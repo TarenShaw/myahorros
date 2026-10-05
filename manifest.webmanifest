@@ -1,0 +1,28 @@
+{
+  "name": "Yearly Budget Tracker",
+  "short_name": "Budget",
+  "description": "A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f1f4f2",
+  "theme_color": "#0d5c63",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
