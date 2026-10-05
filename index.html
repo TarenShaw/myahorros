@@ -4,7 +4,7 @@
 <meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1PeN54lB10Mjx5/1p0s/oK1UrIJj6i8gdOpDaoYYjr8=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-liPfzbMzFUqqHcz9rUOBbCUP7N7rxZZeCvGRFuFRm+A=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -118,6 +118,7 @@ html{scrollbar-gutter:stable}
 .tab[aria-selected="true"]{color:var(--ink)}
 .tab[aria-selected="true"]::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;background:var(--accent);border-radius:2px 2px 0 0}
 .tab .badge{margin-left:6px}
+@media(min-width:861px){.tab .badge[data-t]::after{content:attr(data-t);white-space:nowrap;margin-left:4px}}
 .tab .ti{display:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .tabbar-end{display:flex;align-items:center;gap:10px;padding-block:6px}
 .eye-btn{padding:0;width:32px;justify-content:center}
@@ -929,7 +930,7 @@ const STARTER_KW={
   en:{
     income:kwPack({'Salary':'salary|payroll|nomina','Dividends':'dividend','Interest':'interest','Tax Return':'tax refund|hmrc refund'}),
     expenses:kwPack({
-      'Groceries':'tesco|sainsbury|asda|aldi|lidl|morrisons|waitrose|whole foods|walmart|kroger|trader joe|costco|mercadona|carrefour|alcampo|eroski|consum',
+      'Groceries':'tesco|sainsbury|asda|aldi|lidl|morrisons|waitrose|whole foods|walmart|kroger|trader joe|costco|mercadona|carrefour|alcampo|eroski|consum s coop|consum coop',
       'Restaurants':'uber eats|deliveroo|just eat|glovo|mcdonald|burger king|kfc|starbucks|pret a manger|nando|domino|telepizza|restaurant',
       'Transport':'uber|lyft|bolt.eu|cabify|trainline|renfe|shell|esso|repsol|cepsa|parking',
       'Subscriptions':'netflix|spotify|disney|amazon prime|apple.com/bill|youtube|audible|icloud',
@@ -945,12 +946,13 @@ const STARTER_KW={
       'Cash':'cash withdrawal|cajero',
       'Taxes':'hmrc|aeat',
       'Education':'udemy|coursera'}),
+    extra:kwPack({'Groceries':'co-op|ocado|target|safeway|publix|wegmans|heb','Restaurants':'costa coffee|greggs|wetherspoon|itsu|wagamama|chipotle|doordash|grubhub|dunkin|panera','Transport':'tfl|oyster|national rail|chevron|exxon|mta','Utilities':'edf|sse|severn trent|united utilities|comcast|xfinity','Phone':'verizon|t-mobile','Health':'boots|superdrug|specsavers|cvs|walgreens|rite aid','Non Essential Shopping':'john lewis|currys|b&q|screwfix'}),
     investments:kwPack({'Funds/ETFs':'vanguard|indexa|myinvestor','Stocks':'trading 212|degiro|interactive brokers|trade republic|etoro|freetrade','Pension':'pension'})
   },
   es:{
     income:kwPack({'Nómina':'nomina|salario','Dividendos':'dividendo','Intereses':'intereses','Devolución de impuestos':'devolucion irpf|devolucion hacienda|agencia tributaria'}),
     expenses:kwPack({
-      'Supermercado':'mercadona|carrefour|lidl|aldi|alcampo|eroski|consum|ahorramas|hipercor|supercor|caprabo|condis|bonpreu|gadis|froiz|masymas',
+      'Supermercado':'mercadona|carrefour|lidl|aldi|alcampo|eroski|consum s coop|consum coop|ahorramas|hipercor|supercor|caprabo|condis|bonpreu|gadis|froiz|masymas',
       'Restaurantes':'uber eats|glovo|just eat|deliveroo|telepizza|domino|mcdonald|burger king|kfc|starbucks|rodilla|restaurante',
       'Bares y copas':'cerveceria|taberna',
       'Transporte':'renfe|cabify|uber|bolt.eu|blablacar|alsa|ouigo|iryo|repsol|cepsa|galp|gasolinera|parking|metro de madrid',
@@ -1013,7 +1015,29 @@ function fmtNum(v,dec=2){
    edit boxes, downloads and exports keep the real numbers. Remembered per browser. */
 let HIDE=false; try{ HIDE=localStorage.getItem('ybt.hideAmounts')==='1'; }catch(_){}
 const MASK='••••';
-const fmtEUR=(v,dec=2)=>HIDE?(v<-0.004?'−':'')+MASK+' €':fmtNum(v,dec)+' €';
+/* the money symbol: chosen in Settings (settings.currency), euro unless a new tracker was set up in another region */
+const CURRENCIES={EUR:{s:'€',after:true,n:'Euro (€)'},GBP:{s:'£',after:false,n:'Pound sterling (£)'},USD:{s:'$',after:false,n:'US dollar ($)'},CAD:{s:'CA$',after:false,n:'Canadian dollar (CA$)'},AUD:{s:'A$',after:false,n:'Australian dollar (A$)'},CHF:{s:'CHF',after:true,n:'Swiss franc (CHF)'},MXN:{s:'MX$',after:false,n:'Mexican peso (MX$)'},SEK:{s:'kr',after:true,n:'Swedish krona (kr)'},PLN:{s:'zł',after:true,n:'Polish złoty (zł)'}};
+let CUR='EUR';
+const cs=()=>(CURRENCIES[CUR]||CURRENCIES.EUR).s;
+function fmtEUR(v,dec=2){
+  const c=CURRENCIES[CUR]||CURRENCIES.EUR, t=HIDE?(v<-0.004?'−':'')+MASK:fmtNum(v,dec);
+  if(c.after) return t+' '+c.s;
+  const neg=t.charAt(0)==='−'; return (neg?'−':'')+c.s+(neg?t.slice(1):t);
+}
+/* a symbol or code in an amount that isn't the tracker's own currency: the row is flagged, never converted */
+function foreignCode(raw,own){
+  if(typeof raw!=='string') return null;
+  const m=raw.match(/\b(USD|GBP|EUR|CHF|CAD|AUD|JPY|MXN|SEK|NOK|DKK|PLN)\b/i);
+  if(m){ const c=m[1].toUpperCase(); return c===own?null:c; }
+  if(raw.indexOf('€')>-1) return own==='EUR'?null:'EUR';
+  if(raw.indexOf('£')>-1) return own==='GBP'?null:'GBP';
+  if(raw.indexOf('$')>-1) return ['USD','CAD','AUD','MXN'].includes(own)?null:'USD';
+  return null;
+}
+function regionCurrency(){ const rg=(((navigator.languages&&navigator.languages[0])||navigator.language||'').split('-')[1]||'').toUpperCase();
+  return {GB:'GBP',UK:'GBP',IE:'EUR',US:'USD',CA:'CAD',AU:'AUD',CH:'CHF',MX:'MXN',SE:'SEK',PL:'PLN'}[rg]||'EUR'; }
+function applyCur(){ const c=S.settings&&S.settings.currency; CUR=CURRENCIES[c]?c:'EUR'; }
+function setCurrency(v){ v=CURRENCIES[v]?v:'EUR'; if(!S.canWrite) return; setSettings({currency:v}); render(); toast(L('currencySaved',fmtEUR(1234.56))); }
 const fmtCell=v=>Math.abs(v)<0.005?'–':HIDE?MASK:fmtNum(v);
 const fmtTick=v=>HIDE&&Math.abs(v)>0.004?'':fmtNum(v,0);
 function fmtPct(r,dec=1){ if(!isFinite(r)) return '–'; return fmtNum(r*100,dec)+'%'; }
@@ -1025,28 +1049,52 @@ function isoOf(y,m,d){
   if(dt.getUTCMonth()!==m-1) return null;
   return y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
 }
+/* the day/month order of slashed dates (05/01/2026): parseRows works it out from the file itself, day first otherwise */
+let DATE_ORDER='dmy';
+let MON_MAP=null;
+function monMap(){ if(MON_MAP) return MON_MAP; MON_MAP=Object.create(null); for(const l of [MONTHS_L.en,MONTHS_L.es]) l.forEach((n,i)=>{ const f=fold(n); MON_MAP[f]=i+1; MON_MAP[f.slice(0,3)]=i+1; }); MON_MAP.sept=9; MON_MAP.setiembre=9; return MON_MAP; }
+function detectDateOrder(rows){
+  let day=false, mon=false;
+  for(const r of rows) for(const c of r){ if(typeof c!=='string') continue;
+    const m=c.match(/^\s*(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2}|\d{4})(?:\s.*)?$/); if(!m) continue;
+    if(+m[1]>12) day=true; if(+m[2]>12) mon=true; }
+  return mon&&!day?'mdy':'dmy';
+}
 function parseDate(v){
   if(v==null||v==='') return null;
-  if(typeof v==='number'){ if(v>20000&&v<80000){ const dt=new Date(Date.UTC(1899,11,30)+Math.floor(v)*86400000); return isoOf(dt.getUTCFullYear(),dt.getUTCMonth()+1,dt.getUTCDate()); } return null; }
+  if(typeof v==='number'){
+    if(v>20000&&v<80000){ const dt=new Date(Date.UTC(1899,11,30)+Math.floor(v)*86400000); return isoOf(dt.getUTCFullYear(),dt.getUTCMonth()+1,dt.getUTCDate()); }
+    if(Number.isInteger(v)&&v>=19000101&&v<=22001231) return isoOf(Math.floor(v/10000),Math.floor(v/100)%100,v%100);
+    return null; }
   if(v instanceof Date && !isNaN(v)) return isoOf(v.getFullYear(),v.getMonth()+1,v.getDate());
   const s=String(v).trim(); let m;
   if((m=s.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})(?:[ T].*)?$/))) return isoOf(+m[1],+m[2],+m[3]);
-  if((m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2}|\d{4})(?:\s.*)?$/))){ let y=+m[3]; if(y<100) y+=2000; return isoOf(y,+m[2],+m[1]); }
+  if((m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2}|\d{4})(?:\s.*)?$/))){ let y=+m[3]; if(y<100) y+=2000; return DATE_ORDER==='mdy'?isoOf(y,+m[1],+m[2]):isoOf(y,+m[2],+m[1]); }
   if(/^\d{5}(\.\d+)?$/.test(s)) return parseDate(+s);
+  if(/^\d{8}$/.test(s)) return parseDate(+s);
+  /* "5 Jan 2026", "05-ene-2026", "5 de enero de 2026", "Jan 5, 2026" */
+  const f=fold(s), MM=monMap();
+  if((m=f.match(/^(\d{1,2})(?:st|nd|rd|th)?[\s\-\/.]+(?:de\s+)?([a-z]{3,10})\.?[\s\-\/.,]+(?:de\s+)?(\d{4}|\d{2})(?:\D.*)?$/))&&MM[m[2]]){ let y=+m[3]; if(y<100) y+=2000; return isoOf(y,MM[m[2]],+m[1]); }
+  if((m=f.match(/^([a-z]{3,10})\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})(?:\D.*)?$/))&&MM[m[1]]) return isoOf(+m[3],MM[m[1]],+m[2]);
   return null;
 }
+/* "1.234,56", "1,234.56", "(23,45)", "23,45-", "€ 12", "$12.50", "£1,200.00": null when it isn't a plausible amount */
 function parseAmount(v){
   if(typeof v==='number') return isFinite(v)?r2(v):null;
   if(v==null) return null;
-  let s=String(v).trim().replace(/[€\s ]|EUR/gi,'').replace(/−/g,'-');
+  let s=String(v).trim().replace(/US\$/gi,'').replace(/[€$£¥\s ]|EUR|USD|GBP/gi,'').replace(/[−–]/g,'-');
   let neg=false;
   const p=s.match(/^\((.*)\)$/); if(p){ s=p[1]; neg=true; }
   if(/-$/.test(s)){ s=s.slice(0,-1); neg=!neg; }
   if(!/^[+-]?[\d.,]*\d[\d.,]*$/.test(s)) return null;
-  const lc=s.lastIndexOf(','), ld=s.lastIndexOf('.');
-  if(lc>-1&&ld>-1){ s = lc>ld ? s.replace(/\./g,'').replace(',','.') : s.replace(/,/g,''); }
-  else if(lc>-1){ const many=(s.match(/,/g)||[]).length>1; const dec=s.length-lc-1; s = (many||dec===3)? s.replace(/,/g,'') : s.replace(',','.'); }
-  else if(ld>-1){ const many=(s.match(/\./g)||[]).length>1; const dec=s.length-ld-1; const intPart=s.slice(0,ld).replace(/^[+-]/,''); if(many||(dec===3&&intPart!=='0'&&intPart!=='')) s=s.replace(/\./g,''); }
+  const lc=s.lastIndexOf(','), ld=s.lastIndexOf('.'), cnt=ch=>(s.split(ch).length-1);
+  if(lc>-1&&ld>-1){ const dec=lc>ld?',':'.'; if(cnt(dec)!==1) return null; s = dec===',' ? s.replace(/\./g,'').replace(',','.') : s.replace(/,/g,''); }
+  else if(lc>-1){ const many=cnt(',')>1, dec=s.length-lc-1, ip=s.slice(0,lc).replace(/^[+-]/,'');
+    if(many&&!/^[+-]?\d{1,3}(,\d{3})+$/.test(s)) return null;
+    s = (many||(dec===3&&ip!=='0'&&ip!==''))? s.replace(/,/g,'') : s.replace(',','.'); }
+  else if(ld>-1){ const many=cnt('.')>1, dec=s.length-ld-1, ip=s.slice(0,ld).replace(/^[+-]/,'');
+    if(many&&!/^[+-]?\d{1,3}(\.\d{3})+$/.test(s)) return null;
+    if(many||(dec===3&&ip!=='0'&&ip!=='')) s=s.replace(/\./g,''); }
   const n=parseFloat(s); if(!isFinite(n)) return null;
   return r2(neg?-n:n);
 }
@@ -1206,6 +1254,18 @@ const STR={
   how3:['To fix a wrong result, add a longer, more specific keyword rather than editing a short one other transactions rely on.','Para corregir un resultado, añade una palabra más larga y específica en lugar de cambiar una corta de la que dependen otros movimientos.'],
   how4:['Keywords of 4 letters or fewer only match at the start of a word, so “o2” finds “O2 FIBRA” but not “EXPHIERRO2”.','Las palabras de 4 letras o menos solo coinciden al principio de una palabra: «o2» encuentra «O2 FIBRA» pero no «EXPHIERRO2».'],
   how5:['New rows get their category from the keywords when you add or import them. A category you pick by hand is never overwritten, and the tracker offers to remember it as a keyword for next time.','Las filas nuevas reciben su categoría de las palabras clave al añadirlas o importarlas. Una categoría elegida a mano nunca se sobrescribe, y el control te ofrece recordarla como palabra clave para la próxima vez.'],
+  currency:['Currency','Moneda'], currencyHelp:['Only the symbol changes. Amounts are never converted.','Solo cambia el símbolo. Los importes no se convierten.'], currencySaved:[v=>`Amounts now show like ${v}.`,v=>`Los importes se mostrarán así: ${v}.`],
+  savedDef:['Income minus expenses. Money you invested still counts as kept.','Ingresos menos gastos. El dinero que has invertido sigue contando como conservado.'],
+  indUncat:[n=>`Leaves out ${pl(n,'row')} without a category.`,n=>`No incluye ${pl(n,'row')} sin categoría.`],
+  toSort:['to sort','por clasificar'],
+  txRowHint:['Click a row to edit or delete it. You can also change a category straight from its list.','Pulsa una fila para editarla o eliminarla. También puedes cambiar la categoría desde su lista.'],
+  kwWholeHint:['Tip: put a word in quotes, like "shell", to match it only as a whole word.','Truco: pon una palabra entre comillas, como "shell", para que solo coincida como palabra completa.'],
+  mcTitle:['Monthly check','Revisión del mes'], mcSub:['A few things worth a minute.','Unas cosas que merecen un minuto.'],
+  mcMissing:[l=>`No transactions recorded for ${l}.`,l=>`No hay movimientos registrados en ${l}.`], mcNw:[m=>`Net worth figures for ${m} are still missing.`,m=>`Faltan las cifras de patrimonio de ${m}.`], mcNwGo:['Enter them','Introducirlas'],
+  impOdd:[n=>`${pl(n,'row')} ${n===1?'is':'are'} much larger than usual for ${n===1?'its':'their'} category. Check ${n===1?'it':'them'} before adding.`,n=>`${pl(n,'row')} ${n===1?'es':'son'} mucho ${n===1?'mayor':'mayores'} de lo habitual para su categoría. Revísa${n===1?'la':'las'} antes de añadir.`],
+  noteOdd:[u=>`Usually about ${u}`,u=>`Lo habitual: unos ${u}`],
+  impFx:[(n,c)=>`${pl(n,'row')} ${n===1?'looks':'look'} to be in another currency (${c}). The amount is saved as written, not converted. Untick ${n===1?'it':'any'} you'd rather convert first.`,(n,c)=>`${pl(n,'row')} ${n===1?'parece':'parecen'} estar en otra moneda (${c}). El importe se guarda tal cual, sin convertir. Desmarca ${n===1?'la':'las'} que prefieras convertir antes.`],
+  noteFx:[c=>`Currency: ${c}`,c=>`Moneda: ${c}`],
   kwTestHint:['Shows which keyword would pick the category.','Muestra qué palabra clave elegiría la categoría.'],
   kwTestNone:['No keyword matches, so this would be <b>Uncategorised</b>.','Ninguna palabra clave coincide, así que quedaría <b>Sin categoría</b>.'],
   kwFrom:['from','por la palabra'], alsoMatched:['Also matched:','También coinciden:'],
@@ -1218,7 +1278,7 @@ const STR={
   /* modals: edit */
   editTx:['Edit transaction','Editar movimiento'], inTableDate:[(t,d)=>`In ${t}, ${d}`,(t,d)=>`En ${t}, ${d}`],
   signRule:['Money in is positive, money out is negative.','El dinero que entra es positivo y el que sale, negativo.'],
-  conceptPh:['As it appears on the statement','Tal como aparece en el extracto'], amountEur:['Amount (€)','Importe (€)'],
+  conceptPh:['As it appears on the statement','Tal como aparece en el extracto'], amountEur:[()=>`Amount (${cs()})`,()=>`Importe (${cs()})`],
   help_exp:['Expenses are negative; a refund is positive.','Los gastos son negativos; una devolución es positiva.'],
   help_inv:['Money put into an investment is negative.','El dinero que metes en una inversión es negativo.'],
   help_inc:['Income is positive.','Los ingresos son positivos.'],
@@ -1263,6 +1323,13 @@ const STR={
   dupUnticked:[n=>`${pl(n,'row')} already in the tracker ${n===1?'is':'are'} unticked`,n=>`${pl(n,'row')} que ya ${n===1?'está':'están'} en el control ${n===1?'aparece':'aparecen'} sin marcar`],
   skipUnticked:[n=>`${pl(n,'row')} on your skip list ${n===1?'is':'are'} unticked. Tick ${n===1?'it':'any'} you do want.`,n=>`${pl(n,'row')} con palabras a omitir ${n===1?'aparece':'aparecen'} sin marcar. Marca las que sí quieras.`],
   includeRow:[i=>`Include row ${i}`,i=>`Incluir la fila ${i}`], alreadyIn:['Already in tracker','Ya está en el control'],
+  impXfer:[n=>`${pl(n,'row')} ${n===1?'looks':'look'} like a transfer between your own accounts (the same amount out and in, within 3 days), so ${n===1?'it is':'they are'} unticked. Tick ${n===1?'it':'any'} you do want.`,n=>`${pl(n,'row')} ${n===1?'parece':'parecen'} un traspaso entre tus cuentas (el mismo importe sale y entra con menos de 3 días de diferencia), así que ${n===1?'aparece':'aparecen'} sin marcar. Marca ${n===1?'la':'las'} que sí quieras.`],
+  impPossDup:[n=>`${pl(n,'row')} ${n===1?'has':'have'} the same date and amount as something already in the tracker, under another description. ${n===1?'It stays':'They stay'} ticked: untick ${n===1?'it':'any'} that ${n===1?'is':'are'} a repeat.`,n=>`${pl(n,'row')} ${n===1?'tiene':'tienen'} la misma fecha e importe que algo que ya está en el control, con otro concepto. ${n===1?'Sigue marcada':'Siguen marcadas'}: desmarca ${n===1?'la':'las'} que sean repetidas.`],
+  impBalOk:[(ok,t)=>`The running balance in your file adds up for ${fmtCount(ok)} of ${fmtCount(t)} steps, so nothing looks missing.`,(ok,t)=>`El saldo de tu archivo cuadra en ${fmtCount(ok)} de ${fmtCount(t)} pasos, así que no parece faltar nada.`],
+  impBalBad:[(ok,t,b)=>`The running balance in your file adds up for ${fmtCount(ok)} of ${fmtCount(t)} steps. ${pl(b,'row')} ${b===1?'does':'do'} not follow from the row before: a row may be missing, or an amount may have the wrong sign. ${b===1?'It is':'They are'} marked below.`,(ok,t,b)=>`El saldo de tu archivo cuadra en ${fmtCount(ok)} de ${fmtCount(t)} pasos. ${pl(b,'row')} no ${b===1?'sale':'salen'} de la fila anterior: puede faltar alguna fila o algún importe tener el signo cambiado. ${b===1?'Aparece marcada':'Aparecen marcadas'} abajo.`],
+  noteXfer:['Looks like a transfer between your accounts','Parece un traspaso entre tus cuentas'],
+  noteLike:[c=>`Same date and amount as “${c}”`,c=>`Misma fecha e importe que «${c}»`],
+  noteBal:['Doesn’t follow from the balance','No cuadra con el saldo'],
   skipListNote:[w=>`Skip list: “${w}”`,w=>`Palabra a omitir: «${w}»`], noKeyword:['No keyword','Sin palabra clave'],
   badLines:[n=>`${pl(n,'line')} couldn’t be read and will be skipped`,n=>`${pl(n,'line')} no se ${n===1?'ha':'han'} podido leer y se ${n===1?'omitirá':'omitirán'}`],
   nToT:[(n,t)=>`${n} to ${t}`,(n,t)=>`${n} a ${t}`], nUncat:[n=>` · ${n} uncategorised`,n=>` · ${n} sin categoría`],
@@ -1414,7 +1481,7 @@ const STR={
   showAllKw:[n=>`Show all ${n} keywords`,n=>`Ver las ${n} palabras clave`],
   obLead:['Pick a language and how you’d like to start.','Elige un idioma y cómo quieres empezar.'],
   obHowQ:['How do you want to start?','¿Cómo quieres empezar?'],
-  obWayAi:['Build it from my bank statements','Crearlo con mis extractos'], obWayAiSub:['Claude reads them, sorts every movement and finds your balances. You check it all before it’s saved.','Claude los lee, clasifica cada movimiento y encuentra tus saldos. Lo revisas todo antes de guardarlo.'], obQuickest:['Quickest','Lo más rápido'],
+  obWayAi:['Build it from my bank statements','Crearlo con mis extractos'], obWayAiSub:['Claude reads them, sorts every movement and finds your balances. You check it all before it’s saved. Needs your own AI key (pay per use) or a copy-and-paste step.','Claude los lee, clasifica cada movimiento y encuentra tus saldos. Lo revisas todo antes de guardarlo. Necesita tu propia clave de IA (pago por uso) o un paso de copiar y pegar.'], obQuickest:['Quickest','Lo más rápido'],
   obWayImp:['Import a bank file','Importar un archivo del banco'], obWayImpSub:['Download your bank’s export (.csv or .xlsx) and bring it in.','Descarga la exportación de tu banco (.csv o .xlsx) y tráela aquí.'],
   obWayEmpty:['Start empty','Empezar desde cero'], obWayEmptySub:['A two-minute tour first, then a short guide to add your accounts and transactions.','Primero un recorrido de dos minutos y luego una guía corta para añadir tus cuentas y movimientos.'],
   obEarlier:['Start from an earlier month?','¿Empezar desde un mes anterior?'],
@@ -1496,7 +1563,7 @@ const STR={
   gTitle_done:['You’re set up','Ya está todo listo'],
   gDoneText:['From now on: once a month, enter what your accounts are worth (Net worth reminds you when it’s time), and add or import that month’s transactions. Overview shows how the year is going.','A partir de ahora: una vez al mes, introduce lo que valen tus cuentas (Patrimonio te avisa cuando toca) y añade o importa los movimientos de ese mes. El Resumen muestra cómo va el año.'],
   gDoneSkip:['Net worth is there whenever you want it: add your accounts on the Net worth tab.','Patrimonio te espera cuando quieras: añade tus cuentas en la pestaña Patrimonio.'],
-  gToOverview:['Go to Overview','Ir al Resumen'], gSkipNw:['Skip net worth for now','Saltar el patrimonio por ahora'],
+  gToOverview:['Go to Overview','Ir al Resumen'], gSkipNw:['Start with my spending instead','Empezar por mis gastos'],
   gHide:['Hide the setup guide','Ocultar la guía'], gHidden:['Setup guide hidden. You can bring it back from Settings.','Guía oculta. Puedes volver a mostrarla desde Ajustes.'],
   gContinue:['Continue','Continuar'], gShow:['Show the setup guide','Mostrar la guía de configuración'],
   nwAccStartQ:['Which of these do you have? Tap to add them, then rename them after your bank or app, for example “BBVA current account”.','¿Cuáles de estas tienes? Púlsalas para añadirlas y luego ponles el nombre de tu banco o app, por ejemplo «Cuenta corriente BBVA».'],
@@ -1605,7 +1672,7 @@ const STR={
   nwSug_invest:[['Index funds','Investment account','Crypto'],['Fondos indexados','Cuenta de inversión','Cripto']],
   nwSug_illiquid:[['Crowdlending','Property','Fixed-term deposit'],['Crowdlending','Inmueble','Depósito a plazo']],
   nwSug_pension:[['Pension plan'],['Plan de pensiones']],
-  nwGoalTitle:['Net worth goal','Objetivo de patrimonio'], nwGoalAmount:['Amount (€)','Importe (€)'], nwGoalBy:['By the end of','A final de'],
+  nwGoalTitle:['Net worth goal','Objetivo de patrimonio'], nwGoalAmount:[()=>`Amount (${cs()})`,()=>`Importe (${cs()})`], nwGoalBy:['By the end of','A final de'],
   nwRemoveGoal:['Remove goal','Quitar objetivo'], nwSaveGoal:['Save goal','Guardar objetivo'], nwGoalErr:['Enter an amount above zero.','Introduce un importe mayor que cero.'],
   nwGoalSaved:['Goal saved','Objetivo guardado'], nwGoalRemoved:['Goal removed','Objetivo quitado'],
   /* returns: interest, dividends and gains */
@@ -1760,7 +1827,7 @@ const STR={
   overBy:[v=>`${v} over`,v=>`${v} por encima`], leftOf:[v=>`${v} left`,v=>`quedan ${v}`],
   limAria:[(n,s,l)=>`${n}: ${s} spent of a ${l} limit`,(n,s,l)=>`${n}: ${s} gastados de un límite de ${l}`],
   addLimit:['Set limit','Poner límite'], perMonthShort:[v=>`${v}/month`,v=>`${v}/mes`], limitFor:[n=>`Monthly limit for ${n}`,n=>`Límite mensual de ${n}`],
-  limitTitle:['Monthly limit','Límite mensual'], limitPerMonth:['Limit per month (€)','Límite al mes (€)'],
+  limitTitle:['Monthly limit','Límite mensual'], limitPerMonth:[()=>`Limit per month (${cs()})`,()=>`Límite al mes (${cs()})`],
   limitAvg:[(v,y)=>`In ${y} you spent ${v} a month here on average.`,(v,y)=>`En ${y} gastaste de media ${v} al mes aquí.`],
   limitHelp:['A round figure you’d like to stay under.','Una cifra redonda por debajo de la que quieres quedarte.'],
   limitWhere:['Overview shows what’s left this month, and Yearly tracking marks the months that went over.','El Resumen muestra lo que queda este mes y el Seguimiento anual marca los meses que se pasaron.'],
@@ -1793,6 +1860,8 @@ function sheetTable(name){ const n=String(name).trim().toUpperCase(); for(const 
 
 const ALL_MONTH_NAMES=new Set([...MONTHS_L.en,...MONTHS_L.es].map(m=>m.toLowerCase()));
 const dispCat=n=>n===UNCAT?L('uncat'):n;
+/* "Uncategorised" is how the tracker names rows without a category, so no real category can use that name */
+const isReservedCat=n=>[UNCAT,STR.uncat[0],STR.uncat[1]].some(x=>fold(x)===fold(n));
 const nwLabel=ty=>L(ty==='Need'?'need':'want');
 
 /* ───────── data accessors ───────── */
@@ -1877,6 +1946,8 @@ function catRowsFor(A,t){ const names=catNames(t).slice(); if(A[t].uncatCount>0)
 /* Keyword matching. Accents and capitals don't matter (cafetería = CAFETERIA).
    A keyword of 4 characters or fewer only matches at the start of a word, so "o2" finds "O2 FIBRA" but not "EXPHIERRO2". */
 const fold=s=>String(s==null?'':s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+/* matching also ignores punctuation and spacing: "UBER* EATS", "Uber-Eats" and "uber eats" are the same text, and "H & M" finds "h&m" */
+const loose=s=>fold(s).replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const WORDCH=/[\p{L}\p{N}]/u;
 const SHORT_KW=4;
 function hasKw(c,kl){
@@ -1885,18 +1956,20 @@ function hasKw(c,kl){
   for(let i=c.indexOf(kl);i>-1;i=c.indexOf(kl,i+1)) if(i===0||!WORDCH.test(c[i-1])) return true;
   return false;
 }
-function kwFolded(t){ return memo('kwf'+t,()=>(kws()[t]||[]).map(([k,cat],i)=>({kw:k,kl:fold(k),cat,i})).filter(x=>x.kl)); }
+/* a keyword in quotes ("shell") only matches as a whole word */
+const hasWord=(c,kl)=>(' '+c+' ').includes(' '+kl+' ');
+function kwFolded(t){ return memo('kwf'+t,()=>(kws()[t]||[]).map(([k,cat],i)=>{ const q=/^"(.+)"$/.exec(String(k).trim()); return {kw:k,kl:loose(q?q[1]:k),w:!!q,cat,i}; }).filter(x=>x.kl)); }
 function matchKeyword(t,concept){
-  const c=fold(concept); let best=null;
-  for(const x of kwFolded(t)) if((!best||x.kl.length>best.k.length)&&hasKw(c,x.kl)) best={k:x.kl,kw:x.kw,cat:x.cat};
+  const c=loose(concept); let best=null;
+  for(const x of kwFolded(t)) if((!best||x.kl.length>best.k.length)&&(x.w?hasWord(c,x.kl):hasKw(c,x.kl))) best={k:x.kl,kw:x.kw,cat:x.cat};
   return best;
 }
 function allMatches(t,concept){
-  const c=fold(concept);
-  return kwFolded(t).filter(x=>hasKw(c,x.kl)).map(x=>({kw:x.kw,cat:x.cat,i:x.i})).sort((a,b)=>b.kw.length-a.kw.length||a.i-b.i);
+  const c=loose(concept);
+  return kwFolded(t).filter(x=>x.w?hasWord(c,x.kl):hasKw(c,x.kl)).map(x=>({kw:x.kw,cat:x.cat,i:x.i})).sort((a,b)=>b.kw.length-a.kw.length||a.i-b.i);
 }
 /* folded concepts of every saved transaction, in allRows() order */
-function foldedConcepts(){ return memo('fc',()=>allRows().map(r=>fold(r.concept))); }
+function foldedConcepts(){ return memo('fc',()=>allRows().map(r=>loose(r.concept))); }
 
 /* ───────── persistence ───────── */
 const dirty=new Set(), busy=new Set(), failed=new Set(); let flushTimer=null, flushing=false, lastErr=null;
@@ -2087,7 +2160,7 @@ function applyNum(){ const v=wantNum(); NF=v==='en'?{t:',',d:'.'}:{t:'.',d:','};
 function setNumFmt(v){ v=v==='en'?'en':'eu'; if(S.canWrite){ S.ui.numLocal=null; setSettings({numFmt:v}); } else S.ui.numLocal=v; render(); toast(L('numSaved',fmtEUR(1234.56))); }
 function render(){
   if(infoOpen) hideInfo();
-  applyLang(); applyTheme(); applyNum();
+  applyCur(); applyLang(); applyTheme(); applyNum();
   renderHeader();
   const ob=isOnboarding(), app=$('.app');
   app.classList.toggle('wide',S.ui.tab==='yearly'&&!ob);
@@ -2135,7 +2208,7 @@ function renderHeader(){
 function setTxTab(nUn){
   const tb=$('#tab-transactions'), tl=tb.querySelector('.tl'), w=L('tab_transactions'); if(tl.textContent!==w) tl.textContent=w;
   let b=tb.querySelector('.badge');
-  if(nUn){ if(!b){ b=document.createElement('span'); b.className='badge'; tb.appendChild(b); } const s=String(nUn); if(b.textContent!==s) b.textContent=s; b.title=L('withoutCat',nUn); }
+  if(nUn){ if(!b){ b=document.createElement('span'); b.className='badge'; tb.appendChild(b); } const s=String(nUn); if(b.textContent!==s) b.textContent=s; b.title=L('withoutCat',nUn); b.dataset.t=L('toSort'); b.setAttribute('aria-label',L('withoutCat',nUn)); }
   else if(b) b.remove();
 }
 function viewNoDb(){
@@ -2169,17 +2242,17 @@ function langCards(prefix,cur,disabled){
 }
 function yearRange(from,to){ const a=[]; for(let y=from;y<=to;y++) a.push(y); return a; }
 /* a new tracker: language, first month, the default categories and starter keywords for that language, the setup guide */
-const KW_UK=new Set(['tesco','sainsbury','asda','morrisons','waitrose','british gas','octopus energy','thames water','giffgaff','argos','cineworld','odeon','puregym','hmrc refund','trainline','pret a manger','nando','british airways','aviva','bupa','hmrc']);
-const KW_US=new Set(['walmart','kroger','trader joe','costco','whole foods','lyft']);
+const KW_UK=new Set(['co-op','ocado','costa coffee','greggs','wetherspoon','itsu','wagamama','tfl','oyster','national rail','edf','sse','severn trent','united utilities','boots','superdrug','specsavers','john lewis','currys','b&q','screwfix','tesco','sainsbury','asda','morrisons','waitrose','british gas','octopus energy','thames water','giffgaff','argos','cineworld','odeon','puregym','hmrc refund','trainline','pret a manger','nando','british airways','aviva','bupa','hmrc']);
+const KW_US=new Set(['target','safeway','publix','wegmans','heb','chipotle','doordash','grubhub','dunkin','panera','chevron','exxon','mta','cvs','walgreens','rite aid','comcast','xfinity','verizon','t-mobile','walmart','kroger','trader joe','costco','whole foods','lyft']);
 function kwRegionKeep(){ const rg=((navigator.languages&&navigator.languages[0])||navigator.language||'').split('-')[1]||''; const R=rg.toUpperCase();
   return k=>{ k=String(k).toLowerCase(); if(KW_UK.has(k)) return R==='GB'||R==='IE'||R==='UK'; if(KW_US.has(k)) return R==='US'||R==='CA'; return true; }; }
 function obStartPick(){ const box=$('#ob-month-box'), now=new Date();
   if(box&&box.open) return {y:+$('#ob-year').value,m:+$('#ob-month').value,auto:false};
   return {y:now.getFullYear(),m:now.getMonth(),auto:true}; }
 function obApply(lang,y,m,auto){
-  setSettings({lang,start:{y,m},guide:{on:true},startAuto:!!auto});
+  setSettings(Object.assign({lang,start:{y,m},guide:{on:true},startAuto:!!auto},S.settings&&S.settings.numFmt?{}:{numFmt:lang==='en'?'en':'eu'},S.settings&&S.settings.currency?{}:{currency:regionCurrency()}));
   if(!S.cats||(isStockCats(S.cats)&&!TKEYS.some(t=>(kws()[t]||[]).length))){ S.cats=clone(lang==='es'?DEFAULT_CATS_ES:DEFAULT_CATS); markDirty('config/categories'); }
-  if(!S.kw||!TKEYS.some(t=>(S.kw[t]||[]).length)){ const st=STARTER_KW[lang], keep=kwRegionKeep(); S.kw={}; for(const t of TKEYS) S.kw[t]=st[t].filter(q=>isKnown(t,q[1])&&keep(q[0])).map(q=>q.slice()); markDirty('config/keywords'); }
+  if(!S.kw||!TKEYS.some(t=>(S.kw[t]||[]).length)){ const st=STARTER_KW[lang], keep=kwRegionKeep(); S.kw={}; for(const t of TKEYS) S.kw[t]=st[t].concat(t==='expenses'&&st.extra?st.extra:[]).filter(q=>isKnown(t,q[1])&&keep(q[0])).map(q=>q.slice()); markDirty('config/keywords'); }
   S.ui.year=y; bump();
 }
 function viewWelcome(){
@@ -2191,8 +2264,8 @@ function viewWelcome(){
     <fieldset class="field plain"><legend class="lab">${esc(L('language'))}</legend>${langCards('ob',u.obLang==='es'?'es':'en',false)}</fieldset>
     <fieldset class="field plain"><legend class="lab">${esc(L('obHowQ'))}</legend>
       <div class="ob-ways">
-        ${S.ai?way('ob-ai','ob-ai',ICON.ai,L('obWayAi'),L('obWayAiSub'),L('obQuickest')):''}
         ${way('ob-import','ob-import',ICON.xl,L('obWayImp'),L('obWayImpSub'))}
+        ${S.ai?way('ob-ai','ob-ai',ICON.ai,L('obWayAi'),L('obWayAiSub'),''):''}
         ${way('ob-start','ob-start',ICON.plus,L('obWayEmpty'),L('obWayEmptySub'))}
       </div></fieldset>
     <details class="ob-month" id="ob-month-box"${u.obMonthOpen?' open':''}><summary>${esc(L('obEarlier'))}</summary>
@@ -2213,7 +2286,8 @@ function viewSettings(){
   const langCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('language'))}</h2><p class="sub">${esc(L('langSub'))}</p></div></div>
     ${langCards('st',LANG,false)}
     <p class="hint" style="margin-top:12px">${esc(cw?L('langCatNote'):L('langLocal'))}</p>
-    <fieldset class="field plain" style="margin-top:18px"><legend class="lab">${esc(L('numFmt'))}</legend><div class="radio-row">${[['eu','1.234,56 €','numEu'],['en','1,234.56 €','numEn']].map(([v,s,k])=>`<label class="radio-card"><input type="radio" name="st-num" id="st-num-${v}" value="${v}"${nf===v?' checked':''}><span><b class="num">${s}</b><small>${esc(L(k))}</small></span></label>`).join('')}</div></fieldset></section>`;
+    <fieldset class="field plain" style="margin-top:18px"><legend class="lab">${esc(L('numFmt'))}</legend><div class="radio-row">${[['eu','1.234,56','numEu'],['en','1,234.56','numEn']].map(([v,s,k])=>`<label class="radio-card"><input type="radio" name="st-num" id="st-num-${v}" value="${v}"${nf===v?' checked':''}><span><b class="num">${s}</b><small>${esc(L(k))}</small></span></label>`).join('')}</div></fieldset>
+    <div class="field" style="margin-top:18px"><label class="lab" for="st-cur">${esc(L('currency'))}</label><select id="st-cur"${cw?'':' disabled'} style="max-width:320px">${Object.entries(CURRENCIES).map(([k,c])=>`<option value="${k}"${k===CUR?' selected':''}>${esc(c.n)}</option>`).join('')}</select><span class="help">${esc(L('currencyHelp'))}</span></div></section>`;
   let startBody;
   if(!st){
     startBody=`<p class="hint">${esc(L('notSetHint'))}</p>${cw?`<div style="margin-top:12px"><button class="btn" type="button" data-action="st-set">${esc(L('setStart'))}</button></div>`:''}`;
@@ -2348,12 +2422,13 @@ function viewOverview(){
   const multi=yearsWithData().length>1;
   const mmT=S.ui.mm.table, mc=mmCat(A);
   return `<div class="stack">
-    ${notice}${backupNudge()}
+    ${notice}${backupNudge()}${monthlyCard()}
     <section class="ov-top" aria-label="${esc(L('yearSummary'))}">
       <div class="hero">
         <p class="eyebrow">${esc(L('savedIn',y,ms.length?monthRange([idx[0],idx[idx.length-1]].filter((v,i,a)=>a.indexOf(v)===i)):L('noMonths')))}${info('ovSaved')}</p>
         <p class="hero-num">${fmtEUR(Y.sav)}</p>
         <p class="hero-sub">${Y.inc>0?L('keptAfter',fmtPct(Y.savRate)):esc(L('noIncomeYet'))}</p>
+        <p class="hint" style="margin:6px 0 0">${esc(L('savedDef'))}</p>
       </div>
       <div class="tiles">
         <div class="tile"><span class="tile-label"><i class="sw income"></i>${esc(TL('income'))}</span><span class="tile-val">${fmtEUR(Y.inc)}</span><span class="tile-sub">${ms.length?esc(L('avgMonth',fmtEUR(incAvg,0))):'—'}</span></div>
@@ -2364,7 +2439,7 @@ function viewOverview(){
     </section>
     ${thisMonthCard()}
     ${Y.inc>0?`<section class="card">
-      <div class="card-head"><div><h2>${esc(L('indicators'))}${info('ovInd')}</h2><p class="sub">${esc(L('indicatorsSub',y))}</p></div></div>
+      <div class="card-head"><div><h2>${esc(L('indicators'))}${info('ovInd')}</h2><p class="sub">${esc(L('indicatorsSub',y))}${AF.expenses.uncatCount?' '+esc(L('indUncat',AF.expenses.uncatCount)):''}</p></div></div>
       <div class="inds">${inds}</div>
     </section>`:`<section class="card ov-first"><h2>${esc(L('ovFirstTitle'))}</h2><p class="sub">${esc(L('ovFirstText'))}</p>${S.canWrite?`<button class="btn primary" type="button" data-action="guide-income">${esc(L('ovAddIncome'))}</button>`:''}</section>`}
     <section class="card">
@@ -2395,6 +2470,18 @@ function viewOverview(){
     </section>
     ${multi?`<section class="card"><div class="card-head"><div><h2>${esc(L('yearByYear'))}${info('ovYears')}</h2><p class="sub">${esc(L('eurosYear'))}</p></div><div class="legend">${TKEYS.map(t=>`<span><i class="sw ${t}"></i>${esc(TL(t))}</span>`).join('')}</div></div><div class="chart" id="ch-years" style="height:260px"></div></section>`:''}
   </div>`;
+}
+/* Monthly check: months with no transactions since the first one, and net worth figures not yet typed in */
+function monthlyCard(){
+  if(S.demo||!S.canWrite||!allRows().length) return '';
+  const first=trackerStart(), now=ymNow(), st=startOf(), from=st&&ymOf(st.y,st.m)>first?ymOf(st.y,st.m):first;
+  const have=new Set(allRows().map(r=>r.date.slice(0,7))), miss=[];
+  for(let k=from;k<now&&miss.length<36;k=ymAdd(k,1)) if(!have.has(k)) miss.push(k);
+  const due=nwDue(), items=[];
+  if(miss.length) items.push(`<li><span>${esc(L('mcMissing',(miss.length>4?'… ':'')+listJoin(miss.slice(-4).map(k=>ymLabel(k,true)))))}</span> <button class="linkish" type="button" data-action="import">${esc(L('pasteImport'))}</button></li>`);
+  if(due) items.push(`<li><span>${esc(L('mcNw',ymIn(due)))}</span> <button class="linkish" type="button" data-action="tab" data-tab="networth">${esc(L('mcNwGo'))}</button></li>`);
+  if(!items.length) return '';
+  return `<section class="card"><div class="card-head"><div><h2>${esc(L('mcTitle'))}</h2><p class="sub">${esc(L('mcSub'))}</p></div></div><ul style="margin:0;padding-left:18px;display:grid;gap:8px">${items.join('')}</ul></section>`;
 }
 /* This month: spending so far, monthly limits, where the money went */
 function thisMonthCard(){
@@ -2802,7 +2889,7 @@ function guideCard(G){
   const steps=[['acc',G.acc],['val',G.val],['tx',G.tx]].map(([k,d],i)=>{ const s=state(k,d);
     return `<li class="gs-${s}"${G.cur===k?' aria-current="step"':''}><span class="gs-n" aria-hidden="true">${s==='done'?'✓':s==='skip'?'–':i+1}</span><span>${esc(L('gStep_'+k))}${s==='skip'?` <small>· ${esc(L('gSkipped'))}</small>`:s==='done'?`<span class="sr"> ${esc(L('gDoneSr'))}</span>`:''}</span></li>`; }).join('');
   const go=(action,label,extra)=>`<button class="btn primary guide-go" type="button" data-action="${action}"${extra||''}>${label}</button>`;
-  const skipNw=`<button class="linkish guide-skip" type="button" data-action="guide-skipnw">${esc(L('gSkipNw'))}</button>`;
+  const skipNw=`<button class="btn guide-skip" type="button" data-action="guide-skipnw">${esc(L('gSkipNw'))}</button>`;
   let body='', acts='', after='';
   if(G.cur==='acc'){
     body=`<p>${esc(L('gAccText'))}</p><div class="nw-groups-help guide-groups">${NW_GROUPS.map(g=>`<div>${gSw(g)}<b>${esc(L('g_'+g))}</b><span class="hint">${esc(L('gEx_'+g))}</span></div>`).join('')}</div>`;
@@ -2923,15 +3010,6 @@ function goalGrowthCalc(T,rest,left,pace){
   const inv=r2(T.g.invest+T.g.illiquid+T.g.pension), fromSaving=pace?r2(pace.avg*left):0, gap=r2(rest-fromSaving);
   const tot=inv>0&&gap>0?gap/inv:null, yr=tot!=null?Math.pow(1+tot,12/left)-1:null;
   return {inv,fromSaving,gap,tot,yr};
-}
-function goalGrowth(T,rest,left,pace){
-  const c=goalGrowthCalc(T,rest,left,pace);
-  if(pace&&c.gap<=0) return `<p class="hint nw-growth">${esc(L('nwGoalSavingEnough'))}</p>`;
-  const sv=Math.max(0,c.fromSaving), gp=Math.max(0,c.gap), tt=sv+gp||1;
-  const mix=pace&&sv>0?`<div class="nw-mix" role="img" aria-label="${esc(L('nwFromSaving',fmtEUR(sv,0))+', '+L('nwFromGrowth',fmtEUR(gp,0)))}"><i class="saved" style="width:${(sv/tt*100).toFixed(1)}%"></i><i class="growth" style="width:${(gp/tt*100).toFixed(1)}%"></i></div>
-    <div class="nw-mix-leg"><span><i class="sw saved"></i>${esc(L('nwFromSaving',fmtEUR(sv,0)))}</span><span><i class="sw growth"></i>${esc(L('nwFromGrowth',fmtEUR(gp,0)))}</span></div>`:'';
-  const txt=c.tot!=null?L(!pace?'nwGoalGrowthNoPace':pace.avg<0?'nwGoalGrowthNeg':'nwGoalGrowth',fmtEUR(c.inv,0),fmtEUR(c.gap,0),fmtPct(c.tot,1),left>=12?fmtPct(c.yr,1):null):L('nwGoalNoInvest',fmtEUR(c.gap,0));
-  return `<div class="nw-growth">${mix}<p>${esc(txt)}</p>${c.tot!=null?`<p class="hint">${esc(L('nwGoalGrowthNote'))}</p>`:''}</div>`;
 }
 function accountsCard(k){
   const N=nw(), s=k?N.snaps[k]||{}:{}, prev=k?nwMonths()[nwMonths().indexOf(k)-1]:null, s0=prev?N.snaps[prev]:null, T=k?nwTotals(k):{total:0,g:{}};
@@ -3717,6 +3795,7 @@ function viewTransactions(){
       ${(u.q||u.month!=='all'||u.cat!=='all')?`<button class="btn ghost sm" data-action="tx-clear">${esc(L('clearFilters'))}</button>`:''}
     </div>
     <div class="tx-sum"><span>${esc(pl(rows.length,'transaction'))}${rows.length>shown.length?esc(L('showingFirst',fmtCount(shown.length))):''}</span><span>${esc(L('total'))} <b>${fmtEUR(total)}</b></span></div>
+    ${S.canWrite&&rows.length?`<p class="hint" style="margin:0 0 8px">${esc(L('txRowHint'))}</p>`:''}
     <div class="frame" style="overflow:visible"><table class="tx">
       <thead><tr><th style="width:110px">${sortBtn('date',L('date'))}</th><th>${esc(L('concept'))}</th><th style="width:240px">${esc(L('category'))}</th><th class="r" style="width:140px">${sortBtn('amount',L('amount'))}</th></tr></thead>
       <tbody>${tr||`<tr class="empty-row"><td colspan="4">${esc(L('noMatchFilters',tl(u.table)))}</td></tr>`}</tbody>
@@ -3772,7 +3851,8 @@ function viewCategories(){
         <label class="sr" for="new-kw-cat">${esc(L('category'))}</label><select id="new-kw-cat">${catNames(t).map(n=>`<option value="${esc(n)}"${n===c.newKwCat?' selected':''}>${esc(n)}</option>`).join('')}</select>
         <button class="btn" type="submit">${esc(L('addKeyword'))}</button>
         <span class="warn-text" id="kw-warn">${c.newKw.trim()&&c.newKw.trim().length<=SHORT_KW?esc(L('shortKw')):''}</span>
-      </form>`:''}
+      </form>
+      <p class="hint" style="margin:8px 0 0">${esc(L('kwWholeHint'))}</p>`:''}
       <div style="margin-top:14px"><label class="sr" for="kw-q">${esc(L('filterKw'))}</label><input type="search" id="kw-q" placeholder="${esc(L('filterKw'))}" value="${esc(c.q)}" style="width:100%" autocomplete="off"></div>
       <div class="kw-list">${kwRows||`<p class="hint" style="padding:12px 0">${esc(L('noKwMatch'))}</p>`}</div>
       ${filtered.length>shown.length?`<div class="more"><button class="btn" data-action="kw-more">${esc(L('showAllKw',fmtCount(filtered.length)))}</button></div>`:''}
@@ -3967,8 +4047,8 @@ function modalDrill(){
 
 /* import */
 function skipList(){ const s=S.settings&&S.settings.skip; return Array.isArray(s)?s:DEFAULT_SKIP; }
-function skipMatch(concept){ const c=fold(concept); let best=null, bl=0; for(const w of skipList()){ const lw=fold(w).trim(); if(lw&&lw.length>bl&&hasKw(c,lw)){ best=w; bl=lw.length; } } return best; }
-function skipHits(word){ const lw=fold(word).trim(); if(!lw) return []; const fc=foldedConcepts(); return allRows().filter((r,i)=>hasKw(fc[i],lw)); }
+function skipMatch(concept){ const c=loose(concept); let best=null, bl=0; for(const w of skipList()){ const lw=loose(w); if(lw&&lw.length>bl&&hasKw(c,lw)){ best=w; bl=lw.length; } } return best; }
+function skipHits(word){ const lw=loose(word); if(!lw) return []; const fc=foldedConcepts(); return allRows().filter((r,i)=>hasKw(fc[i],lw)); }
 function oddSign(r){ return (r.table==='expenses'&&r.amount>0)||(r.table==='income'&&r.amount<0)||(r.table==='investments'&&r.amount>0); }
 function signReason(r){ return L(r.table==='expenses'?'rs_exp':r.table==='income'?'rs_inc':'rs_inv'); }
 const quote=w=>LANG==='es'?'«'+w+'»':'“'+w+'”';
@@ -4018,10 +4098,10 @@ function modalImport(){
     <td class="a r num">${fmtEUR(r.amount)}</td>
     <td class="tb">${impTableSel(r,i)}</td>
     <td class="k"><label class="sr" for="imp-c-${i}">${esc(L('catForRow',i+1))}</label><select id="imp-c-${i}" data-action="imp-cat" data-i="${i}" class="${r.category?(r.ml?'guess':''):'missing'}"${r.ml?` title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}"`:''}>${catOptions(r.table,r.category,true)}</select></td>
-    <td class="n">${r.aiQ?`<span class="note ai-q" title="${esc(r.aiQ)}"><b>${esc(L('aiAsks'))}:</b> ${esc(r.aiQ)}</span>`:''}${r.dup?`<span class="note">${esc(L('alreadyIn'))}</span>`:r.skip?`<span class="note">${esc(L('skipListNote',r.skip))}</span>`:r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',r.ml.like.length>24?r.ml.like.slice(0,23).trim()+'…':r.ml.like))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
+    <td class="n">${r.aiQ?`<span class="note ai-q" title="${esc(r.aiQ)}"><b>${esc(L('aiAsks'))}:</b> ${esc(r.aiQ)}</span>`:''}${r.xfer?`<span class="note">${esc(L('noteXfer'))}</span> `:''}${r.like&&!r.dup?`<span class="note">${esc(L('noteLike',r.like.length>30?r.like.slice(0,29).trim()+'…':r.like))}</span> `:''}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.xfer?'':r.dup?`<span class="note">${esc(L('alreadyIn'))}</span>`:r.skip?`<span class="note">${esc(L('skipListNote',r.skip))}</span>`:r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',r.ml.like.length>24?r.ml.like.slice(0,23).trim()+'…':r.ml.like))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
-    ${aiReviewNote(m)}
+    ${aiReviewNote(m)}${impChecksNote(m)}
     ${guessed?`<p class="hint">${esc(L('sortedNote'))}</p>`:''}
     ${nMl?`<p class="hint ml-note">${esc(L('mlImpNote',nMl))}</p>`:''}
     ${dup||skp?`<div class="legend">${dup?`<span>${esc(L('dupUnticked',dup))}</span>`:''}${skp?`<span>${esc(L('skipUnticked',skp))}</span>`:''}</div>`:''}
@@ -4044,23 +4124,31 @@ const HDR={
   skip:/saldo|balance|disponible|^mes$|^month$|^a[ñn]o$|^year$/i,
   valueDate:/valor|value\s*date/i,
   date:/^(fecha|date|f\.?\s*operaci[oó]n|fecha\s+(de\s+)?(la\s+)?(operaci[oó]n|transacci[oó]n|contable|movimiento|compra)|transaction\s+date|booking\s+date|operation\s+date|posting\s+date|completed\s+date|started\s+date)$/i,
-  amount:/^(importe|amount|cantidad|transaction\s+amount|importe\s+(de\s+la\s+)?(operaci[oó]n|movimiento))(\s*\(?(eur|€|euros?)\)?)?$/i,
+  amount:/^(importe|amount|cantidad|monto|value|transaction\s+amount|importe\s+(de\s+la\s+)?(operaci[oó]n|movimiento))(\s*\(?(eur|€|euros?)\)?)?$/i,
   debit:/^(cargos?|debe|d[eé]bitos?|debits?|debit\s+amount|salidas?|gastos?|pagos?|retiradas?|money\s+out|paid\s+out|amount\s+out|out|withdrawals?)(\s*\(?(eur|€)\)?)?$/i,
   credit:/^(abonos?|haber|cr[eé]ditos?|credits?|credit\s+amount|entradas?|ingresos?|cobros?|money\s+in|paid\s+in|amount\s+in|in|deposits?)(\s*\(?(eur|€)\)?)?$/i,
   category:/^(categor[ií]a|category)$/i,
+  currency:/^(currency|divisa|moneda)$/i,
+  balance:/^(saldo|balance|running\s+balance|saldo\s+(contable|disponible|final|posterior)|balance\s+after(\s+transaction)?)(\s*\(?(eur|€|euros?)\)?)?$/i,
+  concept2:/^(referencia|reference|payment\s+reference|memo|narrative|observaciones|m[aá]s\s+datos|counterparty|nombre|name|texto|notes?|notas?|ordenante)$/i,
   concept:/concepto|concept|descripci[oó]n|description|detalle|details|beneficiario|comercio|payee|merchant|movimiento/i
 };
 function findHeader(rows){
   for(let i=0;i<Math.min(rows.length,15);i++){
-    const cols={date:-1,amount:-1,debit:-1,credit:-1,category:-1,concept:[]}; let vdate=-1;
-    rows[i].forEach((raw,c)=>{ const h=String(raw==null?'':raw).trim(); if(!h||HDR.skip.test(h)) return;
+    const cols={date:-1,amount:-1,debit:-1,credit:-1,category:-1,bal:-1,cur:-1,concept:[],concept2:[]}; let vdate=-1;
+    rows[i].forEach((raw,c)=>{ const h=String(raw==null?'':raw).trim(); if(!h) return;
+      if(HDR.balance.test(h)){ if(cols.bal<0) cols.bal=c; return; }
+      if(HDR.currency.test(h)){ if(cols.cur<0) cols.cur=c; return; }
+      if(HDR.skip.test(h)) return;
       if(HDR.valueDate.test(h)){ if(vdate<0) vdate=c; return; }
       if(cols.date<0&&HDR.date.test(h)) cols.date=c;
       else if(cols.amount<0&&HDR.amount.test(h)) cols.amount=c;
       else if(cols.debit<0&&HDR.debit.test(h)) cols.debit=c;
       else if(cols.credit<0&&HDR.credit.test(h)) cols.credit=c;
       else if(cols.category<0&&HDR.category.test(h)) cols.category=c;
-      else if(HDR.concept.test(h)) cols.concept.push(c); });
+      else if(HDR.concept.test(h)) cols.concept.push(c);
+      else if(HDR.concept2.test(h)) cols.concept2.push(c); });
+    if(!cols.concept.length) cols.concept=cols.concept2;
     if(cols.date<0) cols.date=vdate;
     if(cols.date>-1&&(cols.amount>-1||cols.debit>-1||cols.credit>-1)) return {row:i,cols};
   }
@@ -4075,10 +4163,15 @@ function rowFromCols(cells,cols,table){
   if(amount===null) return {err:true};
   let concept=cols.concept.map(i=>String(cell(i)).trim()).filter(Boolean).join(' ');
   const raw=String(cell(cols.category)).trim(), category=raw&&(table==='auto'?TKEYS.some(t=>isKnown(t,raw)):isKnown(table,raw))?raw:'';
-  return {date,amount,concept:concept.replace(/\s+/g,' ').trim(),category};
+  const bal=cols.bal>-1&&String(cell(cols.bal)).trim()!==''?parseAmount(cell(cols.bal)):null;
+  const fxRaw=cols.amount>-1?cell(cols.amount):(String(cell(cols.debit)).trim()?cell(cols.debit):cell(cols.credit));
+  let fx=foreignCode(typeof fxRaw==='string'?fxRaw:null,CUR);
+  if(cols.cur>-1){ const cc=String(cell(cols.cur)).trim().toUpperCase(); if(/^[A-Z]{3}$/.test(cc)) fx=cc===CUR?null:cc; }
+  return {date,amount,concept:concept.replace(/\s+/g,' ').trim(),category,bal,fx};
 }
 /* one table of cells -> transactions; uses the header row when there is one, otherwise guesses each row */
-function parseRows(rows,table,label){
+function parseRows(rows,table,label){ const prev=DATE_ORDER; DATE_ORDER=detectDateOrder(rows); try{ return parseRowsCore(rows,table,label); } finally{ DATE_ORDER=prev; } }
+function parseRowsCore(rows,table,label){
   const parsed=[],bad=[], h=findHeader(rows);
   rows.forEach((cells,i)=>{
     cells=cells.map(c=>c==null?'':c); if(!cells.some(c=>String(c).trim())) return;
@@ -4094,10 +4187,14 @@ function parseRows(rows,table,label){
 /* CSV: finds the separator (tab, semicolon or comma), understands quotes */
 function parseCSV(text){
   text=String(text).replace(/^\uFEFF/,'');
-  const lines=text.split(/\r?\n/).filter(l=>l.trim()).slice(0,10);
+  const lines=text.split(/\r?\n/).filter(l=>l.trim()).slice(0,40);
   const count=(l,ch)=>{ let n=0,q=false; for(const c of l){ if(c==='"') q=!q; else if(c===ch&&!q) n++; } return n; };
-  let delim='', best=0;
-  for(const ch of ['\t',';',',']){ const mn=Math.min(...lines.map(l=>count(l,ch))); if(mn>best){ best=mn; delim=ch; } }
+  /* the separator is the one that splits most lines into the same number of cells; title lines above the header don't count against it */
+  const need=Math.min(lines.length,Math.max(2,Math.ceil(0.6*lines.length)));
+  const score=ch=>{ const f=new Map(); for(const l of lines){ const c=count(l,ch); if(c>0) f.set(c,(f.get(c)||0)+1); } let top=0; for(const v of f.values()) if(v>top) top=v; return top; };
+  const sc=['\t',';',','].map(ch=>[ch,score(ch)]);
+  let delim=(sc.find(x=>x[1]>=need)||[''])[0];
+  if(!delim){ let best=0; for(const [ch,v] of sc) if(v>=2&&v>best){ best=v; delim=ch; } }
   if(!delim) return text.split(/\r?\n/).filter(l=>l.trim()).map(splitLine);
   const rows=[]; let row=[], cell='', q=false;
   for(let i=0;i<text.length;i++){ const c=text[i];
@@ -4135,7 +4232,7 @@ function parseCells(cells,table){
   const rest=cells.filter((_,i)=>i!==di&&i!==ai).map(c=>String(c).trim()).filter(Boolean);
   let category=''; const names=table==='auto'?TKEYS.flatMap(catNames):catNames(table); const words=[];
   for(const s of rest){ if(!category&&names.includes(s)) { category=s; continue; } if(ALL_MONTH_NAMES.has(s.toLowerCase())||/^\d{4}$/.test(s)) continue; words.push(s); }
-  return {date,amount,concept:words.join(' ').replace(/\s+/g,' ').trim(),category};
+  return {date,amount,concept:words.join(' ').replace(/\s+/g,' ').trim(),category,fx:foreignCode(typeof cells[ai]==='string'?cells[ai]:null,CUR)};
 }
 /* which table an imported row belongs to: money out is an expense unless an investment keyword says otherwise;
    money in is income unless only an expense keyword (a refund) or an investment keyword (a withdrawal) matches */
@@ -4152,11 +4249,52 @@ function guessTable(p){
 }
 function autoCat(r,raw){ if(raw&&isKnown(r.table,raw)) return raw; const mt=matchKeyword(r.table,r.concept); return mt&&isKnown(r.table,mt.cat)?mt.cat:''; }
 function setImpTable(r,t){ if(!TKEYS.includes(t)||r.table===t) return; r.table=t; r.guessed=false; if(!r.manual||!isKnown(t,r.category)){ r.manual=false; r.category=autoCat(r,''); impGuess(r); } }
+/* checks on the rows read, before anything is saved:
+   - a pair with the same amount out and in within 3 days, where one side says "transfer", is money moved between your own accounts: unticked
+   - if the file has a running balance column and it follows the rows, any row that doesn't follow from the one before is marked */
+const XFER_RE=/\b(transfer|transferencia|transf|traspaso|trf|tfr|own account|between accounts|entre cuentas|cuenta propia|savings|ahorros?|internal)\b/;
+const dayNum=iso=>Math.round(Date.UTC(+iso.slice(0,4),+iso.slice(5,7)-1,+iso.slice(8,10))/86400000);
+function importChecks(rows){
+  const out={xfer:0,like:0,odd:0,fx:0,fxCodes:'',bal:null};
+  const cand=rows.map((r,i)=>i).filter(i=>rows[i].on&&Math.abs(rows[i].amount)>=1);
+  const used=new Set();
+  for(const i of cand){ if(used.has(i)) continue; const a=rows[i]; let best=-1,bd=99;
+    for(const j of cand){ if(j===i||used.has(j)) continue; const b=rows[j];
+      if(Math.abs(a.amount+b.amount)>0.005||a.amount===b.amount) continue;
+      if(!XFER_RE.test(loose(a.concept))&&!XFER_RE.test(loose(b.concept))) continue;
+      const d=Math.abs(dayNum(a.date)-dayNum(b.date)); if(d<=3&&d<bd){ best=j; bd=d; } }
+    if(best>-1){ used.add(i); used.add(best); for(const k of [i,best]){ rows[k].xfer=true; rows[k].on=false; } out.xfer+=2; } }
+  out.like=rows.filter(r=>r.like&&!r.dup).length;
+  /* far larger than anything usual for the category (over 3 times its 90th percentile, 8 or more saved rows to judge by) */
+  const hist=new Map(); for(const r of allRows()){ if(!isKnown(r.table,r.category)) continue; const k=r.table+'|'+r.category; if(!hist.has(k)) hist.set(k,[]); hist.get(k).push(Math.abs(r.amount)); }
+  out.odd=0;
+  for(const r of rows){ if(!r.on||!r.category) continue; const h=hist.get(r.table+'|'+r.category); if(!h||h.length<8) continue;
+    const srt=h.slice().sort((a,b)=>a-b); if(Math.abs(r.amount)>3*percentileInc(srt,0.9)&&Math.abs(r.amount)>=50){ r.odd=percentileInc(srt,0.5); out.odd++; } }
+  const fxr=rows.filter(r=>r.fx&&r.on); out.fx=fxr.length; out.fxCodes=[...new Set(fxr.map(r=>r.fx))].join(', ');
+  const withBal=rows.filter(r=>r.bal!=null);
+  if(withBal.length>=4&&withBal.length>=0.7*rows.length){
+    const run=list=>{ let ok=0; const bad=[]; for(let i=1;i<list.length;i++){ if(Math.abs(r2(list[i].bal-list[i-1].bal)-list[i].amount)<=0.011) ok++; else bad.push(list[i]); } return {ok,bad}; };
+    const up=run(withBal), down=run(withBal.slice().reverse()), best=up.ok>=down.ok?up:down, steps=withBal.length-1;
+    if(best.ok>=0.6*steps){ for(const r of best.bad) r.balOff=true; out.bal={steps,ok:best.ok,bad:best.bad.length}; }
+  }
+  return out;
+}
+function impChecksNote(m){
+  const c=m.checks; if(!c) return '';
+  const p=[];
+  if(c.bal) p.push(c.bal.bad?`<p class="ai-check bad">${ICON.warn}<span>${esc(L('impBalBad',c.bal.ok,c.bal.steps,c.bal.bad))}</span></p>`:`<p class="ai-check ok">${ICON.ok}<span>${esc(L('impBalOk',c.bal.ok,c.bal.steps))}</span></p>`);
+  if(c.xfer) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impXfer',c.xfer))}</span></p>`);
+  if(c.like) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impPossDup',c.like))}</span></p>`);
+  if(c.odd) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impOdd',c.odd))}</span></p>`);
+  if(c.fx) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impFx',c.fx,c.fxCodes))}</span></p>`);
+  return p.length?`<div class="ai-review">${p.join('')}</div>`:'';
+}
 function finishImport(parsed,bad,fileName){
   /* a row already in the tracker (same date, amount and description, in any table) arrives unticked */
   const key=r=>[r.date,r2(r.amount).toFixed(2),fold(r.concept).replace(/\s+/g,' ').trim()].join('|');
   const exist=new Map(); for(const r of allRows()){ const k=key(r); exist.set(k,(exist.get(k)||0)+1); }
   const seen=new Map();
+  const sameDA=new Map(); for(const r of allRows()){ const k=r.date+'|'+r2(r.amount).toFixed(2); if(!sameDA.has(k)) sameDA.set(k,[]); sameDA.get(k).push({c:r.concept,f:fold(r.concept).replace(/\s+/g,' ').trim()}); }
   const rows=parsed.map(p=>{
     const k=key(p); const n=(seen.get(k)||0)+1; seen.set(k,n);
     const dup=n<=(exist.get(k)||0);
@@ -4164,14 +4302,21 @@ function finishImport(parsed,bad,fileName){
     const guessed=p.table==='auto';
     const r=Object.assign({},p,{table:guessed?guessTable(p):p.table,guessed,dup,skip,on:!dup&&!skip,manual:false});
     r.category=autoCat(r,p.category); impGuess(r);
+    /* same day and amount as a saved row under another description: kept ticked, but pointed out */
+    const la=sameDA.get(p.date+'|'+r2(p.amount).toFixed(2));
+    if(la&&la.length){ const fi=la.findIndex(x=>x.f===fold(p.concept).replace(/\s+/g,' ').trim()); if(fi>-1) la.splice(fi,1); else if(!dup){ r.like=la.shift().c; } }
     return r;
   });
+  const checks=importChecks(rows);
   if(!rows.length){ S.modal.msg=bad.length?L('noDateAmount'):L('nothingToRead'); renderModal(); return; }
-  Object.assign(S.modal,{step:'preview',rows,bad,fileName,wide:true,msg:'',confirmClose:false}); renderModal();
+  Object.assign(S.modal,{step:'preview',rows,bad,fileName,wide:true,msg:'',confirmClose:false,checks}); renderModal();
 }
 function readPasted(fileName){
   const m=S.modal; m.text=$('#imp-text').value; m.table=$('#imp-table').value;
-  const rows=m.text.split(/\r?\n/).filter(l=>l.trim()).map(splitLine);
+  const lines=m.text.split(/\r?\n/).filter(l=>l.trim());
+  /* tab or semicolon rows, "date amount description" rows, or comma-separated rows (a date or a Date/Fecha heading then a comma) */
+  const commaCsv=!lines.some(l=>l.includes('\t')||l.includes(';'))&&lines.filter(l=>/^\s*"?(\d{1,4}[-\/.]\d{1,2}[-\/.]\d{1,4}(?:[ T]\d{1,2}:\d{2}(?::\d{2})?)?"?\s*,|(?:date|fecha)[^,\d]*,)/i.test(l)).length>=Math.max(1,lines.length/2);
+  const rows=commaCsv?parseCSV(m.text):lines.map(splitLine);
   const r=parseRows(rows,m.table,cells=>cells.join('\t'));
   finishImport(r.parsed,r.bad,fileName||'');
 }
@@ -4226,12 +4371,12 @@ function kwSuggestion(concept){
 }
 function offerKeyword(t,concept,cat){
   if(!S.canWrite||!isKnown(t,cat)) return;
-  const k=kwSuggestion(concept); if(!k||!hasKw(fold(concept),k)) return;
-  if((kws()[t]||[]).some(q=>fold(q[0])===k)) return;
-  const cur=matchKeyword(t,concept); if(cur&&(cur.cat===cat||cur.k.length>=k.length)) return;
+  const k=kwSuggestion(concept), kl=k&&loose(k); if(!k||!kl||!hasKw(loose(concept),kl)) return;
+  if((kws()[t]||[]).some(q=>loose(q[0])===kl)) return;
+  const cur=matchKeyword(t,concept); if(cur&&(cur.cat===cat||cur.k.length>=kl.length)) return;
   const fc=foldedConcepts(); let n=0;
-  allRows().forEach((r,i)=>{ if(r.table===t&&!isKnown(t,r.category)&&hasKw(fc[i],k)) n++; });
-  if(S.modal&&S.modal.type==='import'&&S.modal.rows) n+=S.modal.rows.filter(r=>r.table===t&&!r.category&&hasKw(fold(r.concept),k)).length;
+  allRows().forEach((r,i)=>{ if(r.table===t&&!isKnown(t,r.category)&&hasKw(fc[i],kl)) n++; });
+  if(S.modal&&S.modal.type==='import'&&S.modal.rows) n+=S.modal.rows.filter(r=>r.table===t&&!r.category&&hasKw(loose(r.concept),kl)).length;
   toast(L('alwaysQ',k,cat),{label:n?L('alwaysYesN',n):L('alwaysYes'),fn:()=>addKwAndFill(t,k,cat)},10000);
 }
 function addKwAndFill(t,k,cat){
@@ -4887,6 +5032,7 @@ document.addEventListener('change',e=>{
   if(el.name==='st-lang'){ setLang(el.value); return; }
   if(el.name==='st-theme'){ setTheme(el.value); return; }
   if(el.name==='st-num'){ setNumFmt(el.value); return; }
+  if(id==='st-cur'){ setCurrency(el.value); return; }
   if(id==='st-ml'){ setSettings({mlGuess:el.checked}); render(); return; }
   if(id==='ob-month'){ S.ui.obM=+el.value; return; }
   if(id==='ob-year'){ S.ui.obY=+el.value; return; }
@@ -4931,7 +5077,7 @@ document.addEventListener('submit',e=>{
     const m=S.modal, nn=$('#rn-name').value.replace(/\s+/g,' ').trim(), errEl=$('#rn-err');
     if(!nn){ errEl.textContent=L('enterName'); return; }
     if(nn===m.name){ closeModal(); return; }
-    if(catNames(m.t).some(n=>n!==m.name&&n.toLowerCase()===nn.toLowerCase())){ errEl.textContent=L('catExists'); return; }
+    if(isReservedCat(nn)||catNames(m.t).some(n=>n!==m.name&&n.toLowerCase()===nn.toLowerCase())){ errEl.textContent=L('catExists'); return; }
     renameCatCore(m.t,m.name,nn);
     markDirty('config/categories'); markDirty('config/keywords'); bump(); closeModal(); render(); toast(L('renamedTo',nn));
   }
@@ -4971,7 +5117,7 @@ document.addEventListener('submit',e=>{
   else if(f.id==='addcat-form'){
     const t=S.modal.t, name=$('#ac-name').value.replace(/\s+/g,' ').trim(), err=$('#ac-err');
     if(!name){ err.textContent=L('enterName'); $('#ac-name').focus(); return; }
-    if(catNames(t).some(n=>n.toLowerCase()===name.toLowerCase())){ err.textContent=L('catAlready',TL(t),name); $('#ac-name').focus(); return; }
+    if(isReservedCat(name)||catNames(t).some(n=>n.toLowerCase()===name.toLowerCase())){ err.textContent=L('catAlready',TL(t),name); $('#ac-name').focus(); return; }
     const picked=f.querySelector('input[name="ac-type"]:checked');
     const other=roleName(t,'other');
     const C=ensureCats(); const item=t==='expenses'?{name,type:picked?picked.value:'Want'}:{name};
@@ -5042,6 +5188,8 @@ async function boot(){
   try{ const u=await C.use('user'); if(u){ const c=await u.can('data.write'); S.canWrite=c!==false; } else S.canWrite=true; }catch(_){ S.canWrite=true; }
   if(window.Neutralino||window.YBT_WEB){ try{ S.local=await C.use('local'); }catch(_){ S.local=null; } }
   subscribe(); render();
+  let auto=false; try{ auto=sessionStorage.getItem('ybt.autotour')==='1'; sessionStorage.removeItem('ybt.autotour'); }catch(_){}
+  if(auto){ let n=0; const iv=setInterval(()=>{ if(isOnboarding()){ clearInterval(iv); ACTIONS['ob-start'](); } else if(++n>40) clearInterval(iv); },150); }
   C.use('downloads').then(d=>{ S.downloads=d||null; render(); }).catch(()=>{});
   C.use('sample').then(f=>{ S.ai=typeof f==='function'&&typeof f.json==='function'?f:null; if(S.ai) render(); }).catch(()=>{});
 }
@@ -5072,7 +5220,7 @@ window.addEventListener('ybt-replace-data',e=>loadDataset((e&&e.detail)||{},fals
 window.addEventListener('ybt-lang',e=>{ const v=e&&e.detail==='es'?'es':'en'; S.ui.obLang=v; if(S.settings&&S.settings.lang&&S.canWrite&&S.settings.lang!==v) setSettings({lang:v}); render(); });
 window.addEventListener('ybt-local-render',()=>{ if(S.mode==='live'){ render(); if(S.modal) renderModalKeepScroll(); } });
 window.addEventListener('hashchange',()=>{ const h=(location.hash||'').replace('#',''); if(TABS.includes(h)&&h!==S.ui.tab) setTab(h); });
-if(window.__ybtTest) window.__ybt={aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
+if(window.__ybtTest) window.__ybt={parseAmount,parseDate,parseCSV,parseRows,findHeader,parseCells,guessTable,matchKeyword,allMatches,hasKw,fold,loose,agg,upsertTx,finishImport,splitLine,kwSuggestion,skipMatch,fmtNum,fmtEUR,CURRENCIES,foreignCode,isoOf,allRows,rowFromCols,readPasted,importChecks,detectDateOrder,monthlyCard,catNames,cats,kws,deleteTx,normCats,normKw,startOf,ymNow,aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
 boot();
 })();
 </script>

@@ -25,7 +25,7 @@ const stamp=()=>{ const d=new Date(); return today()+' '+pad(d.getHours())+'.'+p
 const hhmm=d=>pad(d.getHours())+':'+pad(d.getMinutes());
 const dmy=s=>{ const m=String(s).match(/(\d{4})-(\d{2})-(\d{2})/); return m?m[3]+'/'+m[2]+'/'+m[1]:s; };
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fmtN=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const fmtN=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,lsGet('ybt.num')==='en'?',':'.');
 const lsGet=k=>{ try{ return localStorage.getItem(k); }catch(_){ return null; } };
 const lsSet=(k,v)=>{ try{ if(v==null) localStorage.removeItem(k); else localStorage.setItem(k,v); }catch(_){} };
 
@@ -40,7 +40,7 @@ const TX={
     driveT:'Your Google Drive', driveS:'Saved in your own Google Drive, so it’s the same on your phone and computer. Works offline and catches up when you’re back online. The site can only see the files it creates.',
     driveNo:'Not available on this site yet.', driveOffline:'Needs an internet connection to set up.',
     browserT:'Only in this browser', browserS:'Nothing to set up. Clearing your browsing data deletes it, so download a backup now and then.',
-    recommended:'Recommended', cancel:'Cancel',
+    recommended:'Recommended', cancel:'Cancel', exampleBtn:'Just looking? Try it with example data',
     pickHint:'Pick a folder such as Documents. A “Yearly Budget Tracker” folder is made inside it, unless you pick one that already has your tracker.',
     pickedNotAllowed:'The browser didn’t allow saving in that folder. Pick another one, such as Documents.',
     reTitle:'Allow access to your tracker folder', reText:n=>`Your tracker is saved in the folder “${n}”. Your browser asks you to allow access again before the site can open it.`,
@@ -109,7 +109,7 @@ const TX={
     driveT:'Tu Google Drive', driveS:'Se guarda en tu propio Google Drive, así que es el mismo en el móvil y en el ordenador. Funciona sin conexión y se pone al día al volver a conectarte. La web solo puede ver los archivos que crea.',
     driveNo:'Todavía no está disponible en esta web.', driveOffline:'Necesita conexión a internet para configurarlo.',
     browserT:'Solo en este navegador', browserS:'No hay nada que configurar. Si borras los datos de navegación se borra, así que descarga una copia de vez en cuando.',
-    recommended:'Recomendado', cancel:'Cancelar',
+    recommended:'Recomendado', cancel:'Cancelar', exampleBtn:'¿Solo quieres echar un vistazo? Pruébalo con datos de ejemplo',
     pickHint:'Elige una carpeta como Documentos. Dentro se crea una carpeta «Yearly Budget Tracker», salvo que elijas una que ya tenga tu control.',
     pickedNotAllowed:'El navegador no permite guardar en esa carpeta. Elige otra, como Documentos.',
     reTitle:'Permite el acceso a la carpeta de tu control', reText:n=>`Tu control se guarda en la carpeta «${n}». El navegador pide que vuelvas a permitir el acceso antes de abrirlo.`,
@@ -237,7 +237,10 @@ const browser={
     try{ const cur=await idb.get('data'); if(typeof cur==='string'&&!(await idb.get('bk:'+d))) await idb.set('bk:'+d,cur);
       const ks=(await idb.keys()).filter(k=>/^bk:\d{4}-\d{2}-\d{2}$/.test(k)).sort();
       for(const k of ks.slice(0,Math.max(0,ks.length-KEEP_BROWSER))) await idb.del(k); }catch(_){} },
-  async keepCopy(text,label){ await idb.set('bk:'+label+' '+stamp(),text); },
+  async keepCopy(text,label){ await idb.set('bk:'+label+' '+stamp(),text);
+    /* the labelled safety copies (before opening a file, starting fresh...) keep the newest 20; the daily ones are pruned in backup() */
+    try{ const ks=(await idb.keys()).map(String).filter(k=>/^bk:(?!\d{4}-\d{2}-\d{2}$)/.test(k)).sort((a,b)=>a.slice(-19)<b.slice(-19)?-1:1);
+      for(const k of ks.slice(0,Math.max(0,ks.length-20))) await idb.del(k); }catch(_){} },
   file(){ return lang()==='es'?'Este navegador (en este dispositivo)':'This browser (on this device)'; },
   backups(){ return t('bkBrowserWhere'); }
 };
@@ -343,6 +346,7 @@ const drive={
   async upload(text){
     const m=this.meta;
     if(!m.fileId){
+      const ex=await this.findFile(m.folderId); if(ex){ m.fileId=ex.id; this.remember(); throw new Error('exists'); }   /* another device made it first: sync again so nothing is overwritten */
       const bd='ybt'+Math.random().toString(36).slice(2);
       const body=`--${bd}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify({name:FILE,parents:[m.folderId],mimeType:'application/json'})}\r\n--${bd}\r\nContent-Type: application/json\r\n\r\n${text}\r\n--${bd}--`;
       const f=await (await this.api('POST',`${UPLOAD}/files?uploadType=multipart&fields=id,version,modifiedTime`,body,{'Content-Type':'multipart/related; boundary='+bd})).json();
@@ -410,12 +414,14 @@ function chooseMode(fromSettings){
         ${card('browser',t('browserT'),t('browserS'),true,'',false)}
       </div>
       ${fOk?`<p class="web-hint">${esc(t('pickHint'))}</p>`:''}
+      ${fromSettings?'':`<div class="web-acts"><button type="button" class="btn ghost" data-x="example">${esc(t('exampleBtn'))}</button></div>`}
       ${fromSettings?'':`<p class="web-hint web-about">${esc(t('about'))} <a href="privacy.html">${esc(t('privacyLink'))}</a></p>`}
       ${fromSettings?`<div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`:''}`,{overlay:fromSettings});
     el.addEventListener('click',async e=>{
       const b=e.target.closest('button'); if(!b||b.disabled) return;
-      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); el.remove(); chooseMode(fromSettings).then(resolve); return; }
+      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'Control de presupuesto anual':'Yearly Budget Tracker'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); el.remove(); chooseMode(fromSettings).then(resolve); return; }
       if(b.dataset.x==='cancel'){ el.remove(); resolve(null); return; }
+      if(b.dataset.x==='example'){ try{ sessionStorage.setItem('ybt.autotour','1'); }catch(_){} el.remove(); resolve({mode:'browser'}); return; }
       const m=b.dataset.m; if(!m) return;
       el.busy(true); el.msg('');
       try{
@@ -489,7 +495,7 @@ function save(){
     saving=null;
     const text=serialise();
     if(mode==='browser'){ try{ await browser.write(text); }catch(_){ throw {code:'unavailable',message:'not saved'}; } return; }
-    if(mode==='folder'){ await idb.set('folder-pending',text).catch(()=>{}); await flushFolder(); return; }
+    if(mode==='folder'){ await idb.set('folder-pending',text).catch(()=>{}); await idb.set('folder-pending-mod',folder.mod==null?null:folder.mod).catch(()=>{}); await flushFolder(); return; }
     if(mode==='drive'){ try{ await drive.keepLocal(text,true); }catch(_){ throw {code:'unavailable',message:'not saved'}; } drive.dirty=true; scheduleUpload(); notify(); }
   });
   saving=p; return p;
@@ -552,7 +558,8 @@ function driveSync(pull){
       drive.lastSync=new Date(); drive.state='idle'; bar(null);
     }catch(e){
       const m=e&&e.message||'';
-      if(m==='signin'){ drive.state='signin'; bar('signin'); }
+      if(m==='exists'){ scheduleUpload(300); }
+      else if(m==='signin'){ drive.state='signin'; bar('signin'); }
       else if(m==='offline'||navigator.onLine===false){ drive.state='offline'; bar('offline'); }
       else { drive.state='error'; notify(); scheduleUpload(30000); }
     } finally { notify(); }
@@ -790,7 +797,8 @@ async function startFolder(){
   const text=await folder.read();
   const pend=await idb.get('folder-pending').catch(()=>null);
   store=(typeof pend==='string'&&parseData(pend))||(text&&parseData(text))||empty();
-  if(typeof pend==='string') setTimeout(()=>flushFolder(),0);
+  /* the file changed (the Windows app, another computer) since this unsaved copy was made: flushFolder then asks which to keep */
+  if(typeof pend==='string'){ const base=await idb.get('folder-pending-mod').catch(()=>null); if(base!=null&&text!=null) folder.mod=base; setTimeout(()=>flushFolder(),0); }
   return true;
 }
 async function startDrive(){
