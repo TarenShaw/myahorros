@@ -4,7 +4,7 @@
 <meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-liPfzbMzFUqqHcz9rUOBbCUP7N7rxZZeCvGRFuFRm+A=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+yazRngfpY/yWlqksSzL50dcqkET8fPe3bO1mQF7Ywk=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1266,6 +1266,22 @@ const STR={
   noteOdd:[u=>`Usually about ${u}`,u=>`Lo habitual: unos ${u}`],
   impFx:[(n,c)=>`${pl(n,'row')} ${n===1?'looks':'look'} to be in another currency (${c}). The amount is saved as written, not converted. Untick ${n===1?'it':'any'} you'd rather convert first.`,(n,c)=>`${pl(n,'row')} ${n===1?'parece':'parecen'} estar en otra moneda (${c}). El importe se guarda tal cual, sin convertir. Desmarca ${n===1?'la':'las'} que prefieras convertir antes.`],
   noteFx:[c=>`Currency: ${c}`,c=>`Moneda: ${c}`],
+  khTitle:['Keyword check','Revisión de palabras clave'],
+  khSummary:[(u,c,o,d)=>[u&&`${fmtCount(u)} unused`,c&&`${fmtCount(c)} unreliable`,o&&`${fmtCount(o)} overlapping`,d&&`${fmtCount(d)} repeated`].filter(Boolean).join(' · ')||'all good',(u,c,o,d)=>[u&&`${fmtCount(u)} sin uso`,c&&`${fmtCount(c)} poco fiables`,o&&`${fmtCount(o)} solapadas`,d&&`${fmtCount(d)} repetidas`].filter(Boolean).join(' · ')||'todo en orden'],
+  khIntro:['Based on your saved transactions of this kind. Nothing is changed unless you press a button.','Según tus movimientos guardados de este tipo. No se cambia nada hasta que pulses un botón.'],
+  khFew:['Unused keywords can be judged once there are about 30 saved transactions of this kind.','Las palabras sin uso se pueden valorar cuando haya unos 30 movimientos guardados de este tipo.'],
+  khClashH:[n=>`${fmtCount(n)} often point at another category`,n=>`${fmtCount(n)} suelen apuntar a otra categoría`],
+  khClashHelp:['These matched rows you filed elsewhere. They may be too generic: make them longer or remove them.','Coincidieron con filas que archivaste en otra categoría. Puede que sean demasiado genéricas: alárgalas o quítalas.'],
+  khClashRow:[(ok,n)=>`right on ${ok} of ${n} rows`,(ok,n)=>`acierta en ${ok} de ${n} filas`],
+  khDupH:[n=>`${fmtCount(n)} appear twice`,n=>`${fmtCount(n)} aparecen dos veces`],
+  khDupRow:[c=>`also listed under ${c}`,c=>`también en ${c}`],
+  khOverlapH:[n=>`${fmtCount(n)} sit inside a longer keyword of another category`,n=>`${fmtCount(n)} están dentro de una palabra clave más larga de otra categoría`],
+  khOverlapHelp:['Usually fine: the longer keyword wins when both match. Check only if a row went to the wrong place.','Normalmente está bien: gana la más larga cuando coinciden las dos. Revísalo solo si una fila acabó en el sitio equivocado.'],
+  khOverlapRow:[(w,c)=>`inside “${w}” (${c})`,(w,c)=>`dentro de «${w}» (${c})`],
+  khUnusedH:[n=>`${fmtCount(n)} never match a saved transaction`,n=>`${fmtCount(n)} no coinciden con ningún movimiento guardado`],
+  khUnusedHelp:['Unused is not the same as useless: they may be for shops you haven’t visited yet. Remove only the ones you don’t want.','Sin uso no es lo mismo que inútil: pueden ser de tiendas que aún no has visitado. Quita solo las que no quieras.'],
+  khPrune:[n=>`Remove all ${fmtCount(n)} unused`,n=>`Quitar las ${fmtCount(n)} sin uso`], khPruned:[n=>`Removed ${fmtCount(n)} unused keywords.`,n=>`Se han quitado ${fmtCount(n)} palabras clave sin uso.`],
+  khFind:['Find','Buscar'], khShowAll:[n=>`Show all ${fmtCount(n)}`,n=>`Ver las ${fmtCount(n)}`], khNone:['Nothing to tidy here.','Nada que ordenar aquí.'],
   kwTestHint:['Shows which keyword would pick the category.','Muestra qué palabra clave elegiría la categoría.'],
   kwTestNone:['No keyword matches, so this would be <b>Uncategorised</b>.','Ninguna palabra clave coincide, así que quedaría <b>Sin categoría</b>.'],
   kwFrom:['from','por la palabra'], alsoMatched:['Also matched:','También coinciden:'],
@@ -1970,6 +1986,35 @@ function allMatches(t,concept){
 }
 /* folded concepts of every saved transaction, in allRows() order */
 function foldedConcepts(){ return memo('fc',()=>allRows().map(r=>loose(r.concept))); }
+
+/* Keyword check: which keywords never match a saved transaction, which often point at another category,
+   which sit inside a longer keyword of another category (the longer one wins), which are listed twice. */
+function kwHealth(t){ return memo('kwh'+t,()=>{
+  const K=kwFolded(t), fc=foldedConcepts(), st=new Map(); let rowsN=0;
+  allRows().forEach((r,i)=>{ if(r.table!==t) return; rowsN++; const c=fc[i], known=isKnown(t,r.category);
+    for(const x of K) if(x.w?hasWord(c,x.kl):hasKw(c,x.kl)){ const q=st.get(x.i)||{ok:0,bad:0}; if(known){ if(r.category===x.cat) q.ok++; else q.bad++; } st.set(x.i,q); } });
+  const unused=K.filter(x=>!st.has(x.i)).map(x=>x.i);
+  const clash=K.filter(x=>{ const q=st.get(x.i); return q&&q.bad>=2&&q.ok<0.8*(q.ok+q.bad); }).map(x=>({i:x.i,ok:st.get(x.i).ok,n:st.get(x.i).ok+st.get(x.i).bad})).sort((a,b)=>(b.n-b.ok)-(a.n-a.ok));
+  const overlap=[]; for(const a of K){ let best=null; for(const b of K) if(b.kl.length>a.kl.length&&b.cat!==a.cat&&(' '+b.kl+' ').includes(' '+a.kl+' ')&&(!best||b.kl.length<best.kl.length)) best=b; if(best) overlap.push({i:a.i,j:best.i}); }
+  const seen=new Map(), dup=[]; for(const x of K){ const k=x.kl+(x.w?'"':''); if(seen.has(k)) dup.push({i:x.i,of:seen.get(k)}); else seen.set(k,x.i); }
+  return {unused,clash,overlap,dup,rows:rowsN};
+}); }
+function kwHealthCard(t){
+  const H=kwHealth(t), K=kws()[t]||[], c=S.ui.ct, can=S.canWrite;
+  const judge=H.rows>=30, un=judge?H.unused:[];
+  const row=(i,mid,extra)=>`<div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:5px 0;border-top:1px solid var(--line)"><span><span class="kw">${esc(K[i][0])}</span> <span class="hint">→ ${esc(K[i][1])}${mid?' · '+esc(mid):''}</span></span>${extra||'<span></span>'}${can?`<button class="icon-btn" data-action="kw-del" data-i="${i}" aria-label="${esc(L('delKw',K[i][0]))}">${ICON.x}</button>`:'<span></span>'}</div>`;
+  const find=i=>`<button type="button" class="linkish" data-action="kh-find" data-k="${esc(K[i][0])}">${esc(L('khFind'))}</button>`;
+  const list=(key,items,render)=>{ const all=c.khAll&&c.khAll[key], shown=all?items:items.slice(0,15); return shown.map(render).join('')+(items.length>shown.length?`<div class="more"><button class="btn sm" data-action="kh-all" data-k="${key}">${esc(L('khShowAll',items.length))}</button></div>`:''); };
+  const sec=(h,help,body)=>`<div style="margin-top:14px"><h3 style="margin:0;font-size:14px">${esc(h)}</h3>${help?`<p class="hint" style="margin:2px 0 6px">${esc(help)}</p>`:''}${body}</div>`;
+  let body='';
+  if(H.clash.length) body+=sec(L('khClashH',H.clash.length),L('khClashHelp'),list('clash',H.clash,x=>row(x.i,L('khClashRow',x.ok,x.n),find(x.i))));
+  if(H.dup.length) body+=sec(L('khDupH',H.dup.length),'',list('dup',H.dup,x=>row(x.i,L('khDupRow',K[x.of][1]),find(x.i))));
+  if(H.overlap.length) body+=sec(L('khOverlapH',H.overlap.length),L('khOverlapHelp'),list('overlap',H.overlap,x=>row(x.i,L('khOverlapRow',K[x.j][0],K[x.j][1]),find(x.i))));
+  if(un.length) body+=sec(L('khUnusedH',un.length),L('khUnusedHelp'),(can?`<p style="margin:0 0 6px"><button class="btn sm" type="button" data-action="kh-prune">${esc(L('khPrune',un.length))}</button></p>`:'')+list('unused',un,i=>row(i,'',find(i))));
+  if(!judge) body+=`<p class="hint" style="margin-top:12px">${esc(L('khFew'))}</p>`;
+  if(!body) body=`<p class="hint" style="margin-top:12px">${esc(L('khNone'))}</p>`;
+  return `<details class="howto card" id="kw-health"${c.khOpen?' open':''} style="margin-top:14px"><summary>${esc(L('khTitle'))} · <span class="hint">${esc(L('khSummary',un.length,H.clash.length,H.overlap.length,H.dup.length))}</span></summary><p class="hint" style="margin:8px 0 0">${esc(L('khIntro'))}</p>${body}</details>`;
+}
 
 /* ───────── persistence ───────── */
 const dirty=new Set(), busy=new Set(), failed=new Set(); let flushTimer=null, flushing=false, lastErr=null;
@@ -3856,6 +3901,7 @@ function viewCategories(){
       <div style="margin-top:14px"><label class="sr" for="kw-q">${esc(L('filterKw'))}</label><input type="search" id="kw-q" placeholder="${esc(L('filterKw'))}" value="${esc(c.q)}" style="width:100%" autocomplete="off"></div>
       <div class="kw-list">${kwRows||`<p class="hint" style="padding:12px 0">${esc(L('noKwMatch'))}</p>`}</div>
       ${filtered.length>shown.length?`<div class="more"><button class="btn" data-action="kw-more">${esc(L('showAllKw',fmtCount(filtered.length)))}</button></div>`:''}
+      ${kwHealthCard(t)}
     </section>
   </div>
   <details class="howto card"><summary>${esc(L('howTitle'))}</summary>
@@ -4887,7 +4933,7 @@ const ACTIONS={
   'goto-skip':()=>{ closeModal(); setTab('categories'); const s=document.getElementById('skip-card'); if(s){ s.scrollIntoView({block:'start'}); const i=$('#new-skip'); if(i) i.focus({preventScroll:true}); } },
   'skip-del':el=>{ const list=skipList().slice(), i=+el.dataset.i, [w]=list.splice(i,1); setSkip(list); toast(L('removedSkip',w),{label:L('undo'),fn:()=>{ const l=skipList().slice(); l.splice(i,0,w); setSkip(l); }}); },
   'close':()=>{ const m=S.modal; if(wantsDiscardCheck()&&!m.confirmClose){ m.confirmClose=true; renderModalKeepScroll('imp-keep'); return; } closeModal(); },
-  'ct-table':el=>{ Object.assign(S.ui.ct,{table:el.dataset.t,q:'',cq:'',kwLimit:25,newKwCat:''}); render(); },
+  'ct-table':el=>{ Object.assign(S.ui.ct,{table:el.dataset.t,q:'',cq:'',kwLimit:25,newKwCat:'',khAll:{}}); render(); },
   'add-cat':()=>openModal({type:'addcat',t:S.ui.ct.table}),
   'limit':el=>openModal({type:'limit',name:el.dataset.name}),
   'limit-remove':()=>{ const n=S.modal.name; setLimit(n,0); closeModal(); render(); toast(L('limitRemoved',n)); },
@@ -4909,6 +4955,11 @@ const ACTIONS={
     moveReturnCat(t,m.name,null);
     markDirty('config/categories'); markDirty('config/keywords'); bump(); closeModal(); render(); toast(L('deletedCat',m.name)); },
   'kw-more':()=>{ S.ui.ct.kwLimit=1e9; render(); },
+  'kh-all':el=>{ const c=S.ui.ct; c.khAll=Object.assign({},c.khAll,{[el.dataset.k]:true}); c.khOpen=true; render(); },
+  'kh-find':el=>{ const c=S.ui.ct; c.q=el.dataset.k; c.kwLimit=25; render(); const i=$('#kw-q'); if(i) i.scrollIntoView({block:'center'}); },
+  'kh-prune':()=>{ if(!S.canWrite) return; const t=S.ui.ct.table, H=kwHealth(t), K=ensureKw(), drop=new Set(H.unused), gone=K[t].filter((_,i)=>drop.has(i));
+    if(!gone.length) return; K[t]=K[t].filter((_,i)=>!drop.has(i)); S.ui.ct.khOpen=true; markDirty('config/keywords'); bump(); render();
+    toast(L('khPruned',gone.length),{label:L('undo'),fn:()=>{ const K2=ensureKw(); const have=new Set(K2[t].map(q=>q[0].toLowerCase())); for(const p of gone) if(!have.has(p[0].toLowerCase())) K2[t].push(p); markDirty('config/keywords'); bump(); render(); }},12000); },
   'kw-del':el=>{ const t=S.ui.ct.table, i=+el.dataset.i, K=ensureKw(); const [p]=K[t].splice(i,1); markDirty('config/keywords'); bump(); render();
     toast(L('kwRemoved',p[0]),{label:L('undo'),fn:()=>{ const K2=ensureKw(); if(!K2[t].some(q=>q[0].toLowerCase()===p[0].toLowerCase())) K2[t].splice(Math.min(i,K2[t].length),0,p); markDirty('config/keywords'); bump(); render(); }}); },
   /* welcome */
@@ -5175,7 +5226,7 @@ function placeYearly(){
 document.addEventListener('scroll',e=>{ const t=e.target; if(t&&t.classList&&t.classList.contains('yframe')) S.ui.yScroll={y:S.ui.year,l:t.scrollLeft,t:t.scrollTop}; },true);
 if(window.ResizeObserver){ let rt=null; new ResizeObserver(()=>{ clearTimeout(rt); rt=setTimeout(()=>{ const w=$('#view').clientWidth; if(w!==lastW&&S.ui.tab==='overview'&&S.gotMonths&&!isOnboarding()){ lastW=w; hideTip(); drawOverviewCharts(); } else if(w!==lastW&&S.ui.tab==='networth'){ lastW=w; hideTip(); drawNwChart(); } },120); }).observe($('#view')); }
 
-document.addEventListener('toggle',e=>{ const d=e.target; if(d&&d.id==='ob-month-box'){ S.ui.obMonthOpen=d.open; return; } if(d&&d.classList&&d.classList.contains('ai-rules')&&S.modal&&S.modal.type==='ai') S.modal.openRules=d.open; },true);
+document.addEventListener('toggle',e=>{ const d=e.target; if(d&&d.id==='ob-month-box'){ S.ui.obMonthOpen=d.open; return; } if(d&&d.id==='kw-health'){ S.ui.ct.khOpen=d.open; return; } if(d&&d.classList&&d.classList.contains('ai-rules')&&S.modal&&S.modal.type==='ai') S.modal.openRules=d.open; },true);
 /* ───────── boot ───────── */
 async function boot(){
   const h=(location.hash||'').replace('#',''); if(TABS.includes(h)) S.ui.tab=h;
@@ -5220,7 +5271,7 @@ window.addEventListener('ybt-replace-data',e=>loadDataset((e&&e.detail)||{},fals
 window.addEventListener('ybt-lang',e=>{ const v=e&&e.detail==='es'?'es':'en'; S.ui.obLang=v; if(S.settings&&S.settings.lang&&S.canWrite&&S.settings.lang!==v) setSettings({lang:v}); render(); });
 window.addEventListener('ybt-local-render',()=>{ if(S.mode==='live'){ render(); if(S.modal) renderModalKeepScroll(); } });
 window.addEventListener('hashchange',()=>{ const h=(location.hash||'').replace('#',''); if(TABS.includes(h)&&h!==S.ui.tab) setTab(h); });
-if(window.__ybtTest) window.__ybt={parseAmount,parseDate,parseCSV,parseRows,findHeader,parseCells,guessTable,matchKeyword,allMatches,hasKw,fold,loose,agg,upsertTx,finishImport,splitLine,kwSuggestion,skipMatch,fmtNum,fmtEUR,CURRENCIES,foreignCode,isoOf,allRows,rowFromCols,readPasted,importChecks,detectDateOrder,monthlyCard,catNames,cats,kws,deleteTx,normCats,normKw,startOf,ymNow,aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
+if(window.__ybtTest) window.__ybt={kwHealth,parseAmount,parseDate,parseCSV,parseRows,findHeader,parseCells,guessTable,matchKeyword,allMatches,hasKw,fold,loose,agg,upsertTx,finishImport,splitLine,kwSuggestion,skipMatch,fmtNum,fmtEUR,CURRENCIES,foreignCode,isoOf,allRows,rowFromCols,readPasted,importChecks,detectDateOrder,monthlyCard,catNames,cats,kws,deleteTx,normCats,normKw,startOf,ymNow,aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
 boot();
 })();
 </script>
