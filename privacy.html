@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy · Yearly Budget Tracker</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'; script-src 'none'; object-src 'none'; base-uri 'none'">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--bg:#f1f4f2;--surface:#fcfdfc;--ink:#13201c;--ink-2:#3f4b47;--ink-3:#6b7772;--line:#dde3e0;--accent:#0d5c63;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1513;--surface:#161d1b;--ink:#e8eeeb;--ink-2:#b9c4bf;--ink-3:#8a9691;--line:#2a3431;--accent:#5fb7bd}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'Public Sans',system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:48px 16px 64px}
+h1{font:650 32px/1.15 'Bricolage Grotesque',system-ui;margin:0 0 6px;letter-spacing:-.01em}
+h2{font:600 20px/1.3 'Bricolage Grotesque',system-ui;margin:32px 0 8px}
+p,li{color:var(--ink-2)}
+.eyebrow{font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 12px}
+section{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 24px 20px;margin-top:24px}
+a{color:var(--accent)}
+nav{display:flex;gap:16px;font-size:14px}
+</style>
+</head>
+<body>
+<main>
+<p class="eyebrow">Yearly Budget Tracker</p>
+<h1>Privacy</h1>
+<nav><a href="./">Back to the tracker</a><a href="#es">Español</a></nav>
+
+<section>
+<h2>Your figures never reach this website</h2>
+<p>The tracker runs entirely in your browser. Your transactions, accounts and settings are saved only where you choose:</p>
+<ul>
+<li><b>A folder on your computer</b> (Chrome or Edge): a file in the folder you pick. The site can only use that folder, and only after you allow it.</li>
+<li><b>Your Google Drive</b>: a file in your own Drive. Your browser sends it straight to Google; it never passes through this site. The site asks Google only for permission to see the files it creates itself (the <code>drive.file</code> permission), not the rest of your Drive. A copy is also kept in your browser so the tracker opens offline.</li>
+<li><b>Only in this browser</b>: in your browser's own storage on this device.</li>
+</ul>
+<p>This site has no accounts, no database, no analytics, no advertising and no cookies. The site's files are kept on your device so it opens offline; that copy contains no data of yours.</p>
+<h2>Reading statements with AI (optional)</h2>
+<p>If you use the “with AI” buttons, the statements you pick are read in your browser and their text (and any scanned pages) is sent from your browser straight to the AI service you chose, with your own API key: Anthropic (Claude), OpenAI (ChatGPT) or Google (Gemini). Their own privacy terms apply to what you send. On Google's free tier, Google may use what you send to improve its products. Your key is kept only in your browser and only ever sent to the company it belongs to. With copy and paste, nothing is sent by the site: you paste the text into the chat yourself.</p>
+<h2>Google sign-in</h2>
+<p>If you choose Google Drive, Google's sign-in window gives your browser a short-lived key to your Drive. It stays in the page while it's open and is never stored or sent anywhere else. You can remove the site's access at any time in your Google Account, under Security › Third-party apps &amp; services.</p>
+<h2>Deleting your data</h2>
+<p>Delete the file from your folder or Drive, or clear this site's data in your browser settings. In the tracker, Settings › Start fresh deletes everything after keeping a backup.</p>
+<h2>Not financial advice</h2>
+<p>The tracker shows your own figures and simple calculations. It is not financial, tax or legal advice.</p>
+</section>
+
+<section id="es" lang="es">
+<h2>Tus cifras nunca llegan a esta web</h2>
+<p>El control funciona por completo en tu navegador. Tus movimientos, cuentas y ajustes solo se guardan donde tú elijas:</p>
+<ul>
+<li><b>Una carpeta de tu ordenador</b> (Chrome o Edge): un archivo en la carpeta que elijas. La web solo puede usar esa carpeta, y solo después de que lo permitas.</li>
+<li><b>Tu Google Drive</b>: un archivo en tu propio Drive. Tu navegador lo envía directamente a Google; nunca pasa por esta web. La web solo pide a Google permiso para ver los archivos que crea ella misma (el permiso <code>drive.file</code>), no el resto de tu Drive. También se guarda una copia en tu navegador para que el control se abra sin conexión.</li>
+<li><b>Solo en este navegador</b>: en el almacenamiento propio de tu navegador, en este dispositivo.</li>
+</ul>
+<p>Esta web no tiene cuentas, base de datos, analítica, publicidad ni cookies. Los archivos de la web se guardan en tu dispositivo para que se abra sin conexión; esa copia no contiene ningún dato tuyo.</p>
+<h2>Leer extractos con IA (opcional)</h2>
+<p>Si usas los botones «con IA», los extractos que eliges se leen en tu navegador y su texto (y las páginas escaneadas) se envía desde tu navegador directamente al servicio de IA que hayas elegido, con tu propia clave de API: Anthropic (Claude), OpenAI (ChatGPT) o Google (Gemini). Lo que envías queda sujeto a sus propias condiciones de privacidad. En el nivel gratuito de Google, Google puede usar lo que envías para mejorar sus productos. Tu clave solo se guarda en tu navegador y solo se envía a la empresa a la que pertenece. Con copiar y pegar, la web no envía nada: tú pegas el texto en el chat.</p>
+<h2>Inicio de sesión con Google</h2>
+<p>Si eliges Google Drive, la ventana de inicio de sesión de Google da a tu navegador una clave temporal para tu Drive. Solo existe mientras la página está abierta y nunca se guarda ni se envía a ningún otro sitio. Puedes quitar el acceso de la web cuando quieras en tu cuenta de Google, en Seguridad › Aplicaciones y servicios de terceros.</p>
+<h2>Borrar tus datos</h2>
+<p>Borra el archivo de tu carpeta o de tu Drive, o borra los datos de esta web en los ajustes del navegador. En el control, Ajustes › Empezar de cero lo borra todo después de guardar una copia.</p>
+<h2>No es asesoramiento financiero</h2>
+<p>El control muestra tus propias cifras y cálculos sencillos. No es asesoramiento financiero, fiscal ni legal.</p>
+</section>
+</main>
+</body>
+</html>

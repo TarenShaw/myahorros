@@ -1,0 +1,50 @@
+/* web version: where-to-save panels and the strip at the bottom (uses the tracker's own colours) */
+.web-panel{position:fixed;inset:0;z-index:120;background:var(--bg,#f1f4f2);display:grid;place-items:center;padding:24px 16px;overflow:auto}
+.web-panel.overlay{background:rgba(10,20,18,.45);backdrop-filter:blur(2px)}
+.web-panel-card{max-width:620px;width:100%;background:var(--surface,#fff);border:1px solid var(--line,#dde3e0);border-radius:12px;padding:26px;display:grid;gap:14px;box-shadow:var(--shadow,0 10px 40px rgba(0,0,0,.12));color:var(--ink,#13201c)}
+.web-panel h2{margin:0;font:650 24px/1.2 var(--f-display,system-ui);letter-spacing:-.01em}
+.web-eyebrow{margin:0;font:500 11px/1 var(--f-mono,ui-monospace,monospace);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3,#6b7772)}
+.web-sub{margin:0;color:var(--ink-2,#3f4b47);line-height:1.5}
+.web-hint{margin:0;font-size:13px;color:var(--ink-3,#6b7772);line-height:1.5}
+.web-ways{display:grid;gap:10px;margin-top:4px}
+.web-way{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;padding:14px 16px;border:1px solid var(--line,#dde3e0);border-radius:10px;background:var(--surface,#fff);color:inherit;font:inherit;cursor:pointer}
+.web-way:hover:not([disabled]){border-color:var(--accent,#0d5c63);background:var(--accent-soft,#e3efee)}
+.web-way:focus-visible{outline:2px solid var(--accent,#0d5c63);outline-offset:2px}
+.web-way[disabled]{opacity:.55;cursor:not-allowed}
+.web-way.current{border-color:var(--accent,#0d5c63)}
+.web-way svg{flex:none;margin-top:1px;color:var(--accent,#0d5c63)}
+.web-way span{display:grid;gap:4px}
+.web-way b{font-weight:600;font-size:15px}
+.web-way small{font-size:13px;line-height:1.45;color:var(--ink-2,#3f4b47)}
+.web-way small.web-why{color:var(--warn-ink,#8a5a00);font-weight:500}
+.web-rec{font-style:normal;font-size:11px;font-weight:600;padding:2px 7px;border-radius:99px;background:var(--accent,#0d5c63);color:#fff;margin-left:6px;vertical-align:1px}
+.web-acts{display:flex;flex-wrap:wrap;gap:8px}
+.web-msg{margin:0;font-weight:600;color:var(--bad-ink,#a82727)}
+.web-bar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:90;display:flex;align-items:center;gap:12px;max-width:min(720px,calc(100vw - 32px));width:max-content;padding:10px 12px 10px 16px;border-radius:10px;background:var(--surface,#fff);border:1px solid var(--line,#dde3e0);box-shadow:var(--shadow,0 6px 24px rgba(0,0,0,.14));font-size:13px;line-height:1.45;color:var(--ink,#13201c)}
+.web-bar.signin,.web-bar.folder,.web-bar.folderfail{border-color:var(--warn,#c98a12)}
+.web-bar .btn{flex:none}
+@media (max-width:560px){
+  .web-panel-card{padding:20px}
+  .web-panel h2{font-size:21px}
+  .web-bar{left:12px;right:12px;transform:none;width:auto;max-width:none;flex-wrap:wrap}
+}
+/* AI: choosing the service, the key, copy and paste */
+.ai-ways{grid-template-columns:1fr 1fr}
+.ai-way span{gap:3px}
+.ai-way small{font-size:12.5px}
+.ai-key{display:grid;gap:8px}
+.ai-key[hidden]{display:none}
+.ai-key label,.ai-steps label{font-weight:600;font-size:13px}
+.ai-key input[type=password],.ai-key select,.ai-panel textarea{width:100%;box-sizing:border-box;font:13px/1.45 var(--f-mono,ui-monospace,monospace);padding:9px 11px;border:1px solid var(--line-2,#bcc8c3);border-radius:8px;background:var(--surface,#fff);color:var(--ink,#13201c)}
+.ai-key select{font-family:inherit}
+.ai-key input:focus,.ai-panel textarea:focus,.ai-key select:focus{outline:2px solid var(--accent,#0d5c63);outline-offset:1px;border-color:transparent}
+.ai-check{display:flex;gap:8px;align-items:center;font-weight:500!important}
+.ai-steps{margin:0;padding-left:20px;display:grid;gap:14px}
+.ai-steps li p{margin:0 0 6px;color:var(--ink-2,#3f4b47)}
+.ai-steps .web-acts{margin-bottom:4px}
+.ai-req{height:44px;resize:none;color:var(--muted,#6f7e79)!important;font-size:11px!important}
+.web-links{display:flex;gap:16px;flex-wrap:wrap}
+.web-links a,.ai-key a{color:var(--accent,#0d5c63);font-weight:600}
+.web-msg.good{color:var(--good-ink,#006300)}
+@media (max-width:560px){ .ai-ways{grid-template-columns:1fr} }
+.web-foot{text-align:center;padding:8px 16px 72px;font-size:12px}.web-foot a{color:var(--ink-3,#6b7772)}
