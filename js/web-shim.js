@@ -51,6 +51,13 @@ const TX={
     driveFail:'Google Drive couldn’t be reached. Check your connection and try again.',
     driveDenied:'Google Drive access wasn’t given, so nothing was changed.',
     barSignIn:'Google Drive needs you to sign in again. Your changes are kept on this device until then.',
+    driveHave:'Already using it on another device? Choose this and your tracker opens from your Drive.',
+    restoreT:'Restore from Google Drive…', restoreHelp:'Open your tracker or one of its daily backups from your Google Drive.',
+    restoreTitle:'Restore from Google Drive', restoreSub:'Pick the version to open. What’s on screen now is kept as a backup first.',
+    restoreMain:'Your tracker in Drive', restoreDaily:d=>`Backup from ${d}`, restoreOther:'Backup', restoreNone:'There’s nothing in your Google Drive from this tracker yet.',
+    restoreN:n=>`${n} transactions`, restoreOpen:'Open', restored:(w,n)=>`Opened ${w} from Google Drive: ${n} transactions. What was on screen was kept as a backup.`,
+    loading:'Loading…',
+    topDrive:'Connect Google Drive', topDriveHelp:'Save your tracker in your own Google Drive, the same on every device.',
     barStart:'Opened from this device. Connect to Google Drive to save your changes there and get the ones from your other devices.',
     barOffline:'You’re offline. Your changes are kept on this device and go to Google Drive when you’re back online.',
     barFolder:'The browser needs your permission again to save in your tracker folder. Your changes are kept until then.',
@@ -113,6 +120,13 @@ const TX={
     driveFail:'No se ha podido conectar con Google Drive. Revisa la conexión y vuelve a intentarlo.',
     driveDenied:'No se ha dado acceso a Google Drive, así que no se ha cambiado nada.',
     barSignIn:'Google Drive necesita que vuelvas a iniciar sesión. Hasta entonces, tus cambios se guardan en este dispositivo.',
+    driveHave:'¿Ya lo usas en otro dispositivo? Elige esta opción y tu control se abre desde tu Drive.',
+    restoreT:'Restaurar desde Google Drive…', restoreHelp:'Abre tu control o una de sus copias diarias desde tu Google Drive.',
+    restoreTitle:'Restaurar desde Google Drive', restoreSub:'Elige la versión que quieres abrir. Antes se guarda una copia de lo que hay ahora en pantalla.',
+    restoreMain:'Tu control en Drive', restoreDaily:d=>`Copia del ${d}`, restoreOther:'Copia', restoreNone:'Todavía no hay nada de este control en tu Google Drive.',
+    restoreN:n=>`${n} movimientos`, restoreOpen:'Abrir', restored:(w,n)=>`Abierto ${w} desde Google Drive: ${n} movimientos. Lo que había en pantalla se ha guardado como copia.`,
+    loading:'Cargando…',
+    topDrive:'Conectar Google Drive', topDriveHelp:'Guarda tu control en tu propio Google Drive, igual en todos tus dispositivos.',
     barStart:'Abierto desde este dispositivo. Conecta Google Drive para guardar allí tus cambios y recibir los de tus otros dispositivos.',
     barOffline:'Estás sin conexión. Tus cambios se guardan en este dispositivo y pasan a Google Drive al volver a conectarte.',
     barFolder:'El navegador necesita tu permiso otra vez para guardar en la carpeta de tu control. Hasta entonces, tus cambios se conservan.',
@@ -183,6 +197,7 @@ function parseData(text){ try{ return normalise(JSON.parse(String(text).replace(
 function serialise(d){ d=d||store; return JSON.stringify({app:'Yearly Budget Tracker',format:1,savedAt:new Date().toISOString(),months:d.months,config:d.config}); }
 function countTx(d){ let n=0; if(!d) return 0; for(const m of Object.values(d.months||{})) for(const k of ['income','expenses','investments']) n+=Array.isArray(m[k])?m[k].length:0; return n; }
 const empty=()=>({months:{},config:{}});
+const nothingAdded=d=>{ if(!d) return true; if(countTx(d)) return false; const n=d.config&&d.config.networth; return !(n&&((n.accounts||[]).length||Object.keys(n.snaps||{}).length)); };
 const isEmpty=d=>!d||(!countTx(d)&&!Object.keys(d.config||{}).length);
 
 /* ---------- IndexedDB (browser storage, the Drive copy on this device, the folder's handle) ---------- */
@@ -286,7 +301,7 @@ const drive={
     return new Promise((res,rej)=>{
       const hint=(JSON.parse(lsGet(DRIVE_KEY)||'{}')||{}).hint;
       const c=o.initTokenClient({client_id:CFG.googleClientId,scope:DRIVE_SCOPE,prompt:'',login_hint:hint||undefined,
-        callback:r=>{ if(r&&r.access_token&&(!o.hasGrantedAllScopes||o.hasGrantedAllScopes(r,DRIVE_SCOPE))){ this.token=r.access_token; this.exp=Date.now()+(+r.expires_in||3600)*1000; res(true); } else rej(new Error('denied')); },
+        callback:r=>{ if(r&&r.access_token&&(!o.hasGrantedAllScopes||o.hasGrantedAllScopes(r,DRIVE_SCOPE))){ this.token=r.access_token; this.exp=Date.now()+(+r.expires_in||3600)*1000; res(true); setTimeout(()=>window.dispatchEvent(new CustomEvent('ybt-local-render')),0); } else rej(new Error('denied')); },
         error_callback:e=>rej(new Error(e&&e.type==='popup_closed'?'denied':'gis'))});
       c.requestAccessToken();
     });
@@ -387,10 +402,11 @@ function chooseMode(fromSettings){
   return new Promise(resolve=>{
     const fOk=canFolder(), dOk=canDrive()&&navigator.onLine!==false;
     const card=(m,title,sub,ok,why,rec)=>`<button type="button" class="web-way${mode===m&&fromSettings?' current':''}" data-m="${m}"${ok?'':' disabled'}>${ICONS[m]}<span><b>${esc(title)}${rec&&ok?` <i class="web-rec">${esc(t('recommended'))}</i>`:''}</b><small>${esc(sub)}</small>${ok?'':`<small class="web-why">${esc(why)}</small>`}</span></button>`;
-    const el=panel(`<p class="web-eyebrow">Yearly Budget Tracker</p><h2 id="wp-title">${esc(t('chooseTitle'))}</h2><p class="web-sub">${esc(t('chooseSub'))}</p>
+    const L0=lang(), langSw=fromSettings?'':`<div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>`;
+    const el=panel(`<div class="web-top"><p class="web-eyebrow">Yearly Budget Tracker</p>${langSw}</div><h2 id="wp-title">${esc(t('chooseTitle'))}</h2><p class="web-sub">${esc(t('chooseSub'))}</p>
       <div class="web-ways">
         ${card('folder',t('folderT'),t('folderS'),fOk,t('folderNo'),true)}
-        ${card('drive',t('driveT'),t('driveS'),dOk,canDrive()?t('driveOffline'):t('driveNo'),!fOk)}
+        ${card('drive',t('driveT'),t('driveS')+(fromSettings?'':' '+t('driveHave')),dOk,canDrive()?t('driveOffline'):t('driveNo'),!fOk)}
         ${card('browser',t('browserT'),t('browserS'),true,'',false)}
       </div>
       ${fOk?`<p class="web-hint">${esc(t('pickHint'))}</p>`:''}
@@ -398,6 +414,7 @@ function chooseMode(fromSettings){
       ${fromSettings?`<div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`:''}`,{overlay:fromSettings});
     el.addEventListener('click',async e=>{
       const b=e.target.closest('button'); if(!b||b.disabled) return;
+      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); el.remove(); chooseMode(fromSettings).then(resolve); return; }
       if(b.dataset.x==='cancel'){ el.remove(); resolve(null); return; }
       const m=b.dataset.m; if(!m) return;
       el.busy(true); el.msg('');
@@ -588,6 +605,33 @@ async function moveTo(choice){
   return t('moved',t(choice.mode==='folder'?'wFolder':choice.mode==='drive'?'wDrive':'wBrowser'));
 }
 
+/* ---------- restoring from Google Drive: the tracker file or one of its backups ---------- */
+async function driveRestore(){
+  if(navigator.onLine===false) return {message:t('driveOffline'),bad:true};
+  try{ if(!drive.valid()) await drive.signIn(); await drive.locate(); }
+  catch(e){ return {message:e&&e.message==='denied'?t('driveDenied'):t('driveFail'),bad:true}; }
+  const m=drive.meta, items=[];
+  try{
+    if(m.fileId){ const f=await drive.remote(); items.push({id:m.fileId,label:t('restoreMain'),when:f&&f.modifiedTime,main:true}); }
+    const bid=m.backupsId||await drive.findFolder(BACKUPS,m.folderId);
+    if(bid){ const r=await drive.json('GET',`${API}/files?q=${drive.q(`'${bid}' in parents and trashed=false`)}&fields=files(id,name,modifiedTime)&orderBy=modifiedTime desc&pageSize=60&spaces=drive`);
+      for(const f of r.files||[]){ const d=(f.name.match(/(\d{4}-\d{2}-\d{2})/)||[])[1]; items.push({id:f.id,label:d&&DAILY.test(f.name)?t('restoreDaily',dmy(d)):t('restoreOther')+' · '+f.name.replace(/^tracker-data /,'').replace(/\.json$/,''),when:f.modifiedTime}); } }
+  }catch(_){ return {message:t('driveFail'),bad:true}; }
+  if(!items.length) return {message:t('restoreNone')};
+  const fmtW=w=>{ if(!w) return ''; const d=new Date(w); return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear()+' '+hhmm(d); };
+  const pick=await new Promise(resolve=>{
+    const el=panel(`<h2 id="wp-title">${esc(t('restoreTitle'))}</h2><p class="web-sub">${esc(t('restoreSub'))}</p>
+      <ul class="web-list">${items.map((it,i)=>`<li><span><b>${esc(it.label)}</b><small>${esc(fmtW(it.when))}</small></span><button type="button" class="btn sm${i===0?' primary':''}" data-i="${i}">${esc(t('restoreOpen'))}</button></li>`).join('')}</ul>
+      <div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`,{overlay:true});
+    el.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; if(b.dataset.x==='cancel'){ el.remove(); resolve(null); return; } if(b.dataset.i!=null){ el.remove(); resolve(items[+b.dataset.i]); } });
+  });
+  if(!pick) return null;
+  let text; try{ text=await drive.download(pick.id); }catch(_){ return {message:t('driveFail'),bad:true}; }
+  const d=parseData(text); if(!d) return {message:t('notTracker'),bad:true};
+  try{ await replaceAll(d,'before restoring from Drive'); }catch(e){ return {message:e.message,bad:true}; }
+  return {message:t('restored',pick.label,fmtN(countTx(d)))};
+}
+
 /* ---------- files: saving a backup, opening one ---------- */
 async function saveFile(name,blob,types){
   if(typeof window.showSaveFilePicker==='function'&&!isMobile()){
@@ -652,11 +696,24 @@ const local={
     if(k==='saveCopyHelp') return t('saveCopyHelp');
     return null;
   },
-  actions:['changeStorage','syncNow'],
+  actions:['changeStorage','syncNow','connectDrive','driveRestore'],
+  async driveRestore(){ return driveRestore(); },
+  /* the top-bar button: Connect Google Drive, while it isn't connected */
+  top(lg){ seeLang(lg); if(!canDrive()) return null;
+    if(mode==='drive'&&drive.valid()) return null;
+    return {fn:mode==='drive'?'syncNow':'connectDrive',label:t('topDrive'),help:t('topDriveHelp'),icon:ICONS.drive.replace(/width="22" height="22"/,'width="16" height="16"')}; },
+  async connectDrive(){
+    if(navigator.onLine===false) return {message:t('driveOffline'),bad:true};
+    try{ await drive.signIn(); await drive.locate(); }
+    catch(e){ return {message:e&&e.message==='denied'?t('driveDenied'):t('driveFail'),bad:true}; }
+    try{ const msg=await moveTo({mode:'drive'}); window.dispatchEvent(new CustomEvent('ybt-local-render')); return msg?{message:msg}:null; }
+    catch(_){ return {message:t('writeFail'),bad:true}; }
+  },
   extra(lg){
     seeLang(lg);
     const out=[{fn:'changeStorage',label:t('change'),help:t('changeHelp')}];
     if(mode==='drive') out.unshift({fn:'syncNow',label:t('syncNow'),help:t('syncNowHelp')});
+    if(canDrive()) out.push({fn:'driveRestore',label:t('restoreT'),help:t('restoreHelp')});
     return out;
   },
 
@@ -742,7 +799,7 @@ async function startDrive(){
   if(c&&typeof c.text==='string'&&parseData(c.text)){
     store=parseData(c.text); drive.dirty=!!c.dirty;
     /* opens straight away from the copy on this device; Drive catches up once signed in */
-    setTimeout(()=>{ drive.state=navigator.onLine===false?'offline':'signin'; bar(drive.state==='offline'?'offline':'start'); },0);
+    setTimeout(()=>{ if(!store||mode!=='drive') return; drive.state=navigator.onLine===false?'offline':'signin'; bar(drive.state==='offline'?'offline':'start'); },0);
     return true;
   }
   /* a new device: connect before opening */
@@ -768,6 +825,8 @@ async function start(){
   if(m==='folder'&&!(await startFolder())) m=mode;
   if(m==='drive'&&!(await startDrive().catch(()=>false))) m=mode||'browser';
   if(!store&&m==='browser'){ setMode('browser'); const text=await browser.read().catch(()=>null); store=(text&&parseData(text))||empty(); }
+  /* nothing added yet (no transactions, no accounts or figures): the choice isn't final, so ask again */
+  if(store&&nothingAdded(store)){ store=null; bar(null); }
   if(!store){
     /* first visit: where should it live? */
     const c=await chooseMode(false);
