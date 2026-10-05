@@ -47,4 +47,6 @@
 .web-links a,.ai-key a{color:var(--accent,#0d5c63);font-weight:600}
 .web-msg.good{color:var(--good-ink,#006300)}
 @media (max-width:560px){ .ai-ways{grid-template-columns:1fr} }
+.web-about{border-top:1px solid var(--line,#dde3e0);padding-top:12px}
+.web-about a{color:var(--accent,#0d5c63);font-weight:600}
 .web-foot{text-align:center;padding:8px 16px 72px;font-size:12px}.web-foot a{color:var(--ink-3,#6b7772)}
