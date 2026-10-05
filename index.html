@@ -4,7 +4,7 @@
 <meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-q4xA2c3lJU/b4iAHLmkWiNJ575XgIDGc6JqS8bcB2es=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1PeN54lB10Mjx5/1p0s/oK1UrIJj6i8gdOpDaoYYjr8=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -96,7 +96,8 @@ p{margin:0}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .num,.tab-num{font-variant-numeric:tabular-nums}
 
-.app{max-width:1240px;margin:0 auto;padding-inline:clamp(16px,3vw,32px);padding-block:0 64px}
+html{scrollbar-gutter:stable}
+.app{max-width:1600px;margin:0 auto;padding-inline:clamp(16px,3vw,32px);padding-block:0 64px}
 
 /* masthead */
 .mast{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;padding-block:28px 18px}
@@ -187,6 +188,8 @@ tr.ai-ask td.n{min-width:220px;white-space:normal}
 .acc-start-h{display:flex;align-items:baseline;gap:4px 8px;flex-wrap:wrap;margin-bottom:7px}
 .acc-start-h .hint{margin:0;font-size:12.5px}
 .acc-start-chips{display:flex;flex-wrap:wrap;gap:6px}
+.local-top{display:inline-flex;align-items:center;gap:6px}
+.local-top svg{flex:none}
 @media (max-width:640px){#btn-backup,#btn-export{display:none!important}
   .guide{display:flex;flex-direction:column}.guide .guide-groups{order:6}.guide .guide-acts{order:5}.guide .guide-tour{order:7}
   .bk-nudge .bk-acts{margin-left:0}
@@ -349,7 +352,7 @@ select{padding-right:28px}
 .heat-scale i{display:inline-block;width:96px;height:10px;border-radius:3px;background:linear-gradient(90deg,var(--heat-lo),var(--heat-mid),var(--heat-hi));border:1px solid var(--line)}
 .flag{display:inline-block;width:12px;height:12px;vertical-align:-1px;color:var(--bad);flex:none}
 .frame{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
-.app.wide{max-width:1560px}
+.app.wide{max-width:1600px}
 table.grid{border-collapse:separate;border-spacing:0;width:100%;table-layout:fixed;font-size:12.5px;font-variant-numeric:tabular-nums}
 .grid col.c-rh{width:15%}
 .grid col.c-tot{width:8%}
@@ -878,6 +881,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-nume
     </nav>
     <div class="tabbar-end">
       <span class="sync" id="sync" data-s="idle">Connecting</span>
+      <button class="btn sm local-top" type="button" data-action="local-x" id="btn-local-top" hidden></button>
       <button class="btn sm eye-btn" type="button" data-action="toggle-hide" id="btn-hide" aria-pressed="false" hidden></button>
       <button class="btn sm" type="button" data-action="backup" id="btn-backup" hidden>Download backup</button>
       <button class="btn sm" type="button" data-action="export" id="btn-export" hidden>Download .xlsx</button>
@@ -2122,6 +2126,8 @@ function renderHeader(){
   setTxTab(nUn);
   $('#tab-networth').classList.toggle('due',!!(S.canWrite&&S.gotConfig&&nwDue()));
   $('#btn-export').hidden=$('#btn-backup').hidden=!(S.downloads && allRows().length && !isOnboarding());
+  { const tb=$('#btn-local-top'); let tp=null; try{ tp=S.local&&typeof S.local.top==='function'?S.local.top(LANG):null; }catch(_){}
+    if(tb){ tb.hidden=!tp; if(tp&&tb.dataset.key!==tp.fn+'|'+tp.label){ tb.dataset.fn=tp.fn; tb.innerHTML=(tp.icon||'')+'<span>'+esc(tp.label)+'</span>'; tb.title=tp.help||''; tb.dataset.key=tp.fn+'|'+tp.label; } } }
   const hb=$('#btn-hide'); if(hb){ hb.hidden=!allRows().length&&!(S.nw&&S.nw.accounts.length)||isOnboarding(); hb.setAttribute('aria-pressed',String(HIDE));
     hb.innerHTML=(HIDE?ICON.eyeOff:ICON.eye)+`<span class="sr">${esc(L(HIDE?'showAmounts':'hideAmounts'))}</span>`; hb.title=L(HIDE?'showAmounts':'hideAmounts'); }
 }
@@ -5063,6 +5069,7 @@ function currentDataset(){
 }
 /* desktop app only: its storage layer replaces the whole dataset (open another file / start fresh) */
 window.addEventListener('ybt-replace-data',e=>loadDataset((e&&e.detail)||{},false));
+window.addEventListener('ybt-lang',e=>{ const v=e&&e.detail==='es'?'es':'en'; S.ui.obLang=v; if(S.settings&&S.settings.lang&&S.canWrite&&S.settings.lang!==v) setSettings({lang:v}); render(); });
 window.addEventListener('ybt-local-render',()=>{ if(S.mode==='live'){ render(); if(S.modal) renderModalKeepScroll(); } });
 window.addEventListener('hashchange',()=>{ const h=(location.hash||'').replace('#',''); if(TABS.includes(h)&&h!==S.ui.tab) setTab(h); });
 if(window.__ybtTest) window.__ybt={aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
@@ -5071,5 +5078,5 @@ boot();
 </script>
 
 <noscript><p style="padding:24px">This tracker needs JavaScript.</p></noscript>
-<footer class="web-foot"><a href="privacy.html">Privacy</a></footer>
+<footer class="web-foot">© <span id="ybt-year">2026</span> Yearly Budget Tracker · Developed by Taren Shaw with Claude Opus 5.5 · <a href="privacy.html">Privacy</a></footer>
 </body></html>
