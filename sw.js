@@ -1,7 +1,7 @@
 /* Yearly Budget Tracker: keeps the site's own files on the device so it opens offline.
    Only the site's files are cached; your data is never here (it lives in your folder, Drive or browser storage).
    The page itself is fetched fresh when online, so updates arrive on the next visit. */
-const VERSION='1.0.0-f977937908';
+const VERSION='1.0.0-f977937909';
 const CACHE='ybt-'+VERSION;
 const FILES=["./", "config.js", "fonts/bricolage-grotesque-latin-ext-opsz-normal.woff2", "fonts/bricolage-grotesque-latin-opsz-normal.woff2", "fonts/fonts.css", "fonts/ibm-plex-mono-latin-400-normal.woff2", "fonts/ibm-plex-mono-latin-500-normal.woff2", "fonts/ibm-plex-mono-latin-ext-400-normal.woff2", "fonts/ibm-plex-mono-latin-ext-500-normal.woff2", "fonts/public-sans-latin-ext-wght-normal.woff2", "fonts/public-sans-latin-wght-normal.woff2", "icons/apple-touch-icon.png", "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png", "index.html", "js/web-ai.js", "js/web-boot.js", "js/web-shim.js", "manifest.webmanifest", "privacy.html", "vendor/pdf.min.js", "vendor/pdf.worker.min.js", "vendor/xlsx.full.min.js", "web.css"];
 self.addEventListener('install',e=>{ e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())); });
