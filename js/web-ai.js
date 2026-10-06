@@ -20,7 +20,7 @@ function lang(){ if(pageLang) return pageLang; try{ const s=window.__ybtWeb&&win
 const P={
   anthropic:{name:'Claude', company:'Anthropic', keyUrl:'https://console.anthropic.com/settings/keys', keyHint:'sk-ant-…', keyRe:/^sk-ant-/},
   openai:{name:'ChatGPT', company:'OpenAI', keyUrl:'https://platform.openai.com/api-keys', keyHint:'sk-…', keyRe:/^sk-/},
-  gemini:{name:'Gemini', company:'Google', keyUrl:'https://aistudio.google.com/apikey', keyHint:'AIza…', keyRe:/^AIza/},
+  gemini:{name:'Gemini', company:'Google', keyUrl:'https://aistudio.google.com/apikey', keyHint:'AIza… or AQ.…', keyRe:/^(AIza|AQ\.)/},
   paste:{name:null}
 };
 const TX={
