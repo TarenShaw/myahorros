@@ -69,8 +69,10 @@ const TX={
     conflictDrive:(t,n)=>`The copy in your Google Drive was changed ${t?'at '+t+' ':''}on another device or browser (${n} transactions), after this one last synced.`,
     conflictFolder:(t,n)=>`The data file was changed ${t?'at '+t+' ':''}by something else, such as the Windows app (${n} transactions).`,
     conflictMine:n=>`This screen has ${n} transactions with changes not saved there yet.`,
-    useTheirs:'Open the newer one', useMine:'Keep the one on this screen',
-    conflictNote:'Whichever you don’t keep is saved as a backup first.',
+    useTheirs:'Open the newer one', useMine:'Keep the one on this screen', useMerge:'Merge both',
+    conflictNote:'Whichever you don’t keep is saved as a backup first. “Merge both” keeps every month from both versions; where both have the same month, it keeps the one on this screen.',
+    mergedBoth:'Merged both versions. The other one was kept as a backup.',
+    stDriveError:t=>`Couldn’t sync with Google Drive. Trying again at ${t}.`, stDrivePaused:'Sync is waiting until you finish what you’re doing.',
     keptTheirs:'Opened the newer version. The one on this screen was kept as a backup.', keptMine:'Kept the version on this screen. The other one was kept as a backup.',
     existsTitle:'There’s already a tracker there', existsText:(n,m)=>`It has ${n} transactions. The tracker open now has ${m}.`,
     useThere:'Use the one already there', replaceThere:'Replace it with the one open now', replaceNote:'If you replace it, the one already there is kept as a backup first.',
@@ -138,8 +140,10 @@ const TX={
     conflictDrive:(t,n)=>`La copia de tu Google Drive se cambió ${t?'a las '+t+' ':''}en otro dispositivo o navegador (${n} movimientos), después de la última sincronización de este.`,
     conflictFolder:(t,n)=>`El archivo de datos lo ha cambiado ${t?'a las '+t+' ':''}otro programa, como la aplicación de Windows (${n} movimientos).`,
     conflictMine:n=>`Esta pantalla tiene ${n} movimientos con cambios que aún no se han guardado allí.`,
-    useTheirs:'Abrir la versión más nueva', useMine:'Quedarme con la de esta pantalla',
-    conflictNote:'La que no elijas se guarda antes como copia de seguridad.',
+    useTheirs:'Abrir la versión más nueva', useMine:'Quedarme con la de esta pantalla', useMerge:'Combinar las dos',
+    conflictNote:'La que no elijas se guarda antes como copia de seguridad. «Combinar las dos» conserva todos los meses de ambas versiones; si los dos tienen el mismo mes, se queda con el de esta pantalla.',
+    mergedBoth:'Se han combinado las dos versiones. La otra se guardó como copia de seguridad.',
+    stDriveError:t=>`No se ha podido sincronizar con Google Drive. Se reintentará a las ${t}.`, stDrivePaused:'La sincronización espera a que termines lo que estás haciendo.',
     keptTheirs:'Abierta la versión más nueva. La de esta pantalla se ha guardado como copia.', keptMine:'Te has quedado con la versión de esta pantalla. La otra se ha guardado como copia.',
     existsTitle:'Ya hay un control ahí', existsText:(n,m)=>`Tiene ${n} movimientos. El control abierto ahora tiene ${m}.`,
     useThere:'Usar el que ya está', replaceThere:'Sustituirlo por el abierto ahora', replaceNote:'Si lo sustituyes, antes se guarda una copia del que ya estaba.',
@@ -311,8 +315,15 @@ const drive={
   },
   async api(method,url,body,headers){
     if(!this.valid()) throw new Error('signin');
-    let r; try{ r=await fetch(url,{method,body,headers:Object.assign({Authorization:'Bearer '+this.token},headers||{})}); }
-    catch(_){ throw new Error(navigator.onLine===false?'offline':'network'); }
+    /* reads and updates are tried up to 3 times when Google is busy or the connection blips; creating a file is not
+       repeated here (the next sync finds out whether it was made, so there are never two) */
+    const tries=method==='POST'?1:3; let r;
+    for(let i=1;;i++){
+      try{ r=await fetch(url,{method,body,headers:Object.assign({Authorization:'Bearer '+this.token},headers||{})}); }
+      catch(_){ if(navigator.onLine===false) throw new Error('offline'); if(i<tries){ await sleep(600*Math.pow(2,i)); continue; } throw new Error('network'); }
+      if((r.status===429||r.status>=500)&&i<tries){ await sleep(Math.min(8000,Math.max((+r.headers.get('Retry-After')||0)*1000,600*Math.pow(2,i)))); continue; }
+      break;
+    }
     if(r.status===401||r.status===403&&/auth/i.test(await r.clone().text())){ this.token=null; throw new Error('signin'); }
     if(!r.ok) throw new Error('drive '+r.status);
     return r;
@@ -442,10 +453,19 @@ function askConflict(kind,theirs,when){
     const el=panel(`<h2 id="wp-title">${esc(t('conflictTitle'))}</h2>
       <p class="web-sub">${esc(kind==='drive'?t('conflictDrive',when?hhmm(when):'',fmtN(countTx(theirs))):t('conflictFolder',when?hhmm(when):'',fmtN(countTx(theirs))))}</p>
       <p class="web-sub">${esc(t('conflictMine',fmtN(countTx(store))))}</p>
-      <div class="web-acts"><button type="button" class="btn primary" data-x="theirs">${esc(t('useTheirs'))}</button><button type="button" class="btn" data-x="mine">${esc(t('useMine'))}</button></div>
+      <div class="web-acts"><button type="button" class="btn primary" data-x="theirs">${esc(t('useTheirs'))}</button><button type="button" class="btn" data-x="mine">${esc(t('useMine'))}</button><button type="button" class="btn" data-x="merge">${esc(t('useMerge'))}</button></div>
       <p class="web-hint">${esc(t('conflictNote'))}</p>`,{overlay:true});
     el.addEventListener('click',e=>{ const b=e.target.closest('button[data-x]'); if(!b) return; el.remove(); resolve(b.dataset.x); });
   });
+}
+/* every month and setting from both; where both have the same one, the version on this screen wins
+   (ponytail: whole months, not single transactions. The other side is kept as a backup before this runs.) */
+function mergeData(mine,theirs){
+  const monthEmpty=m=>!m||!['income','expenses','investments'].some(k=>Array.isArray(m[k])&&m[k].length);
+  const out=clone(theirs); out.months=out.months||{}; out.config=out.config||{};
+  for(const [k,v] of Object.entries((mine&&mine.months)||{})) if(!(k in out.months)||!monthEmpty(v)) out.months[k]=clone(v);
+  for(const [k,v] of Object.entries((mine&&mine.config)||{})) if(v!=null) out.config[k]=clone(v);
+  return out;
 }
 /* the place picked already has a tracker: 'there' or 'replace' */
 function askExisting(there){
@@ -482,7 +502,13 @@ function bar(kind){
 }
 /* the page redraws its Settings line */
 let notifyT=0;
-function notify(){ clearTimeout(notifyT); notifyT=setTimeout(()=>{ const s=document.getElementById('local-status'); if(s){ const v=local.status; s.textContent=v||''; s.hidden=!v; } },30); }
+function notify(){ clearTimeout(notifyT); notifyT=setTimeout(()=>{ const s=document.getElementById('local-status'); if(s){ const v=local.status; s.textContent=v||''; s.hidden=!v; }
+  /* a small always-visible sync line while Google Drive is the storage */
+  let p=document.getElementById('web-sync');
+  if(mode!=='drive'){ if(p) p.remove(); return; }
+  if(!p){ p=document.createElement('div'); p.id='web-sync'; p.setAttribute('role','status'); document.body.appendChild(p); }
+  p.className='web-sync '+(drive.state==='error'?'bad':drive.state==='saving'||drive.dirty?'busy':'ok'); p.textContent=local.status||''; p.hidden=!p.textContent;
+},30); }
 function note(s){ window.dispatchEvent(new CustomEvent('ybt-local-note',{detail:s})); }
 window.addEventListener('ybt-local-note',e=>{ const host=document.getElementById('toast'); if(!host||!e.detail) return;
   const d=document.createElement('div'); d.className='toast'; d.innerHTML='<span>'+esc(e.detail)+'</span>'; host.appendChild(d); setTimeout(()=>d.remove(),8000); });
@@ -501,15 +527,23 @@ function save(){
   saving=p; return p;
 }
 /* the folder: write the newest data, or keep it in the browser until the folder works again */
+/* the page is in the middle of something (a dialog is open, edits are still on their way here):
+   never swap its data or put a question over it. The data waits in the browser and is tried again. */
+let busyT=0;
+const pageBusy=()=>{ try{ return typeof window.YBT_BUSY==='function'&&!!window.YBT_BUSY(); }catch(_){ return false; } };
+function deferIfBusy(fn){ if(!pageBusy()) return false; clearTimeout(busyT); busyT=setTimeout(fn,4000); return true; }
 async function flushFolder(){
-  const text=await idb.get('folder-pending').catch(()=>null); if(typeof text!=='string') return;
+  if(deferIfBusy(()=>flushFolder().catch(()=>{}))) return;
+  let text=await idb.get('folder-pending').catch(()=>null); if(typeof text!=='string') return;
   try{
     if(await folder.perm(folder.dir,false)!=='granted'){ bar('folder'); return; }
     const other=await folder.changedElsewhere();
     if(other){ const theirs=parseData(other.text);
       if(theirs){ const pick=await askConflict('folder',theirs,new Date(other.mod));
-        if(pick==='theirs'){ try{ await folder.keepCopy(text,'from this screen'); }catch(_){} folder.mod=other.mod; store=theirs; await idb.del('folder-pending'); window.dispatchEvent(new CustomEvent('ybt-replace-data',{detail:clone(theirs)})); note(t('keptTheirs')); return; }
-        try{ await folder.keepCopy(other.text,'changed elsewhere'); }catch(_){} note(t('keptMine')); } }
+        if(pick==='theirs'){ try{ await folder.keepCopy(text,'from this screen'); }catch(_){} folder.mod=other.mod; store=theirs; await idb.del('folder-pending'); window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(theirs)})); note(t('keptTheirs')); return; }
+        try{ await folder.keepCopy(other.text,'changed elsewhere'); }catch(_){}
+        if(pick==='merge'){ const mine=parseData(text); if(mine){ store=mergeData(mine,theirs); text=serialise(); await idb.set('folder-pending',text); window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(store)})); note(t('mergedBoth')); } }
+        else note(t('keptMine')); } }
     await folder.write(text);
     if(await idb.get('folder-pending')===text) await idb.del('folder-pending');
     if(barKind) bar(null); notify();
@@ -521,6 +555,7 @@ function scheduleUpload(ms){ clearTimeout(upT); upT=setTimeout(()=>{ driveSync(f
 let syncing=null;
 function driveSync(pull){
   if(syncing) return syncing.then(()=>pull||drive.dirty?driveSync(pull):null);
+  if(deferIfBusy(()=>driveSync(pull).catch(()=>{}))){ drive.state='paused'; notify(); return Promise.resolve(); }
   syncing=(async()=>{
     try{
       if(navigator.onLine===false){ drive.state='offline'; bar('offline'); return; }
@@ -532,14 +567,21 @@ function driveSync(pull){
       const newer=!!r&&(c.version==null||+r.version>+c.version);
       if(newer){
         const text=await drive.download(r.id), theirs=parseData(text);
-        if(theirs&&(c.dirty&&!isEmpty(parseData(c.text)))){
+        /* the page may have started something while that downloaded: leave its data alone and look again soon */
+        if(pageBusy()){ deferIfBusy(()=>driveSync(pull).catch(()=>{})); drive.state='paused'; return; }
+        /* edits made while it downloaded count as ours: look again, right before deciding */
+        const cl=(await drive.cache())||c, unsaved=!!saving||drive.dirty;
+        const mineText=unsaved?serialise():cl.text, mine=mineText?parseData(mineText):null;
+        if(theirs&&(cl.dirty||unsaved)&&mine&&!isEmpty(mine)){
           const pick=await askConflict('drive',theirs,r.modifiedTime?new Date(r.modifiedTime):null);
-          if(pick==='theirs'){ try{ await drive.keepCopy(c.text,'from this screen'); }catch(_){} store=theirs; await drive.markSynced(text,r.version); drive.dirty=false; window.dispatchEvent(new CustomEvent('ybt-replace-data',{detail:clone(theirs)})); note(t('keptTheirs')); drive.lastSync=new Date(); drive.state='idle'; bar(null); return; }
-          try{ await drive.keepCopy(text,'changed elsewhere'); }catch(_){} note(t('keptMine'));
-          await idb.set('drive',{text:c.text,version:r.version,dirty:true});   /* ours goes up below */
+          if(pick==='theirs'){ try{ await drive.keepCopy(mineText,'from this screen'); }catch(_){} store=theirs; await drive.markSynced(text,r.version); drive.dirty=false; window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(theirs)})); note(t('keptTheirs')); drive.lastSync=new Date(); drive.state='idle'; bar(null); return; }
+          try{ await drive.keepCopy(text,'changed elsewhere'); }catch(_){}
+          if(pick==='merge'){ store=mergeData(mine,theirs); const mt=serialise(); await idb.set('drive',{text:mt,version:r.version,dirty:true}); drive.dirty=true;
+            window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(store)})); note(t('mergedBoth')); }   /* the merge goes up below */
+          else { note(t('keptMine')); await idb.set('drive',{text:mineText,version:r.version,dirty:true}); }   /* ours goes up below */
         } else if(theirs){
           store=theirs; await drive.markSynced(text,r.version);
-          window.dispatchEvent(new CustomEvent('ybt-replace-data',{detail:clone(theirs)}));
+          window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(theirs)}));
           if(pull==='note') note(t('pulled'));
           drive.lastSync=new Date(); drive.state='idle'; bar(null); return;
         }
@@ -547,6 +589,8 @@ function driveSync(pull){
       const c2=(await drive.cache())||{};
       if(c2.dirty||!drive.meta.fileId&&!isEmpty(store)){
         drive.state='saving'; notify();
+        /* someone may have saved since we looked: if so, go round again rather than overwrite them */
+        if(drive.meta.fileId&&c2.version!=null){ const r2=await drive.remote(); if(r2&&+r2.version>+c2.version){ drive.dirty=true; drive.state='idle'; scheduleUpload(300); return; } }
         await drive.backup();
         const text=c2.text||serialise();
         const f=await drive.upload(text);
@@ -555,13 +599,15 @@ function driveSync(pull){
         drive.dirty=c3.text!==text;
         if(drive.dirty) scheduleUpload(300);
       }
-      drive.lastSync=new Date(); drive.state='idle'; bar(null);
+      drive.lastSync=new Date(); drive.state='idle'; drive.fails=0; bar(null);
     }catch(e){
       const m=e&&e.message||'';
       if(m==='exists'){ scheduleUpload(300); }
       else if(m==='signin'){ drive.state='signin'; bar('signin'); }
       else if(m==='offline'||navigator.onLine===false){ drive.state='offline'; bar('offline'); }
-      else { drive.state='error'; notify(); scheduleUpload(30000); }
+      else { /* back off: 30 s, 1 min, 2 min … up to 5 min, and say when the next try is */
+        drive.fails=(drive.fails||0)+1; const wait=Math.min(300000,30000*Math.pow(2,drive.fails-1));
+        drive.state='error'; drive.nextTry=new Date(Date.now()+wait); scheduleUpload(wait); }
     } finally { notify(); }
   })().finally(()=>{ syncing=null; });
   return syncing;
@@ -684,6 +730,8 @@ const local={
   get status(){
     if(mode==='drive'){
       if(drive.state==='saving') return t('stDriveSaving');
+      if(drive.state==='paused') return t('stDrivePaused');
+      if(drive.state==='error'&&drive.nextTry) return t('stDriveError',hhmm(drive.nextTry));
       if(drive.state==='offline') return t('barOffline');
       if(drive.state==='signin') return t('barSignIn');
       if(drive.dirty) return t('stDriveWait');
