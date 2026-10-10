@@ -4,7 +4,7 @@
 <meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Ko2mwvivIlrcQm+P8B16/TwE3lWlY5yhumKWpuHZ4DI=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+71JaGJtR8W678Krq4JxIVwwQ3TosER6RGZ4xDwL+Wk=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -148,6 +148,15 @@ html{scrollbar-gutter:stable}
 .ai-rules textarea{width:100%;margin-top:8px;font:13px/1.5 var(--f-mono);resize:vertical}
 .ai-rules .hint{margin:8px 0 0}
 .ai-busy{display:grid;gap:8px;margin:0;font-size:14px}
+.ai-who{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);font-size:13.5px}
+.ai-who span{min-width:0;overflow-wrap:anywhere}
+.imp-tpl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ai-qbox{display:grid;gap:6px}
+.ai-opts{display:flex;flex-wrap:wrap;gap:6px}
+.ai-opt{white-space:normal;text-align:left;height:auto}
+.ai-opt.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ai-reply{display:flex;gap:6px}
+.ai-reply input{flex:1;min-width:0;font:13px var(--f-body);padding:5px 8px;border:1px solid var(--line-2);border-radius:6px;background:var(--surface);color:var(--ink)}
 .ai-errbox{display:grid;gap:8px}
 .ai-errbox pre{margin:8px 0;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);font:12px/1.5 var(--f-mono);white-space:pre-wrap;overflow-wrap:anywhere;max-height:200px;overflow:auto}
 .ai-errbox summary{cursor:pointer;font-size:13px;color:var(--ink-2)}
@@ -1495,6 +1504,10 @@ const STR={
   langCatsDone:[n=>`Language changed. ${n} ${n===1?'category name was':'category names were'} translated too.`,n=>`Idioma cambiado. También se ${n===1?'ha traducido 1 nombre de categoría':'han traducido '+n+' nombres de categorías'}.`],
   langCatsUndo:['Keep the old names','Mantener los nombres'], langCatsKept:['Category names put back as they were.','Los nombres de las categorías vuelven a estar como antes.'],
   aiChangeAi:['Change AI…','Cambiar la IA…'],
+  aiUsing:[n=>`Using: ${n}`,n=>`Usando: ${n}`], aiNone:['No AI chosen yet','Aún no has elegido una IA'], aiChangeBtn:['Change AI','Cambiar la IA'],
+  aiYourAnswer:[n=>`Your answer: ${n}`,n=>`Tu respuesta: ${n}`], aiReplyPh:['Or type your answer','O escribe tu respuesta'], aiReplyBtn:['Answer','Responder'],
+  dlTemplateBtn:['Download empty template','Descargar plantilla vacía'], dlTemplateHint:['Fill it in, then choose it below.','Rellénala y elígela después aquí abajo.'],
+  impFileA:['Your bank’s export (.csv or .xlsx), or this tracker’s ','La exportación de tu banco (.csv o .xlsx), o la '], impFileLink:['template','plantilla'], impFileB:['.',' de este control.'],
   nwLateHint:[(amt,d,acc,pm,km)=>`${amt} went into investments on ${d}, but ${acc} only shows it in ${km}. That makes ${pm} look like a loss under Markets and ${km} like a gain. If the money had left your bank by the end of ${pm}, count it in ${pm}.`,(amt,d,acc,pm,km)=>`El ${d} invertiste ${amt}, pero ${acc} no lo muestra hasta ${km}. Por eso ${pm} parece una pérdida en Mercados y ${km} una ganancia. Si el dinero ya había salido de tu banco a finales de ${pm}, cuéntalo en ${pm}.`],
   nwLateFix:[(acc,pm,a,b)=>`Count it in ${pm}: ${a} → ${b}`,(acc,pm,a,b)=>`Contarlo en ${pm}: ${a} → ${b}`],
   nwLateOk:['It’s right as it is','Está bien así'],
@@ -3749,6 +3762,25 @@ async function aiRun(){
     const x=aiErr(e); m.msg=x.text; m.errDetails=x.details; renderModalKeepScroll();
   }
 }
+/* the first time, the person picks which AI before anything else; the choice is remembered */
+async function aiOpen(m){
+  if(S.ai&&typeof S.ai.configured==='function'&&!S.ai.configured()){ const c=await S.ai.setup(); if(!c) return; render(); }
+  openModal(m);
+}
+/* "Is this a transfer? A) Yes B) No" -> the question and its options */
+function aiOptions(q){
+  q=String(q||''); const re=/(?:^|\s)\(?([A-Da-d1-4])[).]\s+/g, hits=[]; let x;
+  while((x=re.exec(q))) hits.push({k:x[1].toUpperCase(),i:x.index,end:re.lastIndex});
+  if(hits.length<2||!/^[A1]$/.test(hits[0].k)) return {stem:q,opts:[]};
+  return {stem:q.slice(0,hits[0].i).trim(),opts:hits.map((h,j)=>({k:h.k,text:q.slice(h.end,j+1<hits.length?hits[j+1].i:q.length).trim().replace(/\s*[;,]?\s*(or)?$/i,'')})).filter(o=>o.text)};
+}
+/* an answer to a question about a row: kept on the row, and used when it names one of the row's categories or tables */
+function aiAnswer(r,text){
+  text=String(text||'').trim(); if(!text) return; r.aiA=text;
+  const f=fold(text), cat=catNames(r.table).find(n=>fold(n)===f);
+  if(cat){ r.category=cat; r.manual=true; r.ml=null; r.maybe=null; return; }
+  const tk=TKEYS.find(k=>k===f||fold(TL(k))===f); if(tk&&tk!==r.table) setImpTable(r,tk);
+}
 function aiApply(m,res,nFiles){
   const label=L('aiFrom',nFiles);
   const tx=m.mode!=='nw'?aiTxResult(res,aiCatsFor(m.mode)):null, nwd=m.mode!=='tx'?aiNwData(res):null;
@@ -3770,6 +3802,7 @@ function modalAi(){
   const custom=mode!=='start'&&m.rules.trim()!==aiDefault(aiRulesKey(mode)).trim();
   return `${mHead(esc(L('aiTitle_'+mode)),esc(L('aiSub_'+mode)))}
   <div class="m-body ai-body">
+    ${(()=>{ const c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null; return `<div class="ai-who"><span>${esc(c?L('aiUsing',c.name+(c.model?' · '+c.model:'')):L('aiNone'))}</span>${S.ai&&typeof S.ai.setup==='function'&&!busy?`<button type="button" class="btn sm" data-action="ai-setup">${esc(L('aiChangeBtn'))}</button>`:''}</div>`; })()}
     <div class="field"><span class="lab">${esc(L('aiFiles'))}</span>
       <div class="drop ai-drop" id="ai-drop"><span>${esc(L('aiDrop'))}</span>
         <label class="btn sm" for="ai-file">${esc(L('aiChoose'))}</label><input type="file" id="ai-file" multiple accept=".pdf,.csv,.txt,.tsv,.xlsx,.xlsm,.xls,.ods,.png,.jpg,.jpeg,.webp,.gif" class="sr"${busy?' disabled':''}></div>
@@ -3778,7 +3811,7 @@ function modalAi(){
       <p class="hint">${esc(L('aiRulesHelp'))}</p>
       <label class="sr" for="ai-rules">${esc(L('aiRules'))}</label><textarea id="ai-rules" rows="12"${busy?' disabled':''}>${esc(m.rules)}</textarea>
       ${mode!=='start'&&custom&&!busy?`<button type="button" class="linkish" data-action="ai-reset">${esc(L('aiReset'))}</button>`:''}</details>
-    <p class="hint">${esc(L('aiPrivacy'))}${S.ai&&typeof S.ai.setup==='function'?` <button type="button" class="linkish" data-action="ai-setup">${esc(L('aiChangeAi'))}</button>`:''}</p>
+    <p class="hint">${esc(L('aiPrivacy'))}</p>
     ${busy?`<p class="ai-busy" role="status"><span class="loading-bar"></span><span id="ai-phase">${esc(m.phase||'')}</span></p>`:''}
     ${m.msg?`<div class="field ai-errbox" role="alert"><span class="err">${esc(m.msg)}</span>${m.errDetails?`<details open><summary>${esc(L('aiErrWhat'))}</summary><pre>${esc(m.errDetails)}</pre><button type="button" class="btn sm" data-action="ai-copy-err">${esc(L('aiCopyDetails'))}</button></details>`:''}</div>`:''}
   </div>
@@ -3787,7 +3820,7 @@ function modalAi(){
 /* above the import review when Claude did the reading */
 function aiReviewNote(m){
   const a=m.ai; if(!a) return '';
-  const q=m.rows.filter(r=>r.aiQ).length;
+  const q=m.rows.filter(r=>r.aiQ&&!r.aiA).length;
   return `<div class="ai-review">
     ${a.checks.map(c=>`<p class="ai-check ${c.ok?'ok':'bad'}">${c.ok?ICON.ok:ICON.warn}<span>${esc(c.ok?L('aiCheckOk',c.name):L('aiCheckBad',c.name,fmtEUR(c.move),fmtEUR(c.found)))}</span></p>`).join('')}
     ${q?`<p class="ai-check q">${ICON.warn}<span>${esc(L('aiQRows',q))}</span></p>`:''}
@@ -4182,7 +4215,8 @@ function modalImport(){
     const sk=skipList();
     return `${mHead(esc(L('impTitle')),esc(L('impSub')))}
   <div class="m-body imp-src">
-    <div class="drop" id="imp-drop"><span>${esc(L('impFileFirst'))}</span>
+    ${S.downloads?`<div class="imp-tpl"><button type="button" class="btn primary" data-action="import-template">${esc(L('dlTemplateBtn'))}</button><span class="hint">${esc(L('dlTemplateHint'))}</span></div>`:''}
+    <div class="drop" id="imp-drop"><span>${esc(L('impFileA'))}${S.downloads?`<button type="button" class="linkish" data-action="import-template">${esc(L('impFileLink'))}</button>`:esc(L('impFileLink'))}${esc(L('impFileB'))}</span>
       <label class="btn sm" for="imp-file">${esc(L('chooseFile'))}</label><input type="file" id="imp-file" accept=".xlsx,.xlsm,.xls,.csv,.txt" class="sr"></div>
     <div class="field"><label for="imp-text">${esc(L('impOrPaste'))}</label>
       <textarea id="imp-text" rows="4" placeholder="31/08/2026&#9;-60,00&#9;Amazon.es&#10;30/08/2026&#9;-39,90&#9;RENFE VIRTUAL INTERNET">${esc(m.text)}</textarea>
@@ -4209,14 +4243,14 @@ function modalImport(){
   const rows=m.rows, on=rows.filter(r=>r.on), dup=rows.filter(r=>r.dup).length, skp=rows.filter(r=>r.skip).length, noCat=on.filter(r=>!r.category).length, nMl=on.filter(r=>r.ml&&r.category===r.ml.cat).length;
   const guessed=rows.some(r=>r.guessed);
   const byT=TKEYS.map(t=>[t,on.filter(r=>r.table===t).length]).filter(x=>x[1]);
-  const body=rows.map((r,i)=>`<tr class="${r.on?'':'off'}${r.aiQ?' ai-ask':''}" id="imp-r-${i}">
+  const body=rows.map((r,i)=>`<tr class="${r.on?'':'off'}${r.aiQ&&!r.aiA?' ai-ask':''}" id="imp-r-${i}">
     <td class="on"><input type="checkbox" id="imp-on-${i}" data-action="imp-on" data-i="${i}" ${r.on?'checked':''} aria-label="${esc(L('includeRow',i+1))}"></td>
     <td class="d">${fmtDate(r.date)}</td>
     <td class="c">${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}</td>
     <td class="a r num">${fmtEUR(r.amount)}</td>
     <td class="tb">${impTableSel(r,i)}</td>
     <td class="k"><label class="sr" for="imp-c-${i}">${esc(L('catForRow',i+1))}</label><select id="imp-c-${i}" data-action="imp-cat" data-i="${i}" class="${r.category?(r.ml?'guess':''):'missing'}"${r.ml?` title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}"`:''}>${catOptions(r.table,r.category,true)}</select></td>
-    <td class="n">${r.aiQ?`<span class="note ai-q" title="${esc(r.aiQ)}"><b>${esc(L('aiAsks'))}:</b> ${esc(r.aiQ)}</span>`:''}${r.xfer?`<span class="note">${esc(L('noteXfer'))}</span> `:''}${r.like&&!r.dup?`<span class="note">${esc(L('noteLike',r.like.length>30?r.like.slice(0,29).trim()+'…':r.like))}</span> `:''}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.xfer?'':r.dup?`<span class="note">${esc(L('alreadyIn'))}</span>`:r.skip?`<span class="note">${esc(L('skipListNote',r.skip))}</span>`:r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',r.ml.like.length>24?r.ml.like.slice(0,23).trim()+'…':r.ml.like))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
+    <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${r.xfer?`<span class="note">${esc(L('noteXfer'))}</span> `:''}${r.like&&!r.dup?`<span class="note">${esc(L('noteLike',r.like.length>30?r.like.slice(0,29).trim()+'…':r.like))}</span> `:''}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.xfer?'':r.dup?`<span class="note">${esc(L('alreadyIn'))}</span>`:r.skip?`<span class="note">${esc(L('skipListNote',r.skip))}</span>`:r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',r.ml.like.length>24?r.ml.like.slice(0,23).trim()+'…':r.ml.like))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
     ${aiReviewNote(m)}${impChecksNote(m)}
@@ -5043,12 +5077,14 @@ const ACTIONS={
     bump(); render(); window.scrollTo({top:0});
     setTimeout(()=>startTour({fresh:true}),350);
   },
-  'ob-ai':()=>{ if(!S.canWrite||!S.ai) return; const lang=S.ui.obLang==='es'?'es':'en'; openModal({type:'ai',mode:'start',files:[],lang,mid:true}); },
+  'ob-ai':()=>{ if(!S.canWrite||!S.ai) return; const lang=S.ui.obLang==='es'?'es':'en'; aiOpen({type:'ai',mode:'start',files:[],lang,mid:true}); },
   'ob-import':()=>{ if(!S.canWrite) return; const lang=S.ui.obLang==='es'?'es':'en', {y,m,auto}=obStartPick();
     obApply(lang,y,m,auto); S.ui.tab='transactions'; try{ history.replaceState(null,'','#transactions'); }catch(_){}
     bump(); render(); window.scrollTo({top:0}); ACTIONS.import(); },
-  'ai-tx':()=>{ if(S.canWrite&&S.ai) openModal({type:'ai',mode:'tx',files:[],mid:true}); },
-  'ai-nw':()=>{ if(S.canWrite&&S.ai) openModal({type:'ai',mode:'nw',files:[],mid:true}); },
+  'ai-tx':()=>{ if(S.canWrite&&S.ai) aiOpen({type:'ai',mode:'tx',files:[],mid:true}); },
+  'ai-nw':()=>{ if(S.canWrite&&S.ai) aiOpen({type:'ai',mode:'nw',files:[],mid:true}); },
+  'ai-opt':el=>{ const m=S.modal, r=m&&m.rows&&m.rows[+el.dataset.i]; if(!r) return; const o=aiOptions(r.aiQ).opts[+el.dataset.j]; if(o){ aiAnswer(r,o.text); renderModalKeepScroll(); } },
+  'ai-reply':el=>{ const m=S.modal, r=m&&m.rows&&m.rows[+el.dataset.i], inp=$('#ai-reply-'+el.dataset.i); if(r&&inp){ aiAnswer(r,inp.value); renderModalKeepScroll(); } },
   'ai-send':()=>aiRun(),
   'ai-stop':()=>{ const m=S.modal; if(m&&m.ctl) m.ctl.abort(); },
   'ai-copy-err':async()=>{ const m=S.modal; if(!m||!m.errDetails) return; let ok=false; try{ await navigator.clipboard.writeText(m.errDetails); ok=true; }catch(_){}
