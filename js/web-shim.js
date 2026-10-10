@@ -425,6 +425,11 @@ function panel(html,opts){
   el.innerHTML=`<div class="web-panel-card">${html}<p class="web-msg" role="status" hidden></p></div>`;
   document.body.appendChild(el);
   const first=el.querySelector('button:not([disabled])'); if(first) setTimeout(()=>first.focus(),0);
+  /* Tab stays inside the panel, like the app's own dialogs */
+  el.addEventListener('keydown',e=>{ if(e.key!=='Tab') return;
+    const f=[...el.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled])')].filter(x=>x.getClientRects().length), i=f.indexOf(document.activeElement);
+    if(!f.length) return;
+    if(e.shiftKey&&i<=0){ e.preventDefault(); f[f.length-1].focus(); } else if(!e.shiftKey&&i===f.length-1){ e.preventDefault(); f[0].focus(); } });
   el.msg=s=>{ const m=el.querySelector('.web-msg'); m.textContent=s||''; m.hidden=!s; };
   el.busy=on=>el.querySelectorAll('button').forEach(b=>{ if(on){ b.dataset.was=b.disabled?'1':''; b.disabled=true; } else b.disabled=b.dataset.was==='1'; });
   return el;
