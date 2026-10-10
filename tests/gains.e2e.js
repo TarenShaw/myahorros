@@ -128,6 +128,23 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await expect('2026-09', SEP);
   console.log('4. edit, delete and an ambiguous row');
 
+  /* 6b. statement words: rows that don't name the account, or whose words fit two accounts */
+  await add('investments', '2026-09-12', 'GAMMA GLOBAL FI @ 35.538006', 150, 'out');   // fund name only: a gain until words are set
+  await add('investments', '2026-09-14', 'INDEXA MAS RENTABILIDAD ACCION', 25, 'out'); // name rule sends it to Indexa Capital
+  await expect('2026-09', { 'Indexa Capital': '+40.00', 'MyInvestor Fund': '+50.00' });
+  const words = async w => {
+    await p.click('[data-action=tab][data-tab=networth]'); await p.click('[data-action="nw-accounts"]');
+    for (const [n, v] of Object.entries(w)) await p.locator('#nw-acc-form .acc-row').filter({ has: p.locator(`input[data-f=name][value="${n}"]`) }).locator('input[data-f=words]').fill(v);
+    await p.click('#nw-acc-form button[type=submit]'); await p.waitForSelector('#nw-acc-form', { state: 'detached' });
+  };
+  await words({ 'MyInvestor Fund': 'Gamma Global', 'Indexa Capital': 'Indexa', 'MyInvestor Pension': 'Indexa mas rentabilidad, MyInvestor deposit' });
+  /* Gamma -> Fund; the longer "Indexa mas rentabilidad" beats "Indexa"; "MyInvestor deposit" (a tie by name) -> Pension */
+  const SEPW = { 'Indexa Capital': '+65.00', 'MyInvestor Fund': '−100.00', 'MyInvestor Pension': '+175.00', 'Total': '+1,430.00' };
+  await expect('2026-09', SEPW);
+  await p.reload({ waitUntil: 'load' }); await p.waitForSelector('#nw-month');
+  await expect('2026-09', SEPW);
+  console.log('4b. statement words: unnamed fund rows, longest phrase wins, saved across reload');
+
   /* 7. phones show Gains too */
   await p.setViewportSize({ width: 390, height: 844 });
   await p.click('[data-action=tab][data-tab=networth]');

@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-nlH30on9mcSV1G4OmSItgJeq5BIAKWWcfnLqIgDmQpU=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-OQ0RgVQubTujEyeOaedEp/IYRZT2B5Q4f1nA2ujhQKo=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -860,13 +860,14 @@ table.nwt{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-nume
 .acc-list{display:grid;gap:8px}
 .acc-row{display:grid;grid-template-columns:minmax(0,1fr) 150px auto auto;gap:8px;align-items:center}
 .acc-row .acts{display:flex}
+.acc-row .acc-words{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:center;font-size:12.5px;color:var(--muted)}
 .nw-sug{border:1px dashed var(--line-2);background:transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .nw-sug:hover{border-style:solid;color:var(--ink)}
 @media (max-width:980px){.nw-groups-help{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){
   .nw-row{grid-template-columns:minmax(0,1fr) 130px}
   .acc-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n n" "g g" "r a"}
-  .acc-row input[type=text]{grid-area:n}.acc-row select{grid-area:g}.acc-row .check{grid-area:r}.acc-row .acts{grid-area:a}
+  .acc-row>input[type=text]{grid-area:n}.acc-row>select{grid-area:g}.acc-row .acc-words{grid-template-columns:1fr;gap:4px}.acc-row{padding-bottom:12px;border-bottom:1px solid var(--line)}.acc-row .check{grid-area:r}.acc-row .acts{grid-area:a}
   table.nwt thead{display:none}
   table.nwt,.nwt tbody,.nwt tfoot,.nwt tr,.nwt td{display:block}
   .nwt tfoot tr{background:var(--surface-2);border-top:2px solid var(--line-2)}
@@ -1762,6 +1763,8 @@ const STR={
   nwSavedToast:[(m,y)=>`Saved the figures for ${m} ${y}`,(m,y)=>`Cifras de ${m} de ${y} guardadas`], nwDeletedToast:[(m,y)=>`Deleted the figures for ${m} ${y}`,(m,y)=>`Cifras de ${m} de ${y} eliminadas`],
   nwBadNumber:[a=>`“${a}” needs a number, e.g. 1.234,56.`,a=>`«${a}» necesita un número, p. ej. 1.234,56.`],
   nwAccTitle:['Your accounts','Tus cuentas'], nwAccSub:['Group each account by how quickly you could use the money.','Agrupa cada cuenta según lo rápido que podrías usar el dinero.'],
+  nwAccWords:['Statement words','Palabras del extracto'], nwAccWordsPh:['e.g. Gamma Global, Indexa Capital','p. ej. Gamma Global, Indexa Capital'],
+  nwAccWordsHelp:['Statement words: how your bank describes money going into or out of the account, separated by commas. Gains counts Investments rows that contain them as money you put in, so it isn’t shown as gain. Leave empty to match on the account’s name. Not used for Cash accounts.','Palabras del extracto: cómo describe tu banco el dinero que entra o sale de la cuenta, separadas por comas. Ganancias cuenta las filas de Inversiones que las contienen como dinero aportado, para que no se muestre como ganancia. Déjalo vacío para buscar por el nombre de la cuenta. No se usa en las cuentas de efectivo.'],
   nwAccName:['Name','Nombre'], nwAccGroup:['Group','Grupo'], nwRiskHelp:['Shown apart in the total, e.g. a delayed loan','Se muestra aparte en el total, p. ej. un préstamo retrasado'],
   nwAddAccount:['Add account','Añadir cuenta'], nwSuggest:['Ideas:','Ideas:'],
   nwMoveUp:[n=>`Move ${n} up`,n=>`Subir ${n}`], nwMoveDown:[n=>`Move ${n} down`,n=>`Bajar ${n}`], nwRemoveAcc:[n=>`Remove ${n}`,n=>`Quitar ${n}`],
@@ -1803,7 +1806,7 @@ const STR={
   /* accounts at 0 */
   nwTotalRow:['Total, all accounts','Total, todas las cuentas'],
   nwGains:['Gains','Ganancias'],
-  nwGainsTip:['Gains: what an account earned you. It is the change since last month, minus the money you put in, plus interest, dividends, capital gains or rent it paid out to you. Money put in or taken out comes from your Investments rows that name the account; payouts come from income rows that name the account in a category ticked under “Interest, dividends and gains” on Net worth. If a dividend stayed inside the account, don’t also record it as income, or it counts twice. Cash accounts show none. A row that doesn’t name the account, or fits two accounts equally well, isn’t counted for any account.','Ganancias: lo que te ha hecho ganar una cuenta. Es el cambio desde el mes anterior, menos el dinero que aportaste, más los intereses, dividendos, plusvalías o alquiler que te pagó. Lo aportado o retirado sale de tus filas de Inversiones que nombran la cuenta; los cobros, de los ingresos que nombran la cuenta en una categoría marcada en “Intereses, dividendos y plusvalías” de Patrimonio. Si un dividendo se quedó dentro de la cuenta, no lo apuntes también como ingreso o contará dos veces. Las cuentas de efectivo no muestran nada. Una fila que no nombra la cuenta, o que encaja igual de bien con dos cuentas, no cuenta para ninguna.'],
+  nwGainsTip:['Gains: what an account earned you. It is the change since last month, minus the money you put in, plus interest, dividends, capital gains or rent it paid out to you. Money put in or taken out comes from your Investments rows that contain the account’s statement words (Edit accounts) or, failing that, its name;payouts come from income rows that name the account in a category ticked under “Interest, dividends and gains” on Net worth. If a dividend stayed inside the account, don’t also record it as income, or it counts twice. Cash accounts show none. A row that matches no account, or fits two accounts equally well, isn’t counted for any account, so it shows up as gain: add statement words to fix it.','Ganancias: lo que te ha hecho ganar una cuenta. Es el cambio desde el mes anterior, menos el dinero que aportaste, más los intereses, dividendos, plusvalías o alquiler que te pagó. Lo aportado o retirado sale de tus filas de Inversiones que contienen las palabras del extracto de la cuenta (Editar cuentas) o, si no, su nombre;los cobros, de los ingresos que nombran la cuenta en una categoría marcada en “Intereses, dividendos y plusvalías” de Patrimonio. Si un dividendo se quedó dentro de la cuenta, no lo apuntes también como ingreso o contará dos veces. Las cuentas de efectivo no muestran nada. Una fila que no encaja con ninguna cuenta, o que encaja igual de bien con dos, no cuenta para ninguna y se muestra como ganancia: añade palabras del extracto para corregirlo.'],
   nwLaterHero:[n=>`No figure yet this month for ${n}: ${n.includes(',')||n.includes(' and ')?'their':'its'} first figure comes later, so the total may be low.`,n=>`Sin cifra este mes para ${n}: su primera cifra es posterior, así que el total puede quedarse corto.`],
   nwFaded:['Faded months are missing figures, so they look lower than they were:','Los meses atenuados no tienen todas las cifras, así que parecen más bajos de lo que fueron:'],
   nwLaterLine:[(n,m)=>`${n}: no figures before ${m}.`,(n,m)=>`${n}: sin cifras antes de ${m}.`],
@@ -2845,7 +2848,7 @@ function normNw(d){
   const o={accounts:[],snaps:{},goal:null}; if(!d||typeof d!=='object') return o;
   const ids=new Set();
   for(const a of Array.isArray(d.accounts)?d.accounts:[]){ if(!a||!String(a.name||'').trim()) continue; const id=String(a.id||newId()); if(ids.has(id)) continue; ids.add(id);
-    const x={id,name:String(a.name).trim(),group:NW_GROUPS.includes(a.group)?a.group:'invest'}; if(a.risk) x.risk=true; if(/^\d{4}-\d{2}$/.test(String(a.from||''))) x.from=a.from; o.accounts.push(x); }
+    const x={id,name:String(a.name).trim(),group:NW_GROUPS.includes(a.group)?a.group:'invest'}; if(a.risk) x.risk=true; if(/^\d{4}-\d{2}$/.test(String(a.from||''))) x.from=a.from; if(String(a.words||'').trim()) x.words=String(a.words).trim(); o.accounts.push(x); }
   if(d.snaps&&typeof d.snaps==='object') for(const [k,v] of Object.entries(d.snaps)){ if(!/^\d{4}-\d{2}$/.test(k)||!v||typeof v!=='object') continue;
     const s={}; for(const [id,x] of Object.entries(v)) if(ids.has(id)&&x!==null&&x!==''&&isFinite(+x)) s[id]=r2(+x); if(Object.keys(s).length) o.snaps[k]=s; }
   if(d.goal&&+d.goal.amount>0&&/^\d{4}-\d{2}$/.test(String(d.goal.month||''))) o.goal={amount:r2(+d.goal.amount),month:d.goal.month};
@@ -3191,16 +3194,21 @@ function goalGrowthCalc(T,rest,left,pace){
    that pays rent shows what it earned, not just its price change. Cash accounts have no gain: their change is
    mostly pay and spending. A deposit whose description doesn't name the account is counted as a gain.
    Names match on whole words of 3+ letters ("ING", not "ingreso"; "Fund", not "refund"). A row goes to the one account
-   whose name shares the most words with it ("MyInvestor Pension" beats "MyInvestor Fund"); a tie goes to neither. */
+   whose name shares the most words with it ("MyInvestor Pension" beats "MyInvestor Fund"); a tie goes to neither.
+   An account's own "statement words" (Edit accounts, comma-separated, e.g. "Gamma Global, Indexa Capital") come first:
+   a row containing one of those phrases as whole words goes to that account, the longest phrase winning; the name rule
+   is only the fallback for rows no phrase matches. */
 function nwGains(prev,k){
   const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map(), put=new Map();
   const words=s=>fold(s).split(/[^a-z0-9]+/).filter(x=>x.length>=3);
-  const accs=N.accounts.filter(a=>a.group!=='cash').map(a=>({id:a.id,w:new Set(words(a.name))}));
+  const accs=N.accounts.filter(a=>a.group!=='cash').map(a=>({id:a.id,w:new Set(words(a.name)),p:String(a.words||'').split(',').map(loose).filter(Boolean)}));
+  /* the one account with the best score; a tie goes to neither */
+  const pick=score=>{ let best=null, n=0, tie=false; for(const a of accs){ const s=score(a); if(s>n){ best=a.id; n=s; tie=false; } else if(s&&s===n) tie=true; } return tie?null:best; };
   for(const r of allRows()){ const m=r.date.slice(0,7); if(r.table!=='investments'&&!isReturn(r)||m<=prev||m>k) continue;
-    const cw=new Set(words(r.concept)); let best=null, n=0, tie=false;
-    for(const a of accs){ let s=0; for(const x of a.w) if(cw.has(x)) s++;
-      if(s>n){ best=a.id; n=s; tie=false; } else if(s&&s===n) tie=true; }
-    if(best&&!tie) put.set(best,(put.get(best)||0)-r.amount); }
+    const c=' '+loose(r.concept)+' ', cw=new Set(words(r.concept));
+    const byPhrase=pick(a=>Math.max(0,...a.p.filter(p=>c.includes(' '+p+' ')).map(p=>p.length)));
+    const best=byPhrase||(accs.some(a=>a.p.some(p=>c.includes(' '+p+' ')))?null:pick(a=>{ let s=0; for(const x of a.w) if(cw.has(x)) s++; return s; }));
+    if(best) put.set(best,(put.get(best)||0)-r.amount); }
   for(const a of N.accounts){
     if(a.group==='cash') continue;
     const v1=s1[a.id], v0=s0[a.id]; if(v1==null||v0==null) continue;
@@ -3336,7 +3344,8 @@ function modalNwAccounts(){
       <label class="sr" for="na-n-${i}">${esc(L('nwAccName'))}</label><input type="text" id="na-n-${i}" data-i="${i}" data-f="name" value="${esc(a.name)}" autocomplete="off">
       <label class="sr" for="na-g-${i}">${esc(L('nwAccGroup'))}</label><select id="na-g-${i}" data-i="${i}" data-f="group">${NW_GROUPS.map(g=>`<option value="${g}"${a.group===g?' selected':''}>${esc(L('g_'+g))}</option>`).join('')}</select>
       <label class="check" title="${esc(L('nwRiskHelp'))}"><input type="checkbox" id="na-r-${i}" data-i="${i}" data-f="risk"${a.risk?' checked':''}>${esc(L('nwRisk'))}</label>
-      <span class="acts"><button type="button" class="icon-btn" data-action="na-up" data-i="${i}" aria-label="${esc(L('nwMoveUp',a.name||''))}"${i?'':' disabled'}>↑</button><button type="button" class="icon-btn" data-action="na-down" data-i="${i}" aria-label="${esc(L('nwMoveDown',a.name||''))}"${i<L2.length-1?'':' disabled'}>↓</button><button type="button" class="icon-btn" data-action="na-del" data-i="${i}" aria-label="${esc(L('nwRemoveAcc',a.name||''))}">${ICON.x}</button></span></div>`).join('');
+      <span class="acts"><button type="button" class="icon-btn" data-action="na-up" data-i="${i}" aria-label="${esc(L('nwMoveUp',a.name||''))}"${i?'':' disabled'}>↑</button><button type="button" class="icon-btn" data-action="na-down" data-i="${i}" aria-label="${esc(L('nwMoveDown',a.name||''))}"${i<L2.length-1?'':' disabled'}>↓</button><button type="button" class="icon-btn" data-action="na-del" data-i="${i}" aria-label="${esc(L('nwRemoveAcc',a.name||''))}">${ICON.x}</button></span>
+      <label class="acc-words" for="na-w-${i}"><span>${esc(L('nwAccWords'))}</span><input type="text" id="na-w-${i}" data-i="${i}" data-f="words" value="${esc(a.words||'')}" placeholder="${esc(L('nwAccWordsPh'))}" autocomplete="off"></label></div>`).join('');
   const sug=NW_GROUPS.flatMap(g=>STR['nwSug_'+g][LANG==='es'?1:0].map(n=>[g,n])).filter(([,n])=>!L2.some(a=>a.name.toLowerCase()===n.toLowerCase()));
   const chip=([g,n])=>`<button type="button" class="kchip nw-sug" data-action="na-add" data-g="${g}" data-n="${esc(n)}">${gSw(g)} ${esc(n)}</button>`;
   /* a new list (or the setup guide): the ideas by group, with what each group means */
@@ -3346,7 +3355,7 @@ function modalNwAccounts(){
     <div class="ctrls" style="margin-top:12px"><button type="button" class="btn sm" data-action="na-add">${esc(L('nwAddOther'))}</button></div></div>`:'';
   return `${mHead(esc(L('nwAccTitle')),esc(L('nwAccSub')))}
   <form id="nw-acc-form" novalidate><div class="m-body">
-    ${L2.length?`<div class="acc-list">${rows}</div>`:''}
+    ${L2.length?`<div class="acc-list">${rows}</div><p class="hint" style="margin-top:10px">${esc(L('nwAccWordsHelp'))}</p>`:''}
     ${start?startBox:`<div class="ctrls"><button type="button" class="btn sm" data-action="na-add">${esc(L('nwAddAccount'))}</button>${sug.length?`<span class="hint">${esc(L('nwSuggest'))}</span>${sug.map(chip).join('')}`:''}</div>`}
     ${dropped?`<p class="warn-text">${esc(L('nwAccDropWarn',dropped))}</p>`:''}
     <p class="err" id="na-err" aria-live="polite"></p>
@@ -5404,7 +5413,7 @@ document.addEventListener('submit',e=>{
     if(list.some(a=>!a.name)||new Set(names).size!==names.length){ $('#na-err').textContent=L('nwAccErr'); return; }
     if(!list.length&&!nw().accounts.length){ $('#na-err').textContent=L('nwAccNone'); return; }
     const N=ensureNw(), keep=new Set(list.map(a=>a.id));
-    N.accounts=list.map(a=>{ const x={id:a.id,name:a.name,group:NW_GROUPS.includes(a.group)?a.group:'invest'}; if(a.risk) x.risk=true; if(a.from) x.from=a.from; return x; });
+    N.accounts=list.map(a=>{ const x={id:a.id,name:a.name,group:NW_GROUPS.includes(a.group)?a.group:'invest'}; if(a.risk) x.risk=true; if(a.from) x.from=a.from; const w=String(a.words||'').replace(/\s+/g,' ').trim(); if(w) x.words=w; return x; });
     for(const k of Object.keys(N.snaps)){ for(const id of Object.keys(N.snaps[k])) if(!keep.has(id)) delete N.snaps[k][id]; if(!Object.keys(N.snaps[k]).length) delete N.snaps[k]; }
     saveNw(); closeModal(); render(); toast(L('nwAccSaved'));
   }
