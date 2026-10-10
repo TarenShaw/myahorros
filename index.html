@@ -4,7 +4,7 @@
 <meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-OLyJP0qCAsJ0+l4DgkCTqZviyxCE3I+A3cShFB5XHkQ=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Ko2mwvivIlrcQm+P8B16/TwE3lWlY5yhumKWpuHZ4DI=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -5321,7 +5321,7 @@ async function boot(){
 }
 /* swaps in a whole dataset {months, config}. persist=true writes every document back (website restore and its undo);
    the desktop app's storage layer has already written its file, so it passes false */
-function loadDataset(d,persist){
+function loadDataset(d,persist,soft){
   const c=(d&&d.config)||{}, prevLang=LANG, oldKeys=Object.keys(S.months);
   if(!persist){ dirty.clear(); clearTimeout(flushTimer); }
   S.months={}; for(const [k,v] of Object.entries((d&&d.months)||{})) S.months[k]=normMonth(v);
@@ -5334,8 +5334,9 @@ function loadDataset(d,persist){
     for(const k of Object.keys(S.months)) markDirty('months/'+k);
     markDirty('config/categories'); markDirty('config/keywords'); markDirty('config/settings'); markDirty('config/networth');
   }
-  S.ui.year=null; S.ui.mm={table:S.ui.mm.table,cat:null}; S.ui.oc.month='all'; S.ui.tx.cat='all'; S.ui.tx.month='all'; S.ui.editTarget=null; S.ui.obY=null; S.ui.yScroll=null; S.lastImport=null;
-  closeModal(); bump(); render();
+  /* soft: data that arrived from another device or file: the screen, filters and any open dialog stay as they are */
+  if(!soft){ S.ui.year=null; S.ui.mm={table:S.ui.mm.table,cat:null}; S.ui.oc.month='all'; S.ui.tx.cat='all'; S.ui.tx.month='all'; S.ui.editTarget=null; S.ui.obY=null; S.ui.yScroll=null; S.lastImport=null; closeModal(); }
+  bump(); render();
 }
 function currentDataset(){
   const config={}; if(S.cats) config.categories=clone(S.cats); if(S.kw) config.keywords=clone(S.kw); if(S.settings) config.settings=clone(S.settings); config.networth=clone(nw());
@@ -5343,6 +5344,10 @@ function currentDataset(){
 }
 /* desktop app only: its storage layer replaces the whole dataset (open another file / start fresh) */
 window.addEventListener('ybt-replace-data',e=>loadDataset((e&&e.detail)||{},false));
+/* a newer copy arrived by itself (Drive, or the folder changed elsewhere): never closes a dialog or cancels an AI request */
+window.addEventListener('ybt-sync-data',e=>loadDataset((e&&e.detail)||{},false,true));
+/* the storage layer asks before it swaps data or asks a question: wait while a dialog is open or edits are on their way */
+window.YBT_BUSY=()=>!!S.modal||dirty.size>0||busy.size>0||flushing;
 window.addEventListener('ybt-lang',e=>{ const v=e&&e.detail==='es'?'es':'en'; S.ui.obLang=v; if(S.settings&&S.settings.lang&&S.canWrite&&S.settings.lang!==v) setSettings({lang:v}); render(); });
 window.addEventListener('ybt-local-render',()=>{ if(S.mode==='live'){ render(); if(S.modal) renderModalKeepScroll(); } });
 window.addEventListener('hashchange',()=>{ const h=(location.hash||'').replace('#',''); if(TABS.includes(h)&&h!==S.ui.tab) setTab(h); });
