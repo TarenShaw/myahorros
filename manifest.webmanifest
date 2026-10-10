@@ -1,6 +1,6 @@
 {
-  "name": "Yearly Budget Tracker",
-  "short_name": "Budget",
+  "name": "MyAhorros",
+  "short_name": "MyAhorros",
   "description": "A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.",
   "start_url": "./",
   "scope": "./",

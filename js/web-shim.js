@@ -1,4 +1,4 @@
-/* Yearly Budget Tracker: storage layer for the stand-alone web version.
+/* MyAhorros: storage layer for the stand-alone web version.
    Stands in for window.claude, like the Windows app's layer, and keeps every figure on the visitor's side:
    - "folder":  one data file in a folder they pick (Chrome or Edge on a computer, File System Access API),
                 tracker-data.json plus Backups\tracker-data YYYY-MM-DD.json, the same files as the Windows app;
@@ -33,7 +33,7 @@ const lsSet=(k,v)=>{ try{ if(v==null) localStorage.removeItem(k); else localStor
 const TX={
   en:{
     chooseTitle:'Where should your tracker be saved?',
-    about:'Yearly Budget Tracker is a free budget and net worth tracker: income, expenses, investments and what you own, month by month, in English or Spanish.', privacyLink:'Privacy',
+    about:'MyAhorros is a free budget and net worth tracker: income, expenses, investments and what you own, month by month, in English or Spanish.', privacyLink:'Privacy',
     chooseSub:'Your figures never go to this website. Pick where they’re kept; you can change it later in Settings.',
     folderT:'A folder on this computer', folderS:'One data file in a folder you choose, such as Documents, with a backup every day. Works offline. The same file the Windows app uses.',
     folderNo:'Needs Chrome or Edge on a computer.',
@@ -103,7 +103,7 @@ const TX={
     syncNow:'Sync now', syncNowHelp:'Upload the latest changes and check for newer ones from your other devices.',
     disconnect:'Disconnect Google Drive', disconnectHelp:'Keep the tracker only in this browser. The file in your Drive stays there.',
     saveCopy:'Save a backup…', saveCopyHelp:'Save a copy of everything as a file.',
-    copyName:d=>`Yearly Budget Tracker backup ${d}.json`, copySaved:n=>`Backup saved: ${n}`, copyDownloaded:n=>`Backup downloaded: ${n}`, copyFailed:'The backup couldn’t be saved.',
+    copyName:d=>`MyAhorros backup ${d}.json`, copySaved:n=>`Backup saved: ${n}`, copyDownloaded:n=>`Backup downloaded: ${n}`, copyFailed:'The backup couldn’t be saved.',
     openTitle:'Open a tracker data file or backup',
     cantRead:'That file couldn’t be read, so nothing was changed.', notTracker:'That isn’t a tracker data file, so nothing was changed.',
     opened:(n,c)=>`Opened ${n}: ${c} ${c==='1'?'transaction':'transactions'}. Your previous data was kept as a backup first.`,
@@ -115,7 +115,7 @@ const TX={
   },
   es:{
     chooseTitle:'¿Dónde quieres guardar tu control?',
-    about:'Yearly Budget Tracker es un control gratuito de presupuesto y patrimonio: ingresos, gastos, inversiones y lo que tienes, mes a mes, en español o en inglés.', privacyLink:'Privacidad',
+    about:'MyAhorros es un control gratuito de presupuesto y patrimonio: ingresos, gastos, inversiones y lo que tienes, mes a mes, en español o en inglés.', privacyLink:'Privacidad',
     chooseSub:'Tus cifras nunca llegan a esta web. Elige dónde se guardan; puedes cambiarlo luego en Ajustes.',
     folderT:'Una carpeta de este ordenador', folderS:'Un archivo de datos en la carpeta que elijas, como Documentos, con una copia cada día. Funciona sin conexión. Es el mismo archivo que usa la aplicación de Windows.',
     folderNo:'Necesita Chrome o Edge en un ordenador.',
@@ -437,11 +437,11 @@ const ICONS={
 /* the page a new visitor sees first: what the tracker is, then "See a demo" or "Get started". Resolves 'demo' | 'start'. */
 function landing(){
   return new Promise(resolve=>{
-    const el=document.createElement('div'); el.className='web-landing'; el.setAttribute('role','dialog'); el.setAttribute('aria-label','Yearly Budget Tracker');
+    const el=document.createElement('div'); el.className='web-landing'; el.setAttribute('role','dialog'); el.setAttribute('aria-label','MyAhorros');
     const draw=()=>{
       const L0=lang(), F=t('landF'), H=t('landHowSteps');
       const ico=['<path d="M4 16.5V10M10 16.5V4M16 16.5V8"/>','<path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/>','<rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8.5h14M8 8.5V17M12.5 8.5V17"/>','<path d="M10 2.5l6 2.5v4.5c0 4-2.6 6.8-6 8-3.4-1.2-6-4-6-8V5z"/><path d="M7.5 10l2 2 3.5-4"/>'];
-      el.innerHTML=`<header class="wl-top"><span class="wl-brand">Yearly Budget Tracker</span>
+      el.innerHTML=`<header class="wl-top"><span class="wl-brand">MyAhorros</span>
           <div class="wl-top-r"><div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>
           <button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button></div></header>
         <main>
@@ -462,7 +462,7 @@ function landing(){
     };
     draw(); document.body.appendChild(el); document.body.classList.add('web-landing-on');
     el.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
-      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'Control de presupuesto anual':'Yearly Budget Tracker'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); const y=el.scrollTop; draw(); el.scrollTop=y; return; }
+      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); const y=el.scrollTop; draw(); el.scrollTop=y; return; }
       if(!b.dataset.x) return; el.remove(); document.body.classList.remove('web-landing-on'); resolve(b.dataset.x); });
   });
 }
@@ -472,7 +472,7 @@ function chooseMode(fromSettings){
     const fOk=canFolder(), dOk=canDrive()&&navigator.onLine!==false;
     const card=(m,title,sub,ok,why,rec)=>`<button type="button" class="web-way${mode===m&&fromSettings?' current':''}" data-m="${m}"${ok?'':' disabled'}>${ICONS[m]}<span><b>${esc(title)}${rec&&ok?` <i class="web-rec">${esc(t('recommended'))}</i>`:''}</b><small>${esc(sub)}</small>${ok?'':`<small class="web-why">${esc(why)}</small>`}</span></button>`;
     const L0=lang(), langSw=fromSettings?'':`<div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>`;
-    const el=panel(`<div class="web-top"><p class="web-eyebrow">Yearly Budget Tracker</p>${langSw}</div><h2 id="wp-title">${esc(t('chooseTitle'))}</h2><p class="web-sub">${esc(t('chooseSub'))}</p>
+    const el=panel(`<div class="web-top"><p class="web-eyebrow">MyAhorros</p>${langSw}</div><h2 id="wp-title">${esc(t('chooseTitle'))}</h2><p class="web-sub">${esc(t('chooseSub'))}</p>
       <div class="web-ways">
         ${card('folder',t('folderT'),t('folderS'),fOk,t('folderNo'),true)}
         ${card('drive',t('driveT'),t('driveS')+(fromSettings?'':' '+t('driveHave')),dOk,canDrive()?t('driveOffline'):t('driveNo'),!fOk)}
@@ -484,7 +484,7 @@ function chooseMode(fromSettings){
       ${fromSettings?`<div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`:''}`,{overlay:fromSettings});
     el.addEventListener('click',async e=>{
       const b=e.target.closest('button'); if(!b||b.disabled) return;
-      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'Control de presupuesto anual':'Yearly Budget Tracker'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); el.remove(); chooseMode(fromSettings).then(resolve); return; }
+      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); el.remove(); chooseMode(fromSettings).then(resolve); return; }
       if(b.dataset.x==='cancel'){ el.remove(); resolve(null); return; }
       if(b.dataset.x==='example'){ try{ sessionStorage.setItem('ybt.autotour','1'); }catch(_){} el.remove(); resolve({mode:'browser'}); return; }
       const m=b.dataset.m; if(!m) return;
@@ -884,7 +884,7 @@ async function startFolder(){
   if(p!=='granted'){
     /* the browser wants a click before it opens the folder again */
     p=await new Promise(resolve=>{
-      const el=panel(`<p class="web-eyebrow">Yearly Budget Tracker</p><h2 id="wp-title">${esc(t('reTitle'))}</h2><p class="web-sub">${esc(t('reText',h.name))}</p>
+      const el=panel(`<p class="web-eyebrow">MyAhorros</p><h2 id="wp-title">${esc(t('reTitle'))}</h2><p class="web-sub">${esc(t('reText',h.name))}</p>
         <div class="web-acts"><button type="button" class="btn primary" data-x="allow">${esc(t('allow'))}</button><button type="button" class="btn" data-x="other">${esc(t('otherFolder'))}</button><button type="button" class="btn ghost" data-x="browser">${esc(t('useBrowser'))}</button></div>`);
       el.addEventListener('click',async e=>{ const b=e.target.closest('button[data-x]'); if(!b) return; el.busy(true); el.msg('');
         try{
@@ -914,7 +914,7 @@ async function startDrive(){
   }
   /* a new device: connect before opening */
   const ok=await new Promise(resolve=>{
-    const el=panel(`<p class="web-eyebrow">Yearly Budget Tracker</p><h2 id="wp-title">${esc(t('driveConnectTitle'))}</h2><p class="web-sub">${esc(t('driveConnectText'))}</p>
+    const el=panel(`<p class="web-eyebrow">MyAhorros</p><h2 id="wp-title">${esc(t('driveConnectTitle'))}</h2><p class="web-sub">${esc(t('driveConnectText'))}</p>
       <div class="web-acts"><button type="button" class="btn primary" data-x="go">${esc(t('connect'))}</button><button type="button" class="btn ghost" data-x="browser">${esc(t('useBrowser'))}</button></div>`);
     el.addEventListener('click',async e=>{ const b=e.target.closest('button[data-x]'); if(!b) return;
       if(b.dataset.x==='browser'){ el.remove(); resolve(false); return; }

@@ -11,7 +11,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
 const files = []; let nextId = 1;
 const now = () => new Date().toISOString();
 const add = (o) => { const f = Object.assign({ id: 'f' + nextId++, parents: [], version: 1, modifiedTime: now(), content: '' }, o); files.push(f); return f; };
-const root = add({ name: 'Yearly Budget Tracker', mime: 'application/vnd.google-apps.folder' });
+const root = add({ name: 'MyAhorros', mime: 'application/vnd.google-apps.folder' });
 const matches = q => files.filter(f => { const n = q.match(/name='([^']*)'/), p = q.match(/'([^']+)' in parents/), m = q.match(/mimeType='([^']*)'/);
   return (!n || f.name === n[1]) && (!p || f.parents.includes(p[1])) && (!m || f.mime === m[1]); });
 const pub = f => ({ id: f.id, name: f.name, version: String(f.version), modifiedTime: f.modifiedTime, trashed: false });
