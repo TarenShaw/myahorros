@@ -1,6 +1,6 @@
 # PROGRESS
 
-Branch: `worktree-quick-wins` (worktree `.claude/worktrees/quick-wins`, local only, not pushed), based on `main` at `baf2f60` (PR #1 `overhaul` already merged). Last handoff: 2026-10-10.
+Branch: `worktree-quick-wins` (worktree `.claude/worktrees/quick-wins`), pushed to `origin/worktree-quick-wins`, not merged; based on `main` at `baf2f60` (PR #1 `overhaul` already merged). Last handoff: 2026-10-10.
 Product name: **MyAhorros** (site at myahorros.app).
 
 ## Completed
@@ -20,14 +20,15 @@ Product name: **MyAhorros** (site at myahorros.app).
 | Gains payouts | `2f844ba` | Gains = change − money put in + interest/dividends/gains paid out (income rows in a returns category naming the account). Civislend repaid 1,000 + 80 interest shows +80. Tooltip en/es rewritten. SW 1.0.9 |
 | Gains test + fixes | `cbd7963` | Playwright run of Gains with ~50 rows (dialog + paste import), Aug gap, reload, edit/delete. Fixed: names match whole words of 3+ letters ("ING" works, "refund" ≠ "Fund"); a row goes to the account sharing most name words, tie = neither (MyInvestor Fund/Pension no longer double-counted); Gains column was hidden at phone width, now shown under Change. New `tests/gains.e2e.js`. SW 1.0.8 |
 | Audit quick wins | `58be1db` | Newcomer audit (Playwright, 390/768/1280 px) then 5 fixes: empty-state actions on Overview/Transactions, "add at least one account" validation, setup strip "step N of 5", paste/import recommended + API key not remembered by default, new title/description/og/twitter tags, `sw.js` VERSION 1.0.7, CSP hash refreshed |
+| Repo files | `517f37a`, `9f3e05e` | Claude files briefly untracked, then restored at the user's request (net: no change); branch pushed |
 
 ## In progress
 
-Nothing uncommitted in application code. Untracked in the worktree: `.playwright-cli/` (Playwright logs, safe to delete). In the main checkout: `.graphifyignore`, `graphify-out/`.
+Nothing uncommitted. Untracked in the worktree: `.playwright-cli/` (Playwright logs, safe to delete). In the main checkout: `.graphifyignore`, `graphify-out/`. Next proposed section: 8.3 (mobile and tour pass); open questions from the last briefing (fix or only log audit layout items, keyboard/screen-reader scope) are unanswered.
 
 ## Pending
 
-- Push `worktree-quick-wins` for review, or merge into `main` (merging publishes the live site via GitHub Pages). Needs the user's say-so.
+- 8.4 Merge `worktree-quick-wins` into `main` (publishes the live site via GitHub Pages). Needs the user's say-so. PR link: https://github.com/TarenShaw/myahorros/pull/new/worktree-quick-wins
 - 8.2 Live-key verification (rotated Gemini key + real Claude key, large statement on Haiku 5.5 and Gemini).
 - 8.3 Mobile and tour pass: landing page and import review at 390 px not yet checked; keyboard and screen-reader checks not done.
 - 8.5 Post-release: GoatCounter counts a visit, existing users update cleanly (SW `VERSION`, CSP hash).
@@ -50,6 +51,8 @@ Nothing uncommitted in application code. Untracked in the worktree: `.playwright
 - 2026-10-10: Gains bugs found by tests may be fixed directly; Gains scenario kept as `tests/gains.e2e.js`.
 - 2026-10-10: Gains matching: whole words ≥3 letters, best-matching account wins, tie counts for neither (shown as gain). Tip text updated en+es.
 - 2026-10-10: Gains means what the account earned you: price change plus payouts (interest, dividends, capital gains, rent if its category is ticked as a return). Supersedes the 2026-10-10 Gains formula above where they differ. A dividend that stayed inside the account must not also be recorded as income (double count; stated in tooltip).
+- 2026-10-10: Keep everything in the repo, including CLAUDE.md, PLAN.md, PROGRESS.md and `.claude/skills/`; delete nothing. Only `.playwright-cli/` logs stay untracked.
+- 2026-10-10: User approved pushing `worktree-quick-wins` (done). Merge into `main` still needs approval.
 - 2026-10-10: Setup strip counts wizard steps (acc and figures = 1, transactions = 3, of 5); wizard step 3 recommends paste/import, not AI.
 
 ## Known issues
@@ -73,6 +76,7 @@ Nothing uncommitted in application code. Untracked in the worktree: `.playwright
 - Switching language to Spanish auto-translates category names (35 in the test tracker); expected, but worth knowing when testing.
 - Port 8000 was already in use during this session; tests ran on 8123 via `START_URL=http://localhost:8123/`.
 - Line endings: checkouts must stay LF or the CSP hash breaks locally (`.gitattributes`, `tools/update-csp-hash.js`).
+- GitHub says the repo moved to `https://github.com/TarenShaw/myahorros.git`; pushes still work. Update with `git remote set-url origin https://github.com/TarenShaw/myahorros.git`.
 - Worktree sessions refuse compound git commands and `eval` strings; run git as plain separate commands.
 
 ## Commands
