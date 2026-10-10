@@ -132,6 +132,8 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await add('investments', '2026-09-12', 'GAMMA GLOBAL FI @ 35.538006', 150, 'out');   // fund name only: a gain until words are set
   await add('investments', '2026-09-14', 'INDEXA MAS RENTABILIDAD ACCION', 25, 'out'); // name rule sends it to Indexa Capital
   await expect('2026-09', { 'Indexa Capital': '+40.00', 'MyInvestor Fund': '+50.00' });
+  const unlinked = () => p.locator('.warn-text', { hasText: 'no account' }).allTextContents().then(t => t.join(' '));
+  assert.ok((await unlinked()).includes('“GAMMA GLOBAL FI”'), 'no warning for the unlinked Gamma row');
   const words = async w => {
     await p.click('[data-action=tab][data-tab=networth]'); await p.click('[data-action="nw-accounts"]');
     for (const [n, v] of Object.entries(w)) await p.locator('#nw-acc-form .acc-row').filter({ has: p.locator(`input[data-f=name][value="${n}"]`) }).locator('input[data-f=words]').fill(v);
@@ -141,9 +143,10 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   /* Gamma -> Fund; the longer "Indexa mas rentabilidad" beats "Indexa"; "MyInvestor deposit" (a tie by name) -> Pension */
   const SEPW = { 'Indexa Capital': '+65.00', 'MyInvestor Fund': '−100.00', 'MyInvestor Pension': '+175.00', 'Total': '+1,430.00' };
   await expect('2026-09', SEPW);
+  assert.ok(!(await unlinked()).includes('GAMMA'), 'Gamma still listed as unlinked after adding its words');
   await p.reload({ waitUntil: 'load' }); await p.waitForSelector('#nw-month');
   await expect('2026-09', SEPW);
-  console.log('4b. statement words: unnamed fund rows, longest phrase wins, saved across reload');
+  console.log('4b. statement words: unnamed fund rows, longest phrase wins, saved across reload, unlinked-rows warning');
 
   /* 7. phones show Gains too */
   await p.setViewportSize({ width: 390, height: 844 });
