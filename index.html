@@ -4,7 +4,7 @@
 <meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+71JaGJtR8W678Krq4JxIVwwQ3TosER6RGZ4xDwL+Wk=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-TTTAZqHtUyhrYDhz/ESO4QRKQx0qNuQOTwxis9K+soI=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -89,7 +89,7 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font:400 14px/1.5 var(--f-body);-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--f-body);-webkit-font-smoothing:antialiased}
 button,input,select,textarea{font:inherit;color:inherit}
 h1,h2,h3{margin:0;text-wrap:balance}
 p{margin:0}
@@ -98,7 +98,7 @@ p{margin:0}
 .num,.tab-num{font-variant-numeric:tabular-nums}
 
 html{scrollbar-gutter:stable}
-.app{max-width:1600px;margin:0 auto;padding-inline:clamp(16px,3vw,32px);padding-block:0 64px}
+.app{max-width:1760px;margin:0 auto;padding-inline:clamp(16px,3vw,32px);padding-block:0 64px}
 
 /* masthead */
 .mast{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;padding-block:28px 18px}
@@ -114,13 +114,14 @@ html{scrollbar-gutter:stable}
 .tabbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between}
 .tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0}
 .tabs::-webkit-scrollbar{display:none}
-.tab{position:relative;background:none;border:0;padding:12px 12px 13px;font-weight:600;color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.tab{position:relative;background:none;border:0;padding:12px 9px 13px;font-weight:600;color:var(--ink-2);cursor:pointer;white-space:nowrap}
 .tab:hover{color:var(--ink)}
 .tab[aria-selected="true"]{color:var(--ink)}
 .tab[aria-selected="true"]::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;background:var(--accent);border-radius:2px 2px 0 0}
 .tab .badge{margin-left:6px}
 @media(min-width:861px){.tab .badge[data-t]::after{content:attr(data-t);white-space:nowrap;margin-left:4px}}
-.tab .ti{display:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tab .ti{display:inline-block;width:18px;height:18px;vertical-align:-4px;margin-right:5px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tabs{gap:0}
 .tabbar-end{display:flex;align-items:center;gap:10px;padding-block:6px}
 .eye-btn{padding:0;width:32px;justify-content:center}
 .guide{border-color:var(--accent)}
@@ -246,13 +247,15 @@ main{padding-top:24px}
 .btn.ghost:hover:not(:disabled){background:var(--surface-2)}
 .btn.sm{height:28px;padding:0 9px;font-size:12.5px}
 .btn:disabled{opacity:.45;cursor:default}
-.linkish{background:none;border:0;padding:0;color:var(--accent);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.linkish{background:var(--surface);border:1px solid var(--line-2);border-radius:6px;padding:3px 9px;color:var(--ink);font-weight:600;font-size:13px;cursor:pointer;text-decoration:none;vertical-align:baseline}
+.linkish:hover{background:var(--surface-2);border-color:var(--accent);color:var(--accent)}
 input[type=text],input[type=search],input[type=date],input[type=number],select,textarea{height:34px;border:1px solid var(--line-2);background:var(--surface);border-radius:6px;padding:0 10px;min-width:0}
 textarea{height:auto;padding:10px;line-height:1.45;resize:vertical;font:13px/1.45 var(--f-mono)}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent)}
 select{padding-right:28px}
-.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:7px;padding:2px;background:var(--surface);gap:2px;flex-wrap:wrap}
-.seg button{border:0;background:transparent;border-radius:5px;padding:5px 11px;font-weight:600;font-size:13px;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.seg{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--line-2);border-radius:7px;padding:2px;background:var(--surface);gap:2px}
+@media (max-width:520px){.seg{display:inline-flex;flex-wrap:wrap}}
+.seg button{border:0;background:transparent;border-radius:5px;padding:5px 11px;font-weight:600;font-size:13px;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap}
 .seg button:hover{color:var(--ink);background:var(--surface-2)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
 .seg .ct{font:500 11px/1 var(--f-mono);opacity:.75}
@@ -502,7 +505,7 @@ code,.kw{font:12.5px var(--f-mono);background:var(--surface-2);border-radius:4px
 #overlay.on{display:block}
 .scrim{position:absolute;inset:0;background:var(--scrim)}
 .modal{position:absolute;left:50%;top:max(24px,6vh);transform:translateX(-50%);width:min(560px,calc(100% - 24px));max-height:calc(100% - max(48px,12vh));overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);display:flex;flex-direction:column}
-.modal.wide{width:min(1000px,calc(100% - 24px))}
+.modal.wide{width:min(1240px,calc(100% - 24px))}
 .modal.mid{width:min(720px,calc(100% - 24px))}
 .tab.due .tl::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--warn-ink);margin-left:5px;vertical-align:2px}
 .m-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 20px 12px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:1}
@@ -563,7 +566,8 @@ table.imp{width:100%;border-collapse:collapse;font-size:13px}
 .imp td.r,.imp th.r{text-align:right}
 .imp tr.off td{opacity:.5}
 .imp select{height:28px;font-size:12.5px;max-width:200px}
-.imp .note{font-size:11.5px;color:var(--warn-ink);font-weight:600;white-space:nowrap}
+.imp .note{font-size:12px;color:var(--warn-ink);font-weight:600;white-space:normal;overflow-wrap:anywhere}
+.imp td.n{min-width:220px;max-width:380px;white-space:normal}
 .imp .note.ml{color:var(--accent);font-weight:600;white-space:normal;display:inline-block;max-width:240px;line-height:1.3}
 .imp select.guess{border-style:dashed;border-color:var(--accent)}
 .ml-maybe{font-size:12px;margin-left:8px;white-space:nowrap}
@@ -686,7 +690,7 @@ fieldset.plain legend{padding:0;margin-bottom:6px}
   .tabbar{justify-content:flex-end;min-height:0}
   .tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);overflow:visible;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
   .tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 2px 7px;font-size:10.5px;line-height:1.15;min-width:0}
-  .tab .ti{display:block;width:21px;height:21px}
+  .tab .ti{display:block;width:21px;height:21px;margin:0}
   .tab .tl{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .tab .tab-long{display:none}
   .tab[aria-selected="true"]{color:var(--accent)}
@@ -813,7 +817,7 @@ table.nwimp-t{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-
 .drop:focus-within .btn{outline:2px solid var(--accent);outline-offset:2px}
 .nwimp-nrow select{min-width:0;width:100%}
 .nwimp-t .sh{display:none}
-table.nwt{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+table.nwt{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-numeric:tabular-nums}
 .nwt th{text-align:left;font:600 11px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--line-2);white-space:nowrap}
 .nwt td{padding:8px 12px;border-bottom:1px solid var(--line)}
 .nwt th.r,.nwt td.r{text-align:right;white-space:nowrap}
@@ -1739,6 +1743,8 @@ const STR={
   nwGoalNoInvest:[v=>`${v} would have to come from growth on top of your saving.`,v=>`${v} tendrían que venir del crecimiento, además de tu ahorro.`],
   /* accounts at 0 */
   nwTotalRow:['Total, all accounts','Total, todas las cuentas'],
+  nwGains:['Gains','Ganancias'],
+  nwGainsTip:['Gains: how much an account grew on its own (prices, interest, dividends), apart from money you put in. It is the change since last month minus the money put into that account, taken from your Investments rows that name the account. Cash accounts show none. A deposit that doesn’t name the account counts as a gain.','Ganancias: cuánto creció una cuenta por sí sola (precios, intereses, dividendos), sin contar el dinero que aportaste. Es el cambio desde el mes anterior menos lo aportado a esa cuenta, según tus filas de Inversiones que nombran la cuenta. Las cuentas de efectivo no muestran nada. Un ingreso que no nombra la cuenta cuenta como ganancia.'],
   nwLaterHero:[n=>`No figure yet this month for ${n}: ${n.includes(',')||n.includes(' and ')?'their':'its'} first figure comes later, so the total may be low.`,n=>`Sin cifra este mes para ${n}: su primera cifra es posterior, así que el total puede quedarse corto.`],
   nwFaded:['Faded months are missing figures, so they look lower than they were:','Los meses atenuados no tienen todas las cifras, así que parecen más bajos de lo que fueron:'],
   nwLaterLine:[(n,m)=>`${n}: no figures before ${m}.`,(n,m)=>`${n}: sin cifras antes de ${m}.`],
@@ -2504,25 +2510,14 @@ function viewOverview(){
       </div>
     </section>
     ${thisMonthCard()}
-    ${Y.inc>0?`<section class="card">
-      <div class="card-head"><div><h2>${esc(L('indicators'))}${info('ovInd')}</h2><p class="sub">${esc(L('indicatorsSub',y))}${AF.expenses.uncatCount?' '+esc(L('indUncat',AF.expenses.uncatCount)):''}</p></div></div>
-      <div class="inds">${inds}</div>
-    </section>`:`<section class="card ov-first"><h2>${esc(L('ovFirstTitle'))}</h2><p class="sub">${esc(L('ovFirstText'))}</p>${S.canWrite?`<button class="btn primary" type="button" data-action="guide-income">${esc(L('ovAddIncome'))}</button>`:''}</section>`}
+    ${Y.inc>0?'':`<section class="card ov-first"><h2>${esc(L('ovFirstTitle'))}</h2><p class="sub">${esc(L('ovFirstText'))}</p>${S.canWrite?`<button class="btn primary" type="button" data-action="guide-income">${esc(L('ovAddIncome'))}</button>`:''}</section>`}
     <section class="card">
       <div class="card-head"><div><h2>${esc(L('monthByMonth'))}${info('ovMonthly')}</h2><p class="sub">${esc(mmSummary(A))} ${esc(L('clickBar'))}</p></div>
         <div class="seg" role="group" aria-label="${esc(L('show'))}"><button data-action="mm-table" data-t="all" aria-pressed="${mmT==='all'}">${esc(L('all'))}</button>${TKEYS.map(t=>`<button data-action="mm-table" data-t="${t}" aria-pressed="${mmT===t}"><i class="sw ${t}"></i>${esc(TL(t))}</button>`).join('')}</div></div>
-      <div class="legend" style="margin-bottom:6px">${mmT==='all'
-        ? TKEYS.map(t=>`<span><i class="sw ${t}"></i>${esc(TL(t))}</span>`).join('')
-        : `<span><i class="sw ${mmT}"></i>${esc(L('perMonth',mc?dispCat(mc):TL(mmT)))}</span><span><i class="lkey trend"></i>${esc(L('trendFor',y))}</span>${mc?`<button type="button" class="cat-chip" data-action="mm-clear-cat">${esc(L('onlyCat',dispCat(mc)))}<span aria-hidden="true">${ICON.x}</span><span class="sr">${esc(L('backToAll',mmT))}</span></button>`:''}`}</div>
+      ${mmT!=='all'&&mc?`<div class="legend" style="margin-bottom:6px"><button type="button" class="cat-chip" data-action="mm-clear-cat">${esc(L('onlyCat',dispCat(mc)))}<span aria-hidden="true">${ICON.x}</span><span class="sr">${esc(L('backToAll',mmT))}</span></button></div>`:''}
       <div class="chart" id="ch-monthly" style="height:290px"></div>
       ${partialOut?`<p class="foot-note">${esc(L('partialNote',M()[nm.m]))}</p>`:''}
     </section>
-    ${Y.inc>0?`    <section class="card">
-      <div class="card-head"><div><h2>${esc(L('shareIncome'))}${info('ovShare')}</h2><p class="sub">${esc(L('shareIncomeSub'))}</p></div>
-        <div class="legend"><span><i class="lkey" style="background:var(--c-expenses)"></i>${esc(TL('expenses'))}</span><span><i class="lkey" style="background:var(--c-investments)"></i>${esc(TL('investments'))}</span></div></div>
-      <div class="chart" id="ch-prop"></div>
-      <p class="foot-note">${esc(L('shareFoot'))}</p>
-    </section>`:''}
     <section class="card">
       <div class="card-head"><div><h2>${esc(L('byCategory'))}${info('ovCats')}</h2><p class="sub">${esc(oc.table==='expenses'&&oc.exRent&&rn?L('rentLeftOut',rn):L('totalsPeriod'))}${esc(L('clickCat'))}</p></div>
         <div class="ctrls">
@@ -2534,6 +2529,16 @@ function viewOverview(){
         </div></div>
       <div id="ch-cats">${catBars(A)}</div>
     </section>
+    ${Y.inc>0?`    <section class="card">
+      <div class="card-head"><div><h2>${esc(L('shareIncome'))}${info('ovShare')}</h2><p class="sub">${esc(L('shareIncomeSub'))}</p></div>
+        <div class="legend"><span><i class="lkey" style="background:var(--c-expenses)"></i>${esc(TL('expenses'))}</span><span><i class="lkey" style="background:var(--c-investments)"></i>${esc(TL('investments'))}</span></div></div>
+      <div class="chart" id="ch-prop"></div>
+      <p class="foot-note">${esc(L('shareFoot'))}</p>
+    </section>`:''}
+    ${Y.inc>0?`<section class="card">
+      <div class="card-head"><div><h2>${esc(L('indicators'))}${info('ovInd')}</h2><p class="sub">${esc(L('indicatorsSub',y))}${AF.expenses.uncatCount?' '+esc(L('indUncat',AF.expenses.uncatCount)):''}</p></div></div>
+      <div class="inds">${inds}</div>
+    </section>`:''}
     ${multi?`<section class="card"><div class="card-head"><div><h2>${esc(L('yearByYear'))}${info('ovYears')}</h2><p class="sub">${esc(L('eurosYear'))}</p></div><div class="legend">${TKEYS.map(t=>`<span><i class="sw ${t}"></i>${esc(TL(t))}</span>`).join('')}</div></div><div class="chart" id="ch-years" style="height:260px"></div></section>`:''}
   </div>`;
 }
@@ -2568,7 +2573,7 @@ function thisMonthCard(){
   const top=catRowsFor(A,'expenses').map(c=>({n:c,v:r2(-A.expenses.rows.get(c)[m])})).filter(d=>d.v>0.004&&!limitFor(d.n)).sort((a,b)=>b.v-a.v).slice(0,6);
   return `<section class="card tm" aria-labelledby="tm-title">
     <div class="card-head"><div><h2 id="tm-title">${esc(L('thisMonth'))} · ${esc(M()[m])}${info('ovThisMonth')}</h2><p class="sub">${esc(L('dayOf',n.day,n.days))}</p></div>
-      ${S.canWrite?`<div class="ctrls"><button class="btn sm" type="button" data-action="add-tx">${esc(L('addTx'))}</button><button class="btn sm" type="button" data-action="import">${esc(L('pasteImport'))}</button></div>`:''}</div>
+      ${S.canWrite?`<div class="ctrls"><button class="btn sm" type="button" data-action="add-tx">${esc(L('addTx'))}</button><button class="btn sm" type="button" data-action="import">${esc(L('pasteImport'))}</button>${S.ai?`<button class="btn sm" type="button" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}</div>`:''}</div>
     ${cnt?`<div class="tm-stats">
       <div><span class="tile-label"><i class="sw expenses"></i>${esc(L('spentSoFar'))}</span><span class="tm-num">${fmtEUR(spent)}</span>${avgSpent!=null?`<span class="tile-sub">${esc(L('avgMonthIs',fmtEUR(avgSpent,0)))}</span>`:''}</div>
       <div><span class="tile-label"><i class="sw income"></i>${esc(L('inSoFar'))}</span><span class="tm-num">${fmtEUR(inc)}</span></div>
@@ -3066,7 +3071,6 @@ function viewNetworth(){
   const ally=nwYearsAll(), sely=nwYearsSel();
   const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
       <div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div></div>
-      <div class="legend nw-legend">${NW_GROUPS.filter(g=>nwChartMonths().some(x=>nwTotals(x).g[g]>0.004)).map(g=>`<span>${gSw(g)}${esc(L('g_'+g))}</span>`).join('')}${nwTrend(nwChartMonths())?`<span><i class="lkey trend"></i>${esc(L('trendLine'))}</span>`:''}</div>
       <div class="chart" id="ch-nw" style="height:260px"></div>${nwChartNote()}</section>`:'';
   return head(ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${chart}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
 }
@@ -3077,19 +3081,39 @@ function goalGrowthCalc(T,rest,left,pace){
   const tot=inv>0&&gap>0?gap/inv:null, yr=tot!=null?Math.pow(1+tot,12/left)-1:null;
   return {inv,fromSaving,gap,tot,yr};
 }
+/* Gains: how much an account grew by on its own (prices, interest, dividends), apart from money you put in.
+   gain = change since the month with figures before - net money put in.
+   "Put in" = rows in Investments dated after that month, up to this one, whose description names the account
+   (money out of your pay is a deposit, money back in is a withdrawal). Cash accounts have no gain: their change is
+   mostly pay and spending. A deposit whose description doesn't name the account is counted as a gain. */
+function nwGains(prev,k){
+  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map();
+  const rows=allRows().filter(r=>r.table==='investments'&&r.date.slice(0,7)>prev&&r.date.slice(0,7)<=k);
+  for(const a of N.accounts){
+    if(a.group==='cash') continue;
+    const v1=s1[a.id], v0=s0[a.id]; if(v1==null||v0==null) continue;
+    const w=fold(a.name).split(/[^a-z0-9]+/).filter(x=>x.length>=4);
+    const put=w.length?sum(rows.filter(r=>w.some(x=>fold(r.concept).includes(x))).map(r=>-r.amount)):0;
+    out.set(a.id,r2(v1-v0-put));
+  }
+  return out;
+}
 function accountsCard(k){
   const N=nw(), s=k?N.snaps[k]||{}:{}, prev=k?nwMonths()[nwMonths().indexOf(k)-1]:null, s0=prev?N.snaps[prev]:null, T=k?nwTotals(k):{total:0,g:{}};
   const st=k?nwState(k):null, shown=st?st.shown:N.accounts;
+  const G=k&&prev?nwGains(prev,k):new Map(), gc=v=>`<td class="r ${v==null?'':v<-0.004?'down':v>0.004?'up':''}">${v==null?'':Math.abs(v)<0.005?'–':signed(v)}</td>`;
   const rows=NW_GROUPS.map(g=>{ const accs=shown.filter(a=>a.group===g); if(!accs.length) return '';
-    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td><td></td><td class="r">${k&&T.total>0?fmtPct(T.g[g]/T.total,0):''}</td></tr>`+
+    const gg=accs.filter(a=>G.has(a.id));
+    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td><td></td>${gc(gg.length?r2(sum(gg.map(a=>G.get(a.id)))):null)}<td class="r">${k&&T.total>0?fmtPct(T.g[g]/T.total,0):''}</td></tr>`+
       accs.map(a=>{ const v=s[a.id], v0=s0?s0[a.id]:null, d=v!=null&&v0!=null?r2(v-v0):null;
         return `<tr><td class="an">${esc(a.name)}${a.risk?` <span class="chip-risk">${esc(L('nwRisk'))}</span>`:''}</td><td class="r">${v!=null?fmtEUR(v):`<span class="missing">${esc(L('nwNoFigure'))}</span>`}</td>
-          <td class="r ${d==null?'':d<-0.004?'down':d>0.004?'up':''}">${d==null?'':Math.abs(d)<0.005?'–':signed(d)}</td><td class="r">${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
+          <td class="r ${d==null?'':d<-0.004?'down':d>0.004?'up':''}">${d==null?'':Math.abs(d)<0.005?'–':signed(d)}</td>${gc(G.has(a.id)?G.get(a.id):null)}<td class="r">${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
   const dT=k&&prev?r2(T.total-nwTotals(prev).total):null;
-  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}">${dT==null?'':Math.abs(dT)<0.005?'–':signed(dT)}</td><td class="r">${T.total>0?fmtPct(1,0):''}</td></tr></tfoot>`:'';
+  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}">${dT==null?'':Math.abs(dT)<0.005?'–':signed(dT)}</td>${gc(G.size?r2(sum([...G.values()])):null)}<td class="r">${T.total>0?fmtPct(1,0):''}</td></tr></tfoot>`:'';
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
       ${S.canWrite?`<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button>`:''}</div>
-    <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
+    <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
+    ${k&&prev?`<p class="hint" style="margin-top:10px">${esc(L('nwGainsTip'))}</p>`:''}
     ${st&&st.closed.size?`<p class="hint" style="margin-top:10px">${esc(L('nwClosedNote',st.closed.size))}</p>`:''}</section>`;
 }
 /* years in the Over time chart: the current year by default (or the latest with figures), any mix on request */
