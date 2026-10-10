@@ -11,6 +11,7 @@ Product name: **MyAhorros** (site at myahorros.app).
 | Audit quick wins | `58be1db` | Empty-state actions, account validation, "step N of 5", paste/import recommended, share tags |
 | Gains | `cbd7963`, `2f844ba` | Whole-word matching, best account wins, Gains on phones, payouts count (interest/dividends); `tests/gains.e2e.js` |
 | Repo files | `517f37a`, `9f3e05e`, `56b1a99`, `81fe48b` | Claude files kept in repo; PROGRESS.md handoffs; all pushed |
+| Gains statement words | (this commit) | User's Sep Gains equalled Change for every account: no Investments row matched ("GAMMA GLOBAL FI" names no account; "Indexa"/"Fondos" shared by accounts → ties). Each account now has optional "Statement words" (Edit accounts, comma-separated, saved as `words` on the account); a row containing one as whole words goes to that account, longest phrase wins, name rule is the fallback. Replay of the user's data: Indexa fund +212.19, pension +31.50, MyInvestor Fondos +8.45 (were +732.19/+156.50/+786.75). Tooltip en+es updated; step 4b in `tests/gains.e2e.js`. SW 1.0.11 |
 | 8.4 Release | `afdd2dd` (PR #2), `d0df6eb` | PR #2 merged into `main`; 8.3 and later commits pushed straight to `main` |
 | 8.3 Mobile + tour pass | `7b4b8ad` | Checked 390/768 px (mouse + touch): landing, where-to-save, wizard, all 17 tour steps, all tabs, accounts table, add dialog, import review (fits). Fixed: 36-40 px touch targets on phones/`pointer:coarse` (Categories 176/183 under 36 px → 0); `--muted` light → `#5c6a65` (≥4.5:1 everywhere; web.css and privacy.html greys too); "You're set up" card on Overview only, no eyebrow/step list, Got it beside title (46% → 40% of 390 px screen), Transactions shows one-line "Go to Overview" bar; phone accounts table labels Change and Share; tour card at bottom for tall targets on phones; tabs fit 641-900 px; where-to-save panel traps Tab; Esc on wizard = Finish later (no longer reopens). Two new checks in `tests/landing-wizard.e2e.js`. SW 1.0.10 |
 
@@ -47,6 +48,7 @@ Nothing uncommitted. Untracked: `.playwright-cli/` (Playwright logs, safe to del
 - 2026-10-10: 8.3 scope (user: "complete all open questions 1 and 2"): fix every audit layout item inside 8.3 (setup-done card, tap targets, contrast, phone accounts-table labels), and run keyboard/screen-reader checks on landing, where-to-save, wizard, tour and add/import dialogs, fixing real problems found.
 - 2026-10-10: User said "push everything": branch pushed to `origin/worktree-quick-wins` at `81fe48b`.
 - 2026-10-10: User: "I want to always commit and push to main." Every commit goes to `main` (`git push origin HEAD:main`, fast-forward only; run the checks first because `main` is the live site). Supersedes "do not push or merge without the user's say-so" and the merge-approval notes above.
+- 2026-10-10: Gains matching: user chose option 1, per-account "Statement words" (over a per-row account picker or smarter guessing only). Words win over the name rule; longest phrase wins; equal-length phrases on two accounts = neither.
 
 ## Known issues
 
@@ -67,7 +69,9 @@ Nothing uncommitted. Untracked: `.playwright-cli/` (Playwright logs, safe to del
   - Landing is `role=dialog` without `aria-modal`; harmless because the app behind it is `display:none`.
   - `.info-btn` is drawn 17 px (hit area 41 px via `::after`); inline footer links are 14 px tall.
 - Not tested: Firefox/Safari, offline/service-worker update, real Drive OAuth, a real screen reader (checks were DOM-level: names, labels, dialog roles, focus order).
-- Gains: a deposit whose description doesn't name the account, or fits two accounts equally, counts for no account, so it shows as gain (`nwGains` in `index.html`). Fix would be 9.1.
+- Gains: a row matching no account's statement words or name, or fitting two equally, still counts for no account and shows as gain (`nwGains` in `index.html`); the user fixes it by adding statement words. No hint yet listing unlinked rows.
+- Statement words (`words` on each account in `config/networth`) are dropped by Windows app builds made before this change when they save; re-enter after using an old build.
+- SEGO - Factoring has no August figure, so its September Gains stay blank although its 150 put in now matches.
 - No default "Rent" income category; rent counts in a flat's Gains only if the user adds one and ticks it as a return.
 - Gains blank for an account missing a figure in the previous month with figures, even if an earlier month has one.
 - Switching language to Spanish auto-translates category names; expected, but worth knowing when testing.
