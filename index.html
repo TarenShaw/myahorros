@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-aBOMgLuRnS7/FUqQVoUSP1aU470Dv/aZopx6yiDBSTQ=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-nlH30on9mcSV1G4OmSItgJeq5BIAKWWcfnLqIgDmQpU=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -30,7 +30,7 @@
   --surface-3:#e2e8e5;
   --ink:#13211f;
   --ink-2:#44554f;
-  --muted:#6f7e79;
+  --muted:#5c6a65;
   --line:#d8dfdc;
   --line-2:#bcc8c3;
   --accent:#0d5c63;
@@ -85,7 +85,7 @@
 /* Appearance setting: Light / Dark chosen in Settings beats the device setting (Automatic removes the attribute) */
 :root[data-ybt-theme="light"]{
   --bg:#f1f4f2;--surface:#fcfdfc;--surface-2:#edf1ef;--surface-3:#e2e8e5;
-  --ink:#13211f;--ink-2:#44554f;--muted:#6f7e79;--line:#d8dfdc;--line-2:#bcc8c3;
+  --ink:#13211f;--ink-2:#44554f;--muted:#5c6a65;--line:#d8dfdc;--line-2:#bcc8c3;
   --accent:#0d5c63;--accent-hover:#0a4a50;--accent-ink:#ffffff;--accent-soft:#d9ebea;
   --c-income:#1baf7a;--c-expenses:#eb6834;--c-investments:#2a78d6;
   --good:#0ca30c;--good-ink:#006300;--good-soft:#e1f2de;
@@ -336,7 +336,8 @@ select{padding-right:28px}
 .chart{position:relative;width:100%;min-height:200px}
 .chart svg{display:block;max-width:100%;overflow:visible}
 #ch-prop{height:330px}
-@media (max-width:480px){.tab-long{display:none}}
+@media (max-width:900px){.tab-long{display:none}}
+@media (min-width:641px) and (max-width:767px){.tab .ti{display:none}}
 .chart .gl{stroke:var(--line);stroke-width:1}
 .chart .base{stroke:var(--line-2);stroke-width:1}
 .chart .ref{stroke:var(--line-2);stroke-width:1}
@@ -883,8 +884,9 @@ table.nwt{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-nume
   .nwt td.an{padding-left:8px}
   .nwt td:nth-child(3){grid-column:2;grid-row:2;font-size:12px}
   .nwt td:nth-child(3):empty,.nwt td:nth-child(4):empty{display:none}
-  .nwt td:nth-child(4){grid-column:2;font-size:12px}.nwt td:nth-child(4)::before{content:attr(data-l) " ";color:var(--muted)}
-  .nwt td:nth-child(5){grid-column:1;grid-row:2}
+  .nwt td:nth-child(4){grid-column:2;font-size:12px}
+  .nwt td:nth-child(n+3)[data-l]:not(:empty)::before{content:attr(data-l) " ";color:var(--muted)}
+  .nwt td:nth-child(5){grid-column:1;grid-row:2;text-align:left;font-size:12px}
   .nwt tr.grp{background:var(--surface-2)}
   .nwt tr.grp .hint{display:block;font-size:11.5px;margin-top:1px}
   .nwt tr.grp .grp-sub::before{content:none}
@@ -892,6 +894,18 @@ table.nwt{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-nume
   .tab{font-size:9.5px;letter-spacing:-.01em}
 }
 @media (max-width:370px){.tab{font-size:9px;padding-inline:1px}}
+/* phones and touch screens: controls big enough for a finger */
+@media (max-width:640px),(pointer:coarse){
+  .btn{min-height:40px}.btn.sm{min-height:36px}
+  .icon-btn{min-width:40px;min-height:40px}
+  input[type=text],input[type=search],input[type=date],input[type=number],select{min-height:40px}
+  .linkish{padding:8px 11px}.lim-btn{min-height:36px;padding:8px 10px}
+  .seg button{min-height:36px}summary{padding:8px 0}
+  button.nw{min-height:36px;min-width:44px}
+  .info-btn{position:relative}.info-btn::after{content:"";position:absolute;inset:-12px}
+  .kw-row{grid-template-columns:minmax(0,1fr) minmax(120px,190px) 40px}
+}
+@media (max-width:640px){.kw-row{grid-template-columns:minmax(0,1fr) 40px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -2294,7 +2308,7 @@ function render(){
     html=!G?viewEmpty():S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='tx')?`<div class="guide-wrap">${guideCard(G)}</div>`+viewEmpty():guideBar(G)+viewEmpty(); }
   else { html=({overview:viewOverview,yearly:viewYearly,transactions:viewTransactions,categories:viewCategories,networth:viewNetworth,settings:viewSettings})[S.ui.tab]();
     const G=S.ui.tab!=='networth'&&S.ui.tab!=='settings'?guideState():null;
-    if(G){ const full=S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='done'); html=(full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G))+html; } }
+    if(G){ const full=S.ui.tab==='overview'; html=(full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G))+html; } }
   v.innerHTML=html;
   restoreFocus(st);
   afterRender();
@@ -3049,9 +3063,6 @@ function guideStrip(G){
 }
 function guideCard(G){
   if(G.cur!=='done') return guideStrip(G);
-  const state=(k,done)=>G.skip&&k!=='tx'?'skip':done?'done':G.cur===k?'cur':'todo';
-  const steps=[['acc',G.acc],['val',G.val],['tx',G.tx]].map(([k,d],i)=>{ const s=state(k,d);
-    return `<li class="gs-${s}"${G.cur===k?' aria-current="step"':''}><span class="gs-n" aria-hidden="true">${s==='done'?'✓':s==='skip'?'–':i+1}</span><span>${esc(L('gStep_'+k))}${s==='skip'?` <small>· ${esc(L('gSkipped'))}</small>`:s==='done'?`<span class="sr"> ${esc(L('gDoneSr'))}</span>`:''}</span></li>`; }).join('');
   const go=(action,label,extra)=>`<button class="btn primary guide-go" type="button" data-action="${action}"${extra||''}>${label}</button>`;
   const skipNw=`<button class="btn guide-skip" type="button" data-action="guide-skipnw">${esc(L('gSkipNw'))}</button>`;
   let body='', acts='', after='';
@@ -3069,22 +3080,20 @@ function guideCard(G){
     acts=go('guide-income',esc(L('gAddSalary')))+`<button class="btn" type="button" data-action="guide-import">${esc(L('pasteRows'))}</button>`+(S.ai?`<button class="btn" type="button" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:'');
   } else {
     body=`<p>${esc(L('gDoneText'))}${G.skip?' '+esc(L('gDoneSkip')):''}</p><p class="hint" style="margin-top:8px">${esc(S.local?LT('gSafeApp'):L('gSafeWeb'))}</p>`;
-    acts=(S.ui.tab==='overview'?go('guide-hide',esc(L('gGotIt'))):go('guide-finish',esc(L('gToOverview')))+`<button class="btn" type="button" data-action="guide-hide">${esc(L('close'))}</button>`)
-      +(S.downloads||S.local?`<button class="btn" type="button" data-action="remind-ics">${esc(L('remindBtn'))}</button>`:'');
+    acts=S.downloads||S.local?`<button class="btn" type="button" data-action="remind-ics">${esc(L('remindBtn'))}</button>`:'';
   }
-  return `<section class="card guide${G.cur==='done'?' guide-done':''}" aria-labelledby="guide-title">
-    <div class="guide-top"><span class="eyebrow">${esc(G.cur==='done'?L('gEyebrowDone'):L('gEyebrow',G.n))}</span>${G.cur!=='done'?`<button class="icon-btn" type="button" data-action="guide-hide" aria-label="${esc(L('gHide'))}" title="${esc(L('gHide'))}">${ICON.x}</button>`:''}</div>
-    <ol class="guide-steps">${steps}</ol>
-    <h2 id="guide-title">${esc(L('gTitle_'+G.cur))}</h2>${body}
-    <div class="guide-acts">${acts}</div>${after}</section>`;
+  /* only "done" gets here, on Overview (the steps in progress use guideStrip): title and "Got it" share a row, no eyebrow or ticked step list */
+  return `<section class="card guide guide-done" aria-labelledby="guide-title">
+    <div class="guide-top"><h2 id="guide-title">${esc(L('gTitle_'+G.cur))}</h2>${go('guide-hide',esc(L('gGotIt')))}</div>${body}
+    ${acts?`<div class="guide-acts">${acts}</div>`:''}${after}</section>`;
 }
-/* on Yearly and Categories: one line pointing back to the step in progress */
+/* on Yearly, Transactions and Categories: one line pointing back to the step in progress; once done, only Transactions (where the last step happens) points to Overview */
 function guideBar(G){
-  if(G.cur==='done') return '';
+  if(G.cur==='done') return S.ui.tab==='transactions'?`<div class="guide-bar"><span><b>${esc(L('gTitle_done'))}</b></span><button class="linkish" type="button" data-action="tab" data-tab="overview">${esc(L('gToOverview'))}</button></div>`:'';
   return `<div class="guide-bar"><span><b>${esc(L('gEyebrow',G.n))}</b> · ${esc(L('gTitle_'+G.cur))}</span><button class="linkish" type="button" data-action="guide-continue">${esc(L('gContinue'))}</button></div>`;
 }
 function viewNetworth(){
-  const N=nw(), ms=nwMonths(), cw=S.canWrite, due=nwDue(), G=guideState();
+  const N=nw(), ms=nwMonths(), cw=S.canWrite, due=nwDue(), G0=guideState(), G=G0&&G0.cur!=='done'?G0:null;   /* the "you're set up" card lives on Overview only */
   const head=(right)=>`<div class="nw-head"><div><h2 class="sec-title">${esc(L('nwTitle'))}${info('nwWhat')}</h2><p class="hint">${esc(L('nwSub'))}</p></div>${right||''}</div>`;
   if(!N.accounts.length) return head()+(G?guideCard(G):`<section class="card nw-empty"><h2>${esc(L('nwEmptyTitle'))}</h2><p class="sub" style="max-width:68ch">${esc(L('nwEmptyText'))}</p>
     <div class="nw-groups-help">${NW_GROUPS.map(g=>`<div>${gSw(g)}<b>${esc(L('g_'+g))}</b><span class="hint">${esc(L('gs_'+g))}</span></div>`).join('')}</div>
@@ -3202,15 +3211,16 @@ function nwGains(prev,k){
 function accountsCard(k){
   const N=nw(), s=k?N.snaps[k]||{}:{}, prev=k?nwMonths()[nwMonths().indexOf(k)-1]:null, s0=prev?N.snaps[prev]:null, T=k?nwTotals(k):{total:0,g:{}};
   const st=k?nwState(k):null, shown=st?st.shown:N.accounts;
+  const lC=` data-l="${esc(L('nwChangeCol'))}"`, lS=` data-l="${esc(L('nwShare'))}"`;   /* labels for the phone layout, where the header row is hidden */
   const G=k&&prev?nwGains(prev,k):new Map(), gc=v=>`<td class="r ${v==null?'':v<-0.004?'down':v>0.004?'up':''}" data-l="${esc(L('nwGains'))}">${v==null?'':Math.abs(v)<0.005?'–':signed(v)}</td>`;
   const rows=NW_GROUPS.map(g=>{ const accs=shown.filter(a=>a.group===g); if(!accs.length) return '';
     const gg=accs.filter(a=>G.has(a.id));
-    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td><td></td>${gc(gg.length?r2(sum(gg.map(a=>G.get(a.id)))):null)}<td class="r">${k&&T.total>0?fmtPct(T.g[g]/T.total,0):''}</td></tr>`+
+    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td><td></td>${gc(gg.length?r2(sum(gg.map(a=>G.get(a.id)))):null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,0):''}</td></tr>`+
       accs.map(a=>{ const v=s[a.id], v0=s0?s0[a.id]:null, d=v!=null&&v0!=null?r2(v-v0):null;
         return `<tr><td class="an">${esc(a.name)}${a.risk?` <span class="chip-risk">${esc(L('nwRisk'))}</span>`:''}</td><td class="r">${v!=null?fmtEUR(v):`<span class="missing">${esc(L('nwNoFigure'))}</span>`}</td>
-          <td class="r ${d==null?'':d<-0.004?'down':d>0.004?'up':''}">${d==null?'':Math.abs(d)<0.005?'–':signed(d)}</td>${gc(G.has(a.id)?G.get(a.id):null)}<td class="r">${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
+          <td class="r ${d==null?'':d<-0.004?'down':d>0.004?'up':''}"${lC}>${d==null?'':Math.abs(d)<0.005?'–':signed(d)}</td>${gc(G.has(a.id)?G.get(a.id):null)}<td class="r"${lS}>${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
   const dT=k&&prev?r2(T.total-nwTotals(prev).total):null;
-  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}">${dT==null?'':Math.abs(dT)<0.005?'–':signed(dT)}</td>${gc(G.size?r2(sum([...G.values()])):null)}<td class="r">${T.total>0?fmtPct(1,0):''}</td></tr></tfoot>`:'';
+  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?'–':signed(dT)}</td>${gc(G.size?r2(sum([...G.values()])):null)}<td class="r"${lS}>${T.total>0?fmtPct(1,0):''}</td></tr></tfoot>`:'';
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
       ${S.canWrite?`<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button>`:''}</div>
     <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
@@ -4170,6 +4180,8 @@ let opener=null;
 function openModal(m){ const a=document.activeElement; if(!S.modal) opener=a&&a!==document.body&&!$('#overlay').contains(a)?a:null; S.modal=m; renderModal(); }
 function closeModal(){ const prev=S.modal&&S.modal.type; if(S.modal&&S.modal.type==='ai'&&S.modal.ctl) S.modal.ctl.abort(); const was=!!S.modal; S.modal=null; const o=$('#overlay'); o.classList.remove('on'); o.innerHTML=''; o.setAttribute('aria-hidden','true');
   if(was&&opener&&opener.isConnected) opener.focus({preventScroll:true}); opener=null;
+  /* the wizard itself closed (Esc, outside click, ×): same as "Finish later", so it doesn't come back after the next dialog */
+  if(prev==='wizard'&&S.wizard) S.wizard.on=false;
   /* a dialog the setup wizard opened has closed: bring the wizard back */
   if(was&&prev!=='wizard'&&S.wizard&&S.wizard.on) setTimeout(()=>{ if(!S.modal&&S.wizard&&S.wizard.on) openModal({type:'wizard',mid:true}); },0); }
 document.addEventListener('keydown',e=>{
@@ -5076,7 +5088,8 @@ function tourPlace(scroll){
   const top=Math.max(4,r.top-pad), bottom=Math.min(vh-4,r.bottom+pad), left=Math.max(4,r.left-pad), right=Math.min(vw-4,r.right+pad);
   Object.assign(spot.style,{left:left+'px',top:top+'px',width:Math.max(0,right-left)+'px',height:Math.max(0,bottom-top)+'px'});
   const ch=card.offsetHeight, cw=card.offsetWidth;
-  if(phone){ if((top+bottom)/2>vh/2){ card.style.top='12px'; } else { card.style.bottom='12px'; } return; }
+  /* phones: the card goes to the half the target isn't in; a target taller than half the screen keeps its top (its heading) in view */
+  if(phone){ if(bottom-top<vh/2&&(top+bottom)/2>vh/2){ card.style.top='12px'; } else { card.style.bottom='12px'; } return; }
   let cx=Math.min(Math.max(12,left),vw-cw-12), cy;
   if(bottom+12+ch<vh-8) cy=bottom+12; else if(top-12-ch>8) cy=top-12-ch; else { cy=vh-ch-16; cx=vw-cw-16; }
   card.style.left=cx+'px'; card.style.top=cy+'px';

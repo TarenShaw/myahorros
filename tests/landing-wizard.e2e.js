@@ -23,7 +23,9 @@ const SHOTS = process.env.SHOTS;
   assert.ok(await p.$('.web-landing [data-x=demo]') && await p.$('.web-landing [data-x=start]'));
   await p.click('.web-landing .wl-hero [data-x=start]');
   await p.waitForSelector('button.web-way[data-m=browser]');
-  console.log('1. landing -> where to save');
+  for (let i = 0; i < 12; i++) await p.keyboard.press('Tab');
+  assert.ok(await p.evaluate(() => document.querySelector('.web-panel').contains(document.activeElement)), 'Tab left the where-to-save panel');
+  console.log('1. landing -> where to save (Tab stays inside)');
 
   /* 2. pick the browser, set up from scratch -> the wizard opens by itself */
   await p.click('button.web-way[data-m=browser]');
@@ -55,8 +57,15 @@ const SHOTS = process.env.SHOTS;
   await p.waitForSelector('.wz-body', { timeout: 5000 });
   console.log('3. wizard returns after a dialog closes');
 
+  /* 3b. Esc on the wizard itself counts as "Finish later": the next dialog doesn't bring it back */
+  await p.keyboard.press('Escape');
+  await p.waitForSelector('#overlay.on', { state: 'detached' }).catch(() => {});
+  await p.click('#tab-transactions'); await p.click('#view [data-action="add-tx"]');
+  await p.waitForSelector('#overlay .modal'); await p.keyboard.press('Escape'); await p.waitForTimeout(300);
+  assert.ok(!(await p.$('.wz-body')), 'wizard came back after Esc');
+  console.log('3b. Esc closes the wizard for good');
+
   /* 4. returning visitors don't see the landing again */
-  await p.click('[data-action="wz-later"]');
   await p.reload({ waitUntil: 'load' });
   await p.waitForTimeout(1500);
   assert.ok(!(await p.$('.web-landing')), 'landing shown again to a returning visitor');
