@@ -4,7 +4,7 @@
 <meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+yazRngfpY/yWlqksSzL50dcqkET8fPe3bO1mQF7Ywk=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-OLyJP0qCAsJ0+l4DgkCTqZviyxCE3I+A3cShFB5XHkQ=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -148,6 +148,9 @@ html{scrollbar-gutter:stable}
 .ai-rules textarea{width:100%;margin-top:8px;font:13px/1.5 var(--f-mono);resize:vertical}
 .ai-rules .hint{margin:8px 0 0}
 .ai-busy{display:grid;gap:8px;margin:0;font-size:14px}
+.ai-errbox{display:grid;gap:8px}
+.ai-errbox pre{margin:8px 0;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);font:12px/1.5 var(--f-mono);white-space:pre-wrap;overflow-wrap:anywhere;max-height:200px;overflow:auto}
+.ai-errbox summary{cursor:pointer;font-size:13px;color:var(--ink-2)}
 .ai-busy .loading-bar{width:100%}
 .btn [data-action] svg,.btn svg{flex:none}
 .ai-review{display:grid;gap:6px;margin-bottom:12px}
@@ -857,6 +860,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-nume
 
 <script src="config.js"></script>
 <script src="js/web-shim.js"></script>
+<script src="js/models.js"></script>
 <script src="js/web-ai.js"></script>
 <script src="js/web-boot.js"></script>
 <div class="app">
@@ -1562,6 +1566,9 @@ const STR={
   aiCheckBad:[(n,a,b)=>`${n}: the statement’s balances move by ${a}, but the movements found add up to ${b}. Something may be missing or counted twice.`,(n,a,b)=>`${n}: los saldos del extracto cambian ${a}, pero los movimientos encontrados suman ${b}. Puede faltar algo o haber algo contado dos veces.`],
   aiLeftOut:[n=>`Left out on purpose (${n})`,n=>`Dejados fuera a propósito (${n})`], aiNotes:['Claude’s notes','Notas de Claude'],
   aiNwFrom:['Balances read by Claude','Saldos leídos por Claude'],
+  aiPart:[(i,n)=>`Reading part ${i} of ${n}…`,(i,n)=>`Leyendo la parte ${i} de ${n}…`],
+  aiRetry:[(i,n)=>`Busy or no connection. Trying again (${i} of ${n})…`,(i,n)=>`Ocupado o sin conexión. Reintentando (${i} de ${n})…`],
+  aiErrWhat:['What went wrong','Qué ha fallado'], aiCopyDetails:['Copy details','Copiar detalles'], aiCopied:['Details copied','Detalles copiados'],
   obAiQ:['Have your bank statements to hand?','¿Tienes a mano tus extractos?'], obAiBtn:['Build it with AI','Crearlo con IA'],
   obAiHelp:['Claude reads them, sorts every movement, finds your accounts’ balances and works out when your tracker starts. You check everything before it’s saved.','Claude los lee, clasifica cada movimiento, encuentra los saldos de tus cuentas y deduce desde cuándo empieza tu control. Lo revisas todo antes de guardarlo.'],
 
@@ -3560,7 +3567,7 @@ async function getPdfjs(){
   window.pdfjsLib.GlobalWorkerOptions.workerSrc=PDFJS_WORKER;
   return window.pdfjsLib;
 }
-const AI_TEXT_MAX=200000;
+const YM_=window.YBT_MODELS||{}, AI_TEXT_MAX=YM_.totalChars||1500000, AI_CHUNK_CHARS=YM_.chunkChars||15000, AI_CHUNK_IMAGES=YM_.chunkImages||8;
 /* one file -> {text, images[]} */
 async function aiReadFile(file){
   const name=file.name, low=name.toLowerCase();
@@ -3647,9 +3654,73 @@ function aiCatsFor(mode){ const c=mode==='start'?(LANG==='es'?DEFAULT_CATS_ES:DE
 async function aiAddFiles(list){
   const m=S.modal; if(!m||m.type!=='ai'||m.busy) return;
   for(const f of list){ if(m.files.some(x=>x.file.name===f.name&&x.file.size===f.size)) continue; m.files.push({file:f}); }
-  m.msg=''; renderModalKeepScroll();
+  m.msg=''; m.errDetails=''; m.cache=null; renderModalKeepScroll();
 }
 function aiErrText(e){ const c=e&&e.code; return STR['aiErr_'+c]?L('aiErr_'+c):L('aiErr_other'); }
+/* -> {text, details}: a plain reason, plus the facts a person can copy and send */
+function aiErr(e){
+  if(e&&e.local) return {text:e.local,details:''};
+  if(S.ai&&typeof S.ai.explain==='function'){ const x=S.ai.explain(e,LANG); return {text:x.why,details:x.details}; }
+  return {text:aiErrText(e),details:''};
+}
+/* the files, cut into requests small enough for any model to answer in full (one request when it all fits) */
+function aiJobs(files,max,maxImg){
+  const parts=[];
+  for(const f of files){
+    if(f.text.length<=max){ parts.push(f); continue; }
+    const lines=f.text.split('\n'), head=/\.(csv|tsv)$/i.test(f.name)&&lines[0].length<400?lines[0]:'';
+    let cur=[], n=0, k=0;
+    const flush=()=>{ if(!cur.length) return;
+      const lead=k?(head&&cur[0]!==head?head+'\n':'')+'[continued: this is a later part of the same file]\n':'';
+      parts.push({name:f.name,images:k?[]:f.images,text:lead+cur.join('\n')}); k++; cur=[]; n=0; };
+    for(const l of lines){ if(n+l.length+1>max&&cur.length) flush(); cur.push(l); n+=l.length+1; }
+    flush();
+  }
+  const jobs=[]; let job=null;
+  for(const p of parts){
+    if(!job||job.chars+p.text.length>max||job.images.length+p.images.length>maxImg){ job={files:[],chars:0,images:[]}; jobs.push(job); }
+    job.files.push(p); job.chars+=p.text.length; job.images=job.images.concat(p.images);
+  }
+  return jobs;
+}
+/* results of several requests -> one result, as if it had been a single answer */
+function aiMerge(rs){
+  if(rs.length===1) return rs[0];
+  const out={rows:[],left_out:[],statements:[],accounts:[],notes:''}, st=new Map(), ac=new Map(), notes=[];
+  for(const r of rs){
+    if(Array.isArray(r.rows)) out.rows.push(...r.rows);
+    if(Array.isArray(r.left_out)) out.left_out.push(...r.left_out);
+    for(const s of Array.isArray(r.statements)?r.statements:[]){ if(!s) continue; const k=String(s.source||''), c=st.get(k);
+      if(!c) st.set(k,Object.assign({},s)); else { if(c.opening==null) c.opening=s.opening; if(s.closing!=null) c.closing=s.closing; } }
+    for(const a of Array.isArray(r.accounts)?r.accounts:[]){ if(!a||!Array.isArray(a.balances)) continue; const k=a.match||String(a.name||'').trim().toLowerCase(), c=ac.get(k);
+      if(!c) ac.set(k,Object.assign({},a,{balances:a.balances.slice()})); else c.balances=c.balances.filter(b=>!a.balances.some(x=>x[0]===b[0])).concat(a.balances); }
+    if(typeof r.notes==='string'&&r.notes.trim()&&!notes.includes(r.notes.trim())) notes.push(r.notes.trim());
+  }
+  out.statements=[...st.values()]; out.accounts=[...ac.values()]; out.notes=notes.join(' ');
+  return out;
+}
+/* one request; if the answer comes back cut off, the same text is sent again in two halves */
+async function aiRunJob(m,job,i,n,depth){
+  const prompt=aiPrompt(m.mode,m.rules,job.files,aiContext(m.mode));
+  const hit=m.cache&&m.cache.get(prompt); if(hit) return hit;
+  const lim=await S.ai.limits().catch(()=>null);
+  if(job.images.length){ if(!lim||!lim.images) throw {local:L('aiNoImages')}; if(job.images.length>lim.images.maxCount) throw {local:L('aiTooManyImages',lim.images.maxCount)}; }
+  const say=s=>{ if(S.modal!==m) return; m.phase=s; const el=$('#ai-phase'); if(el) el.textContent=s; };
+  say(n>1?L('aiPart',i+1,n):L('aiAsking'));
+  try{
+    const res=await S.ai.json(prompt,{signal:m.ctl.signal,cache:false,images:job.images.length?job.images:undefined,
+      onText:({text})=>say((n>1?L('aiPart',i+1,n)+' ':'')+L('aiWriting',fmtCount(text.length))),
+      onRetry:({attempt,max})=>say(L('aiRetry',attempt,max))});
+    if(!m.cache) m.cache=new Map(); m.cache.set(prompt,res); return res;
+  }catch(e){
+    if(e&&/^(output_truncated|invalid_json|prompt_too_large)$/.test(e.code)&&depth<3&&job.chars>2000){
+      const halves=aiJobs(job.files,Math.ceil(job.chars/2),AI_CHUNK_IMAGES), rs=[];
+      if(halves.length>1){ for(const h of halves) rs.push(await aiRunJob(m,h,i,n,depth+1)); return aiMerge(rs); }
+    }
+    if(e&&typeof e==='object'&&n>1&&!e.local) e.part=L('aiPart',i+1,n);
+    throw e;
+  }
+}
 async function aiRun(){
   const m=S.modal; if(!m||m.type!=='ai'||m.busy) return;
   const ta=$('#ai-rules'); if(ta) m.rules=ta.value;
@@ -3657,25 +3728,25 @@ async function aiRun(){
   /* instructions you changed are kept for next time; the default isn't stored */
   if(m.mode!=='start'&&S.canWrite){ const key=aiRulesKey(m.mode), cur=(S.settings&&S.settings.aiRules)||{}, def=aiDefault(key), v=m.rules.trim()===def.trim()?null:m.rules;
     if((cur[key]||null)!==v){ const nx=Object.assign({},cur); if(v) nx[key]=v; else delete nx[key]; setSettings({aiRules:nx}); } }
-  m.busy=true; m.msg=''; const ctl=new AbortController(); m.ctl=ctl;
-  const files=[]; let images=[];
+  m.busy=true; m.msg=''; m.errDetails=''; const ctl=new AbortController(); m.ctl=ctl;
+  const files=[];
   try{
     for(let i=0;i<m.files.length;i++){ m.phase=L('aiReading',i+1,m.files.length); renderModalKeepScroll();
       let r; try{ r=await aiReadFile(m.files[i].file); }catch(e){ throw {local:L('aiCantRead',m.files[i].file.name)}; }
       if(!r.text.trim()&&!r.images.length) throw {local:L('aiEmptyFile',m.files[i].file.name)};
-      files.push({name:m.files[i].file.name,text:r.text.slice(0,AI_TEXT_MAX),images:r.images}); images=images.concat(r.images); }
+      files.push({name:m.files[i].file.name,text:r.text,images:r.images}); }
     if(sum(files.map(f=>f.text.length))>AI_TEXT_MAX) throw {local:L('aiTooBig')};
-    if(images.length){ const lim=await S.ai.limits().catch(()=>null); if(!lim||!lim.images) throw {local:L('aiNoImages')}; if(images.length>lim.images.maxCount) throw {local:L('aiTooManyImages',lim.images.maxCount)}; }
-    const prompt=aiPrompt(m.mode,m.rules,files,aiContext(m.mode));
-    m.phase=L('aiAsking'); renderModalKeepScroll();
-    const res=await S.ai.json(prompt,{signal:ctl.signal,cache:false,images:images.length?images:undefined,onText:({text})=>{ if(S.modal!==m) return; const el=$('#ai-phase'); if(el) el.textContent=L('aiWriting',fmtCount(text.length)); }});
+    const jobs=aiJobs(files,AI_CHUNK_CHARS,AI_CHUNK_IMAGES), rs=[];
+    m.cache=m.cache||new Map();
+    renderModalKeepScroll();
+    for(let i=0;i<jobs.length;i++){ if(S.modal!==m) return; rs.push(await aiRunJob(m,jobs[i],i,jobs.length,0)); }
     if(S.modal!==m) return;
-    aiApply(m,res||{},files.length);
+    aiApply(m,aiMerge(rs),files.length);
   }catch(e){
     if(S.modal!==m) return;
     m.busy=false; m.ctl=null; m.phase='';
     if(e&&e.code==='cancelled'){ renderModalKeepScroll(); return; }
-    m.msg=e&&e.local?e.local:aiErrText(e); renderModalKeepScroll();
+    const x=aiErr(e); m.msg=x.text; m.errDetails=x.details; renderModalKeepScroll();
   }
 }
 function aiApply(m,res,nFiles){
@@ -3709,7 +3780,7 @@ function modalAi(){
       ${mode!=='start'&&custom&&!busy?`<button type="button" class="linkish" data-action="ai-reset">${esc(L('aiReset'))}</button>`:''}</details>
     <p class="hint">${esc(L('aiPrivacy'))}${S.ai&&typeof S.ai.setup==='function'?` <button type="button" class="linkish" data-action="ai-setup">${esc(L('aiChangeAi'))}</button>`:''}</p>
     ${busy?`<p class="ai-busy" role="status"><span class="loading-bar"></span><span id="ai-phase">${esc(m.phase||'')}</span></p>`:''}
-    ${m.msg?`<p class="field" role="alert"><span class="err">${esc(m.msg)}</span></p>`:''}
+    ${m.msg?`<div class="field ai-errbox" role="alert"><span class="err">${esc(m.msg)}</span>${m.errDetails?`<details open><summary>${esc(L('aiErrWhat'))}</summary><pre>${esc(m.errDetails)}</pre><button type="button" class="btn sm" data-action="ai-copy-err">${esc(L('aiCopyDetails'))}</button></details>`:''}</div>`:''}
   </div>
   <div class="m-foot"><span class="r">${busy?`<button class="btn" type="button" data-action="ai-stop">${esc(L('aiStop'))}</button>`:`<button class="btn" type="button" data-action="close">${esc(L('cancel'))}</button><button class="btn primary" type="button" data-action="ai-send">${ICON.ai}${esc(L('aiSend'))}</button>`}</span></div>`;
 }
@@ -4980,7 +5051,10 @@ const ACTIONS={
   'ai-nw':()=>{ if(S.canWrite&&S.ai) openModal({type:'ai',mode:'nw',files:[],mid:true}); },
   'ai-send':()=>aiRun(),
   'ai-stop':()=>{ const m=S.modal; if(m&&m.ctl) m.ctl.abort(); },
-  'ai-del':el=>{ const m=S.modal; if(!m||m.busy) return; const ta=$('#ai-rules'); if(ta) m.rules=ta.value; m.files.splice(+el.dataset.i,1); renderModalKeepScroll(); },
+  'ai-copy-err':async()=>{ const m=S.modal; if(!m||!m.errDetails) return; let ok=false; try{ await navigator.clipboard.writeText(m.errDetails); ok=true; }catch(_){}
+    if(!ok){ const ta=document.createElement('textarea'); ta.value=m.errDetails; ta.style.cssText='position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); try{ ok=document.execCommand('copy'); }catch(_){} ta.remove(); }
+    toast(L('aiCopied')); },
+  'ai-del':el=>{ const m=S.modal; if(!m||m.busy) return; const ta=$('#ai-rules'); if(ta) m.rules=ta.value; m.files.splice(+el.dataset.i,1); m.cache=null; m.errDetails=''; renderModalKeepScroll(); },
   'ai-reset':()=>{ const m=S.modal; m.rules=aiDefault(aiRulesKey(m.mode)); m.openRules=true; renderModalKeepScroll(); },
   /* settings */
   'st-set':()=>{ const mk=Object.keys(S.months).filter(k=>TKEYS.some(t=>S.months[k][t].length)).sort()[0]; const d=new Date();
