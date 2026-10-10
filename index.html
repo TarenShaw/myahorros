@@ -1,10 +1,17 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MyAhorros</title>
-<meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
+<title>MyAhorros: track your savings, spending and net worth</title>
+<meta name="description" content="Free savings and net worth tracker. See where your money goes and how much you keep each month. No account; your data stays in a folder, your Google Drive or your browser.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MyAhorros">
+<meta property="og:title" content="MyAhorros: track your savings, spending and net worth">
+<meta property="og:description" content="Free savings and net worth tracker. No account; your data stays on your device.">
+<meta property="og:url" content="https://myahorros.app/">
+<meta property="og:image" content="https://myahorros.app/icons/icon-512.png">
+<meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BxzPQDIMNg7cPV4f/FHQ4CYuTVeoKcTIysL1Si43ebo=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-LA4FITpqnkc4IqMEN1r4VQfEl4dicrSWCfWXx0LM0Jc=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1162,7 +1169,7 @@ function pl(n,k){ const p=PL[k][LANG==='es'?1:0]; return fmtCount(n)+' '+(n===1?
 const ALL_ES={income:'todos los ingresos',expenses:'todos los gastos',investments:'todas las inversiones'};
 const STR={
   /* chrome */
-  appTitle:['MyAhorros','MyAhorros'],
+  appTitle:['MyAhorros','MyAhorros'], appDocTitle:['MyAhorros: track your savings, spending and net worth','MyAhorros: controla tus ahorros, gastos y patrimonio'],
   kicker:['Income · Expenses · Investments','Ingresos · Gastos · Inversiones'],
   prevYear:['Previous year','Año anterior'], nextYear:['Next year','Año siguiente'], year:['Year','Año'],
   sections:['Sections','Secciones'],
@@ -1604,7 +1611,7 @@ const STR={
   obAiQ:['Have your bank statements to hand?','¿Tienes a mano tus extractos?'], obAiBtn:['Build it with AI','Crearlo con IA'],
   obAiHelp:['Claude reads them, sorts every movement, finds your accounts’ balances and works out when your tracker starts. You check everything before it’s saved.','Claude los lee, clasifica cada movimiento, encuentra los saldos de tus cuentas y deduce desde cuándo empieza tu control. Lo revisas todo antes de guardarlo.'],
 
-  gEyebrow:[n=>`Set up your tracker · step ${n} of 3`,n=>`Configura tu control · paso ${n} de 3`], gEyebrowDone:['Set up your tracker · done','Configura tu control · listo'],
+  gEyebrow:[n=>`Set up your tracker · step ${n} of 5`,n=>`Configura tu control · paso ${n} de 5`], gEyebrowDone:['Set up your tracker · done','Configura tu control · listo'],
   gStep_acc:['Your accounts','Tus cuentas'], gStep_val:['What they’re worth','Lo que valen'], gStep_tx:['Your transactions','Tus movimientos'],
   gSkipped:['skipped','saltado'], gDoneSr:['(done)','(hecho)'],
   wzEyebrow:[(i,n)=>`Set up your tracker · step ${i} of ${n}`,(i,n)=>`Configura tu control · paso ${i} de ${n}`],
@@ -1744,7 +1751,7 @@ const STR={
   nwMoveUp:[n=>`Move ${n} up`,n=>`Subir ${n}`], nwMoveDown:[n=>`Move ${n} down`,n=>`Bajar ${n}`], nwRemoveAcc:[n=>`Remove ${n}`,n=>`Quitar ${n}`],
   nwAccErr:['Give every account a name, each one different.','Pon nombre a todas las cuentas, cada una distinto.'],
   nwAccDropWarn:[n=>`Removing ${n===1?'this account':'these accounts'} also removes ${n===1?'its':'their'} figures.`,n=>`Al quitar ${n===1?'esta cuenta':'estas cuentas'} también se quitan sus cifras.`],
-  nwSaveAccounts:['Save accounts','Guardar cuentas'], nwAccSaved:['Accounts saved','Cuentas guardadas'],
+  nwSaveAccounts:['Save accounts','Guardar cuentas'], nwAccSaved:['Accounts saved','Cuentas guardadas'], nwAccNone:['Add at least one account first: tap one of the suggestions or use “Add another account”.','Añade primero al menos una cuenta: toca una de las sugerencias o usa «Añadir otra cuenta».'],
   nwSug_cash:[['Current account','Savings account'],['Cuenta corriente','Cuenta de ahorro']],
   nwSug_invest:[['Index funds','Investment account','Crypto'],['Fondos indexados','Cuenta de inversión','Cripto']],
   nwSug_illiquid:[['Crowdlending','Property','Fixed-term deposit'],['Crowdlending','Inmueble','Depósito a plazo']],
@@ -2219,7 +2226,7 @@ let chromeLang=null;
 function applyLang(){
   LANG=wantLang()==='es'?'es':'en';
   if(chromeLang===LANG) return; chromeLang=LANG;
-  document.documentElement.lang=LANG; document.title=L('appTitle');
+  document.documentElement.lang=LANG; document.title=L('appDocTitle');
   try{ localStorage.setItem('ybt.lang',LANG); }catch(_){}
   $('.kicker').textContent=L('kicker'); $('.mast h1').textContent=L('appTitle');
   $('#year-prev').setAttribute('aria-label',L('prevYear')); $('#year-next').setAttribute('aria-label',L('nextYear'));
@@ -2282,7 +2289,7 @@ function render(){
   else if(ob) html=viewWelcome();
   else if(!allRows().length && S.ui.tab!=='categories' && S.ui.tab!=='settings' && S.ui.tab!=='networth'){ const G=guideState();
     /* Overview, and Transactions at its step, show the guide itself; elsewhere a reminder above the usual empty page */
-    html=!G?viewEmpty():S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='tx')?`<div class="guide-solo">${guideCard(G)}</div>`:guideBar(G)+viewEmpty(); }
+    html=!G?viewEmpty():S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='tx')?`<div class="guide-wrap">${guideCard(G)}</div>`+viewEmpty():guideBar(G)+viewEmpty(); }
   else { html=({overview:viewOverview,yearly:viewYearly,transactions:viewTransactions,categories:viewCategories,networth:viewNetworth,settings:viewSettings})[S.ui.tab]();
     const G=S.ui.tab!=='networth'&&S.ui.tab!=='settings'?guideState():null;
     if(G){ const full=S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='done'); html=(full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G))+html; } }
@@ -2965,7 +2972,7 @@ function guideState(){
   if(!g||!g.on||S.demo||!S.canWrite||S.mode!=='live') return null;
   const acc=nw().accounts.length>0, val=nwMonths().length>0, tx=allRows().length>0, skip=!!g.skipNw;
   const cur=!skip&&!acc?'acc':!skip&&!val?'val':!tx?'tx':'done';
-  return {acc,val,tx,skip,cur,n:{acc:1,val:2,tx:3,done:3}[cur]};
+  return {acc,val,tx,skip,cur,n:{acc:1,val:1,tx:3,done:3}[cur]};
 }
 const guideFigMonth=()=>nwDue()||ymAdd(ymNow(),-1);
 /* a calendar file with a reminder on the 1st of every month */
@@ -3014,13 +3021,13 @@ function modalWizard(){
       ${ok(nAcc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[0])}${ok(nMon,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[1])}`;
   } else if(i===1){
     body=`<p>${esc(L('wz1Text'))}</p>
-      <div class="wz-acts">${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtnNw'))+` <span class="tag">${esc(L('wzRecommended'))}</span>`,'','primary'):''}${act('guide-val',esc(L('wzEarlierHand')),` data-k="${ymAdd(k,-1)}"`)}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}</div>`;
+      <div class="wz-acts">${act('guide-val',esc(L('wzEarlierHand')),` data-k="${ymAdd(k,-1)}"`,'primary')}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtnNw'))):''}</div>`;
   } else if(i===2){
     body=`<p>${esc(L('wz2Text'))}</p>
       <div class="wz-ways">
         <button type="button" class="ob-way" data-action="guide-add"><span class="ob-t">${esc(L('wzWayHand'))}</span><span class="ob-s">${esc(L('wzWayHandSub'))}</span></button>
-        <button type="button" class="ob-way" data-action="guide-import"><span class="ob-t">${esc(L('wzWayPaste'))}</span><span class="ob-s">${esc(L('wzWayPasteSub'))}</span></button>
-        ${S.ai?`<button type="button" class="ob-way" data-action="ai-tx"><span class="ob-t">${ICON.ai}${esc(L('wzWayAi'))} <span class="tag">${esc(L('wzRecommended'))}</span></span><span class="ob-s">${esc(L('wzWayAiSub'))}</span></button>`:''}
+        <button type="button" class="ob-way" data-action="guide-import"><span class="ob-t">${esc(L('wzWayPaste'))} <span class="tag">${esc(L('wzRecommended'))}</span></span><span class="ob-s">${esc(L('wzWayPasteSub'))}</span></button>
+        ${S.ai?`<button type="button" class="ob-way" data-action="ai-tx"><span class="ob-t">${ICON.ai}${esc(L('wzWayAi'))}</span><span class="ob-s">${esc(L('wzWayAiSub'))}</span></button>`:''}
       </div>${ok(nTx,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[2])}`;
   } else if(i===3){
     body=`<p>${esc(L('wz3Text'))}</p><div class="wz-acts">${act('guide-income',esc(L('wzAddSalary')),'',nInc?'':'primary')}</div>${ok(nInc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[3])}`;
@@ -5372,6 +5379,7 @@ document.addEventListener('submit',e=>{
     readNwAccounts(); const m=S.modal, list=m.list.map(a=>Object.assign({},a,{name:String(a.name||'').replace(/\s+/g,' ').trim()}));
     const names=list.map(a=>a.name.toLowerCase());
     if(list.some(a=>!a.name)||new Set(names).size!==names.length){ $('#na-err').textContent=L('nwAccErr'); return; }
+    if(!list.length&&!nw().accounts.length){ $('#na-err').textContent=L('nwAccNone'); return; }
     const N=ensureNw(), keep=new Set(list.map(a=>a.id));
     N.accounts=list.map(a=>{ const x={id:a.id,name:a.name,group:NW_GROUPS.includes(a.group)?a.group:'invest'}; if(a.risk) x.risk=true; if(a.from) x.from=a.from; return x; });
     for(const k of Object.keys(N.snaps)){ for(const id of Object.keys(N.snaps[k])) if(!keep.has(id)) delete N.snaps[k][id]; if(!Object.keys(N.snaps[k]).length) delete N.snaps[k]; }

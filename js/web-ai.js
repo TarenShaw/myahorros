@@ -242,7 +242,7 @@ function setup(){
         <label for="ai-key">${esc(t('keyLabel'))}</label>
         <input id="ai-key" type="password" autocomplete="off" spellcheck="false">
         <p class="web-hint"><a id="ai-getkey" target="_blank" rel="noopener noreferrer"></a> · ${esc(t('keyPrivacy'))}</p>
-        <label class="ai-check"><input type="checkbox" id="ai-remember"${c.remember||!c.key?' checked':''}> ${esc(t('remember'))}</label>
+        <label class="ai-check"><input type="checkbox" id="ai-remember"${c.remember?' checked':''}> ${esc(t('remember'))}</label>
         <div id="ai-modelbox" hidden><label for="ai-model">${esc(t('model'))}</label><select id="ai-model"></select><p class="web-hint">${esc(t('modelHelp'))}</p></div>
         <div id="ai-reco" class="ai-reco" hidden></div>
       </div>
