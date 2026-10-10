@@ -1,4 +1,4 @@
-/* Yearly Budget Tracker: storage layer for the stand-alone web version.
+/* MyAhorros: storage layer for the stand-alone web version.
    Stands in for window.claude, like the Windows app's layer, and keeps every figure on the visitor's side:
    - "folder":  one data file in a folder they pick (Chrome or Edge on a computer, File System Access API),
                 tracker-data.json plus Backups\tracker-data YYYY-MM-DD.json, the same files as the Windows app;
@@ -33,7 +33,7 @@ const lsSet=(k,v)=>{ try{ if(v==null) localStorage.removeItem(k); else localStor
 const TX={
   en:{
     chooseTitle:'Where should your tracker be saved?',
-    about:'Yearly Budget Tracker is a free budget and net worth tracker: income, expenses, investments and what you own, month by month, in English or Spanish.', privacyLink:'Privacy',
+    about:'MyAhorros is a free budget and net worth tracker: income, expenses, investments and what you own, month by month, in English or Spanish.', privacyLink:'Privacy',
     chooseSub:'Your figures never go to this website. Pick where they’re kept; you can change it later in Settings.',
     folderT:'A folder on this computer', folderS:'One data file in a folder you choose, such as Documents, with a backup every day. Works offline. The same file the Windows app uses.',
     folderNo:'Needs Chrome or Edge on a computer.',
@@ -69,8 +69,21 @@ const TX={
     conflictDrive:(t,n)=>`The copy in your Google Drive was changed ${t?'at '+t+' ':''}on another device or browser (${n} transactions), after this one last synced.`,
     conflictFolder:(t,n)=>`The data file was changed ${t?'at '+t+' ':''}by something else, such as the Windows app (${n} transactions).`,
     conflictMine:n=>`This screen has ${n} transactions with changes not saved there yet.`,
-    useTheirs:'Open the newer one', useMine:'Keep the one on this screen',
-    conflictNote:'Whichever you don’t keep is saved as a backup first.',
+    useTheirs:'Open the newer one', useMine:'Keep the one on this screen', useMerge:'Merge both',
+    conflictNote:'Whichever you don’t keep is saved as a backup first. “Merge both” keeps every month from both versions; where both have the same month, it keeps the one on this screen.',
+    mergedBoth:'Merged both versions. The other one was kept as a backup.',
+    landDemo:'See a demo', landStart:'Get started', landMenu:'Sections',
+    landH1:'Know where your money goes, and what you’re worth.',
+    landSub:'A free yearly budget and net worth tracker that keeps your data on your side: in a folder on your computer, in your Google Drive, or in your browser.',
+    landNoSignup:'No account. No sign-up. Nothing leaves your device unless you choose.',
+    landF:[['See your whole year at a glance','Income, expenses and investments month by month, where the money went by category, monthly limits and indicators that tell you if you’re on track. Click any figure to see the transactions behind it.'],
+           ['Track what you’re worth','List your accounts once, type their balance at the end of each month and watch your net worth grow. See what you saved, what your investments gained on their own, and how close you are to your goal.'],
+           ['Bring in your statements','Paste rows or import your bank’s .csv or .xlsx and the tracker sorts them into categories by itself, learning from your choices. Or let an AI read statements and PDFs for you: you check everything before it’s saved.'],
+           ['Your data stays yours','There is no account and no server holding your figures. Save them in a folder, in your own Google Drive or only in this browser, with a daily backup. It works offline and installs like an app.']],
+    landHow:'How it works', landHowSteps:[['Choose where it lives','A folder, your Google Drive or your browser. You can change it any time.'],['Add what you own','A few accounts and what they were worth last month.'],['Add your transactions','By hand, by pasting a statement, or with AI.']],
+    landEnd:'Ready when you are', landEndSub:'Take the two-minute tour with example data, or set up your own tracker.',
+    landPrivacy:'Privacy',
+    stDriveError:t=>`Couldn’t sync with Google Drive. Trying again at ${t}.`, stDrivePaused:'Sync is waiting until you finish what you’re doing.',
     keptTheirs:'Opened the newer version. The one on this screen was kept as a backup.', keptMine:'Kept the version on this screen. The other one was kept as a backup.',
     existsTitle:'There’s already a tracker there', existsText:(n,m)=>`It has ${n} transactions. The tracker open now has ${m}.`,
     useThere:'Use the one already there', replaceThere:'Replace it with the one open now', replaceNote:'If you replace it, the one already there is kept as a backup first.',
@@ -90,7 +103,7 @@ const TX={
     syncNow:'Sync now', syncNowHelp:'Upload the latest changes and check for newer ones from your other devices.',
     disconnect:'Disconnect Google Drive', disconnectHelp:'Keep the tracker only in this browser. The file in your Drive stays there.',
     saveCopy:'Save a backup…', saveCopyHelp:'Save a copy of everything as a file.',
-    copyName:d=>`Yearly Budget Tracker backup ${d}.json`, copySaved:n=>`Backup saved: ${n}`, copyDownloaded:n=>`Backup downloaded: ${n}`, copyFailed:'The backup couldn’t be saved.',
+    copyName:d=>`MyAhorros backup ${d}.json`, copySaved:n=>`Backup saved: ${n}`, copyDownloaded:n=>`Backup downloaded: ${n}`, copyFailed:'The backup couldn’t be saved.',
     openTitle:'Open a tracker data file or backup',
     cantRead:'That file couldn’t be read, so nothing was changed.', notTracker:'That isn’t a tracker data file, so nothing was changed.',
     opened:(n,c)=>`Opened ${n}: ${c} ${c==='1'?'transaction':'transactions'}. Your previous data was kept as a backup first.`,
@@ -102,7 +115,7 @@ const TX={
   },
   es:{
     chooseTitle:'¿Dónde quieres guardar tu control?',
-    about:'Yearly Budget Tracker es un control gratuito de presupuesto y patrimonio: ingresos, gastos, inversiones y lo que tienes, mes a mes, en español o en inglés.', privacyLink:'Privacidad',
+    about:'MyAhorros es un control gratuito de presupuesto y patrimonio: ingresos, gastos, inversiones y lo que tienes, mes a mes, en español o en inglés.', privacyLink:'Privacidad',
     chooseSub:'Tus cifras nunca llegan a esta web. Elige dónde se guardan; puedes cambiarlo luego en Ajustes.',
     folderT:'Una carpeta de este ordenador', folderS:'Un archivo de datos en la carpeta que elijas, como Documentos, con una copia cada día. Funciona sin conexión. Es el mismo archivo que usa la aplicación de Windows.',
     folderNo:'Necesita Chrome o Edge en un ordenador.',
@@ -138,8 +151,21 @@ const TX={
     conflictDrive:(t,n)=>`La copia de tu Google Drive se cambió ${t?'a las '+t+' ':''}en otro dispositivo o navegador (${n} movimientos), después de la última sincronización de este.`,
     conflictFolder:(t,n)=>`El archivo de datos lo ha cambiado ${t?'a las '+t+' ':''}otro programa, como la aplicación de Windows (${n} movimientos).`,
     conflictMine:n=>`Esta pantalla tiene ${n} movimientos con cambios que aún no se han guardado allí.`,
-    useTheirs:'Abrir la versión más nueva', useMine:'Quedarme con la de esta pantalla',
-    conflictNote:'La que no elijas se guarda antes como copia de seguridad.',
+    useTheirs:'Abrir la versión más nueva', useMine:'Quedarme con la de esta pantalla', useMerge:'Combinar las dos',
+    conflictNote:'La que no elijas se guarda antes como copia de seguridad. «Combinar las dos» conserva todos los meses de ambas versiones; si los dos tienen el mismo mes, se queda con el de esta pantalla.',
+    mergedBoth:'Se han combinado las dos versiones. La otra se guardó como copia de seguridad.',
+    landDemo:'Ver una demo', landStart:'Empezar', landMenu:'Secciones',
+    landH1:'Sabe a dónde va tu dinero y cuánto vales.',
+    landSub:'Un control de presupuesto anual y patrimonio, gratuito, que guarda tus datos de tu lado: en una carpeta de tu ordenador, en tu Google Drive o en tu navegador.',
+    landNoSignup:'Sin cuenta. Sin registro. Nada sale de tu dispositivo si tú no quieres.',
+    landF:[['Tu año entero de un vistazo','Ingresos, gastos e inversiones mes a mes, a dónde fue el dinero por categoría, límites mensuales e indicadores que te dicen si vas bien. Pulsa cualquier cifra para ver los movimientos que hay detrás.'],
+           ['Sigue lo que vales','Apunta tus cuentas una vez, escribe su saldo a final de cada mes y mira crecer tu patrimonio. Ve lo que ahorraste, lo que ganaron tus inversiones por sí solas y cuánto te falta para tu objetivo.'],
+           ['Trae tus extractos','Pega filas o importa el .csv o .xlsx de tu banco y el control las clasifica solo, aprendiendo de tus elecciones. O deja que una IA lea extractos y PDF por ti: lo revisas todo antes de guardarlo.'],
+           ['Tus datos son tuyos','No hay cuenta ni servidor con tus cifras. Guárdalas en una carpeta, en tu propio Google Drive o solo en este navegador, con copia diaria. Funciona sin conexión y se instala como una app.']],
+    landHow:'Cómo funciona', landHowSteps:[['Elige dónde vive','Una carpeta, tu Google Drive o tu navegador. Puedes cambiarlo cuando quieras.'],['Añade lo que tienes','Unas cuentas y lo que valían el mes pasado.'],['Añade tus movimientos','A mano, pegando un extracto o con IA.']],
+    landEnd:'Cuando quieras', landEndSub:'Haz el recorrido de dos minutos con datos de ejemplo, o configura tu propio control.',
+    landPrivacy:'Privacidad',
+    stDriveError:t=>`No se ha podido sincronizar con Google Drive. Se reintentará a las ${t}.`, stDrivePaused:'La sincronización espera a que termines lo que estás haciendo.',
     keptTheirs:'Abierta la versión más nueva. La de esta pantalla se ha guardado como copia.', keptMine:'Te has quedado con la versión de esta pantalla. La otra se ha guardado como copia.',
     existsTitle:'Ya hay un control ahí', existsText:(n,m)=>`Tiene ${n} movimientos. El control abierto ahora tiene ${m}.`,
     useThere:'Usar el que ya está', replaceThere:'Sustituirlo por el abierto ahora', replaceNote:'Si lo sustituyes, antes se guarda una copia del que ya estaba.',
@@ -311,8 +337,15 @@ const drive={
   },
   async api(method,url,body,headers){
     if(!this.valid()) throw new Error('signin');
-    let r; try{ r=await fetch(url,{method,body,headers:Object.assign({Authorization:'Bearer '+this.token},headers||{})}); }
-    catch(_){ throw new Error(navigator.onLine===false?'offline':'network'); }
+    /* reads and updates are tried up to 3 times when Google is busy or the connection blips; creating a file is not
+       repeated here (the next sync finds out whether it was made, so there are never two) */
+    const tries=method==='POST'?1:3; let r;
+    for(let i=1;;i++){
+      try{ r=await fetch(url,{method,body,headers:Object.assign({Authorization:'Bearer '+this.token},headers||{})}); }
+      catch(_){ if(navigator.onLine===false) throw new Error('offline'); if(i<tries){ await sleep(600*Math.pow(2,i)); continue; } throw new Error('network'); }
+      if((r.status===429||r.status>=500)&&i<tries){ await sleep(Math.min(8000,Math.max((+r.headers.get('Retry-After')||0)*1000,600*Math.pow(2,i)))); continue; }
+      break;
+    }
     if(r.status===401||r.status===403&&/auth/i.test(await r.clone().text())){ this.token=null; throw new Error('signin'); }
     if(!r.ok) throw new Error('drive '+r.status);
     return r;
@@ -401,13 +434,45 @@ const ICONS={
   drive:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M8.5 3.5h7l6 10.5-3.5 6H6L2.5 14z"/><path d="M8.5 3.5 15 14.5H2.5M15.5 3.5 9 14.5l-3 5.5M21.5 14H9"/></svg>',
   browser:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M3 9h18"/></svg>'
 };
+/* the page a new visitor sees first: what the tracker is, then "See a demo" or "Get started". Resolves 'demo' | 'start'. */
+function landing(){
+  return new Promise(resolve=>{
+    const el=document.createElement('div'); el.className='web-landing'; el.setAttribute('role','dialog'); el.setAttribute('aria-label','MyAhorros');
+    const draw=()=>{
+      const L0=lang(), F=t('landF'), H=t('landHowSteps');
+      const ico=['<path d="M4 16.5V10M10 16.5V4M16 16.5V8"/>','<path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/>','<rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8.5h14M8 8.5V17M12.5 8.5V17"/>','<path d="M10 2.5l6 2.5v4.5c0 4-2.6 6.8-6 8-3.4-1.2-6-4-6-8V5z"/><path d="M7.5 10l2 2 3.5-4"/>'];
+      el.innerHTML=`<header class="wl-top"><span class="wl-brand">MyAhorros</span>
+          <div class="wl-top-r"><div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>
+          <button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button></div></header>
+        <main>
+          <section class="wl-hero"><h1>${esc(t('landH1'))}</h1><p>${esc(t('landSub'))}</p>
+            <div class="wl-cta"><button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button></div>
+            <p class="wl-fine">${esc(t('landNoSignup'))}</p></section>
+          ${F.map((f,i)=>`<section class="wl-sec wl-reveal${i%2?' alt':''}"><svg viewBox="0 0 20 20" width="44" height="44" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ico[i]}</svg><div><h2>${esc(f[0])}</h2><p>${esc(f[1])}</p></div></section>`).join('')}
+          <section class="wl-how wl-reveal"><h2>${esc(t('landHow'))}</h2><ol>${H.map((h,i)=>`<li><b>${esc(h[0])}</b><span>${esc(h[1])}</span></li>`).join('')}</ol></section>
+          <section class="wl-end wl-reveal"><h2>${esc(t('landEnd'))}</h2><p>${esc(t('landEndSub'))}</p>
+            <div class="wl-cta"><button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button></div></section>
+        </main>
+        <footer class="wl-foot"><a href="privacy.html">${esc(t('landPrivacy'))}</a></footer>`;
+      /* sections fade in as they scroll into view (not for people who asked for less motion) */
+      const secs=[...el.querySelectorAll('.wl-reveal')];
+      if(!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){ secs.forEach(x=>x.classList.add('in')); return; }
+      const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }),{root:el,threshold:.15});
+      secs.forEach(x=>io.observe(x));
+    };
+    draw(); document.body.appendChild(el); document.body.classList.add('web-landing-on');
+    el.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
+      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); const y=el.scrollTop; draw(); el.scrollTop=y; return; }
+      if(!b.dataset.x) return; el.remove(); document.body.classList.remove('web-landing-on'); resolve(b.dataset.x); });
+  });
+}
 /* the three choices; resolves with the mode picked, or null (cancelled from Settings) */
 function chooseMode(fromSettings){
   return new Promise(resolve=>{
     const fOk=canFolder(), dOk=canDrive()&&navigator.onLine!==false;
     const card=(m,title,sub,ok,why,rec)=>`<button type="button" class="web-way${mode===m&&fromSettings?' current':''}" data-m="${m}"${ok?'':' disabled'}>${ICONS[m]}<span><b>${esc(title)}${rec&&ok?` <i class="web-rec">${esc(t('recommended'))}</i>`:''}</b><small>${esc(sub)}</small>${ok?'':`<small class="web-why">${esc(why)}</small>`}</span></button>`;
     const L0=lang(), langSw=fromSettings?'':`<div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>`;
-    const el=panel(`<div class="web-top"><p class="web-eyebrow">Yearly Budget Tracker</p>${langSw}</div><h2 id="wp-title">${esc(t('chooseTitle'))}</h2><p class="web-sub">${esc(t('chooseSub'))}</p>
+    const el=panel(`<div class="web-top"><p class="web-eyebrow">MyAhorros</p>${langSw}</div><h2 id="wp-title">${esc(t('chooseTitle'))}</h2><p class="web-sub">${esc(t('chooseSub'))}</p>
       <div class="web-ways">
         ${card('folder',t('folderT'),t('folderS'),fOk,t('folderNo'),true)}
         ${card('drive',t('driveT'),t('driveS')+(fromSettings?'':' '+t('driveHave')),dOk,canDrive()?t('driveOffline'):t('driveNo'),!fOk)}
@@ -419,7 +484,7 @@ function chooseMode(fromSettings){
       ${fromSettings?`<div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`:''}`,{overlay:fromSettings});
     el.addEventListener('click',async e=>{
       const b=e.target.closest('button'); if(!b||b.disabled) return;
-      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'Control de presupuesto anual':'Yearly Budget Tracker'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); el.remove(); chooseMode(fromSettings).then(resolve); return; }
+      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); el.remove(); chooseMode(fromSettings).then(resolve); return; }
       if(b.dataset.x==='cancel'){ el.remove(); resolve(null); return; }
       if(b.dataset.x==='example'){ try{ sessionStorage.setItem('ybt.autotour','1'); }catch(_){} el.remove(); resolve({mode:'browser'}); return; }
       const m=b.dataset.m; if(!m) return;
@@ -442,10 +507,19 @@ function askConflict(kind,theirs,when){
     const el=panel(`<h2 id="wp-title">${esc(t('conflictTitle'))}</h2>
       <p class="web-sub">${esc(kind==='drive'?t('conflictDrive',when?hhmm(when):'',fmtN(countTx(theirs))):t('conflictFolder',when?hhmm(when):'',fmtN(countTx(theirs))))}</p>
       <p class="web-sub">${esc(t('conflictMine',fmtN(countTx(store))))}</p>
-      <div class="web-acts"><button type="button" class="btn primary" data-x="theirs">${esc(t('useTheirs'))}</button><button type="button" class="btn" data-x="mine">${esc(t('useMine'))}</button></div>
+      <div class="web-acts"><button type="button" class="btn primary" data-x="theirs">${esc(t('useTheirs'))}</button><button type="button" class="btn" data-x="mine">${esc(t('useMine'))}</button><button type="button" class="btn" data-x="merge">${esc(t('useMerge'))}</button></div>
       <p class="web-hint">${esc(t('conflictNote'))}</p>`,{overlay:true});
     el.addEventListener('click',e=>{ const b=e.target.closest('button[data-x]'); if(!b) return; el.remove(); resolve(b.dataset.x); });
   });
+}
+/* every month and setting from both; where both have the same one, the version on this screen wins
+   (ponytail: whole months, not single transactions. The other side is kept as a backup before this runs.) */
+function mergeData(mine,theirs){
+  const monthEmpty=m=>!m||!['income','expenses','investments'].some(k=>Array.isArray(m[k])&&m[k].length);
+  const out=clone(theirs); out.months=out.months||{}; out.config=out.config||{};
+  for(const [k,v] of Object.entries((mine&&mine.months)||{})) if(!(k in out.months)||!monthEmpty(v)) out.months[k]=clone(v);
+  for(const [k,v] of Object.entries((mine&&mine.config)||{})) if(v!=null) out.config[k]=clone(v);
+  return out;
 }
 /* the place picked already has a tracker: 'there' or 'replace' */
 function askExisting(there){
@@ -482,7 +556,13 @@ function bar(kind){
 }
 /* the page redraws its Settings line */
 let notifyT=0;
-function notify(){ clearTimeout(notifyT); notifyT=setTimeout(()=>{ const s=document.getElementById('local-status'); if(s){ const v=local.status; s.textContent=v||''; s.hidden=!v; } },30); }
+function notify(){ clearTimeout(notifyT); notifyT=setTimeout(()=>{ const s=document.getElementById('local-status'); if(s){ const v=local.status; s.textContent=v||''; s.hidden=!v; }
+  /* a small always-visible sync line while Google Drive is the storage */
+  let p=document.getElementById('web-sync');
+  if(mode!=='drive'){ if(p) p.remove(); return; }
+  if(!p){ p=document.createElement('div'); p.id='web-sync'; p.setAttribute('role','status'); document.body.appendChild(p); }
+  p.className='web-sync '+(drive.state==='error'?'bad':drive.state==='saving'||drive.dirty?'busy':'ok'); p.textContent=local.status||''; p.hidden=!p.textContent;
+},30); }
 function note(s){ window.dispatchEvent(new CustomEvent('ybt-local-note',{detail:s})); }
 window.addEventListener('ybt-local-note',e=>{ const host=document.getElementById('toast'); if(!host||!e.detail) return;
   const d=document.createElement('div'); d.className='toast'; d.innerHTML='<span>'+esc(e.detail)+'</span>'; host.appendChild(d); setTimeout(()=>d.remove(),8000); });
@@ -501,15 +581,23 @@ function save(){
   saving=p; return p;
 }
 /* the folder: write the newest data, or keep it in the browser until the folder works again */
+/* the page is in the middle of something (a dialog is open, edits are still on their way here):
+   never swap its data or put a question over it. The data waits in the browser and is tried again. */
+let busyT=0;
+const pageBusy=()=>{ try{ return typeof window.YBT_BUSY==='function'&&!!window.YBT_BUSY(); }catch(_){ return false; } };
+function deferIfBusy(fn){ if(!pageBusy()) return false; clearTimeout(busyT); busyT=setTimeout(fn,4000); return true; }
 async function flushFolder(){
-  const text=await idb.get('folder-pending').catch(()=>null); if(typeof text!=='string') return;
+  if(deferIfBusy(()=>flushFolder().catch(()=>{}))) return;
+  let text=await idb.get('folder-pending').catch(()=>null); if(typeof text!=='string') return;
   try{
     if(await folder.perm(folder.dir,false)!=='granted'){ bar('folder'); return; }
     const other=await folder.changedElsewhere();
     if(other){ const theirs=parseData(other.text);
       if(theirs){ const pick=await askConflict('folder',theirs,new Date(other.mod));
-        if(pick==='theirs'){ try{ await folder.keepCopy(text,'from this screen'); }catch(_){} folder.mod=other.mod; store=theirs; await idb.del('folder-pending'); window.dispatchEvent(new CustomEvent('ybt-replace-data',{detail:clone(theirs)})); note(t('keptTheirs')); return; }
-        try{ await folder.keepCopy(other.text,'changed elsewhere'); }catch(_){} note(t('keptMine')); } }
+        if(pick==='theirs'){ try{ await folder.keepCopy(text,'from this screen'); }catch(_){} folder.mod=other.mod; store=theirs; await idb.del('folder-pending'); window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(theirs)})); note(t('keptTheirs')); return; }
+        try{ await folder.keepCopy(other.text,'changed elsewhere'); }catch(_){}
+        if(pick==='merge'){ const mine=parseData(text); if(mine){ store=mergeData(mine,theirs); text=serialise(); await idb.set('folder-pending',text); window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(store)})); note(t('mergedBoth')); } }
+        else note(t('keptMine')); } }
     await folder.write(text);
     if(await idb.get('folder-pending')===text) await idb.del('folder-pending');
     if(barKind) bar(null); notify();
@@ -521,6 +609,7 @@ function scheduleUpload(ms){ clearTimeout(upT); upT=setTimeout(()=>{ driveSync(f
 let syncing=null;
 function driveSync(pull){
   if(syncing) return syncing.then(()=>pull||drive.dirty?driveSync(pull):null);
+  if(deferIfBusy(()=>driveSync(pull).catch(()=>{}))){ drive.state='paused'; notify(); return Promise.resolve(); }
   syncing=(async()=>{
     try{
       if(navigator.onLine===false){ drive.state='offline'; bar('offline'); return; }
@@ -532,14 +621,21 @@ function driveSync(pull){
       const newer=!!r&&(c.version==null||+r.version>+c.version);
       if(newer){
         const text=await drive.download(r.id), theirs=parseData(text);
-        if(theirs&&(c.dirty&&!isEmpty(parseData(c.text)))){
+        /* the page may have started something while that downloaded: leave its data alone and look again soon */
+        if(pageBusy()){ deferIfBusy(()=>driveSync(pull).catch(()=>{})); drive.state='paused'; return; }
+        /* edits made while it downloaded count as ours: look again, right before deciding */
+        const cl=(await drive.cache())||c, unsaved=!!saving||drive.dirty;
+        const mineText=unsaved?serialise():cl.text, mine=mineText?parseData(mineText):null;
+        if(theirs&&(cl.dirty||unsaved)&&mine&&!isEmpty(mine)){
           const pick=await askConflict('drive',theirs,r.modifiedTime?new Date(r.modifiedTime):null);
-          if(pick==='theirs'){ try{ await drive.keepCopy(c.text,'from this screen'); }catch(_){} store=theirs; await drive.markSynced(text,r.version); drive.dirty=false; window.dispatchEvent(new CustomEvent('ybt-replace-data',{detail:clone(theirs)})); note(t('keptTheirs')); drive.lastSync=new Date(); drive.state='idle'; bar(null); return; }
-          try{ await drive.keepCopy(text,'changed elsewhere'); }catch(_){} note(t('keptMine'));
-          await idb.set('drive',{text:c.text,version:r.version,dirty:true});   /* ours goes up below */
+          if(pick==='theirs'){ try{ await drive.keepCopy(mineText,'from this screen'); }catch(_){} store=theirs; await drive.markSynced(text,r.version); drive.dirty=false; window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(theirs)})); note(t('keptTheirs')); drive.lastSync=new Date(); drive.state='idle'; bar(null); return; }
+          try{ await drive.keepCopy(text,'changed elsewhere'); }catch(_){}
+          if(pick==='merge'){ store=mergeData(mine,theirs); const mt=serialise(); await idb.set('drive',{text:mt,version:r.version,dirty:true}); drive.dirty=true;
+            window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(store)})); note(t('mergedBoth')); }   /* the merge goes up below */
+          else { note(t('keptMine')); await idb.set('drive',{text:mineText,version:r.version,dirty:true}); }   /* ours goes up below */
         } else if(theirs){
           store=theirs; await drive.markSynced(text,r.version);
-          window.dispatchEvent(new CustomEvent('ybt-replace-data',{detail:clone(theirs)}));
+          window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(theirs)}));
           if(pull==='note') note(t('pulled'));
           drive.lastSync=new Date(); drive.state='idle'; bar(null); return;
         }
@@ -547,6 +643,8 @@ function driveSync(pull){
       const c2=(await drive.cache())||{};
       if(c2.dirty||!drive.meta.fileId&&!isEmpty(store)){
         drive.state='saving'; notify();
+        /* someone may have saved since we looked: if so, go round again rather than overwrite them */
+        if(drive.meta.fileId&&c2.version!=null){ const r2=await drive.remote(); if(r2&&+r2.version>+c2.version){ drive.dirty=true; drive.state='idle'; scheduleUpload(300); return; } }
         await drive.backup();
         const text=c2.text||serialise();
         const f=await drive.upload(text);
@@ -555,13 +653,15 @@ function driveSync(pull){
         drive.dirty=c3.text!==text;
         if(drive.dirty) scheduleUpload(300);
       }
-      drive.lastSync=new Date(); drive.state='idle'; bar(null);
+      drive.lastSync=new Date(); drive.state='idle'; drive.fails=0; bar(null);
     }catch(e){
       const m=e&&e.message||'';
       if(m==='exists'){ scheduleUpload(300); }
       else if(m==='signin'){ drive.state='signin'; bar('signin'); }
       else if(m==='offline'||navigator.onLine===false){ drive.state='offline'; bar('offline'); }
-      else { drive.state='error'; notify(); scheduleUpload(30000); }
+      else { /* back off: 30 s, 1 min, 2 min … up to 5 min, and say when the next try is */
+        drive.fails=(drive.fails||0)+1; const wait=Math.min(300000,30000*Math.pow(2,drive.fails-1));
+        drive.state='error'; drive.nextTry=new Date(Date.now()+wait); scheduleUpload(wait); }
     } finally { notify(); }
   })().finally(()=>{ syncing=null; });
   return syncing;
@@ -684,6 +784,8 @@ const local={
   get status(){
     if(mode==='drive'){
       if(drive.state==='saving') return t('stDriveSaving');
+      if(drive.state==='paused') return t('stDrivePaused');
+      if(drive.state==='error'&&drive.nextTry) return t('stDriveError',hhmm(drive.nextTry));
       if(drive.state==='offline') return t('barOffline');
       if(drive.state==='signin') return t('barSignIn');
       if(drive.dirty) return t('stDriveWait');
@@ -782,7 +884,7 @@ async function startFolder(){
   if(p!=='granted'){
     /* the browser wants a click before it opens the folder again */
     p=await new Promise(resolve=>{
-      const el=panel(`<p class="web-eyebrow">Yearly Budget Tracker</p><h2 id="wp-title">${esc(t('reTitle'))}</h2><p class="web-sub">${esc(t('reText',h.name))}</p>
+      const el=panel(`<p class="web-eyebrow">MyAhorros</p><h2 id="wp-title">${esc(t('reTitle'))}</h2><p class="web-sub">${esc(t('reText',h.name))}</p>
         <div class="web-acts"><button type="button" class="btn primary" data-x="allow">${esc(t('allow'))}</button><button type="button" class="btn" data-x="other">${esc(t('otherFolder'))}</button><button type="button" class="btn ghost" data-x="browser">${esc(t('useBrowser'))}</button></div>`);
       el.addEventListener('click',async e=>{ const b=e.target.closest('button[data-x]'); if(!b) return; el.busy(true); el.msg('');
         try{
@@ -812,7 +914,7 @@ async function startDrive(){
   }
   /* a new device: connect before opening */
   const ok=await new Promise(resolve=>{
-    const el=panel(`<p class="web-eyebrow">Yearly Budget Tracker</p><h2 id="wp-title">${esc(t('driveConnectTitle'))}</h2><p class="web-sub">${esc(t('driveConnectText'))}</p>
+    const el=panel(`<p class="web-eyebrow">MyAhorros</p><h2 id="wp-title">${esc(t('driveConnectTitle'))}</h2><p class="web-sub">${esc(t('driveConnectText'))}</p>
       <div class="web-acts"><button type="button" class="btn primary" data-x="go">${esc(t('connect'))}</button><button type="button" class="btn ghost" data-x="browser">${esc(t('useBrowser'))}</button></div>`);
     el.addEventListener('click',async e=>{ const b=e.target.closest('button[data-x]'); if(!b) return;
       if(b.dataset.x==='browser'){ el.remove(); resolve(false); return; }
@@ -836,8 +938,11 @@ async function start(){
   /* nothing added yet (no transactions, no accounts or figures): the choice isn't final, so ask again */
   if(store&&nothingAdded(store)){ store=null; bar(null); }
   if(!store){
-    /* first visit: where should it live? */
-    const c=await chooseMode(false);
+    /* first visit: what is this, then where should it live? (people who already picked a place go straight to the choice) */
+    const first=m?'start':await landing();
+    let c;
+    if(first==='demo'){ try{ sessionStorage.setItem('ybt.autotour','1'); }catch(_){} c={mode:'browser'}; }
+    else c=await chooseMode(false);
     if(c.mode==='folder'){ folder.dir=c.dir; await idb.set('folder',c.dir); setMode('folder'); const text=await folder.read(); store=(text&&parseData(text))||empty(); }
     else if(c.mode==='drive'){ setMode('drive'); const mm=drive.meta; let text=null, v=null; if(mm.fileId){ text=await drive.download(mm.fileId); v=(mm.remote||{}).version; }
       store=(text&&parseData(text))||empty(); await idb.set('drive',{text:serialise(),version:v,dirty:false}); drive.lastSync=new Date(); drive.state='idle'; }
