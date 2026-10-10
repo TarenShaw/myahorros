@@ -106,9 +106,11 @@ Data files keep the same format as the Windows app, and new versions can always 
 | `config.js` | Your settings (the Google Client ID) |
 | `js/web-shim.js` | Saving: folder, Google Drive or browser |
 | `js/web-ai.js` | Reading statements with Claude, ChatGPT or Gemini (the visitor's own key), or copy and paste |
+| `js/models.js` | The AI model names, defaults, recommendations and request limits, in one place |
 | `js/web-boot.js`, `sw.js` | Offline support |
 | `vendor/` | The Excel and PDF readers, served by the site itself |
 | `fonts/`, `icons/`, `manifest.webmanifest` | Fonts, app icons, install details |
 | `privacy.html` | Privacy page, in English and Spanish |
+| `tests/`, `tools/` | Smoke and browser checks, and the script that refreshes the page's security hash after an edit (see CLAUDE.md) |
 
 The page only allows scripts from your own site plus Google's sign-in script and the GoatCounter visitor counter. It can only send data to Google Drive, to GoatCounter (page visits only, no figures) and, when a visitor uses their own key, to Anthropic, OpenAI or Google's Gemini API. The browser enforces this, so even a mistake in the code couldn't send figures anywhere else.
