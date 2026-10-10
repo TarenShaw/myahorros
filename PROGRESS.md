@@ -1,6 +1,6 @@
 # PROGRESS
 
-Branch: `worktree-quick-wins` (worktree `.claude/worktrees/quick-wins`), based on `main` at `baf2f60` (PR #1 `overhaul` merged). Pushed to `origin/worktree-quick-wins` up to `9f3e05e`; `56b1a99` and `7b4b8ad` plus this handoff are local only (push needs the user's say-so). Not merged. Last handoff: 2026-10-10.
+Branch: `worktree-quick-wins` (worktree `.claude/worktrees/quick-wins`), based on `main` at `baf2f60` (PR #1 `overhaul` merged). Pushed to `origin/worktree-quick-wins` up to `81fe48b` (in sync; only this handoff commit may be unpushed). Not merged. Last handoff: 2026-10-10.
 Product name: **MyAhorros** (site at myahorros.app).
 
 ## Completed
@@ -10,7 +10,7 @@ Product name: **MyAhorros** (site at myahorros.app).
 | 0-7, rename, merge | `6f3ff66`…`baf2f60` | GoatCounter/privacy; AI errors, chunking, retries, `js/models.js`; Drive/folder sync safety; Haiku 5.5 default, badges, Change AI; layout/Gains column; landing, wizard, tour; renamed MyAhorros; PR #1 merged |
 | Audit quick wins | `58be1db` | Empty-state actions, account validation, "step N of 5", paste/import recommended, share tags |
 | Gains | `cbd7963`, `2f844ba` | Whole-word matching, best account wins, Gains on phones, payouts count (interest/dividends); `tests/gains.e2e.js` |
-| Repo files | `517f37a`, `9f3e05e`, `56b1a99` | Claude files kept in repo; PROGRESS.md handoffs |
+| Repo files | `517f37a`, `9f3e05e`, `56b1a99`, `81fe48b` | Claude files kept in repo; PROGRESS.md handoffs; all pushed |
 | 8.3 Mobile + tour pass | `7b4b8ad` | Checked 390/768 px (mouse + touch): landing, where-to-save, wizard, all 17 tour steps, all tabs, accounts table, add dialog, import review (fits). Fixed: 36-40 px touch targets on phones/`pointer:coarse` (Categories 176/183 under 36 px → 0); `--muted` light → `#5c6a65` (≥4.5:1 everywhere; web.css and privacy.html greys too); "You're set up" card on Overview only, no eyebrow/step list, Got it beside title (46% → 40% of 390 px screen), Transactions shows one-line "Go to Overview" bar; phone accounts table labels Change and Share; tour card at bottom for tall targets on phones; tabs fit 641-900 px; where-to-save panel traps Tab; Esc on wizard = Finish later (no longer reopens). Two new checks in `tests/landing-wizard.e2e.js`. SW 1.0.10 |
 
 ## In progress
@@ -19,7 +19,7 @@ Nothing uncommitted. Untracked: `.playwright-cli/` (Playwright logs, safe to del
 
 ## Pending
 
-- 8.4 Merge `worktree-quick-wins` into `main` (publishes via GitHub Pages). Needs the user's say-so; push the 2 local commits first. PR link: https://github.com/TarenShaw/myahorros/pull/new/worktree-quick-wins
+- 8.4 Merge `worktree-quick-wins` into `main` (publishes via GitHub Pages). Needs the user's say-so. PR link: https://github.com/TarenShaw/myahorros/pull/new/worktree-quick-wins
 - 8.2 Live-key verification (rotated Gemini key + real Claude key, large statement on Haiku 5.5 and Gemini).
 - 8.5 Post-release: GoatCounter counts a visit, existing users update cleanly (SW `VERSION`, CSP hash).
 - Remaining audit items, only if the user asks (see Known issues).
@@ -45,6 +45,7 @@ Nothing uncommitted. Untracked: `.playwright-cli/` (Playwright logs, safe to del
 - 2026-10-10: User approved pushing `worktree-quick-wins` (done once). Merge into `main` still needs approval.
 - 2026-10-10: Setup strip counts wizard steps (acc and figures = 1, transactions = 3, of 5); wizard step 3 recommends paste/import, not AI.
 - 2026-10-10: 8.3 scope (user: "complete all open questions 1 and 2"): fix every audit layout item inside 8.3 (setup-done card, tap targets, contrast, phone accounts-table labels), and run keyboard/screen-reader checks on landing, where-to-save, wizard, tour and add/import dialogs, fixing real problems found.
+- 2026-10-10: User said "push everything": branch pushed to `origin/worktree-quick-wins` at `81fe48b`. Merge into `main` still needs approval.
 
 ## Known issues
 
