@@ -19,6 +19,7 @@ Must be served over `localhost` or https: the service worker only registers ther
 ```
 node tests/ai-smoke.js          # AI layer: retries, limits, truncation, key scrubbing (no browser)
 node tests/chunk-smoke.js       # request splitting and merging pulled out of index.html
+node tests/merge-smoke.js       # "Merge both" (mergeData in web-shim.js)
 node tools/update-csp-hash.js   # after ANY edit to index.html's inline <script>
 ```
 

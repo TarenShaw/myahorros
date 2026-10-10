@@ -70,7 +70,7 @@ const TX={
     conflictFolder:(t,n)=>`The data file was changed ${t?'at '+t+' ':''}by something else, such as the Windows app (${n} transactions).`,
     conflictMine:n=>`This screen has ${n} transactions with changes not saved there yet.`,
     useTheirs:'Open the newer one', useMine:'Keep the one on this screen', useMerge:'Merge both',
-    conflictNote:'Whichever you don’t keep is saved as a backup first. “Merge both” keeps every month from both versions; where both have the same month, it keeps the one on this screen.',
+    conflictNote:'Whichever you don’t keep is saved as a backup first. “Merge both” keeps every transaction, account and setting from both versions; where both changed the same one, it keeps the one on this screen.',
     mergedBoth:'Merged both versions. The other one was kept as a backup.',
     landDemo:'See a demo', landStart:'Get started', landMenu:'Sections',
     landH1:'Know where your money goes, and what you’re worth.',
@@ -108,6 +108,8 @@ const TX={
     cantRead:'That file couldn’t be read, so nothing was changed.', notTracker:'That isn’t a tracker data file, so nothing was changed.',
     opened:(n,c)=>`Opened ${n}: ${c} ${c==='1'?'transaction':'transactions'}. Your previous data was kept as a backup first.`,
     freshTitle:'Start fresh?', freshText:'This deletes every transaction, category, keyword and setting from the tracker. A backup of your data is kept first.',
+    startFailTitle:'Your tracker didn’t open', startFailFolder:'Your tracker folder couldn’t be read just now. If the Windows app has the file open, close it, then try again.',
+    startFailDrive:'Your tracker couldn’t be opened from Google Drive just now. Check your connection, then try again.', tryAgain:'Try again',
     freshYes:'Delete everything', freshDone:'Started fresh. Your previous data was kept as a backup.',
     restoreBT:'Restore a backup…', restoreBHelp:'Open one of the copies kept in this browser: the daily ones, and those made before starting fresh, opening a file or restoring.',
     restoreBTitle:'Restore a backup', restoreBNone:'There are no backups in this browser yet.',
@@ -157,7 +159,7 @@ const TX={
     conflictFolder:(t,n)=>`El archivo de datos lo ha cambiado ${t?'a las '+t+' ':''}otro programa, como la aplicación de Windows (${n} movimientos).`,
     conflictMine:n=>`Esta pantalla tiene ${n} movimientos con cambios que aún no se han guardado allí.`,
     useTheirs:'Abrir la versión más nueva', useMine:'Quedarme con la de esta pantalla', useMerge:'Combinar las dos',
-    conflictNote:'La que no elijas se guarda antes como copia de seguridad. «Combinar las dos» conserva todos los meses de ambas versiones; si los dos tienen el mismo mes, se queda con el de esta pantalla.',
+    conflictNote:'La que no elijas se guarda antes como copia de seguridad. «Combinar las dos» conserva todos los movimientos, cuentas y ajustes de ambas versiones; si las dos cambiaron el mismo, se queda con el de esta pantalla.',
     mergedBoth:'Se han combinado las dos versiones. La otra se guardó como copia de seguridad.',
     landDemo:'Ver una demo', landStart:'Empezar', landMenu:'Secciones',
     landH1:'Sabe a dónde va tu dinero y cuánto vales.',
@@ -195,6 +197,8 @@ const TX={
     cantRead:'No se ha podido leer ese archivo, así que no se ha cambiado nada.', notTracker:'Ese no es un archivo de datos del control, así que no se ha cambiado nada.',
     opened:(n,c)=>`Abierto ${n}: ${c} ${c==='1'?'movimiento':'movimientos'}. Antes se ha guardado una copia de lo que había.`,
     freshTitle:'¿Empezar de cero?', freshText:'Esto borra todos los movimientos, categorías, palabras clave y ajustes del control. Antes se guarda una copia de seguridad.',
+    startFailTitle:'Tu control no se ha abierto', startFailFolder:'No se ha podido leer la carpeta de tu control. Si la app de Windows tiene el archivo abierto, ciérrala y vuelve a intentarlo.',
+    startFailDrive:'No se ha podido abrir tu control desde Google Drive. Comprueba la conexión y vuelve a intentarlo.', tryAgain:'Reintentar',
     freshYes:'Borrarlo todo', freshDone:'Has empezado de cero. Tus datos anteriores se han guardado como copia.',
     restoreBT:'Restaurar una copia…', restoreBHelp:'Abre una de las copias guardadas en este navegador: las diarias y las que se hacen antes de empezar de cero, abrir un archivo o restaurar.',
     restoreBTitle:'Restaurar una copia', restoreBNone:'Todavía no hay copias en este navegador.',
@@ -534,12 +538,21 @@ function askConflict(kind,theirs,when){
 }
 /* every month and setting from both; where both have the same one, the version on this screen wins
    (ponytail: whole months, not single transactions. The other side is kept as a backup before this runs.) */
+/* "Merge both": everything from both versions. Rows, accounts and the like are matched by id (otherwise by value);
+   where both have the same one, or the same setting, this screen's version wins. Deleted on one side comes back. */
+function mergeVal(mine,theirs){
+  if(mine===undefined) return clone(theirs);
+  if(Array.isArray(mine)&&Array.isArray(theirs)){
+    const key=x=>x&&typeof x==='object'&&x.id!=null?'id:'+x.id:'v:'+JSON.stringify(x);
+    const m=new Map(mine.map(x=>[key(x),x])), seen=new Set(theirs.map(key));
+    return theirs.map(x=>m.has(key(x))?mergeVal(m.get(key(x)),x):clone(x)).concat(clone(mine.filter(x=>!seen.has(key(x)))));
+  }
+  const obj=x=>x&&typeof x==='object'&&!Array.isArray(x);
+  if(obj(mine)&&obj(theirs)){ const out={}; for(const k of new Set([...Object.keys(theirs),...Object.keys(mine)])) out[k]=mergeVal(mine[k],theirs[k]); return out; }
+  return clone(mine);
+}
 function mergeData(mine,theirs){
-  const monthEmpty=m=>!m||!['income','expenses','investments'].some(k=>Array.isArray(m[k])&&m[k].length);
-  const out=clone(theirs); out.months=out.months||{}; out.config=out.config||{};
-  for(const [k,v] of Object.entries((mine&&mine.months)||{})) if(!(k in out.months)||!monthEmpty(v)) out.months[k]=clone(v);
-  for(const [k,v] of Object.entries((mine&&mine.config)||{})) if(v!=null) out.config[k]=clone(v);
-  return out;
+  return mergeVal({months:(mine&&mine.months)||{},config:(mine&&mine.config)||{}},{months:(theirs&&theirs.months)||{},config:(theirs&&theirs.config)||{}});
 }
 /* the place picked already has a tracker: 'there' or 'replace' */
 function askExisting(there){
@@ -648,6 +661,9 @@ function driveSync(pull){
         const text=await drive.download(r.id), theirs=parseData(text);
         /* the page may have started something while that downloaded: leave its data alone and look again soon */
         if(pageBusy()){ deferIfBusy(()=>driveSync(pull).catch(()=>{})); drive.state='paused'; return; }
+        /* Drive's copy can't be read (damaged, cut short): keep it as a backup, then ours goes up over it below.
+           (Before, the newer version kept winning the check before uploading and this went round every 300 ms.) */
+        if(!theirs){ await drive.keepCopy(text,'unreadable'); const cu=(await drive.cache())||c; await idb.set('drive',{text:cu.text||serialise(),version:r.version,dirty:true}); drive.dirty=true; }
         /* edits made while it downloaded count as ours: look again, right before deciding */
         const cl=(await drive.cache())||c, unsaved=!!saving||drive.dirty;
         const mineText=unsaved?serialise():cl.text, mine=mineText?parseData(mineText):null;
@@ -1022,7 +1038,18 @@ if(tabCh) tabCh.onmessage=async e=>{
   await queue;
   if(letGo){ letGo(); letGo=null; }
 };
-takeTab().catch(()=>{}).then(start).catch(e=>{ console.error('storage start failed',e); setMode('browser'); browser.read().then(x=>{ store=(x&&parseData(x))||empty(); resolveReady(); },()=>{ store=empty(); resolveReady(); }); });
+/* the folder or Drive didn't open: say so and offer another try, rather than quietly switching to this browser for good */
+function startFailed(was){
+  return new Promise(resolve=>{
+    const el=panel(`<p class="web-eyebrow">MyAhorros</p><h2 id="wp-title">${esc(t('startFailTitle'))}</h2><p class="web-sub">${esc(t(was==='folder'?'startFailFolder':'startFailDrive'))}</p>
+      <div class="web-acts"><button type="button" class="btn primary" data-x="retry">${esc(t('tryAgain'))}</button><button type="button" class="btn ghost" data-x="browser">${esc(t('useBrowser'))}</button></div>`);
+    el.addEventListener('click',e=>{ const b=e.target.closest('button[data-x]'); if(!b) return; el.remove(); resolve(b.dataset.x); });
+  });
+}
+takeTab().catch(()=>{}).then(start).catch(async e=>{ console.error('storage start failed',e);
+  const was=lsGet(MODE_KEY);
+  if((was==='folder'||was==='drive')&&await startFailed(was)==='retry'){ location.reload(); return; }
+  setMode('browser'); browser.read().then(x=>{ store=(x&&parseData(x))||empty(); resolveReady(); },()=>{ store=empty(); resolveReady(); }); });
 
 /* for the tests */
 window.__ybtWeb={get mode(){ return mode; }, get store(){ return store; }, drive, folder, idb, sync:()=>driveSync(true), queue:()=>queue};
