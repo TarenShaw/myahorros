@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-sj7E62DfZlWGrjW/OYL0itijnTHmmWd0y75mlmG/w6I=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+Q+zux/8Et/tfC2dsnF27xnPltg5TLbuHoBcxxZi46Y=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -860,6 +860,9 @@ table.nwt{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-nume
 .acc-list{display:grid;gap:8px}
 .acc-row{display:grid;grid-template-columns:minmax(0,1fr) 150px auto auto;gap:8px;align-items:center}
 .acc-row .acts{display:flex}
+.acc-row:has(select[data-f=group] option[value=cash]:checked) .acc-words{display:none}   /* statement words do nothing for Cash */
+.link-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,240px);gap:6px 16px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+@media (max-width:640px){.link-row{grid-template-columns:1fr}}
 .acc-row .acc-words{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:center;font-size:12.5px;color:var(--muted)}
 .nw-sug{border:1px dashed var(--line-2);background:transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .nw-sug:hover{border-style:solid;color:var(--ink)}
@@ -1753,8 +1756,20 @@ const STR={
   nwAccounts:['Accounts','Cuentas'], nwAccountsSub:['Value at the end of the month, change since the month before, and share of the total.','Valor a final de mes, cambio desde el mes anterior y peso sobre el total.'],
   nwEditAccounts:['Edit accounts','Editar cuentas'], nwAccount:['Account','Cuenta'], nwValue:['Value','Valor'], nwChangeCol:['Change','Cambio'], nwShare:['Share','Peso'],
   nwNoFigure:['no figure','sin cifra'],
-  nwUnlinked:[(n,a,d)=>`${pl(n,'row')} in Investments (${a}) ${n===1?'matches':'match'} no account, so ${n===1?'it counts':'they count'} as gains: ${d}.`,(n,a,d)=>`${pl(n,'row')} de Inversiones (${a}) no ${n===1?'encaja':'encajan'} con ninguna cuenta, así que ${n===1?'cuenta':'cuentan'} como ganancia: ${d}.`],
-  nwUnlinkedFix:['Add them as statement words in Edit accounts','Añádelas como palabras del extracto en Editar cuentas'], nwRisk:['At risk','En riesgo'],
+  nwUnlinked:[(n,a,d)=>`${pl(n,'row')} in Investments (${a}) ${n===1?'isn’t':'aren’t'} linked to an account yet, so Gains counts ${n===1?'it':'them'} as profit: ${d}.`,(n,a,d)=>`${pl(n,'row')} de Inversiones (${a}) no ${n===1?'está vinculada':'están vinculadas'} a ninguna cuenta, así que Ganancias ${n===1?'la cuenta':'las cuenta'} como beneficio: ${d}.`],
+  nwUnlinkedFix:['Link them to accounts','Vincularlas a sus cuentas'],
+  nwLinkTitle:['Which account did this money go into?','¿A qué cuenta fue este dinero?'],
+  nwLinkSub:['Investments rows from every month that aren’t linked yet. We’ve suggested an account where we could: check each one and pick another if it’s wrong. MyAhorros remembers your choice, so future rows link by themselves.','Filas de Inversiones de todos los meses que aún no están vinculadas. Hemos sugerido una cuenta donde hemos podido: revisa cada una y elige otra si no es correcta. MyAhorros recuerda tu elección, así que las filas futuras se vincularán solas.'],
+  nwLinkUntracked:['An account I don’t track here','Una cuenta que no sigo aquí'],
+  nwAccUntracked:['Statement words of accounts you don’t track here','Palabras del extracto de cuentas que no sigues aquí'],
+  nwLinkMeta:[(n,a,out,ms)=>`${pl(n,'row')} · ${a} ${out?'taken out':'put in'} · ${ms}`,(n,a,out,ms)=>`${pl(n,'row')} · ${a} ${out?'retirados':'aportados'} · ${ms}`],
+  nwLinkPick:[d=>`Account for “${d}”`,d=>`Cuenta para «${d}»`], nwLinkNone:['Not sure yet','Aún no lo sé'],
+  nwLinkWhy_name:[a=>`Suggested ${a}: the name matches.`,a=>`Sugerida ${a}: el nombre coincide.`],
+  nwLinkWhy_pension:[a=>`Suggested ${a}: it looks like a pension payment.`,a=>`Sugerida ${a}: parece una aportación a un plan de pensiones.`],
+  nwLinkWhy_amount:[a=>`Suggested ${a}: its value rose by about this amount.`,a=>`Sugerida ${a}: su valor subió más o menos esta cantidad.`],
+  nwLinkHelp:['Each choice is saved as the account’s statement words; change them any time in Edit accounts.','Cada elección se guarda como palabras del extracto de la cuenta; puedes cambiarlas cuando quieras en Editar cuentas.'],
+  nwLinkEmpty:['Every row is linked.','Todas las filas están vinculadas.'], nwLinkSave:['Link','Vincular'],
+  nwLinked:[n=>`Linked ${pl(n,'row')}. Gains updated.`,n=>`${pl(n,'row')} vinculadas. Ganancias actualizadas.`], nwRisk:['At risk','En riesgo'],
   nwOverTime:['Over time','Evolución'], nwOverTimeSub:['Month-end totals by group.','Totales a fin de mes por grupo.'], nwChartAria:['Net worth at the end of each month, by group','Patrimonio a final de cada mes, por grupo'],
   nwMonthPick:['Month','Mes'],
   nwSnapTitle:[(m,y)=>`Figures for the end of ${m} ${y}`,(m,y)=>`Cifras a final de ${m} de ${y}`],
@@ -1808,7 +1823,7 @@ const STR={
   /* accounts at 0 */
   nwTotalRow:['Total, all accounts','Total, todas las cuentas'],
   nwGains:['Gains','Ganancias'],
-  nwGainsTip:['Gains: what an account earned you. It is the change since last month, minus the money you put in, plus interest, dividends, capital gains or rent it paid out to you. Money put in or taken out comes from your Investments rows that contain the account’s statement words (Edit accounts) or, failing that, its name;payouts come from income rows that name the account in a category ticked under “Interest, dividends and gains” on Net worth. If a dividend stayed inside the account, don’t also record it as income, or it counts twice. Cash accounts show none. A row that matches no account, or fits two accounts equally well, isn’t counted for any account, so it shows up as gain: add statement words to fix it.','Ganancias: lo que te ha hecho ganar una cuenta. Es el cambio desde el mes anterior, menos el dinero que aportaste, más los intereses, dividendos, plusvalías o alquiler que te pagó. Lo aportado o retirado sale de tus filas de Inversiones que contienen las palabras del extracto de la cuenta (Editar cuentas) o, si no, su nombre;los cobros, de los ingresos que nombran la cuenta en una categoría marcada en “Intereses, dividendos y plusvalías” de Patrimonio. Si un dividendo se quedó dentro de la cuenta, no lo apuntes también como ingreso o contará dos veces. Las cuentas de efectivo no muestran nada. Una fila que no encaja con ninguna cuenta, o que encaja igual de bien con dos, no cuenta para ninguna y se muestra como ganancia: añade palabras del extracto para corregirlo.'],
+  nwGainsTip:['Gains: what an account earned you. It is the change since last month, minus the money you put in, plus interest, dividends, capital gains or rent it paid out to you. Money put in or taken out comes from your Investments rows that contain the account’s statement words (Edit accounts) or, failing that, its name; payouts come from income rows that name the account in a category ticked under “Interest, dividends and gains” on Net worth. If a dividend stayed inside the account, don’t also record it as income, or it counts twice. Cash accounts show none. A row that matches no account, or fits two accounts equally well, isn’t counted for any account, so it shows up as gain: use “Link them to accounts” under the table to fix it. A row that says pension goes to a Retirement account.','Ganancias: lo que te ha hecho ganar una cuenta. Es el cambio desde el mes anterior, menos el dinero que aportaste, más los intereses, dividendos, plusvalías o alquiler que te pagó. Lo aportado o retirado sale de tus filas de Inversiones que contienen las palabras del extracto de la cuenta (Editar cuentas) o, si no, su nombre; los cobros, de los ingresos que nombran la cuenta en una categoría marcada en “Intereses, dividendos y plusvalías” de Patrimonio. Si un dividendo se quedó dentro de la cuenta, no lo apuntes también como ingreso o contará dos veces. Las cuentas de efectivo no muestran nada. Una fila que no encaja con ninguna cuenta, o que encaja igual de bien con dos, no cuenta para ninguna y se muestra como ganancia: usa «Vincularlas a sus cuentas» debajo de la tabla para corregirlo. Una fila que dice pensión va a una cuenta de Jubilación.'],
   nwLaterHero:[n=>`No figure yet this month for ${n}: ${n.includes(',')||n.includes(' and ')?'their':'its'} first figure comes later, so the total may be low.`,n=>`Sin cifra este mes para ${n}: su primera cifra es posterior, así que el total puede quedarse corto.`],
   nwFaded:['Faded months are missing figures, so they look lower than they were:','Los meses atenuados no tienen todas las cifras, así que parecen más bajos de lo que fueron:'],
   nwLaterLine:[(n,m)=>`${n}: no figures before ${m}.`,(n,m)=>`${n}: sin cifras antes de ${m}.`],
@@ -2854,6 +2869,7 @@ function normNw(d){
   if(d.snaps&&typeof d.snaps==='object') for(const [k,v] of Object.entries(d.snaps)){ if(!/^\d{4}-\d{2}$/.test(k)||!v||typeof v!=='object') continue;
     const s={}; for(const [id,x] of Object.entries(v)) if(ids.has(id)&&x!==null&&x!==''&&isFinite(+x)) s[id]=r2(+x); if(Object.keys(s).length) o.snaps[k]=s; }
   if(d.goal&&+d.goal.amount>0&&/^\d{4}-\d{2}$/.test(String(d.goal.month||''))) o.goal={amount:r2(+d.goal.amount),month:d.goal.month};
+  if(String(d.untracked||'').trim()) o.untracked=String(d.untracked).trim();
   if(d.returnCats&&typeof d.returnCats==='object') o.returnCats={income:(Array.isArray(d.returnCats.income)?d.returnCats.income:[]).map(String),expenses:(Array.isArray(d.returnCats.expenses)?d.returnCats.expenses:[]).map(String)};
   return o;
 }
@@ -3197,27 +3213,86 @@ function goalGrowthCalc(T,rest,left,pace){
    mostly pay and spending. A deposit whose description doesn't name the account is counted as a gain.
    Names match on whole words of 3+ letters ("ING", not "ingreso"; "Fund", not "refund"). A row goes to the one account
    whose name shares the most words with it ("MyInvestor Pension" beats "MyInvestor Fund"); a tie goes to neither.
+   A row whose category or description says pension prefers Retirement accounts, any other row the rest.
    An account's own "statement words" (Edit accounts, comma-separated, e.g. "Gamma Global, Indexa Capital") come first:
    a row containing one of those phrases as whole words goes to that account, the longest phrase winning; the name rule
    is only the fallback for rows no phrase matches. Investments rows linked to no account are listed in out.unlinked
-   so the accounts card can say so instead of showing them silently as gain. */
+   so the accounts card can say so instead of showing them silently as gain; rows containing a phrase from
+   "accounts you don't track here" (N.untracked) are left out of that list. */
+const nwWords=s=>fold(s).split(/[^a-z0-9]+/).filter(x=>x.length>=3);
+const nwPensionish=s=>/pensi|jubil|retir/.test(fold(s));
 function nwGains(prev,k){
   const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map(), put=new Map(); out.unlinked=[];
-  const words=s=>fold(s).split(/[^a-z0-9]+/).filter(x=>x.length>=3);
-  const accs=N.accounts.filter(a=>a.group!=='cash').map(a=>({id:a.id,w:new Set(words(a.name)),p:String(a.words||'').split(',').map(loose).filter(Boolean)}));
+  const words=nwWords, skip=String(N.untracked||'').split(',').map(loose).filter(Boolean);
+  const accs=N.accounts.filter(a=>a.group!=='cash').map(a=>({id:a.id,pen:a.group==='pension',w:new Set(words(a.name)),p:String(a.words||'').split(',').map(loose).filter(Boolean)}));
   /* the one account with the best score; a tie goes to neither */
   const pick=score=>{ let best=null, n=0, tie=false; for(const a of accs){ const s=score(a); if(s>n){ best=a.id; n=s; tie=false; } else if(s&&s===n) tie=true; } return tie?null:best; };
   for(const r of allRows()){ const m=r.date.slice(0,7); if(r.table!=='investments'&&!isReturn(r)||m<=prev||m>k) continue;
     const c=' '+loose(r.concept)+' ', cw=new Set(words(r.concept));
     const byPhrase=pick(a=>Math.max(0,...a.p.filter(p=>c.includes(' '+p+' ')).map(p=>p.length)));
-    const best=byPhrase||(accs.some(a=>a.p.some(p=>c.includes(' '+p+' ')))?null:pick(a=>{ let s=0; for(const x of a.w) if(cw.has(x)) s++; return s; }));
-    if(best) put.set(best,(put.get(best)||0)-r.amount); else if(r.table==='investments') out.unlinked.push(r); }
+    /* by name, a pension-looking row only goes to a Retirement account and any other row only to a non-Retirement
+       one, whenever such an account shares a word with it ("Indexa Capital, plan de ahorro" is not "Indexa pension plan") */
+    const sc=a=>{ let s=0; for(const x of a.w) if(cw.has(x)) s++; return s; }, pen=nwPensionish((r.category||'')+' '+r.concept), side=accs.some(a=>a.pen===pen&&sc(a));
+    const best=byPhrase||(accs.some(a=>a.p.some(p=>c.includes(' '+p+' ')))?null:pick(a=>side&&a.pen!==pen?0:sc(a)));
+    if(best) put.set(best,(put.get(best)||0)-r.amount); else if(r.table==='investments'&&!skip.some(p=>c.includes(' '+p+' '))) out.unlinked.push(r); }
   for(const a of N.accounts){
     if(a.group==='cash') continue;
     const v1=s1[a.id], v0=s0[a.id]; if(v1==null||v0==null) continue;
     out.set(a.id,r2(v1-v0-(put.get(a.id)||0)));
   }
   return out;
+}
+/* unlinked Investments rows ({r,k}: row and the month whose gain it affects), one entry per description: the phrase
+   saved as statement words is the description without the price after "@" or a trailing reference number, unless
+   that no longer matches the row as whole words */
+function nwUnlinked(list){
+  const by=new Map();
+  for(const {r,k} of list){ let d=r.concept.replace(/@.*$/,'').replace(/[\s\d.,:;#/*–-]+$/,'').trim();
+    if(loose(d).length<3||!(' '+loose(r.concept)+' ').includes(' '+loose(d)+' ')) d=r.concept.trim();
+    const key=loose(d); if(!by.has(key)) by.set(key,{label:d,rows:[],amt:0,cat:'',byK:new Map()});
+    const g=by.get(key); g.rows.push(r); g.amt=r2(g.amt-r.amount); g.cat+=' '+(r.category||''); g.byK.set(k,r2((g.byK.get(k)||0)-r.amount)); }
+  return [...by.values()];
+}
+/* every month's unlinked rows, and each month's gains to test guesses against */
+function nwUnlinkedAll(){
+  const ms=nwMonths(), list=[], rest=new Map();
+  for(let i=1;i<ms.length;i++){ const G=nwGains(ms[i-1],ms[i]); rest.set(ms[i],new Map(G)); for(const r of G.unlinked) list.push({r,k:ms[i]}); }
+  const last=g=>[...g.byK.keys()].sort().pop();
+  return {groups:nwUnlinked(list).sort((x,y)=>last(y).localeCompare(last(x))),rest};   /* newest first */
+}
+/* a best guess of the account for each description, biggest amount first: the account whose name shares the most
+   words with it, pension-looking rows among Retirement accounts and the rest among the others (as in nwGains).
+   Among several (or none by name) the account whose gains shrink the most if the money is counted as put in there,
+   i.e. whose value rose by about what went in, in the months the rows fall in. A guess on amount alone must leave
+   at most a quarter of the amount unexplained; otherwise no guess, and the user picks.
+   ponytail: greedy; search every assignment if users report wrong guesses */
+function nwSuggest(groups,rest){
+  const accs=nw().accounts.filter(a=>a.group!=='cash'), out=new Map();
+  const fit=(g,id)=>{ let better=0, left=0; for(const [k,v] of g.byK){ const R=rest.get(k); if(R&&R.has(id)){ better+=Math.abs(R.get(id))-Math.abs(R.get(id)-v); left+=Math.abs(R.get(id)-v); } else left+=Math.abs(v); } return {better,left}; };
+  for(const g of [...groups].sort((a,b)=>Math.abs(b.amt)-Math.abs(a.amt))){
+    const cw=new Set(nwWords(g.label)), sc=a=>nwWords(a.name).filter(x=>cw.has(x)).length, pen=nwPensionish(g.cat+' '+g.label);
+    const side=accs.filter(a=>(a.group==='pension')===pen), pool=side.some(sc)?side:pen&&side.length?side:accs, top=Math.max(0,...pool.map(sc));
+    const c=top?pool.filter(a=>sc(a)===top):pool;
+    let best=null, why=top?'name':pen&&side.length?'pension':'amount';
+    if(c.length===1) best=c[0];
+    else { const f=c.map(a=>[a,fit(g,a.id)]).sort((x,y)=>y[1].better-x[1].better||x[1].left-y[1].left)[0];
+      if(f&&f[1].better>0&&(why!=='amount'||f[1].left<=Math.abs(g.amt)/4)){ best=f[0]; if(why==='name') why='amount'; } }
+    if(!best) continue;
+    out.set(g,{id:best.id,why});
+    for(const [k,v] of g.byK){ const R=rest.get(k); if(R&&R.has(best.id)) R.set(best.id,r2(R.get(best.id)-v)); }
+  }
+  return out;
+}
+function modalNwLink(){
+  const m=S.modal;
+  if(!m.groups){ const u=nwUnlinkedAll(); m.groups=u.groups; m.sug=nwSuggest(u.groups,u.rest); }
+  const accs=nw().accounts.filter(a=>a.group!=='cash');
+  const rows=m.groups.map((g,i)=>{ const s=m.sug.get(g), an=s?(accs.find(a=>a.id===s.id)||{}).name:'', ks=[...g.byK.keys()].sort();
+    return `<div class="link-row"><div><b>${esc(g.label)}</b><div class="hint">${esc(L('nwLinkMeta',g.rows.length,fmtEUR(Math.abs(g.amt)),g.amt<0,listJoin(ks.map(k=>ymLabel(k)))))}</div>${s?`<div class="hint">${esc(L('nwLinkWhy_'+s.why,an))}</div>`:''}</div>
+      <label class="sr" for="nl-${i}">${esc(L('nwLinkPick',g.label))}</label><select id="nl-${i}" data-i="${i}"><option value="">${esc(L('nwLinkNone'))}</option>${NW_GROUPS.filter(x=>x!=='cash').map(x=>{ const o=accs.filter(a=>a.group===x); return o.length?`<optgroup label="${esc(L('g_'+x))}">${o.map(a=>`<option value="${a.id}"${s&&s.id===a.id?' selected':''}>${esc(a.name)}</option>`).join('')}</optgroup>`:''; }).join('')}<option value="-">${esc(L('nwLinkUntracked'))}</option></select></div>`; }).join('');
+  return `${mHead(esc(L('nwLinkTitle')),esc(L('nwLinkSub')))}
+  <form id="nw-link-form" novalidate><div class="m-body">${rows||`<p class="hint">${esc(L('nwLinkEmpty'))}</p>`}<p class="hint" style="margin-top:12px">${esc(L('nwLinkHelp'))}</p></div>
+  <div class="m-foot"><span class="r"><button type="button" class="btn" data-action="close">${esc(L('cancel'))}</button>${rows?`<button type="submit" class="btn primary">${esc(L('nwLinkSave'))}</button>`:''}</span></div></form>`;
 }
 function accountsCard(k){
   const N=nw(), s=k?N.snaps[k]||{}:{}, prev=k?nwMonths()[nwMonths().indexOf(k)-1]:null, s0=prev?N.snaps[prev]:null, T=k?nwTotals(k):{total:0,g:{}};
@@ -3235,11 +3310,8 @@ function accountsCard(k){
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
       ${S.canWrite?`<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button>`:''}</div>
     <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
-    ${G.size&&G.unlinked.length?(()=>{ const u=G.unlinked, seen=new Map();
-      /* one entry per description, without the price after "@" or a trailing reference number */
-      for(const r of u){ const d=r.concept.replace(/@.*$/,'').replace(/[\s\d.,:;#/–-]+$/,'').trim()||r.concept; if(!seen.has(d.toLowerCase())) seen.set(d.toLowerCase(),d); }
-      const ds=[...seen.values()];
-      return `<p class="warn-text" style="margin-top:10px">${esc(L('nwUnlinked',u.length,fmtEUR(Math.abs(sum(u.map(r=>r.amount)))),listJoin(ds.slice(0,5).map(d=>`“${d}”`))+(ds.length>5?' …':'')))}${S.canWrite?` <button class="linkish" type="button" data-action="nw-accounts">${esc(L('nwUnlinkedFix'))}</button>`:''}</p>`; })():''}
+    ${G.size&&G.unlinked.length?(()=>{ const u=G.unlinked, ds=nwUnlinked(u.map(r=>({r,k}))).map(g=>g.label);
+      return `<p class="warn-text" style="margin-top:10px">${esc(L('nwUnlinked',u.length,fmtEUR(Math.abs(sum(u.map(r=>r.amount)))),listJoin(ds.slice(0,5).map(d=>`“${d}”`))+(ds.length>5?' …':'')))}${S.canWrite?` <button class="btn sm primary" type="button" data-action="nw-link">${esc(L('nwUnlinkedFix'))}</button>`:''}</p>`; })():''}
     ${k&&prev?`<p class="hint" style="margin-top:10px">${esc(L('nwGainsTip'))}</p>`:''}
     ${st&&st.closed.size?`<p class="hint" style="margin-top:10px">${esc(L('nwClosedNote',st.closed.size))}</p>`:''}</section>`;
 }
@@ -3363,14 +3435,15 @@ function modalNwAccounts(){
     <div class="ctrls" style="margin-top:12px"><button type="button" class="btn sm" data-action="na-add">${esc(L('nwAddOther'))}</button></div></div>`:'';
   return `${mHead(esc(L('nwAccTitle')),esc(L('nwAccSub')))}
   <form id="nw-acc-form" novalidate><div class="m-body">
-    ${L2.length?`<div class="acc-list">${rows}</div><p class="hint" style="margin-top:10px">${esc(L('nwAccWordsHelp'))}</p>`:''}
+    ${L2.length?`<div class="acc-list">${rows}</div><p class="hint" style="margin-top:10px">${esc(L('nwAccWordsHelp'))}</p>
+    <label class="acc-words" for="na-untracked" style="margin-top:10px"><span>${esc(L('nwAccUntracked'))}</span><input type="text" id="na-untracked" value="${esc(m.untracked!=null?m.untracked:nw().untracked||'')}" autocomplete="off"></label>`:''}
     ${start?startBox:`<div class="ctrls"><button type="button" class="btn sm" data-action="na-add">${esc(L('nwAddAccount'))}</button>${sug.length?`<span class="hint">${esc(L('nwSuggest'))}</span>${sug.map(chip).join('')}`:''}</div>`}
     ${dropped?`<p class="warn-text">${esc(L('nwAccDropWarn',dropped))}</p>`:''}
     <p class="err" id="na-err" aria-live="polite"></p>
   </div>
   <div class="m-foot"><span class="r"><button type="button" class="btn" data-action="close">${esc(L('cancel'))}</button><button type="submit" class="btn primary">${esc(L('nwSaveAccounts'))}</button></span></div></form>`;
 }
-function readNwAccounts(){ const m=S.modal; document.querySelectorAll('#nw-acc-form [data-f]').forEach(el=>{ const a=m.list[+el.dataset.i]; if(!a) return; if(el.dataset.f==='risk') a.risk=el.checked; else a[el.dataset.f]=el.value; }); }
+function readNwAccounts(){ const m=S.modal, u=$('#na-untracked'); if(u) m.untracked=u.value; document.querySelectorAll('#nw-acc-form [data-f]').forEach(el=>{ const a=m.list[+el.dataset.i]; if(!a) return; if(el.dataset.f==='risk') a.risk=el.checked; else a[el.dataset.f]=el.value; }); }
 function modalNwGoal(){
   const G=nw().goal, cy=new Date().getFullYear(), gk=G?G.month:ymOf(cy+1,11);
   return `${mHead(esc(L('nwGoalTitle')),'')}
@@ -4213,7 +4286,7 @@ document.addEventListener('keydown',e=>{
 });
 function renderModal(keepId){
   const m=S.modal, o=$('#overlay'); if(!m){ closeModal(); return; }
-  const inner=({edit:modalEdit,drill:modalDrill,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwacc:modalNwAccounts,ai:modalAi,nwgoal:modalNwGoal,nwret:modalNwReturns,nwimp:modalNwImport})[m.type]();
+  const inner=({edit:modalEdit,drill:modalDrill,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwacc:modalNwAccounts,ai:modalAi,nwgoal:modalNwGoal,nwret:modalNwReturns,nwlink:modalNwLink,nwimp:modalNwImport})[m.type]();
   o.innerHTML=`<div class="scrim" data-action="close"></div><div class="modal${m.wide?' wide':m.mid?' mid':''}" role="dialog" aria-modal="true" aria-labelledby="m-title">${inner}</div>`;
   o.classList.add('on'); o.setAttribute('aria-hidden','false');
   if(keepId){ const k=document.getElementById(keepId); if(k&&o.contains(k)){ k.focus({preventScroll:true}); return; } }
@@ -5299,6 +5372,7 @@ const ACTIONS={
   'nw-tpl':()=>downloadNwTemplate(),
   'nwimp-reset':()=>{ Object.assign(S.modal,{data:null,msg:'',wide:false,mid:true}); renderModal(); },
   'nwimp-go':()=>applyNwImport(),
+  'nw-link':()=>{ if(S.canWrite) openModal({type:'nwlink',mid:true}); },
   'nw-ret':()=>{ if(S.canWrite) openModal({type:'nwret',mid:true}); },
   'nw-late-fix':el=>{ if(!S.canWrite) return; const N=ensureNw(), k=el.dataset.k, id=el.dataset.id, s=N.snaps[k]; if(!s) return;
     const a=N.accounts.find(x=>x.id===id), before=s[id]; s[id]=+el.dataset.v; saveNw(); render();
@@ -5422,8 +5496,16 @@ document.addEventListener('submit',e=>{
     if(!list.length&&!nw().accounts.length){ $('#na-err').textContent=L('nwAccNone'); return; }
     const N=ensureNw(), keep=new Set(list.map(a=>a.id));
     N.accounts=list.map(a=>{ const x={id:a.id,name:a.name,group:NW_GROUPS.includes(a.group)?a.group:'invest'}; if(a.risk) x.risk=true; if(a.from) x.from=a.from; const w=String(a.words||'').replace(/\s+/g,' ').trim(); if(w) x.words=w; return x; });
+    const un=String(m.untracked!=null?m.untracked:N.untracked||'').replace(/\s+/g,' ').trim(); if(un) N.untracked=un; else delete N.untracked;
     for(const k of Object.keys(N.snaps)){ for(const id of Object.keys(N.snaps[k])) if(!keep.has(id)) delete N.snaps[k][id]; if(!Object.keys(N.snaps[k]).length) delete N.snaps[k]; }
     saveNw(); closeModal(); render(); toast(L('nwAccSaved'));
+  }
+  else if(f.id==='nw-link-form'){
+    const m=S.modal, N=ensureNw(); let n=0;
+    const add=(o,f,t)=>{ const w=String(o[f]||'').split(',').map(x=>x.trim()).filter(Boolean); if(!w.some(x=>loose(x)===loose(t))) w.push(t); o[f]=w.join(', '); };
+    f.querySelectorAll('select[data-i]').forEach(el=>{ const g=m.groups[+el.dataset.i], a=N.accounts.find(x=>x.id===el.value); if(!g||!el.value) return;
+      if(el.value==='-') add(N,'untracked',g.label); else if(a) add(a,'words',g.label); else return; n+=g.rows.length; });
+    if(n) saveNw(); closeModal(); render(); if(n) toast(L('nwLinked',n));
   }
   else if(f.id==='nw-ret-form'){
     const m=S.modal, N=ensureNw(), pick=t=>catNames(t).filter(n=>m.sel[t].has(n)), R={income:pick('income'),expenses:pick('expenses')}, A=autoReturnCats();

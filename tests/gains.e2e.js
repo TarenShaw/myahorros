@@ -124,15 +124,15 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await expect('2026-07', { 'Indexa Capital': '+50.00', 'Total': '+280.00' });
   await open('Withdrawal Trade Republic'); await p.click('[data-action=tx-del]'); await p.click('[data-action=tx-del-yes]'); await p.waitForSelector('#tx-form', { state: 'detached' });
   await expect('2026-07', { 'Trade Republic': '−230.00', 'Total': '−20.00' });
-  await add('investments', '2026-09-15', 'MyInvestor deposit', 100, 'out');   // fits both MyInvestor accounts: neither
-  await expect('2026-09', SEP);
-  console.log('4. edit, delete and an ambiguous row');
+  await add('investments', '2026-09-15', 'MyInvestor deposit', 100, 'out');   // fits both MyInvestor accounts; not a pension row: the Fund
+  await expect('2026-09', Object.assign({}, SEP, { 'MyInvestor Fund': '−50.00', 'Total': '+1,605.00' }));
+  console.log('4. edit, delete and a row fitting two accounts by name');
 
   /* 6b. statement words: rows that don't name the account, or whose words fit two accounts */
   await add('investments', '2026-09-12', 'GAMMA GLOBAL FI @ 35.538006', 150, 'out');   // fund name only: a gain until words are set
   await add('investments', '2026-09-14', 'INDEXA MAS RENTABILIDAD ACCION', 25, 'out'); // name rule sends it to Indexa Capital
-  await expect('2026-09', { 'Indexa Capital': '+40.00', 'MyInvestor Fund': '+50.00' });
-  const unlinked = () => p.locator('.warn-text', { hasText: 'no account' }).allTextContents().then(t => t.join(' '));
+  await expect('2026-09', { 'Indexa Capital': '+40.00', 'MyInvestor Fund': '−50.00' });
+  const unlinked = () => p.locator('.warn-text', { hasText: 'linked to an account' }).allTextContents().then(t => t.join(' '));
   assert.ok((await unlinked()).includes('“GAMMA GLOBAL FI”'), 'no warning for the unlinked Gamma row');
   const words = async w => {
     await p.click('[data-action=tab][data-tab=networth]'); await p.click('[data-action="nw-accounts"]');
@@ -140,13 +140,31 @@ const START = process.env.START_URL || 'http://localhost:8000/';
     await p.click('#nw-acc-form button[type=submit]'); await p.waitForSelector('#nw-acc-form', { state: 'detached' });
   };
   await words({ 'MyInvestor Fund': 'Gamma Global', 'Indexa Capital': 'Indexa', 'MyInvestor Pension': 'Indexa mas rentabilidad, MyInvestor deposit' });
-  /* Gamma -> Fund; the longer "Indexa mas rentabilidad" beats "Indexa"; "MyInvestor deposit" (a tie by name) -> Pension */
+  /* Gamma -> Fund; the longer "Indexa mas rentabilidad" beats "Indexa"; "MyInvestor deposit" (Fund by name) -> Pension */
   const SEPW = { 'Indexa Capital': '+65.00', 'MyInvestor Fund': '−100.00', 'MyInvestor Pension': '+175.00', 'Total': '+1,430.00' };
   await expect('2026-09', SEPW);
   assert.ok(!(await unlinked()).includes('GAMMA'), 'Gamma still listed as unlinked after adding its words');
   await p.reload({ waitUntil: 'load' }); await p.waitForSelector('#nw-month');
   await expect('2026-09', SEPW);
   console.log('4b. statement words: unnamed fund rows, longest phrase wins, saved across reload, unlinked-rows warning');
+
+  /* 4c. a pension-looking row goes to the Retirement account; the link dialog guesses by amount and remembers choices */
+  await add('investments', '2026-09-15', 'MyInvestor aportacion plan pensiones', 40, 'out');   // tie by name before; pension now
+  await add('investments', '2026-09-16', 'ZETA GLOBAL @ 1.23', 150, 'out');                    // Trade Republic rose by exactly this
+  await add('investments', '2026-09-17', 'ACME PAYMENT 123', 300, 'out');              // fits nothing well: no guess
+  await expect('2026-09', { 'MyInvestor Pension': '+135.00', 'Trade Republic': '+150.00', 'Total': '+1,390.00' });
+  assert.ok((await unlinked()).includes('“ZETA GLOBAL”'), 'no warning for the ZETA row');
+  await p.click('[data-action="nw-link"]');
+  const pickFor = t => p.locator('#nw-link-form .link-row', { hasText: t }).locator('select');
+  const shown = async t => pickFor(t).evaluate(s => s.selectedOptions[0].text);
+  assert.strictEqual(await shown('ZETA GLOBAL'), 'Trade Republic', 'ZETA not guessed by amount');
+  assert.strictEqual(await shown('ACME PAYMENT'), 'Not sure yet', 'ACME guessed without a close fit');
+  await pickFor('ACME PAYMENT').selectOption('-');
+  await p.click('#nw-link-form button[type=submit]'); await p.waitForSelector('#nw-link-form', { state: 'detached' });
+  await expect('2026-09', { 'MyInvestor Pension': '+135.00', 'Trade Republic': '–', 'Total': '+1,240.00' });
+  const left = await unlinked();
+  assert.ok(!left.includes('ZETA') && !left.includes('ACME'), 'linked rows still listed: ' + left);
+  console.log('4c. pension rows prefer Retirement; link dialog guesses by amount, "not tracked here" clears the warning');
 
   /* 7. phones show Gains too */
   await p.setViewportSize({ width: 390, height: 844 });
