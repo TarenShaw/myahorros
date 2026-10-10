@@ -1,8 +1,0 @@
-# Claude Code working files (kept locally, not part of the site)
-.claude/
-CLAUDE.md
-PLAN.md
-PROGRESS.md
-graphify-out/
-.graphifyignore
-.playwright-cli/
