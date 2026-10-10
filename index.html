@@ -1,10 +1,17 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MyAhorros</title>
-<meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
+<title>MyAhorros: track your savings, spending and net worth</title>
+<meta name="description" content="Free savings and net worth tracker. See where your money goes and how much you keep each month. No account; your data stays in a folder, your Google Drive or your browser.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MyAhorros">
+<meta property="og:title" content="MyAhorros: track your savings, spending and net worth">
+<meta property="og:description" content="Free savings and net worth tracker. No account; your data stays on your device.">
+<meta property="og:url" content="https://myahorros.app/">
+<meta property="og:image" content="https://myahorros.app/icons/icon-512.png">
+<meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BxzPQDIMNg7cPV4f/FHQ4CYuTVeoKcTIysL1Si43ebo=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-aBOMgLuRnS7/FUqQVoUSP1aU470Dv/aZopx6yiDBSTQ=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -875,7 +882,9 @@ table.nwt{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-nume
   .nwt td{border:0;padding:0}
   .nwt td.an{padding-left:8px}
   .nwt td:nth-child(3){grid-column:2;grid-row:2;font-size:12px}
-  .nwt td:nth-child(3):empty,.nwt td:nth-child(4){display:none}
+  .nwt td:nth-child(3):empty,.nwt td:nth-child(4):empty{display:none}
+  .nwt td:nth-child(4){grid-column:2;font-size:12px}.nwt td:nth-child(4)::before{content:attr(data-l) " ";color:var(--muted)}
+  .nwt td:nth-child(5){grid-column:1;grid-row:2}
   .nwt tr.grp{background:var(--surface-2)}
   .nwt tr.grp .hint{display:block;font-size:11.5px;margin-top:1px}
   .nwt tr.grp .grp-sub::before{content:none}
@@ -1162,7 +1171,7 @@ function pl(n,k){ const p=PL[k][LANG==='es'?1:0]; return fmtCount(n)+' '+(n===1?
 const ALL_ES={income:'todos los ingresos',expenses:'todos los gastos',investments:'todas las inversiones'};
 const STR={
   /* chrome */
-  appTitle:['MyAhorros','MyAhorros'],
+  appTitle:['MyAhorros','MyAhorros'], appDocTitle:['MyAhorros: track your savings, spending and net worth','MyAhorros: controla tus ahorros, gastos y patrimonio'],
   kicker:['Income · Expenses · Investments','Ingresos · Gastos · Inversiones'],
   prevYear:['Previous year','Año anterior'], nextYear:['Next year','Año siguiente'], year:['Year','Año'],
   sections:['Sections','Secciones'],
@@ -1604,7 +1613,7 @@ const STR={
   obAiQ:['Have your bank statements to hand?','¿Tienes a mano tus extractos?'], obAiBtn:['Build it with AI','Crearlo con IA'],
   obAiHelp:['Claude reads them, sorts every movement, finds your accounts’ balances and works out when your tracker starts. You check everything before it’s saved.','Claude los lee, clasifica cada movimiento, encuentra los saldos de tus cuentas y deduce desde cuándo empieza tu control. Lo revisas todo antes de guardarlo.'],
 
-  gEyebrow:[n=>`Set up your tracker · step ${n} of 3`,n=>`Configura tu control · paso ${n} de 3`], gEyebrowDone:['Set up your tracker · done','Configura tu control · listo'],
+  gEyebrow:[n=>`Set up your tracker · step ${n} of 5`,n=>`Configura tu control · paso ${n} de 5`], gEyebrowDone:['Set up your tracker · done','Configura tu control · listo'],
   gStep_acc:['Your accounts','Tus cuentas'], gStep_val:['What they’re worth','Lo que valen'], gStep_tx:['Your transactions','Tus movimientos'],
   gSkipped:['skipped','saltado'], gDoneSr:['(done)','(hecho)'],
   wzEyebrow:[(i,n)=>`Set up your tracker · step ${i} of ${n}`,(i,n)=>`Configura tu control · paso ${i} de ${n}`],
@@ -1744,7 +1753,7 @@ const STR={
   nwMoveUp:[n=>`Move ${n} up`,n=>`Subir ${n}`], nwMoveDown:[n=>`Move ${n} down`,n=>`Bajar ${n}`], nwRemoveAcc:[n=>`Remove ${n}`,n=>`Quitar ${n}`],
   nwAccErr:['Give every account a name, each one different.','Pon nombre a todas las cuentas, cada una distinto.'],
   nwAccDropWarn:[n=>`Removing ${n===1?'this account':'these accounts'} also removes ${n===1?'its':'their'} figures.`,n=>`Al quitar ${n===1?'esta cuenta':'estas cuentas'} también se quitan sus cifras.`],
-  nwSaveAccounts:['Save accounts','Guardar cuentas'], nwAccSaved:['Accounts saved','Cuentas guardadas'],
+  nwSaveAccounts:['Save accounts','Guardar cuentas'], nwAccSaved:['Accounts saved','Cuentas guardadas'], nwAccNone:['Add at least one account first: tap one of the suggestions or use “Add another account”.','Añade primero al menos una cuenta: toca una de las sugerencias o usa «Añadir otra cuenta».'],
   nwSug_cash:[['Current account','Savings account'],['Cuenta corriente','Cuenta de ahorro']],
   nwSug_invest:[['Index funds','Investment account','Crypto'],['Fondos indexados','Cuenta de inversión','Cripto']],
   nwSug_illiquid:[['Crowdlending','Property','Fixed-term deposit'],['Crowdlending','Inmueble','Depósito a plazo']],
@@ -1780,7 +1789,7 @@ const STR={
   /* accounts at 0 */
   nwTotalRow:['Total, all accounts','Total, todas las cuentas'],
   nwGains:['Gains','Ganancias'],
-  nwGainsTip:['Gains: how much an account grew on its own (prices, interest, dividends), apart from money you put in. It is the change since last month minus the money put into that account, taken from your Investments rows that name the account. Cash accounts show none. If an account grew by more than the money you put in through the tracker, the difference is shown as a gain: it came from the account’s own value rising, which the tracker itself doesn’t record. A deposit that doesn’t name the account counts as a gain.','Ganancias: cuánto creció una cuenta por sí sola (precios, intereses, dividendos), sin contar el dinero que aportaste. Es el cambio desde el mes anterior menos lo aportado a esa cuenta, según tus filas de Inversiones que nombran la cuenta. Las cuentas de efectivo no muestran nada. Si una cuenta creció más que el dinero aportado a través del control, la diferencia se muestra como ganancia: viene de que el valor de la propia cuenta subió, algo que el control no registra. Un ingreso que no nombra la cuenta cuenta como ganancia.'],
+  nwGainsTip:['Gains: what an account earned you. It is the change since last month, minus the money you put in, plus interest, dividends, capital gains or rent it paid out to you. Money put in or taken out comes from your Investments rows that name the account; payouts come from income rows that name the account in a category ticked under “Interest, dividends and gains” on Net worth. If a dividend stayed inside the account, don’t also record it as income, or it counts twice. Cash accounts show none. A row that doesn’t name the account, or fits two accounts equally well, isn’t counted for any account.','Ganancias: lo que te ha hecho ganar una cuenta. Es el cambio desde el mes anterior, menos el dinero que aportaste, más los intereses, dividendos, plusvalías o alquiler que te pagó. Lo aportado o retirado sale de tus filas de Inversiones que nombran la cuenta; los cobros, de los ingresos que nombran la cuenta en una categoría marcada en “Intereses, dividendos y plusvalías” de Patrimonio. Si un dividendo se quedó dentro de la cuenta, no lo apuntes también como ingreso o contará dos veces. Las cuentas de efectivo no muestran nada. Una fila que no nombra la cuenta, o que encaja igual de bien con dos cuentas, no cuenta para ninguna.'],
   nwLaterHero:[n=>`No figure yet this month for ${n}: ${n.includes(',')||n.includes(' and ')?'their':'its'} first figure comes later, so the total may be low.`,n=>`Sin cifra este mes para ${n}: su primera cifra es posterior, así que el total puede quedarse corto.`],
   nwFaded:['Faded months are missing figures, so they look lower than they were:','Los meses atenuados no tienen todas las cifras, así que parecen más bajos de lo que fueron:'],
   nwLaterLine:[(n,m)=>`${n}: no figures before ${m}.`,(n,m)=>`${n}: sin cifras antes de ${m}.`],
@@ -2219,7 +2228,7 @@ let chromeLang=null;
 function applyLang(){
   LANG=wantLang()==='es'?'es':'en';
   if(chromeLang===LANG) return; chromeLang=LANG;
-  document.documentElement.lang=LANG; document.title=L('appTitle');
+  document.documentElement.lang=LANG; document.title=L('appDocTitle');
   try{ localStorage.setItem('ybt.lang',LANG); }catch(_){}
   $('.kicker').textContent=L('kicker'); $('.mast h1').textContent=L('appTitle');
   $('#year-prev').setAttribute('aria-label',L('prevYear')); $('#year-next').setAttribute('aria-label',L('nextYear'));
@@ -2282,7 +2291,7 @@ function render(){
   else if(ob) html=viewWelcome();
   else if(!allRows().length && S.ui.tab!=='categories' && S.ui.tab!=='settings' && S.ui.tab!=='networth'){ const G=guideState();
     /* Overview, and Transactions at its step, show the guide itself; elsewhere a reminder above the usual empty page */
-    html=!G?viewEmpty():S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='tx')?`<div class="guide-solo">${guideCard(G)}</div>`:guideBar(G)+viewEmpty(); }
+    html=!G?viewEmpty():S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='tx')?`<div class="guide-wrap">${guideCard(G)}</div>`+viewEmpty():guideBar(G)+viewEmpty(); }
   else { html=({overview:viewOverview,yearly:viewYearly,transactions:viewTransactions,categories:viewCategories,networth:viewNetworth,settings:viewSettings})[S.ui.tab]();
     const G=S.ui.tab!=='networth'&&S.ui.tab!=='settings'?guideState():null;
     if(G){ const full=S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='done'); html=(full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G))+html; } }
@@ -2965,7 +2974,7 @@ function guideState(){
   if(!g||!g.on||S.demo||!S.canWrite||S.mode!=='live') return null;
   const acc=nw().accounts.length>0, val=nwMonths().length>0, tx=allRows().length>0, skip=!!g.skipNw;
   const cur=!skip&&!acc?'acc':!skip&&!val?'val':!tx?'tx':'done';
-  return {acc,val,tx,skip,cur,n:{acc:1,val:2,tx:3,done:3}[cur]};
+  return {acc,val,tx,skip,cur,n:{acc:1,val:1,tx:3,done:3}[cur]};
 }
 const guideFigMonth=()=>nwDue()||ymAdd(ymNow(),-1);
 /* a calendar file with a reminder on the 1st of every month */
@@ -3014,13 +3023,13 @@ function modalWizard(){
       ${ok(nAcc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[0])}${ok(nMon,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[1])}`;
   } else if(i===1){
     body=`<p>${esc(L('wz1Text'))}</p>
-      <div class="wz-acts">${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtnNw'))+` <span class="tag">${esc(L('wzRecommended'))}</span>`,'','primary'):''}${act('guide-val',esc(L('wzEarlierHand')),` data-k="${ymAdd(k,-1)}"`)}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}</div>`;
+      <div class="wz-acts">${act('guide-val',esc(L('wzEarlierHand')),` data-k="${ymAdd(k,-1)}"`,'primary')}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtnNw'))):''}</div>`;
   } else if(i===2){
     body=`<p>${esc(L('wz2Text'))}</p>
       <div class="wz-ways">
         <button type="button" class="ob-way" data-action="guide-add"><span class="ob-t">${esc(L('wzWayHand'))}</span><span class="ob-s">${esc(L('wzWayHandSub'))}</span></button>
-        <button type="button" class="ob-way" data-action="guide-import"><span class="ob-t">${esc(L('wzWayPaste'))}</span><span class="ob-s">${esc(L('wzWayPasteSub'))}</span></button>
-        ${S.ai?`<button type="button" class="ob-way" data-action="ai-tx"><span class="ob-t">${ICON.ai}${esc(L('wzWayAi'))} <span class="tag">${esc(L('wzRecommended'))}</span></span><span class="ob-s">${esc(L('wzWayAiSub'))}</span></button>`:''}
+        <button type="button" class="ob-way" data-action="guide-import"><span class="ob-t">${esc(L('wzWayPaste'))} <span class="tag">${esc(L('wzRecommended'))}</span></span><span class="ob-s">${esc(L('wzWayPasteSub'))}</span></button>
+        ${S.ai?`<button type="button" class="ob-way" data-action="ai-tx"><span class="ob-t">${ICON.ai}${esc(L('wzWayAi'))}</span><span class="ob-s">${esc(L('wzWayAiSub'))}</span></button>`:''}
       </div>${ok(nTx,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[2])}`;
   } else if(i===3){
     body=`<p>${esc(L('wz3Text'))}</p><div class="wz-acts">${act('guide-income',esc(L('wzAddSalary')),'',nInc?'':'primary')}</div>${ok(nInc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[3])}`;
@@ -3166,26 +3175,34 @@ function goalGrowthCalc(T,rest,left,pace){
   return {inv,fromSaving,gap,tot,yr};
 }
 /* Gains: how much an account grew by on its own (prices, interest, dividends), apart from money you put in.
-   gain = change since the month with figures before - net money put in.
+   gain = change since the month with figures before - net money put in + returns paid out to you.
    "Put in" = rows in Investments dated after that month, up to this one, whose description names the account
-   (money out of your pay is a deposit, money back in is a withdrawal). Cash accounts have no gain: their change is
-   mostly pay and spending. A deposit whose description doesn't name the account is counted as a gain. */
+   (money out of your pay is a deposit, money back in is a withdrawal). "Returns" = rows in a returns category
+   (interest, dividends, capital gains, rent if ticked) that name the account, so a loan that pays interest or a flat
+   that pays rent shows what it earned, not just its price change. Cash accounts have no gain: their change is
+   mostly pay and spending. A deposit whose description doesn't name the account is counted as a gain.
+   Names match on whole words of 3+ letters ("ING", not "ingreso"; "Fund", not "refund"). A row goes to the one account
+   whose name shares the most words with it ("MyInvestor Pension" beats "MyInvestor Fund"); a tie goes to neither. */
 function nwGains(prev,k){
-  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map();
-  const rows=allRows().filter(r=>r.table==='investments'&&r.date.slice(0,7)>prev&&r.date.slice(0,7)<=k);
+  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map(), put=new Map();
+  const words=s=>fold(s).split(/[^a-z0-9]+/).filter(x=>x.length>=3);
+  const accs=N.accounts.filter(a=>a.group!=='cash').map(a=>({id:a.id,w:new Set(words(a.name))}));
+  for(const r of allRows()){ const m=r.date.slice(0,7); if(r.table!=='investments'&&!isReturn(r)||m<=prev||m>k) continue;
+    const cw=new Set(words(r.concept)); let best=null, n=0, tie=false;
+    for(const a of accs){ let s=0; for(const x of a.w) if(cw.has(x)) s++;
+      if(s>n){ best=a.id; n=s; tie=false; } else if(s&&s===n) tie=true; }
+    if(best&&!tie) put.set(best,(put.get(best)||0)-r.amount); }
   for(const a of N.accounts){
     if(a.group==='cash') continue;
     const v1=s1[a.id], v0=s0[a.id]; if(v1==null||v0==null) continue;
-    const w=fold(a.name).split(/[^a-z0-9]+/).filter(x=>x.length>=4);
-    const put=w.length?sum(rows.filter(r=>w.some(x=>fold(r.concept).includes(x))).map(r=>-r.amount)):0;
-    out.set(a.id,r2(v1-v0-put));
+    out.set(a.id,r2(v1-v0-(put.get(a.id)||0)));
   }
   return out;
 }
 function accountsCard(k){
   const N=nw(), s=k?N.snaps[k]||{}:{}, prev=k?nwMonths()[nwMonths().indexOf(k)-1]:null, s0=prev?N.snaps[prev]:null, T=k?nwTotals(k):{total:0,g:{}};
   const st=k?nwState(k):null, shown=st?st.shown:N.accounts;
-  const G=k&&prev?nwGains(prev,k):new Map(), gc=v=>`<td class="r ${v==null?'':v<-0.004?'down':v>0.004?'up':''}">${v==null?'':Math.abs(v)<0.005?'–':signed(v)}</td>`;
+  const G=k&&prev?nwGains(prev,k):new Map(), gc=v=>`<td class="r ${v==null?'':v<-0.004?'down':v>0.004?'up':''}" data-l="${esc(L('nwGains'))}">${v==null?'':Math.abs(v)<0.005?'–':signed(v)}</td>`;
   const rows=NW_GROUPS.map(g=>{ const accs=shown.filter(a=>a.group===g); if(!accs.length) return '';
     const gg=accs.filter(a=>G.has(a.id));
     return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td><td></td>${gc(gg.length?r2(sum(gg.map(a=>G.get(a.id)))):null)}<td class="r">${k&&T.total>0?fmtPct(T.g[g]/T.total,0):''}</td></tr>`+
@@ -5372,6 +5389,7 @@ document.addEventListener('submit',e=>{
     readNwAccounts(); const m=S.modal, list=m.list.map(a=>Object.assign({},a,{name:String(a.name||'').replace(/\s+/g,' ').trim()}));
     const names=list.map(a=>a.name.toLowerCase());
     if(list.some(a=>!a.name)||new Set(names).size!==names.length){ $('#na-err').textContent=L('nwAccErr'); return; }
+    if(!list.length&&!nw().accounts.length){ $('#na-err').textContent=L('nwAccNone'); return; }
     const N=ensureNw(), keep=new Set(list.map(a=>a.id));
     N.accounts=list.map(a=>{ const x={id:a.id,name:a.name,group:NW_GROUPS.includes(a.group)?a.group:'invest'}; if(a.risk) x.risk=true; if(a.from) x.from=a.from; return x; });
     for(const k of Object.keys(N.snaps)){ for(const id of Object.keys(N.snaps[k])) if(!keep.has(id)) delete N.snaps[k][id]; if(!Object.keys(N.snaps[k]).length) delete N.snaps[k]; }
