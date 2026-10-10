@@ -72,6 +72,17 @@ const TX={
     useTheirs:'Open the newer one', useMine:'Keep the one on this screen', useMerge:'Merge both',
     conflictNote:'Whichever you don’t keep is saved as a backup first. “Merge both” keeps every month from both versions; where both have the same month, it keeps the one on this screen.',
     mergedBoth:'Merged both versions. The other one was kept as a backup.',
+    landDemo:'See a demo', landStart:'Get started', landMenu:'Sections',
+    landH1:'Know where your money goes, and what you’re worth.',
+    landSub:'A free yearly budget and net worth tracker that keeps your data on your side: in a folder on your computer, in your Google Drive, or in your browser.',
+    landNoSignup:'No account. No sign-up. Nothing leaves your device unless you choose.',
+    landF:[['See your whole year at a glance','Income, expenses and investments month by month, where the money went by category, monthly limits and indicators that tell you if you’re on track. Click any figure to see the transactions behind it.'],
+           ['Track what you’re worth','List your accounts once, type their balance at the end of each month and watch your net worth grow. See what you saved, what your investments gained on their own, and how close you are to your goal.'],
+           ['Bring in your statements','Paste rows or import your bank’s .csv or .xlsx and the tracker sorts them into categories by itself, learning from your choices. Or let an AI read statements and PDFs for you: you check everything before it’s saved.'],
+           ['Your data stays yours','There is no account and no server holding your figures. Save them in a folder, in your own Google Drive or only in this browser, with a daily backup. It works offline and installs like an app.']],
+    landHow:'How it works', landHowSteps:[['Choose where it lives','A folder, your Google Drive or your browser. You can change it any time.'],['Add what you own','A few accounts and what they were worth last month.'],['Add your transactions','By hand, by pasting a statement, or with AI.']],
+    landEnd:'Ready when you are', landEndSub:'Take the two-minute tour with example data, or set up your own tracker.',
+    landPrivacy:'Privacy',
     stDriveError:t=>`Couldn’t sync with Google Drive. Trying again at ${t}.`, stDrivePaused:'Sync is waiting until you finish what you’re doing.',
     keptTheirs:'Opened the newer version. The one on this screen was kept as a backup.', keptMine:'Kept the version on this screen. The other one was kept as a backup.',
     existsTitle:'There’s already a tracker there', existsText:(n,m)=>`It has ${n} transactions. The tracker open now has ${m}.`,
@@ -143,6 +154,17 @@ const TX={
     useTheirs:'Abrir la versión más nueva', useMine:'Quedarme con la de esta pantalla', useMerge:'Combinar las dos',
     conflictNote:'La que no elijas se guarda antes como copia de seguridad. «Combinar las dos» conserva todos los meses de ambas versiones; si los dos tienen el mismo mes, se queda con el de esta pantalla.',
     mergedBoth:'Se han combinado las dos versiones. La otra se guardó como copia de seguridad.',
+    landDemo:'Ver una demo', landStart:'Empezar', landMenu:'Secciones',
+    landH1:'Sabe a dónde va tu dinero y cuánto vales.',
+    landSub:'Un control de presupuesto anual y patrimonio, gratuito, que guarda tus datos de tu lado: en una carpeta de tu ordenador, en tu Google Drive o en tu navegador.',
+    landNoSignup:'Sin cuenta. Sin registro. Nada sale de tu dispositivo si tú no quieres.',
+    landF:[['Tu año entero de un vistazo','Ingresos, gastos e inversiones mes a mes, a dónde fue el dinero por categoría, límites mensuales e indicadores que te dicen si vas bien. Pulsa cualquier cifra para ver los movimientos que hay detrás.'],
+           ['Sigue lo que vales','Apunta tus cuentas una vez, escribe su saldo a final de cada mes y mira crecer tu patrimonio. Ve lo que ahorraste, lo que ganaron tus inversiones por sí solas y cuánto te falta para tu objetivo.'],
+           ['Trae tus extractos','Pega filas o importa el .csv o .xlsx de tu banco y el control las clasifica solo, aprendiendo de tus elecciones. O deja que una IA lea extractos y PDF por ti: lo revisas todo antes de guardarlo.'],
+           ['Tus datos son tuyos','No hay cuenta ni servidor con tus cifras. Guárdalas en una carpeta, en tu propio Google Drive o solo en este navegador, con copia diaria. Funciona sin conexión y se instala como una app.']],
+    landHow:'Cómo funciona', landHowSteps:[['Elige dónde vive','Una carpeta, tu Google Drive o tu navegador. Puedes cambiarlo cuando quieras.'],['Añade lo que tienes','Unas cuentas y lo que valían el mes pasado.'],['Añade tus movimientos','A mano, pegando un extracto o con IA.']],
+    landEnd:'Cuando quieras', landEndSub:'Haz el recorrido de dos minutos con datos de ejemplo, o configura tu propio control.',
+    landPrivacy:'Privacidad',
     stDriveError:t=>`No se ha podido sincronizar con Google Drive. Se reintentará a las ${t}.`, stDrivePaused:'La sincronización espera a que termines lo que estás haciendo.',
     keptTheirs:'Abierta la versión más nueva. La de esta pantalla se ha guardado como copia.', keptMine:'Te has quedado con la versión de esta pantalla. La otra se ha guardado como copia.',
     existsTitle:'Ya hay un control ahí', existsText:(n,m)=>`Tiene ${n} movimientos. El control abierto ahora tiene ${m}.`,
@@ -412,6 +434,38 @@ const ICONS={
   drive:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M8.5 3.5h7l6 10.5-3.5 6H6L2.5 14z"/><path d="M8.5 3.5 15 14.5H2.5M15.5 3.5 9 14.5l-3 5.5M21.5 14H9"/></svg>',
   browser:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M3 9h18"/></svg>'
 };
+/* the page a new visitor sees first: what the tracker is, then "See a demo" or "Get started". Resolves 'demo' | 'start'. */
+function landing(){
+  return new Promise(resolve=>{
+    const el=document.createElement('div'); el.className='web-landing'; el.setAttribute('role','dialog'); el.setAttribute('aria-label','Yearly Budget Tracker');
+    const draw=()=>{
+      const L0=lang(), F=t('landF'), H=t('landHowSteps');
+      const ico=['<path d="M4 16.5V10M10 16.5V4M16 16.5V8"/>','<path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/>','<rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8.5h14M8 8.5V17M12.5 8.5V17"/>','<path d="M10 2.5l6 2.5v4.5c0 4-2.6 6.8-6 8-3.4-1.2-6-4-6-8V5z"/><path d="M7.5 10l2 2 3.5-4"/>'];
+      el.innerHTML=`<header class="wl-top"><span class="wl-brand">Yearly Budget Tracker</span>
+          <div class="wl-top-r"><div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>
+          <button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button></div></header>
+        <main>
+          <section class="wl-hero"><h1>${esc(t('landH1'))}</h1><p>${esc(t('landSub'))}</p>
+            <div class="wl-cta"><button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button></div>
+            <p class="wl-fine">${esc(t('landNoSignup'))}</p></section>
+          ${F.map((f,i)=>`<section class="wl-sec wl-reveal${i%2?' alt':''}"><svg viewBox="0 0 20 20" width="44" height="44" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ico[i]}</svg><div><h2>${esc(f[0])}</h2><p>${esc(f[1])}</p></div></section>`).join('')}
+          <section class="wl-how wl-reveal"><h2>${esc(t('landHow'))}</h2><ol>${H.map((h,i)=>`<li><b>${esc(h[0])}</b><span>${esc(h[1])}</span></li>`).join('')}</ol></section>
+          <section class="wl-end wl-reveal"><h2>${esc(t('landEnd'))}</h2><p>${esc(t('landEndSub'))}</p>
+            <div class="wl-cta"><button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button></div></section>
+        </main>
+        <footer class="wl-foot"><a href="privacy.html">${esc(t('landPrivacy'))}</a></footer>`;
+      /* sections fade in as they scroll into view (not for people who asked for less motion) */
+      const secs=[...el.querySelectorAll('.wl-reveal')];
+      if(!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){ secs.forEach(x=>x.classList.add('in')); return; }
+      const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }),{root:el,threshold:.15});
+      secs.forEach(x=>io.observe(x));
+    };
+    draw(); document.body.appendChild(el); document.body.classList.add('web-landing-on');
+    el.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
+      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'Control de presupuesto anual':'Yearly Budget Tracker'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); const y=el.scrollTop; draw(); el.scrollTop=y; return; }
+      if(!b.dataset.x) return; el.remove(); document.body.classList.remove('web-landing-on'); resolve(b.dataset.x); });
+  });
+}
 /* the three choices; resolves with the mode picked, or null (cancelled from Settings) */
 function chooseMode(fromSettings){
   return new Promise(resolve=>{
@@ -884,8 +938,11 @@ async function start(){
   /* nothing added yet (no transactions, no accounts or figures): the choice isn't final, so ask again */
   if(store&&nothingAdded(store)){ store=null; bar(null); }
   if(!store){
-    /* first visit: where should it live? */
-    const c=await chooseMode(false);
+    /* first visit: what is this, then where should it live? (people who already picked a place go straight to the choice) */
+    const first=m?'start':await landing();
+    let c;
+    if(first==='demo'){ try{ sessionStorage.setItem('ybt.autotour','1'); }catch(_){} c={mode:'browser'}; }
+    else c=await chooseMode(false);
     if(c.mode==='folder'){ folder.dir=c.dir; await idb.set('folder',c.dir); setMode('folder'); const text=await folder.read(); store=(text&&parseData(text))||empty(); }
     else if(c.mode==='drive'){ setMode('drive'); const mm=drive.meta; let text=null, v=null; if(mm.fileId){ text=await drive.download(mm.fileId); v=(mm.remote||{}).version; }
       store=(text&&parseData(text))||empty(); await idb.set('drive',{text:serialise(),version:v,dirty:false}); drive.lastSync=new Date(); drive.state='idle'; }

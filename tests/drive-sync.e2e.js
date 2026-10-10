@@ -52,6 +52,7 @@ async function until(fn, ms, what) { const t = Date.now(); for (;;) { const v = 
   await routeDrive(page);
   await page.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
   await page.goto(START, { waitUntil: 'load' });
+  await page.click('.web-landing .wl-hero [data-x=start]');
   await page.click('button.web-way[data-m=drive]');
   await page.waitForSelector('.web-panel', { state: 'detached', timeout: 10000 });
   await page.evaluate(() => { window.__synced = 0; window.addEventListener('ybt-sync-data', () => window.__synced++); });

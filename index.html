@@ -4,7 +4,7 @@
 <meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-TTTAZqHtUyhrYDhz/ESO4QRKQx0qNuQOTwxis9K+soI=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1r86e4aPUQrw3ZdItjXp3NZ8YC7ed6qn9dJIFWGWnDg=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -149,6 +149,21 @@ html{scrollbar-gutter:stable}
 .ai-rules textarea{width:100%;margin-top:8px;font:13px/1.5 var(--f-mono);resize:vertical}
 .ai-rules .hint{margin:8px 0 0}
 .ai-busy{display:grid;gap:8px;margin:0;font-size:14px}
+.wz-body{display:grid;gap:16px}
+.wz-dots{list-style:none;margin:0;padding:0;display:flex;gap:6px;flex-wrap:wrap}
+.wz-dots li{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
+.wz-dots li span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1px solid var(--line-2);font-weight:700;font-size:12px}
+.wz-dots li.cur{color:var(--ink)}.wz-dots li.cur span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.wz-dots li.done span{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.wz-dots li+li::before{content:"";width:14px;height:1px;background:var(--line-2)}
+.wz-body p{margin:0}
+.wz-acts{display:flex;gap:8px;flex-wrap:wrap}
+.wz-ways{display:grid;gap:10px}
+.wz-ok{display:flex;gap:8px;align-items:center;color:var(--good-ink);font-weight:600;font-size:13.5px}
+.wz-ok svg{width:16px;height:16px;flex:none}
+.wz-sum{font-weight:600}
+.guide-strip{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px}
+.guide-strip .grow{flex:1;min-width:160px;font-weight:600}
 .ai-who{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);font-size:13.5px}
 .ai-who span{min-width:0;overflow-wrap:anywhere}
 .imp-tpl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -1592,6 +1607,25 @@ const STR={
   gEyebrow:[n=>`Set up your tracker · step ${n} of 3`,n=>`Configura tu control · paso ${n} de 3`], gEyebrowDone:['Set up your tracker · done','Configura tu control · listo'],
   gStep_acc:['Your accounts','Tus cuentas'], gStep_val:['What they’re worth','Lo que valen'], gStep_tx:['Your transactions','Tus movimientos'],
   gSkipped:['skipped','saltado'], gDoneSr:['(done)','(hecho)'],
+  wzEyebrow:[(i,n)=>`Set up your tracker · step ${i} of ${n}`,(i,n)=>`Configura tu control · paso ${i} de ${n}`],
+  wzNames:[['Net worth','Earlier months','Transactions','Salary','Summary'],['Patrimonio','Meses anteriores','Movimientos','Nómina','Resumen']],
+  wz0Title:['Start with what you own','Empieza por lo que tienes'],
+  wz0Text:[m=>`Add each place you keep money: your current account, savings, investments, pension. Then enter what each one was worth at the end of last month (${m}). When you start recording this month, these balances should be last month’s end amounts.`,m=>`Añade cada sitio donde guardas dinero: tu cuenta corriente, ahorros, inversiones, plan de pensiones. Después introduce lo que valía cada uno a final del mes pasado (${m}). Cuando empieces a registrar este mes, estos saldos deben ser los de final del mes pasado.`],
+  wz1Title:['Earlier months (optional)','Meses anteriores (opcional)'],
+  wz1Text:['Want your history too? Fill in the month-end balances for earlier months and your net worth chart starts further back. The quickest way is the AI: give it past statements and it reads the balances for you.','¿Quieres también tu historial? Rellena los saldos de fin de mes de meses anteriores y tu gráfico de patrimonio empezará antes. Lo más rápido es la IA: dale extractos pasados y lee los saldos por ti.'],
+  wzRecommended:['Recommended','Recomendado'], wzEarlierHand:['Enter an earlier month by hand','Introducir un mes anterior a mano'],
+  wz2Title:['Add your transactions','Añade tus movimientos'], wz2Text:['Choose the way that suits you. You can mix them.','Elige la forma que prefieras. Puedes combinarlas.'],
+  wzWayHand:['By hand','A mano'], wzWayHandSub:['Add one transaction at a time.','Añade un movimiento cada vez.'],
+  wzWayPaste:['Paste or import a bank statement','Pega o importa un extracto'], wzWayPasteSub:['Paste rows or choose your bank’s .csv or .xlsx file.','Pega filas o elige el .csv o .xlsx de tu banco.'],
+  wzWayAi:['With AI','Con IA'], wzWayAiSub:['Give it your statements. It sorts everything and you check it before it’s saved.','Dale tus extractos. Lo ordena todo y tú lo revisas antes de guardarlo.'],
+  wz3Title:['Last, your salary','Por último, tu nómina'],
+  wz3Text:['Add your salary after your transactions, so the tracker can show what you kept. This tracker is built for you to fill in the previous month at the end of that month, so your figures always run one month behind. That is by design.','Añade tu nómina después de tus movimientos, para que el control muestre lo que has ahorrado. Este control está pensado para rellenar el mes anterior al terminar ese mes, así que tus cifras siempre van un mes por detrás. Es a propósito.'],
+  wzAddSalary:['Add my salary','Añadir mi nómina'],
+  wz4Title:['You’re all set','Ya está todo listo'],
+  wz4Text:['Here’s what is in your tracker. Next month, add the month that just ended: balances first, then transactions.','Esto es lo que hay en tu control. El mes que viene, añade el mes que acaba de terminar: primero los saldos y luego los movimientos.'],
+  wzCounts:[(a,m,t,i)=>`${a} ${a===1?'account':'accounts'} · ${m} ${m===1?'month':'months'} of balances · ${t} ${t===1?'transaction':'transactions'} · ${i} ${i===1?'income row':'income rows'}`,(a,m,t,i)=>`${a} ${a===1?'cuenta':'cuentas'} · ${m} ${m===1?'mes':'meses'} de saldos · ${t} ${t===1?'movimiento':'movimientos'} · ${i} ${i===1?'ingreso':'ingresos'}`],
+  wzDone:['Done','Hecho'], wzNext:['Next','Siguiente'], wzBack:['Back','Atrás'], wzSkip:['Skip this step','Saltar este paso'], wzLater:['Finish later','Terminar después'],
+  wzFinish:['Go to the overview','Ir al resumen'], wzContinue:['Continue setup','Continuar la configuración'],
   gTitle_acc:['Start with what you own','Empieza por lo que tienes'],
   gAccText:['Add each place you keep money, only the ones you have: your bank’s current account, a savings account, an investment account, a pension plan… You can name them after your bank and change them later.','Añade cada sitio donde tienes dinero, solo los que tengas: la cuenta corriente de tu banco, una cuenta de ahorro, una cuenta de inversión, un plan de pensiones… Puedes ponerles el nombre de tu banco y cambiarlas más adelante.'],
   gEx_cash:['Current account, savings account','Cuenta corriente, cuenta de ahorro'], gEx_invest:['Investment account, index funds, shares, crypto','Cuenta de inversión, fondos indexados, acciones, cripto'],
@@ -1609,7 +1643,7 @@ const STR={
   gContinue:['Continue','Continuar'], gShow:['Show the setup guide','Mostrar la guía de configuración'],
   nwAccStartQ:['Which of these do you have? Tap to add them, then rename them after your bank or app, for example “BBVA current account”.','¿Cuáles de estas tienes? Púlsalas para añadirlas y luego ponles el nombre de tu banco o app, por ejemplo «Cuenta corriente BBVA».'],
   nwAddOther:['Add another account','Añadir otra cuenta'], nwSugAllAdded:['All added','Todas añadidas'],
-  tour_introNew:[['Welcome to your tracker','Before you set it up, here’s a two-minute tour with a made-up example, so you can see every page full of data. Nothing in it is saved. Afterwards a short guide helps you add your accounts, then your transactions.'],['Bienvenido a tu control','Antes de configurarlo, aquí tienes un recorrido de dos minutos con un ejemplo inventado, para que veas cada página llena de datos. Nada de él se guarda. Después, una guía corta te ayuda a añadir tus cuentas y luego tus movimientos.']],
+  tour_introNew:[['Welcome to your tracker','Before you set it up, here’s a two-minute tour with a made-up example, so you can see every page full of data. Nothing in it is saved. Afterwards a short setup wizard helps you add your accounts, then your transactions and your salary.'],['Bienvenido a tu control','Antes de configurarlo, aquí tienes un recorrido de dos minutos con un ejemplo inventado, para que veas cada página llena de datos. Nada de él se guarda. Después, un asistente corto te ayuda a añadir tus cuentas, luego tus movimientos y tu nómina.']],
   tourSkipNew:['Skip the tour','Saltar el recorrido'], tourSetup:['Set up my tracker','Configurar mi control'],
   /* info bubbles */
   infoAbout:['What does this mean?','¿Qué significa esto?'],
@@ -1648,10 +1682,12 @@ const STR={
   tour_ovMonthly:[['Month by month','Each month’s income, expenses or investments. Click a bar to see the transactions behind it.'],['Mes a mes','Los ingresos, gastos o inversiones de cada mes. Pulsa una barra para ver los movimientos que hay detrás.']],
   tour_ovCats:[['Where it went','Your categories, biggest first. Click one to follow it month by month.'],['A dónde fue','Tus categorías, de más a menos. Pulsa una para seguirla mes a mes.']],
   tour_yearly:[['Every figure, every month','Laid out like a spreadsheet: categories down the side, months across. Click any figure to see its transactions. The heat map shows where most of the money went each month.'],['Cada cifra, cada mes','Como una hoja de cálculo: categorías a un lado y meses en columnas. Pulsa cualquier cifra para ver sus movimientos. El mapa de calor muestra a dónde fue más dinero cada mes.']],
-  tour_txImport:[['Bring in your bank’s export','Paste rows or choose your bank’s file (.csv or .xlsx). Each row is sorted into Income, Expenses or Investments and gets its category from your keywords. Rows already in the tracker are spotted.'],['Trae el extracto de tu banco','Pega filas o elige el archivo de tu banco (.csv o .xlsx). Cada fila va a Ingresos, Gastos o Inversiones y recibe su categoría según tus palabras clave. Las filas que ya están en el control se detectan.']],
+  tour_txImport:[['Bring in your bank’s export','Paste rows or choose your bank’s file (.csv or .xlsx), or download the empty template and fill it in. Each row is sorted into Income, Expenses or Investments and gets its category from your keywords. Rows already in the tracker are spotted.'],['Trae el extracto de tu banco','Pega filas o elige el archivo de tu banco (.csv o .xlsx), o descarga la plantilla vacía y rellénala. Cada fila va a Ingresos, Gastos o Inversiones y recibe su categoría según tus palabras clave. Las filas que ya están en el control se detectan.']],
   tour_txGuess:[['Categories, guessed','When no keyword matches a row, the tracker suggests a category learned from your past transactions. One click accepts it, and it offers to remember a keyword for next time.'],['Categorías sugeridas','Si ninguna palabra clave coincide, el control sugiere una categoría aprendida de tus movimientos anteriores. Un clic la acepta, y te ofrece guardar una palabra clave para la próxima vez.']],
   tour_catKw:[['Keywords do the sorting','A keyword like “netflix” puts every matching row in its category by itself. Type any description in the test box to see which keyword picks it.'],['Las palabras clave ordenan','Una palabra clave como «netflix» pone sola cada fila que la contenga en su categoría. Escribe cualquier descripción en la casilla de prueba para ver qué palabra la elige.']],
   tour_catList:[['Your categories','Rename, add or remove categories, mark each expense as Need or Want, and set monthly limits.'],['Tus categorías','Cambia el nombre, añade o quita categorías, marca cada gasto como Necesario o Capricho y pon límites mensuales.']],
+  tour_nwAccounts:[['Accounts and gains','Each account’s value, its change since last month and its Gains: how much it grew on its own (prices, interest, dividends), apart from money you put in. Hover Gains for how it’s worked out.'],['Cuentas y ganancias','El valor de cada cuenta, su cambio desde el mes pasado y sus Ganancias: cuánto creció por sí sola (precios, intereses, dividendos), sin contar lo que aportaste. Pasa el ratón por Ganancias para ver cómo se calcula.']],
+  tour_txAi:[['Let an AI read your statements','Do it with AI reads statements and PDFs for you. The first time you pick which AI: Copy and paste is free, Gemini has a free tier, Claude and GPT are paid with your own key. A recommendation next to the model picker says which model suits one file or many months. Change AI switches it any time, and you check every row before it’s saved.'],['Deja que una IA lea tus extractos','Hacerlo con IA lee extractos y PDF por ti. La primera vez eliges qué IA: Copiar y pegar es gratis, Gemini tiene un nivel gratuito, Claude y GPT son de pago con tu propia clave. Una recomendación junto al selector de modelo indica cuál sirve para un archivo o para muchos meses. Cambiar la IA lo cambia cuando quieras, y revisas cada fila antes de guardarla.']],
   tour_nwTop:[['What you own','Once a month, type what each account is worth, or import several months from Excel. Accounts are grouped by how soon you could use the money.'],['Lo que tienes','Una vez al mes, escribe lo que vale cada cuenta o importa varios meses desde Excel. Las cuentas se agrupan según lo pronto que podrías usar el dinero.']],
   tour_nwChart:[['How it grows','Your month-end totals with a trend line. Pick one year or several.'],['Cómo crece','Tus totales a fin de mes con una línea de tendencia. Elige un año o varios.']],
   tour_nwCards:[['Why it changed, and your goal','What changed splits each month into what you saved and what markets added. Goal shows what you need a month and how much would have to come from growth.'],['Por qué cambió y tu objetivo','Qué ha cambiado reparte cada mes entre lo que ahorraste y lo que aportaron los mercados. Objetivo muestra cuánto hace falta al mes y cuánto tendría que venir del crecimiento.']],
@@ -2254,6 +2290,7 @@ function render(){
   restoreFocus(st);
   afterRender();
   syncStatus();
+  maybeWizard();
 }
 function renderHeader(){
   const ys=yearList();
@@ -2955,7 +2992,54 @@ function backupNudge(){
   if(days!=null&&days<35) return '';
   return `<div class="notice bk-nudge">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(days==null?L('bkNever'):L('bkOld',days))}</span><span class="bk-acts"><button class="linkish" type="button" data-action="backup">${esc(L('dlBackup'))}</button><button class="linkish" type="button" data-action="bk-later">${esc(L('bkLater'))}</button></span></div>`;
 }
+/* ───────── setup wizard ─────────
+   The default path for a new tracker: one focused dialog, one thing per step. Each button opens the existing
+   dialog for that job; when that one closes, the wizard comes back (see closeModal). Progress comes from the data. */
+const WZ_STEPS=5;
+function wizardOpen(step){ S.wizard={on:true,step:step==null?0:step}; openModal({type:'wizard',mid:true}); }
+function maybeWizard(){
+  const G=guideState();
+  if(!G||G.cur==='done'||S.modal||S.wizardShown||!S.canWrite||S.mode!=='live'||S.tourPending||TOUR) return;
+  S.wizardShown=true; wizardOpen(G.cur==='tx'?2:0);
+}
+function modalWizard(){
+  const w=S.wizard, i=w.step, N=nw(), k=guideFigMonth();
+  const nAcc=N.accounts.length, nMon=nwMonths().length, rows=allRows(), nTx=rows.length, nInc=rows.filter(r=>r.table==='income').length;
+  const act=(a,label,extra,cls)=>`<button type="button" class="btn ${cls||''}" data-action="${a}"${extra||''}>${label}</button>`;
+  const ok=(on,text)=>on?`<p class="wz-ok">${ICON.ok}<span>${esc(text)}</span></p>`:'';
+  let body='';
+  if(i===0){
+    body=`<p>${esc(L('wz0Text',ymIn(k)))}</p>
+      <div class="wz-acts">${act('guide-acc',esc(L('nwAddAccounts')),'',nAcc?'':'primary')}${act('guide-val',esc(L('nwEnter',ymIn(k))),` data-k="${k}"`,nAcc&&!nMon?'primary':'')}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtnNw'))):''}</div>
+      ${ok(nAcc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[0])}${ok(nMon,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[1])}`;
+  } else if(i===1){
+    body=`<p>${esc(L('wz1Text'))}</p>
+      <div class="wz-acts">${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtnNw'))+` <span class="tag">${esc(L('wzRecommended'))}</span>`,'','primary'):''}${act('guide-val',esc(L('wzEarlierHand')),` data-k="${ymAdd(k,-1)}"`)}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}</div>`;
+  } else if(i===2){
+    body=`<p>${esc(L('wz2Text'))}</p>
+      <div class="wz-ways">
+        <button type="button" class="ob-way" data-action="guide-add"><span class="ob-t">${esc(L('wzWayHand'))}</span><span class="ob-s">${esc(L('wzWayHandSub'))}</span></button>
+        <button type="button" class="ob-way" data-action="guide-import"><span class="ob-t">${esc(L('wzWayPaste'))}</span><span class="ob-s">${esc(L('wzWayPasteSub'))}</span></button>
+        ${S.ai?`<button type="button" class="ob-way" data-action="ai-tx"><span class="ob-t">${ICON.ai}${esc(L('wzWayAi'))} <span class="tag">${esc(L('wzRecommended'))}</span></span><span class="ob-s">${esc(L('wzWayAiSub'))}</span></button>`:''}
+      </div>${ok(nTx,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[2])}`;
+  } else if(i===3){
+    body=`<p>${esc(L('wz3Text'))}</p><div class="wz-acts">${act('guide-income',esc(L('wzAddSalary')),'',nInc?'':'primary')}</div>${ok(nInc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[3])}`;
+  } else {
+    body=`<p>${esc(L('wz4Text'))}</p><p class="wz-sum">${esc(L('wzCounts',nAcc,nMon,nTx,nInc))}</p><p class="hint">${esc(S.local?LT('gSafeApp'):L('gSafeWeb'))}</p>`;
+  }
+  const names=L('wzNames');
+  const dots=names.map((n,j)=>`<li class="${j===i?'cur':j<i?'done':''}"${j===i?' aria-current="step"':''}><span>${j<i?'✓':j+1}</span><small>${esc(n)}</small></li>`).join('');
+  const last=i===WZ_STEPS-1, optional=i===1||i===2||i===3;
+  return `<div class="m-head"><div><p class="eyebrow">${esc(L('wzEyebrow',i+1,WZ_STEPS))}</p><h3 id="m-title">${esc(L('wz'+i+'Title'))}</h3></div><button class="icon-btn" data-action="wz-later" aria-label="${esc(L('wzLater'))}" title="${esc(L('wzLater'))}">${ICON.x}</button></div>
+  <div class="m-body wz-body"><ol class="wz-dots">${dots}</ol>${body}</div>
+  <div class="m-foot"><span>${i>0?act('wz-back',esc(L('wzBack'))):act('wz-later',esc(L('wzLater')),'','ghost')}</span><span class="r">${optional?act('wz-next',esc(L('wzSkip')),'','ghost'):''}${last?act('guide-finish',esc(L('wzFinish')),'','primary'):act('wz-next',esc(L('wzNext')),'',optional?'':'primary')}</span></div>`;
+}
+/* the strip that stays on the pages until setup is finished */
+function guideStrip(G){
+  return `<section class="card guide guide-strip"><span class="eyebrow">${esc(L('gEyebrow',G.n))}</span><span class="grow">${esc(L('gTitle_'+G.cur))}</span><button class="btn primary" type="button" data-action="wz-open">${esc(L('wzContinue'))}</button><button class="icon-btn" type="button" data-action="guide-hide" aria-label="${esc(L('gHide'))}" title="${esc(L('gHide'))}">${ICON.x}</button></section>`;
+}
 function guideCard(G){
+  if(G.cur!=='done') return guideStrip(G);
   const state=(k,done)=>G.skip&&k!=='tx'?'skip':done?'done':G.cur===k?'cur':'todo';
   const steps=[['acc',G.acc],['val',G.val],['tx',G.tx]].map(([k,d],i)=>{ const s=state(k,d);
     return `<li class="gs-${s}"${G.cur===k?' aria-current="step"':''}><span class="gs-n" aria-hidden="true">${s==='done'?'✓':s==='skip'?'–':i+1}</span><span>${esc(L('gStep_'+k))}${s==='skip'?` <small>· ${esc(L('gSkipped'))}</small>`:s==='done'?`<span class="sr"> ${esc(L('gDoneSr'))}</span>`:''}</span></li>`; }).join('');
@@ -4067,8 +4151,10 @@ function kwTestOut(){
 /* ───────── modals ───────── */
 let opener=null;
 function openModal(m){ const a=document.activeElement; if(!S.modal) opener=a&&a!==document.body&&!$('#overlay').contains(a)?a:null; S.modal=m; renderModal(); }
-function closeModal(){ if(S.modal&&S.modal.type==='ai'&&S.modal.ctl) S.modal.ctl.abort(); const was=!!S.modal; S.modal=null; const o=$('#overlay'); o.classList.remove('on'); o.innerHTML=''; o.setAttribute('aria-hidden','true');
-  if(was&&opener&&opener.isConnected) opener.focus({preventScroll:true}); opener=null; }
+function closeModal(){ const prev=S.modal&&S.modal.type; if(S.modal&&S.modal.type==='ai'&&S.modal.ctl) S.modal.ctl.abort(); const was=!!S.modal; S.modal=null; const o=$('#overlay'); o.classList.remove('on'); o.innerHTML=''; o.setAttribute('aria-hidden','true');
+  if(was&&opener&&opener.isConnected) opener.focus({preventScroll:true}); opener=null;
+  /* a dialog the setup wizard opened has closed: bring the wizard back */
+  if(was&&prev!=='wizard'&&S.wizard&&S.wizard.on) setTimeout(()=>{ if(!S.modal&&S.wizard&&S.wizard.on) openModal({type:'wizard',mid:true}); },0); }
 document.addEventListener('keydown',e=>{
   if(e.key!=='Tab'||!S.modal) return;
   const md=$('#overlay .modal'); if(!md) return;
@@ -4081,7 +4167,7 @@ document.addEventListener('keydown',e=>{
 });
 function renderModal(keepId){
   const m=S.modal, o=$('#overlay'); if(!m){ closeModal(); return; }
-  const inner=({edit:modalEdit,drill:modalDrill,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,nwsnap:modalNwSnap,nwacc:modalNwAccounts,ai:modalAi,nwgoal:modalNwGoal,nwret:modalNwReturns,nwimp:modalNwImport})[m.type]();
+  const inner=({edit:modalEdit,drill:modalDrill,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwacc:modalNwAccounts,ai:modalAi,nwgoal:modalNwGoal,nwret:modalNwReturns,nwimp:modalNwImport})[m.type]();
   o.innerHTML=`<div class="scrim" data-action="close"></div><div class="modal${m.wide?' wide':m.mid?' mid':''}" role="dialog" aria-modal="true" aria-labelledby="m-title">${inner}</div>`;
   o.classList.add('on'); o.setAttribute('aria-hidden','false');
   if(keepId){ const k=document.getElementById(keepId); if(k&&o.contains(k)){ k.focus({preventScroll:true}); return; } }
@@ -4858,13 +4944,15 @@ const TOUR_STEPS=[
   {k:'nwTop',tab:'networth',el:()=>$('#view .ov-top')},
   {k:'nwChart',tab:'networth',el:tourSec('#ch-nw')},
   {k:'nwCards',tab:'networth',el:()=>$('#view .nw-two')},
+  {k:'nwAccounts',tab:'networth',el:()=>$('#view table.nwt')},
   {k:'ovTop',tab:'overview',el:()=>$('#view .ov-top')},
   {k:'ovMonth',tab:'overview',el:tourSec('#tm-title')},
-  {k:'ovInd',tab:'overview',el:tourSec('.inds')},
   {k:'ovMonthly',tab:'overview',el:tourSec('#ch-monthly')},
   {k:'ovCats',tab:'overview',el:tourSec('#ch-cats')},
+  {k:'ovInd',tab:'overview',el:tourSec('.inds')},
   {k:'yearly',tab:'yearly',el:()=>$('#view .yframe')},
   {k:'txImport',tab:'transactions',el:()=>$('#view .toolbar [data-action=import]')},
+  {k:'txAi',tab:'transactions',el:()=>$('#view .toolbar [data-action=ai-tx]')||$('#view .toolbar [data-action=import]')},
   {k:'txGuess',tab:'transactions',el:()=>{ const b=$('#view [data-action=use-ml-row]'); return b?b.closest('tr'):$('#view table'); }},
   {k:'catKw',tab:'categories',el:tourSec('#kw-test')},
   {k:'catList',tab:'categories',el:tourSec('.cat-list')},
@@ -4922,6 +5010,7 @@ function sampleDataset(){
   return {year:y,months,cats:C,kw,settings,nw:{accounts:acc,snaps,goal:{amount:80000,month:ymOf(y+1,11)}}};
 }
 async function startTour(opts){
+  S.tourPending=false;
   if(TOUR) return;
   /* let pending saves finish first, so nothing of the example can ever be written */
   for(let i=0;i<60&&(flushing||dirty.size||busy.size);i++){ if(!flushing&&dirty.size){ clearTimeout(flushTimer); flush(); } await sleep(100); }
@@ -5098,6 +5187,7 @@ const ACTIONS={
     const lang=S.ui.obLang==='es'?'es':'en', {y,m,auto}=obStartPick();
     obApply(lang,y,m,auto);
     S.ui.tab='networth'; try{ history.replaceState(null,'','#networth'); }catch(_){}
+    S.tourPending=true;   /* the tour comes first; the setup wizard follows when it ends */
     bump(); render(); window.scrollTo({top:0});
     setTimeout(()=>startTour({fresh:true}),350);
   },
@@ -5144,13 +5234,17 @@ const ACTIONS={
   'guide-import':()=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS.import(); },
   'guide-income':()=>{ if(!S.canWrite) return; S.ui.tx.table='income'; if(S.ui.tab!=='transactions') setTab('transactions'); else render(); ACTIONS['add-tx'](); },
   'guide-add':()=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS['add-tx'](); },
+  'wz-open':()=>{ const G=guideState(); wizardOpen(G&&G.cur==='tx'?2:0); },
+  'wz-next':()=>{ if(!S.wizard) return; S.wizard.step=Math.min(WZ_STEPS-1,S.wizard.step+1); renderModalKeepScroll(); },
+  'wz-back':()=>{ if(!S.wizard) return; S.wizard.step=Math.max(0,S.wizard.step-1); renderModalKeepScroll(); },
+  'wz-later':()=>{ if(S.wizard) S.wizard.on=false; closeModal(); },
   'guide-skipnw':()=>{ setSettings({guide:Object.assign({},S.settings.guide,{skipNw:true})}); setTab('transactions'); },
   'guide-continue':()=>{ const G=guideState(); if(G) setTab(G.cur==='tx'?'transactions':'networth'); },
   'remind-ics':()=>remindIcs(),
   'bk-later':()=>{ if(!S.canWrite) return; setSettings({backupSnooze:ymdAdd(todayYmd(),30)}); render(); },
   'guide-hide':()=>{ const G=guideState(); setSettings({guide:Object.assign({},S.settings.guide,{on:false},G&&G.cur==='done'?{done:true}:{})}); render(); if(G&&G.cur!=='done') toast(L('gHidden')); },
-  'guide-finish':()=>{ setSettings({guide:Object.assign({},S.settings.guide,{on:false,done:true})}); setTab('overview'); },
-  'guide-show':()=>{ setSettings({guide:{on:true}}); const G=guideState(); setTab(G&&G.cur==='tx'?'transactions':'networth'); },
+  'guide-finish':()=>{ if(S.wizard) S.wizard.on=false; closeModal(); setSettings({guide:Object.assign({},S.settings.guide,{on:false,done:true})}); setTab('overview'); },
+  'guide-show':()=>{ setSettings({guide:{on:true}}); const G=guideState(); setTab(G&&G.cur==='tx'?'transactions':'networth'); wizardOpen(G&&G.cur==='tx'?2:0); },
   'toggle-hide':()=>{ HIDE=!HIDE; try{ localStorage.setItem('ybt.hideAmounts',HIDE?'1':'0'); }catch(_){} hideTip(); render(); if(S.modal) renderModalKeepScroll(); toast(L(HIDE?'amountsHidden':'amountsShown')); },
   'nw-from':el=>{ const N=ensureNw(), a=N.accounts.find(x=>x.id===el.dataset.id); if(!a) return; const before=a.from; a.from=el.dataset.k; saveNw(); render();
     toast(L('nwFromSaved',a.name,ymIn(a.from)),{label:L('undo'),fn:()=>{ const b=ensureNw().accounts.find(x=>x.id===a.id); if(b){ if(before) b.from=before; else delete b.from; saveNw(); render(); } }}); },
@@ -5405,6 +5499,7 @@ function currentDataset(){
 /* desktop app only: its storage layer replaces the whole dataset (open another file / start fresh) */
 window.addEventListener('ybt-replace-data',e=>loadDataset((e&&e.detail)||{},false));
 /* a newer copy arrived by itself (Drive, or the folder changed elsewhere): never closes a dialog or cancels an AI request */
+window.addEventListener('ybt-wizard-check',()=>maybeWizard());
 window.addEventListener('ybt-sync-data',e=>loadDataset((e&&e.detail)||{},false,true));
 /* the storage layer asks before it swaps data or asks a question: wait while a dialog is open or edits are on their way */
 window.YBT_BUSY=()=>!!S.modal||dirty.size>0||busy.size>0||flushing;
