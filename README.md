@@ -111,4 +111,4 @@ Data files keep the same format as the Windows app, and new versions can always 
 | `fonts/`, `icons/`, `manifest.webmanifest` | Fonts, app icons, install details |
 | `privacy.html` | Privacy page, in English and Spanish |
 
-The page only allows scripts from your own site plus Google's sign-in script. It can only send data to Google Drive and, when a visitor uses their own key, to Anthropic, OpenAI or Google's Gemini API. The browser enforces this, so even a mistake in the code couldn't send figures anywhere else.
+The page only allows scripts from your own site plus Google's sign-in script and the GoatCounter visitor counter. It can only send data to Google Drive, to GoatCounter (page visits only, no figures) and, when a visitor uses their own key, to Anthropic, OpenAI or Google's Gemini API. The browser enforces this, so even a mistake in the code couldn't send figures anywhere else.
