@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-2LXbwTDDrNyYe6kpaOyME203Qe5tb2Fk749pkcQksPk=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-aBOMgLuRnS7/FUqQVoUSP1aU470Dv/aZopx6yiDBSTQ=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1789,7 +1789,7 @@ const STR={
   /* accounts at 0 */
   nwTotalRow:['Total, all accounts','Total, todas las cuentas'],
   nwGains:['Gains','Ganancias'],
-  nwGainsTip:['Gains: how much an account grew on its own (prices, interest, dividends), apart from money you put in. It is the change since last month minus the money put into that account, taken from your Investments rows that name the account. Cash accounts show none. If an account grew by more than the money you put in through the tracker, the difference is shown as a gain: it came from the account’s own value rising, which the tracker itself doesn’t record. A deposit that doesn’t name the account, or fits two accounts equally well, counts as a gain.','Ganancias: cuánto creció una cuenta por sí sola (precios, intereses, dividendos), sin contar el dinero que aportaste. Es el cambio desde el mes anterior menos lo aportado a esa cuenta, según tus filas de Inversiones que nombran la cuenta. Las cuentas de efectivo no muestran nada. Si una cuenta creció más que el dinero aportado a través del control, la diferencia se muestra como ganancia: viene de que el valor de la propia cuenta subió, algo que el control no registra. Un ingreso que no nombra la cuenta, o que encaja igual de bien con dos cuentas, cuenta como ganancia.'],
+  nwGainsTip:['Gains: what an account earned you. It is the change since last month, minus the money you put in, plus interest, dividends, capital gains or rent it paid out to you. Money put in or taken out comes from your Investments rows that name the account; payouts come from income rows that name the account in a category ticked under “Interest, dividends and gains” on Net worth. If a dividend stayed inside the account, don’t also record it as income, or it counts twice. Cash accounts show none. A row that doesn’t name the account, or fits two accounts equally well, isn’t counted for any account.','Ganancias: lo que te ha hecho ganar una cuenta. Es el cambio desde el mes anterior, menos el dinero que aportaste, más los intereses, dividendos, plusvalías o alquiler que te pagó. Lo aportado o retirado sale de tus filas de Inversiones que nombran la cuenta; los cobros, de los ingresos que nombran la cuenta en una categoría marcada en “Intereses, dividendos y plusvalías” de Patrimonio. Si un dividendo se quedó dentro de la cuenta, no lo apuntes también como ingreso o contará dos veces. Las cuentas de efectivo no muestran nada. Una fila que no nombra la cuenta, o que encaja igual de bien con dos cuentas, no cuenta para ninguna.'],
   nwLaterHero:[n=>`No figure yet this month for ${n}: ${n.includes(',')||n.includes(' and ')?'their':'its'} first figure comes later, so the total may be low.`,n=>`Sin cifra este mes para ${n}: su primera cifra es posterior, así que el total puede quedarse corto.`],
   nwFaded:['Faded months are missing figures, so they look lower than they were:','Los meses atenuados no tienen todas las cifras, así que parecen más bajos de lo que fueron:'],
   nwLaterLine:[(n,m)=>`${n}: no figures before ${m}.`,(n,m)=>`${n}: sin cifras antes de ${m}.`],
@@ -3175,9 +3175,11 @@ function goalGrowthCalc(T,rest,left,pace){
   return {inv,fromSaving,gap,tot,yr};
 }
 /* Gains: how much an account grew by on its own (prices, interest, dividends), apart from money you put in.
-   gain = change since the month with figures before - net money put in.
+   gain = change since the month with figures before - net money put in + returns paid out to you.
    "Put in" = rows in Investments dated after that month, up to this one, whose description names the account
-   (money out of your pay is a deposit, money back in is a withdrawal). Cash accounts have no gain: their change is
+   (money out of your pay is a deposit, money back in is a withdrawal). "Returns" = rows in a returns category
+   (interest, dividends, capital gains, rent if ticked) that name the account, so a loan that pays interest or a flat
+   that pays rent shows what it earned, not just its price change. Cash accounts have no gain: their change is
    mostly pay and spending. A deposit whose description doesn't name the account is counted as a gain.
    Names match on whole words of 3+ letters ("ING", not "ingreso"; "Fund", not "refund"). A row goes to the one account
    whose name shares the most words with it ("MyInvestor Pension" beats "MyInvestor Fund"); a tie goes to neither. */
@@ -3185,7 +3187,7 @@ function nwGains(prev,k){
   const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map(), put=new Map();
   const words=s=>fold(s).split(/[^a-z0-9]+/).filter(x=>x.length>=3);
   const accs=N.accounts.filter(a=>a.group!=='cash').map(a=>({id:a.id,w:new Set(words(a.name))}));
-  for(const r of allRows()){ const m=r.date.slice(0,7); if(r.table!=='investments'||m<=prev||m>k) continue;
+  for(const r of allRows()){ const m=r.date.slice(0,7); if(r.table!=='investments'&&!isReturn(r)||m<=prev||m>k) continue;
     const cw=new Set(words(r.concept)); let best=null, n=0, tie=false;
     for(const a of accs){ let s=0; for(const x of a.w) if(cw.has(x)) s++;
       if(s>n){ best=a.id; n=s; tie=false; } else if(s&&s===n) tie=true; }
