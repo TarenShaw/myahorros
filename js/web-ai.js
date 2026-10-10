@@ -1,4 +1,4 @@
-/* Yearly Budget Tracker (web version): reading statements with AI, using the visitor's own account.
+/* MyAhorros (web version): reading statements with AI, using the visitor's own account.
    Plays the part of Claude's `sample` for the page: sample.json(prompt,{images,signal,onText}) answers with the JSON object.
    - Claude, ChatGPT or Gemini with the visitor's own API key: the request goes straight from this browser to that
      company; the key is kept only in this browser (or only until the tab closes, if they prefer);
@@ -233,7 +233,7 @@ function setup(){
     const c=cfg(); let sel=c.provider||'anthropic', models=null;
     const badge=k=>k?`<span class="ai-badge ${k}">${esc(t(k==='paid'?'badgePaid':'badgeFree'))}</span>`:'';
     const card=(p,title,sub,b)=>`<button type="button" class="web-way ai-way${sel===p?' current':''}" data-p="${p}" aria-pressed="${sel===p}"><span><b>${esc(title)} ${badge(b)}</b><small>${esc(sub)}</small></span></button>`;
-    const el=panel(`<p class="web-eyebrow">Yearly Budget Tracker</p><h2 id="ap-title">${esc(t('title'))}</h2><p class="web-sub">${esc(t('sub'))}</p>
+    const el=panel(`<p class="web-eyebrow">MyAhorros</p><h2 id="ap-title">${esc(t('title'))}</h2><p class="web-sub">${esc(t('sub'))}</p>
       <div class="ai-cols">
         <section class="ai-col"><h3>${esc(t('colPaste'))} ${badge('free')}</h3><div class="web-ways ai-ways">${card('paste',t('pasteT'),t('pasteS'))}</div></section>
         <section class="ai-col"><h3>${esc(t('colApi'))}</h3><div class="web-ways ai-ways">${card('anthropic','Claude',t('anthropicS'),'paid')}${card('openai','ChatGPT',t('openaiS'),'paid')}${card('gemini','Gemini',t('geminiS'),'free')}</div></section>

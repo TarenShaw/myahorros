@@ -1,10 +1,10 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Yearly Budget Tracker</title>
+<title>MyAhorros</title>
 <meta name="description" content="A yearly budget and net worth tracker that keeps your data on your side: in a folder, your Google Drive or your browser.">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1r86e4aPUQrw3ZdItjXp3NZ8YC7ed6qn9dJIFWGWnDg=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-7TMaLYA//GWWWOxmyECav585lomd5MZWFPW1+1o8HA0=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -895,7 +895,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-nume
   <header class="mast">
     <div>
       <p class="kicker">Income · Expenses · Investments</p>
-      <h1>Yearly Budget Tracker</h1>
+      <h1>MyAhorros</h1>
     </div>
     <div class="yearbox">
       <button class="icon-btn" type="button" data-action="year-step" data-step="-1" id="year-prev" aria-label="Previous year">‹</button>
@@ -1162,7 +1162,7 @@ function pl(n,k){ const p=PL[k][LANG==='es'?1:0]; return fmtCount(n)+' '+(n===1?
 const ALL_ES={income:'todos los ingresos',expenses:'todos los gastos',investments:'todas las inversiones'};
 const STR={
   /* chrome */
-  appTitle:['Yearly Budget Tracker','Control de presupuesto anual'],
+  appTitle:['MyAhorros','MyAhorros'],
   kicker:['Income · Expenses · Investments','Ingresos · Gastos · Inversiones'],
   prevYear:['Previous year','Año anterior'], nextYear:['Next year','Año siguiente'], year:['Year','Año'],
   sections:['Sections','Secciones'],
@@ -1434,7 +1434,7 @@ const STR={
   saveWaiting:['A save is already waiting for your answer.','Ya hay una descarga esperando tu respuesta.'],
   dlFailed:['The download didn’t go through in this view.','La descarga no se ha podido completar aquí.'],
   sheetSaved:['Spreadsheet saved','Hoja de cálculo guardada'], templateSaved:['Template saved','Plantilla guardada'], kwListSaved:['Keyword list saved','Lista de palabras clave guardada'],
-  fileBase:['Yearly Budget Tracker','Control de presupuesto'],
+  fileBase:['MyAhorros','Control de presupuesto'],
   /* toasts */
   readOnly:['This copy is read-only, so changes can’t be saved.','Esta copia es de solo lectura, así que los cambios no se pueden guardar.'],
   storageFull:['The tracker’s storage is full. Delete some old transactions before adding more.','El almacenamiento del control está lleno. Borra movimientos antiguos antes de añadir más.'],
@@ -1546,7 +1546,7 @@ const STR={
   gTxTextSalary:[m=>`Start with your salary: everything on Overview is measured against your income. Then bring in the money that went out${m?` since ${m}`:''}. The quickest way is your bank’s export (.csv or .xlsx): each row is sorted into Income, Expenses or Investments and gets a category from your keywords.`,m=>`Empieza por tu nómina: todo el Resumen se mide frente a tus ingresos. Después trae el dinero que salió${m?` desde ${m}`:''}. Lo más rápido es la exportación de tu banco (.csv o .xlsx): cada fila se clasifica en Ingresos, Gastos o Inversiones y recibe una categoría según tus palabras clave.`],
   gGotIt:['Got it','Entendido'],
   gSafeWeb:['Your figures are saved in your Claude account. You can download a backup of your own any time from Settings.','Tus cifras se guardan en tu cuenta de Claude. Puedes descargar una copia de seguridad propia cuando quieras desde Ajustes.'],
-  gSafeApp:['Your figures are saved in Documents\\Yearly Budget Tracker on this computer, with a daily backup.','Tus cifras se guardan en Documentos\\Yearly Budget Tracker en este ordenador, con una copia diaria.'],
+  gSafeApp:['Your figures are saved in Documents\\MyAhorros on this computer, with a daily backup.','Tus cifras se guardan en Documentos\\MyAhorros en este ordenador, con una copia diaria.'],
   remindBtn:['Add a monthly reminder to my calendar','Añadir un recordatorio mensual a mi calendario'],
   remindTitle:['Budget tracker: last month’s figures','Control de presupuesto: cifras del mes pasado'],
   remindDesc:['Enter what your accounts were worth at the end of last month, and import last month’s transactions.','Introduce lo que valían tus cuentas a final del mes pasado e importa los movimientos del mes pasado.'],
@@ -1780,7 +1780,7 @@ const STR={
   /* accounts at 0 */
   nwTotalRow:['Total, all accounts','Total, todas las cuentas'],
   nwGains:['Gains','Ganancias'],
-  nwGainsTip:['Gains: how much an account grew on its own (prices, interest, dividends), apart from money you put in. It is the change since last month minus the money put into that account, taken from your Investments rows that name the account. Cash accounts show none. A deposit that doesn’t name the account counts as a gain.','Ganancias: cuánto creció una cuenta por sí sola (precios, intereses, dividendos), sin contar el dinero que aportaste. Es el cambio desde el mes anterior menos lo aportado a esa cuenta, según tus filas de Inversiones que nombran la cuenta. Las cuentas de efectivo no muestran nada. Un ingreso que no nombra la cuenta cuenta como ganancia.'],
+  nwGainsTip:['Gains: how much an account grew on its own (prices, interest, dividends), apart from money you put in. It is the change since last month minus the money put into that account, taken from your Investments rows that name the account. Cash accounts show none. If an account grew by more than the money you put in through the tracker, the difference is shown as a gain: it came from the account’s own value rising, which the tracker itself doesn’t record. A deposit that doesn’t name the account counts as a gain.','Ganancias: cuánto creció una cuenta por sí sola (precios, intereses, dividendos), sin contar el dinero que aportaste. Es el cambio desde el mes anterior menos lo aportado a esa cuenta, según tus filas de Inversiones que nombran la cuenta. Las cuentas de efectivo no muestran nada. Si una cuenta creció más que el dinero aportado a través del control, la diferencia se muestra como ganancia: viene de que el valor de la propia cuenta subió, algo que el control no registra. Un ingreso que no nombra la cuenta cuenta como ganancia.'],
   nwLaterHero:[n=>`No figure yet this month for ${n}: ${n.includes(',')||n.includes(' and ')?'their':'its'} first figure comes later, so the total may be low.`,n=>`Sin cifra este mes para ${n}: su primera cifra es posterior, así que el total puede quedarse corto.`],
   nwFaded:['Faded months are missing figures, so they look lower than they were:','Los meses atenuados no tienen todas las cifras, así que parecen más bajos de lo que fueron:'],
   nwLaterLine:[(n,m)=>`${n}: no figures before ${m}.`,(n,m)=>`${n}: sin cifras antes de ${m}.`],
@@ -2974,7 +2974,7 @@ const ymdAdd=(s,n)=>{ const d=new Date(s+'T12:00:00'); d.setDate(d.getDate()+n);
 function remindIcsText(){
   const d=new Date(), nx=new Date(d.getFullYear(),d.getMonth()+1,1), ymd=x=>x.getFullYear()+String(x.getMonth()+1).padStart(2,'0')+String(x.getDate()).padStart(2,'0');
   const stamp=d.toISOString().replace(/[-:]/g,'').replace(/\.\d+/,''), e=s=>String(s).replace(/[\\,;]/g,m=>'\\'+m);
-  return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Yearly Budget Tracker//EN','CALSCALE:GREGORIAN','BEGIN:VEVENT',`UID:ybt-monthly-${stamp}@yearly-budget-tracker`,`DTSTAMP:${stamp}`,
+  return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//MyAhorros//EN','CALSCALE:GREGORIAN','BEGIN:VEVENT',`UID:ybt-monthly-${stamp}@yearly-budget-tracker`,`DTSTAMP:${stamp}`,
     `DTSTART;VALUE=DATE:${ymd(nx)}`,'RRULE:FREQ=MONTHLY;BYMONTHDAY=1',`SUMMARY:${e(L('remindTitle'))}`,`DESCRIPTION:${e(L('remindDesc'))}`,
     'BEGIN:VALARM','TRIGGER:PT9H','ACTION:DISPLAY',`DESCRIPTION:${e(L('remindTitle'))}`,'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n')+'\r\n';
 }
@@ -5512,5 +5512,5 @@ boot();
 </script>
 
 <noscript><p style="padding:24px">This tracker needs JavaScript.</p></noscript>
-<footer class="web-foot">© <span id="ybt-year">2026</span> Yearly Budget Tracker · Developed by Taren Shaw with Claude Opus 5.5 · <a href="privacy.html">Privacy</a></footer>
+<footer class="web-foot">© <span id="ybt-year">2026</span> MyAhorros · Developed by Taren Shaw with Claude Opus 5.5 · <a href="privacy.html">Privacy</a></footer>
 </body></html>

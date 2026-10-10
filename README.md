@@ -1,4 +1,4 @@
-# Yearly Budget Tracker: web version
+# MyAhorros: web version
 
 The tracker as a website that runs entirely in each visitor's browser. Their figures never reach your server: they're saved where they choose on their first visit.
 
@@ -45,7 +45,7 @@ You'll create a "sign-in client" that lets your site ask Google for access to a 
 1. Go to **console.cloud.google.com** and sign in. At the top, click the project picker, then **New project**. Name it `Budget Tracker` and click **Create**, then make sure it's selected.
 2. **APIs & Services › Library**: search for **Google Drive API**, open it and click **Enable**.
 3. **Google Auth Platform** (in older menus, *OAuth consent screen*) › **Get started**:
-   - **App name:** `Yearly Budget Tracker`. **User support email:** your email.
+   - **App name:** `MyAhorros`. **User support email:** your email.
    - **Audience:** **External**.
    - **Contact information:** your email. Accept the policy and click **Create**.
 4. **Branding** (same section):

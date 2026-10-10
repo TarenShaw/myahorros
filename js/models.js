@@ -1,4 +1,4 @@
-/* Yearly Budget Tracker: AI model names and request limits, in one place.
+/* MyAhorros: AI model names and request limits, in one place.
    Edit here when a model is renamed or a limit changes; nothing else in the site hard-codes them. */
 window.YBT_MODELS={
   /* characters of statement text sent per request: keeps every answer small enough to finish */

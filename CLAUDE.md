@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-"Yearly Budget Tracker" (myahorros.app): a static, no-build, no-backend web app deployed straight from `main` to GitHub Pages (`.nojekyll`, `CNAME`). All user data stays in the visitor's browser/folder/Google Drive. There is no package.json, bundler or linter.
+"MyAhorros" (myahorros.app): a static, no-build, no-backend web app deployed straight from `main` to GitHub Pages (`.nojekyll`, `CNAME`). All user data stays in the visitor's browser/folder/Google Drive. There is no package.json, bundler or linter.
 
 ## Run locally
 
