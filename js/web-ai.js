@@ -48,6 +48,12 @@ const TX={
     privacyPaste:'Your files are read here, in this page. You copy their text into the AI chat yourself; nothing goes to this website.',
     label:'AI', change:'Change AI…',
     errWhat:'What went wrong', copyDetails:'Copy details', detailsCopied:'Copied',
+    badgePaid:'Paid', badgeFree:'Free', colPaste:'Copy and paste', colApi:'API (your own key)',
+    recoTitle:'Which model should I pick?',
+    use_big:'12 or more months of data, or several files.', use_mid:'About 6 months of data with several files.', use_small:'1 month of data, or a couple of files. Fast and inexpensive.',
+    gLabels:['1 file','Several files','Several months'],
+    guide_openai:['A small model (its name has “mini”) is enough: fast and inexpensive.','Use the full-size model.','Use the full-size model and send a few months at a time.'],
+    guide_gemini:['A Flash model is enough: fast, and free to try.','A Pro model is better; Flash is fine for a few files.','Use a Pro model and send a few months at a time.'],
     why_bad_key:n=>`${n} didn’t accept the API key. It may be wrong, expired, deleted, or limited to other websites or services.`,
     why_no_credit:n=>`Your ${n} account has no credit left, or it has reached its spending limit for the API.`,
     why_rate_limited:n=>`${n} is busy, or you’ve reached your usage limit. Wait a minute and try again.`,
@@ -87,6 +93,12 @@ const TX={
     privacyPaste:'Tus archivos se leen aquí, en esta página. Tú copias su texto en el chat de IA; no llega nada a esta web.',
     label:'la IA', change:'Cambiar la IA…',
     errWhat:'Qué ha fallado', copyDetails:'Copiar detalles', detailsCopied:'Copiado',
+    badgePaid:'De pago', badgeFree:'Gratis', colPaste:'Copiar y pegar', colApi:'API (tu propia clave)',
+    recoTitle:'¿Qué modelo elijo?',
+    use_big:'12 o más meses de datos, o varios archivos.', use_mid:'Unos 6 meses de datos con varios archivos.', use_small:'1 mes de datos, o un par de archivos. Rápido y barato.',
+    gLabels:['1 archivo','Varios archivos','Varios meses'],
+    guide_openai:['Basta un modelo pequeño (su nombre lleva «mini»): rápido y barato.','Usa el modelo de tamaño completo.','Usa el modelo de tamaño completo y envía unos pocos meses cada vez.'],
+    guide_gemini:['Basta un modelo Flash: rápido y con uso gratuito.','Mejor un modelo Pro; Flash sirve para pocos archivos.','Usa un modelo Pro y envía unos pocos meses cada vez.'],
     why_bad_key:n=>`${n} no ha aceptado la clave de API. Puede ser incorrecta, haber caducado, estar borrada o limitada a otras webs o servicios.`,
     why_no_credit:n=>`Tu cuenta de ${n} no tiene saldo, o ha llegado a su límite de gasto para la API.`,
     why_rate_limited:n=>`${n} está ocupado, o has llegado a tu límite de uso. Espera un minuto y vuelve a intentarlo.`,
@@ -115,7 +127,8 @@ const API={
   anthropic:{
     headers:k=>({'x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true','content-type':'application/json'}),
     async models(k){ const r=await req('https://api.anthropic.com/v1/models?limit=100',{headers:this.headers(k)}); return ((await r.json()).data||[]).map(m=>m.id); },
-    pick(ids){ return ids.find(i=>/sonnet/.test(i))||ids.find(i=>/opus/.test(i))||ids[0]; },
+    pick(ids){ const d=((M().providers||{}).anthropic||{}).default||'';
+      return (d&&(ids.find(i=>i===d)||ids.find(i=>i.startsWith(d))))||ids.find(i=>/haiku/.test(i))||ids.find(i=>/sonnet/.test(i))||ids.find(i=>/opus/.test(i))||ids[0]; },
     request(k,model,prompt,imgs,maxTok){ return ['https://api.anthropic.com/v1/messages',{method:'POST',headers:this.headers(k),body:JSON.stringify({model,max_tokens:maxTok||outMax(),stream:true,
       messages:[{role:'user',content:[...imgs.map(i=>({type:'image',source:{type:'base64',media_type:i.type,data:i.data}})),{type:'text',text:prompt}]}]})}]; },
     delta(ev){ if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta') return ev.delta.text; if(ev.type==='error') throw mapErr(400,JSON.stringify(ev)); if(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='refusal') throw {code:'refused'}; if(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='max_tokens') throw {code:'output_truncated'}; return ''; }
@@ -141,7 +154,8 @@ const API={
       return c&&c.content&&(c.content.parts||[]).map(p=>p.text||'').join('')||''; }
   }
 };
-const outMax=()=>{ const m=window.YBT_MODELS; return m&&m.maxOutput||16000; };
+const M=()=>window.YBT_MODELS||{};
+const outMax=()=>M().maxOutput||16000;
 const HEAD_MS=60000, IDLE_MS=90000, TRIES=3;
 /* never let a key travel into an error message or into the details a person copies */
 const clean=s=>String(s||'').replace(/\b(sk-[A-Za-z0-9_-]{8,}|AIza[0-9A-Za-z_-]{10,}|AQ\.[0-9A-Za-z_.-]{10,})/g,'[key hidden]');
@@ -201,16 +215,28 @@ function panel(html){
   el.addEventListener('keydown',e=>{ if(e.key==='Escape'){ const c=el.querySelector('[data-x=cancel]'); if(c) c.click(); } e.stopPropagation(); });
   return el;
 }
+/* "Haiku 5.5 (claude-haiku-5-5)" for the models the config file names; everything else as the service calls it */
+function modelName(p,id){ const T=((M().providers||{})[p]||{}).tiers||[]; const x=T.find(m=>id===m.id||id.startsWith(m.id)); return x?x.name+' ('+id+')':id; }
+/* the "which model?" block next to the picker */
+function reco(p){
+  const C=(M().providers||{})[p]||{}, li=(a,b)=>`<li><b>${esc(a)}</b> ${esc(b)}</li>`;
+  let rows='';
+  if(p==='anthropic') rows=(C.tiers||[]).map(m=>li(m.name,t('use_'+m.use))).join('');
+  else { const g=t('guide_'+p)||[], l=t('gLabels'); rows=g.map((x,i)=>li(l[i]+':',x)).join(''); }
+  return rows?`<p class="web-hint"><b>${esc(t('recoTitle'))}</b></p><ul>${rows}</ul>`:'';
+}
 /* pick the AI (and key); resolves with the saved choice, or null if cancelled */
 let setupOpen=null;
 function setup(){
   if(setupOpen) return setupOpen;
   setupOpen=new Promise(resolve=>{
     const c=cfg(); let sel=c.provider||'anthropic', models=null;
-    const card=(p,title,sub)=>`<button type="button" class="web-way ai-way${sel===p?' current':''}" data-p="${p}" aria-pressed="${sel===p}"><span><b>${esc(title)}</b><small>${esc(sub)}</small></span></button>`;
+    const badge=k=>k?`<span class="ai-badge ${k}">${esc(t(k==='paid'?'badgePaid':'badgeFree'))}</span>`:'';
+    const card=(p,title,sub,b)=>`<button type="button" class="web-way ai-way${sel===p?' current':''}" data-p="${p}" aria-pressed="${sel===p}"><span><b>${esc(title)} ${badge(b)}</b><small>${esc(sub)}</small></span></button>`;
     const el=panel(`<p class="web-eyebrow">Yearly Budget Tracker</p><h2 id="ap-title">${esc(t('title'))}</h2><p class="web-sub">${esc(t('sub'))}</p>
-      <div class="web-ways ai-ways">
-        ${card('anthropic','Claude',t('anthropicS'))}${card('openai','ChatGPT',t('openaiS'))}${card('gemini','Gemini',t('geminiS'))}${card('paste',t('pasteT'),t('pasteS'))}
+      <div class="ai-cols">
+        <section class="ai-col"><h3>${esc(t('colPaste'))} ${badge('free')}</h3><div class="web-ways ai-ways">${card('paste',t('pasteT'),t('pasteS'))}</div></section>
+        <section class="ai-col"><h3>${esc(t('colApi'))}</h3><div class="web-ways ai-ways">${card('anthropic','Claude',t('anthropicS'),'paid')}${card('openai','ChatGPT',t('openaiS'),'paid')}${card('gemini','Gemini',t('geminiS'),'free')}</div></section>
       </div>
       <div class="ai-key" id="ai-keybox">
         <label for="ai-key">${esc(t('keyLabel'))}</label>
@@ -218,6 +244,7 @@ function setup(){
         <p class="web-hint"><a id="ai-getkey" target="_blank" rel="noopener noreferrer"></a> · ${esc(t('keyPrivacy'))}</p>
         <label class="ai-check"><input type="checkbox" id="ai-remember"${c.remember||!c.key?' checked':''}> ${esc(t('remember'))}</label>
         <div id="ai-modelbox" hidden><label for="ai-model">${esc(t('model'))}</label><select id="ai-model"></select><p class="web-hint">${esc(t('modelHelp'))}</p></div>
+        <div id="ai-reco" class="ai-reco" hidden></div>
       </div>
       <div class="web-acts"><button type="button" class="btn primary" data-x="go"></button><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`);
     const $=s=>el.querySelector(s), keyIn=$('#ai-key');
@@ -227,6 +254,7 @@ function setup(){
       const api=sel!=='paste'; $('#ai-keybox').hidden=!api;
       if(api){ const p=P[sel]; keyIn.placeholder=p.keyHint; const a=$('#ai-getkey'); a.href=p.keyUrl; a.textContent=t('getKey',p.company); }
       $('#ai-modelbox').hidden=!(api&&models&&models.length>1);
+      const rc=$('#ai-reco'); rc.innerHTML=api?reco(sel):''; rc.hidden=!api;
       $('[data-x=go]').textContent=api?t('check'):t('usePaste'); el.msg('');
     };
     show();
@@ -235,7 +263,7 @@ function setup(){
     const listModels=async()=>{ if(sel==='paste'||!keyIn.value.trim()) return; const p=sel;
       try{ const ms=await API[p].models(keyIn.value.trim()); if(p!==sel||!el.isConnected) return; models=ms;
         const cur=c.provider===p&&c.model&&ms.includes(c.model)?c.model:API[p].pick(ms);
-        $('#ai-model').innerHTML=ms.filter(m=>p!=='openai'||/^(gpt-|o\d)/.test(m)).map(m=>`<option${m===cur?' selected':''}>${esc(m)}</option>`).join(''); show(); }catch(_){} };
+        $('#ai-model').innerHTML=ms.filter(m=>p!=='openai'||/^(gpt-|o\d)/.test(m)).map(m=>`<option value="${esc(m)}"${m===cur?' selected':''}>${esc(modelName(p,m))}</option>`).join(''); show(); }catch(_){} };
     if(c.key&&c.provider===sel) listModels();
     /* a different key is checked again from scratch */
     keyIn.addEventListener('input',()=>{ if(models){ models=null; show(); } });
@@ -323,6 +351,7 @@ async function json(prompt,opts){
   const c=await ensure(); if(!c) throw {code:'cancelled'};
   if(c.provider==='paste') return pasteRound(prompt,opts.signal);
   const imgs=[]; for(const b of opts.images||[]) imgs.push(await prep(c.provider,b));
+  if(c.provider==='gemini'&&imgs.reduce((n,i)=>n+i.data.length,0)>18e6) throw {code:'prompt_too_large',provider:P.gemini.name,model:c.model,message:'pictures add up to more than 18 MB'};
   const A=API[c.provider]; let maxTok=null, err;
   for(let attempt=1;attempt<=TRIES;attempt++){
     try{ return await once(c,A,prompt,imgs,opts,maxTok); }
@@ -353,6 +382,9 @@ Object.assign(sample,{
   async aiSetup(){ await setup(); window.dispatchEvent(new CustomEvent('ybt-local-render')); return null; },
 
   async aiForget(){ const c=cfg(); saveCfg({provider:null,model:'',key:'',remember:false}); ss.set(SKEY,null); window.dispatchEvent(new CustomEvent('ybt-local-render')); return {message:t('forgotten')}; },
+  /* has an AI been chosen yet? (the page shows the picker before anything else on first use) */
+  configured(){ return !!ready(); },
+  current(){ const c=cfg(); if(!ready()) return null; return {provider:c.provider,name:c.provider==='paste'?t('pasteT'):P[c.provider].name,model:c.model||''}; },
   _parse:parseAnswer, _cfg:cfg
 });
 /* read each time: the choice and the language can change while the page is open */

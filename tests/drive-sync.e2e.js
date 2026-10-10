@@ -67,6 +67,10 @@ async function until(fn, ms, what) { const t = Date.now(); for (;;) { const v = 
   const other = JSON.parse(trackerFile().content); other.months['2026-06'] = month(250);
   const opened = await page.evaluate(() => { const b = document.querySelector('[data-action="ob-ai"],[data-action="ai-tx"]'); if (b) { b.click(); return true; } return false; });
   if (opened) {
+    /* first use: the AI picker comes before anything else */
+    await page.waitForSelector('.ai-panel button.ai-way[data-p=paste]', { timeout: 5000 });
+    await page.click('.ai-panel button.ai-way[data-p=paste]');
+    await page.click('.ai-panel [data-x=go]');
     await page.waitForSelector('#overlay.on', { timeout: 5000 });
     const f = trackerFile(); f.content = JSON.stringify(other); f.version += 1;
     await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
