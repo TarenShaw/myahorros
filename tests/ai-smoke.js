@@ -39,12 +39,18 @@ const claudeText = t => [{ type: 'content_block_delta', delta: { type: 'text_del
 
   /* 3. model's own output limit is lower: asked again within it */
   useCfg('anthropic', 'claude-haiku-5-5');
-  const sent = [];
-  fetch = async (u, o) => { const mt = JSON.parse(o.body).max_tokens; sent.push(mt);
-    return mt > 8192 ? fail(400, '{"error":{"type":"invalid_request_error","message":"max_tokens: 16000 > 8192, which is the maximum allowed number of output tokens for claude-haiku-5-5"}}')
+  const sent = [], efforts = [];
+  fetch = async (u, o) => { const b = JSON.parse(o.body), mt = b.max_tokens; sent.push(mt); efforts.push(b.output_config && b.output_config.effort);
+    return mt > 8192 ? fail(400, '{"error":{"type":"invalid_request_error","message":"max_tokens: 32000 > 8192, which is the maximum allowed number of output tokens for claude-haiku-5-5"}}')
       : sse(claudeText('{"done":true}')); };
   assert.deepStrictEqual(await sample.json('p'), { done: true });
-  assert.deepStrictEqual(sent, [16000, 8192]);
+  assert.deepStrictEqual(sent, [32000, 8192]);
+  /* Claude 5 models get low effort, so their thinking doesn't use up the answer's length; older models don't take the field */
+  assert.deepStrictEqual(efforts, ['low', 'low']);
+  useCfg('anthropic', 'claude-haiku-4-5'); efforts.length = 0;
+  assert.deepStrictEqual(await sample.json('p'), { done: true });
+  assert.deepStrictEqual(efforts, [undefined, undefined]);
+  useCfg('anthropic', 'claude-haiku-5-5');
 
   /* 4. answer cut off by the output limit is reported as such, with the status and no key */
   fetch = async () => sse([...claudeText('{"rows":['), { type: 'message_delta', delta: { stop_reason: 'max_tokens' } }]);

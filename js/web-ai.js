@@ -129,8 +129,12 @@ const API={
     async models(k){ const r=await req('https://api.anthropic.com/v1/models?limit=100',{headers:this.headers(k)}); return ((await r.json()).data||[]).map(m=>m.id); },
     pick(ids){ const d=((M().providers||{}).anthropic||{}).default||'';
       return (d&&(ids.find(i=>i===d)||ids.find(i=>i.startsWith(d))))||ids.find(i=>/haiku/.test(i))||ids.find(i=>/sonnet/.test(i))||ids.find(i=>/opus/.test(i))||ids[0]; },
-    request(k,model,prompt,imgs,maxTok){ return ['https://api.anthropic.com/v1/messages',{method:'POST',headers:this.headers(k),body:JSON.stringify({model,max_tokens:maxTok||outMax(),stream:true,
-      messages:[{role:'user',content:[...imgs.map(i=>({type:'image',source:{type:'base64',media_type:i.type,data:i.data}})),{type:'text',text:prompt}]}]})}]; },
+    request(k,model,prompt,imgs,maxTok){ const A=(M().providers||{}).anthropic||{};
+      const body={model,max_tokens:maxTok||A.maxOutput||outMax(),stream:true,
+        messages:[{role:'user',content:[...imgs.map(i=>({type:'image',source:{type:'base64',media_type:i.type,data:i.data}})),{type:'text',text:prompt}]}]};
+      /* Claude 5 models think before answering, and that thinking counts against max_tokens: reading statements needs little of it */
+      if(A.effort&&/^claude-[a-z]+-([5-9]|\d\d)(-|$)/.test(model)) body.output_config={effort:A.effort};
+      return ['https://api.anthropic.com/v1/messages',{method:'POST',headers:this.headers(k),body:JSON.stringify(body)}]; },
     delta(ev){ if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta') return ev.delta.text; if(ev.type==='error') throw mapErr(400,JSON.stringify(ev)); if(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='refusal') throw {code:'refused'}; if(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='max_tokens') throw {code:'output_truncated'}; return ''; }
   },
   openai:{

@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+Q+zux/8Et/tfC2dsnF27xnPltg5TLbuHoBcxxZi46Y=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ifmUhoUdot5RO6JSv0NZ/lU2RDtwqvFdWIbBvn7tpqY=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -972,12 +972,12 @@ function mkCats(inc,exp,inv,roles){
   return c;
 }
 const DEFAULT_CATS=mkCats(
-  ['Salary','Tickets Comida','Dividends','Flex','Interest','Tax Return','Other'],
+  ['Salary','Tickets Comida','Dividends','Flex','Interest','Rent received','Tax Return','Other'],
   [['Rent','Need'],['Utilities','Need'],['Subscriptions','Want'],['Phone','Need'],['Insurance','Need'],['Education','Want'],['Transport','Need'],['Groceries','Need'],['Snacks','Want'],['Restaurants','Want'],['Alcohol + Bars','Want'],['Entertainment','Want'],['Clothes','Want'],['Non Essential Shopping','Want'],['Vacation + Hotel + Travel','Want'],['Health','Need'],['Legal','Need'],['Gifts','Want'],['Capital Gains Losses','Need'],['Taxes','Need'],['Cash','Need'],['Lottery','Want'],['Gym','Want'],['Other','Want']],
   ['Funds/ETFs','Stocks','Pension','Real Estate','Other'],
   {rent:'Rent',utilities:'Utilities',other:'Other'});
 const DEFAULT_CATS_ES=mkCats(
-  ['Nómina','Tickets comida','Dividendos','Beneficios de empresa','Intereses','Devolución de impuestos','Otros'],
+  ['Nómina','Tickets comida','Dividendos','Beneficios de empresa','Intereses','Alquileres cobrados','Devolución de impuestos','Otros'],
   [['Alquiler','Need'],['Suministros','Need'],['Suscripciones','Want'],['Teléfono','Need'],['Seguros','Need'],['Formación','Want'],['Transporte','Need'],['Supermercado','Need'],['Picoteo','Want'],['Restaurantes','Want'],['Bares y copas','Want'],['Ocio','Want'],['Ropa','Want'],['Compras no esenciales','Want'],['Vacaciones y viajes','Want'],['Salud','Need'],['Trámites legales','Need'],['Regalos','Want'],['Pérdidas en inversiones','Need'],['Impuestos','Need'],['Efectivo','Need'],['Lotería','Want'],['Gimnasio','Want'],['Otros','Want']],
   ['Fondos/ETFs','Acciones','Plan de pensiones','Inmuebles','Otros'],
   {rent:'Alquiler',utilities:'Suministros',other:'Otros'});
@@ -988,7 +988,7 @@ const DEFAULT_SKIP=['traspaso'];
 const kwPack=o=>Object.entries(o).flatMap(([cat,s])=>s.split('|').map(k=>[k,cat]));
 const STARTER_KW={
   en:{
-    income:kwPack({'Salary':'salary|payroll|nomina','Dividends':'dividend','Interest':'interest','Tax Return':'tax refund|hmrc refund'}),
+    income:kwPack({'Salary':'salary|payroll|nomina','Dividends':'dividend','Interest':'interest','Rent received':'rent received|rental income','Tax Return':'tax refund|hmrc refund'}),
     expenses:kwPack({
       'Groceries':'tesco|sainsbury|asda|aldi|lidl|morrisons|waitrose|whole foods|walmart|kroger|trader joe|costco|mercadona|carrefour|alcampo|eroski|consum s coop|consum coop',
       'Restaurants':'uber eats|deliveroo|just eat|glovo|mcdonald|burger king|kfc|starbucks|pret a manger|nando|domino|telepizza|restaurant',
@@ -1010,14 +1010,15 @@ const STARTER_KW={
     investments:kwPack({'Funds/ETFs':'vanguard|indexa|myinvestor','Stocks':'trading 212|degiro|interactive brokers|trade republic|etoro|freetrade','Pension':'pension'})
   },
   es:{
-    income:kwPack({'Nómina':'nomina|salario','Dividendos':'dividendo','Intereses':'intereses','Devolución de impuestos':'devolucion irpf|devolucion hacienda|agencia tributaria'}),
+    income:kwPack({'Nómina':'nomina|salario','Dividendos':'dividendo|dividend','Intereses':'intereses|liq intereses','Alquileres cobrados':'alquiler','Devolución de impuestos':'devolucion irpf|devolucion hacienda|agencia tributaria'}),
     expenses:kwPack({
-      'Supermercado':'mercadona|carrefour|lidl|aldi|alcampo|eroski|consum s coop|consum coop|ahorramas|hipercor|supercor|caprabo|condis|bonpreu|gadis|froiz|masymas',
-      'Restaurantes':'uber eats|glovo|just eat|deliveroo|telepizza|domino|mcdonald|burger king|kfc|starbucks|rodilla|restaurante',
-      'Bares y copas':'cerveceria|taberna',
-      'Transporte':'renfe|cabify|uber|bolt.eu|blablacar|alsa|ouigo|iryo|repsol|cepsa|galp|gasolinera|parking|metro de madrid',
-      'Suscripciones':'netflix|spotify|hbo|disney|amazon prime|apple.com/bill|youtube|dazn|filmin|audible|icloud',
-      'Teléfono':'movistar|vodafone|orange|yoigo|masmovil|pepephone|simyo|lowi|jazztel|digi mobil|finetwork',
+      'Supermercado':'mercadona|carrefour|lidl|aldi|alcampo|eroski|consum s coop|consum coop|ahorramas|hipercor|supercor|caprabo|condis|bonpreu|gadis|froiz|masymas|supeco|lupa|primaprix|bm supermercados|coviran|family cash|"spar"',
+      'Alquiler':'alquiler|"renta piso"',
+      'Restaurantes':'uber eats|glovo|just eat|deliveroo|telepizza|domino|mcdonald|mc donald|burger king|kfc|starbucks|rodilla|restaurante|papa john|five guys|goiko|vips|foster|100 montaditos|taco bell|popeyes|sushi|pizzeria|kebab',
+      'Bares y copas':'cerveceria|taberna|"bar"|"cafe"|cafeteria|"pub"|irish',
+      'Transporte':'renfe|cabify|uber|bolt.eu|blablacar|alsa|ouigo|iryo|repsol|cepsa|galp|gasolinera|parking|metro de|"emt"|empresa municipal de transportes|crtm|"taxi"|free now|freenow|bicimad|cercanias',
+      'Suscripciones':'netflix|spotify|hbo|disney|amazon prime|apple.com/bill|youtube|dazn|filmin|audible|icloud|google one|openai|chatgpt|anthropic',
+      'Teléfono':'movistar|vodafone|orange|yoigo|masmovil|pepephone|simyo|lowi|jazztel|"digi"|finetwork|"o2"',
       'Suministros':'iberdrola|endesa|naturgy|holaluz|canal de isabel|aguas de',
       'Seguros':'mapfre|mutua|linea directa|allianz|sanitas|adeslas|asisa|seguro',
       'Salud':'farmacia|clinica|dentista|optica|hospital',
@@ -1025,12 +1026,12 @@ const STARTER_KW={
       'Compras no esenciales':'amazon|aliexpress|ikea|mediamarkt|fnac|el corte ingles|leroy merlin|temu|decathlon',
       'Ocio':'cine|yelmo|cinesa|ticketmaster|steam|playstation|nintendo',
       'Vacaciones y viajes':'booking.com|airbnb|ryanair|vueling|iberia|easyjet|air europa|expedia|edreams|hotel',
-      'Gimnasio':'gimnasio|basic-fit|mcfit|altafit|synergym|anytime fitness',
-      'Efectivo':'cajero|reintegro',
+      'Gimnasio':'gimnasio|basic-fit|mcfit|altafit|synergym|anytime fitness|vivagym|"gym"|fitness',
+      'Efectivo':'cajero|reintegro|retirada efectivo|ret efectivo',
       'Impuestos':'agencia tributaria|aeat',
-      'Lotería':'loterias|selae',
+      'Lotería':'loterias|loteria|selae|tulotero|"once"',
       'Formación':'udemy|coursera|academia'}),
-    investments:kwPack({'Fondos/ETFs':'indexa|myinvestor|finizens|inbestme','Acciones':'degiro|interactive brokers|trade republic|xtb|etoro','Plan de pensiones':'plan de pensiones|plan pensiones'})
+    investments:kwPack({'Fondos/ETFs':'indexa|myinvestor|finizens|inbestme|suscripcion iic|suscripcion fondo|"fi"|"etf"','Acciones':'degiro|interactive brokers|trade republic|xtb|etoro','Plan de pensiones':'plan de pensiones|plan pensiones|operacion de plan'})
   }
 };
 const XLSX_SRC='vendor/xlsx.full.min.js';
@@ -1138,11 +1139,14 @@ function parseDate(v){
   if((m=f.match(/^([a-z]{3,10})\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})(?:\D.*)?$/))&&MM[m[1]]) return isoOf(+m[3],MM[m[1]],+m[2]);
   return null;
 }
-/* "1.234,56", "1,234.56", "(23,45)", "23,45-", "€ 12", "$12.50", "£1,200.00": null when it isn't a plausible amount */
+/* "1.234,56", "1,234.56", "1 234,56", "(23,45)", "23,45-", "€ 12", "$12.50", "£1,200.00": null when it isn't a plausible amount (a billion or more is a misread number) */
 function parseAmount(v){
-  if(typeof v==='number') return isFinite(v)?r2(v):null;
+  if(typeof v==='number') return isFinite(v)&&Math.abs(v)<1e9?r2(v):null;
   if(v==null) return null;
-  let s=String(v).trim().replace(/US\$/gi,'').replace(/[€$£¥\s ]|EUR|USD|GBP/gi,'').replace(/[−–]/g,'-');
+  let s=String(v).trim().replace(/US\$/gi,'').replace(/[€$£¥]|EUR|USD|GBP/gi,'').trim();
+  /* a space inside a number only separates thousands ("1 234,56"); "49 091 536 01" is an account number, not an amount */
+  if(/\d[\s ]+\d/.test(s)&&!/^[+\-−–(]?\s*\d{1,3}([\s ]\d{3})+([.,]\d+)?\s*[)\-−–]?$/.test(s)) return null;
+  s=s.replace(/[\s ]/g,'').replace(/[−–]/g,'-');
   let neg=false;
   const p=s.match(/^\((.*)\)$/); if(p){ s=p[1]; neg=true; }
   if(/-$/.test(s)){ s=s.slice(0,-1); neg=!neg; }
@@ -1155,7 +1159,7 @@ function parseAmount(v){
   else if(ld>-1){ const many=cnt('.')>1, dec=s.length-ld-1, ip=s.slice(0,ld).replace(/^[+-]/,'');
     if(many&&!/^[+-]?\d{1,3}(\.\d{3})+$/.test(s)) return null;
     if(many||(dec===3&&ip!=='0'&&ip!=='')) s=s.replace(/\./g,''); }
-  const n=parseFloat(s); if(!isFinite(n)) return null;
+  const n=parseFloat(s); if(!isFinite(n)||Math.abs(n)>=1e9) return null;
   return r2(neg?-n:n);
 }
 function newId(){ const a=new Uint8Array(8); (window.crypto||{}).getRandomValues? crypto.getRandomValues(a) : a.forEach((_,i)=>a[i]=Math.random()*256|0); return Array.from(a,b=>(b%36).toString(36)).join('')+Date.now().toString(36).slice(-3); }
@@ -1189,6 +1193,7 @@ function pl(n,k){ const p=PL[k][LANG==='es'?1:0]; return fmtCount(n)+' '+(n===1?
 const ALL_ES={income:'todos los ingresos',expenses:'todos los gastos',investments:'todas las inversiones'};
 const STR={
   /* chrome */
+  ftDev:['Developed by Taren Shaw with Claude Opus 5.5','Desarrollado por Taren Shaw con Claude Opus 5.5'], ftPriv:['Privacy','Privacidad'],
   appTitle:['MyAhorros','MyAhorros'], appDocTitle:['MyAhorros: track your savings, spending and net worth','MyAhorros: controla tus ahorros, gastos y patrimonio'],
   kicker:['Income · Expenses · Investments','Ingresos · Gastos · Inversiones'],
   prevYear:['Previous year','Año anterior'], nextYear:['Next year','Año siguiente'], year:['Year','Año'],
@@ -1304,7 +1309,6 @@ const STR={
   downloadList:['Download list','Descargar lista'], importList:['Import list','Importar lista'],
   testConcept:['Test a description','Probar un concepto'], testPh:['Paste a description from a statement','Pega un concepto de un extracto'],
   kwPh:['Keyword, e.g. mercadona','Palabra clave, p. ej. mercadona'], addKeyword:['Add keyword','Añadir palabra'],
-  shortKw:['Up to 4 letters: it only matches at the start of a word.','Hasta 4 letras: solo coincide al principio de una palabra.'],
   filterKw:['Filter keywords','Filtrar palabras clave'], noKwMatch:['No keywords match.','Ninguna palabra clave coincide.'],
   showMoreOf:[(a,b)=>`Show ${a} more of ${b}`,(a,b)=>`Mostrar ${a} más de ${b}`],
   catFor:[k=>`Category for ${k}`,k=>`Categoría de ${k}`], delKw:[k=>`Delete keyword ${k}`,k=>`Eliminar la palabra clave ${k}`],
@@ -1312,7 +1316,7 @@ const STR={
   how1:['A keyword matches when it appears anywhere in the description. Capitals and accents don’t matter: “cafetería” finds “CAFETERIA”.','Una palabra clave coincide si aparece en cualquier parte del concepto. Las mayúsculas y los acentos dan igual: «cafetería» encuentra «CAFETERIA».'],
   how2:['When several keywords match, the longest one wins. On a tie, the one higher in the list wins.','Si coinciden varias, gana la más larga. Si empatan, gana la que está más arriba en la lista.'],
   how3:['To fix a wrong result, add a longer, more specific keyword rather than editing a short one other transactions rely on.','Para corregir un resultado, añade una palabra más larga y específica en lugar de cambiar una corta de la que dependen otros movimientos.'],
-  how4:['Keywords of 4 letters or fewer only match at the start of a word, so “o2” finds “O2 FIBRA” but not “EXPHIERRO2”.','Las palabras de 4 letras o menos solo coinciden al principio de una palabra: «o2» encuentra «O2 FIBRA» pero no «EXPHIERRO2».'],
+  how4:['A keyword only matches at the start of a word, so “o2” finds “O2 FIBRA” but not “EXPHIERRO2”, and “mcdonald” finds “MCDONALDS”.','Una palabra clave solo coincide al principio de una palabra: «o2» encuentra «O2 FIBRA» pero no «EXPHIERRO2», y «mcdonald» encuentra «MCDONALDS».'],
   how5:['New rows get their category from the keywords when you add or import them. A category you pick by hand is never overwritten, and the tracker offers to remember it as a keyword for next time.','Las filas nuevas reciben su categoría de las palabras clave al añadirlas o importarlas. Una categoría elegida a mano nunca se sobrescribe, y el control te ofrece recordarla como palabra clave para la próxima vez.'],
   currency:['Currency','Moneda'], currencyHelp:['Only the symbol changes. Amounts are never converted.','Solo cambia el símbolo. Los importes no se convierten.'], currencySaved:[v=>`Amounts now show like ${v}.`,v=>`Los importes se mostrarán así: ${v}.`],
   savedDef:['Income minus expenses. Money you invested still counts as kept.','Ingresos menos gastos. El dinero que has invertido sigue contando como conservado.'],
@@ -1400,10 +1404,19 @@ const STR={
   skipUnticked:[n=>`${pl(n,'row')} on your skip list ${n===1?'is':'are'} unticked. Tick ${n===1?'it':'any'} you do want.`,n=>`${pl(n,'row')} con palabras a omitir ${n===1?'aparece':'aparecen'} sin marcar. Marca las que sí quieras.`],
   includeRow:[i=>`Include row ${i}`,i=>`Incluir la fila ${i}`], alreadyIn:['Already in tracker','Ya está en el control'],
   impXfer:[n=>`${pl(n,'row')} ${n===1?'looks':'look'} like a transfer between your own accounts (the same amount out and in, within 3 days), so ${n===1?'it is':'they are'} unticked. Tick ${n===1?'it':'any'} you do want.`,n=>`${pl(n,'row')} ${n===1?'parece':'parecen'} un traspaso entre tus cuentas (el mismo importe sale y entra con menos de 3 días de diferencia), así que ${n===1?'aparece':'aparecen'} sin marcar. Marca ${n===1?'la':'las'} que sí quieras.`],
-  impPossDup:[n=>`${pl(n,'row')} ${n===1?'has':'have'} the same date and amount as something already in the tracker, under another description. ${n===1?'It stays':'They stay'} ticked: untick ${n===1?'it':'any'} that ${n===1?'is':'are'} a repeat.`,n=>`${pl(n,'row')} ${n===1?'tiene':'tienen'} la misma fecha e importe que algo que ya está en el control, con otro concepto. ${n===1?'Sigue marcada':'Siguen marcadas'}: desmarca ${n===1?'la':'las'} que sean repetidas.`],
+  impPossDup:[n=>`${pl(n,'row')} ${n===1?'has':'have'} the same date and amount as something already in the tracker, under another description. ${n===1?'It stays':'They stay'} ticked: untick ${n===1?'it':'any'} that ${n===1?'is':'are'} a repeat.`,n=>`${pl(n,'row')} ${n===1?'tiene':'tienen'} la misma fecha e importe que algo que ya está en el control, con otro concepto. ${n===1?'Sigue marcada':'Siguen marcadas'}: desmarca ${n===1?'la que sea repetida':'las que sean repetidas'}.`],
   impBalOk:[(ok,t)=>`The running balance in your file adds up for ${fmtCount(ok)} of ${fmtCount(t)} steps, so nothing looks missing.`,(ok,t)=>`El saldo de tu archivo cuadra en ${fmtCount(ok)} de ${fmtCount(t)} pasos, así que no parece faltar nada.`],
   impBalBad:[(ok,t,b)=>`The running balance in your file adds up for ${fmtCount(ok)} of ${fmtCount(t)} steps. ${pl(b,'row')} ${b===1?'does':'do'} not follow from the row before: a row may be missing, or an amount may have the wrong sign. ${b===1?'It is':'They are'} marked below.`,(ok,t,b)=>`El saldo de tu archivo cuadra en ${fmtCount(ok)} de ${fmtCount(t)} pasos. ${pl(b,'row')} no ${b===1?'sale':'salen'} de la fila anterior: puede faltar alguna fila o algún importe tener el signo cambiado. ${b===1?'Aparece marcada':'Aparecen marcadas'} abajo.`],
   noteXfer:['Looks like a transfer between your accounts','Parece un traspaso entre tus cuentas'],
+  noteXferWith:[s=>`Looks like the other side of “${s}”, already in the tracker`,s=>`Parece la otra mitad de «${s}», que ya está en el control`],
+  impInvest:['This file looks like an investment account or a pension plan. Its buys, sells and contributions are not income or spending: the money already left your bank as an investment. Every row arrives unticked; tick only what you want to count. To follow what it’s worth, enter its balance in Net worth.','Este archivo parece de una cuenta de inversión o de un plan de pensiones. Sus compras, ventas y aportaciones no son ingresos ni gastos: el dinero ya salió de tu banco como inversión. Todas las filas llegan sin marcar; marca solo las que quieras contar. Para seguir lo que vale, apunta su saldo en Patrimonio.'],
+  impFuture:[n=>`${pl(n,'row')} ${n===1?'has':'have'} a date that hasn’t happened yet (a payment schedule?), so ${n===1?'it arrives':'they arrive'} unticked.`,n=>`${pl(n,'row')} ${n===1?'tiene':'tienen'} una fecha que aún no ha llegado (¿un calendario de pagos?), así que ${n===1?'llega':'llegan'} sin marcar.`],
+  noteFuture:['Date in the future','Fecha futura'],
+  impSame:[n=>`Most of this file is already in the tracker, worded differently (another export of the same account?). The ${pl(n,'row')} with the same date and amount as a saved one arrive unticked.`,n=>`Casi todo este archivo ya está en el control con otras palabras (¿otra exportación de la misma cuenta?). ${n===1?'La fila':'Las '+pl(n,'row')} con la misma fecha e importe que una guardada ${n===1?'llega':'llegan'} sin marcar.`],
+  impPreStart:[(n,m)=>`${pl(n,'row')} ${n===1?'is':'are'} dated before your tracker starts (${m}), so the Overview won’t show ${n===1?'it':'them'}.`,(n,m)=>`${pl(n,'row')} ${n===1?'tiene':'tienen'} fecha anterior al inicio de tu control (${m}), así que el Resumen no ${n===1?'la':'las'} mostrará.`],
+  impPreStartBtn:[m=>`Start the tracker in ${m}`,m=>`Empezar el control en ${m}`],
+  swWho:['Which one is you in Splitwise?','¿Quién eres tú en Splitwise?'],
+  swHelp:['Each row is what that expense changed for you: what you owe is spending, and what others owe you after you paid makes it smaller.','Cada fila es lo que ese gasto cambió para ti: lo que debes es gasto, y lo que te deben por haber pagado tú lo reduce.'],
   noteLike:[c=>`Same date and amount as “${c}”`,c=>`Misma fecha e importe que «${c}»`],
   noteBal:['Doesn’t follow from the balance','No cuadra con el saldo'],
   skipListNote:[w=>`Skip list: “${w}”`,w=>`Palabra a omitir: «${w}»`], noKeyword:['No keyword','Sin palabra clave'],
@@ -1509,7 +1522,8 @@ const STR={
   langCatNote:['Category names are translated too. Names you made up yourself stay as you wrote them; rename them in Categories if you like. Keywords don’t change.','Los nombres de las categorías también se traducen. Los que creaste tú se quedan como los escribiste; puedes renombrarlos en Categorías. Las palabras clave no cambian.'],
   langLocal:['This copy is read-only, so the language changes only on this screen.','Esta copia es de solo lectura, así que el idioma solo cambia en esta pantalla.'],
   setStart:['Set a start month','Fijar un mes de inicio'], clearStart:['Clear','Quitar'],
-  preData:[n=>`${pl(n,'transaction')} ${n===1?'is':'are'} dated before this month. ${n===1?'It still counts':'They still count'} in the totals.`,n=>`${pl(n,'transaction')} ${n===1?'tiene':'tienen'} fecha anterior a este mes. ${n===1?'Sigue':'Siguen'} contando en los totales.`],
+  preData:[n=>`${pl(n,'transaction')} ${n===1?'is':'are'} dated before this month, so the Overview and the charts leave ${n===1?'it':'them'} out.`,n=>`${pl(n,'transaction')} ${n===1?'tiene':'tienen'} fecha anterior a este mes, así que el Resumen y los gráficos ${n===1?'lo':'los'} dejan fuera.`],
+  preDataBtn:['Start at the first month with data','Empezar en el primer mes con datos'],
   nodbDeskTitle:['The tracker couldn’t start','El control no ha podido arrancar'],
   nodbDeskText:['Its data file couldn’t be opened. Close the app and open it again.','No se ha podido abrir su archivo de datos. Cierra la aplicación y vuelve a abrirla.'],
   dlAllHelp:['Every transaction, the year summary, categories and keywords in one .xlsx.','Todos los movimientos, el resumen del año, las categorías y las palabras clave en un .xlsx.'],
@@ -1626,6 +1640,7 @@ const STR={
   aiLeftOut:[n=>`Left out on purpose (${n})`,n=>`Dejados fuera a propósito (${n})`], aiNotes:['Claude’s notes','Notas de Claude'],
   aiNwFrom:['Balances read by Claude','Saldos leídos por Claude'],
   aiPart:[(i,n)=>`Reading part ${i} of ${n}…`,(i,n)=>`Leyendo la parte ${i} de ${n}…`],
+  aiSplitting:[(i,n)=>`The answer was too long, so it’s being read in smaller pieces (${i} of ${n})…`,(i,n)=>`La respuesta era demasiado larga, así que se lee en trozos más pequeños (${i} de ${n})…`],
   aiRetry:[(i,n)=>`Busy or no connection. Trying again (${i} of ${n})…`,(i,n)=>`Ocupado o sin conexión. Reintentando (${i} de ${n})…`],
   aiErrWhat:['What went wrong','Qué ha fallado'], aiCopyDetails:['Copy details','Copiar detalles'], aiCopied:['Details copied','Detalles copiados'],
   obAiQ:['Have your bank statements to hand?','¿Tienes a mano tus extractos?'], obAiBtn:['Build it with AI','Crearlo con IA'],
@@ -1685,7 +1700,7 @@ const STR={
   info_yTable:['Every figure is the total of the transactions behind it: click one to see them. The heat map colours each expense within its month, from least (green) to most (red) spent, leaving rent out so it doesn’t drown the rest. The flag marks the single biggest month and category.','Cada cifra es el total de los movimientos que hay detrás: pulsa una para verlos. El mapa de calor colorea cada gasto dentro de su mes, de menos (verde) a más (rojo), sin el alquiler para que no tape lo demás. La bandera marca el mes y la categoría con más gasto.'],
   info_txKinds:['Income is money coming in. Expenses is money going out; a refund goes here too, as a positive amount. Investments is money moved into funds, shares, a pension or property (negative) or taken back out (positive): it’s still yours, so it doesn’t count as spending.','Ingresos es el dinero que entra. Gastos, el que sale; una devolución también va aquí, en positivo. Inversiones es el dinero que pasas a fondos, acciones, un plan de pensiones o inmuebles (en negativo) o que retiras (en positivo): sigue siendo tuyo, así que no cuenta como gasto.'],
   info_catList:['Categories group your transactions; renaming one moves its transactions and keywords with it. Mark each expense category Need (essentials you’d pay anyway) or Want (nice to have): it feeds the indicators on Overview. A monthly limit shows in This month how much is left.','Las categorías agrupan tus movimientos; al cambiar el nombre de una, sus movimientos y palabras clave pasan con ella. Marca cada categoría de gasto como Necesario (lo esencial, que pagarías igualmente) o Capricho: alimenta los indicadores del Resumen. Un límite mensual muestra en Este mes cuánto queda.'],
-  info_catKw:['When a description contains a keyword, the transaction gets that category by itself, on import and when you add a row. If several match, the longest keyword wins; short ones (4 letters or fewer) only match at the start of a word. Type a description in the test box to see which keyword picks it.','Si una descripción contiene una palabra clave, el movimiento recibe esa categoría solo, al importar y al añadirlo. Si coinciden varias, gana la más larga; las cortas (4 letras o menos) solo cuentan al principio de una palabra. Escribe una descripción en la casilla de prueba para ver qué palabra la elige.'],
+  info_catKw:['When a description contains a keyword, the transaction gets that category by itself, on import and when you add a row. If several match, the longest keyword wins. A keyword only matches at the start of a word. Type a description in the test box to see which keyword picks it.','Si una descripción contiene una palabra clave, el movimiento recibe esa categoría solo, al importar y al añadirlo. Si coinciden varias, gana la más larga. Una palabra clave solo cuenta al principio de una palabra. Escribe una descripción en la casilla de prueba para ver qué palabra la elige.'],
   info_catSkip:['Rows whose description contains one of these words arrive unticked when you import: for example transfers between your own accounts, which are neither income nor spending.','Las filas cuya descripción contiene una de estas palabras llegan sin marcar al importar: por ejemplo, traspasos entre tus propias cuentas, que no son ni ingresos ni gastos.'],
   info_nwWhat:['Net worth is what everything you own is worth, minus what you owe. Once a month, type what each account is worth at the end of the month, or import several months from Excel, and the tracker shows how it grows and why.','El patrimonio neto es lo que vale todo lo que tienes, menos lo que debes. Una vez al mes, escribe lo que vale cada cuenta a final de mes, o importa varios meses desde Excel, y el control muestra cómo crece y por qué.'],
   info_nwGroups:['Accounts are grouped by how soon you could use the money: Cash now, Investments within days, Illiquid on its own schedule (loans, property), Retirement when you retire. “Without retirement savings” is what you could reach before then.','Las cuentas se agrupan según lo pronto que podrías usar el dinero: Efectivo ya, Inversiones en días, Ilíquido según su propio calendario (préstamos, inmuebles) y Jubilación al jubilarte. «Sin el ahorro para la jubilación» es lo que podrías usar antes.'],
@@ -2066,15 +2081,14 @@ const rowSum=(A,t,n)=>{ const a=A[t].rows.get(n); return a?r2(sum(a)):0; };
 function catRowsFor(A,t){ const names=catNames(t).slice(); if(A[t].uncatCount>0) names.push(UNCAT); return names; }
 
 /* Keyword matching. Accents and capitals don't matter (cafetería = CAFETERIA).
-   A keyword of 4 characters or fewer only matches at the start of a word, so "o2" finds "O2 FIBRA" but not "EXPHIERRO2". */
+   A keyword only matches at the start of a word, so "o2" finds "O2 FIBRA" but not "EXPHIERRO2", and "etoro" doesn't find
+   the surname "CARRETOROS". "mcdonald" still finds "MCDONALDS". */
 const fold=s=>String(s==null?'':s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
 /* matching also ignores punctuation and spacing: "UBER* EATS", "Uber-Eats" and "uber eats" are the same text, and "H & M" finds "h&m" */
 const loose=s=>fold(s).replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const WORDCH=/[\p{L}\p{N}]/u;
-const SHORT_KW=4;
 function hasKw(c,kl){
   if(!kl) return false;
-  if(kl.length>SHORT_KW) return c.includes(kl);
   for(let i=c.indexOf(kl);i>-1;i=c.indexOf(kl,i+1)) if(i===0||!WORDCH.test(c[i-1])) return true;
   return false;
 }
@@ -2261,6 +2275,8 @@ function wantLang(){
 let chromeLang=null;
 function applyLang(){
   LANG=wantLang()==='es'?'es':'en';
+  /* the web footer is below this script, so it is set on every call until it exists */
+  const ftd=$('#ft-dev'), ftp=$('#ft-priv'); if(ftd&&ftd.textContent!==L('ftDev')){ ftd.textContent=L('ftDev'); if(ftp) ftp.textContent=L('ftPriv'); }
   if(chromeLang===LANG) return; chromeLang=LANG;
   document.documentElement.lang=LANG; document.title=L('appDocTitle');
   try{ localStorage.setItem('ybt.lang',LANG); }catch(_){}
@@ -2399,7 +2415,8 @@ const KW_US=new Set(['target','safeway','publix','wegmans','heb','chipotle','doo
 function kwRegionKeep(){ const rg=((navigator.languages&&navigator.languages[0])||navigator.language||'').split('-')[1]||''; const R=rg.toUpperCase();
   return k=>{ k=String(k).toLowerCase(); if(KW_UK.has(k)) return R==='GB'||R==='IE'||R==='UK'; if(KW_US.has(k)) return R==='US'||R==='CA'; return true; }; }
 function obStartPick(){ const box=$('#ob-month-box'), now=new Date();
-  if(box&&box.open) return {y:+$('#ob-year').value,m:+$('#ob-month').value,auto:false};
+  /* opening "start from an earlier month?" without changing it keeps the automatic start (the first month you import) */
+  if(box&&box.open){ const y=+$('#ob-year').value, m=+$('#ob-month').value; if(y!==now.getFullYear()||m!==now.getMonth()) return {y,m,auto:false}; }
   return {y:now.getFullYear(),m:now.getMonth(),auto:true}; }
 function obApply(lang,y,m,auto){
   setSettings(Object.assign({lang,start:{y,m},guide:{on:true},startAuto:!!auto},S.settings&&S.settings.numFmt?{}:{numFmt:lang==='en'?'en':'eu'},S.settings&&S.settings.currency?{}:{currency:regionCurrency()}));
@@ -2451,7 +2468,7 @@ function viewSettings(){
     startBody=`<div class="start-row"><label class="sr" for="st-month">${esc(L('month'))}</label><select id="st-month"${cw?'':' disabled'}>${M().map((n,i)=>`<option value="${i}"${i===st.m?' selected':''}>${n}</option>`).join('')}</select>
       <label class="sr" for="st-year">${esc(L('year'))}</label><select id="st-year"${cw?'':' disabled'}>${ys.map(y=>`<option${y===st.y?' selected':''}>${y}</option>`).join('')}</select>
       ${cw&&allRows().length?`<button class="btn ghost sm" type="button" data-action="st-clear">${esc(L('clearStart'))}</button>`:''}</div>
-      ${pre?`<p class="warn-text" style="margin-top:10px">${esc(L('preData',pre))}</p>`:''}`;
+      ${pre?`<p class="warn-text" style="margin-top:10px">${esc(L('preData',pre))}${cw?` <button class="btn sm" type="button" data-action="st-set">${esc(L('preDataBtn'))}</button>`:''}</p>`:''}`;
   }
   const startCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('startTitle'))}${info('setStart')}</h2><p class="sub">${esc(L('startSub'))}</p></div></div>${startBody}</section>`;
   const canDl=S.downloads&&allRows().length;
@@ -3938,22 +3955,25 @@ function aiMerge(rs){
   return out;
 }
 /* one request; if the answer comes back cut off, the same text is sent again in two halves */
-async function aiRunJob(m,job,i,n,depth){
+async function aiRunJob(m,job,i,n,depth,label){
   const prompt=aiPrompt(m.mode,m.rules,job.files,aiContext(m.mode));
   const hit=m.cache&&m.cache.get(prompt); if(hit) return hit;
   const lim=await S.ai.limits().catch(()=>null);
   if(job.images.length){ if(!lim||!lim.images) throw {local:L('aiNoImages')}; if(job.images.length>lim.images.maxCount) throw {local:L('aiTooManyImages',lim.images.maxCount)}; }
   const say=s=>{ if(S.modal!==m) return; m.phase=s; const el=$('#ai-phase'); if(el) el.textContent=s; };
-  say(n>1?L('aiPart',i+1,n):L('aiAsking'));
+  const head=label||(n>1?L('aiPart',i+1,n):'');
+  say(head||L('aiAsking'));
   try{
     const res=await S.ai.json(prompt,{signal:m.ctl.signal,cache:false,images:job.images.length?job.images:undefined,
-      onText:({text})=>say((n>1?L('aiPart',i+1,n)+' ':'')+L('aiWriting',fmtCount(text.length))),
+      onText:({text})=>say((head?head+' ':'')+L('aiWriting',fmtCount(text.length))),
       onRetry:({attempt,max})=>say(L('aiRetry',attempt,max))});
     if(!m.cache) m.cache=new Map(); m.cache.set(prompt,res); return res;
   }catch(e){
     if(e&&/^(output_truncated|invalid_json|prompt_too_large)$/.test(e.code)&&depth<3&&job.chars>2000){
       const halves=aiJobs(job.files,Math.ceil(job.chars/2),AI_CHUNK_IMAGES), rs=[];
-      if(halves.length>1){ for(const h of halves) rs.push(await aiRunJob(m,h,i,n,depth+1)); return aiMerge(rs); }
+      if(halves.length>1){ for(let h=0;h<halves.length;h++){ const sub=L('aiSplitting',h+1,halves.length);
+          rs.push(await aiRunJob(m,halves[h],i,n,depth+1,(n>1?L('aiPart',i+1,n)+' ':'')+sub)); }
+        return aiMerge(rs); }
     }
     if(e&&typeof e==='object'&&n>1&&!e.local) e.part=L('aiPart',i+1,n);
     throw e;
@@ -4225,7 +4245,6 @@ function viewCategories(){
         <label class="sr" for="new-kw">${esc(L('kwHead'))}</label><input type="text" id="new-kw" placeholder="${esc(L('kwPh'))}" value="${esc(c.newKw)}" autocomplete="off">
         <label class="sr" for="new-kw-cat">${esc(L('category'))}</label><select id="new-kw-cat">${catNames(t).map(n=>`<option value="${esc(n)}"${n===c.newKwCat?' selected':''}>${esc(n)}</option>`).join('')}</select>
         <button class="btn" type="submit">${esc(L('addKeyword'))}</button>
-        <span class="warn-text" id="kw-warn">${c.newKw.trim()&&c.newKw.trim().length<=SHORT_KW?esc(L('shortKw')):''}</span>
       </form>
       <p class="hint" style="margin:8px 0 0">${esc(L('kwWholeHint'))}</p>`:''}
       <div style="margin-top:14px"><label class="sr" for="kw-q">${esc(L('filterKw'))}</label><input type="search" id="kw-q" placeholder="${esc(L('filterKw'))}" value="${esc(c.q)}" style="width:100%" autocomplete="off"></div>
@@ -4351,10 +4370,17 @@ function mlGuess(t,concept){
 /* sure: filled in on import (marked); maybe: offered as a question. A guess must also look like a past transaction,
    so a description that shares only a few letters with your history ("FOOBAR" vs "BAR …") isn't guessed. */
 function mlLevel(g){ if(!g) return null; if(g.p>=ML_SURE&&g.sim>=ML_SIM_SURE) return 'sure'; if(g.p>=ML_MAYBE&&g.sim>=ML_SIM_MAYBE) return 'maybe'; return null; }
+/* the first word of a description that names who was paid, past the bank's own wording ("TARJETA VISA", "Pago en", "TRANSFERENCIA OTRA ENTIDAD") */
+const ML_STOP=new Set('tarjeta visa mastercard debito credito pago pagos compra compras comercio en con de del la el los las y a al su recibo adeudo cargo abono transferencia transf otra entidad sepa inmediata emitida recibida realizada favor card payment purchase pay ibercaja bbva santander caixabank sabadell bankinter unicaja kutxabank google apple top up from to by contado bizum enviado recibido inmediata'.split(' '));
+const mlKeyWord=s=>mlNorm(s).split(' ').find(w=>w.length>1&&!ML_STOP.has(w))||'';
 function mlLearnedCount(){ return TKEYS.reduce((a,t)=>{ const M=mlModel(t); return a+(M?M.n:0); },0); }
-/* an import row with no keyword: a confident guess fills the category (marked), a weaker one is offered */
+/* an import row with no keyword: a confident guess fills the category (marked), a weaker one is offered.
+   A sure guess must also name the same payee as the past transaction it looks like: "Alquiler Arturo Soria" is not "FARMACIA ARTURO SORIA",
+   so it is only offered. A description with no payee word ("TRANSFERENCIA SEPA") is not guessed at all. */
 function impGuess(r){ r.ml=null; r.maybe=null; if(r.category||r.dup) return; const g=mlGuess(r.table,r.concept); if(!g) return;
-  const lv=mlLevel(g); if(lv==='sure'){ r.category=g.cat; r.ml=g; } else if(lv==='maybe') r.maybe=g; }
+  const kw=mlKeyWord(r.concept); if(!kw) return;
+  let lv=mlLevel(g); if(lv==='sure'&&g.like&&mlKeyWord(g.like)!==kw) lv='maybe';
+  if(lv==='sure'){ r.category=g.cat; r.ml=g; } else if(lv==='maybe') r.maybe=g; }
 function sugHtml(d){
   const sug=matchKeyword(d.table,d.concept);
   if(!sug){ const g=d.concept?mlGuess(d.table,d.concept):null;
@@ -4479,10 +4505,11 @@ function modalImport(){
     <td class="a r num">${fmtEUR(r.amount)}</td>
     <td class="tb">${impTableSel(r,i)}</td>
     <td class="k"><label class="sr" for="imp-c-${i}">${esc(L('catForRow',i+1))}</label><select id="imp-c-${i}" data-action="imp-cat" data-i="${i}" class="${r.category?(r.ml?'guess':''):'missing'}"${r.ml?` title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}"`:''}>${catOptions(r.table,r.category,true)}</select></td>
-    <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${r.xfer?`<span class="note">${esc(L('noteXfer'))}</span> `:''}${r.like&&!r.dup?`<span class="note">${esc(L('noteLike',r.like.length>30?r.like.slice(0,29).trim()+'…':r.like))}</span> `:''}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.xfer?'':r.dup?`<span class="note">${esc(L('alreadyIn'))}</span>`:r.skip?`<span class="note">${esc(L('skipListNote',r.skip))}</span>`:r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',r.ml.like.length>24?r.ml.like.slice(0,23).trim()+'…':r.ml.like))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
+    <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${r.xfer?`<span class="note">${esc(r.xferWith?L('noteXferWith',r.xferWith.length>30?r.xferWith.slice(0,29).trim()+'…':r.xferWith):L('noteXfer'))}</span> `:''}${r.future?`<span class="note">${esc(L('noteFuture'))}</span> `:''}${r.like&&!r.dup?`<span class="note">${esc(L('noteLike',r.like.length>30?r.like.slice(0,29).trim()+'…':r.like))}</span> `:''}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.xfer?'':r.dup?`<span class="note">${esc(L('alreadyIn'))}</span>`:r.skip?`<span class="note">${esc(L('skipListNote',r.skip))}</span>`:r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',r.ml.like.length>24?r.ml.like.slice(0,23).trim()+'…':r.ml.like))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
     ${aiReviewNote(m)}${impChecksNote(m)}
+    ${m.sw&&m.sw.people.length>1?`<div class="field"><label class="lab" for="imp-sw-who">${esc(L('swWho'))}</label><select id="imp-sw-who" style="max-width:320px">${m.sw.people.map((p,i)=>`<option value="${i}"${i===m.sw.who?' selected':''}>${esc(p)}</option>`).join('')}</select><span class="help">${esc(L('swHelp'))}</span></div>`:''}
     ${guessed?`<p class="hint">${esc(L('sortedNote'))}</p>`:''}
     ${nMl?`<p class="hint ml-note">${esc(L('mlImpNote',nMl))}</p>`:''}
     ${dup||skp?`<div class="legend">${dup?`<span>${esc(L('dupUnticked',dup))}</span>`:''}${skp?`<span>${esc(L('skipUnticked',skp))}</span>`:''}</div>`:''}
@@ -4504,26 +4531,28 @@ const HEADER_RE=/date|fecha|concept|importe|amount|palabra|descrip|money|saldo|b
 const HDR={
   skip:/saldo|balance|disponible|^mes$|^month$|^a[ñn]o$|^year$/i,
   valueDate:/valor|value\s*date/i,
-  date:/^(fecha|date|f\.?\s*operaci[oó]n|fecha\s+(de\s+)?(la\s+)?(operaci[oó]n|transacci[oó]n|contable|movimiento|compra)|transaction\s+date|booking\s+date|operation\s+date|posting\s+date|completed\s+date|started\s+date)$/i,
+  date:/^(fecha|date|f\.?\s*operaci[oó]n|fecha\s+(de\s+)?(la\s+)?(operaci[oó]n|transacci[oó]n|contable|movimiento|compra|liquidaci[oó]n)|transaction\s+date|booking\s+date|operation\s+date|posting\s+date|completed\s+date|started\s+date|settle(ment)?\s+date)$/i,
+  fee:/^(fees?|comisi[oó]n(es)?|commission)(\s*\(?(eur|€)\)?)?$/i,
   amount:/^(importe|amount|cantidad|monto|value|transaction\s+amount|importe\s+(de\s+la\s+)?(operaci[oó]n|movimiento))(\s*\(?(eur|€|euros?)\)?)?$/i,
   debit:/^(cargos?|debe|d[eé]bitos?|debits?|debit\s+amount|salidas?|gastos?|pagos?|retiradas?|money\s+out|paid\s+out|amount\s+out|out|withdrawals?)(\s*\(?(eur|€)\)?)?$/i,
   credit:/^(abonos?|haber|cr[eé]ditos?|credits?|credit\s+amount|entradas?|ingresos?|cobros?|money\s+in|paid\s+in|amount\s+in|in|deposits?)(\s*\(?(eur|€)\)?)?$/i,
   category:/^(categor[ií]a|category)$/i,
   currency:/^(currency|divisa|moneda)$/i,
   balance:/^(saldo|balance|running\s+balance|saldo\s+(contable|disponible|final|posterior)|balance\s+after(\s+transaction)?)(\s*\(?(eur|€|euros?)\)?)?$/i,
-  concept2:/^(referencia|reference|payment\s+reference|memo|narrative|observaciones|m[aá]s\s+datos|counterparty|nombre|name|texto|notes?|notas?|ordenante)$/i,
+  concept2:/^(referencia|reference|payment\s+reference|memo|narrative|observaciones|m[aá]s\s+datos|counterparty|nombre|name|texto|notes?|notas?|ordenante|inversi[oó]n|fondo|producto|tipo(\s+de\s+(movimiento|operaci[oó]n))?)$/i,
   concept:/concepto|concept|descripci[oó]n|description|detalle|details|beneficiario|comercio|payee|merchant|movimiento/i
 };
 function findHeader(rows){
   for(let i=0;i<Math.min(rows.length,15);i++){
-    const cols={date:-1,amount:-1,debit:-1,credit:-1,category:-1,bal:-1,cur:-1,concept:[],concept2:[]}; let vdate=-1;
+    const cols={date:-1,amount:-1,debit:-1,credit:-1,category:-1,bal:-1,cur:-1,fee:-1,concept:[],concept2:[]}; let vdate=-1;
     rows[i].forEach((raw,c)=>{ const h=String(raw==null?'':raw).trim(); if(!h) return;
       if(HDR.balance.test(h)){ if(cols.bal<0) cols.bal=c; return; }
       if(HDR.currency.test(h)){ if(cols.cur<0) cols.cur=c; return; }
+      if(HDR.fee.test(h)){ if(cols.fee<0) cols.fee=c; return; }
       if(HDR.skip.test(h)) return;
       if(HDR.valueDate.test(h)){ if(vdate<0) vdate=c; return; }
       if(cols.date<0&&HDR.date.test(h)) cols.date=c;
-      else if(cols.amount<0&&HDR.amount.test(h)) cols.amount=c;
+      else if(cols.amount<0&&(HDR.amount.test(h)||HDR.amount.test(h.split(/\s*\n\s*/).pop()))) cols.amount=c;
       else if(cols.debit<0&&HDR.debit.test(h)) cols.debit=c;
       else if(cols.credit<0&&HDR.credit.test(h)) cols.credit=c;
       else if(cols.category<0&&HDR.category.test(h)) cols.category=c;
@@ -4542,7 +4571,11 @@ function rowFromCols(cells,cols,table){
   if(cols.amount>-1) amount=parseAmount(cell(cols.amount));
   else { const d=String(cell(cols.debit)).trim()?parseAmount(cell(cols.debit)):null, c=String(cell(cols.credit)).trim()?parseAmount(cell(cols.credit)):null; if(d!==null||c!==null) amount=r2((c||0)-Math.abs(d||0)); }
   if(amount===null) return {err:true};
+  /* a separate fee column (Revolut, Trade Republic) is money you also paid, whatever its sign */
+  if(cols.fee>-1){ const f=parseAmount(cell(cols.fee)); if(f) amount=r2(amount-Math.abs(f)); }
   let concept=cols.concept.map(i=>String(cell(i)).trim()).filter(Boolean).join(' ');
+  /* a description that is only "." says nothing: the second text column ("Tipo de operación": "BIZUM ENVIADO") is used */
+  if(!loose(concept)) concept=cols.concept2.filter(i=>!cols.concept.includes(i)).map(i=>String(cell(i)).trim()).filter(Boolean).join(' ')||concept;
   const raw=String(cell(cols.category)).trim(), category=raw&&(table==='auto'?TKEYS.some(t=>isKnown(t,raw)):isKnown(table,raw))?raw:'';
   const bal=cols.bal>-1&&String(cell(cols.bal)).trim()!==''?parseAmount(cell(cols.bal)):null;
   const fxRaw=cols.amount>-1?cell(cols.amount):(String(cell(cols.debit)).trim()?cell(cols.debit):cell(cols.credit));
@@ -4554,6 +4587,10 @@ function rowFromCols(cells,cols,table){
 function parseRows(rows,table,label){ const prev=DATE_ORDER; DATE_ORDER=detectDateOrder(rows); try{ return parseRowsCore(rows,table,label); } finally{ DATE_ORDER=prev; } }
 function parseRowsCore(rows,table,label){
   const parsed=[],bad=[], h=findHeader(rows);
+  /* a heading drawn over two cells ("Cargo/Abono Importe" over an A/C flag and the amount): the amounts are one column right */
+  if(h&&h.cols.amount>-1){ const a=h.cols.amount, data=rows.slice(h.row+1,h.row+41).filter(r=>r.some(c=>String(c==null?'':c).trim()));
+    const nums=c=>data.filter(r=>r[c]!=null&&String(r[c]).trim()!==''&&parseAmount(r[c])!==null).length;
+    if(data.length>=3&&nums(a)<0.5*data.length&&nums(a+1)>=0.8*data.length&&a+1!==h.cols.bal) h.cols.amount=a+1; }
   rows.forEach((cells,i)=>{
     cells=cells.map(c=>c==null?'':c); if(!cells.some(c=>String(c).trim())) return;
     if(h&&i<=h.row) return;
@@ -4587,6 +4624,43 @@ function parseCSV(text){
   if(cell!==''||row.length){ row.push(cell); rows.push(row); }
   return rows.filter(r=>r.some(c=>String(c).trim()));
 }
+/* a CSV made of sections, "Name,Header,…" then "Name,Data,…" (Interactive Brokers statements): only sections with a date
+   and an amount column are read, never guessed, and each row keeps its section name */
+function csvSections(rows){
+  const tag=r=>String(r[1]==null?'':r[1]).trim();
+  if(rows.length<3||rows.filter(r=>/^(Header|Data|Total|SubTotal|Notes)$/.test(tag(r))).length<0.6*rows.length) return null;
+  const out=[]; let cur=null;
+  for(const r of rows){ const name=String(r[0]==null?'':r[0]).replace(/^﻿/,'').trim();
+    if(tag(r)==='Header'){ cur={name,rows:[r.slice(2)]}; out.push(cur); }
+    else if(tag(r)==='Data'&&cur&&cur.name===name&&!/^(sub)?total$/i.test(String(r[2]==null?'':r[2]).trim())) cur.rows.push(r.slice(2)); }
+  return out;
+}
+/* column headings that only an investment account, a fund or a pension plan has */
+const INV_HDR=/^((c[oó]digo\s+)?isin|participaciones|n[uú]mero\s+de\s+participaciones|shares|quantity|symbol|asset[_\s]?class|valor\s+liquidativo|tin|rentabilidad.*|proyecto|devoluci[oó]n\s+neta.*|capital\s+reembolsado)$/i;
+const INV_SECTIONS=/^(trades|open positions)$/i;
+/* rows of cells -> transactions, plus whether the file looks like an investment account */
+function parseAny(rows,table,label){
+  const sec=csvSections(rows);
+  if(sec){ const parsed=[],bad=[];
+    for(const s of sec){ if(!findHeader(s.rows)) continue;
+      const r=parseRows(s.rows,table,cells=>`${s.name}: ${cells.join(' | ')}`);
+      for(const p of r.parsed) p.concept=(s.name+' · '+p.concept).trim();
+      parsed.push(...r.parsed); bad.push(...r.bad); }
+    return {parsed,bad,invest:sec.some(s=>INV_SECTIONS.test(s.name))}; }
+  const r=parseRows(rows,table,label);
+  r.invest=rows.slice(0,15).some(row=>row.some(c=>typeof c==='string'&&INV_HDR.test(c.trim())));
+  return r;
+}
+/* a Splitwise export: Date, Description, Category, Cost, Currency, then one column per person with what that expense
+   changed for them. Your column is what you spent (what you owe) or got back (what others owe you after you paid) */
+function splitwisePeople(rows){ const h=(rows[0]||[]).map(c=>String(c==null?'':c).trim());
+  return /^date$/i.test(h[0])&&/^description$/i.test(h[1])&&/^category$/i.test(h[2])&&/^cost$/i.test(h[3])&&/^currency$/i.test(h[4])&&h.length>5?h.slice(5).filter(Boolean):null; }
+function readSplitwise(){
+  const w=S.modal.sw, rows=[['Date','Description','Amount'],...w.rows.slice(1).filter(r=>r[0]&&!/^total balance$/i.test(String(r[1]==null?'':r[1]).trim())).map(r=>[r[0],String(r[1]==null?'':r[1]).trim(),r[5+w.who]])];
+  const r=parseRows(rows,'expenses',cells=>cells.join(' | '));
+  finishImport(r.parsed,r.bad,w.fileName);
+}
+function trySplitwise(rows,fileName){ const people=splitwisePeople(rows); if(!people) return false; S.modal.sw={people,rows,who:0,fileName}; readSplitwise(); return true; }
 /* bank CSVs are often not UTF-8 */
 async function fileText(file){ const buf=await file.arrayBuffer(); try{ return new TextDecoder('utf-8',{fatal:true}).decode(buf); }catch(_){ return new TextDecoder('windows-1252').decode(buf); } }
 /* spreadsheet cells -> rows; cells formatted as dates become dates, so a second date column is never read as the amount */
@@ -4626,25 +4700,35 @@ function guessTable(p){
   }
   if(p.category){ for(const t of TKEYS) if(isKnown(t,p.category)) return t; }
   for(const t of TKEYS) if(ok(t,matchKeyword(t,p.concept))) return t;
+  /* money back on a card is a refund, not income */
+  if(CARD_RE.test(loose(p.concept))) return 'expenses';
   return 'income';
 }
+const CARD_RE=/^(tarjeta|card payment|pago con tarjeta|pago en|compra|compra comercio|compra en comercio)\b|\bpago con tarjeta\b/;
 function autoCat(r,raw){ if(raw&&isKnown(r.table,raw)) return raw; const mt=matchKeyword(r.table,r.concept); return mt&&isKnown(r.table,mt.cat)?mt.cat:''; }
 function setImpTable(r,t){ if(!TKEYS.includes(t)||r.table===t) return; r.table=t; r.guessed=false; if(!r.manual||!isKnown(t,r.category)){ r.manual=false; r.category=autoCat(r,''); impGuess(r); } }
 /* checks on the rows read, before anything is saved:
-   - a pair with the same amount out and in within 3 days, where one side says "transfer", is money moved between your own accounts: unticked
+   - money moved between your own accounts is unticked: within one file, the same amount out and in within 3 days with both
+     sides saying "transfer"; against the tracker, a row whose opposite (same amount, 3 days) is already saved, where either says so
    - if the file has a running balance column and it follows the rows, any row that doesn't follow from the one before is marked */
-const XFER_RE=/\b(transfer|transferencia|transf|traspaso|trf|tfr|own account|between accounts|entre cuentas|cuenta propia|savings|ahorros?|internal)\b/;
+const XFER_RE=/\b(transfer|transferencia|transf|traspaso|trf|tfr|own account|between accounts|entre cuentas|cuenta propia|savings|ahorros?|internal|top up|topup|recarga|deposit|fund transfer|disbursement)\b/;
 const dayNum=iso=>Math.round(Date.UTC(+iso.slice(0,4),+iso.slice(5,7)-1,+iso.slice(8,10))/86400000);
 function importChecks(rows){
   const out={xfer:0,like:0,odd:0,fx:0,fxCodes:'',bal:null};
   const cand=rows.map((r,i)=>i).filter(i=>rows[i].on&&Math.abs(rows[i].amount)>=1);
+  const isX=r=>XFER_RE.test(loose(r.concept));
   const used=new Set();
   for(const i of cand){ if(used.has(i)) continue; const a=rows[i]; let best=-1,bd=99;
     for(const j of cand){ if(j===i||used.has(j)) continue; const b=rows[j];
       if(Math.abs(a.amount+b.amount)>0.005||a.amount===b.amount) continue;
-      if(!XFER_RE.test(loose(a.concept))&&!XFER_RE.test(loose(b.concept))) continue;
+      if(!isX(a)||!isX(b)) continue;
       const d=Math.abs(dayNum(a.date)-dayNum(b.date)); if(d<=3&&d<bd){ best=j; bd=d; } }
     if(best>-1){ used.add(i); used.add(best); for(const k of [i,best]){ rows[k].xfer=true; rows[k].on=false; } out.xfer+=2; } }
+  const saved=new Map(); for(const r of allRows()){ const k=r2(-r.amount).toFixed(2); if(!saved.has(k)) saved.set(k,[]); saved.get(k).push(r); }
+  const taken=new Set();
+  for(const i of cand){ const a=rows[i]; if(used.has(i)||!a.on) continue;
+    const o=(saved.get(r2(a.amount).toFixed(2))||[]).find(r=>!taken.has(r)&&Math.abs(dayNum(r.date)-dayNum(a.date))<=3&&(isX(a)||isX(r)));
+    if(o){ taken.add(o); a.xfer=true; a.on=false; a.xferWith=o.concept; out.xfer++; } }
   out.like=rows.filter(r=>r.like&&!r.dup).length;
   /* far larger than anything usual for the category (over 3 times its 90th percentile, 8 or more saved rows to judge by) */
   const hist=new Map(); for(const r of allRows()){ if(!isKnown(r.table,r.category)) continue; const k=r.table+'|'+r.category; if(!hist.has(k)) hist.set(k,[]); hist.get(k).push(Math.abs(r.amount)); }
@@ -4668,9 +4752,23 @@ function impChecksNote(m){
   if(c.like) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impPossDup',c.like))}</span></p>`);
   if(c.odd) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impOdd',c.odd))}</span></p>`);
   if(c.fx) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impFx',c.fx,c.fxCodes))}</span></p>`);
+  if(c.invest) p.unshift(`<p class="ai-check bad">${ICON.warn}<span>${esc(L('impInvest'))}</span></p>`);
+  if(c.future) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impFuture',c.future))}</span></p>`);
+  if(c.same) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impSame',c.same))}</span></p>`);
+  /* ticked rows before the tracker's first month would be saved but not shown in the Overview */
+  const st=startOf();
+  if(st&&!(S.settings&&S.settings.startAuto)&&m.rows){ const iso=st.y+'-'+String(st.m+1).padStart(2,'0'), pre=m.rows.filter(r=>r.on&&r.date.slice(0,7)<iso);
+    if(pre.length){ const k=pre.map(r=>r.date).sort()[0].slice(0,7);
+      p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impPreStart',pre.length,ymIn(iso)))} <button type="button" class="btn sm" data-action="imp-start" data-k="${k}">${esc(L('impPreStartBtn',ymIn(k)))}</button></span></p>`); } }
   return p.length?`<div class="ai-review">${p.join('')}</div>`:'';
 }
-function finishImport(parsed,bad,fileName){
+const INV_CONCEPT=/\b(suscripcion|reembolso|buy trade|sell trade|aportacion|compra de valores|venta de valores|comision de gestion|comision custodia)\b/;
+function finishImport(parsed,bad,fileName,opt){
+  parsed=parsed.filter(p=>Math.abs(p.amount)>=0.005);
+  /* a file from an investment account or pension plan (its headings, or a quarter of its rows being buys and contributions):
+     every row arrives unticked, since that money already left a bank account as an investment */
+  const invest=!!(opt&&opt.invest)||(parsed.length>=3&&parsed.filter(p=>INV_CONCEPT.test(loose(p.concept))).length>=0.25*parsed.length);
+  const today=todayIso();
   /* a row already in the tracker (same date, amount and description, in any table) arrives unticked */
   const key=r=>[r.date,r2(r.amount).toFixed(2),fold(r.concept).replace(/\s+/g,' ').trim()].join('|');
   const exist=new Map(); for(const r of allRows()){ const k=key(r); exist.set(k,(exist.get(k)||0)+1); }
@@ -4681,14 +4779,20 @@ function finishImport(parsed,bad,fileName){
     const dup=n<=(exist.get(k)||0);
     const skip=dup?null:skipMatch(p.concept);
     const guessed=p.table==='auto';
-    const r=Object.assign({},p,{table:guessed?guessTable(p):p.table,guessed,dup,skip,on:!dup&&!skip,manual:false});
+    const future=p.date>today;
+    const r=Object.assign({},p,{table:guessed?guessTable(p):p.table,guessed,dup,skip,future,on:!dup&&!skip&&!future&&!invest,manual:false});
     r.category=autoCat(r,p.category); impGuess(r);
     /* same day and amount as a saved row under another description: kept ticked, but pointed out */
     const la=sameDA.get(p.date+'|'+r2(p.amount).toFixed(2));
     if(la&&la.length){ const fi=la.findIndex(x=>x.f===fold(p.concept).replace(/\s+/g,' ').trim()); if(fi>-1) la.splice(fi,1); else if(!dup){ r.like=la.shift().c; } }
     return r;
   });
+  /* most of the file already saved under other wording (another export of the same account): those rows arrive unticked too */
+  const likeRows=rows.filter(r=>r.like&&!r.dup), same=likeRows.length>=3&&likeRows.length+rows.filter(r=>r.dup).length>=0.5*rows.length;
+  if(same) for(const r of likeRows) r.on=false;
   const checks=importChecks(rows);
+  checks.invest=invest; checks.future=rows.filter(r=>r.future).length;
+  if(same){ checks.same=checks.like; checks.like=0; }
   if(!rows.length){ S.modal.msg=bad.length?L('noDateAmount'):L('nothingToRead'); renderModal(); return; }
   Object.assign(S.modal,{step:'preview',rows,bad,fileName,wide:true,msg:'',confirmClose:false,checks}); renderModal();
 }
@@ -4698,24 +4802,34 @@ function readPasted(fileName){
   /* tab or semicolon rows, "date amount description" rows, or comma-separated rows (a date or a Date/Fecha heading then a comma) */
   const commaCsv=!lines.some(l=>l.includes('\t')||l.includes(';'))&&lines.filter(l=>/^\s*"?(\d{1,4}[-\/.]\d{1,2}[-\/.]\d{1,4}(?:[ T]\d{1,2}:\d{2}(?::\d{2})?)?"?\s*,|(?:date|fecha)[^,\d]*,)/i.test(l)).length>=Math.max(1,lines.length/2);
   const rows=commaCsv?parseCSV(m.text):lines.map(splitLine);
-  const r=parseRows(rows,m.table,cells=>cells.join('\t'));
-  finishImport(r.parsed,r.bad,fileName||'');
+  delete m.sw; if(trySplitwise(rows,fileName||'')) return;
+  const r=parseAny(rows,m.table,cells=>cells.join('\t'));
+  finishImport(r.parsed,r.bad,fileName||'',{invest:r.invest});
 }
 function loadScript(src){ return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=()=>rej(new Error('load')); document.head.appendChild(s); }); }
 async function getXLSX(){ if(window.XLSX) return window.XLSX; try{ await loadScript(XLSX_SRC); }catch(e){ await loadScript(XLSX_SRC2); } return window.XLSX; }
 async function readFile(file){
   const m=S.modal; m.table=($('#imp-table')||{}).value||m.table; m.text=($('#imp-text')||{}).value||m.text;
-  if(/\.(csv|txt)$/i.test(file.name)){ const r=parseRows(parseCSV(await fileText(file)),m.table,cells=>cells.join(' | ')); finishImport(r.parsed,r.bad,file.name); return; }
+  delete m.sw;
+  /* a file with no extension (Trade Republic's export) is read as CSV unless it starts like a workbook or a web page */
+  const textLike=async()=>{ const b=new Uint8Array(await file.slice(0,4096).arrayBuffer()), h=new TextDecoder('latin1').decode(b);
+    return !/^(PK|\xD0\xCF\x11\xE0)/.test(h)&&!/<(html|table)\b/i.test(h)&&!b.includes(0); };
+  if(/\.(csv|txt)$/i.test(file.name)||(!/\.(xlsx|xlsm|xls|ods)$/i.test(file.name)&&await textLike())){ const rows=parseCSV(await fileText(file)); if(trySplitwise(rows,file.name)) return;
+    const r=parseAny(rows,m.table,cells=>cells.join(' | ')); finishImport(r.parsed,r.bad,file.name,{invest:r.invest}); return; }
   let X; try{ X=await getXLSX(); }catch(e){ m.msg=L('readerFail'); renderModal(); return; }
   try{
-    const wb=X.read(await file.arrayBuffer(),{type:'array',cellNF:true});
-    const parsed=[],bad=[]; const named=wb.SheetNames.filter(n=>sheetTable(n));
+    /* many banks' ".xls" is really a web page: its cells are read as the text shown, so "12/05/2026" and "-9,70" keep their Spanish meaning */
+    const buf=await file.arrayBuffer(), html=/<(html|table)\b/i.test(new TextDecoder('latin1').decode(new Uint8Array(buf.slice(0,4096))));
+    /* and is often not UTF-8: decoded here, as a bank CSV is, so "Fecha operación" stays a heading */
+    const wb=html?X.read(await fileText(file),{type:'string',raw:true}):X.read(buf,{type:'array',cellNF:true});
+    const parsed=[],bad=[]; const named=wb.SheetNames.filter(n=>sheetTable(n)); let invest=false;
     const sheets=named.length?named.map(n=>[n,sheetTable(n)]):[[wb.SheetNames[0],m.table]];
+    if(sheets.length===1&&trySplitwise(sheetRows(X,wb.Sheets[sheets[0][0]]),file.name)) return;
     for(const [name,table] of sheets){
-      const r=parseRows(sheetRows(X,wb.Sheets[name]),table,cells=>`${name}: ${cells.join(' | ')}`);
-      parsed.push(...r.parsed); bad.push(...r.bad);
+      const r=parseAny(sheetRows(X,wb.Sheets[name]),table,cells=>`${name}: ${cells.join(' | ')}`);
+      parsed.push(...r.parsed); bad.push(...r.bad); invest=invest||r.invest;
     }
-    finishImport(parsed,bad,file.name);
+    finishImport(parsed,bad,file.name,{invest});
   }catch(e){ m.msg=L('notSpreadsheet'); renderModal(); }
 }
 function addImported(){
@@ -5252,6 +5366,7 @@ const ACTIONS={
     openModal({type:'edit',ref:null,origCat:'',draft:{table:t,date:todayIso(),concept:'',amount:null,dir:defaultDir(t),category:''}}); },
   'use-ml':()=>{ readEditForm(); const d=S.modal.draft, g=mlGuess(d.table,d.concept); if(g){ $('#f-cat').value=g.cat; d.category=g.cat; refreshEditSuggest(); } },
   'use-ml-row':el=>{ const ref=refOf(el), c=el.dataset.c; setTxCategory(ref,c); render(); const f=findRow(ref.mk,ref.table,ref.id); if(f.row) offerKeyword(ref.table,f.row.concept,c); },
+  'imp-start':el=>{ const k=el.dataset.k; if(!/^\d{4}-\d{2}$/.test(k||'')) return; setSettings({start:{y:+k.slice(0,4),m:+k.slice(5,7)-1}}); renderModalKeepScroll(); toast(L('startSaved',M()[+k.slice(5,7)-1],+k.slice(0,4))); },
   'imp-maybe':el=>{ const r=S.modal.rows[+el.dataset.i]; if(!r||!r.maybe) return; r.category=r.maybe.cat; r.manual=true; const c=r.category; r.maybe=null; renderModalKeepScroll(); offerKeyword(r.table,r.concept,c); },
   'use-sug':()=>{ readEditForm(); const s=matchKeyword(S.modal.draft.table,S.modal.draft.concept); if(s){ $('#f-cat').value=s.cat; S.modal.draft.category=s.cat; refreshEditSuggest(); } },
   'tx-del':()=>{ readEditForm(); S.modal.confirmDel=true; renderModal(); },
@@ -5422,7 +5537,7 @@ document.addEventListener('input',e=>{
   else if(id==='new-skip'){ const el=$('#skip-warn'); if(el) el.textContent=skipWarnText(e.target.value); }
   else if(id==='ac-name'){ const er=$('#ac-err'); if(er) er.textContent=''; }
   else if(id==='kw-test'){ S.ui.ct.test=e.target.value; $('#kw-out').innerHTML=kwTestOut(); }
-  else if(id==='new-kw'){ S.ui.ct.newKw=e.target.value; const w=$('#kw-warn'); if(w){ const k=e.target.value.trim(); w.textContent=k&&k.length<=SHORT_KW?L('shortKw'):''; } }
+  else if(id==='new-kw'){ S.ui.ct.newKw=e.target.value; }
   else if(id==='f-concept'&&S.modal){ S.modal.draft.concept=e.target.value; refreshEditSuggest(); }
   else if(e.target.dataset&&e.target.dataset.acc&&S.modal&&S.modal.type==='nwsnap'){ const m=S.modal; (m.touched=m.touched||{})[e.target.dataset.acc]=true; e.target.classList.remove('carried'); }
   else if(id==='f-amount'&&S.modal){ if(/^\s*[-−]/.test(e.target.value)){ const o=$('#f-dir-out'); if(o) o.checked=true; } }
@@ -5438,6 +5553,7 @@ document.addEventListener('change',e=>{
   if(id==='ob-month'){ S.ui.obM=+el.value; return; }
   if(id==='ob-year'){ S.ui.obY=+el.value; return; }
   if(id==='st-month'||id==='st-year'){ setStart({y:+$('#st-year').value,m:+$('#st-month').value}); return; }
+  if(id==='imp-sw-who'&&S.modal&&S.modal.sw){ S.modal.sw.who=+el.value; readSplitwise(); return; }
   if(id==='year-select'){ S.ui.year=+el.value; S.ui.tx.month='all'; S.ui.oc.month='all'; render(); return; }
   if(id==='oc-month'){ S.ui.oc.month=el.value; render(); return; }
   if(id==='oc-exrent'){ S.ui.oc.exRent=el.checked; render(); return; }
@@ -5642,5 +5758,5 @@ boot();
 </script>
 
 <noscript><p style="padding:24px">This tracker needs JavaScript.</p></noscript>
-<footer class="web-foot">© <span id="ybt-year">2026</span> MyAhorros · Developed by Taren Shaw with Claude Opus 5.5 · <a href="privacy.html">Privacy</a></footer>
+<footer class="web-foot">© <span id="ybt-year">2026</span> MyAhorros · <span id="ft-dev">Developed by Taren Shaw with Claude Opus 5.5</span> · <a href="privacy.html" id="ft-priv">Privacy</a></footer>
 </body></html>
