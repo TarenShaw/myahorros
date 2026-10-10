@@ -22,7 +22,7 @@ node tests/chunk-smoke.js       # request splitting and merging pulled out of in
 node tools/update-csp-hash.js   # after ANY edit to index.html's inline <script>
 ```
 
-Browser tests need Playwright (Edge channel) and the server above: `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` (fake Drive: deferral, conflict, merge) and `tests/landing-wizard.e2e.js` (landing, wizard, tour hand-off).
+Browser tests need Playwright (Edge channel) and the server above: `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` (fake Drive: deferral, conflict, merge) and `tests/landing-wizard.e2e.js` (landing, wizard, tour hand-off) and `tests/tabs-restore.e2e.js` (one tab at a time, browser backup restore, Start fresh).
 
 ## Line endings
 

@@ -19,7 +19,7 @@ function lang(){ if(pageLang) return pageLang; try{ const s=window.__ybtWeb&&win
 
 const P={
   anthropic:{name:'Claude', company:'Anthropic', keyUrl:'https://console.anthropic.com/settings/keys', keyHint:'sk-ant-…', keyRe:/^sk-ant-/},
-  openai:{name:'ChatGPT', company:'OpenAI', keyUrl:'https://platform.openai.com/api-keys', keyHint:'sk-…', keyRe:/^sk-/},
+  openai:{name:'ChatGPT', company:'OpenAI', keyUrl:'https://platform.openai.com/api-keys', keyHint:'sk-…', keyRe:/^sk-(?!ant-)/},
   gemini:{name:'Gemini', company:'Google', keyUrl:'https://aistudio.google.com/apikey', keyHint:'AIza… or AQ.…', keyRe:/^(AIza|AQ\.)/},
   paste:{name:null}
 };
@@ -274,7 +274,7 @@ function setup(){
       if(b.dataset.x==='cancel'){ done(null); return; }
       if(sel==='paste'){ const n={provider:'paste',model:'',key:'',remember:false}; saveCfg(n); done(n); toast(t('savedPaste')); return; }
       const key=keyIn.value.trim(); if(!key){ el.msg(t('noKey')); keyIn.focus(); return; }
-      if(!P[sel].keyRe.test(key)&&!(sel==='openai'&&/^sk-/.test(key))){ el.msg(t('wrongKey',P[sel].name,P[sel].keyHint)); keyIn.focus(); return; }
+      if(!P[sel].keyRe.test(key)){ el.msg(t('wrongKey',P[sel].name,P[sel].keyHint)); keyIn.focus(); return; }
       const chosen=!$('#ai-modelbox').hidden?$('#ai-model').value:'';
       b.disabled=true; const was=b.textContent; b.textContent=t('checking');
       try{

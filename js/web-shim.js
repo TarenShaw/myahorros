@@ -109,6 +109,11 @@ const TX={
     opened:(n,c)=>`Opened ${n}: ${c} ${c==='1'?'transaction':'transactions'}. Your previous data was kept as a backup first.`,
     freshTitle:'Start fresh?', freshText:'This deletes every transaction, category, keyword and setting from the tracker. A backup of your data is kept first.',
     freshYes:'Delete everything', freshDone:'Started fresh. Your previous data was kept as a backup.',
+    restoreBT:'Restore a backup…', restoreBHelp:'Open one of the copies kept in this browser: the daily ones, and those made before starting fresh, opening a file or restoring.',
+    restoreBTitle:'Restore a backup', restoreBNone:'There are no backups in this browser yet.',
+    restoredB:(w,n)=>`Opened ${w}: ${n} transactions. What was on screen was kept as a backup.`,
+    itpWarn:'This browser also deletes it if you don’t open the site for 7 days. Add the site to your Home Screen (or Dock), or pick Google Drive.',
+    tabTitle:'Open in another tab', tabText:'MyAhorros was opened in another tab or window. This one stopped saving so the two don’t overwrite each other.', tabHere:'Use it here',
     safetyFail:'The backup couldn’t be saved first, so nothing was changed.', writeFail:'Your data couldn’t be saved, so nothing was changed.',
     synced:'Up to date with Google Drive.', pulled:'Loaded the newer version from Google Drive.',
     dlBackup:'Download a backup', jsonFilter:'Tracker data or backup'
@@ -191,6 +196,11 @@ const TX={
     opened:(n,c)=>`Abierto ${n}: ${c} ${c==='1'?'movimiento':'movimientos'}. Antes se ha guardado una copia de lo que había.`,
     freshTitle:'¿Empezar de cero?', freshText:'Esto borra todos los movimientos, categorías, palabras clave y ajustes del control. Antes se guarda una copia de seguridad.',
     freshYes:'Borrarlo todo', freshDone:'Has empezado de cero. Tus datos anteriores se han guardado como copia.',
+    restoreBT:'Restaurar una copia…', restoreBHelp:'Abre una de las copias guardadas en este navegador: las diarias y las que se hacen antes de empezar de cero, abrir un archivo o restaurar.',
+    restoreBTitle:'Restaurar una copia', restoreBNone:'Todavía no hay copias en este navegador.',
+    restoredB:(w,n)=>`Se ha abierto ${w}: ${n} movimientos. Lo que había en pantalla se ha guardado como copia.`,
+    itpWarn:'Este navegador también lo borra si no abres la web en 7 días. Añádela a la pantalla de inicio (o al Dock), o elige Google Drive.',
+    tabTitle:'Abierto en otra pestaña', tabText:'MyAhorros se ha abierto en otra pestaña o ventana. Esta ha dejado de guardar para que las dos no se sobrescriban.', tabHere:'Usarlo aquí',
     safetyFail:'No se ha podido guardar antes la copia, así que no se ha cambiado nada.', writeFail:'No se han podido guardar tus datos, así que no se ha cambiado nada.',
     synced:'Al día con Google Drive.', pulled:'Cargada la versión más nueva de Google Drive.',
     dlBackup:'Descargar una copia', jsonFilter:'Datos o copia del control'
@@ -246,6 +256,11 @@ function askPersist(){ if(persistAsked) return; persistAsked=true; try{ if(navig
 /* ---------- what this browser can do ---------- */
 const isMobile=()=>/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||'')||(navigator.userAgentData&&navigator.userAgentData.mobile);
 const canFolder=()=>typeof window.showDirectoryPicker==='function'&&!isMobile();
+/* Safari, and every browser on iPhone/iPad, deletes a site's storage after 7 days without a visit, unless the site is installed */
+const itp=()=>{ const u=navigator.userAgent||'';
+  const webkit=/iPhone|iPad|iPod/.test(u)||/Macintosh/.test(u)&&navigator.maxTouchPoints>1||/Safari\//.test(u)&&!/Chrome|Chromium|CriOS|FxiOS|Edg|Android/.test(u);
+  let installed=false; try{ installed=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches; }catch(_){}
+  return webkit&&!installed; };
 const canDrive=()=>!!CFG.googleClientId;
 
 /* ---------- saving: one at a time, a failure never stops the next ---------- */
@@ -424,7 +439,7 @@ function panel(html,opts){
   if(opts&&opts.overlay) el.classList.add('overlay');
   el.innerHTML=`<div class="web-panel-card">${html}<p class="web-msg" role="status" hidden></p></div>`;
   document.body.appendChild(el);
-  const first=el.querySelector('button:not([disabled])'); if(first) setTimeout(()=>first.focus(),0);
+  const first=el.querySelector('[autofocus]')||el.querySelector('button:not([disabled])'); if(first) setTimeout(()=>first.focus(),0);
   el.msg=s=>{ const m=el.querySelector('.web-msg'); m.textContent=s||''; m.hidden=!s; };
   el.busy=on=>el.querySelectorAll('button').forEach(b=>{ if(on){ b.dataset.was=b.disabled?'1':''; b.disabled=true; } else b.disabled=b.dataset.was==='1'; });
   return el;
@@ -476,7 +491,7 @@ function chooseMode(fromSettings){
       <div class="web-ways">
         ${card('folder',t('folderT'),t('folderS'),fOk,t('folderNo'),true)}
         ${card('drive',t('driveT'),t('driveS')+(fromSettings?'':' '+t('driveHave')),dOk,canDrive()?t('driveOffline'):t('driveNo'),!fOk)}
-        ${card('browser',t('browserT'),t('browserS'),true,'',false)}
+        ${card('browser',t('browserT'),t('browserS')+(itp()?' '+t('itpWarn'):''),true,'',false)}
       </div>
       ${fOk?`<p class="web-hint">${esc(t('pickHint'))}</p>`:''}
       ${fromSettings?'':`<div class="web-acts"><button type="button" class="btn ghost" data-x="example">${esc(t('exampleBtn'))}</button></div>`}
@@ -533,8 +548,10 @@ function askExisting(there){
 function askConfirm(title,text,yes){
   return new Promise(resolve=>{
     const el=panel(`<h2 id="wp-title">${esc(title)}</h2><p class="web-sub">${esc(text)}</p>
-      <div class="web-acts"><button type="button" class="btn danger" data-x="yes">${esc(yes)}</button><button type="button" class="btn" data-x="no">${esc(t('cancel'))}</button></div>`,{overlay:true});
+      <div class="web-acts"><button type="button" class="btn danger" data-x="yes">${esc(yes)}</button><button type="button" class="btn" data-x="no" autofocus>${esc(t('cancel'))}</button></div>`,{overlay:true});
     el.addEventListener('click',e=>{ const b=e.target.closest('button[data-x]'); if(!b) return; el.remove(); resolve(b.dataset.x==='yes'); });
+    /* Escape cancels; it stops here so the dialog underneath stays open */
+    el.addEventListener('keydown',e=>{ if(e.key!=='Escape') return; e.stopPropagation(); el.remove(); resolve(false); });
   });
 }
 
@@ -568,8 +585,9 @@ window.addEventListener('ybt-local-note',e=>{ const host=document.getElementById
   const d=document.createElement('div'); d.className='toast'; d.innerHTML='<span>'+esc(e.detail)+'</span>'; host.appendChild(d); setTimeout(()=>d.remove(),8000); });
 
 /* ---------- saving ---------- */
-let saving=null;
+let saving=null, asleep=false;   /* asleep: another tab took over (see "one tab at a time") */
 function save(){
+  if(asleep) return Promise.resolve();
   if(saving) return saving;
   const p=enqueue(async()=>{
     saving=null;
@@ -587,6 +605,7 @@ let busyT=0;
 const pageBusy=()=>{ try{ return typeof window.YBT_BUSY==='function'&&!!window.YBT_BUSY(); }catch(_){ return false; } };
 function deferIfBusy(fn){ if(!pageBusy()) return false; clearTimeout(busyT); busyT=setTimeout(fn,4000); return true; }
 async function flushFolder(){
+  if(asleep) return;
   if(deferIfBusy(()=>flushFolder().catch(()=>{}))) return;
   let text=await idb.get('folder-pending').catch(()=>null); if(typeof text!=='string') return;
   try{
@@ -608,6 +627,7 @@ let upT=0;
 function scheduleUpload(ms){ clearTimeout(upT); upT=setTimeout(()=>{ driveSync(false).catch(()=>{}); },ms==null?1500:ms); }
 let syncing=null;
 function driveSync(pull){
+  if(asleep) return Promise.resolve();
   if(syncing) return syncing.then(()=>pull||drive.dirty?driveSync(pull):null);
   if(deferIfBusy(()=>driveSync(pull).catch(()=>{}))){ drive.state='paused'; notify(); return Promise.resolve(); }
   syncing=(async()=>{
@@ -726,17 +746,37 @@ async function driveRestore(){
   }catch(_){ return {message:t('driveFail'),bad:true}; }
   if(!items.length) return {message:t('restoreNone')};
   const fmtW=w=>{ if(!w) return ''; const d=new Date(w); return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear()+' '+hhmm(d); };
-  const pick=await new Promise(resolve=>{
-    const el=panel(`<h2 id="wp-title">${esc(t('restoreTitle'))}</h2><p class="web-sub">${esc(t('restoreSub'))}</p>
-      <ul class="web-list">${items.map((it,i)=>`<li><span><b>${esc(it.label)}</b><small>${esc(fmtW(it.when))}</small></span><button type="button" class="btn sm${i===0?' primary':''}" data-i="${i}">${esc(t('restoreOpen'))}</button></li>`).join('')}</ul>
-      <div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`,{overlay:true});
-    el.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; if(b.dataset.x==='cancel'){ el.remove(); resolve(null); return; } if(b.dataset.i!=null){ el.remove(); resolve(items[+b.dataset.i]); } });
-  });
+  const pick=await pickRestore(t('restoreTitle'),items.map(it=>Object.assign({},it,{when:fmtW(it.when)})));
   if(!pick) return null;
   let text; try{ text=await drive.download(pick.id); }catch(_){ return {message:t('driveFail'),bad:true}; }
   const d=parseData(text); if(!d) return {message:t('notTracker'),bad:true};
   try{ await replaceAll(d,'before restoring from Drive'); }catch(e){ return {message:e.message,bad:true}; }
   return {message:t('restored',pick.label,fmtN(countTx(d)))};
+}
+
+/* the list of versions to open; resolves with the one picked, or null */
+function pickRestore(title,items){
+  return new Promise(resolve=>{
+    const el=panel(`<h2 id="wp-title">${esc(title)}</h2><p class="web-sub">${esc(t('restoreSub'))}</p>
+      <ul class="web-list">${items.map((it,i)=>`<li><span><b>${esc(it.label)}</b><small>${esc(it.when||'')}</small></span><button type="button" class="btn sm${i===0?' primary':''}" data-i="${i}">${esc(t('restoreOpen'))}</button></li>`).join('')}</ul>
+      <div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`,{overlay:true});
+    el.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; if(b.dataset.x==='cancel'){ el.remove(); resolve(null); return; } if(b.dataset.i!=null){ el.remove(); resolve(items[+b.dataset.i]); } });
+  });
+}
+/* ---------- restoring from this browser: the daily copies and the safety copies (bk: keys) ---------- */
+async function browserRestore(){
+  let ks=[]; try{ ks=(await idb.keys()).map(String).filter(k=>k.startsWith('bk:')); }catch(_){}
+  const items=ks.map(k=>{ const s=k.slice(3);
+    if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return {id:k,sort:s+' 0000',label:t('restoreDaily',dmy(s)),when:''};
+    const m=s.match(/^(.*) (\d{4}-\d{2}-\d{2}) (\d{2})\.(\d{2})\.\d{2}$/);
+    return {id:k,sort:m?m[2]+' '+m[3]+m[4]:'',label:t('restoreOther')+' · '+(m?m[1]:s),when:m?dmy(m[2])+' '+m[3]+':'+m[4]:''};
+  }).sort((a,b)=>a.sort<b.sort?1:a.sort>b.sort?-1:0);
+  if(!items.length) return {message:t('restoreBNone')};
+  const pick=await pickRestore(t('restoreBTitle'),items); if(!pick) return null;
+  const text=await idb.get(pick.id).catch(()=>null), d=typeof text==='string'?parseData(text):null;
+  if(!d) return {message:t('notTracker'),bad:true};
+  try{ await replaceAll(d,'before restoring a backup'); }catch(e){ return {message:e.message,bad:true}; }
+  return {message:t('restoredB',pick.label,fmtN(countTx(d)))};
 }
 
 /* ---------- files: saving a backup, opening one ---------- */
@@ -798,15 +838,17 @@ const local={
     seeLang(lg);
     const m={folder:'Folder',drive:'Drive',browser:'Browser'}[mode]; if(!m) return null;
     if(k==='dataFileTitle') return t('dataTitle');
-    if(k==='dataFileSub') return t('sub'+m);
+    const w=m==='Browser'&&itp()?' '+t('itpWarn'):'';
+    if(k==='dataFileSub') return t('sub'+m)+w;
     if(k==='backupsNote') return t('bk'+m);
-    if(k==='gSafeApp') return t('safe'+m);
+    if(k==='gSafeApp') return t('safe'+m)+w;
     if(k==='saveCopy') return t('saveCopy');
     if(k==='saveCopyHelp') return t('saveCopyHelp');
     return null;
   },
-  actions:['changeStorage','syncNow','connectDrive','driveRestore'],
+  actions:['changeStorage','syncNow','connectDrive','driveRestore','browserRestore'],
   async driveRestore(){ return driveRestore(); },
+  async browserRestore(){ return browserRestore(); },
   /* the top-bar button: Connect Google Drive, while it isn't connected */
   top(lg){ seeLang(lg); if(!canDrive()) return null;
     if(mode==='drive'&&drive.valid()) return null;
@@ -822,6 +864,7 @@ const local={
     seeLang(lg);
     const out=[{fn:'changeStorage',label:t('change'),help:t('changeHelp')}];
     if(mode==='drive') out.unshift({fn:'syncNow',label:t('syncNow'),help:t('syncNowHelp')});
+    if(mode==='browser') out.push({fn:'browserRestore',label:t('restoreBT'),help:t('restoreBHelp')});
     if(canDrive()) out.push({fn:'driveRestore',label:t('restoreT'),help:t('restoreHelp')});
     return out;
   },
@@ -951,7 +994,30 @@ async function start(){
   resolveReady();
   notify();
 }
-start().catch(e=>{ console.error('storage start failed',e); setMode('browser'); browser.read().then(x=>{ store=(x&&parseData(x))||empty(); resolveReady(); },()=>{ store=empty(); resolveReady(); }); });
+/* ---------- one tab at a time: two tabs each saving their own copy would overwrite each other ----------
+   The newest tab takes over. The older one saves what it has, lets go of the lock and stops. */
+let letGo=null;
+const tabCh=typeof BroadcastChannel==='function'?new BroadcastChannel('myahorros-tab'):null;
+function grab(opts){ return new Promise(res=>{ navigator.locks.request('myahorros-tab',opts,l=>{ res(!!l); return l?new Promise(r=>{ letGo=r; }):null; }).catch(()=>res(false)); }); }
+async function takeTab(){
+  if(tabCh) tabCh.postMessage('take');
+  if(!navigator.locks) return;
+  if(await grab({ifAvailable:true})) return;
+  /* a tab frozen in the background can't answer: after 3 seconds take over anyway */
+  const ac=new AbortController();
+  if(!(await Promise.race([grab({signal:ac.signal}),sleep(3000).then(()=>false)]))){ ac.abort(); await grab({steal:true}); }
+}
+if(tabCh) tabCh.onmessage=async e=>{
+  if(e.data!=='take'||asleep) return;
+  asleep=true; clearTimeout(upT); clearTimeout(busyT);
+  const el=panel(`<p class="web-eyebrow">MyAhorros</p><h2 id="wp-title">${esc(t('tabTitle'))}</h2><p class="web-sub">${esc(t('tabText'))}</p>
+    <div class="web-acts"><button type="button" class="btn primary" data-x="here">${esc(t('tabHere'))}</button></div>`);
+  for(const c of document.body.children) if(c!==el) c.inert=true;
+  el.addEventListener('click',ev=>{ if(ev.target.closest('button[data-x="here"]')) location.reload(); });
+  await queue;
+  if(letGo){ letGo(); letGo=null; }
+};
+takeTab().catch(()=>{}).then(start).catch(e=>{ console.error('storage start failed',e); setMode('browser'); browser.read().then(x=>{ store=(x&&parseData(x))||empty(); resolveReady(); },()=>{ store=empty(); resolveReady(); }); });
 
 /* for the tests */
 window.__ybtWeb={get mode(){ return mode; }, get store(){ return store; }, drive, folder, idb, sync:()=>driveSync(true), queue:()=>queue};
