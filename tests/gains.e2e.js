@@ -1,6 +1,7 @@
 /* Browser check of the Gains column on Net worth: accounts, figures and transactions entered through the UI.
      python -m http.server 8000   (repo root)     NODE_PATH=<playwright folder> node tests/gains.e2e.js
-   gain = change since the previous month with figures - money put in (Investments rows that name the account). */
+   gain = change since the previous month with figures - money put in (Investments rows that name the account)
+   + interest, dividends and gains paid out (income rows in a returns category that name the account). */
 const { chromium } = require('playwright');
 const assert = require('assert');
 const START = process.env.START_URL || 'http://localhost:8000/';
@@ -26,7 +27,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   /* 1. accounts: a 3-letter name, two sharing a word, one with no earlier figure */
   await p.click('[data-action="nw-accounts"]');
   for (const [n, g] of [['Current account', 'cash'], ['Indexa Capital', 'invest'], ['Trade Republic', 'invest'], ['ING', 'invest'],
-    ['MyInvestor Fund', 'invest'], ['MyInvestor Pension', 'pension'], ['Flat Madrid', 'illiquid'], ['New Broker', 'invest']]) {
+    ['MyInvestor Fund', 'invest'], ['MyInvestor Pension', 'pension'], ['Flat Madrid', 'illiquid'], ['New Broker', 'invest'], ['Civislend', 'invest']]) {
     await p.click('#nw-acc-form [data-action="na-add"]:not([data-n])');
     const last = p.locator('#nw-acc-form .acc-row').last();
     await last.locator('input[data-f=name]').fill(n);
@@ -36,9 +37,9 @@ const START = process.env.START_URL || 'http://localhost:8000/';
 
   /* 2. figures for June, July and September; August left out on purpose */
   const F = {
-    '2026-06': { 'Current account': 3000, 'Indexa Capital': 10000, 'Trade Republic': 5000, 'ING': 2000, 'MyInvestor Fund': 4000, 'MyInvestor Pension': 8000, 'Flat Madrid': 200000 },
-    '2026-07': { 'Current account': 3400, 'Indexa Capital': 10650, 'Trade Republic': 4750, 'ING': 2310, 'MyInvestor Fund': 4300, 'MyInvestor Pension': 8100, 'Flat Madrid': 200000 },
-    '2026-09': { 'Current account': 3900, 'Indexa Capital': 11500, 'Trade Republic': 4900, 'ING': 2620, 'MyInvestor Fund': 4750, 'MyInvestor Pension': 8400, 'Flat Madrid': 201000, 'New Broker': 1000 },
+    '2026-06': { 'Current account': 3000, 'Indexa Capital': 10000, 'Trade Republic': 5000, 'ING': 2000, 'MyInvestor Fund': 4000, 'MyInvestor Pension': 8000, 'Flat Madrid': 200000, 'Civislend': 1000 },
+    '2026-07': { 'Current account': 3400, 'Indexa Capital': 10650, 'Trade Republic': 4750, 'ING': 2310, 'MyInvestor Fund': 4300, 'MyInvestor Pension': 8100, 'Flat Madrid': 200000, 'Civislend': 1000 },
+    '2026-09': { 'Current account': 3900, 'Indexa Capital': 11500, 'Trade Republic': 4900, 'ING': 2620, 'MyInvestor Fund': 4750, 'MyInvestor Pension': 8400, 'Flat Madrid': 201000, 'New Broker': 1000, 'Civislend': 0 },
   };
   for (const [k, vals] of Object.entries(F)) {
     await p.click('[data-action="nw-snap"] >> nth=0');
@@ -59,10 +60,11 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   console.log('1. accounts and figures; no transactions -> gain = change');
 
   /* 3. transactions through the Add dialog */
-  const add = async (t, d, c, a, dir) => {
+  const add = async (t, d, c, a, dir, cat) => {
     await p.click('[data-action=tab][data-tab=transactions]');
     await p.click('[data-action="add-tx"] >> nth=0');
     await p.selectOption('#f-table', t);
+    if (cat) await p.selectOption('#f-cat', { label: cat });
     await p.fill('#f-date', d); await p.fill('#f-concept', c); await p.fill('#f-amount', String(a));
     await p.check('#f-dir-' + dir, { force: true });
     await p.click('#tx-form button[type=submit]');
@@ -82,8 +84,11 @@ const START = process.env.START_URL || 'http://localhost:8000/';
     ['investments', '2026-08-20', 'MyInvestor Fund', 200, 'out'],                 // August: no figures, counts toward September
     ['investments', '2026-09-20', 'myinvestor fund', 200, 'out'],
     ['investments', '2026-09-25', 'Broker fee refund', 10, 'in'],                 // "refund" is not "Fund"
-    ['income', '2026-07-15', 'Dividend Trade Republic', 20, 'in'],               // income rows are not money put in
-    ['income', '2026-09-30', 'Interest Indexa Capital', 15, 'in'],
+    ['income', '2026-07-15', 'Dividend Trade Republic', 20, 'in', 'Dividends'],  // paid out to you: part of the gain
+    ['income', '2026-07-16', 'Trade Republic cashback', 5, 'in', 'Other'],       // not a returns category: not counted
+    ['income', '2026-09-30', 'Interest Indexa Capital', 15, 'in', 'Interest'],
+    ['investments', '2026-08-15', 'Civislend loan repaid', 1000, 'in'],          // loan paid back: 1,000 out ...
+    ['income', '2026-08-15', 'Civislend interest', 80, 'in', 'Interest'],         // ... plus 80 interest = +80 gain
   ]) await add(...r);
 
   /* 4. pasted import: everyday rows sorted automatically, plus one investment row with an accent */
@@ -101,8 +106,8 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await imp('05/08/2026\t-400,00\tAportación Indexa', 'investments');
 
   const expect = async (k, want) => { const g = await gains(k); for (const [n, v] of Object.entries(want)) assert.strictEqual(g[n], v, `${k} ${n}: got ${g[n]}, want ${v}`); };
-  const JUL = { 'Indexa Capital': '+150.00', 'Trade Republic': '+50.00', 'ING': '+10.00', 'MyInvestor Fund': '+100.00', 'MyInvestor Pension': '+50.00', 'Flat Madrid': '–', 'Current account': '', 'Total': '+360.00' };
-  const SEP = { 'Indexa Capital': '+50.00', 'Trade Republic': '+150.00', 'ING': '+60.00', 'MyInvestor Fund': '+50.00', 'MyInvestor Pension': '+300.00', 'Flat Madrid': '+1,000.00', 'New Broker': '', 'Total': '+1,610.00' };
+  const JUL = { 'Indexa Capital': '+150.00', 'Trade Republic': '+70.00', 'ING': '+10.00', 'MyInvestor Fund': '+100.00', 'MyInvestor Pension': '+50.00', 'Flat Madrid': '–', 'Civislend': '–', 'Current account': '', 'Total': '+380.00' };
+  const SEP = { 'Indexa Capital': '+65.00', 'Trade Republic': '+150.00', 'ING': '+60.00', 'MyInvestor Fund': '+50.00', 'MyInvestor Pension': '+300.00', 'Flat Madrid': '+1,000.00', 'New Broker': '', 'Civislend': '+80.00', 'Total': '+1,705.00' };
   await expect('2026-07', JUL); await expect('2026-09', SEP);
   console.log('2. gains after dialog + import rows: July and September (across the August gap)');
 
@@ -116,9 +121,9 @@ const START = process.env.START_URL || 'http://localhost:8000/';
     await p.locator('[data-action=edit-tx][data-t=investments]', { hasText: c }).first().click(); await p.waitForSelector('#tx-form'); };
   const save = async () => { await p.click('#tx-form button[type=submit]'); await p.waitForSelector('#tx-form', { state: 'detached' }); await closeExtra(); };
   await open('Transfer to Indexa Capital'); await p.fill('#f-amount', '600'); await save();
-  await expect('2026-07', { 'Indexa Capital': '+50.00', 'Total': '+260.00' });
+  await expect('2026-07', { 'Indexa Capital': '+50.00', 'Total': '+280.00' });
   await open('Withdrawal Trade Republic'); await p.click('[data-action=tx-del]'); await p.click('[data-action=tx-del-yes]'); await p.waitForSelector('#tx-form', { state: 'detached' });
-  await expect('2026-07', { 'Trade Republic': '−250.00', 'Total': '−40.00' });
+  await expect('2026-07', { 'Trade Republic': '−230.00', 'Total': '−20.00' });
   await add('investments', '2026-09-15', 'MyInvestor deposit', 100, 'out');   // fits both MyInvestor accounts: neither
   await expect('2026-09', SEP);
   console.log('4. edit, delete and an ambiguous row');
