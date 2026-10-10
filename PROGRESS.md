@@ -69,7 +69,7 @@ Nothing uncommitted. Untracked: `.playwright-cli/` (Playwright logs, safe to del
   - Landing is `role=dialog` without `aria-modal`; harmless because the app behind it is `display:none`.
   - `.info-btn` is drawn 17 px (hit area 41 px via `::after`); inline footer links are 14 px tall.
 - Not tested: Firefox/Safari, offline/service-worker update, real Drive OAuth, a real screen reader (checks were DOM-level: names, labels, dialog roles, focus order).
-- Gains: a row matching no account's statement words or name, or fitting two equally, still counts for no account and shows as gain (`nwGains` in `index.html`); the user fixes it by adding statement words. No hint yet listing unlinked rows.
+- Gains: a row matching no account's statement words or name, or fitting two equally, still counts for no account and shows as gain (`nwGains` in `index.html`); the user fixes it by adding statement words. The accounts card now lists such Investments rows in a warning with a button to Edit accounts (SW 1.0.12).
 - Statement words (`words` on each account in `config/networth`) are dropped by Windows app builds made before this change when they save; re-enter after using an old build.
 - SEGO - Factoring has no August figure, so its September Gains stay blank although its 150 put in now matches.
 - No default "Rent" income category; rent counts in a flat's Gains only if the user adds one and ticks it as a return.

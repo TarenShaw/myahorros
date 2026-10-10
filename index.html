@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-OQ0RgVQubTujEyeOaedEp/IYRZT2B5Q4f1nA2ujhQKo=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-sj7E62DfZlWGrjW/OYL0itijnTHmmWd0y75mlmG/w6I=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1752,7 +1752,9 @@ const STR={
   nwGoalPast:['The goal date has passed.','La fecha del objetivo ya ha pasado.'],
   nwAccounts:['Accounts','Cuentas'], nwAccountsSub:['Value at the end of the month, change since the month before, and share of the total.','Valor a final de mes, cambio desde el mes anterior y peso sobre el total.'],
   nwEditAccounts:['Edit accounts','Editar cuentas'], nwAccount:['Account','Cuenta'], nwValue:['Value','Valor'], nwChangeCol:['Change','Cambio'], nwShare:['Share','Peso'],
-  nwNoFigure:['no figure','sin cifra'], nwRisk:['At risk','En riesgo'],
+  nwNoFigure:['no figure','sin cifra'],
+  nwUnlinked:[(n,a,d)=>`${pl(n,'row')} in Investments (${a}) ${n===1?'matches':'match'} no account, so ${n===1?'it counts':'they count'} as gains: ${d}.`,(n,a,d)=>`${pl(n,'row')} de Inversiones (${a}) no ${n===1?'encaja':'encajan'} con ninguna cuenta, así que ${n===1?'cuenta':'cuentan'} como ganancia: ${d}.`],
+  nwUnlinkedFix:['Add them as statement words in Edit accounts','Añádelas como palabras del extracto en Editar cuentas'], nwRisk:['At risk','En riesgo'],
   nwOverTime:['Over time','Evolución'], nwOverTimeSub:['Month-end totals by group.','Totales a fin de mes por grupo.'], nwChartAria:['Net worth at the end of each month, by group','Patrimonio a final de cada mes, por grupo'],
   nwMonthPick:['Month','Mes'],
   nwSnapTitle:[(m,y)=>`Figures for the end of ${m} ${y}`,(m,y)=>`Cifras a final de ${m} de ${y}`],
@@ -3197,9 +3199,10 @@ function goalGrowthCalc(T,rest,left,pace){
    whose name shares the most words with it ("MyInvestor Pension" beats "MyInvestor Fund"); a tie goes to neither.
    An account's own "statement words" (Edit accounts, comma-separated, e.g. "Gamma Global, Indexa Capital") come first:
    a row containing one of those phrases as whole words goes to that account, the longest phrase winning; the name rule
-   is only the fallback for rows no phrase matches. */
+   is only the fallback for rows no phrase matches. Investments rows linked to no account are listed in out.unlinked
+   so the accounts card can say so instead of showing them silently as gain. */
 function nwGains(prev,k){
-  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map(), put=new Map();
+  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map(), put=new Map(); out.unlinked=[];
   const words=s=>fold(s).split(/[^a-z0-9]+/).filter(x=>x.length>=3);
   const accs=N.accounts.filter(a=>a.group!=='cash').map(a=>({id:a.id,w:new Set(words(a.name)),p:String(a.words||'').split(',').map(loose).filter(Boolean)}));
   /* the one account with the best score; a tie goes to neither */
@@ -3208,7 +3211,7 @@ function nwGains(prev,k){
     const c=' '+loose(r.concept)+' ', cw=new Set(words(r.concept));
     const byPhrase=pick(a=>Math.max(0,...a.p.filter(p=>c.includes(' '+p+' ')).map(p=>p.length)));
     const best=byPhrase||(accs.some(a=>a.p.some(p=>c.includes(' '+p+' ')))?null:pick(a=>{ let s=0; for(const x of a.w) if(cw.has(x)) s++; return s; }));
-    if(best) put.set(best,(put.get(best)||0)-r.amount); }
+    if(best) put.set(best,(put.get(best)||0)-r.amount); else if(r.table==='investments') out.unlinked.push(r); }
   for(const a of N.accounts){
     if(a.group==='cash') continue;
     const v1=s1[a.id], v0=s0[a.id]; if(v1==null||v0==null) continue;
@@ -3232,6 +3235,11 @@ function accountsCard(k){
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
       ${S.canWrite?`<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button>`:''}</div>
     <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
+    ${G.size&&G.unlinked.length?(()=>{ const u=G.unlinked, seen=new Map();
+      /* one entry per description, without the price after "@" or a trailing reference number */
+      for(const r of u){ const d=r.concept.replace(/@.*$/,'').replace(/[\s\d.,:;#/–-]+$/,'').trim()||r.concept; if(!seen.has(d.toLowerCase())) seen.set(d.toLowerCase(),d); }
+      const ds=[...seen.values()];
+      return `<p class="warn-text" style="margin-top:10px">${esc(L('nwUnlinked',u.length,fmtEUR(Math.abs(sum(u.map(r=>r.amount)))),listJoin(ds.slice(0,5).map(d=>`“${d}”`))+(ds.length>5?' …':'')))}${S.canWrite?` <button class="linkish" type="button" data-action="nw-accounts">${esc(L('nwUnlinkedFix'))}</button>`:''}</p>`; })():''}
     ${k&&prev?`<p class="hint" style="margin-top:10px">${esc(L('nwGainsTip'))}</p>`:''}
     ${st&&st.closed.size?`<p class="hint" style="margin-top:10px">${esc(L('nwClosedNote',st.closed.size))}</p>`:''}</section>`;
 }
