@@ -1,7 +1,7 @@
 # PLAN: MyAhorros update
 
 Source: the user's brief (phases 0-7). Status as of 2026-10-10. Details of what was built are in PROGRESS.md.
-Ground rules: keep all existing features working; match existing style and UI language (en + es for every new string); small commits per phase; no secrets in the repo; never push or merge without the user's say-so.
+Ground rules: keep all existing features working; match existing style and UI language (en + es for every new string); small commits per phase; no secrets in the repo; commit to `main`, but ask the user for a yes before each push.
 
 ## Done
 
@@ -20,12 +20,12 @@ Ground rules: keep all existing features working; match existing style and UI la
 | 2.5 | Gemini file uploads | Done (GIF converted; unverified live) | `c814aff` |
 | 2.6 | Clickable answer options | Done (applied locally) | `bdc77ef` |
 | 2.7 | Template download button and link | Done | `bdc77ef` |
-| 3.1-3.9 | Layout, legend, static buttons, icons, space, action buttons, Gains | Done at 1280 px | `b222477` |
-| 4.1 | Landing page | Done | `523c194` |
-| 4.2 | Setup wizard | Done | `523c194` |
-| 4.3 | Tour review | Done (text level) | `523c194` |
-| 5 | GoatCounter and privacy policy | Done | `6f3ff66`, `2a2a787` |
-| 6 | Name proposals; MyAhorros chosen and applied | Done | `978013a`, `133d267` |
+| 3.1-3.9 | Layout, legend, static buttons, icons, space, action buttons, Gains | Done at 1280 px | `de9b16e` |
+| 4.1 | Landing page | Done | `f35a45e` |
+| 4.2 | Setup wizard | Done | `f35a45e` |
+| 4.3 | Tour review | Done (text level) | `f35a45e` |
+| 5 | GoatCounter and privacy policy | Done | `6f3ff66`, `f9b2106` |
+| 6 | Name proposals; MyAhorros chosen and applied | Done | `b6b7a96`, `d4462cc` |
 | 7 | Drive stability (retries, status, no silent overwrite) | Done | `d5b0dbe` |
 
 ## Pending
