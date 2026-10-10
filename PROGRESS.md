@@ -1,38 +1,28 @@
 # PROGRESS
 
-Branch: `worktree-quick-wins` (worktree `.claude/worktrees/quick-wins`), pushed to `origin/worktree-quick-wins`, not merged; based on `main` at `baf2f60` (PR #1 `overhaul` already merged). Last handoff: 2026-10-10.
+Branch: `worktree-quick-wins` (worktree `.claude/worktrees/quick-wins`), based on `main` at `baf2f60` (PR #1 `overhaul` merged). Pushed to `origin/worktree-quick-wins` up to `9f3e05e`; `56b1a99` and `7b4b8ad` plus this handoff are local only (push needs the user's say-so). Not merged. Last handoff: 2026-10-10.
 Product name: **MyAhorros** (site at myahorros.app).
 
 ## Completed
 
 | Phase | Commit | Summary |
 |---|---|---|
-| Setup | `6f3ff66` | GoatCounter + privacy policy, CLAUDE.md |
-| 1.1-1.3, 1.5 | `c814aff` | AI error box with copy details, request chunking/merge, retries, timeouts, truncation handling, Gemini GIF conversion, `js/models.js`, CSP hash tool, `.gitattributes` (LF) |
-| 1.4 + 7 | `d5b0dbe` | Drive/folder sync waits while a dialog is open or edits in flight, "Merge both", version re-check before upload, retry/backoff, sync status line |
-| 2.x | `bdc77ef` | Haiku 5.5 default, model guidance, Paid/Free badges, first-use picker, Change AI, clickable answer options, template button/link |
-| 3.x | `b222477` | Overview order, no chart legends, fixed-width selectors, tab icons, wrapped review notes, bigger type, action buttons, Gains column |
-| 4.x | `523c194` | Landing page, setup wizard (net worth, earlier months, transactions, salary, summary), tour refresh |
-| 5, docs | `2a2a787` | GoatCounter privacy link, README/CLAUDE.md updates |
-| Rename | `978013a`, `133d267` | Renamed to MyAhorros; Gains tooltip explains value rising beyond tracked deposits |
-| 6 | (chat only) | Name proposals delivered; MyAhorros chosen |
-| Merge | `baf2f60` | PR #1 `overhaul` merged into `main` |
-| Gains payouts | `2f844ba` | Gains = change − money put in + interest/dividends/gains paid out (income rows in a returns category naming the account). Civislend repaid 1,000 + 80 interest shows +80. Tooltip en/es rewritten. SW 1.0.9 |
-| Gains test + fixes | `cbd7963` | Playwright run of Gains with ~50 rows (dialog + paste import), Aug gap, reload, edit/delete. Fixed: names match whole words of 3+ letters ("ING" works, "refund" ≠ "Fund"); a row goes to the account sharing most name words, tie = neither (MyInvestor Fund/Pension no longer double-counted); Gains column was hidden at phone width, now shown under Change. New `tests/gains.e2e.js`. SW 1.0.8 |
-| Audit quick wins | `58be1db` | Newcomer audit (Playwright, 390/768/1280 px) then 5 fixes: empty-state actions on Overview/Transactions, "add at least one account" validation, setup strip "step N of 5", paste/import recommended + API key not remembered by default, new title/description/og/twitter tags, `sw.js` VERSION 1.0.7, CSP hash refreshed |
-| Repo files | `517f37a`, `9f3e05e` | Claude files briefly untracked, then restored at the user's request (net: no change); branch pushed |
+| 0-7, rename, merge | `6f3ff66`…`baf2f60` | GoatCounter/privacy; AI errors, chunking, retries, `js/models.js`; Drive/folder sync safety; Haiku 5.5 default, badges, Change AI; layout/Gains column; landing, wizard, tour; renamed MyAhorros; PR #1 merged |
+| Audit quick wins | `58be1db` | Empty-state actions, account validation, "step N of 5", paste/import recommended, share tags |
+| Gains | `cbd7963`, `2f844ba` | Whole-word matching, best account wins, Gains on phones, payouts count (interest/dividends); `tests/gains.e2e.js` |
+| Repo files | `517f37a`, `9f3e05e`, `56b1a99` | Claude files kept in repo; PROGRESS.md handoffs |
+| 8.3 Mobile + tour pass | `7b4b8ad` | Checked 390/768 px (mouse + touch): landing, where-to-save, wizard, all 17 tour steps, all tabs, accounts table, add dialog, import review (fits). Fixed: 36-40 px touch targets on phones/`pointer:coarse` (Categories 176/183 under 36 px → 0); `--muted` light → `#5c6a65` (≥4.5:1 everywhere; web.css and privacy.html greys too); "You're set up" card on Overview only, no eyebrow/step list, Got it beside title (46% → 40% of 390 px screen), Transactions shows one-line "Go to Overview" bar; phone accounts table labels Change and Share; tour card at bottom for tall targets on phones; tabs fit 641-900 px; where-to-save panel traps Tab; Esc on wizard = Finish later (no longer reopens). Two new checks in `tests/landing-wizard.e2e.js`. SW 1.0.10 |
 
 ## In progress
 
-Nothing uncommitted. Untracked in the worktree: `.playwright-cli/` (Playwright logs, safe to delete). In the main checkout: `.graphifyignore`, `graphify-out/`. Next proposed section: 8.3 (mobile and tour pass); open questions from the last briefing (fix or only log audit layout items, keyboard/screen-reader scope) are unanswered.
+Nothing uncommitted. Untracked: `.playwright-cli/` (Playwright logs, safe to delete). Main checkout: `.graphifyignore`, `graphify-out/`. Audit scripts used for 8.3 lived in the job tmp folder (not kept).
 
 ## Pending
 
-- 8.4 Merge `worktree-quick-wins` into `main` (publishes the live site via GitHub Pages). Needs the user's say-so. PR link: https://github.com/TarenShaw/myahorros/pull/new/worktree-quick-wins
+- 8.4 Merge `worktree-quick-wins` into `main` (publishes via GitHub Pages). Needs the user's say-so; push the 2 local commits first. PR link: https://github.com/TarenShaw/myahorros/pull/new/worktree-quick-wins
 - 8.2 Live-key verification (rotated Gemini key + real Claude key, large statement on Haiku 5.5 and Gemini).
-- 8.3 Mobile and tour pass: landing page and import review at 390 px not yet checked; keyboard and screen-reader checks not done.
 - 8.5 Post-release: GoatCounter counts a visit, existing users update cleanly (SW `VERSION`, CSP hash).
-- Remaining audit items, only if the user asks (see Known issues): P1 #5-#10, P2 list.
+- Remaining audit items, only if the user asks (see Known issues).
 - 9.x follow-ups from PLAN.md (deposit-to-account matching, send answers back to the AI).
 
 ## Decisions
@@ -52,39 +42,43 @@ Nothing uncommitted. Untracked in the worktree: `.playwright-cli/` (Playwright l
 - 2026-10-10: Gains matching: whole words ≥3 letters, best-matching account wins, tie counts for neither (shown as gain). Tip text updated en+es.
 - 2026-10-10: Gains means what the account earned you: price change plus payouts (interest, dividends, capital gains, rent if its category is ticked as a return). Supersedes the 2026-10-10 Gains formula above where they differ. A dividend that stayed inside the account must not also be recorded as income (double count; stated in tooltip).
 - 2026-10-10: Keep everything in the repo, including CLAUDE.md, PLAN.md, PROGRESS.md and `.claude/skills/`; delete nothing. Only `.playwright-cli/` logs stay untracked.
-- 2026-10-10: User approved pushing `worktree-quick-wins` (done). Merge into `main` still needs approval.
+- 2026-10-10: User approved pushing `worktree-quick-wins` (done once). Merge into `main` still needs approval.
 - 2026-10-10: Setup strip counts wizard steps (acc and figures = 1, transactions = 3, of 5); wizard step 3 recommends paste/import, not AI.
+- 2026-10-10: 8.3 scope (user: "complete all open questions 1 and 2"): fix every audit layout item inside 8.3 (setup-done card, tap targets, contrast, phone accounts-table labels), and run keyboard/screen-reader checks on landing, where-to-save, wizard, tour and add/import dialogs, fixing real problems found.
 
 ## Known issues
 
 - Rotate the Google/Gemini API key pasted into an earlier chat (treated as exposed; never used).
 - Gemini rejection and the large-input failure (Haiku 5.5) not reproduced without a live key; mocks only (`js/web-ai.js`, `index.html` aiRun).
 - Audit, not yet fixed:
-  - Demo → "Set up my tracker" silently sets `ybt.storage=browser` and skips the where-to-save chooser (`js/web-shim.js`, `index.html`).
-  - "Setup done" card appears after one transaction and repeats on every tab, about 40% of a 390 px screen (`guideCard` in `index.html`).
+  - Demo → tour end opens the setup wizard and silently sets `ybt.storage=browser`, skipping the where-to-save chooser (`js/web-shim.js`, `index.html`).
   - "No keyword matches this concept" jargon shown before typing; amount error not cleared on input; example `1.234,56` ignores the chosen number format (`index.html` add-transaction dialog).
   - Demo Overview shows an empty current month and a "no backup yet" warning (`backupNudge`, `index.html`).
-  - Contrast below 4.5:1 for 11 px grey labels; 18-30 tap targets under 36 px per tab, about 175 on Categories (`web.css`).
   - Spanish "tu control" wording; category defaults are Spanish-personal ("Lottery", "Gym", "Tickets Comida", "Flex"); currency list lacks JPY/COP/ARS/BRL.
   - `og:image` is the square `icons/icon-512.png`; a 1200x630 image would preview better. No custom 404.
   - Footer credit reads "Claude Opus 5.5" (`index.html`, `js/web-shim.js`); check it is still wanted.
-- Not tested: Firefox/Safari, offline/service-worker update, real Drive OAuth, import review at 390 px.
-- Gains: a deposit whose description doesn't name the account (e.g. "Buy ETF"), or fits two accounts equally ("MyInvestor deposit"), is not counted for any account, so its amount shows up as gain in whichever account received it (`nwGains` in `index.html`). Fix would be 9.1.
-- No default "Rent" income category; rent counts in a flat's Gains only if the user adds one and ticks it under "Interest, dividends and gains".
+- Found in 8.3, logged only (minor):
+  - Focus lands on BODY on the welcome screen after choosing where to save, and after Esc closes the auto-opened wizard (no opener to return to) (`index.html` `closeModal`, `viewWelcome`).
+  - "You're set up" card is still ~40% of a 390 px screen; the rest is copy length (`gDoneText`, `gSafeWeb`).
+  - Tour step 5 says "Hover Gains", meaningless on touch (`tour_nwAccounts`, en+es).
+  - `guideCard` acc/val/tx branches are unreachable (those states use `guideStrip`); strings `gEyebrowDone`, `gStep_*`, `gSkipped`, `gDoneSr` now unused.
+  - Landing is `role=dialog` without `aria-modal`; harmless because the app behind it is `display:none`.
+  - `.info-btn` is drawn 17 px (hit area 41 px via `::after`); inline footer links are 14 px tall.
+- Not tested: Firefox/Safari, offline/service-worker update, real Drive OAuth, a real screen reader (checks were DOM-level: names, labels, dialog roles, focus order).
+- Gains: a deposit whose description doesn't name the account, or fits two accounts equally, counts for no account, so it shows as gain (`nwGains` in `index.html`). Fix would be 9.1.
+- No default "Rent" income category; rent counts in a flat's Gains only if the user adds one and ticks it as a return.
 - Gains blank for an account missing a figure in the previous month with figures, even if an earlier month has one.
-- Phone layout of the accounts table: Share % sits centred under the name; Change has no label (pre-existing, `index.html` CSS ~line 884).
-- Switching language to Spanish auto-translates category names (35 in the test tracker); expected, but worth knowing when testing.
-- Port 8000 was already in use during this session; tests ran on 8123 via `START_URL=http://localhost:8123/`.
+- Switching language to Spanish auto-translates category names; expected, but worth knowing when testing.
+- Port 8000 is often in use; tests run on 8123 via `START_URL=http://localhost:8123/`.
 - Line endings: checkouts must stay LF or the CSP hash breaks locally (`.gitattributes`, `tools/update-csp-hash.js`).
-- GitHub says the repo moved to `https://github.com/TarenShaw/myahorros.git`; pushes still work. Update with `git remote set-url origin https://github.com/TarenShaw/myahorros.git`.
-- Worktree sessions refuse compound git commands and `eval` strings; run git as plain separate commands.
+- GitHub says the repo moved to `https://github.com/TarenShaw/myahorros.git`; update with `git remote set-url origin https://github.com/TarenShaw/myahorros.git`.
+- Worktree sessions refuse compound shell commands that mix `cd`/heredocs with other steps; run them as separate commands.
 
 ## Commands
 
 - Serve: `python -m http.server 8000` then open http://localhost:8000
 - After editing index.html's inline script: `node tools/update-csp-hash.js`
-- playwright-cli: put multi-step code in a file and run `playwright-cli -s=<name> run-code --filename=<file>` (inline JS with "eval" is refused in worktree sessions); app internals like `nw()` are not global, so read the DOM.
 - Tests: `node tests/ai-smoke.js`, `node tests/chunk-smoke.js`
-- Browser tests (Playwright, Edge channel, server running): `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` and `tests/landing-wizard.e2e.js`, `tests/gains.e2e.js` (playwright module: `C:/Users/taren/AppData/Roaming/npm/node_modules/@playwright/cli/node_modules`; other port via `START_URL`)
+- Browser tests (Playwright, Edge channel, server running): `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js`, `tests/landing-wizard.e2e.js`, `tests/gains.e2e.js` (playwright module: `C:/Users/taren/AppData/Roaming/npm/node_modules/@playwright/cli/node_modules`; other port via `START_URL`)
 - Bump `VERSION` in `sw.js` and update its `FILES` list when shipped files change.
-- Audit/verification driving: `playwright-cli -s=<name> open http://localhost:<port>`, scripts via `run-code --filename=<file>`.
+- playwright-cli: put multi-step code in a file and run `playwright-cli -s=<name> run-code --filename=<file>`; app internals like `nw()` are not global, so read the DOM.
