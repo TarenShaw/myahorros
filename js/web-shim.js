@@ -74,12 +74,16 @@ const TX={
     mergedBoth:'Merged both versions. The other one was kept as a backup.',
     landDemo:'See a demo', landStart:'Get started', landOpen:'Open my tracker', landMenu:'Sections',
     landH1:'Know where your money goes, and what you’re worth.',
-    landSub:'A free yearly budget and net worth tracker that keeps your data on your side: in a folder on your computer, in your Google Drive, or in your browser.',
+    landSub:'A free, simple way to follow what you earn, spend and own. Your figures stay on your device or in your own Google Drive.',
     landNoSignup:'No account. No sign-up. Nothing leaves your device unless you choose.',
-    landF:[['See your whole year at a glance','Income, expenses and investments month by month, where the money went by category, monthly limits and indicators that tell you if you’re on track. Click any figure to see the transactions behind it.'],
-           ['Track what you’re worth','List your accounts once, type their balance at the end of each month and watch your net worth grow. See what you saved, what your investments gained on their own, and how close you are to your goal.'],
-           ['Bring in your statements','Paste rows or import your bank’s .csv or .xlsx and the tracker sorts them into categories by itself, learning from your choices. Or let an AI read statements and PDFs for you: you check everything before it’s saved.'],
-           ['Your data stays yours','There is no account and no server holding your figures. Save them in a folder, in your own Google Drive or only in this browser, with a daily backup. It works offline and installs like an app.']],
+    landChip:'Free · No sign-up · Private',
+    landShotAlt:'The Net worth page with example figures: a total of 39.065 € and a chart of month-end totals that grows each month, with the last four months of the year in grey as a forecast.',
+    landFeatT:'Everything in one place', landFeatSub:'Made for people who just want to know how they’re doing. No finance words needed.',
+    landF:[['Income and expenses','Add what comes in and what goes out, by hand or with your bank’s file. It sorts everything into categories and puts each month side by side.'],
+           ['Net worth over time','Once a month, type what each account holds. One chart shows your total growing through the year.'],
+           ['Investments','See how much you put in, and how much your funds, shares or pension gained on their own.'],
+           ['A look ahead','Grey months show where you’ll likely be by December if you carry on as you have this past year.']],
+    landSafeT:'Your data stays yours', landSafe:'There is no account and no server holding your figures. Keep them in a folder, in your own Google Drive or only in this browser, with a daily backup. It works offline and installs like an app.',
     landHow:'How it works', landHowSteps:[['Choose where it lives','A folder, your Google Drive or your browser. You can change it any time.'],['Add what you own','A few accounts and what they were worth last month.'],['Add your transactions','By hand, by pasting a statement, or with AI.']],
     landEnd:'Ready when you are', landEndSub:'Take the two-minute tour with example data, or set up your own tracker.',
     landPrivacy:'Privacy',
@@ -163,12 +167,16 @@ const TX={
     mergedBoth:'Se han combinado las dos versiones. La otra se guardó como copia de seguridad.',
     landDemo:'Ver una demo', landStart:'Empezar', landOpen:'Abrir mi control', landMenu:'Secciones',
     landH1:'Sabe a dónde va tu dinero y cuánto vales.',
-    landSub:'Un control de presupuesto anual y patrimonio, gratuito, que guarda tus datos de tu lado: en una carpeta de tu ordenador, en tu Google Drive o en tu navegador.',
+    landSub:'Una forma gratuita y sencilla de seguir lo que ganas, gastas y tienes. Tus cifras se quedan en tu dispositivo o en tu propio Google Drive.',
     landNoSignup:'Sin cuenta. Sin registro. Nada sale de tu dispositivo si tú no quieres.',
-    landF:[['Tu año entero de un vistazo','Ingresos, gastos e inversiones mes a mes, a dónde fue el dinero por categoría, límites mensuales e indicadores que te dicen si vas bien. Pulsa cualquier cifra para ver los movimientos que hay detrás.'],
-           ['Sigue lo que vales','Apunta tus cuentas una vez, escribe su saldo a final de cada mes y mira crecer tu patrimonio. Ve lo que ahorraste, lo que ganaron tus inversiones por sí solas y cuánto te falta para tu objetivo.'],
-           ['Trae tus extractos','Pega filas o importa el .csv o .xlsx de tu banco y el control las clasifica solo, aprendiendo de tus elecciones. O deja que una IA lea extractos y PDF por ti: lo revisas todo antes de guardarlo.'],
-           ['Tus datos son tuyos','No hay cuenta ni servidor con tus cifras. Guárdalas en una carpeta, en tu propio Google Drive o solo en este navegador, con copia diaria. Funciona sin conexión y se instala como una app.']],
+    landChip:'Gratis · Sin registro · Privado',
+    landShotAlt:'La página de Patrimonio con cifras de ejemplo: un total de 39.065 € y un gráfico de totales a fin de mes que crece cada mes, con los cuatro últimos meses del año en gris como previsión.',
+    landFeatT:'Todo en un mismo sitio', landFeatSub:'Pensado para quien solo quiere saber cómo va. Sin palabras de finanzas.',
+    landF:[['Ingresos y gastos','Apunta lo que entra y lo que sale, a mano o con el archivo de tu banco. Lo ordena todo en categorías y pone cada mes al lado del anterior.'],
+           ['Tu patrimonio mes a mes','Una vez al mes, escribe cuánto hay en cada cuenta. Un gráfico te enseña cómo crece tu total a lo largo del año.'],
+           ['Inversiones','Ve cuánto has aportado y cuánto han ganado solos tus fondos, acciones o plan de pensiones.'],
+           ['Mirada al futuro','Los meses en gris te enseñan dónde estarás seguramente en diciembre si sigues como este último año.']],
+    landSafeT:'Tus datos son tuyos', landSafe:'No hay cuenta ni servidor con tus cifras. Guárdalas en una carpeta, en tu propio Google Drive o solo en este navegador, con copia diaria. Funciona sin conexión y se instala como una app.',
     landHow:'Cómo funciona', landHowSteps:[['Elige dónde vive','Una carpeta, tu Google Drive o tu navegador. Puedes cambiarlo cuando quieras.'],['Añade lo que tienes','Unas cuentas y lo que valían el mes pasado.'],['Añade tus movimientos','A mano, pegando un extracto o con IA.']],
     landEnd:'Cuando quieras', landEndSub:'Haz el recorrido de dos minutos con datos de ejemplo, o configura tu propio control.',
     landPrivacy:'Privacidad',
@@ -471,20 +479,26 @@ function landing(known){
     const draw=()=>{
       const L0=lang(), F=t('landF'), H=t('landHowSteps');
       const cta=known?`<button type="button" class="btn primary" data-x="open">${esc(t('landOpen'))}</button>`:`<button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button>`;
-      const ico=['<path d="M4 16.5V10M10 16.5V4M16 16.5V8"/>','<path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/>','<rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8.5h14M8 8.5V17M12.5 8.5V17"/>','<path d="M10 2.5l6 2.5v4.5c0 4-2.6 6.8-6 8-3.4-1.2-6-4-6-8V5z"/><path d="M7.5 10l2 2 3.5-4"/>'];
+      const ico=['<path d="M4 16.5V10M10 16.5V4M16 16.5V8"/>','<path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/>','<path d="M3 14.5l4.5-4.5 3 3L17 6.5"/><path d="M12.5 6.5H17V11"/>','<path d="M3 15.5l3.5-3.5 3 2 2.5-3"/><path d="M14 9.5l3.5-3.5" stroke-dasharray="1.2 2.6"/><path d="M3 18h14"/>'],
+        shield='<path d="M10 2.5l6 2.5v4.5c0 4-2.6 6.8-6 8-3.4-1.2-6-4-6-8V5z"/><path d="M7.5 10l2 2 3.5-4"/>', svg=(d,n)=>`<svg viewBox="0 0 20 20" width="${n}" height="${n}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+      /* the product shot (made by tools/landing-shot.js from made-up data) in the tracker's light or dark look */
+      const th=document.documentElement.getAttribute('data-ybt-theme'), dark=th?th==='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);
       el.innerHTML=`<header class="wl-top"><span class="wl-brand">MyAhorros</span>
           <div class="wl-top-r"><div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>
           ${cta}</div></header>
         <main>
-          <section class="wl-hero"><h1>${esc(t('landH1'))}</h1><p>${esc(t('landSub'))}</p>
+          <section class="wl-hero"><div class="wl-hero-text"><p class="wl-chip">${esc(t('landChip'))}</p><h1>${esc(t('landH1'))}</h1><p class="wl-lead">${esc(t('landSub'))}</p>
             <div class="wl-cta">${cta}</div>
-            <p class="wl-fine">${esc(t('landNoSignup'))}</p></section>
-          ${F.map((f,i)=>`<section class="wl-sec wl-reveal${i%2?' alt':''}"><svg viewBox="0 0 20 20" width="44" height="44" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ico[i]}</svg><div><h2>${esc(f[0])}</h2><p>${esc(f[1])}</p></div></section>`).join('')}
+            <p class="wl-fine">${esc(t('landNoSignup'))}</p></div>
+            <figure class="wl-shot"><picture><source type="image/webp" srcset="images/landing-hero-${dark?'dark':'light'}.webp"><img src="images/landing-hero.jpg" alt="${esc(t('landShotAlt'))}" width="1280" height="1010" fetchpriority="high" decoding="async"></picture></figure></section>
+          <section class="wl-feats wl-reveal"><h2>${esc(t('landFeatT'))}</h2><p class="wl-sub">${esc(t('landFeatSub'))}</p>
+            <div class="wl-grid">${F.map((f,i)=>`<article class="wl-card"><span class="wl-ico">${svg(ico[i],22)}</span><h3>${esc(f[0])}</h3><p>${esc(f[1])}</p></article>`).join('')}</div></section>
+          <section class="wl-safe wl-reveal"><span class="wl-ico big">${svg(shield,30)}</span><div><h2>${esc(t('landSafeT'))}</h2><p>${esc(t('landSafe'))}</p></div></section>
           <section class="wl-how wl-reveal"><h2>${esc(t('landHow'))}</h2><ol>${H.map((h,i)=>`<li><b>${esc(h[0])}</b><span>${esc(h[1])}</span></li>`).join('')}</ol></section>
           <section class="wl-end wl-reveal"><h2>${esc(t('landEnd'))}</h2><p>${esc(t('landEndSub'))}</p>
             <div class="wl-cta">${cta}</div></section>
         </main>
-        <footer class="wl-foot"><a href="privacy.html">${esc(t('landPrivacy'))}</a></footer>`;
+        <footer class="wl-foot"><span class="wl-brand">MyAhorros</span><a href="privacy.html">${esc(t('landPrivacy'))}</a><span>© ${new Date().getFullYear()}</span></footer>`;
       /* sections fade in as they scroll into view (not for people who asked for less motion) */
       const secs=[...el.querySelectorAll('.wl-reveal')];
       if(!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){ secs.forEach(x=>x.classList.add('in')); return; }

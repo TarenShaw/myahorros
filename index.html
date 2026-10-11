@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-lDd2KjCv+OPq2mtW60GHgg96erGqXHe88xf6Spt9NuI=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-p2rijQGVCLP8WX50KaYvoi7zrfsrCJpY4vj/P+RK1OU=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -281,6 +281,7 @@ select{padding-right:28px}
 .seg button{border:0;background:transparent;border-radius:5px;padding:5px 11px;font-weight:600;font-size:13px;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap}
 .seg button:hover{color:var(--ink);background:var(--surface-2)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.seg button[aria-disabled="true"]{opacity:.4;cursor:not-allowed;background:transparent}
 .seg .ct{font:500 11px/1 var(--f-mono);opacity:.75}
 .sw{display:inline-block;width:9px;height:9px;border-radius:2px;flex:none}
 .sw.income{background:var(--c-income)}.sw.expenses{background:var(--c-expenses)}.sw.investments{background:var(--c-investments)}
@@ -803,6 +804,11 @@ fieldset.plain legend{padding:0;margin-bottom:6px}
 .nw-closed .linkish{justify-self:start}
 .nw-years button{font-variant-numeric:tabular-nums}
 .chart .nw-inc{opacity:.38}
+.chart .nw-fc{opacity:.32;filter:saturate(.25)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]):not([data-ybt-theme="light"]) .chart .nw-fc{opacity:.45}}
+:root[data-theme="dark"] .chart .nw-fc,:root[data-ybt-theme="dark"] .chart .nw-fc{opacity:.45}
+.chart .trend.fc{stroke-dasharray:1.5 5;opacity:.45}
+.lkey.fc{width:10px;height:10px;border-radius:2px;background:var(--g-invest);opacity:.3;filter:saturate(.25);vertical-align:-1px}
 .chart text.lbl.inc{fill:var(--muted)}
 .chart text.nw-lbl{paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round}
 .nw-faded{margin-top:12px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font-size:13px}
@@ -1282,7 +1288,9 @@ const STR={
   pct100:['100% of income','100% de los ingresos'], kept:['Kept','Conservado'],
   shareAria:[y=>`Expenses and investments as a share of income per month in ${y}`,y=>`Gastos e inversiones como porcentaje de los ingresos por mes en ${y}`],
   monthByMonth:['Month by month','Mes a mes'], mmView:['Months or days','Meses o días'], mmMonths:['Months','Meses'], mmDays:['Days','Días'],
-  mmDaysAll:['Days show one type at a time, Expenses here: pick Income or Investments to see those.','Por días se ve un tipo cada vez, aquí Gastos: elige Ingresos o Inversiones para verlos.'],
+  mmDaysOff:['Daily view is available for Income, Expenses or Investments individually.','La vista por días está disponible para Ingresos, Gastos o Inversiones por separado.'],
+  dayPos_expenses:['Spent','Gastado'], dayNeg_expenses:['Refunds','Devoluciones'], dayPos_income:['Received','Recibido'], dayNeg_income:['Taken back','Devuelto'],
+  dayPos_investments:['Put in','Aportado'], dayNeg_investments:['Taken out','Retirado'], dayNet:['Net','Neto'],
   dayAria:[(n,y)=>`${n} per day in ${y}`,(n,y)=>`${n} por día en ${y}`], clickBar:['Click a bar to see that month by category.','Pulsa una barra para ver ese mes por categoría.'],
   all:['All','Todo'], show:['Show','Mostrar'],
   perMonth:[n=>`${n} per month`,n=>`${n} por mes`], trendFor:[y=>`Trend line for ${y}`,y=>`Línea de tendencia ${y}`],
@@ -1745,7 +1753,7 @@ const STR={
   info_fh_passive:['What your investments could pay you each month at a 4% yearly withdrawal, compared with what you spend.','Lo que tus inversiones podrían pagarte cada mes retirando un 4% al año, comparado con lo que gastas.'],
   info_fh_age:['The Millionaire Next Door rule: age × yearly gross income ÷ 10.','La regla de «The Millionaire Next Door»: edad × ingresos brutos anuales ÷ 10.'],
   info_nwGoal:['Needed a month is what’s left to the goal divided by the months left. You save a month is your average saving over the last six finished months. From growth is what your investments, illiquid and retirement accounts would have to earn on top of that.','Hace falta al mes es lo que falta para el objetivo dividido entre los meses que quedan. Ahorras al mes es tu ahorro medio de los últimos seis meses completos. Con crecimiento es lo que tendrían que ganar tus inversiones, ilíquido y jubilación además de eso.'],
-  info_nwOverTime:['Month-end totals stacked by group. The dashed trend line shows the general direction. A faded month is missing a figure for one of your accounts, so it looks lower than it was.','Totales a fin de mes apilados por grupo. La línea de tendencia discontinua muestra la dirección general. Un mes atenuado no tiene la cifra de alguna cuenta, así que parece más bajo de lo que fue.'],
+  info_nwOverTime:['Month-end totals stacked by group. The dashed trend line shows the general direction. A faded month is missing a figure for one of your accounts, so it looks lower than it was. Grey months after your last figure are a forecast.','Totales a fin de mes apilados por grupo. La línea de tendencia discontinua muestra la dirección general. Un mes atenuado no tiene la cifra de alguna cuenta, así que parece más bajo de lo que fue. Los meses en gris después de tu última cifra son una previsión.'],
   info_nwAccounts:['Change is the difference from the previous month with figures; Share is the account’s part of the total. An account you set to 0 is hidden from the next month on, and comes back if you give it a figure.','Cambio es la diferencia con el mes anterior con cifras; Peso es la parte del total que supone la cuenta. Una cuenta que pones a 0 se oculta a partir del mes siguiente y vuelve si le pones una cifra.'],
   info_setStart:['The first month your figures cover. Months before it are greyed out on Yearly tracking and left out of averages: useful if you started tracking mid-year.','El primer mes que cubren tus cifras. Los meses anteriores salen en gris en Seguimiento y no cuentan en las medias: útil si empezaste a registrar a mitad de año.'],
   /* guided tour */
@@ -1896,6 +1904,10 @@ const STR={
   nwGains:['Gains','Ganancias'],
   nwGainsTip:['Gains: what an account earned you. It is the change since last month, minus the money you put in, plus interest, dividends, capital gains or rent it paid out to you. Money put in or taken out comes from your Investments rows that contain the account’s statement words (Edit accounts) or, failing that, its name; payouts come from income rows with the account’s statement words or name, in a category ticked under “Interest, dividends and gains” on Net worth. If a dividend stayed inside the account, don’t also record it as income, or it counts twice. Cash accounts show only the interest they paid you. A row that matches no account, or fits two accounts equally well, isn’t counted for any account, so it shows up as gain: use “Link them to accounts” under the table to fix it. A row that says pension goes to a Retirement account.','Ganancias: lo que te ha hecho ganar una cuenta. Es el cambio desde el mes anterior, menos el dinero que aportaste, más los intereses, dividendos, plusvalías o alquiler que te pagó. Lo aportado o retirado sale de tus filas de Inversiones que contienen las palabras del extracto de la cuenta (Editar cuentas) o, si no, su nombre; los cobros, de los ingresos con las palabras del extracto o el nombre de la cuenta, en una categoría marcada en “Intereses, dividendos y plusvalías” de Patrimonio. Si un dividendo se quedó dentro de la cuenta, no lo apuntes también como ingreso o contará dos veces. Las cuentas de efectivo solo muestran los intereses que te pagaron. Una fila que no encaja con ninguna cuenta, o que encaja igual de bien con dos, no cuenta para ninguna y se muestra como ganancia: usa «Vincularlas a sus cuentas» debajo de la tabla para corregirlo. Una fila que dice pensión va a una cuenta de Jubilación.'],
   nwLaterHero:[n=>`No figure yet this month for ${n}: ${n.includes(',')||n.includes(' and ')?'their':'its'} first figure comes later, so the total may be low.`,n=>`Sin cifra este mes para ${n}: su primera cifra es posterior, así que el total puede quedarse corto.`],
+  nwFcTag:['Forecast','Previsión'],
+  nwFcNote:[n=>`Greyed months are projected from your last ${n===1?'month, so they stay flat':n+' months'}.`,n=>`Los meses en gris son una previsión a partir de ${n===1?'tu único mes, así que no cambian':'tus últimos '+n+' meses'}.`],
+  nwFcHow:[n=>n===1?'A projection, not a figure you entered. With only one month of figures so far, it stays flat.':`A projection, not a figure you entered: each group carries on from its last month-end at its typical monthly change over your last ${n} months (the middle value, so one unusual month doesn’t skew it).`,
+    n=>n===1?'Una previsión, no una cifra que hayas puesto. Con un solo mes de cifras, se queda igual.':`Una previsión, no una cifra que hayas puesto: cada grupo sigue desde su último fin de mes con su cambio mensual típico de tus últimos ${n} meses (el valor del medio, para que un mes raro no la desvíe).`],
   nwFaded:['Faded months are missing figures, so they look lower than they were:','Los meses atenuados no tienen todas las cifras, así que parecen más bajos de lo que fueron:'],
   nwLaterLine:[(n,m)=>`${n}: no figures before ${m}.`,(n,m)=>`${n}: sin cifras antes de ${m}.`],
   nwGapLine:[(n,m)=>`${n}: no figure for ${m}.`,(n,m)=>`${n}: sin cifra en ${m}.`],
@@ -2689,7 +2701,7 @@ function viewOverview(){
   }).join('');
   const oc=S.ui.oc, am=ms;
   const multi=yearsWithData().length>1;
-  const mmT=S.ui.mm.table, mmD=!!S.ui.mm.days, mc=mmCat(A);
+  const mmT=S.ui.mm.table, mmD=!!S.ui.mm.days&&mmT!=='all', mc=mmCat(A);
   return `<div class="stack">
     ${notice}${backupNudge()}${monthlyCard()}
     <section class="ov-top" aria-label="${esc(L('yearSummary'))}">
@@ -2711,10 +2723,9 @@ function viewOverview(){
     <section class="card">
       <div class="card-head"><div><h2>${esc(L('monthByMonth'))}${info('ovMonthly')}</h2><p class="sub">${esc(mmSummary(A))} ${esc(L('clickBar'))}</p></div>
         <div class="ctrls"><div class="seg" role="group" aria-label="${esc(L('show'))}"><button data-action="mm-table" data-t="all" aria-pressed="${mmT==='all'}">${esc(L('all'))}</button>${TKEYS.map(t=>`<button data-action="mm-table" data-t="${t}" aria-pressed="${mmT===t}"><i class="sw ${t}"></i>${esc(TL(t))}</button>`).join('')}</div>
-          <div class="seg" role="group" aria-label="${esc(L('mmView'))}"><button data-action="mm-days" data-v="0" aria-pressed="${!mmD}">${esc(L('mmMonths'))}</button><button data-action="mm-days" data-v="1" aria-pressed="${mmD}">${esc(L('mmDays'))}</button></div></div></div>
+          <div class="seg" role="group" aria-label="${esc(L('mmView'))}"><button data-action="mm-days" data-v="0" aria-pressed="${!mmD}">${esc(L('mmMonths'))}</button><button data-action="mm-days" data-v="1" aria-pressed="${mmD}"${mmT==='all'?` aria-disabled="true" title="${esc(L('mmDaysOff'))}"`:''}>${esc(L('mmDays'))}</button></div></div></div>
       ${mmT!=='all'&&mc?`<div class="legend" style="margin-bottom:6px"><button type="button" class="cat-chip" data-action="mm-clear-cat">${esc(L('onlyCat',dispCat(mc)))}<span aria-hidden="true">${ICON.x}</span><span class="sr">${esc(L('backToAll',mmT))}</span></button></div>`:''}
       <div class="chart" id="ch-monthly"></div>
-      ${mmD&&mmT==='all'?`<p class="foot-note">${esc(L('mmDaysAll'))}</p>`:''}
       ${partialOut&&!mmD?`<p class="foot-note">${esc(L('partialNote',M()[nm.m]))}</p>`:''}
     </section>
     <section class="card">
@@ -2817,14 +2828,17 @@ function colPathDown(x,y0,w,h,r){ r=Math.max(0,Math.min(r,w/2,h)); const yb=y0+h
 function colPath(x,yTop,w,h,r){ r=Math.max(0,Math.min(r,w/2,h)); const yb=yTop+h; return `M${x},${yb}V${yTop+r}Q${x},${yTop} ${x+r},${yTop}H${x+w-r}Q${x+w},${yTop} ${x+w},${yTop+r}V${yb}Z`; }
 function mmCat(A){ const c=S.ui.mm.cat, t=S.ui.mm.table; return c&&t!=='all'&&A[t]&&A[t].rows.has(c)?c:null; }
 function mmValues(A,t,idx,cat){ const src=cat?A[t].rows.get(cat):A[t].total; return idx.map(i=>r2(t==='expenses'?-src[i]:src[i])); }
-/* the Days view: one value per day of the chart months (up to today in the month in progress), signs as in mmValues */
+/* the Days view: per day of the chart months (up to today in the month in progress), signs as in mmValues:
+   pos and neg are the rows each way (purchases and refunds), vals the net */
 function mmDaily(y,t,cat){
   const idx=chartIdx(y), n=nowYM(), f=ovFirst(y), known=agg(y,true)[t].rows, by=new Map();
   for(const r of allRows()){ if(r.table!==t||+r.date.slice(0,4)!==y||+r.date.slice(5,7)-1<f) continue;
     if(cat&&((r.category&&r.category!==UNCAT&&known.has(r.category))?r.category:UNCAT)!==cat) continue;
-    const d=r.date.slice(0,10); by.set(d,(by.get(d)||0)+(t==='income'?r.amount:-r.amount)); }
+    /* kept apart, not netted: a refund on a day with purchases would otherwise vanish into that day's total */
+    const d=r.date.slice(0,10), v=t==='income'?r.amount:-r.amount, b=by.get(d)||{pos:0,neg:0}; b[v<0?'neg':'pos']+=v; by.set(d,b); }
   const dates=[]; for(const m of idx){ const dn=y===n.y&&m===n.m?n.day:new Date(y,m+1,0).getDate(); for(let d=1;d<=dn;d++) dates.push(ymOf(y,m)+'-'+String(d).padStart(2,'0')); }
-  return {dates,vals:dates.map(d=>r2(by.get(d)||0))};
+  const pos=dates.map(d=>r2((by.get(d)||{}).pos||0)), neg=dates.map(d=>r2((by.get(d)||{}).neg||0));
+  return {dates,pos,neg,vals:pos.map((v,i)=>r2(v+neg[i]))};
 }
 /* least-squares line through {x,v} points; x0..x1 is the stretch it is drawn over */
 function linFitXY(pts){
@@ -2851,7 +2865,8 @@ function drawColumns(el,labels,series,opts){
   const TR=opts.trend, tr=TR&&TR.x1>TR.x0?[TR.at(TR.x0),TR.at(TR.x1)]:null;
   const allv=[...series.flatMap(s=>s.values),...(tr||[])].filter(v=>v!=null&&isFinite(v));
   const {top,bot,arr}=niceRange(Math.min(0,...allv),Math.max(0,...allv),4); const y=v=>m.t+ph-((v-bot)/(top-bot))*ph;
-  const bw=Math.max(2,Math.min(k===1?34:24,(band*(k===1?0.5:0.74)-gap*(k-1))/k)), gw=bw*k+gap*(k-1);
+  /* overlay: the series share one column (one above the line, one below), as in the Days view */
+  const kk=opts.overlay?1:k, bw=Math.max(2,Math.min(kk===1?34:24,(band*(kk===1?0.5:0.74)-gap*(kk-1))/kk)), gw=bw*kk+gap*(kk-1), xj=j=>opts.overlay?0:j*(bw+gap);
   let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opts.label)}">`;
   if(opts.selected!=null&&opts.selected>=0&&opts.selected<n) s+=`<rect class="sel" x="${m.l+band*opts.selected}" y="${m.t}" width="${band}" height="${ph}" rx="4"/>`;
   s+=`<rect class="hl" id="${el.id}-hl" x="0" y="${m.t}" width="${band}" height="${ph}" rx="4"/>`;
@@ -2859,8 +2874,8 @@ function drawColumns(el,labels,series,opts){
   for(const v of arr) s+=`<text class="tk" x="${m.l-8}" y="${(y(v)+3.5).toFixed(1)}" text-anchor="end">${fmtTick(v)}</text>`;
   labels.forEach((lab,i)=>{
     const x0=m.l+band*i+(band-gw)/2;
-    series.forEach((se,j)=>{ const v=se.values[i]; if(!(Math.abs(v)>=0.005)) return; const y0=y(0), yv=y(v);
-      const d=v>0?colPath(x0+j*(bw+gap),yv,bw,y0-yv,4):colPathDown(x0+j*(bw+gap),y0,bw,yv-y0,4);
+    series.forEach((se,j)=>{ const v=se.values[i]; if(!(Math.abs(v)>=0.005)) return; const y0=y(0), h=Math.max(2,Math.abs(y(v)-y0));
+      const d=v>0?colPath(x0+xj(j),y0-h,bw,h,4):colPathDown(x0+xj(j),y0,bw,h,4);
       s+=`<path class="bar${i===opts.partial?' partial':''}" data-i="${i}" data-j="${j}" d="${d}" style="fill:${se.color}"/>`; });
     if(!lab) return;
     /* sparse: a label only here and there (Days view), written out in full from the start of its bar */
@@ -2873,9 +2888,9 @@ function drawColumns(el,labels,series,opts){
   el.innerHTML=s;
   const svg=el.querySelector('svg'), hl=el.querySelector('.hl');
   const pos=e=>{ const r=svg.getBoundingClientRect(); const x=(e.clientX-r.left)*(W/r.width)-m.l; const i=Math.max(0,Math.min(n-1,Math.floor(x/band)));
-    const xin=x-band*i; let j=0,best=Infinity; for(let q=0;q<k;q++){ const c=(band-gw)/2+q*(bw+gap)+bw/2, dd=Math.abs(xin-c); if(dd<best){ best=dd; j=q; } } return {i,j}; };
+    const xin=x-band*i; let j=0,best=Infinity; for(let q=0;q<k;q++){ const c=(band-gw)/2+xj(q)+bw/2, dd=Math.abs(xin-c); if(dd<best){ best=dd; j=q; } } return {i,j}; };
   const bars=[...svg.querySelectorAll('path.bar')];
-  const mark=(i,j)=>{ if(!opts.onClick||k<2) return; bars.forEach(b=>b.classList.toggle('dim',+b.dataset.i===i&&+b.dataset.j!==j)); };
+  const mark=(i,j)=>{ if(!opts.onClick||k<2||opts.overlay) return; bars.forEach(b=>b.classList.toggle('dim',+b.dataset.i===i&&+b.dataset.j!==j)); };
   if(opts.onClick) svg.style.cursor='pointer';
   const move=e=>{ const {i,j}=pos(e); hl.setAttribute('x',m.l+band*i); hl.style.opacity='.7'; mark(i,j); showTip(opts.tip(i,j),e); };
   svg.addEventListener('pointermove',move);
@@ -2952,13 +2967,13 @@ function drawOverviewCharts(){
   const oc=S.ui.oc, selFor=t=>{ if(oc.month==='all'||!(t==='all'||t===oc.table)) return null; const p=idx.indexOf(+oc.month); return p<0?null:p; };
   const clickHint=(t,i)=>`<div class="hint">${esc(oc.table===t&&String(oc.month)===String(i)?L('clickAgainYear'):L('clickSeeMonth',tl(t),M()[i]))}</div>`;
   const pp=partialPos(y,idx), ttl=p=>M()[idx[p]]+' '+y+(p===pp?' · '+L('soFar'):'');
-  if(el&&S.ui.mm.days){
-    /* ponytail: one type per day (Expenses for "All"); three bars a day don't fit in a year */
-    const t=S.ui.mm.table==='all'?'expenses':S.ui.mm.table, cat=mmCat(A), name=cat?dispCat(cat):TL(t), D=mmDaily(y,t,cat), mOf=p=>+D.dates[p].slice(5,7)-1;
-    drawColumns(el,D.dates.map(d=>d.slice(8)==='01'?M3()[+d.slice(5,7)-1]:''),[{values:D.vals,color:TCOLOR[t]}],{
-      label:L('dayAria',name,y), sparse:true,
+  if(el&&S.ui.mm.days&&S.ui.mm.table!=='all'){
+    /* one type at a time (three bars a day don't fit in a year); a day with refunds gets a bar below the line too */
+    const t=S.ui.mm.table, cat=mmCat(A), name=cat?dispCat(cat):TL(t), D=mmDaily(y,t,cat), mOf=p=>+D.dates[p].slice(5,7)-1;
+    drawColumns(el,D.dates.map(d=>d.slice(8)==='01'?M3()[+d.slice(5,7)-1]:''),[{values:D.pos,color:TCOLOR[t]},{values:D.neg,color:TCOLOR[t]}],{
+      label:L('dayAria',name,y), sparse:true, overlay:true,
       onClick:p=>showMonthByCategory(t,mOf(p)),
-      tip:p=>tipRows(fmtDate(D.dates[p]),[{sw:t,label:name,value:fmtEUR(D.vals[p])}],clickHint(t,mOf(p)))
+      tip:p=>tipRows(fmtDate(D.dates[p]),D.pos[p]&&D.neg[p]?[{sw:t,label:L('dayPos_'+t),value:fmtEUR(D.pos[p])},{label:L('dayNeg_'+t),value:fmtEUR(D.neg[p])},{label:L('dayNet'),value:fmtEUR(D.vals[p])}]:[{sw:t,label:name,value:fmtEUR(D.vals[p])}],clickHint(t,mOf(p)))
     });
   }
   else if(el&&S.ui.mm.table==='all'){
@@ -3338,7 +3353,7 @@ function viewNetworth(){
   const ally=nwYearsAll(), sely=nwYearsSel();
   const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
       <div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div></div>
-      <div class="chart" id="ch-nw" style="height:260px"></div>${nwChartNote()}</section>`:'';
+      <div class="chart" id="ch-nw" style="height:260px"></div>${(n=>n?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L('nwFcNote',n))}</p>`:'')(nwChartForecast(nwChartMonths()).n)}${nwChartNote()}</section>`:'';
   return head(ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${chart}${healthCard(k,T)}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
 }
 /* Financial health: rules of thumb as of the end of month k. Income and expenses are the ones behind "You saved"
@@ -3508,9 +3523,35 @@ function accountsCard(k){
 /* years in the Over time chart: the current year by default (or the latest with figures), any mix on request */
 function nwYearsAll(){ return [...new Set(nwMonths().map(k=>+k.slice(0,4)))].sort((a,b)=>a-b); }
 function nwYearsSel(){ const all=nwYearsAll(); let sel=(S.ui.nw.years||[]).filter(y=>all.includes(y)); if(!sel.length&&all.length){ const cy=nowYM().y; sel=[all.includes(cy)?cy:all[all.length-1]]; } return sel.sort((a,b)=>a-b); }
-/* every month from the first to the last month with figures in the chosen years, gaps included */
-function nwChartMonths(){ const ys=nwYearsSel(), ms=nwMonths().filter(k=>ys.includes(+k.slice(0,4))); if(!ms.length) return [];
-  const out=[]; for(let k=ms[0];k<=ms[ms.length-1];k=ymAdd(k,1)) out.push(k); return out; }
+/* January of the first chosen year to December of the last: months after the last figure are projected (nwChartForecast) */
+function nwChartMonths(){ const ys=nwYearsSel(); if(!ys.length) return [];
+  const out=[]; for(let k=ys[0]+'-01';k<=ys[ys.length-1]+'-12';k=ymAdd(k,1)) out.push(k); return out; }
+/* Over time forecast. pts: month-end figures by group, oldest first, as {i: month number (year*12+month), g:{group:value}};
+   at: the month numbers to project. Each group goes on from its last figure by the median of its monthly changes over
+   the last 12 months (a change across a missing month counts per month), then the groups are added up so the stack stays whole.
+   Why the median: with a handful of months, a least-squares line or the average change lets one big deposit or market drop
+   set the slope of the whole projection; the median ignores it. No damping on top: a steady saver's months look alike, and
+   damping would bend their line down for no reason. A group never crosses 0 (savings don't go below nothing, a debt paid
+   off doesn't turn into money). No figures: nothing to project (null). One figure: flat. */
+function nwForecast(pts,at){
+  if(!pts.length) return at.map(()=>null);
+  const last=pts[pts.length-1], use=pts.filter(p=>p.i>last.i-12), groups=[...new Set(use.flatMap(p=>Object.keys(p.g)))], step={};
+  for(const g of groups){ const d=[]; for(let j=1;j<use.length;j++) d.push(((use[j].g[g]||0)-(use[j-1].g[g]||0))/(use[j].i-use[j-1].i));
+    d.sort((a,b)=>a-b); const h=d.length>>1; step[g]=!d.length?0:d.length%2?d[h]:(d[h-1]+d[h])/2; }
+  return at.map(i=>{ const g={}; let total=0;
+    for(const k of groups){ const v0=last.g[k]||0, v=v0+step[k]*(i-last.i); g[k]=Math.round((v0>=0?Math.max(0,v):Math.min(0,v))*100)/100; total+=g[k]; }
+    return {g,total:Math.round(total*100)/100}; });
+}
+/* the projection for the chart months after the last month with figures, from the complete months (a faded month looks too low);
+   n = how many months it was based on */
+function nwChartForecast(ms){
+  const all=nwMonths(), last=all[all.length-1], F=ms.map(()=>null), fut=ms.map((k,i)=>({k,i})).filter(x=>x.k>last);
+  if(!fut.length) return {F,n:0};
+  const full=all.filter(k=>!nwIncomplete(k)), ix=k=>+k.slice(0,4)*12+ +k.slice(5,7)-1;
+  const pts=(full.length?full:all).map(k=>({i:ix(k),g:nwTotals(k).g})), li=pts[pts.length-1].i;
+  nwForecast(pts,fut.map(x=>ix(x.k))).forEach((p,j)=>{ F[fut[j].i]=p; });
+  return {F,n:pts.filter(p=>p.i>li-12).length};
+}
 function nwChartNote(){
   const N=nw(), cw=S.canWrite, later=new Map(), gaps=new Map();
   for(const k of nwChartMonths()){ if(!N.snaps[k]) continue; const h=new Set(nwHoles(k));
@@ -3533,9 +3574,11 @@ function drawNwChart(){
   const ms=nwChartMonths(); if(!ms.length) return;
   const N=nw(), multi=new Set(ms.map(k=>k.slice(0,4))).size>1;
   const T=ms.map(k=>N.snaps[k]?nwTotals(k):null), W=Math.max(280,el.clientWidth), H=el.clientHeight||260, m={l:58,r:8,t:22,b:multi?42:26}, pw=W-m.l-m.r, ph=H-m.t-m.b, n=ms.length, band=pw/n;
-  const posOf=t=>sum(NW_GROUPS.map(g=>Math.max(0,t.g[g]))), negOf=t=>sum(NW_GROUPS.map(g=>Math.min(0,t.g[g])));
-  const fit=nwTrend(ms), fitEnds=fit?[fit.at(fit.x0),fit.at(fit.x1)]:[];
-  const {top,bot,arr}=niceRange(Math.min(0,...T.map(t=>t?negOf(t):0),...fitEnds),Math.max(1,...T.map(t=>t?posOf(t):0),...fitEnds),4); const y=v=>m.t+ph-((v-bot)/(top-bot))*ph;
+  const {F,n:fcN}=nwChartForecast(ms), TF=T.map((t,i)=>t||F[i]), fcEnd=F.reduce((a,f,i)=>f?i:a,-1);
+  const posOf=t=>sum(NW_GROUPS.map(g=>Math.max(0,t.g[g]||0))), negOf=t=>sum(NW_GROUPS.map(g=>Math.min(0,t.g[g]||0)));
+  /* the trend line carries on, fainter, over the projected months */
+  const fit=nwTrend(ms), tEnd=fit?Math.max(fit.x1,fcEnd):-1, fitEnds=fit?[fit.at(fit.x0),fit.at(tEnd)]:[];
+  const {top,bot,arr}=niceRange(Math.min(0,...TF.map(t=>t?negOf(t):0),...fitEnds),Math.max(1,...TF.map(t=>t?posOf(t):0),...fitEnds),4); const y=v=>m.t+ph-((v-bot)/(top-bot))*ph;
   let lbls='';
   const bw=Math.max(3,Math.min(56,band*0.56)), step=Math.max(1,Math.ceil((multi?30:44)/band));
   let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(L('nwChartAria'))}">`;
@@ -3549,17 +3592,19 @@ function drawNwChart(){
   ms.forEach((k,i)=>{
     const mi=+k.slice(5,7)-1, lab=multi?(band<22?M3()[mi].slice(0,1):M3()[mi]):ymLabel(k,false), lx=(m.l+band*i+band/2).toFixed(1);
     if(multi?(band>=22||mi%step===0):(band>=44||i%step===0)) s+=`<text class="tk${i===selI?' nw-sel-lbl':''}" x="${lx}" y="${multi?H-24:H-8}" text-anchor="middle">${esc(!multi&&band<44?lab.slice(0,3):lab)}</text>`;
-    if(!T[i]) return;
-    const inc=nwIncomplete(k); if(inc) s+='<g class="nw-inc">';
-    const x0=m.l+band*i+(band-bw)/2; let acc=0, neg=0; const segs=NW_GROUPS.map(g=>({g,v:Math.max(0,T[i].g[g])})).filter(z=>z.v>0.004);
-    for(const g of NW_GROUPS){ const v=T[i].g[g]; if(v<-0.004){ const yt=y(neg), yb=y(neg+v); neg+=v; s+=`<rect x="${x0}" y="${yt.toFixed(1)}" width="${bw}" height="${Math.max(0,yb-yt).toFixed(1)}" style="fill:var(--g-${g});opacity:.55"/>`; } }
+    const t=TF[i]; if(!t) return;
+    /* a projected month: the same stack, greyed (nw-fc), its total marked ≈ */
+    const fc=!T[i], inc=!fc&&nwIncomplete(k); if(fc||inc) s+=`<g class="${fc?'nw-fc':'nw-inc'}">`;
+    const x0=m.l+band*i+(band-bw)/2; let acc=0, neg=0; const segs=NW_GROUPS.map(g=>({g,v:Math.max(0,t.g[g]||0)})).filter(z=>z.v>0.004);
+    for(const g of NW_GROUPS){ const v=t.g[g]||0; if(v<-0.004){ const yt=y(neg), yb=y(neg+v); neg+=v; s+=`<rect x="${x0}" y="${yt.toFixed(1)}" width="${bw}" height="${Math.max(0,yb-yt).toFixed(1)}" style="fill:var(--g-${g});opacity:.55"/>`; } }
     segs.forEach((z,j)=>{ const yt=y(acc+z.v), yb=y(acc); acc+=z.v;
       s+=j===segs.length-1?`<path d="${colPath(x0,yt,bw,yb-yt,4)}" style="fill:var(--g-${z.g})"/>`:`<rect x="${x0}" y="${yt.toFixed(1)}" width="${bw}" height="${Math.max(0,yb-yt).toFixed(1)}" style="fill:var(--g-${z.g})"/>`; });
-    if(inc) s+='</g>';
-    const net=T[i].total; if(band>44&&!HIDE) lbls+=`<text class="lbl nw-lbl${inc?' inc':''}" x="${(x0+bw/2).toFixed(1)}" y="${(y(acc)-6).toFixed(1)}" text-anchor="middle">${fmtNum(net/1000,Math.abs(net)>=100000?0:1)}k</text>`;
+    if(fc||inc) s+='</g>';
+    const net=t.total; if(band>44&&!HIDE) lbls+=`<text class="lbl nw-lbl${fc||inc?' inc':''}" x="${(x0+bw/2).toFixed(1)}" y="${(y(acc)-6).toFixed(1)}" text-anchor="middle">${fc?'≈':''}${fmtNum(net/1000,Math.abs(net)>=100000?0:1)}k</text>`;
   });
-  /* trend line over the bars, the total labels on top of it */
-  if(fit){ const xa=m.l+band*fit.x0+band/2, xb=m.l+band*fit.x1+band/2; s+=`<line class="trend" x1="${xa.toFixed(1)}" y1="${y(fit.at(fit.x0)).toFixed(1)}" x2="${xb.toFixed(1)}" y2="${y(fit.at(fit.x1)).toFixed(1)}"/>`; }
+  /* trend line over the bars (dotted over the projected months), the total labels on top of it */
+  if(fit){ const xo=i=>(m.l+band*i+band/2).toFixed(1); s+=`<line class="trend" x1="${xo(fit.x0)}" y1="${y(fit.at(fit.x0)).toFixed(1)}" x2="${xo(fit.x1)}" y2="${y(fit.at(fit.x1)).toFixed(1)}"/>`;
+    if(tEnd>fit.x1) s+=`<line class="trend fc" x1="${xo(fit.x1)}" y1="${y(fit.at(fit.x1)).toFixed(1)}" x2="${xo(tEnd)}" y2="${y(fit.at(tEnd)).toFixed(1)}"/>`; }
   s+=lbls;
   s+=`<line class="base" x1="${m.l}" x2="${W-m.r}" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}"/><rect x="${m.l}" y="${m.t}" width="${pw}" height="${ph}" fill="transparent"/></svg>`;
   el.innerHTML=s;
@@ -3569,7 +3614,8 @@ function drawNwChart(){
     const ttl=L('nwEyebrow',ymM(ms[i]),ms[i].slice(0,4)).replace(/^[^·]+·\s*/,'');
     const k=ms[i], lack=T[i]?nwHoles(k).map(id=>(N.accounts.find(a=>a.id===id)||{}).name).filter(Boolean):[];
     const clickHint=T[i]&&ms[i]!==nwSelMonth()?`<div class="hint" style="margin-top:6px">${esc(L('nwClickMonth'))}</div>`:'';
-    showTip(T[i]?tipRowsPlus(clickHint,ttl,NW_GROUPS.filter(g=>Math.abs(T[i].g[g])>0.004).map(g=>({sw:g,label:L('g_'+g),value:fmtEUR(T[i].g[g])})),`<div class="tr"><span>${esc(L('total'))}</span><b>${fmtEUR(T[i].total)}</b></div>${fit&&i>=fit.x0&&i<=fit.x1?`<div class="tr"><span><i class="lkey trend"></i>${esc(L('trendLine'))}</span><b>${fmtEUR(fit.at(i))}</b></div>`:''}${lack.length?`<div class="tr warn"><span>${esc(L('nwNoFigure'))}: ${esc(listJoin(lack))}</span></div>`:''}`):tipRows(ttl,[],`<div class="tr"><span>${esc(L('nwNoFigures'))}</span></div>`),e); };
+    const t=TF[i], fc=!T[i], ap=fc?'≈ ':'', tr=fit&&i>=fit.x0&&i<=tEnd?`<div class="tr"><span><i class="lkey trend"></i>${esc(L('trendLine'))}</span><b>${fmtEUR(fit.at(i))}</b></div>`:'';
+    showTip(t?tipRowsPlus(fc?`<div class="hint" style="margin-top:6px;max-width:30ch">${esc(L('nwFcHow',fcN))}</div>`:clickHint,fc?ttl+' · '+L('nwFcTag'):ttl,NW_GROUPS.filter(g=>Math.abs(t.g[g]||0)>0.004).map(g=>({sw:g,label:L('g_'+g),value:ap+fmtEUR(t.g[g])})),`<div class="tr"><span>${esc(L('total'))}</span><b>${ap}${fmtEUR(t.total)}</b></div>${tr}${lack.length?`<div class="tr warn"><span>${esc(L('nwNoFigure'))}: ${esc(listJoin(lack))}</span></div>`:''}`):tipRows(ttl,[],`<div class="tr"><span>${esc(L('nwNoFigures'))}</span></div>`),e); };
   svg.addEventListener('pointermove',move);
   /* a click shows that month across the page, like the month picker above */
   svg.style.cursor='pointer';
@@ -5555,8 +5601,9 @@ const ACTIONS={
   'edit-target':el=>{ if(!S.canWrite) return; S.ui.editTarget=el.dataset.key; render(); const i=$('#target-input'); if(i){ i.focus(); i.select(); } },
   'oc-table':el=>{ S.ui.oc.table=el.dataset.t; render(); },
   'oc-top':el=>{ S.ui.oc.top=el.dataset.v==='top'; try{ localStorage.setItem('ybt.top',S.ui.oc.top?'top':'all'); }catch(_){} render(); },
-  'mm-table':el=>{ S.ui.mm={table:el.dataset.t,cat:null,days:S.ui.mm.days}; render(); },
-  'mm-days':el=>{ S.ui.mm.days=el.dataset.v==='1'; render(); },
+  /* Days shows one type at a time: "All" goes back to Months */
+  'mm-table':el=>{ S.ui.mm={table:el.dataset.t,cat:null,days:el.dataset.t!=='all'&&S.ui.mm.days}; render(); },
+  'mm-days':el=>{ if(el.getAttribute('aria-disabled')==='true') return; S.ui.mm.days=el.dataset.v==='1'; render(); },
   'mm-clear-cat':()=>{ S.ui.mm.cat=null; render(); },
   'cat-month':el=>{ hideTip();
     if(S.ui.mm.cat===el.dataset.tipCat&&S.ui.mm.table===S.ui.oc.table){ S.ui.mm.cat=null; render(); return; }
