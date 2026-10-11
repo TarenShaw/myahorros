@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-NXCOV3fsE7wUmbF6Hp1loRPSvvQ4l/KiHZWVQ/uKVOw=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-17Q0d0G85u3JDZipkjJjM8unqrKMt9d8tmapgr1/o9k=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1000,12 +1000,12 @@ function mkCats(inc,exp,inv,roles){
   return c;
 }
 const DEFAULT_CATS=mkCats(
-  ['Salary','Tickets Comida','Dividends','Flex','Interest','Rent received','Tax Return','Other'],
+  ['Salary','Tickets Comida','Dividends','Flex','Interest','Rent received','Tax Return','Pension','Other'],
   [['Rent','Need'],['Utilities','Need'],['Subscriptions','Need'],['Phone','Need'],['Insurance','Need'],['Education','Need'],['Transport','Want'],['Groceries','Want'],['Snacks','Want'],['Restaurants','Want'],['Alcohol + Bars','Want'],['Entertainment','Want'],['Clothes','Want'],['Non Essential Shopping','Want'],['Vacation + Hotel + Travel','Want'],['Health','Want'],['Legal','Want'],['Gifts','Want'],['Capital Gains Losses','Want'],['Taxes','Need'],['Cash','Want'],['Lottery','Want'],['Gym','Need'],['Other','Want']],
   ['Funds/ETFs','Stocks','Pension','Real Estate','Other'],
   {rent:'Rent',utilities:'Utilities',other:'Other'});
 const DEFAULT_CATS_ES=mkCats(
-  ['Nómina','Tickets comida','Dividendos','Beneficios de empresa','Intereses','Alquileres cobrados','Devolución de impuestos','Otros'],
+  ['Nómina','Tickets comida','Dividendos','Beneficios de empresa','Intereses','Alquileres cobrados','Devolución de impuestos','Pensión','Otros'],
   [['Alquiler','Need'],['Suministros','Need'],['Suscripciones','Need'],['Teléfono','Need'],['Seguros','Need'],['Formación','Need'],['Transporte','Want'],['Supermercado','Want'],['Picoteo','Want'],['Restaurantes','Want'],['Bares y copas','Want'],['Ocio','Want'],['Ropa','Want'],['Compras no esenciales','Want'],['Vacaciones y viajes','Want'],['Salud','Want'],['Trámites legales','Want'],['Regalos','Want'],['Pérdidas en inversiones','Want'],['Impuestos','Need'],['Efectivo','Want'],['Lotería','Want'],['Gimnasio','Need'],['Otros','Want']],
   ['Fondos/ETFs','Acciones','Plan de pensiones','Inmuebles','Otros'],
   {rent:'Alquiler',utilities:'Suministros',other:'Otros'});
@@ -1016,7 +1016,7 @@ const DEFAULT_SKIP=['traspaso'];
 const kwPack=o=>Object.entries(o).flatMap(([cat,s])=>s.split('|').map(k=>[k,cat]));
 const STARTER_KW={
   en:{
-    income:kwPack({'Salary':'salary|payroll|nomina','Dividends':'dividend','Interest':'interest','Rent received':'rent received|rental income','Tax Return':'tax refund|hmrc refund'}),
+    income:kwPack({'Salary':'salary|payroll|nomina','Dividends':'dividend','Interest':'interest','Rent received':'rent received|rental income','Tax Return':'tax refund|hmrc refund','Pension':'pension|state pension|inss'}),
     expenses:kwPack({
       'Groceries':'tesco|sainsbury|asda|aldi|lidl|morrisons|waitrose|whole foods|walmart|kroger|trader joe|costco|mercadona|carrefour|alcampo|eroski|consum s coop|consum coop',
       'Restaurants':'uber eats|deliveroo|just eat|glovo|mcdonald|burger king|kfc|starbucks|pret a manger|nando|domino|telepizza|restaurant',
@@ -1038,7 +1038,7 @@ const STARTER_KW={
     investments:kwPack({'Funds/ETFs':'vanguard|indexa|myinvestor','Stocks':'trading 212|degiro|interactive brokers|trade republic|etoro|freetrade','Pension':'pension'})
   },
   es:{
-    income:kwPack({'Nómina':'nomina|salario','Dividendos':'dividendo|dividend','Intereses':'intereses|liq intereses','Alquileres cobrados':'alquiler','Devolución de impuestos':'devolucion irpf|devolucion hacienda|agencia tributaria'}),
+    income:kwPack({'Nómina':'nomina|salario','Dividendos':'dividendo|dividend','Intereses':'intereses|liq intereses','Alquileres cobrados':'alquiler','Devolución de impuestos':'devolucion irpf|devolucion hacienda|agencia tributaria','Pensión':'pension|inss|jubilacion'}),
     expenses:kwPack({
       'Supermercado':'mercadona|carrefour|lidl|aldi|alcampo|eroski|consum s coop|consum coop|ahorramas|hipercor|supercor|caprabo|condis|bonpreu|gadis|froiz|masymas|supeco|lupa|primaprix|bm supermercados|coviran|family cash|"spar"',
       'Alquiler':'alquiler|"renta piso"',
@@ -1690,9 +1690,9 @@ const STR={
   wzWayHand:['By hand','A mano'], wzWayHandSub:['Add one transaction at a time.','Añade un movimiento cada vez.'],
   wzWayPaste:['Paste or import a bank statement','Pega o importa un extracto'], wzWayPasteSub:['Paste rows or choose your bank’s .csv or .xlsx file.','Pega filas o elige el .csv o .xlsx de tu banco.'],
   wzWayAi:['With AI','Con IA'], wzWayAiSub:['Give it your statements. It sorts everything and you check it before it’s saved.','Dale tus extractos. Lo ordena todo y tú lo revisas antes de guardarlo.'],
-  wz3Title:['Last, your salary','Por último, tu nómina'],
-  wz3Text:['Add your salary after your transactions, so the tracker can show what you kept. This tracker is built for you to fill in the previous month at the end of that month, so your figures always run one month behind. That is by design.','Añade tu nómina después de tus movimientos, para que el control muestre lo que has ahorrado. Este control está pensado para rellenar el mes anterior al terminar ese mes, así que tus cifras siempre van un mes por detrás. Es a propósito.'],
-  wzAddSalary:['Add my salary','Añadir mi nómina'],
+  wz3Title:['Last, your salary or pension','Por último, tu nómina o pensión'],
+  wz3Text:['Add your salary (or pension) after your transactions, so the tracker can show what you kept. This tracker is built for you to fill in the previous month at the end of that month, so your figures always run one month behind. That is by design.','Añade tu nómina (o pensión) después de tus movimientos, para que el control muestre lo que has ahorrado. Este control está pensado para rellenar el mes anterior al terminar ese mes, así que tus cifras siempre van un mes por detrás. Es a propósito.'],
+  wzAddSalary:['Add my salary or pension','Añadir mi nómina o pensión'],
   wz4Title:['You’re all set','Ya está todo listo'],
   wz4Text:['Here’s what is in your tracker. Next month, add the month that just ended: balances first, then transactions.','Esto es lo que hay en tu control. El mes que viene, añade el mes que acaba de terminar: primero los saldos y luego los movimientos.'],
   wzCounts:[(a,m,t,i)=>`${a} ${a===1?'account':'accounts'} · ${m} ${m===1?'month':'months'} of balances · ${t} ${t===1?'transaction':'transactions'} · ${i} ${i===1?'income row':'income rows'}`,(a,m,t,i)=>`${a} ${a===1?'cuenta':'cuentas'} · ${m} ${m===1?'mes':'meses'} de saldos · ${t} ${t===1?'movimiento':'movimientos'} · ${i} ${i===1?'ingreso':'ingresos'}`],
@@ -4888,11 +4888,17 @@ function guessTable(p){
     return ok('investments',v)&&(!ok('expenses',e)||v.k.length>e.k.length)?'investments':'expenses';
   }
   if(p.category){ for(const t of TKEYS) if(isKnown(t,p.category)) return t; }
-  for(const t of TKEYS) if(ok(t,matchKeyword(t,p.concept))) return t;
-  /* money back on a card is a refund, not income */
-  if(CARD_RE.test(loose(p.concept))) return 'expenses';
-  return 'income';
+  /* money back on a card, or with a refund word, is a refund, not income */
+  const refund=CARD_RE.test(loose(p.concept))||REFUND_RE.test(loose(p.concept));
+  for(const t of TKEYS){ const mt=matchKeyword(t,p.concept); if(!ok(t,mt)) continue;
+    /* a shop's name in money coming in isn't enough: a client called "Supermercados Iberia" paying 1,704 € is income.
+       It's a refund when it looks like one, or is no bigger than the most you've spent there at once */
+    if(t==='expenses'&&!refund&&p.amount>biggestSpend(mt.cat)) continue;
+    return t; }
+  return refund?'expenses':'income';
 }
+const REFUND_RE=/\b(devolucion|refund|reembolso|retrocesion|chargeback)\b/;
+const biggestSpend=cat=>memo('bigSpend|'+cat,()=>Math.max(0,...allRows().filter(r=>r.table==='expenses'&&r.category===cat).map(r=>-r.amount)));
 const CARD_RE=/^(tarjeta|card payment|pago con tarjeta|pago en|compra|compra comercio|compra en comercio)\b|\bpago con tarjeta\b/;
 function autoCat(r,raw){ if(raw&&isKnown(r.table,raw)) return raw; const mt=matchKeyword(r.table,r.concept); return mt&&isKnown(r.table,mt.cat)?mt.cat:''; }
 function setImpTable(r,t){ if(!TKEYS.includes(t)||r.table===t) return; r.table=t; r.guessed=false; if(!r.manual||!isKnown(t,r.category)){ r.manual=false; r.category=autoCat(r,''); impGuess(r); } }

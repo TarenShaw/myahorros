@@ -44,4 +44,23 @@ assert.strictEqual(splitwisePeople([['Date', 'Amount', 'Description']]), null);
 assert.ok(CARD_RE.test(loose('TARJETA VISA VENDING GRUPO CPS')) && !CARD_RE.test(loose('TRANSFERENCIA OTRA ENTIDAD')));
 assert.ok(INV_CONCEPT.test(loose('SUSCRIPCIÓN FONDO')) && INV_CONCEPT.test(loose('Indexa Más Rentabilidad TU APORTACIÓN')) && !INV_CONCEPT.test(loose('MERCADONA')));
 
+/* money coming in: a pension is income (income keywords come first), a shop's name alone doesn't make a big payment a
+   refund, a card refund or one no bigger than past spending there does (audit 2026-10-11) */
+{
+  const KW = { income: { pension: 'Pension' }, expenses: { iberia: 'Travel', amazon: 'Shopping' }, investments: { pension: 'Pension' } };
+  const ROWS = [{ table: 'expenses', category: 'Shopping', amount: -40 }];
+  const guessTable = new Function('loose', 'KW', 'ROWS',
+    "const TKEYS=['income','expenses','investments'], isKnown=()=>true, memo=(k,f)=>f(), allRows=()=>ROWS;" +
+    "const matchKeyword=(t,c)=>{ const k=Object.keys(KW[t]).find(k=>loose(c).includes(k)); return k?{cat:KW[t][k],k}:null; };" +
+    line('const CARD_RE=') + line('const REFUND_RE=') + line('const biggestSpend=') + grab('guessTable') + 'return guessTable;')(loose, KW, ROWS);
+  const g = (concept, amount) => guessTable({ concept, amount, category: '' });
+  assert.strictEqual(g('PENSION INSS', 1100), 'income');
+  assert.strictEqual(g('APORTACION PLAN PENSION', -125), 'investments');
+  assert.strictEqual(g('TRANSF SUPERMERCADOS IBERIA S.A.', 1704.51), 'income');
+  assert.strictEqual(g('DEVOLUCION IBERIA', 210), 'expenses');
+  assert.strictEqual(g('AMAZON', 25), 'expenses');
+  assert.strictEqual(g('AMAZON', 400), 'income');
+  assert.strictEqual(g('TARJETA AMAZON', 400), 'expenses');
+}
+
 console.log('import smoke: all passed');
