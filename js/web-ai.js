@@ -69,7 +69,7 @@ const TX={
     why_refused:n=>`${n} declined to read these files. Check they are statements and try again.`,
     why_invalid_json:n=>`${n}’s answer wasn’t complete.`,
     why_other:n=>`Something unexpected went wrong talking to ${n}.`,
-    cardTitle:'Reading statements with AI', cardSub:'The “Do it with AI” and “Read statements with AI” buttons read your bank statements and fill in transactions and balances for you to check.'
+    cardTitle:'Reading statements with AI', cardSub:'The “Fill in with AI” buttons read your bank statements and fill in transactions and balances for you to check.'
   },
   es:{
     title:'Leer extractos con IA', sub:'Elige la IA que lee tus extractos. Tus archivos van directamente de este navegador a la empresa que elijas, nunca a esta web.',
@@ -116,7 +116,7 @@ const TX={
     why_refused:n=>`${n} no ha querido leer estos archivos. Comprueba que son extractos e inténtalo de nuevo.`,
     why_invalid_json:n=>`La respuesta de ${n} no estaba completa.`,
     why_other:n=>`Ha pasado algo inesperado al hablar con ${n}.`,
-    cardTitle:'Leer extractos con IA', cardSub:'Los botones «Hacerlo con IA» y «Leer extractos con IA» leen tus extractos y rellenan movimientos y saldos para que los revises.'
+    cardTitle:'Leer extractos con IA', cardSub:'Los botones «Rellenar con IA» leen tus extractos y rellenan movimientos y saldos para que los revises.'
   }
 };
 function t(k,...a){ const v=TX[lang()][k]; return typeof v==='function'?v(...a):v; }

@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-JE5friGuLlgfdk2G0i1ieWQOVg1+vNyxLb8wDporj4c=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-jzV+A4o8xwyE0YG3KfyN7apDLsMZcYHUE04wVLBIM5A=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1285,7 +1285,6 @@ const STR={
   nodbText:['This tracker keeps its transactions in Claude’s storage for this page. Open it from your Claude account to see and edit them.','Este control guarda sus movimientos en el almacenamiento de Claude para esta página. Ábrelo desde tu cuenta de Claude para verlos y editarlos.'],
   emptyTitle:['Nothing recorded in the tracker yet','Todavía no hay nada registrado'],
   emptyText:['Add transactions one at a time, or paste rows from a bank statement. Categories fill in from your keyword list as they arrive.','Añade movimientos uno a uno o pega filas de un extracto bancario. Las categorías se rellenan con tus palabras clave según llegan.'],
-  addATx:['Add a transaction','Añadir un movimiento'], pasteRows:['Paste or import rows','Pegar o importar filas'],
   /* welcome */
   welcome:['Welcome','Te damos la bienvenida'],
   welcomeIntro:['Two quick choices and you’re ready to add your first figures.','Dos elecciones rápidas y podrás añadir tus primeras cifras.'],
@@ -1681,7 +1680,7 @@ const STR={
   impPasteShort:['From Excel or a statement: date, amount and description on each line.','Desde Excel o un extracto: fecha, importe y concepto en cada línea.'],
 
   nwClickMonth:['Click to show this month','Pulsa para ver este mes'], nwShowing:['Showing','Mostrando'],
-  aiBtn:['Do it with AI','Hacerlo con IA'], aiBtnNw:['Read statements with AI','Leer extractos con IA'],
+  aiBtn:['Fill in with AI','Rellenar con IA'],
   aiTitle_tx:['Sort my statements with AI','Ordenar mis extractos con IA'], aiTitle_nw:['Balances from statements, with AI','Saldos desde extractos, con IA'], aiTitle_start:['Build my tracker with AI','Crear mi control con IA'],
   aiSub_tx:['Claude reads your statements, sorts every movement and picks its category. You check everything before anything is added.','Claude lee tus extractos, clasifica cada movimiento y le pone categoría. Lo revisas todo antes de añadir nada.'],
   aiSub_nw:['Claude reads your bank and broker statements and finds each account’s balance at the end of every month. You check it before it’s saved.','Claude lee los extractos de tus bancos y brókers y encuentra el saldo de cada cuenta al final de cada mes. Lo revisas antes de guardarlo.'],
@@ -1815,7 +1814,7 @@ const STR={
   tour_catKw:[['Keywords do the sorting','A keyword like “netflix” puts every matching row in its category by itself. Type any description in the test box to see which keyword picks it.'],['Las palabras clave ordenan','Una palabra clave como «netflix» pone sola cada fila que la contenga en su categoría. Escribe cualquier descripción en la casilla de prueba para ver qué palabra la elige.']],
   tour_catList:[['Your categories','Rename, add or remove categories, mark each expense as Fixed or Variable, and set monthly limits.'],['Tus categorías','Cambia el nombre, añade o quita categorías, marca cada gasto como Fijo o Variable y pon límites mensuales.']],
   tour_nwAccounts:[['Accounts and gains','Each account’s value, its change since last month and its Gains: how much it grew on its own (prices, interest, dividends), apart from money you put in. Hover Gains for how it’s worked out.'],['Cuentas y ganancias','El valor de cada cuenta, su cambio desde el mes pasado y sus Ganancias: cuánto creció por sí sola (precios, intereses, dividendos), sin contar lo que aportaste. Pasa el ratón por Ganancias para ver cómo se calcula.']],
-  tour_txAi:[['Let an AI read your statements','Do it with AI reads statements and PDFs for you. The first time you pick which AI: Copy and paste is free, Gemini has a free tier, Claude and GPT are paid with your own key. A recommendation next to the model picker says which model suits one file or many months. Change AI switches it any time, and you check every row before it’s saved.'],['Deja que una IA lea tus extractos','Hacerlo con IA lee extractos y PDF por ti. La primera vez eliges qué IA: Copiar y pegar es gratis, Gemini tiene un nivel gratuito, Claude y GPT son de pago con tu propia clave. Una recomendación junto al selector de modelo indica cuál sirve para un archivo o para muchos meses. Cambiar la IA lo cambia cuando quieras, y revisas cada fila antes de guardarla.']],
+  tour_txAi:[['Let an AI read your statements','Fill in with AI reads statements and PDFs for you. The first time you pick which AI: Copy and paste is free, Gemini has a free tier, Claude and GPT are paid with your own key. A recommendation next to the model picker says which model suits one file or many months. Change AI switches it any time, and you check every row before it’s saved.'],['Deja que una IA lea tus extractos','Rellenar con IA lee extractos y PDF por ti. La primera vez eliges qué IA: Copiar y pegar es gratis, Gemini tiene un nivel gratuito, Claude y GPT son de pago con tu propia clave. Una recomendación junto al selector de modelo indica cuál sirve para un archivo o para muchos meses. Cambiar la IA lo cambia cuando quieras, y revisas cada fila antes de guardarla.']],
   tour_nwTop:[['What you own','Once a month, type what each account is worth, or import several months from Excel. Accounts are grouped by how soon you could use the money.'],['Lo que tienes','Una vez al mes, escribe lo que vale cada cuenta o importa varios meses desde Excel. Las cuentas se agrupan según lo pronto que podrías usar el dinero.']],
   tour_nwChart:[['How it grows','Your month-end totals with a trend line. Pick one year or several.'],['Cómo crece','Tus totales a fin de mes con una línea de tendencia. Elige un año o varios.']],
   tour_nwCards:[['Why it changed, and your goal','What changed splits each month into what you saved and what markets added. Goal shows what you need a month and how much would have to come from growth.'],['Por qué cambió y tu objetivo','Qué ha cambiado reparte cada mes entre lo que ahorraste y lo que aportaron los mercados. Objetivo muestra cuánto hace falta al mes y cuánto tendría que venir del crecimiento.']],
@@ -2541,7 +2540,7 @@ function viewNoDb(){
 function viewEmpty(){
   return `<div class="state"><h2>${esc(L('emptyTitle'))}</h2>
     <p>${esc(L('emptyText'))}</p>
-    ${S.canWrite?`<div class="row"><button class="btn primary" data-action="add-tx">${esc(L('addATx'))}</button><button class="btn" data-action="import">${esc(L('pasteRows'))}</button>${S.ai?`<button class="btn" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}</div>`:''}
+    ${S.canWrite?`<div class="row">${S.ai?`<button class="btn" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn" data-action="import">${esc(L('pasteImport'))}</button><button class="btn primary" data-action="add-tx">${esc(L('addTx'))}</button></div>`:''}
     <p class="hint" style="margin-top:var(--s16)">${esc(L('emptyTour'))} <button type="button" class="linkish" data-action="tour">${esc(L('tourBtn'))}</button></p></div>`;
 }
 
@@ -2845,7 +2844,7 @@ function thisMonthCard(){
       ${end?`<span class="tile-sub">${esc(L('onTrack',fmtEUR(end.total,0)))}</span>`:''}</div>`; };
   return `<section class="card tm" aria-labelledby="tm-title">
     <div class="card-head"><div><h2 id="tm-title">${esc(L('thisMonth'))} · ${esc(M()[m])}${info('ovThisMonth')}</h2><p class="sub">${esc(L('dayOf',n.day,n.days))}</p></div>
-      ${S.canWrite?`<div class="ctrls"><button class="btn sm" type="button" data-action="add-tx">${esc(L('addTx'))}</button><button class="btn sm" type="button" data-action="import">${esc(L('pasteImport'))}</button>${S.ai?`<button class="btn sm" type="button" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}</div>`:''}</div>
+      ${S.canWrite?`<div class="ctrls">${S.ai?`<button class="btn sm" type="button" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn sm" type="button" data-action="import">${esc(L('pasteImport'))}</button><button class="btn sm" type="button" data-action="add-tx">${esc(L('addTx'))}</button></div>`:''}</div>
     ${cnt?`<div class="tm-stats">${kpi('expenses','spentSoFar')}${kpi('income','inSoFar')}${kpi('investments','invSoFar')}</div>`:`<p class="hint">${esc(L('nothingThisMonth',M()[m]))}</p>`}
     ${lims.length?`<h3 class="tm-h">${esc(L('monthlyLimits'))}</h3><div class="lims">${limRows}</div>`:''}
     ${cnt&&(top.length||!lims.length)?`<h3 class="tm-h">${esc(lims.length?L('otherSpending'):L('topThisMonth'))}</h3>${top.length?`<div class="hbars${top.length>3?' cols':''}"${top.length>3?` style="grid-template-rows:repeat(${Math.ceil(top.length/2)},auto)"`:''}>${top.map(d=>`<div class="hb" data-action="drill" data-t="expenses" data-c="${esc(d.n)}" data-m="${m}" role="button" tabindex="0">
@@ -3318,11 +3317,11 @@ function modalWizard(){
   let body='';
   if(i===0){
     body=`<p>${esc(L('wz0Text',ymIn(k)))}</p>
-      <div class="wz-acts">${act('guide-acc',esc(L('nwAddAccounts')),'',nAcc?'':'primary')}${act('guide-val',esc(L('nwEnter',ymIn(k))),` data-k="${k}"`,nAcc&&!nMon?'primary':'')}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtnNw'))):''}</div>
+      <div class="wz-acts">${act('guide-acc',esc(L('nwAddAccounts')),'',nAcc?'':'primary')}${act('guide-val',esc(L('nwEnter',ymIn(k))),` data-k="${k}"`,nAcc&&!nMon?'primary':'')}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):''}</div>
       ${ok(nAcc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[0])}${ok(nMon,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[1])}`;
   } else if(i===1){
     body=`<p>${esc(L('wz1Text'))}</p>
-      <div class="wz-acts">${act('guide-val',esc(L('wzEarlierHand')),` data-k="${ymAdd(k,-1)}"`,'primary')}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtnNw'))):''}</div>`;
+      <div class="wz-acts">${act('guide-val',esc(L('wzEarlierHand')),` data-k="${ymAdd(k,-1)}"`,'primary')}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):''}</div>`;
   } else if(i===2){
     body=`<p>${esc(L('wz2Text'))}</p>
       <div class="wz-ways">
@@ -3353,7 +3352,7 @@ function guideCard(G){
   let body='', acts='', after='';
   if(G.cur==='acc'){
     body=`<p>${esc(L('gAccText'))}</p><div class="nw-groups-help guide-groups">${NW_GROUPS.map(g=>`<div>${gSw(g)}<b>${esc(L('g_'+g))}</b><span class="hint">${esc(L('gEx_'+g))}</span></div>`).join('')}</div>`;
-    acts=go('guide-acc',esc(L('nwAddAccounts')))+`<button class="btn" type="button" data-action="guide-nwimport">${ICON.xl}${esc(L('nwImport'))}</button>`+(S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtnNw'))}</button>`:'')+skipNw;
+    acts=(S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtn'))}</button>`:'')+`<button class="btn" type="button" data-action="guide-nwimport">${ICON.xl}${esc(L('nwImport'))}</button>`+go('guide-acc',esc(L('nwAddAccounts')))+skipNw;
     after=`<p class="hint guide-tour">${esc(L('gTourHint'))} <button type="button" class="linkish" data-action="tour">${esc(L('tourBtn'))}</button></p>`;
   } else if(G.cur==='val'){
     const k=guideFigMonth();
@@ -3362,7 +3361,7 @@ function guideCard(G){
   } else if(G.cur==='tx'){
     const st=startOf();
     body=`<p>${esc(L('gTxTextSalary',st?ymIn(ymOf(st.y,st.m)):''))}</p>`;
-    acts=go('guide-income',esc(L('gAddSalary')))+`<button class="btn" type="button" data-action="guide-import">${esc(L('pasteRows'))}</button>`+(S.ai?`<button class="btn" type="button" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:'');
+    acts=(S.ai?`<button class="btn" type="button" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:'')+`<button class="btn" type="button" data-action="guide-import">${esc(L('pasteImport'))}</button>`+go('guide-income',esc(L('gAddSalary')));
   } else {
     body=`<p>${esc(L('gDoneText'))}${G.skip?' '+esc(L('gDoneSkip')):''}</p><p class="hint" style="margin-top:var(--s8)">${esc(S.local?LT('gSafeApp'):L('gSafeWeb'))}</p>`;
     acts=S.downloads||S.local?`<button class="btn" type="button" data-action="remind-ics">${esc(L('remindBtn'))}</button>`:'';
@@ -3382,14 +3381,15 @@ function viewNetworth(){
   const head=(per,acts)=>pageHead('networth',per,acts);
   if(!N.accounts.length) return head()+(G?guideCard(G):`<section class="card nw-empty"><h2>${esc(L('nwEmptyTitle'))}</h2><p class="sub" style="max-width:68ch">${esc(L('nwEmptyText'))}</p>
     <div class="nw-groups-help">${NW_GROUPS.map(g=>`<div>${gSw(g)}<b>${esc(L('g_'+g))}</b><span class="hint">${esc(L('gs_'+g))}</span></div>`).join('')}</div>
-    ${cw?`<div class="ctrls" style="margin-top:var(--s16)"><button class="btn primary" type="button" data-action="nw-accounts">${esc(L('nwAddAccounts'))}</button><button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button>${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtnNw'))}</button>`:''}</div>`:''}</section>`);
+    ${cw?`<div class="ctrls" style="margin-top:var(--s16)">${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button><button class="btn primary" type="button" data-action="nw-accounts">${esc(L('nwAddAccounts'))}</button></div>`:''}</section>`);
   let k=S.ui.nw.month; if(!k||!ms.includes(k)) k=ms[ms.length-1]||null;
   /* the month in progress can be entered from the 25th; earlier, only finished months are offered */
   const newK=due||(nowYM().day>=25&&!ms.includes(ymNow())?ymNow():null);
   const per=ms.length>1?`<label class="sr" for="nw-month">${esc(L('nwMonthPick'))}</label><select id="nw-month">${ms.slice().reverse().map(x=>`<option value="${x}"${x===k?' selected':''}>${esc(ymLabel(x,true))}</option>`).join('')}</select>`:'';
-  const ctrls=`${cw&&k?`<button class="btn" type="button" data-action="nw-snap" data-k="${k}">${esc(L('nwEdit',ymIn(k)))}</button>`:''}
-    ${cw?`<button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button>${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtnNw'))}</button>`:''}`:''}
-    ${cw&&newK&&!(G&&G.cur==='val')?`<button class="btn primary" type="button" data-action="nw-snap" data-k="${newK}">${esc(L('nwEnter',ymIn(newK)))}</button>`:''}`;
+  const enter=cw&&newK&&!(G&&G.cur==='val');
+  const ctrls=`${cw?`${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button>`:''}
+    ${cw&&k?`<button class="btn${enter?'':' primary'}" type="button" data-action="nw-snap" data-k="${k}">${esc(L('nwEdit',ymIn(k)))}</button>`:''}
+    ${enter?`<button class="btn primary" type="button" data-action="nw-snap" data-k="${newK}">${esc(L('nwEnter',ymIn(newK)))}</button>`:''}`;
   const dueBar=due&&cw?`<div class="notice">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(L('nwDue',ymIn(due)))}</span><button class="linkish" type="button" data-action="nw-snap" data-k="${due}">${esc(L('nwEnter',ymIn(due)))}</button></div>`:'';
   if(!k) return head(per,ctrls)+`<div class="stack">${G?guideCard(G):`${dueBar}<section class="card"><p class="hint">${esc(L('nwNoPrev'))}</p></section>`}${accountsCard(null)}</div>`;
   const T=nwTotals(k), prev=ms[ms.indexOf(k)-1]||null, mk=+k.slice(5,7)-1, yk=k.slice(0,4);
@@ -3439,7 +3439,7 @@ function viewNetworth(){
     const kG=ms[ms.length-1], TG=kG===k?T:nwTotals(kG);
     const G=N.goal, gy=G.month.slice(0,4), left=ymDiff(kG,G.month), rest=r2(G.amount-TG.total), pr=Math.max(0,Math.min(1,TG.total/G.amount));
     const pace=savingPace();
-    goalBtn=cw?`<button class="btn ghost sm" type="button" data-action="nw-goal">${esc(L('nwChangeGoal'))}</button>`:'';
+    goalBtn=cw?`<button class="btn sm" type="button" data-action="nw-goal">${esc(L('nwChangeGoal'))}</button>`:'';
     let status='', body='';
     if(rest<=0) status=`<span class="pill good">${ICON.ok}${esc(L('nwReached'))}</span>`;
     else if(left<=0) body=foot([esc(L('nwGoalPast'))]);
@@ -3462,7 +3462,7 @@ function viewNetworth(){
   const goalCard=`<section class="card nw-card"><div class="card-head"><div><h2>${esc(L('nwGoal'))}${info('nwGoal')}</h2></div>${goalBtn}</div>${goal}</section>`;
   const ally=nwYearsAll(), sely=nwYearsSel();
   const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
-      <div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div></div>
+      ${ally.length<2?'':`<div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div>`}</div>
       <div class="chart" id="ch-nw" style="height:260px"></div>${(n=>n?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L('nwFcNote',n))}</p>`:'')(nwChartForecast(nwChartMonths()).n)}${nwChartNote()}</section>`:'';
   return head(per,ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${chart}${healthCard(k,T)}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
 }

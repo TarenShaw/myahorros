@@ -76,7 +76,7 @@ You'll create a "sign-in client" that lets your site ask Google for access to a 
 
 ## AI for reading statements (nothing to set up on your side)
 
-The **Do it with AI** and **Read statements with AI** buttons work on the website too. The first time someone uses them, the tracker asks which AI to use:
+The **Fill in with AI** buttons work on the website too. The first time someone uses them, the tracker asks which AI to use:
 
 | Option | What they need | Cost |
 |---|---|---|
