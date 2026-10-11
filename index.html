@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-xJyU0ccVauDP3iKntK37kgNUN38b1YFGX0VO9LeXtwI=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-702zkCNZJbuej9/TmcTzjh2bSFlWw9zc3BBxbaMKhKQ=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -330,6 +330,15 @@ select{padding-right:28px}
 .pill svg{width:13px;height:13px;flex:none}
 .pill.good{background:var(--good-soft);color:var(--good-ink)}
 .pill.bad{background:var(--bad-soft);color:var(--bad-ink)}
+.pill.warn{background:var(--warn-soft);color:var(--warn-ink)}
+.fh{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.fh-c{border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.fh-c .nw-bar{margin:4px 0 2px}
+.fh-pill{margin-top:auto;padding-top:6px}.fh-link{align-self:flex-start;text-align:left}
+.fh-good{color:var(--good-ink)}.fh-warn{color:var(--warn-ink)}.fh-bad{color:var(--bad-ink)}
+@media (max-width:1180px){.fh{grid-template-columns:repeat(6,minmax(0,1fr))}.fh-c{grid-column:span 2}.fh-c:nth-child(n+4){grid-column:span 3}}
+@media (max-width:860px){.fh{grid-template-columns:repeat(2,minmax(0,1fr))}.fh-c,.fh-c:nth-child(n+4){grid-column:auto}}
+@media (max-width:520px){.fh{grid-template-columns:1fr}}
 
 .two{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:stretch}
 .legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2)}
@@ -1725,6 +1734,12 @@ const STR={
   info_nwWhat:['Net worth is what everything you own is worth, minus what you owe. Once a month, type what each account is worth at the end of the month, or import several months from Excel, and the tracker shows how it grows and why.','El patrimonio neto es lo que vale todo lo que tienes, menos lo que debes. Una vez al mes, escribe lo que vale cada cuenta a final de mes, o importa varios meses desde Excel, y el control muestra cómo crece y por qué.'],
   info_nwGroups:['Accounts are grouped by how soon you could use the money: Cash now, Investments within days, Illiquid on its own schedule (loans, property), Retirement when you retire. “Without retirement savings” is what you could reach before then.','Las cuentas se agrupan según lo pronto que podrías usar el dinero: Efectivo ya, Inversiones en días, Ilíquido según su propio calendario (préstamos, inmuebles) y Jubilación al jubilarte. «Sin el ahorro para la jubilación» es lo que podrías usar antes.'],
   info_nwChange:['How your net worth moved since the previous month with figures, in two parts. You saved: income minus expenses from your tracker. Markets, interest and gains: everything else, such as price moves, interest and dividends. Moving money between your own accounts changes neither.','Cómo ha cambiado tu patrimonio desde el mes anterior con cifras, en dos partes. Has ahorrado: ingresos menos gastos según tu control. Mercados, intereses y plusvalías: todo lo demás, como cambios de precio, intereses y dividendos. Mover dinero entre tus propias cuentas no cambia ninguna de las dos.'],
+  info_fhTitle:['Rules of thumb, not advice.','Reglas orientativas, no asesoramiento.'],
+  info_fh_emerg:['Cash you could use tomorrow divided by your average monthly spending. Rule of thumb: 3–6 months. Meal cards and money owed to you aren’t counted.','El efectivo que podrías usar mañana dividido entre tu gasto medio mensual. Regla orientativa: 3–6 meses. No cuentan las tarjetas de comida ni el dinero que te deben.'],
+  info_fh_fi:['Invested money vs 25× your yearly spending, the amount that lets you live off 4% a year (the 4% rule).','Tu dinero invertido frente a 25 veces tu gasto anual, lo que te permitiría vivir retirando un 4% al año (la regla del 4%).'],
+  info_fh_save:['Share of your income you keep. 20% is the classic 50/30/20 target.','La parte de tus ingresos que te quedas. El 20% es el objetivo clásico de la regla 50/30/20.'],
+  info_fh_passive:['What your investments could pay you each month at a 4% yearly withdrawal, compared with what you spend.','Lo que tus inversiones podrían pagarte cada mes retirando un 4% al año, comparado con lo que gastas.'],
+  info_fh_age:['The Millionaire Next Door rule: age × yearly gross income ÷ 10.','La regla de «The Millionaire Next Door»: edad × ingresos brutos anuales ÷ 10.'],
   info_nwGoal:['Needed a month is what’s left to the goal divided by the months left. You save a month is your average saving over the last six finished months. From growth is what your investments, illiquid and retirement accounts would have to earn on top of that.','Hace falta al mes es lo que falta para el objetivo dividido entre los meses que quedan. Ahorras al mes es tu ahorro medio de los últimos seis meses completos. Con crecimiento es lo que tendrían que ganar tus inversiones, ilíquido y jubilación además de eso.'],
   info_nwOverTime:['Month-end totals stacked by group. The dashed trend line shows the general direction. A faded month is missing a figure for one of your accounts, so it looks lower than it was.','Totales a fin de mes apilados por grupo. La línea de tendencia discontinua muestra la dirección general. Un mes atenuado no tiene la cifra de alguna cuenta, así que parece más bajo de lo que fue.'],
   info_nwAccounts:['Change is the difference from the previous month with figures; Share is the account’s part of the total. An account you set to 0 is hidden from the next month on, and comes back if you give it a figure.','Cambio es la diferencia con el mes anterior con cifras; Peso es la parte del total que supone la cuenta. Una cuenta que pones a 0 se oculta a partir del mes siguiente y vuelve si le pones una cifra.'],
@@ -1777,7 +1792,23 @@ const STR={
   nwSavedIn:[m=>`Saved in ${m}, according to your tracker (income minus expenses, without interest, dividends or gains).`,m=>`Ahorrado en ${m}, según tu control (ingresos menos gastos, sin intereses, dividendos ni plusvalías).`],
   nwNoPrev:['Add next month’s figures to see how much of the change came from your saving and how much from markets.','Añade las cifras del mes que viene para ver cuánto del cambio viene de tu ahorro y cuánto de los mercados.'],
   nwNoTracker:[m=>`Your tracker has no transactions for ${m}, so the change can’t be split yet.`,m=>`Tu control no tiene movimientos de ${m}, así que todavía no se puede repartir el cambio.`],
-  nwGoal:['Goal','Objetivo'], nwSetGoal:['Set a goal','Fijar un objetivo'], nwChangeGoal:['Change goal','Cambiar objetivo'],
+  fhTitle:['Financial health','Salud financiera'], fh_emerg:['Emergency fund','Fondo de emergencia'], fh_fi:['Financial independence','Independencia financiera'],
+  fh_save:['Savings rate','Tasa de ahorro'], fh_passive:['Passive income coverage','Cobertura con rentas pasivas'], fh_age:['Net worth for your age','Patrimonio para tu edad'],
+  fhSub:[(m,n)=>`As of the end of ${m}. ${n>=12?'Averages over the last 12 months.':`Averages based on ${n} month${n===1?'':'s'}.`}`,(m,n)=>`A final de ${m}. ${n>=12?'Medias de los últimos 12 meses.':`Medias de ${n} mes${n===1?'':'es'}.`}`],
+  fhNoData:['No finished month with transactions up to this one yet, so there are no averages.','Aún no hay ningún mes terminado con movimientos hasta este, así que no hay medias.'],
+  fhMonths:[v=>`${v} months`,v=>`${v} meses`], fhTarget:[(n,v)=>`Target ${n} months · ${v}`,(n,v)=>`Objetivo ${n} meses · ${v}`],
+  fhSpare:[v=>`+${v} could be invested`,v=>`+${v} se podrían invertir`], fhToGo:[v=>`${v} to go`,v=>`Faltan ${v}`],
+  fhNoExp:['No spending recorded yet','Aún no hay gastos registrados'], fhNoInc:['No income recorded yet','Aún no hay ingresos registrados'],
+  fhOf:[(a,b)=>`${a} of ${b}`,(a,b)=>`${a} de ${b}`],
+  fhMonthRate:[(m,v,ar,soFar)=>`${m}${soFar?' so far':''}: ${v} ${ar} vs average`,(m,v,ar,soFar)=>`${m}${soFar?' hasta hoy':''}: ${v} ${ar} frente a la media`],
+  fhFire:['FIRE pace','Ritmo FIRE'], fhCovers:['Covers your spending','Cubre tus gastos'], fhProdigious:['Prodigious accumulator','Acumulador prodigioso'],
+  fhPassiveSub:[(a,b)=>`Portfolio could pay ${a}/month of your ${b}/month spending`,(a,b)=>`Tu cartera podría pagar ${a}/mes de tus ${b}/mes de gasto`],
+  fhAgeSub:[(age,b)=>`Benchmark for your age (${age}) and salary: ${b}`,(age,b)=>`Referencia para tu edad (${age}) y salario: ${b}`],
+  fhAddAge:['Add your year of birth and salary in Settings','Añade tu año de nacimiento y salario en Ajustes'],
+  fhLvl_good:['Healthy','Sano'], fhLvl_warn:['Getting there','En camino'], fhLvl_bad:['Low','Bajo'],
+  aboutTitle:['About you','Sobre ti'], aboutSub:['Only used for “Net worth for your age” on Net worth. Saved in your tracker like the rest.','Solo se usa para «Patrimonio para tu edad» en Patrimonio. Se guarda en tu control como lo demás.'],
+  birthYear:['Year of birth','Año de nacimiento'], grossSalary:['Gross yearly salary','Salario bruto anual'],
+  nwGoal:['Goal','Objetivo'],nwSetGoal:['Set a goal','Fijar un objetivo'], nwChangeGoal:['Change goal','Cambiar objetivo'],
   nwGoalNone:['A target amount and a date. The tracker works out how much a month that takes.','Un importe y una fecha. El control calcula cuánto hace falta al mes.'],
   nwGoalLine:[(v,m,y)=>`${v} by the end of ${m} ${y}`,(v,m,y)=>`${v} a final de ${m} de ${y}`],
   nwGoalLeft:[(v,n)=>`${v} to go in ${pl(n,'month')}`,(v,n)=>`Faltan ${v} en ${pl(n,'month')}`],
@@ -2506,6 +2537,10 @@ function viewSettings(){
         </div></section>`
     : `<section class="card"><div class="card-head"><div><h2>${esc(L('dataTitle'))}</h2><p class="sub">${esc(L('dataWeb'))}</p></div></div>
         <div class="set-acts">${canDl?act('backup',L('dlBackupLong'),L('dlBackupHelp')):''}${cw?act('restore',L('restoreBtn'),L('restoreHelp')):''}${canDl?act('export',L('dlAll'),L('dlAllHelp')):''}</div></section>`;
+  const so=S.settings||{};
+  const aboutCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('aboutTitle'))}</h2><p class="sub">${esc(L('aboutSub'))}</p></div></div>
+    <div class="ctrls"><div class="field"><label class="lab" for="st-born">${esc(L('birthYear'))}</label><input id="st-born" type="number" inputmode="numeric" min="1900" max="${cy}" step="1" value="${so.birthYear||''}"${cw?'':' disabled'} style="max-width:140px"></div>
+      <div class="field"><label class="lab" for="st-salary">${esc(L('grossSalary'))}</label><input id="st-salary" type="number" inputmode="decimal" min="0" step="any" value="${so.salary||''}"${cw?'':' disabled'} style="max-width:180px"></div></div></section>`;
   const mlN=mlOn()?mlLearnedCount():0;
   const mlCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('mlTitle'))}</h2><p class="sub">${esc(L('mlSub'))}</p></div></div>
     <label class="check"><input type="checkbox" id="st-ml"${mlOn()?' checked':''}${cw?'':' disabled'}>${esc(L('mlToggle'))}</label>
@@ -2517,7 +2552,7 @@ function viewSettings(){
     <div class="set-acts">${aiX.map(x=>`<div class="set-act"><button class="btn" type="button" data-action="ai-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button><span class="hint">${esc(x.help)}</span></div>`).join('')}</div></section>`:'';
   const helpCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('helpTitle'))}</h2><p class="sub">${esc(L('helpSub'))}</p></div></div>
     <div class="ctrls"><button class="btn" type="button" data-action="tour">${esc(L('tourBtn'))}</button>${S.downloads||S.local?`<button class="btn" type="button" data-action="remind-ics">${esc(L('remindBtn'))}</button>`:''}${S.canWrite&&!guideState()&&(!nw().accounts.length||!nwMonths().length||!allRows().length)?`<button class="btn" type="button" data-action="guide-show">${esc(L('gShow'))}</button>`:''}</div><p class="hint" style="margin-top:12px">${esc(L('helpInfo'))}</p></section>`;
-  return `<h2 class="sec-title" style="margin-bottom:14px">${esc(L('settingsTitle'))}</h2><div class="settings"><div class="stack">${langCard}${startCard}${mlCard}</div><div class="stack">${themeCard}${dataCard}${aiCard}${helpCard}</div></div>`;
+  return `<h2 class="sec-title" style="margin-bottom:14px">${esc(L('settingsTitle'))}</h2><div class="settings"><div class="stack">${langCard}${startCard}${aboutCard}${mlCard}</div><div class="stack">${themeCard}${dataCard}${aiCard}${helpCard}</div></div>`;
 }
 /* renames one category everywhere it's used (the caller saves and redraws) */
 function renameCatCore(t,from,nn){
@@ -3258,7 +3293,52 @@ function viewNetworth(){
   const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
       <div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div></div>
       <div class="chart" id="ch-nw" style="height:260px"></div>${nwChartNote()}</section>`:'';
-  return head(ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${chart}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
+  return head(ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${chart}${healthCard(k,T)}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
+}
+/* Financial health: rules of thumb as of the end of month k. Income and expenses are the ones behind "You saved"
+   (trackerSaved: from your pay, without returns or Investments rows), averaged over the finished months with
+   transactions among the 12 up to k. Assumptions in HEALTH; settings.health overrides any of them.
+   emergencyExclude: Cash accounts that aren't money you could spend tomorrow, as whole words of the account name. */
+const HEALTH={emergencyMonthsTarget:6,fiMultiple:25,withdrawalRate:0.04,savingsRateTarget:0.20,fiGroups:['invest','illiquid','pension'],emergencyExclude:['Pluxee','Edenred','Owed']};
+function healthMonths(k){ return memo('hm'+k,()=>{
+  const have=new Set(allRows().map(r=>r.date.slice(0,7))), now=ymNow(), out=[];
+  for(let i=0,m=k;i<12;i++,m=ymAdd(m,-1)) if(m<now&&have.has(m)){ const tr=trackerSaved(ymAdd(m,-1),m), inc=r2(sum(tr.income)); out.push({k:m,inc,exp:r2(inc-tr.saved)}); }
+  return out; }); }
+function healthCard(k,T){
+  const H=Object.assign({},HEALTH,S.settings&&S.settings.health), hm=healthMonths(k), n=hm.length;
+  const avgInc=n?sum(hm.map(x=>x.inc))/n:0, avgExp=n?sum(hm.map(x=>x.exp))/n:0;
+  const s=nw().snaps[k]||{}, ex=(H.emergencyExclude||[]).map(loose).filter(Boolean);
+  const cash=r2(sum(nw().accounts.filter(a=>a.group==='cash'&&s[a.id]!=null&&!ex.some(p=>(' '+loose(a.name)+' ').includes(' '+p+' '))).map(a=>s[a.id])));
+  const fi=r2(sum((H.fiGroups||[]).map(g=>T.g[g]||0)));
+  const lvl=(v,lo,hi)=>v>=hi?'good':v>=lo?'warn':'bad';
+  const pill=(c,t)=>`<span class="pill ${c}">${c==='good'?ICON.ok:ICON.warn}${esc(t)}</span>`, lp=c=>pill(c,L('fhLvl_'+c));
+  const sub=(t,c)=>`<span class="tile-sub${c?' fh-'+c:''}">${esc(t)}</span>`;
+  const card=(key,sw,val,body,pl,vc)=>`<div class="fh-c"><span class="tile-label">${sw?gSw(sw):''}${esc(L('fh_'+key))}${info('fh_'+key)}</span><span class="tile-val${vc?' fh-'+vc:''}">${val}</span>${body}${pl?`<span class="fh-pill">${pl}</span>`:''}</div>`;
+  const noExp=sub(L('fhNoExp')), hasExp=avgExp>0.5;
+  /* 1. months of spending the spendable cash would cover */
+  let c1=card('emerg','cash','—',noExp);
+  if(hasExp){ const mo=Math.max(0,cash/avgExp), tg=H.emergencyMonthsTarget*avgExp, d=r2(cash-tg), lv=lvl(mo,H.emergencyMonthsTarget/2,H.emergencyMonthsTarget);
+    c1=card('emerg','cash',esc(L('fhMonths',fmtNum(mo,1))),sub(L('fhTarget',H.emergencyMonthsTarget,fmtEUR(tg,0)))+sub(d>=0?L('fhSpare',fmtEUR(d,0)):L('fhToGo',fmtEUR(-d,0)),d>=0?'good':lv),lp(lv)); }
+  /* 2. invested money against fiMultiple × a year of spending */
+  let c2=card('fi','invest','—',noExp);
+  if(hasExp){ const tg=H.fiMultiple*avgExp*12, p=fi/tg;
+    c2=card('fi','invest',fmtPct(p,0),`<span class="nw-bar" role="img" aria-label="${esc(fmtPct(p,0))}"><i class="saved" style="width:${(Math.max(0,Math.min(1,p))*100).toFixed(1)}%"></i></span>`+sub(L('fhOf',fmtEUR(fi,0),fmtEUR(tg,0)))); }
+  /* 3. share of income kept, on average and in month k itself (so far, if k is still running) */
+  let c3=card('save','','—',sub(L('fhNoInc')));
+  if(avgInc>0.5){ const r=(avgInc-avgExp)/avgInc, tk=trackerSaved(ymAdd(k,-1),k), ki=sum(tk.income), kr=ki>0.5?tk.saved/ki:null, tg=H.savingsRateTarget;
+    const ar=kr==null?'':kr>r+0.005?'↑':kr<r-0.005?'↓':'=';
+    c3=card('save','',fmtPct(r,0),kr==null?'':sub(L('fhMonthRate',M()[+k.slice(5,7)-1],fmtPct(kr,0),ar,k===ymNow())),r>=0.4?pill('good',L('fhFire')):lp(lvl(r,tg/2,tg)),r<0?'bad':''); }
+  /* 4. what the invested money could pay each month at withdrawalRate a year, against spending */
+  let c4=card('passive','invest','—',noExp);
+  if(hasExp){ const pm=fi*H.withdrawalRate/12, c=pm/avgExp;
+    c4=card('passive','invest',fmtPct(c,0),sub(L('fhPassiveSub',fmtEUR(pm,0),fmtEUR(avgExp,0))),c>=1?pill('good',L('fhCovers')):''); }
+  /* 5. net worth against age × gross yearly salary ÷ 10 (age in the year of month k) */
+  const by=+(S.settings&&S.settings.birthYear)||0, sal=+(S.settings&&S.settings.salary)||0, age=by?+k.slice(0,4)-by:0;
+  let c5=card('age','','—',`<button class="linkish fh-link" type="button" data-action="tab" data-tab="settings">${esc(L('fhAddAge'))}</button>`);
+  if(age>0&&sal>0){ const b=age*sal/10, x=T.total/b, lv=lvl(x,0.5,1);
+    c5=card('age','',esc(fmtNum(x,1)+'×'),sub(L('fhAgeSub',age,fmtEUR(b,0))),x>=2?pill('good',L('fhProdigious')):lp(lv),x<0.5?'bad':''); }
+  return `<section class="card" aria-labelledby="fh-title"><div class="card-head"><div><h2 id="fh-title">${esc(L('fhTitle'))}${info('fhTitle')}</h2><p class="sub">${esc(n?L('fhSub',ymIn(k),n):L('fhNoData'))}</p></div></div>
+    <div class="fh">${c1}${c2}${c3}${c4}${c5}</div></section>`;
 }
 /* How much of what's left to the goal would have to come from growth of the invested money
    (investments + illiquid + retirement), after counting the saving pace; as an amount, a total % and a yearly %. */
@@ -5605,6 +5685,8 @@ document.addEventListener('change',e=>{
   if(el.name==='st-num'){ setNumFmt(el.value); return; }
   if(id==='st-cur'){ setCurrency(el.value); return; }
   if(id==='st-ml'){ setSettings({mlGuess:el.checked}); render(); return; }
+  if(id==='st-born'||id==='st-salary'){ const v=+el.value, ok=id==='st-born'?Number.isInteger(v)&&v>=1900&&v<=new Date().getFullYear():v>0&&isFinite(v);
+    setSettings({[id==='st-born'?'birthYear':'salary']:ok?(id==='st-born'?v:r2(v)):null}); if(!ok) el.value=''; return; }
   if(id==='ob-month'){ S.ui.obM=+el.value; return; }
   if(id==='ob-year'){ S.ui.obY=+el.value; return; }
   if(id==='st-month'||id==='st-year'){ setStart({y:+$('#st-year').value,m:+$('#st-month').value}); return; }
