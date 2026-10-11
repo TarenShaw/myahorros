@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-oQZM97kdYJKbOwRkbSNuatuZCXV2jJhI4kSH+vpR+UU=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-JE5friGuLlgfdk2G0i1ieWQOVg1+vNyxLb8wDporj4c=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -110,17 +110,17 @@ p{margin:0}
 .num,.tab-num{font-variant-numeric:tabular-nums}
 
 html{scrollbar-gutter:stable}
-.app{max-width:1760px;margin:0 auto;padding-inline:clamp(var(--s16),3vw,var(--s32));padding-block:0 var(--s48);min-height:100vh}
+.app{max-width:calc(1280px + 2*var(--s32));margin:0 auto;padding-inline:clamp(var(--s16),3vw,var(--s32));padding-block:0 var(--s48);min-height:100vh}
 /* while only the loader is shown, #view itself stays invisible, so the header growing when data arrives is not a layout shift */
 #view:has(>.state>.loading-bar){visibility:hidden}#view>.state{visibility:visible}
 
 /* masthead */
 .mast{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s16) var(--s24);flex-wrap:wrap;padding-block:var(--s32) var(--s16)}
 .kicker{font:500 var(--fs-eyebrow)/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--s8)}
-.mast h1{font:800 clamp(var(--fs-page),3.4vw,var(--fs-kpi))/1.05 var(--f-display);letter-spacing:-.01em}
-.yearbox{display:flex;align-items:center;gap:var(--s4)}
-.yearbox select{appearance:none;-webkit-appearance:none;background:transparent;border:0;border-radius:var(--r-inner);font:800 clamp(30px,4.6vw,44px)/1.15 var(--f-display);letter-spacing:-.02em;height:auto;padding:2px var(--s8);cursor:pointer;color:var(--ink)}
-.yearbox select:hover{background:var(--surface-2)}
+.mast .brand{font:800 clamp(var(--fs-page),3.4vw,var(--fs-kpi))/1.05 var(--f-display);letter-spacing:-.01em}
+.yearbox{display:inline-flex;align-items:center;gap:var(--s4)}
+.yearbox select{min-width:96px}
+.yearbox .icon-btn{border-color:var(--line-2);background:var(--surface)}
 .icon-btn{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:var(--r-inner);border:1px solid transparent;background:transparent;color:var(--ink-2);cursor:pointer;font-size:var(--fs-section);line-height:1}
 .icon-btn:hover:not(:disabled){background:var(--surface-2);color:var(--ink)}
 .icon-btn:disabled{opacity:.35;cursor:default}
@@ -265,6 +265,13 @@ tr.ai-ask td.n{min-width:220px;white-space:normal}
 .sync[data-s="err"]::before{background:var(--bad)}
 
 main{padding-top:var(--s24)}
+/* the page header, the same on every tab: title and one line on the left, period control and actions on the right */
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s12) var(--s24);flex-wrap:wrap;margin-bottom:var(--s24)}
+.page-title{font:700 var(--fs-page)/1.2 var(--f-display);letter-spacing:-.01em}
+.ph-meta{color:var(--muted);font-size:var(--fs-meta);margin-top:var(--s4);max-width:72ch}
+.ph-end,.ph-acts{display:flex;align-items:center;gap:var(--s8);flex-wrap:wrap}
+.ph-end{margin-left:auto;justify-content:flex-end}
+@media (max-width:640px){.ph-end{margin-left:0;justify-content:flex-start;width:100%}}
 
 /* controls */
 [hidden]{display:none!important}
@@ -648,8 +655,7 @@ select.tsel{border-left:4px solid var(--tc,var(--line-2));padding-left:var(--s8)
 @media (max-width:520px){.rs-sum{grid-template-columns:1fr 1fr}}
 
 /* welcome (new tracker) + settings */
-.app.onboarding .tabbar,.app.onboarding .yearbox{display:none}
-.app.tab-settings .yearbox,.app.tab-networth .yearbox{visibility:hidden}
+.app.onboarding .tabbar{display:none}
 fieldset.plain{border:0;padding:0;margin:0;min-width:0}
 fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 .welcome{max-width:620px;margin:var(--s8) auto 0;display:grid;gap:var(--s24);padding:var(--s32)}
@@ -761,7 +767,6 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]):not([data-ybt-theme="light"]){--g-cash:#8fa3ae;--g-invest:var(--c-investments);--g-illiquid:#e2b53a;--g-pension:#9478e6}}
 :root[data-theme="dark"],:root[data-ybt-theme="dark"]{--g-cash:#8fa3ae;--g-invest:var(--c-investments);--g-illiquid:#e2b53a;--g-pension:#9478e6}
 .sw.cash{background:var(--g-cash)}.sw.invest{background:var(--g-invest)}.sw.illiquid{background:var(--g-illiquid)}.sw.pension{background:var(--g-pension)}
-.nw-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s12) var(--s24);flex-wrap:wrap;margin-bottom:var(--s16)}
 .nw-alloc{display:flex;height:8px;border-radius:var(--r-inner);overflow:hidden;background:var(--surface-3);margin-top:var(--s12);gap:2px}
 .nw-alloc i{display:block;height:100%;border-radius:var(--r-inner)}
 .nw-alloc{height:10px}
@@ -971,13 +976,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
   <header class="mast">
     <div>
       <p class="kicker">Income · Expenses · Investments</p>
-      <h1>MyAhorros</h1>
-    </div>
-    <div class="yearbox">
-      <button class="icon-btn" type="button" data-action="year-step" data-step="-1" id="year-prev" aria-label="Previous year">‹</button>
-      <label class="sr" for="year-select">Year</label>
-      <select id="year-select"><option>—</option></select>
-      <button class="icon-btn" type="button" data-action="year-step" data-step="1" id="year-next" aria-label="Next year">›</button>
+      <p class="brand">MyAhorros</p>
     </div>
   </header>
   <div class="tabbar">
@@ -1266,6 +1265,11 @@ const STR={
   sections:['Sections','Secciones'],
   tab_overview:['Overview','Resumen'], tab_yearly:['Yearly','Seguimiento'], tab_yearly_long:[' tracking',' anual'],
   tab_transactions:['Transactions','Movimientos'], tab_categories:['Categories','Categorías'], tab_settings:['Settings','Ajustes'],
+  pt_yearly:['Yearly tracking','Seguimiento anual'],
+  ovSub:['Your year at a glance: what came in, what went out and what you kept.','Tu año de un vistazo: lo que entró, lo que salió y lo que te quedó.'],
+  txSub:['Every income, expense and investment row. Click a row to change it.','Cada fila de ingresos, gastos e inversiones. Pulsa una fila para cambiarla.'],
+  ctSub:['How your transactions are grouped, and the words that sort new ones by themselves.','Cómo se agrupan tus movimientos y las palabras que ordenan solos los nuevos.'],
+  stSub:['Language, number format, start month, backups and the AI that reads statements.','Idioma, formato de números, mes de inicio, copias de seguridad y la IA que lee extractos.'],
   withoutCat:[n=>`${n} without a category`,n=>`${n} sin categoría`],
   sync_connecting:['Connecting','Conectando'], sync_nodb:['Not connected','Sin conexión'], sync_saving:['Saving…','Guardando…'],
   sync_err:['Not saved','Sin guardar'], sync_ro:['Read-only','Solo lectura'], sync_ok:['Saved','Guardado'],
@@ -1348,7 +1352,6 @@ const STR={
   allYears:['All years','Todos los años'], totalOf:[t=>`Total ${t}`,t=>`Total ${t}`], pctIncome:['% of income','% de los ingresos'],
   savings:['Savings','Ahorro'], totalSavings:['Total savings','Ahorro total'],
   bigCat:['Biggest category of the year','Categoría con más gasto del año'], bigMonth:['Biggest spending month','Mes con más gasto'],
-  yMonthByMonth:[y=>`${y}, month by month`,y=>`${y}, mes a mes`],
   yHint:['Every figure adds up the transactions behind it. Click a figure to see them.','Cada cifra suma los movimientos que hay detrás. Pulsa una cifra para verlos.'],
   heatMap:['Heat map','Mapa de calor'], bigMonthCat:['Biggest month and category','Mes y categoría con más gasto'],
   mostSpent:['Most spent','Más gasto'], leastSpent:['Least spent','Menos gasto'],
@@ -1569,7 +1572,6 @@ const STR={
   fillN:[n=>`Fill ${n} uncategorised`,n=>`Rellenar ${n} sin categoría`],
   kwRemoved:[k=>`Removed keyword “${k}”`,k=>`Quitada la palabra «${k}»`],
   /* settings */
-  settingsTitle:['Settings','Ajustes'],
   langSub:['The language of every screen, message and download.','El idioma de todas las pantallas, mensajes y descargas.'],
   startTitle:['Tracking start','Inicio del registro'],
   startSub:['The first month your figures cover. Months before it are greyed out on Yearly tracking and left out of the charts and averages.','El primer mes que cubren tus cifras. Los meses anteriores aparecen atenuados en el Seguimiento anual y quedan fuera de los gráficos y las medias.'],
@@ -2436,9 +2438,7 @@ function applyLang(){
   if(chromeLang===LANG) return; chromeLang=LANG;
   document.documentElement.lang=LANG; document.title=L('appDocTitle');
   try{ localStorage.setItem('ybt.lang',LANG); }catch(_){}
-  $('.kicker').textContent=L('kicker'); $('.mast h1').textContent=L('appTitle');
-  $('#year-prev').setAttribute('aria-label',L('prevYear')); $('#year-next').setAttribute('aria-label',L('nextYear'));
-  $('label[for="year-select"]').textContent=L('year');
+  $('.kicker').textContent=L('kicker'); $('.mast .brand').textContent=L('appTitle');
   $('.tabs').setAttribute('aria-label',L('sections'));
   $('#tab-overview .tl').textContent=L('tab_overview');
   $('#tab-yearly .tl').innerHTML=esc(L('tab_yearly'))+`<span class="tab-long">${esc(L('tab_yearly_long'))}</span>`;
@@ -2486,8 +2486,6 @@ function render(){
   renderHeader();
   const ob=isOnboarding(), app=$('.app');
   app.classList.toggle('onboarding',ob);
-  app.classList.toggle('tab-settings',S.ui.tab==='settings'&&!ob);
-  app.classList.toggle('tab-networth',S.ui.tab==='networth'&&!ob);
   const v=$('#view'); const st=captureFocus();
   let html;
   if(S.mode==='nodb') html=viewNoDb();
@@ -2495,10 +2493,10 @@ function render(){
   else if(ob) html=viewWelcome();
   else if(!allRows().length && S.ui.tab!=='categories' && S.ui.tab!=='settings' && S.ui.tab!=='networth'){ const G=guideState();
     /* Overview, and Transactions at its step, show the guide itself; elsewhere a reminder above the usual empty page */
-    html=!G?viewEmpty():S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='tx')?`<div class="guide-wrap">${guideCard(G)}</div>`+viewEmpty():guideBar(G)+viewEmpty(); }
+    html=pageHead(S.ui.tab)+(!G?viewEmpty():S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='tx')?`<div class="guide-wrap">${guideCard(G)}</div>`+viewEmpty():guideBar(G)+viewEmpty()); }
   else { html=({overview:viewOverview,yearly:viewYearly,transactions:viewTransactions,categories:viewCategories,networth:viewNetworth,settings:viewSettings})[S.ui.tab]();
     const G=S.ui.tab!=='networth'&&S.ui.tab!=='settings'?guideState():null;
-    if(G){ const full=S.ui.tab==='overview'; html=(full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G))+html; } }
+    if(G){ const full=S.ui.tab==='overview'; html=afterHead(html,full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G)); } }
   v.innerHTML=html;
   restoreFocus(st);
   afterRender();
@@ -2508,14 +2506,8 @@ function render(){
 function renderHeader(){
   const ys=yearList();
   for(const t of TABS) $('#tab-'+t).setAttribute('aria-selected',String(S.ui.tab===t));
-  if(!S.gotMonths){ $('#year-prev').disabled=$('#year-next').disabled=true; setTxTab(0); return; }
+  if(!S.gotMonths){ setTxTab(0); return; }
   if(S.ui.year==null||!ys.includes(S.ui.year)){ const wd=yearsWithData(), st=startOf(), cy=new Date().getFullYear(); S.ui.year=wd.length?wd[wd.length-1]:(st?Math.max(cy,st.y):cy); }
-  const sel=$('#year-select');
-  const opts=ys.map(y=>`<option value="${y}"${y===S.ui.year?' selected':''}>${y}</option>`).join('');
-  if(sel.innerHTML!==opts) sel.innerHTML=opts;
-  sel.value=String(S.ui.year);
-  $('#year-prev').disabled=ys.indexOf(S.ui.year)<=0;
-  $('#year-next').disabled=ys.indexOf(S.ui.year)>=ys.length-1;
   const un=agg(S.ui.year);
   const nUn=TKEYS.reduce((a,t)=>a+un[t].uncatCount,0);
   setTxTab(nUn);
@@ -2527,6 +2519,15 @@ function renderHeader(){
     hb.innerHTML=(HIDE?ICON.eyeOff:ICON.eye)+`<span class="sr">${esc(L(HIDE?'showAmounts':'hideAmounts'))}</span>`; hb.title=L(HIDE?'showAmounts':'hideAmounts'); }
 }
 
+/* the one page header: title (+ info) and a one-line description on the left; the period control and the page's actions on the right */
+const PH={networth:['tab_networth','nwSub','nwWhat'],overview:['tab_overview','ovSub'],yearly:['pt_yearly','yHint','yTable'],transactions:['tab_transactions','txSub'],categories:['tab_categories','ctSub'],settings:['tab_settings','stSub']};
+function pageHead(t,period,actions){ const [tk,sk,ik]=PH[t];
+  return `<header class="page-head"><div><h1 class="page-title">${esc(L(tk))}${ik?info(ik):''}</h1><p class="ph-meta">${esc(L(sk))}</p></div>${period||actions?`<div class="ph-end">${period||''}${actions?`<div class="ph-acts">${actions}</div>`:''}</div>`:''}</header>`; }
+/* the year control, in the page header of the tabs that show one year */
+function yearStepper(){ const ys=yearList(), i=ys.indexOf(S.ui.year);
+  return `<div class="yearbox"><button class="icon-btn" type="button" data-action="year-step" data-step="-1" id="year-prev" aria-label="${esc(L('prevYear'))}"${i<=0?' disabled':''}>‹</button><label class="sr" for="year-select">${esc(L('year'))}</label><select id="year-select">${ys.map(y=>`<option value="${y}"${y===S.ui.year?' selected':''}>${y}</option>`).join('')}</select><button class="icon-btn" type="button" data-action="year-step" data-step="1" id="year-next" aria-label="${esc(L('nextYear'))}"${i>=ys.length-1?' disabled':''}>›</button></div>`; }
+/* a guide card or bar goes under the page header, not above it */
+function afterHead(html,x){ const i=html.startsWith('<header class="page-head"')?html.indexOf('</header>')+9:0; return html.slice(0,i)+x+html.slice(i); }
 function setTxTab(nUn){
   const tb=$('#tab-transactions'), tl=tb.querySelector('.tl'), w=L('tab_transactions'); if(tl.textContent!==w) tl.textContent=w;
   let b=tb.querySelector('.badge');
@@ -2656,7 +2657,7 @@ function viewSettings(){
     <div class="set-acts">${aiX.map(x=>`<div class="set-act"><button class="btn" type="button" data-action="ai-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button><span class="hint">${esc(x.help)}</span></div>`).join('')}</div></section>`:'';
   const helpCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('helpTitle'))}</h2><p class="sub">${esc(L('helpSub'))}</p></div></div>
     <div class="ctrls"><button class="btn" type="button" data-action="tour">${esc(L('tourBtn'))}</button>${S.downloads||S.local?`<button class="btn" type="button" data-action="remind-ics">${esc(L('remindBtn'))}</button>`:''}${S.canWrite&&!guideState()&&(!nw().accounts.length||!nwMonths().length||!allRows().length)?`<button class="btn" type="button" data-action="guide-show">${esc(L('gShow'))}</button>`:''}</div><p class="hint" style="margin-top:var(--s12)">${esc(L('helpInfo'))}</p></section>`;
-  return `<h2 class="sec-title" style="margin-bottom:var(--s16)">${esc(L('settingsTitle'))}</h2><div class="settings"><div class="stack">${langCard}${startCard}${aboutCard}${mlCard}</div><div class="stack">${themeCard}${dataCard}${aiCard}${helpCard}</div></div>`;
+  return pageHead('settings')+`<div class="settings"><div class="stack">${langCard}${startCard}${aboutCard}${mlCard}</div><div class="stack">${themeCard}${dataCard}${aiCard}${helpCard}</div></div>`;
 }
 /* renames one category everywhere it's used (the caller saves and redraws) */
 function renameCatCore(t,from,nn){
@@ -2757,7 +2758,7 @@ function viewOverview(){
   const oc=S.ui.oc, am=ms;
   const multi=yearsWithData().length>1;
   const mmT=S.ui.mm.table, mmD=!!S.ui.mm.days&&mmT!=='all', mc=mmCat(A);
-  return `<div class="stack">
+  return pageHead('overview',yearStepper())+`<div class="stack">
     ${notice}${backupNudge()}${monthlyCard()}
     <section class="ov-top" aria-label="${esc(L('yearSummary'))}">
       <div class="hero">
@@ -3378,19 +3379,19 @@ function guideBar(G){
 }
 function viewNetworth(){
   const N=nw(), ms=nwMonths(), cw=S.canWrite, due=nwDue(), G0=guideState(), G=G0&&G0.cur!=='done'?G0:null;   /* the "you're set up" card lives on Overview only */
-  const head=(right)=>`<div class="nw-head"><div><h2 class="sec-title">${esc(L('nwTitle'))}${info('nwWhat')}</h2><p class="hint">${esc(L('nwSub'))}</p></div>${right||''}</div>`;
+  const head=(per,acts)=>pageHead('networth',per,acts);
   if(!N.accounts.length) return head()+(G?guideCard(G):`<section class="card nw-empty"><h2>${esc(L('nwEmptyTitle'))}</h2><p class="sub" style="max-width:68ch">${esc(L('nwEmptyText'))}</p>
     <div class="nw-groups-help">${NW_GROUPS.map(g=>`<div>${gSw(g)}<b>${esc(L('g_'+g))}</b><span class="hint">${esc(L('gs_'+g))}</span></div>`).join('')}</div>
     ${cw?`<div class="ctrls" style="margin-top:var(--s16)"><button class="btn primary" type="button" data-action="nw-accounts">${esc(L('nwAddAccounts'))}</button><button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button>${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtnNw'))}</button>`:''}</div>`:''}</section>`);
   let k=S.ui.nw.month; if(!k||!ms.includes(k)) k=ms[ms.length-1]||null;
   /* the month in progress can be entered from the 25th; earlier, only finished months are offered */
   const newK=due||(nowYM().day>=25&&!ms.includes(ymNow())?ymNow():null);
-  const ctrls=`<div class="ctrls">${ms.length>1?`<label class="sr" for="nw-month">${esc(L('nwMonthPick'))}</label><select id="nw-month">${ms.slice().reverse().map(x=>`<option value="${x}"${x===k?' selected':''}>${esc(ymLabel(x,true))}</option>`).join('')}</select>`:''}
-    ${cw&&k?`<button class="btn" type="button" data-action="nw-snap" data-k="${k}">${esc(L('nwEdit',ymIn(k)))}</button>`:''}
+  const per=ms.length>1?`<label class="sr" for="nw-month">${esc(L('nwMonthPick'))}</label><select id="nw-month">${ms.slice().reverse().map(x=>`<option value="${x}"${x===k?' selected':''}>${esc(ymLabel(x,true))}</option>`).join('')}</select>`:'';
+  const ctrls=`${cw&&k?`<button class="btn" type="button" data-action="nw-snap" data-k="${k}">${esc(L('nwEdit',ymIn(k)))}</button>`:''}
     ${cw?`<button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button>${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtnNw'))}</button>`:''}`:''}
-    ${cw&&newK&&!(G&&G.cur==='val')?`<button class="btn primary" type="button" data-action="nw-snap" data-k="${newK}">${esc(L('nwEnter',ymIn(newK)))}</button>`:''}</div>`;
+    ${cw&&newK&&!(G&&G.cur==='val')?`<button class="btn primary" type="button" data-action="nw-snap" data-k="${newK}">${esc(L('nwEnter',ymIn(newK)))}</button>`:''}`;
   const dueBar=due&&cw?`<div class="notice">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(L('nwDue',ymIn(due)))}</span><button class="linkish" type="button" data-action="nw-snap" data-k="${due}">${esc(L('nwEnter',ymIn(due)))}</button></div>`:'';
-  if(!k) return head(ctrls)+`<div class="stack">${G?guideCard(G):`${dueBar}<section class="card"><p class="hint">${esc(L('nwNoPrev'))}</p></section>`}${accountsCard(null)}</div>`;
+  if(!k) return head(per,ctrls)+`<div class="stack">${G?guideCard(G):`${dueBar}<section class="card"><p class="hint">${esc(L('nwNoPrev'))}</p></section>`}${accountsCard(null)}</div>`;
   const T=nwTotals(k), prev=ms[ms.indexOf(k)-1]||null, mk=+k.slice(5,7)-1, yk=k.slice(0,4);
   const share=v=>T.total>0?v/T.total:0;
   const shownG=NW_GROUPS.filter(g=>nwState(k).shown.some(a=>a.group===g)), posSum=Math.max(1e-9,sum(NW_GROUPS.map(g=>Math.max(0,T.g[g]))));
@@ -3463,7 +3464,7 @@ function viewNetworth(){
   const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
       <div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div></div>
       <div class="chart" id="ch-nw" style="height:260px"></div>${(n=>n?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L('nwFcNote',n))}</p>`:'')(nwChartForecast(nwChartMonths()).n)}${nwChartNote()}</section>`:'';
-  return head(ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${chart}${healthCard(k,T)}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
+  return head(per,ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${chart}${healthCard(k,T)}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
 }
 /* Financial health: rules of thumb as of the end of month k. Income and expenses are the ones behind "You saved"
    (trackerSaved: from your pay, without returns or Investments rows), averaged over the finished months with
@@ -4561,8 +4562,7 @@ function viewYearly(){
   body+=`<tr class="sec"><th colspan="${colsN}">${esc(L('savings'))}</th></tr>`;
   body+=`<tr class="savings"><th class="rh" scope="row">${esc(L('totalSavings'))}</th>${sv.map((v,i)=>`<td class="${pc(i).trim()}">${fmtCell(v)}</td>`).join('')}<td class="tot">${fmtCell(r2(sum(sv)))}</td>${multi?`<td class="tot">${fmtCell(r2(sum(ALL.savings)))}</td>`:''}</tr>`;
   body+=`<tr class="prop"><th class="rh" scope="row">${esc(L('pctIncome'))}</th>${sv.map((v,i)=>`<td class="${pc(i).trim()}">${inc[i]?fmtPct(v/inc[i]):DASH}</td>`).join('')}<td class="tot">${sum(inc)?fmtPct(sum(sv)/sum(inc)):DASH}</td>${multi?`<td class="tot">${sum(ALL.income.total)?fmtPct(sum(ALL.savings)/sum(ALL.income.total)):DASH}</td>`:''}</tr>`;
-  return `<div class="grid-head">
-      <div><h2 class="sec-title">${esc(L('yMonthByMonth',y))}${info('yTable')}</h2><p class="hint">${esc(L('yHint'))}</p></div>
+  return pageHead('yearly',yearStepper())+`<div class="grid-head">
       <div class="heat-legend">
         <button type="button" class="switch" role="switch" aria-checked="${S.ui.heat}" data-action="toggle-heat" id="heat-switch"><span class="knob" aria-hidden="true"></span>${esc(L('heatMap'))}</button>
         <span class="cell-flag">${ICON.flag}${esc(L('bigMonthCat'))}</span>
@@ -4604,14 +4604,13 @@ function viewTransactions(){
       :`<span class="cat-text ${known?'':'missing'}">${known?esc(r.category):esc(L('uncat'))}</span>`;
     return `<tr id="txr-${esc(r.id)}" data-action="edit-tx" ${ref} tabindex="0"><td class="d">${fmtDate(r.date)}</td><td class="c">${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}</td><td class="k">${cat}</td><td class="amt r">${r.amount>0&&u.table!=='income'?'+':''}${fmtEUR(r.amount)}</td></tr>`;
   }).join('');
-  return `<div class="toolbar">
-      <div class="left"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(t=>`<button data-action="tx-table" data-t="${t}" aria-pressed="${u.table===t}"><i class="sw ${t}"></i>${esc(TL(t))}<span class="ct">${fmtCount(counts[t])}</span></button>`).join('')}</div>${info('txKinds')}</div>
-      ${S.canWrite?`<div class="right">
+  return pageHead('transactions',yearStepper(),S.canWrite?`
         ${unInTable?`<button class="btn" data-action="categorise" title="${esc(L('categoriseTitle'))}">${esc(L('categoriseBlanks'))}</button>`:''}
         ${S.lastImport?`<button class="btn ghost" data-action="undo-import">${esc(L('undoImport',S.lastImport.n))}</button>`:''}
         ${S.ai?`<button class="btn" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}
         <button class="btn" data-action="import">${esc(L('pasteImport'))}</button>
-        <button class="btn primary" data-action="add-tx">${esc(L('addTx'))}</button></div>`:''}
+        <button class="btn primary" data-action="add-tx">${esc(L('addTx'))}</button>`:'')+`<div class="toolbar">
+      <div class="left"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(t=>`<button data-action="tx-table" data-t="${t}" aria-pressed="${u.table===t}"><i class="sw ${t}"></i>${esc(TL(t))}<span class="ct">${fmtCount(counts[t])}</span></button>`).join('')}</div>${info('txKinds')}</div>
     </div>
     <div class="filters">
       <label class="sr" for="tx-q">${esc(L('search'))}</label><input type="search" id="tx-q" placeholder="${esc(L('searchPh'))}" value="${esc(u.q)}" autocomplete="off">
@@ -4653,7 +4652,7 @@ function viewCategories(){
   const kwRows=shown.map(d=>`<div class="kw-row"><span class="kw" title="${esc(d.k)}">${esc(d.k)}</span>
       ${S.canWrite?`<label class="sr" for="kc-${d.i}">${esc(L('catFor',d.k))}</label><select id="kc-${d.i}" data-action="kw-cat" data-i="${d.i}" class="${isKnown(t,d.cat)?'':'missing'}">${catOptions(t,d.cat,false)}</select>
       <button class="icon-btn" data-action="kw-del" data-i="${d.i}" aria-label="${esc(L('delKw',d.k))}">${ICON.x}</button>`:`<span>${esc(d.cat)}</span>`}</div>`).join('');
-  return `<div class="toolbar"><div class="left"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(k=>`<button data-action="ct-table" data-t="${k}" aria-pressed="${t===k}"><i class="sw ${k}"></i>${esc(TL(k))}</button>`).join('')}</div></div></div>
+  return pageHead('categories')+`<div class="toolbar"><div class="left"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(k=>`<button data-action="ct-table" data-t="${k}" aria-pressed="${t===k}"><i class="sw ${k}"></i>${esc(TL(k))}</button>`).join('')}</div></div></div>
   <div class="cat-layout">
     <div class="stack">
     <section class="card">
@@ -5686,8 +5685,8 @@ const TOUR_STEPS=[
   {k:'ovCats',tab:'overview',el:tourSec('#ch-cats')},
   {k:'ovInd',tab:'overview',el:tourSec('.inds')},
   {k:'yearly',tab:'yearly',el:()=>$('#view .yframe')},
-  {k:'txImport',tab:'transactions',el:()=>$('#view .toolbar [data-action=import]')},
-  {k:'txAi',tab:'transactions',el:()=>$('#view .toolbar [data-action=ai-tx]')||$('#view .toolbar [data-action=import]')},
+  {k:'txImport',tab:'transactions',el:()=>$('#view .page-head [data-action=import]')},
+  {k:'txAi',tab:'transactions',el:()=>$('#view .page-head [data-action=ai-tx]')||$('#view .page-head [data-action=import]')},
   {k:'txGuess',tab:'transactions',el:()=>{ const b=$('#view [data-action=use-ml-row]'); return b?b.closest('tr'):$('#view table'); }},
   {k:'catKw',tab:'categories',el:tourSec('#kw-test')},
   {k:'catList',tab:'categories',el:tourSec('.cat-list')},
