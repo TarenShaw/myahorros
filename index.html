@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ifmUhoUdot5RO6JSv0NZ/lU2RDtwqvFdWIbBvn7tpqY=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-fj6BDCvMS7iCPNd9mufznVxaDTzSFlIEOlNAwBemlLg=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -105,7 +105,9 @@ p{margin:0}
 .num,.tab-num{font-variant-numeric:tabular-nums}
 
 html{scrollbar-gutter:stable}
-.app{max-width:1760px;margin:0 auto;padding-inline:clamp(16px,3vw,32px);padding-block:0 64px}
+.app{max-width:1760px;margin:0 auto;padding-inline:clamp(16px,3vw,32px);padding-block:0 64px;min-height:100vh}
+/* while only the loader is shown, #view itself stays invisible, so the header growing when data arrives is not a layout shift */
+#view:has(>.state>.loading-bar){visibility:hidden}#view>.state{visibility:visible}
 
 /* masthead */
 .mast{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;padding-block:28px 18px}
@@ -2337,7 +2339,7 @@ function render(){
   const v=$('#view'); const st=captureFocus();
   let html;
   if(S.mode==='nodb') html=viewNoDb();
-  else if(!S.gotMonths||!S.gotConfig) html=loadingHtml();
+  else if(!S.gotMonths||!S.gotConfig||S.tourPending) html=loadingHtml();   /* not the empty tracker the tour is about to fill */
   else if(ob) html=viewWelcome();
   else if(!allRows().length && S.ui.tab!=='categories' && S.ui.tab!=='settings' && S.ui.tab!=='networth'){ const G=guideState();
     /* Overview, and Transactions at its step, show the guide itself; elsewhere a reminder above the usual empty page */
@@ -5247,7 +5249,7 @@ async function startTour(opts){
   if(TOUR) return;
   /* let pending saves finish first, so nothing of the example can ever be written */
   for(let i=0;i<60&&(flushing||dirty.size||busy.size);i++){ if(!flushing&&dirty.size){ clearTimeout(flushTimer); flush(); } await sleep(100); }
-  if(flushing||dirty.size||busy.size){ toast(L('tourWait')); return; }
+  if(flushing||dirty.size||busy.size){ toast(L('tourWait')); render(); return; }
   closeModal(); hideTip(); hideInfo();
   const D=sampleDataset();
   TOUR={i:0,fresh:!!(opts&&opts.fresh),hide:HIDE,ui:clone(S.ui),real:{months:S.months,cats:S.cats,kw:S.kw,settings:S.settings,nw:S.nw}};
@@ -5258,7 +5260,7 @@ async function startTour(opts){
   bump();
   const layer=document.createElement('div'); layer.id='tour-layer'; layer.className='tour-layer';
   const spot=document.createElement('div'); spot.id='tour-spot'; spot.className='tour-spot';
-  const card=document.createElement('div'); card.id='tour-card'; card.className='tour-card'; card.setAttribute('role','dialog'); card.setAttribute('aria-modal','true'); card.setAttribute('aria-labelledby','tour-title'); card.setAttribute('aria-describedby','tour-text');
+  const card=document.createElement('div'); card.id='tour-card'; card.className='tour-card'; card.setAttribute('role','dialog'); card.setAttribute('aria-modal','true'); card.setAttribute('aria-labelledby','tour-title'); card.setAttribute('aria-describedby','tour-text'); card.style.visibility='hidden';   /* shown once tourPlace has put it in place */
   card.addEventListener('click',e=>{ const b=e.target.closest('[data-tour]'); if(!b) return; const a=b.dataset.tour; if(a==='next') tourGo(TOUR.i+1); else if(a==='back') tourGo(TOUR.i-1); else endTour(); });
   document.body.append(layer,spot,card);
   setTab('networth');
@@ -5283,7 +5285,7 @@ async function tourGo(i){
 function tourPlace(scroll){
   if(!TOUR) return;
   const st=TOUR_STEPS[TOUR.i], el=st.el?st.el():null, layer=$('#tour-layer'), spot=$('#tour-spot'), card=$('#tour-card'), vw=document.documentElement.clientWidth, vh=window.innerHeight, phone=vw<640;
-  card.style.left=card.style.top=card.style.bottom='';
+  card.style.left=card.style.top=card.style.bottom=''; card.style.visibility='';
   if(!el){ layer.classList.add('dim'); spot.hidden=true; card.classList.add('center'); return; }
   layer.classList.remove('dim'); spot.hidden=false; card.classList.remove('center');
   const fixed=getComputedStyle(el).position==='fixed'||!!el.closest('.tabbar');
