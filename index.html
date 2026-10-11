@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-oPBda5g5s3kA3Ex7EYjxxWkNiwhFc4ZoM5iFibKddXE=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-xJyU0ccVauDP3iKntK37kgNUN38b1YFGX0VO9LeXtwI=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -3258,7 +3258,7 @@ function viewNetworth(){
   const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
       <div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div></div>
       <div class="chart" id="ch-nw" style="height:260px"></div>${nwChartNote()}</section>`:'';
-  return head(ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${chart}${hero}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
+  return head(ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${chart}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
 }
 /* How much of what's left to the goal would have to come from growth of the invested money
    (investments + illiquid + retirement), after counting the saving pace; as an amount, a total % and a yearly %. */
@@ -5228,8 +5228,8 @@ const tourSec=sel=>()=>{ const e=$(sel); return e?e.closest('section')||e:null; 
 const TOUR_STEPS=[
   {k:'intro'},
   {k:'tabs',tab:'networth',el:()=>$('.tabs')},
-  {k:'nwChart',tab:'networth',el:tourSec('#ch-nw')},
   {k:'nwTop',tab:'networth',el:()=>$('#view .ov-top')},
+  {k:'nwChart',tab:'networth',el:tourSec('#ch-nw')},
   {k:'nwCards',tab:'networth',el:()=>$('#view .nw-two')},
   {k:'nwAccounts',tab:'networth',el:()=>$('#view table.nwt')},
   {k:'ovTop',tab:'overview',el:()=>$('#view .ov-top')},
