@@ -110,7 +110,8 @@ p{margin:0}
 .num,.tab-num{font-variant-numeric:tabular-nums}
 
 html{scrollbar-gutter:stable}
-.app{max-width:calc(1280px + 2*var(--s32));margin:0 auto;padding-inline:clamp(var(--s16),3vw,var(--s32));padding-block:0 var(--s48);min-height:100vh}
+/* wide screens: up to 1600 px of content, so a big monitor isn't mostly empty sides */
+.app{max-width:calc(1600px + 2*var(--s32));margin:0 auto;padding-inline:clamp(var(--s16),3vw,var(--s32));padding-block:0 var(--s48);min-height:100vh}
 /* while only the loader is shown, #view itself stays invisible, so the header growing when data arrives is not a layout shift */
 #view:has(>.state>.loading-bar){visibility:hidden}#view>.state{visibility:visible}
 
