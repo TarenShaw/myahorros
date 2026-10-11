@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-WoT5y4fLZQTcLJMUuSR3MdNxL1jIrzTc19+w3n32RNE=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-JWrs8xl2k3w7qaIbZ7TQaX+2EZkcPFMotv0WklVBsEA=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -786,10 +786,14 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 .nw-groups-help .hint{grid-column:2;margin:0}
 .nw-delta{font:700 var(--fs-kpi)/1.1 var(--f-body);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
 .nw-delta.up,.nwt .up,.nw-sval.up{color:var(--good-ink)}.nw-delta.down,.nwt .down,.nw-sval.down{color:var(--bad-ink)}
-.nw-card{display:flex;flex-direction:column}
-.two.nw-two{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start}
+/* What changed + Goal: one row of 4 zones (head, headline, body, footer) shared by both cards through subgrid */
+.two.nw-two{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:0}
+.nw-card{display:grid;grid-row:span 4;grid-template-rows:subgrid;row-gap:0}
+.nw-card>.card-head{align-items:center;flex-wrap:nowrap}.nw-card>.card-head .btn{margin-block:-8px}
+.nw-lead>:first-child,.nw-body>:first-child,.nw-ft>.nw-foot{margin-top:0}
+.nw-body:not(:empty),.nw-ft:not(:empty){padding-top:var(--s24)}
 .nw-cmp .nw-bar{background:none}
-@media (max-width:980px){.two.nw-two{grid-template-columns:1fr}.tiles[style*="--n"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:980px){.two.nw-two{grid-template-columns:1fr;row-gap:var(--s24)}.nw-card{grid-row:auto;grid-template-rows:none}.tiles[style*="--n"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .nw-split{display:grid;gap:var(--s16);margin-top:var(--s16)}
 .nw-srow{display:grid;gap:var(--s8)}
 .nw-stop{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s12)}
@@ -830,7 +834,7 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 .nw-mix i.saved,.sw.saved{background:var(--c-income)}.nw-mix i.growth,.sw.growth{background:var(--g-invest)}
 .nw-mix-leg{display:flex;flex-wrap:wrap;gap:var(--s4) var(--s16);margin-top:var(--s8);font-size:var(--fs-sm);color:var(--ink-2);font-variant-numeric:tabular-nums}
 .nw-mix-leg span{display:inline-flex;align-items:center;gap:var(--s8)}
-.nw-retlink{margin-top:var(--s12);font-size:var(--fs-sm);align-self:flex-start;text-align:left}
+.nw-retlink{margin-top:var(--s12);font-size:var(--fs-sm);text-align:left}
 .tiles[style*="--n"]{grid-template-columns:repeat(var(--n),minmax(0,1fr))}
 .nwt tfoot td{font-weight:700;border-top:2px solid var(--line-2);border-bottom:0;padding-top:var(--s12)}
 .nw-closed{margin-top:var(--s12);padding-top:var(--s8);border-top:1px solid var(--line);display:grid;gap:var(--s8)}
@@ -973,8 +977,6 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
   #ch-monthly,#ch-prop{height:340px}
 }
 .foot-note,.legend,.heat-legend,.ind-target-wrap,.pill,.ind-label small,.ind-val small,.nw-stat-l,.nw-stat-s,.nw-srow small,.nw-foot,.lim-val small,.field .help{font-size:var(--fs-meta)}
-/* footnotes sit at the bottom of the net worth cards, so the two cards line up */
-.nw-card>:has(+ .nw-foot){margin-bottom:var(--s16)}
 .nw-how summary{cursor:pointer;font-weight:600;color:var(--ink-2)}.nw-how ul{list-style:none;margin:var(--s8) 0 0;padding:0;display:grid;gap:var(--s8)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -3421,18 +3423,21 @@ function viewNetworth(){
     <div class="tiles" style="--n:${Math.max(1,shownG.length)}">${shownG.map(g=>`<div class="tile"><span class="tile-label">${gSw(g)}${esc(L('g_'+g))}</span><span class="tile-val">${fmtEUR(T.g[g],0)}</span><span class="tile-sub">${fmtPct(share(T.g[g]),0)} · ${esc(L('gs_'+g))}</span></div>`).join('')}</div>
   </section>`;
   /* what changed since the month before: own saving vs everything else */
-  let change;
+  let cLead='', cBody='', cFt='';
   /* both cards use the same pieces: a row (label and value on one line, an 8px bar, a short note),
      footnotes in small muted text under a divider, and warnings in a notice */
   const nwBarEl=(cls,frac,neg)=>`<span class="nw-bar"><i class="${cls}${neg?' neg':''}" style="width:${(Math.max(0,Math.min(1,frac))*100).toFixed(1)}%"></i></span>`;
   const row=(lab,sub,v,frac,cls,plain)=>`<div class="nw-srow"><div class="nw-stop"><b>${esc(lab)}</b><span class="nw-sval${plain?'':v<-0.004?' down':' up'}">${plain?fmtEUR(v,0):signed(v)}</span></div>${nwBarEl(cls,frac,!plain&&v<-0.004)}${sub?`<small>${esc(sub)}</small>`:''}</div>`;
   const foot=items=>{ const x=items.filter(Boolean); return x.length?`<ul class="nw-foot">${x.map(t=>`<li>${t}</li>`).join('')}</ul>`:''; };
   /* explanations fold away under "How is this calculated?"; foot() stays for what the reader must see */
-  const how=items=>{ const x=items.filter(Boolean); return x.length?`<details class="nw-foot nw-how"><summary>${esc(L('howCalc'))}</summary><ul>${x.map(t=>`<li>${t}</li>`).join('')}</ul></details>`:''; };
+  const how=(items,extra)=>{ const x=items.filter(Boolean); return x.length||extra?`<details class="nw-foot nw-how"><summary>${esc(L('howCalc'))}</summary>${x.length?`<ul>${x.map(t=>`<li>${t}</li>`).join('')}</ul>`:''}${extra||''}</details>`:''; };
+  /* both cards share 4 rows (head, headline, body, footer) so their parts line up side by side */
+  const nwCard=(t,btn,lead,body,ft)=>`<section class="card nw-card"><div class="card-head"><div><h2>${esc(L(t))}${info(t)}</h2></div>${btn}</div><div class="nw-lead">${lead}</div><div class="nw-body">${body}</div><div class="nw-ft">${ft}</div></section>`;
   const warnBox=t=>`<p class="notice nw-repay">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(t)}</span></p>`;
   const retLink=cw?`<button class="linkish nw-retlink" type="button" data-action="nw-ret">${esc(L('nwRetWhich'))}</button>`:'';
   if(!prev){ const tr=trackerSaved(ymAdd(k,-1),k);
-    change=(tr.missing.length?'':`<p class="nw-delta ${tr.saved<-0.004?'down':'up'}">${signed(tr.saved)}</p><p class="hint nw-since">${esc(L('nwSavedIn',ymIn(k)))}</p>`)+foot([esc(L('nwNoPrev'))])+(tr.missing.length?'':retLink); }
+    if(!tr.missing.length){ cLead=`<p class="nw-delta ${tr.saved<-0.004?'down':'up'}">${signed(tr.saved)}</p><p class="hint nw-since">${esc(L('nwSavedIn',ymIn(k)))}</p>`; cFt=how([],retLink); }
+    cBody=foot([esc(L('nwNoPrev'))]); }
   else {
     const sp=nwSplit(prev,k), hasLeft=Math.abs(sp.left)>=0.005, mx=Math.max(Math.abs(sp.saved),Math.abs(sp.gains),Math.abs(sp.fresh),Math.abs(sp.left),1), w=sp.why;
     /* the leftover's causes, each with the rows behind it (the cash part has none: no row explains it) */
@@ -3440,15 +3445,15 @@ function viewNetworth(){
     const revItem=(v,t,rs)=>Math.abs(v)>=0.005?`<li><div class="nw-stop"><span>${esc(t)}</span><b class="nw-sval">${signed(v)}</b></div>${revRows(rs||[])}</li>`:'';
     const review=hasLeft?`<details class="nw-review"><summary>${esc(L('nwReview'))}</summary><ul>${revItem(w.cash,L('nwLeftCash'))}${revItem(w.ret,L('nwLeftRet'),w.retRows)}${revItem(w.put,L('nwLeftPut')+(sp.moved>0.004?' '+L('nwLeftPutMoved',fmtEUR(sp.moved)):''),w.putRows)}</ul></details>`:'';
     const health=`<p class="nw-health ${hasLeft?'bad':'ok'}">${(hasLeft?ICON.warn:ICON.ok).replace('<svg','<svg width="14" height="14"')}<span>${esc(hasLeft?L('nwHealthBad',fmtEUR(Math.abs(sp.left))):L('nwHealthOk'))}</span></p>`;
-    change=`<p class="nw-delta ${sp.change<-0.004?'down':'up'}">${signed(sp.change)}</p><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>`+
-      (sp.missing.length?foot([esc(noTrackerText(sp.missing)),sp.added>0.004?esc(L('nwNewAccIncl',fmtEUR(sp.added,0))):''])
-      :`${health}<div class="nw-split nw-cmp">${row(L('nwSaved'),L('nwSavedSub'),sp.saved,Math.abs(sp.saved)/mx,'saved')}${row(L('nwMarket'),L('nwMarketSub'),sp.gains,Math.abs(sp.gains)/mx,'market')}${Math.abs(sp.fresh)>0.004?row(L('nwNewAccRow'),L('nwNewAccRowSub'),sp.fresh,Math.abs(sp.fresh)/mx,'fresh'):''}${hasLeft?row(L('nwLeftRow'),L('nwLeftRowSub'),sp.left,Math.abs(sp.left)/mx,'left'):''}</div>${review}
-        ${nwLateBox(nwLate(prev,k)||nwLate(k,ms[ms.indexOf(k)+1]))}${sp.blind.length&&Math.abs(sp.left)>=200?warnBox(L('nwBlindHint',listJoin(sp.blind),ymIn(k))):''}${sp.repay?warnBox(L('nwRepayHint',sp.repay)):''}
-        ${how([Math.abs(sp.returns)>0.004?esc(L('nwRetIncl',fmtEUR(sp.returns))):'',sp.moved>0.004?esc(L('nwMovedNote',fmtEUR(sp.moved,0))):''])}${retLink}`);
+    cLead=`<p class="nw-delta ${sp.change<-0.004?'down':'up'}">${signed(sp.change)}</p><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>${sp.missing.length?'':health}`;
+    if(sp.missing.length) cBody=foot([esc(noTrackerText(sp.missing)),sp.added>0.004?esc(L('nwNewAccIncl',fmtEUR(sp.added,0))):'']);
+    else { cBody=`<div class="nw-split nw-cmp">${row(L('nwSaved'),L('nwSavedSub'),sp.saved,Math.abs(sp.saved)/mx,'saved')}${row(L('nwMarket'),L('nwMarketSub'),sp.gains,Math.abs(sp.gains)/mx,'market')}${Math.abs(sp.fresh)>0.004?row(L('nwNewAccRow'),L('nwNewAccRowSub'),sp.fresh,Math.abs(sp.fresh)/mx,'fresh'):''}${hasLeft?row(L('nwLeftRow'),L('nwLeftRowSub'),sp.left,Math.abs(sp.left)/mx,'left'):''}</div>${review}
+        ${nwLateBox(nwLate(prev,k)||nwLate(k,ms[ms.indexOf(k)+1]))}${sp.blind.length&&Math.abs(sp.left)>=200?warnBox(L('nwBlindHint',listJoin(sp.blind),ymIn(k))):''}${sp.repay?warnBox(L('nwRepayHint',sp.repay)):''}`;
+      cFt=how([Math.abs(sp.returns)>0.004?esc(L('nwRetIncl',fmtEUR(sp.returns))):'',sp.moved>0.004?esc(L('nwMovedNote',fmtEUR(sp.moved,0))):''],retLink); }
   }
-  const changeCard=`<section class="card nw-card"><div class="card-head"><div><h2>${esc(L('nwChange'))}${info('nwChange')}</h2></div></div>${change}</section>`;
+  const changeCard=nwCard('nwChange','',cLead,cBody,cFt);
   /* goal: progress, three key figures, where the rest has to come from */
-  let goal, goalBtn='';
+  let goal, goalBtn='', body='', gFt='';
   if(!N.goal) goal=`<p class="hint">${esc(L('nwGoalNone'))}</p>${cw?`<div style="margin-top:var(--s12)"><button class="btn" type="button" data-action="nw-goal">${esc(L('nwSetGoal'))}</button></div>`:''}`;
   else {
     /* the goal always works from the latest figures, whichever month is on screen */
@@ -3456,7 +3461,7 @@ function viewNetworth(){
     const G=N.goal, gy=G.month.slice(0,4), left=ymDiff(kG,G.month), rest=r2(G.amount-TG.total), pr=Math.max(0,Math.min(1,TG.total/G.amount));
     const pace=savingPace();
     goalBtn=cw?`<button class="btn sm" type="button" data-action="nw-goal">${esc(L('nwChangeGoal'))}</button>`:'';
-    let status='', body='';
+    let status='';
     if(rest<=0) status=`<span class="pill good">${ICON.ok}${esc(L('nwReached'))}</span>`;
     else if(left<=0) body=foot([esc(L('nwGoalPast'))]);
     else {
@@ -3467,15 +3472,14 @@ function viewNetworth(){
       const txt=pace&&c.gap<=0?L('nwGoalSavingEnough'):c.tot!=null?L(!pace?'nwGrowNoPace':pace.avg<0?'nwGrowNeg':'nwGrow',fmtEUR(c.inv,0),fmtPct(c.tot,1),left>=12?fmtPct(c.yr,1):null):L('nwGoalNoInvest',fmtEUR(c.gap,0));
       body=`<div class="nw-stats">${stat(L('nwStToGo'),fmtEUR(rest,0),L('nwStToGoSub',left))}${stat(L('nwStNeed'),fmtEUR(need,0),L('nwStNeedSub',M3()[+G.month.slice(5,7)-1],gy))}${stat(L('nwStSave'),pace?fmtEUR(pace.avg,0):DASH,pace?L('nwStSaveSub',pace.n):L('nwStSaveNone'))}</div>
         <div class="nw-split">${row(L('nwFromSavingRow'),'',sv,sv/tt,'saved',true)}${row(L('nwFromGrowthRow'),'',gp,gp/tt,'growth',true)}</div>
-        <p class="nw-growth-txt">${esc(txt)}</p>
-        ${how([pace?esc(L('nwGoalFootProj',fmtEUR(TG.total+pace.avg*left,0),ymM(G.month),gy)):'',c.tot!=null&&c.gap>0?esc(L('nwGoalGrowthNote')):'',kG!==k?esc(L('nwGoalAsOf',ymIn(kG))):''])}`;
+        <p class="nw-growth-txt">${esc(txt)}</p>`;
+      gFt=how([pace?esc(L('nwGoalFootProj',fmtEUR(TG.total+pace.avg*left,0),ymM(G.month),gy)):'',c.tot!=null&&c.gap>0?esc(L('nwGoalGrowthNote')):'',kG!==k?esc(L('nwGoalAsOf',ymIn(kG))):'']);
     }
     goal=`<p class="nw-goal-line">${esc(L('nwGoalLine',fmtEUR(G.amount,0),ymM(G.month),gy))}</p>
       <span class="nw-bar" role="img" aria-label="${esc(fmtPct(pr,0))}"><i class="saved" style="width:${(pr*100).toFixed(1)}%"></i></span>
-      <div class="nw-goal-cap"><span class="hint">${esc(L('nwProgress',fmtPct(pr,0),fmtEUR(TG.total),fmtEUR(G.amount,0)))}</span>${status}</div>
-      ${body}`;
+      <div class="nw-goal-cap"><span class="hint">${esc(L('nwProgress',fmtPct(pr,0),fmtEUR(TG.total),fmtEUR(G.amount,0)))}</span>${status}</div>`;
   }
-  const goalCard=`<section class="card nw-card"><div class="card-head"><div><h2>${esc(L('nwGoal'))}${info('nwGoal')}</h2></div>${goalBtn}</div>${goal}</section>`;
+  const goalCard=nwCard('nwGoal',goalBtn,goal,body,gFt);
   const ally=nwYearsAll(), sely=nwYearsSel();
   const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
       <div class="ch-end">${chartLegend(NW_GROUPS.filter(g=>N.accounts.some(a=>a.group===g)).map(g=>[g,L('g_'+g)]),ms.length>1)}${ally.length<2?'':`<div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div>`}</div></div>
