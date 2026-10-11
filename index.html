@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Rc5FRuVi+5ZCozYlXH79V4b6dic3zSu8EEIzw8gCd5I=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-fIu7K6rV6APXg10vEFKSOLlppVE65Lb9/k9PToPKPt4=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -2238,17 +2238,31 @@ function syncStatus(){
   }
   el.dataset.s=s; el.textContent=L(k);
 }
-function normRow(r){ return {id:String(r.id||newId()),date:String(r.date||''),amount:Number(r.amount)||0,concept:String(r.concept==null?'':r.concept),category:String(r.category||'')}; }
-function normMonth(d){ const o={}; for(const t of TKEYS) o[t]=Array.isArray(d&&d[t])?d[t].filter(r=>r&&r.date).map(normRow):[]; return o; }
+/* files can come from anywhere (backups, the Windows app, hand edits): amounts must be finite and under the 1e9 the
+   import accepts, rows need a YYYY-MM-DD date, categories a name */
+const finAmt=v=>{ const n=Number(v); return Number.isFinite(n)&&Math.abs(n)<1e9?n:0; };
+function normRow(r){ return {id:String(r.id||newId()),date:String(r.date||''),amount:finAmt(r.amount),concept:String(r.concept==null?'':r.concept),category:String(r.category||'')}; }
+function normMonth(d){ const o={}; for(const t of TKEYS) o[t]=Array.isArray(d&&d[t])?d[t].filter(r=>r&&typeof r==='object'&&/^\d{4}-\d{2}-\d{2}/.test(r.date)).map(normRow):[]; return o; }
 function normCats(d){
   const o={};
-  for(const t of TKEYS) o[t]=Array.isArray(d&&d[t])&&d[t].length? d[t].map(c=>{
+  for(const t of TKEYS){ const a=Array.isArray(d&&d[t])?d[t].filter(c=>typeof c==='string'?c.trim():c&&typeof c==='object'&&typeof c.name==='string'&&c.name.trim()):[];
+  o[t]=a.length? a.map(c=>{
     if(typeof c==='string') return {name:c};
     const x={name:String(c.name)};
     if(t==='expenses') x.type=c.type==='Need'?'Need':'Want';
     if(c.role==='rent'||c.role==='utilities'||c.role==='other') x.role=c.role;
-    return x; }) : clone(DEFAULT_CATS[t]);
+    return x; }) : clone(DEFAULT_CATS[t]); }
   return o;
+}
+/* settings whose nested values the screens use directly: Financial health overrides keep only the right types,
+   About you keeps only numbers */
+function normSettings(v){
+  const s=v&&typeof v==='object'&&!Array.isArray(v)?clone(v):{};
+  if(s.health&&typeof s.health==='object'&&!Array.isArray(s.health)){ const h={};
+    for(const [k,d] of Object.entries(HEALTH)) if(Array.isArray(d)?Array.isArray(s.health[k]):Number.isFinite(s.health[k])) h[k]=Array.isArray(d)?s.health[k].map(String):s.health[k];
+    s.health=h; } else delete s.health;
+  for(const k of ['birthYear','salary']) if(k in s&&!(typeof s[k]==='number'&&Number.isFinite(s[k]))) delete s[k];
+  return s;
 }
 function normKw(d){ const o={}; for(const t of TKEYS) o[t]=Array.isArray(d&&d[t])? d[t].filter(p=>Array.isArray(p)&&p[0]).map(p=>[String(p[0]),String(p[1]||'')]) : []; return o; }
 /* 2026-10: Need/Want became Fixed/Variable. Still stored as type 'Need'/'Want' (Need = Fixed) so the file stays
@@ -2282,8 +2296,8 @@ function subConfig(){
     for(const d of snap.docs){ const p='config/'+d.id; if(dirty.has(p)||busy.has(p)) continue;
       const v=clone(d.data()||{});
       const R=S.demo&&TOUR?TOUR.real:null;
-      if(R){ if(d.id==='categories') R.cats=normCats(v); else if(d.id==='keywords') R.kw=normKw(v); else if(d.id==='settings') R.settings=v; else if(d.id==='networth') R.nw=normNw(v); continue; }
-      if(d.id==='categories') S.cats=normCats(v); else if(d.id==='keywords') S.kw=normKw(v); else if(d.id==='settings') S.settings=v; else if(d.id==='networth') S.nw=normNw(v); }
+      if(R){ if(d.id==='categories') R.cats=normCats(v); else if(d.id==='keywords') R.kw=normKw(v); else if(d.id==='settings') R.settings=normSettings(v); else if(d.id==='networth') R.nw=normNw(v); continue; }
+      if(d.id==='categories') S.cats=normCats(v); else if(d.id==='keywords') S.kw=normKw(v); else if(d.id==='settings') S.settings=normSettings(v); else if(d.id==='networth') S.nw=normNw(v); }
     S.gotConfig=true; fixedVarOnce(); bump(); renderSoon();
   },subErr(subConfig));
 }
@@ -2554,8 +2568,8 @@ function viewSettings(){
         <div class="set-acts">${canDl?act('backup',L('dlBackupLong'),L('dlBackupHelp')):''}${cw?act('restore',L('restoreBtn'),L('restoreHelp')):''}${canDl?act('export',L('dlAll'),L('dlAllHelp')):''}</div></section>`;
   const so=S.settings||{};
   const aboutCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('aboutTitle'))}</h2><p class="sub">${esc(L('aboutSub'))}</p></div></div>
-    <div class="ctrls"><div class="field"><label class="lab" for="st-born">${esc(L('birthYear'))}</label><input id="st-born" type="number" inputmode="numeric" min="1900" max="${cy}" step="1" value="${so.birthYear||''}"${cw?'':' disabled'} style="max-width:140px"></div>
-      <div class="field"><label class="lab" for="st-salary">${esc(L('grossSalary'))}</label><input id="st-salary" type="number" inputmode="decimal" min="0" step="any" value="${so.salary||''}"${cw?'':' disabled'} style="max-width:180px"></div></div></section>`;
+    <div class="ctrls"><div class="field"><label class="lab" for="st-born">${esc(L('birthYear'))}</label><input id="st-born" type="number" inputmode="numeric" min="1900" max="${cy}" step="1" value="${esc(String(so.birthYear||''))}"${cw?'':' disabled'} style="max-width:140px"></div>
+      <div class="field"><label class="lab" for="st-salary">${esc(L('grossSalary'))}</label><input id="st-salary" type="number" inputmode="decimal" min="0" step="any" value="${esc(String(so.salary||''))}"${cw?'':' disabled'} style="max-width:180px"></div></div></section>`;
   const mlN=mlOn()?mlLearnedCount():0;
   const mlCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('mlTitle'))}</h2><p class="sub">${esc(L('mlSub'))}</p></div></div>
     <label class="check"><input type="checkbox" id="st-ml"${mlOn()?' checked':''}${cw?'':' disabled'}>${esc(L('mlToggle'))}</label>
@@ -5710,7 +5724,7 @@ document.addEventListener('change',e=>{
   if(el.name==='st-num'){ setNumFmt(el.value); return; }
   if(id==='st-cur'){ setCurrency(el.value); return; }
   if(id==='st-ml'){ setSettings({mlGuess:el.checked}); render(); return; }
-  if(id==='st-born'||id==='st-salary'){ const v=+el.value, ok=id==='st-born'?Number.isInteger(v)&&v>=1900&&v<=new Date().getFullYear():v>0&&isFinite(v);
+  if(id==='st-born'||id==='st-salary'){ const v=+el.value, ok=id==='st-born'?Number.isInteger(v)&&v>=1900&&v<=new Date().getFullYear():v>0&&v<1e9;
     setSettings({[id==='st-born'?'birthYear':'salary']:ok?(id==='st-born'?v:r2(v)):null}); if(!ok) el.value=''; return; }
   if(id==='ob-month'){ S.ui.obM=+el.value; return; }
   if(id==='ob-year'){ S.ui.obY=+el.value; return; }
@@ -5889,7 +5903,7 @@ function loadDataset(d,persist,soft){
   const c=(d&&d.config)||{}, prevLang=LANG, oldKeys=Object.keys(S.months);
   if(!persist){ dirty.clear(); clearTimeout(flushTimer); }
   S.months={}; for(const [k,v] of Object.entries((d&&d.months)||{})) S.months[k]=normMonth(v);
-  S.cats=c.categories?normCats(c.categories):null; S.kw=c.keywords?normKw(c.keywords):null; S.settings=c.settings?clone(c.settings):null; S.nw=c.networth?normNw(c.networth):null; S.ui.nw.month=null;
+  S.cats=c.categories?normCats(c.categories):null; S.kw=c.keywords?normKw(c.keywords):null; S.settings=c.settings?normSettings(c.settings):null; S.nw=c.networth?normNw(c.networth):null; S.ui.nw.month=null;
   /* a file without a saved language keeps the one in use */
   S.ui.obLang=prevLang;
   if(S.settings&&!S.settings.lang){ S.settings.lang=prevLang; markDirty('config/settings'); }

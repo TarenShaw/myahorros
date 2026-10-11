@@ -237,6 +237,11 @@ function parseData(text){ try{ return normalise(JSON.parse(String(text).replace(
 function serialise(d){ d=d||store; return JSON.stringify({app:'Yearly Budget Tracker',format:1,savedAt:new Date().toISOString(),months:d.months,config:d.config}); }
 function countTx(d){ let n=0; if(!d) return 0; for(const m of Object.values(d.months||{})) for(const k of ['income','expenses','investments']) n+=Array.isArray(m[k])?m[k].length:0; return n; }
 const empty=()=>({months:{},config:{}});
+/* stored text that can't be read starts an empty tracker, but is kept first as a browser backup, so the next save
+   doesn't overwrite the only copy */
+async function readStored(text){ const d=text&&parseData(text);
+  if(text&&!d) await browser.keepCopy(typeof text==='string'?text:JSON.stringify(text),'unreadable').catch(()=>{});
+  return d||empty(); }
 const nothingAdded=d=>{ if(!d) return true; if(countTx(d)) return false; const n=d.config&&d.config.networth; return !(n&&((n.accounts||[]).length||Object.keys(n.snaps||{}).length)); };
 const isEmpty=d=>!d||(!countTx(d)&&!Object.keys(d.config||{}).length);
 
@@ -964,7 +969,7 @@ async function startFolder(){
   }
   const text=await folder.read();
   const pend=await idb.get('folder-pending').catch(()=>null);
-  store=(typeof pend==='string'&&parseData(pend))||(text&&parseData(text))||empty();
+  store=(typeof pend==='string'&&parseData(pend))||await readStored(text);
   /* the file changed (the Windows app, another computer) since this unsaved copy was made: flushFolder then asks which to keep */
   if(typeof pend==='string'){ const base=await idb.get('folder-pending-mod').catch(()=>null); if(base!=null&&text!=null) folder.mod=base; setTimeout(()=>flushFolder(),0); }
   return true;
@@ -988,7 +993,7 @@ async function startDrive(){
       try{ await drive.signIn(); await drive.locate();
         const m=drive.meta; let text=null, v=null;
         if(m.fileId){ text=await drive.download(m.fileId); v=(m.remote||{}).version; }
-        store=(text&&parseData(text))||empty();
+        store=await readStored(text);
         await idb.set('drive',{text:serialise(),version:v,dirty:false}); drive.lastSync=new Date(); drive.state='idle';
         el.remove(); resolve(true);
       }catch(err){ el.busy(false); el.msg(err&&err.message==='denied'?t('driveDenied'):t('driveFail')); } });
@@ -1009,7 +1014,7 @@ async function start(){
   let first=nav.type==='reload'?null:await landing(!!m&&await hasData(m));
   if(m==='folder'&&!(await startFolder())) m=mode;
   if(m==='drive'&&!(await startDrive().catch(()=>false))) m=mode||'browser';
-  if(!store&&m==='browser'){ setMode('browser'); const text=await browser.read().catch(()=>null); store=(text&&parseData(text))||empty(); }
+  if(!store&&m==='browser'){ setMode('browser'); const text=await browser.read().catch(()=>null); store=await readStored(text); }
   /* nothing added yet (no transactions, no accounts or figures): the choice isn't final, so ask again */
   if(store&&nothingAdded(store)){ store=null; bar(null); }
   if(!store){
@@ -1018,10 +1023,10 @@ async function start(){
     let c;
     if(first==='demo'){ try{ sessionStorage.setItem('ybt.autotour','1'); }catch(_){} c={mode:'browser'}; }
     else c=await chooseMode(false);
-    if(c.mode==='folder'){ folder.dir=c.dir; await idb.set('folder',c.dir); setMode('folder'); const text=await folder.read(); store=(text&&parseData(text))||empty(); }
+    if(c.mode==='folder'){ folder.dir=c.dir; await idb.set('folder',c.dir); setMode('folder'); const text=await folder.read(); store=await readStored(text); }
     else if(c.mode==='drive'){ setMode('drive'); const mm=drive.meta; let text=null, v=null; if(mm.fileId){ text=await drive.download(mm.fileId); v=(mm.remote||{}).version; }
-      store=(text&&parseData(text))||empty(); await idb.set('drive',{text:serialise(),version:v,dirty:false}); drive.lastSync=new Date(); drive.state='idle'; }
-    else { setMode('browser'); const text=await browser.read().catch(()=>null); store=(text&&parseData(text))||empty(); }
+      store=await readStored(text); await idb.set('drive',{text:serialise(),version:v,dirty:false}); drive.lastSync=new Date(); drive.state='idle'; }
+    else { setMode('browser'); const text=await browser.read().catch(()=>null); store=await readStored(text); }
   }
   resolveReady();
   notify();
@@ -1060,7 +1065,7 @@ function startFailed(was){
 takeTab().catch(()=>{}).then(start).catch(async e=>{ console.error('storage start failed',e);
   const was=lsGet(MODE_KEY);
   if((was==='folder'||was==='drive')&&await startFailed(was)==='retry'){ location.reload(); return; }
-  setMode('browser'); browser.read().then(x=>{ store=(x&&parseData(x))||empty(); resolveReady(); },()=>{ store=empty(); resolveReady(); }); });
+  setMode('browser'); browser.read().then(async x=>{ store=await readStored(x); resolveReady(); },()=>{ store=empty(); resolveReady(); }); });
 
 /* for the tests */
 window.__ybtWeb={get mode(){ return mode; }, get store(){ return store; }, drive, folder, idb, sync:()=>driveSync(true), queue:()=>queue};
