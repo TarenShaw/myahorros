@@ -34,10 +34,14 @@ const TRACKER = lang => JSON.stringify({ app: 'Yearly Budget Tracker', format: 1
   };
   const submit = async () => { await p.$eval('#tx-form', f => f.requestSubmit()); await p.waitForTimeout(200); };
 
-  /* 1. "12,500" typed with 1.234,56 chosen is 12,50, not twelve thousand */
-  assert.strictEqual(await add('QA comma', '12,500'), null);
+  /* 1. "12,500" typed with 1.234,56 chosen is 12,50, not twelve thousand: the field says so as you type, the first
+     press asks once, the second keeps 12,50 (audit 2026-10-12) */
+  const asked = await add('QA comma', '12,500');
+  assert.ok(/12,50 €.*12\.500,00 €/.test(asked), 'ambiguous amount should ask once: ' + asked);
+  assert.ok(/12,50 €/.test(await p.innerText('.amt-read')), 'the amount field shows what it was read as');
+  await submit();
   assert.strictEqual(await find('QA comma'), -12.5);
-  console.log('1. 12,500 typed in 1.234,56 format is 12,50');
+  console.log('1. 12,500 typed in 1.234,56 format is 12,50, after one question');
 
   /* 2. 0 is refused; a future date, a very old date and a missing description warn once, a second press keeps them */
   assert.ok(/other than 0/.test(await add('QA zero', '0')));

@@ -27,7 +27,7 @@ node tests/format-smoke.js      # display formatting: compact chart figures (63,
 node tools/update-csp-hash.js   # after ANY edit to index.html's inline <script>
 ```
 
-Browser tests need Playwright (Edge channel) and the server above: `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` (fake Drive: deferral, conflict, merge) and `tests/landing-wizard.e2e.js` (landing, wizard, tour hand-off) and `tests/tabs-restore.e2e.js` (one tab at a time, browser backup restore, Start fresh) and `tests/import-review.e2e.js` (review dialog fits, inline description/amount edits) and `tests/qa-fixes.e2e.js` (typed amounts follow the number format, Back between tabs, add-dialog warnings, export per year, storage choice kept).
+Browser tests need Playwright (Edge channel) and the server above: `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` (fake Drive: deferral, conflict, merge) and `tests/landing-wizard.e2e.js` (landing, wizard, tour hand-off) and `tests/tabs-restore.e2e.js` (one tab at a time, browser backup restore, Start fresh) and `tests/import-review.e2e.js` (review dialog fits, inline description/amount edits) and `tests/qa-fixes.e2e.js` (typed amounts follow the number format, Back between tabs, add-dialog warnings, export per year, storage choice kept) and `tests/audit-fixes.e2e.js` (demo look-around and its bar, where-to-save after the demo, amount preview, Bizum payback, Yearly empty rows).
 
 ## Line endings
 

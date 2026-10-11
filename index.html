@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-JWrs8xl2k3w7qaIbZ7TQaX+2EZkcPFMotv0WklVBsEA=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Cg+KBNEiolURlRdyENfPd+/GnmsR2awTr+VxtU68Sbc=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -256,6 +256,12 @@ tr.ai-ask td.n{min-width:220px;white-space:normal}
 .tour-card p{margin:0;font-size:var(--fs-body);line-height:1.55;color:var(--ink-2)}
 .tour-acts{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:var(--s8);margin-top:var(--s16)}
 .tour-nav{display:flex;flex-wrap:wrap;gap:var(--s8)}
+/* the example after the tour: a bar that says so, with the way out */
+.demo-bar{position:fixed;z-index:45;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));width:min(720px,calc(100vw - 24px));display:flex;align-items:center;justify-content:space-between;gap:var(--s12);flex-wrap:wrap;background:var(--surface);color:var(--ink);border:1px solid var(--accent);border-radius:var(--r-card);box-shadow:var(--shadow);padding:var(--s12) var(--s16);font-size:var(--fs-meta)}
+.demo-bar .demo-acts{display:flex;gap:var(--s8);flex-wrap:wrap}
+body.demo-on .app{padding-bottom:96px}
+body.demo-on #toast{bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+@media (max-width:640px){.demo-bar{bottom:calc(70px + env(safe-area-inset-bottom,0px));padding:var(--s8) var(--s12);gap:var(--s8)}.demo-bar>span:first-child{font-size:var(--fs-sm)}body.demo-on .app{padding-bottom:calc(200px + env(safe-area-inset-bottom,0px))}body.demo-on #toast{bottom:calc(160px + env(safe-area-inset-bottom,0px))}}
 @media (max-width:640px){.tour-card{left:12px;right:12px;width:auto}.tour-card.center{left:12px!important;right:12px;transform:translateY(-50%)}}
 .eye-btn[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 .sync{font:500 var(--fs-sm)/1 var(--f-mono);color:var(--muted);display:inline-flex;align-items:center;gap:var(--s8);white-space:nowrap}
@@ -352,7 +358,8 @@ select{padding-right:var(--s32)}
 
 @media (max-width:1180px){.fh{grid-template-columns:repeat(6,minmax(0,1fr))}.fh-c{grid-column:span 2}.fh-c:nth-child(n+4){grid-column:span 3}}
 @media (max-width:860px){.fh{grid-template-columns:repeat(2,minmax(0,1fr))}.fh-c,.fh-c:nth-child(n+4){grid-column:auto}}
-@media (max-width:520px){.fh{grid-template-columns:1fr}}
+/* phones: two cards a row (the last one across) and smaller figures, so the section is half as long */
+@media (max-width:520px){.fh{gap:var(--s8)}.fh-c{padding:var(--s12)}.fh-c:last-child{grid-column:1/-1}.fh .tile-val{font-size:var(--fs-section)}}
 
 .two{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:var(--s24);align-items:stretch}
 .legend{display:flex;flex-wrap:wrap;gap:var(--s8) var(--s16);font-size:var(--fs-sm);color:var(--ink-2)}
@@ -442,6 +449,8 @@ table.grid{border-collapse:separate;border-spacing:0;width:100%;table-layout:fix
 .grid tr.sec th .sw{margin-right:var(--s8);vertical-align:1px}
 .grid tr.sec td{background:var(--surface);border-bottom:1px solid var(--line-2)}
 .grid tr.total td,.grid tr.total .rh{font-weight:700;background:var(--surface-3)}
+/* bold month totals with four digits and cents (and a flag) must fit their column: a little less room around them */
+.grid tr.total td{padding-inline:var(--s4);letter-spacing:-.02em}
 .grid tr.prop td,.grid tr.prop .rh{color:var(--ink-2);font-style:italic;font-size:var(--fs-sm)}
 .grid tr.savings td,.grid tr.savings .rh{font-weight:700;background:var(--accent-soft)}
 .grid tr.uncat .rh{color:var(--warn-ink);background:var(--warn-soft)}
@@ -470,6 +479,7 @@ table.tx{width:100%;border-collapse:collapse;font-size:var(--fs-meta)}
 .tx td{padding:var(--s8) var(--s12);border-bottom:1px solid var(--line);vertical-align:middle}
 .tx tbody tr{cursor:pointer}
 .tx tbody tr:hover td{background:var(--surface-2)}
+.tx tr.tx-month{cursor:default}.tx tr.tx-month th,.tx tr.tx-month td{background:var(--surface-2);color:var(--ink-2);font:600 var(--fs-eyebrow)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:var(--s8) var(--s12)}
 .tx .d{font:var(--fs-meta) var(--f-mono);color:var(--ink-2);white-space:nowrap}
 .tx .c{word-break:break-word;min-width:160px}
 .tx .amt{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
@@ -737,6 +747,8 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
   .tx td.k select{max-width:190px}
   .tx td.k .ml-maybe{margin-left:0}
   .empty-row td{grid-column:1/-1}
+  table.tx tr.tx-month{display:flex;justify-content:space-between;padding:var(--s8) var(--s8);background:var(--surface-2)}
+  table.tx tr.tx-month th{display:block;padding:0;border:0;background:none}
   .kw-row{grid-template-columns:minmax(0,1fr) 30px;grid-template-areas:"k x" "s s"}
   .kw-row .kw{grid-area:k}.kw-row select{grid-area:s}.kw-row .icon-btn{grid-area:x}
   .cat-list li.has-lim{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n n" "u u" "l a";row-gap:var(--s8)}
@@ -912,6 +924,8 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 .nw-row input{text-align:right;font-variant-numeric:tabular-nums}
 .nw-row input.carried{color:var(--muted);font-style:italic}
 .nw-row .last{grid-column:2;font-size:var(--fs-sm);color:var(--muted);text-align:right}
+.amt-read{display:block;font-size:var(--fs-sm);color:var(--muted);margin-top:2px}.amt-read.warn{color:var(--warn-ink);font-weight:600}
+.nw-row .amt-read{grid-column:2;text-align:right}
 .acc-list{display:grid;gap:var(--s8)}
 .acc-row{display:grid;grid-template-columns:minmax(0,1fr) 150px auto auto;gap:var(--s8);align-items:center}
 .acc-row .acts{display:flex}
@@ -1033,15 +1047,18 @@ function mkCats(inc,exp,inv,roles){
   return c;
 }
 const DEFAULT_CATS=mkCats(
-  ['Salary','Tickets Comida','Dividends','Flex','Interest','Rent received','Tax Return','Pension','Other'],
-  [['Rent','Need'],['Utilities','Need'],['Subscriptions','Need'],['Phone','Need'],['Insurance','Need'],['Education','Need'],['Transport','Want'],['Groceries','Want'],['Snacks','Want'],['Restaurants','Want'],['Alcohol + Bars','Want'],['Entertainment','Want'],['Clothes','Want'],['Non Essential Shopping','Want'],['Vacation + Hotel + Travel','Want'],['Health','Want'],['Legal','Want'],['Gifts','Want'],['Capital Gains Losses','Want'],['Taxes','Need'],['Cash','Want'],['Lottery','Want'],['Gym','Need'],['Other','Want']],
+  ['Salary','Meal vouchers','Dividends','Company benefits','Interest','Rent received','Tax Return','Pension','Other'],
+  [['Rent','Need'],['Utilities','Need'],['Subscriptions','Need'],['Phone','Need'],['Insurance','Need'],['Transport','Want'],['Groceries','Want'],['Restaurants','Want'],['Alcohol + Bars','Want'],['Entertainment','Want'],['Clothes','Want'],['Non Essential Shopping','Want'],['Vacation + Hotel + Travel','Want'],['Health','Want'],['Gifts','Want'],['Taxes','Need'],['Cash','Want'],['Gym','Need'],['Other','Want']],
   ['Funds/ETFs','Stocks','Pension','Real Estate','Other'],
   {rent:'Rent',utilities:'Utilities',other:'Other'});
 const DEFAULT_CATS_ES=mkCats(
   ['Nómina','Tickets comida','Dividendos','Beneficios de empresa','Intereses','Alquileres cobrados','Devolución de impuestos','Pensión','Otros'],
-  [['Alquiler','Need'],['Suministros','Need'],['Suscripciones','Need'],['Teléfono','Need'],['Seguros','Need'],['Formación','Need'],['Transporte','Want'],['Supermercado','Want'],['Picoteo','Want'],['Restaurantes','Want'],['Bares y copas','Want'],['Ocio','Want'],['Ropa','Want'],['Compras no esenciales','Want'],['Vacaciones y viajes','Want'],['Salud','Want'],['Trámites legales','Want'],['Regalos','Want'],['Pérdidas en inversiones','Want'],['Impuestos','Need'],['Efectivo','Want'],['Lotería','Want'],['Gimnasio','Need'],['Otros','Want']],
+  [['Alquiler','Need'],['Suministros','Need'],['Suscripciones','Need'],['Teléfono','Need'],['Seguros','Need'],['Transporte','Want'],['Supermercado','Want'],['Restaurantes','Want'],['Bares y copas','Want'],['Ocio','Want'],['Ropa','Want'],['Compras no esenciales','Want'],['Vacaciones y viajes','Want'],['Salud','Want'],['Regalos','Want'],['Impuestos','Need'],['Efectivo','Want'],['Gimnasio','Need'],['Otros','Want']],
   ['Fondos/ETFs','Acciones','Plan de pensiones','Inmuebles','Otros'],
   {rent:'Alquiler',utilities:'Suministros',other:'Otros'});
+/* starter categories of earlier versions, still in many trackers: they keep their translation and their Fixed/Variable migration */
+const LEGACY_CATS={income:[['Tickets Comida','Tickets comida'],['Flex','Beneficios de empresa']],
+  expenses:[['Education','Formación','Need'],['Snacks','Picoteo','Want'],['Legal','Trámites legales','Want'],['Capital Gains Losses','Pérdidas en inversiones','Want'],['Lottery','Lotería','Want']]};
 const ROLE_NAMES={rent:['Rent','Alquiler'],utilities:['Utilities','Suministros'],other:['Other','Otros']};
 const DEFAULT_TARGETS={rentUtilities:.30,need:.50,want:.30,investments:.20};
 const DEFAULT_SKIP=['traspaso'];
@@ -1067,7 +1084,7 @@ const STARTER_KW={
       'Gym':'gym|puregym|basic-fit',
       'Cash':'cash withdrawal|cajero',
       'Taxes':'hmrc|aeat',
-      'Education':'udemy|coursera'}),
+      'Alcohol + Bars':'"bar"|"pub"|tavern|cerveceria|taberna'}),
     extra:kwPack({'Groceries':'co-op|ocado|target|safeway|publix|wegmans|heb','Restaurants':'costa coffee|greggs|wetherspoon|itsu|wagamama|chipotle|doordash|grubhub|dunkin|panera','Transport':'tfl|oyster|national rail|chevron|exxon|mta','Utilities':'edf|sse|severn trent|united utilities|comcast|xfinity','Phone':'verizon|t-mobile','Health':'boots|superdrug|specsavers|cvs|walgreens|rite aid','Non Essential Shopping':'john lewis|currys|b&q|screwfix'}),
     investments:kwPack({'Funds/ETFs':'vanguard|indexa|myinvestor','Stocks':'trading 212|degiro|interactive brokers|trade republic|etoro|freetrade','Pension':'pension'})
   },
@@ -1091,8 +1108,7 @@ const STARTER_KW={
       'Gimnasio':'gimnasio|basic-fit|mcfit|altafit|synergym|anytime fitness|vivagym|"gym"|fitness',
       'Efectivo':'cajero|reintegro|retirada efectivo|ret efectivo',
       'Impuestos':'agencia tributaria|aeat',
-      'Lotería':'loterias|loteria|selae|tulotero|"once"',
-      'Formación':'udemy|coursera|academia'}),
+      'Otros':'loterias|loteria|selae|tulotero'}),
     investments:kwPack({'Fondos/ETFs':'indexa|myinvestor|finizens|inbestme|suscripcion iic|suscripcion fondo|"fi"|"etf"','Acciones':'degiro|interactive brokers|trade republic|xtb|etoro','Plan de pensiones':'plan de pensiones|plan pensiones|operacion de plan'})
   }
 };
@@ -1169,6 +1185,8 @@ function foreignCode(raw,own){
   if(raw.indexOf('$')>-1) return ['USD','CAD','AUD','MXN'].includes(own)?null:'USD';
   return null;
 }
+/* the number format of the browser's region, not of the language picked: a Spanish visitor reading in English still writes 1.234,56 */
+function regionNum(){ try{ return new Intl.NumberFormat((navigator.languages&&navigator.languages[0])||navigator.language||'en').format(1.5).includes(',')?'eu':'en'; }catch(_){ return 'eu'; } }
 function regionCurrency(){ const rg=(((navigator.languages&&navigator.languages[0])||navigator.language||'').split('-')[1]||'').toUpperCase();
   return {GB:'GBP',UK:'GBP',IE:'EUR',US:'USD',CA:'CAD',AU:'AUD',CH:'CHF',MX:'MXN',SE:'SEK',PL:'PLN'}[rg]||'EUR'; }
 function applyCur(){ const c=S.settings&&S.settings.currency; CUR=CURRENCIES[c]?c:'EUR'; }
@@ -1240,6 +1258,23 @@ function parseAmount(v,fmt){
     if(many||(dec===3&&ip!=='0'&&ip!==''&&fmt!=='en')) s=s.replace(/\./g,''); }
   const n=parseFloat(s); if(!isFinite(n)||Math.abs(n)>=1e9) return null;
   return r2(neg?-n:n);
+}
+/* a typed amount with one separator and exactly three digits after it ("8.500", "1,250") is read with the chosen number
+   format's decimal mark, so it came out under 1 000: returns what it would be read as thousands, or null when there's no doubt */
+function amtMeant(raw,v){
+  const m=String(raw||'').replace(/[\s €$£]/g,'').match(/^[+\-−]?(\d{1,3})[.,](\d{3})$/);
+  return m&&m[1]!=='0'&&v!=null&&Math.abs(v)<1000?+(m[1]+m[2]):null;
+}
+const AMT_FIELD=/^(f-amount|ng-amt|lim-amt|nwv-.+)$/;
+/* under a typed amount, what it was read as, so a misread shows before it is saved */
+function amtRead(inp){
+  let el=inp.parentElement&&inp.parentElement.querySelector(`.amt-read[data-for="${inp.id}"]`);
+  const raw=inp.value.trim();
+  if(!raw){ if(el) el.remove(); return; }
+  if(!el){ el=document.createElement('span'); el.className='amt-read'; el.dataset.for=inp.id; el.setAttribute('aria-live','polite'); inp.insertAdjacentElement('afterend',el); }
+  const v=parseAmount(raw,wantNum()), meant=amtMeant(raw,v), shown=inp.id==='f-amount'&&v!=null?Math.abs(v):v;
+  el.classList.toggle('warn',meant!=null);
+  el.textContent=v==null?L('amtUnread'):meant!=null?L('amtAmbig',fmtEUR(shown),fmtEUR(meant)):L('amtRead',fmtEUR(shown));
 }
 function newId(){ const a=new Uint8Array(8); (window.crypto||{}).getRandomValues? crypto.getRandomValues(a) : a.forEach((_,i)=>a[i]=Math.random()*256|0); return Array.from(a,b=>(b%36).toString(36)).join('')+Date.now().toString(36).slice(-3); }
 function clone(o){ return JSON.parse(JSON.stringify(o)); }
@@ -1321,7 +1356,7 @@ const STR={
   changeTarget:['Change the target','Cambiar el objetivo'],
   meterAria:[(l,v,tg)=>`${l} ${v} of income, target ${tg}`,(l,v,tg)=>`${l}: ${v} de los ingresos, objetivo ${tg}`],
   yearSummary:['Year summary','Resumen del año'],
-  savedIn:[(y,r)=>`Saved in ${y} · ${r}`,(y,r)=>`Ahorrado en ${y} · ${r}`],
+  savedIn:[(y,r,so)=>`Saved in ${y} · ${r}${so?' so far':''}`,(y,r,so)=>`Ahorrado en ${y} · ${r}${so?' hasta hoy':''}`],
   keptAfter:[p=>`<b>${p}</b> of income kept after expenses`,p=>`<b>${p}</b> de los ingresos conservado tras los gastos`],
   avgMonth:[v=>`avg ${v} a month`,v=>`media de ${v} al mes`],
   ofIncome:[p=>`${p} of income`,p=>`${p} de los ingresos`],
@@ -1433,7 +1468,7 @@ const STR={
   kwTestNone:['No keyword matches, so this would be <b>Uncategorised</b>.','Ninguna palabra clave coincide, así que quedaría <b>Sin categoría</b>.'],
   kwFrom:['from','por la palabra'], alsoMatched:['Also matched:','También coinciden:'],
   skipTitle:['Skip on import','Omitir al importar'],
-  skipSub:['For transfers between your own accounts and moves within your portfolio. When an imported row’s concept contains one of these words, it arrives unticked on the check screen. Applies to all three tables.','Para traspasos entre tus propias cuentas y movimientos dentro de tu cartera. Si el concepto de una fila importada contiene una de estas palabras, llega sin marcar a la pantalla de revisión. Se aplica a las tres tablas.'],
+  skipSub:['For transfers between your own accounts and moves within your portfolio. When an imported row’s description contains one of these words, it arrives unticked on the check screen. Applies to all three tables.','Para traspasos entre tus propias cuentas y movimientos dentro de tu cartera. Si el concepto de una fila importada contiene una de estas palabras, llega sin marcar a la pantalla de revisión. Se aplica a las tres tablas.'],
   alsoIn:[n=>`also in ${pl(n,'keptTx')}`,n=>`también en ${pl(n,'keptTx')}`], notInKept:['not in any kept transaction','no aparece en ningún movimiento guardado'],
   noWords:['No words yet.','Aún no hay palabras.'], wordToSkip:['Word to skip','Palabra a omitir'], skipPh:['Word, e.g. traspaso','Palabra, p. ej. traspaso'],
   addWord:['Add word','Añadir palabra'], removeSkip:[w=>`Remove ${w} from the skip list`,w=>`Quitar ${w} de la lista`],
@@ -1446,7 +1481,9 @@ const STR={
   help_inv:['Money put into an investment is negative.','El dinero que metes en una inversión es negativo.'],
   help_inc:['Income is positive.','Los ingresos son positivos.'],
   kwSuggests:[(k,c)=>`Keyword ${k} suggests <b>${c}</b>`,(k,c)=>`La palabra clave ${k} sugiere <b>${c}</b>`], useIt:['Use it','Usarla'],
-  noKwConcept:['No keyword matches this concept.','Ninguna palabra clave coincide con este concepto.'],
+  yShowEmpty:[n=>n===1?'Show 1 empty category':`Show ${n} empty categories`,n=>n===1?'Mostrar 1 categoría vacía':`Mostrar ${n} categorías vacías`], yHideEmpty:['Hide empty categories','Ocultar categorías vacías'],
+  noteBizum:['Bizum received: counted as someone paying you back, so it lowers this spending. Make it Income if it isn’t.','Bizum recibido: cuenta como alguien que te devuelve dinero, así que reduce este gasto. Ponlo en Ingresos si no lo es.'],
+  noKwConcept:['No keyword matches this description.','Ninguna palabra clave coincide con este concepto.'],
   /* category guesses from your history */
   mlTitle:['Guessing categories','Adivinar categorías'],
   mlSub:['When no keyword matches a transaction, the tracker can guess its category from the transactions you’ve already categorised. Keywords always come first.','Cuando ninguna palabra clave coincide, el control puede adivinar la categoría a partir de los movimientos que ya has categorizado. Las palabras clave siempre van primero.'],
@@ -1465,13 +1502,16 @@ const STR={
   warnOld:[(d,b)=>`This date is a long time ago (${d}). Press ${b} again to keep it.`,(d,b)=>`Esta fecha es de hace mucho (${d}). Pulsa ${b} otra vez para mantenerla.`],
   warnNoDesc:[b=>`There’s no description. Press ${b} again to save it anyway.`,b=>`No hay descripción. Pulsa ${b} otra vez para guardarlo igualmente.`],
   errAmount:[x=>`Enter the amount as a number, for example ${x}.`,x=>`Introduce el importe como número, por ejemplo ${x}.`],
-  savedToast:['Saved','Guardado'], addedAs:[(t,c)=>`Added to ${t} as ${c}`,(t,c)=>`Añadido a ${t} como ${c}`], addedUncat:[t=>`Added to ${t}, uncategorised`,t=>`Añadido a ${t}, sin categoría`],
+  savedToast:['Saved','Guardado'], addedAs:[(t,c,a)=>`Added ${a} to ${t} as ${c}`,(t,c,a)=>`Añadido ${a} a ${t} como ${c}`], addedUncat:[(t,a)=>`Added ${a} to ${t}, uncategorised`,(t,a)=>`Añadido ${a} a ${t}, sin categoría`],
+  amtRead:[a=>`Read as ${a}`,a=>`Se lee como ${a}`], amtUnread:['Not an amount yet','Aún no es un importe'],
+  amtAmbig:[(a,b)=>`Read as ${a}. Did you mean ${b}? Then type it without the separator.`,(a,b)=>`Se lee como ${a}. ¿Querías decir ${b}? Escríbelo sin el separador.`],
+  warnAmbig:[(a,b,btn)=>`This reads as ${a}, not ${b}. Press ${btn} again to keep ${a}.`,(a,b,btn)=>`Esto se lee como ${a}, no ${b}. Pulsa ${btn} otra vez para dejar ${a}.`],
   txDeleted:['Transaction deleted','Movimiento eliminado'],
   /* drill */
   allOf:[k=>`All ${tl(k)}`,k=>ALL_ES[k].charAt(0).toUpperCase()+ALL_ES[k].slice(1)], showingFirst400:['Showing the first 400.','Se muestran los primeros 400.'],
   openInTx:['Open in Transactions','Abrir en Movimientos'], done:['Done','Listo'],
   /* import */
-  impTitle:['Paste or import rows','Pegar o importar filas'], impSub:['Bank, card or broker rows: date, amount and concept.','Filas del banco, tarjeta o bróker: fecha, importe y concepto.'],
+  impTitle:['Paste or import rows','Pegar o importar filas'], impSub:['Bank, card or broker rows: date, amount and description.','Filas del banco, tarjeta o bróker: fecha, importe y concepto.'],
   addPastedTo:['Add pasted rows to','Añadir las filas pegadas a'], pasteRowsLbl:['Paste rows','Pega las filas'],
   pasteHelp:['Copy straight from Excel or a statement. Columns can be split by tabs or semicolons, dates as 31/08/2026 or 2026-08-31, amounts as -1.234,56 or -1234.56.','Copia directamente de Excel o de un extracto. Las columnas pueden ir separadas por tabuladores o punto y coma, las fechas como 31/08/2026 o 2026-08-31 y los importes como -1.234,56 o -1234.56.'],
   orChooseFile:[s=>`Or choose a file: a bank statement (.csv or .xlsx), or this tracker’s template with ${s} sheets.`,s=>`O elige un archivo: un extracto del banco (.csv o .xlsx), o la plantilla de este control con las hojas ${s}.`],
@@ -1742,10 +1782,10 @@ const STR={
   gEyebrow:[n=>`Set up your tracker · step ${n} of 5`,n=>`Configura tu control · paso ${n} de 5`], gEyebrowDone:['Set up your tracker · done','Configura tu control · listo'],
   gStep_acc:['Your accounts','Tus cuentas'], gStep_val:['What they’re worth','Lo que valen'], gStep_tx:['Your transactions','Tus movimientos'],
   gSkipped:['skipped','saltado'], gDoneSr:['(done)','(hecho)'],
-  wzEyebrow:[(i,n)=>`Set up your tracker · step ${i} of ${n}`,(i,n)=>`Configura tu control · paso ${i} de ${n}`],
+  wzEyebrow:[(i,n)=>`Setup · step ${i} of ${n}`,(i,n)=>`Configuración · paso ${i} de ${n}`],   /* short: one line on a phone */
   wzNames:[['Net worth','Earlier months','Transactions','Salary','Summary'],['Patrimonio','Meses anteriores','Movimientos','Nómina','Resumen']],
   wz0Title:['Start with what you own','Empieza por lo que tienes'],
-  wz0Text:[m=>`Add each place you keep money: your current account, savings, investments, pension. Then enter what each one was worth at the end of last month (${m}). When you start recording this month, these balances should be last month’s end amounts.`,m=>`Añade cada sitio donde guardas dinero: tu cuenta corriente, ahorros, inversiones, plan de pensiones. Después introduce lo que valía cada uno a final del mes pasado (${m}). Cuando empieces a registrar este mes, estos saldos deben ser los de final del mes pasado.`],
+  wz0Text:[m=>`Add each place you keep money: your current account, savings, investments, pension. Then enter what each one was worth at the end of last month (${m}). That’s your starting point.`,m=>`Añade cada sitio donde guardas dinero: tu cuenta corriente, ahorros, inversiones, plan de pensiones. Después introduce lo que valía cada uno a final del mes pasado (${m}). Ese es tu punto de partida.`],
   wz1Title:['Earlier months (optional)','Meses anteriores (opcional)'],
   wz1Text:['Want your history too? Fill in the month-end balances for earlier months and your net worth chart starts further back. The quickest way is the AI: give it past statements and it reads the balances for you.','¿Quieres también tu historial? Rellena los saldos de fin de mes de meses anteriores y tu gráfico de patrimonio empezará antes. Lo más rápido es la IA: dale extractos pasados y lee los saldos por ti.'],
   wzRecommended:['Recommended','Recomendado'], wzEarlierHand:['Enter an earlier month by hand','Introducir un mes anterior a mano'],
@@ -1754,8 +1794,10 @@ const STR={
   wzWayPaste:['Paste or import a bank statement','Pega o importa un extracto'], wzWayPasteSub:['Paste rows or choose your bank’s .csv or .xlsx file.','Pega filas o elige el .csv o .xlsx de tu banco.'],
   wzWayAi:['With AI','Con IA'], wzWayAiSub:['Give it your statements. It sorts everything and you check it before it’s saved.','Dale tus extractos. Lo ordena todo y tú lo revisas antes de guardarlo.'],
   wz3Title:['Last, your salary or pension','Por último, tu nómina o pensión'],
-  wz3Text:['Add your salary (or pension) after your transactions, so the tracker can show what you kept. This tracker is built for you to fill in the previous month at the end of that month, so your figures always run one month behind. That is by design.','Añade tu nómina (o pensión) después de tus movimientos, para que el control muestre lo que has ahorrado. Este control está pensado para rellenar el mes anterior al terminar ese mes, así que tus cifras siempre van un mes por detrás. Es a propósito.'],
+  wz3Text:['Add your salary (or pension) so the tracker can show what you kept. From now on, at the start of each month you fill in the previous month: its balances, its transactions and its salary.','Añade tu nómina (o pensión) para que el control muestre lo que has ahorrado. A partir de ahora, al empezar cada mes rellenas el mes anterior: sus saldos, sus movimientos y su nómina.'],
   wzAddSalary:['Add my salary or pension','Añadir mi nómina o pensión'],
+  wzSalaryFound:[(a,d)=>`Salary found: ${a} on ${d}`,(a,d)=>`Nómina encontrada: ${a} el ${d}`], wzSkipped:['skipped','saltado'],
+  wzPlace:['Change where it’s saved','Cambiar dónde se guarda'],
   wz4Title:['You’re all set','Ya está todo listo'],
   wz4Text:['Here’s what is in your tracker. Next month, add the month that just ended: balances first, then transactions.','Esto es lo que hay en tu control. El mes que viene, añade el mes que acaba de terminar: primero los saldos y luego los movimientos.'],
   wzCounts:[(a,m,t,i)=>`${a} ${a===1?'account':'accounts'} · ${m} ${m===1?'month':'months'} of balances · ${t} ${t===1?'transaction':'transactions'} · ${i} ${i===1?'income row':'income rows'}`,(a,m,t,i)=>`${a} ${a===1?'cuenta':'cuentas'} · ${m} ${m===1?'mes':'meses'} de saldos · ${t} ${t===1?'movimiento':'movimientos'} · ${i} ${i===1?'ingreso':'ingresos'}`],
@@ -1779,6 +1821,11 @@ const STR={
   nwAccStartQ:['Which of these do you have? Tap to add them, then rename them after your bank or app, for example “BBVA current account”.','¿Cuáles de estas tienes? Púlsalas para añadirlas y luego ponles el nombre de tu banco o app, por ejemplo «Cuenta corriente BBVA».'],
   nwAddOther:['Add another account','Añadir otra cuenta'], nwSugAllAdded:['All added','Todas añadidas'],
   tour_introNew:[['Welcome to your tracker','Before you set it up, here’s a two-minute tour with a made-up example, so you can see every page full of data. Nothing in it is saved. Afterwards a short setup wizard helps you add your accounts, then your transactions and your salary.'],['Bienvenido a tu control','Antes de configurarlo, aquí tienes un recorrido de dos minutos con un ejemplo inventado, para que veas cada página llena de datos. Nada de él se guarda. Después, un asistente corto te ayuda a añadir tus cuentas, luego tus movimientos y tu nómina.']],
+  tour_introDemo:[['An example tracker','Every page here is full of made-up data, and nothing you change is saved. Take the two-minute tour, or look around on your own.'],['Un control de ejemplo','Cada página está llena de datos inventados y nada de lo que cambies se guarda. Haz el recorrido de dos minutos o míralo por tu cuenta.']],
+  tour_endDemo:[['That’s the tour','Keep looking around the example as long as you like, or set up your own tracker: first where to keep it, then your accounts and transactions. In your own tracker every change is saved straight away.'],['Fin del recorrido','Sigue mirando el ejemplo todo lo que quieras, o configura tu propio control: primero dónde guardarlo y luego tus cuentas y movimientos. En tu propio control cada cambio se guarda al momento.']],
+  tourFree:['Look around on my own','Mirarlo por mi cuenta'], tourKeep:['Keep exploring','Seguir explorando'],
+  demoBar:['Example data · nothing you change is saved','Datos de ejemplo · nada de lo que cambies se guarda'],
+  demoNoSave:['Not in the example: set up your own tracker first.','No en el ejemplo: configura antes tu propio control.'],
   tourSkipNew:['Skip the tour','Saltar el recorrido'], tourSetup:['Set up my tracker','Configurar mi control'],
   /* info bubbles */
   infoAbout:['What does this mean?','¿Qué significa esto?'],
@@ -1796,7 +1843,7 @@ const STR={
   info_catKw:['When a description contains a keyword, the transaction gets that category by itself, on import and when you add a row. If several match, the longest keyword wins. A keyword only matches at the start of a word. Type a description in the test box to see which keyword picks it.','Si una descripción contiene una palabra clave, el movimiento recibe esa categoría solo, al importar y al añadirlo. Si coinciden varias, gana la más larga. Una palabra clave solo cuenta al principio de una palabra. Escribe una descripción en la casilla de prueba para ver qué palabra la elige.'],
   info_catSkip:['Rows whose description contains one of these words arrive unticked when you import: for example transfers between your own accounts, which are neither income nor spending.','Las filas cuya descripción contiene una de estas palabras llegan sin marcar al importar: por ejemplo, traspasos entre tus propias cuentas, que no son ni ingresos ni gastos.'],
   info_nwWhat:['Net worth is what everything you own is worth, minus what you owe. Once a month, type what each account is worth at the end of the month, or import several months from Excel, and the tracker shows how it grows and why.','El patrimonio neto es lo que vale todo lo que tienes, menos lo que debes. Una vez al mes, escribe lo que vale cada cuenta a final de mes, o importa varios meses desde Excel, y el control muestra cómo crece y por qué.'],
-  info_nwGroups:['Accounts are grouped by how soon you could use the money: Cash now, Investments within days, Illiquid on its own schedule (loans, property), Retirement when you retire. “Without retirement savings” is what you could reach before then.','Las cuentas se agrupan según lo pronto que podrías usar el dinero: Efectivo ya, Inversiones en días, Ilíquido según su propio calendario (préstamos, inmuebles) y Jubilación al jubilarte. «Sin el ahorro para la jubilación» es lo que podrías usar antes.'],
+  info_nwGroups:['Accounts are grouped by how soon you could use the money: Cash now, Investments within days, Long-term on its own schedule (loans, property), Retirement when you retire. “Without retirement savings” is what you could reach before then.','Las cuentas se agrupan según lo pronto que podrías usar el dinero: Efectivo ya, Inversiones en días, A largo plazo según su propio calendario (préstamos, inmuebles) y Jubilación al jubilarte. «Sin el ahorro para la jubilación» es lo que podrías usar antes.'],
   info_nwChange:['How your net worth moved since the previous month with figures. You saved: income minus expenses from your tracker. Markets, interest and gains: the Gains total of the Accounts table (price moves, interest, dividends). Moving money between your own accounts changes neither. Anything your transactions and account figures don’t explain shows on its own line, Not matched to an account, so the lines always add up to the total.','Cómo ha cambiado tu patrimonio desde el mes anterior con cifras. Has ahorrado: ingresos menos gastos según tu control. Mercados, intereses y plusvalías: el total de Ganancias de la tabla Cuentas (cambios de precio, intereses, dividendos). Mover dinero entre tus propias cuentas no cambia ninguna de las dos. Lo que tus movimientos y las cifras de tus cuentas no explican sale en su propia línea, Sin cuadrar con ninguna cuenta, así que las líneas siempre suman el total.'],
   info_fhTitle:['Rules of thumb, not advice.','Reglas orientativas, no asesoramiento.'],
   info_fh_emerg:['Cash you could use tomorrow divided by your average monthly spending. Rule of thumb: 3–6 months. Meal cards and money owed to you aren’t counted.','El efectivo que podrías usar mañana dividido entre tu gasto medio mensual. Regla orientativa: 3–6 meses. No cuentan las tarjetas de comida ni el dinero que te deben.'],
@@ -1804,7 +1851,7 @@ const STR={
   info_fh_save:['Share of your income you keep. 20% is the classic 50/30/20 target.','La parte de tus ingresos que te quedas. El 20% es el objetivo clásico de la regla 50/30/20.'],
   info_fh_passive:['What your investments could pay you each month at a 4% yearly withdrawal, compared with what you spend.','Lo que tus inversiones podrían pagarte cada mes retirando un 4% al año, comparado con lo que gastas.'],
   info_fh_age:['The Millionaire Next Door rule: age × yearly gross income ÷ 10.','La regla de «The Millionaire Next Door»: edad × ingresos brutos anuales ÷ 10.'],
-  info_nwGoal:['Needed a month is what’s left to the goal divided by the months left. You save a month is your average saving over the last six finished months. From growth is what your investments, illiquid and retirement accounts would have to earn on top of that.','Hace falta al mes es lo que falta para el objetivo dividido entre los meses que quedan. Ahorras al mes es tu ahorro medio de los últimos seis meses completos. Con crecimiento es lo que tendrían que ganar tus inversiones, ilíquido y jubilación además de eso.'],
+  info_nwGoal:['Needed a month is what’s left to the goal divided by the months left. You save a month is your average saving over the last six finished months. From growth is what your investment, long-term and retirement accounts would have to earn on top of that.','Hace falta al mes es lo que falta para el objetivo dividido entre los meses que quedan. Ahorras al mes es tu ahorro medio de los últimos seis meses completos. Con crecimiento es lo que tendrían que ganar tus cuentas de inversión, a largo plazo y de jubilación además de eso.'],
   info_nwOverTime:['Month-end totals stacked by group. The dashed trend line shows the general direction. A faded month is missing a figure for one of your accounts, so it looks lower than it was. Grey months after your last figure are a forecast.','Totales a fin de mes apilados por grupo. La línea de tendencia discontinua muestra la dirección general. Un mes atenuado no tiene la cifra de alguna cuenta, así que parece más bajo de lo que fue. Los meses en gris después de tu última cifra son una previsión.'],
   info_nwAccounts:['Change is the difference from the previous month with figures; Share is the account’s part of the total. An account you set to 0 is hidden from the next month on, and comes back if you give it a figure.','Cambio es la diferencia con el mes anterior con cifras; Peso es la parte del total que supone la cuenta. Una cuenta que pones a 0 se oculta a partir del mes siguiente y vuelve si le pones una cifra.'],
   info_setStart:['The first month your figures cover. Months before it are greyed out on Yearly tracking and left out of averages: useful if you started tracking mid-year.','El primer mes que cubren tus cifras. Los meses anteriores salen en gris en Seguimiento y no cuentan en las medias: útil si empezaste a registrar a mitad de año.'],
@@ -1819,22 +1866,15 @@ const STR={
   tour_tabs:[['Six pages','Net worth for what you own, Overview for the big picture, Yearly for every figure, Transactions for the rows themselves, Categories for how they’re sorted, and Settings.'],['Seis páginas','Patrimonio para lo que tienes, Resumen para la visión general, Seguimiento para cada cifra, Movimientos para las filas en sí, Categorías para cómo se ordenan, y Ajustes.']],
   tour_ovTop:[['Your year at a glance','How much you kept after expenses this year, and your totals for income, expenses and investments. Any i button explains what a figure means.'],['Tu año de un vistazo','Cuánto has conservado este año tras los gastos y tus totales de ingresos, gastos e inversiones. Cualquier botón i explica qué significa una cifra.']],
   tour_ovMonth:[['This month','How the month in progress is going: what you’ve spent so far against a normal month, and against any monthly limits.'],['Este mes','Cómo va el mes en curso: lo que llevas gastado frente a un mes normal y frente a los límites mensuales.']],
-  tour_ovInd:[['Indicators','How your income splits between rent, fixed and variable spending and investing, against targets you can change.'],['Indicadores','Cómo se reparten tus ingresos entre alquiler, gastos fijos y variables e inversión, frente a objetivos que puedes cambiar.']],
-  tour_ovMonthly:[['Month by month','Each month’s income, expenses or investments. Click a bar to see the transactions behind it.'],['Mes a mes','Los ingresos, gastos o inversiones de cada mes. Pulsa una barra para ver los movimientos que hay detrás.']],
-  tour_ovCats:[['Where it went','Your categories, biggest first. Click one to follow it month by month.'],['A dónde fue','Tus categorías, de más a menos. Pulsa una para seguirla mes a mes.']],
+  tour_ovMonthly:[['Month by month','Each month’s income, expenses or investments, then your categories biggest first and how your income splits against targets. Click a bar or a category to see what’s behind it.'],['Mes a mes','Los ingresos, gastos o inversiones de cada mes; después tus categorías de más a menos y cómo se reparten tus ingresos frente a unos objetivos. Pulsa una barra o una categoría para ver lo que hay detrás.']],
   tour_yearly:[['Every figure, every month','Laid out like a spreadsheet: categories down the side, months across. Click any figure to see its transactions. The heat map shows where most of the money went each month.'],['Cada cifra, cada mes','Como una hoja de cálculo: categorías a un lado y meses en columnas. Pulsa cualquier cifra para ver sus movimientos. El mapa de calor muestra a dónde fue más dinero cada mes.']],
-  tour_txImport:[['Bring in your bank’s export','Paste rows or choose your bank’s file (.csv or .xlsx), or download the empty template and fill it in. Each row is sorted into Income, Expenses or Investments and gets its category from your keywords. Rows already in the tracker are spotted.'],['Trae el extracto de tu banco','Pega filas o elige el archivo de tu banco (.csv o .xlsx), o descarga la plantilla vacía y rellénala. Cada fila va a Ingresos, Gastos o Inversiones y recibe su categoría según tus palabras clave. Las filas que ya están en el control se detectan.']],
-  tour_txGuess:[['Categories, guessed','When no keyword matches a row, the tracker suggests a category learned from your past transactions. One click accepts it, and it offers to remember a keyword for next time.'],['Categorías sugeridas','Si ninguna palabra clave coincide, el control sugiere una categoría aprendida de tus movimientos anteriores. Un clic la acepta, y te ofrece guardar una palabra clave para la próxima vez.']],
-  tour_catKw:[['Keywords do the sorting','A keyword like “netflix” puts every matching row in its category by itself. Type any description in the test box to see which keyword picks it.'],['Las palabras clave ordenan','Una palabra clave como «netflix» pone sola cada fila que la contenga en su categoría. Escribe cualquier descripción en la casilla de prueba para ver qué palabra la elige.']],
-  tour_catList:[['Your categories','Rename, add or remove categories, mark each expense as Fixed or Variable, and set monthly limits.'],['Tus categorías','Cambia el nombre, añade o quita categorías, marca cada gasto como Fijo o Variable y pon límites mensuales.']],
-  tour_nwAccounts:[['Accounts and gains','Each account’s value, its change since last month and its Gains: how much it grew on its own (prices, interest, dividends), apart from money you put in. Hover Gains for how it’s worked out.'],['Cuentas y ganancias','El valor de cada cuenta, su cambio desde el mes pasado y sus Ganancias: cuánto creció por sí sola (precios, intereses, dividendos), sin contar lo que aportaste. Pasa el ratón por Ganancias para ver cómo se calcula.']],
-  tour_txAi:[['Let an AI read your statements','Fill in with AI reads statements and PDFs for you. The first time you pick which AI: Copy and paste is free, Gemini has a free tier, Claude and GPT are paid with your own key. A recommendation next to the model picker says which model suits one file or many months. Change AI switches it any time, and you check every row before it’s saved.'],['Deja que una IA lea tus extractos','Rellenar con IA lee extractos y PDF por ti. La primera vez eliges qué IA: Copiar y pegar es gratis, Gemini tiene un nivel gratuito, Claude y GPT son de pago con tu propia clave. Una recomendación junto al selector de modelo indica cuál sirve para un archivo o para muchos meses. Cambiar la IA lo cambia cuando quieras, y revisas cada fila antes de guardarla.']],
+  tour_txImport:[['Bring in your bank’s export','Paste rows or choose your bank’s file (.csv or .xlsx), or let an AI read statements and PDFs for you. Each row is sorted into Income, Expenses or Investments and gets its category from your keywords, or a guess learned from your past rows. You check every row before it’s saved.'],['Trae el extracto de tu banco','Pega filas o elige el archivo de tu banco (.csv o .xlsx), o deja que una IA lea tus extractos y PDF. Cada fila va a Ingresos, Gastos o Inversiones y recibe su categoría según tus palabras clave, o una sugerencia aprendida de tus filas anteriores. Revisas cada fila antes de guardarla.']],
+  tour_catList:[['Your categories and keywords','Rename, add or remove categories, mark each expense as Fixed or Variable, and set monthly limits. A keyword like “netflix” puts every matching row in its category by itself.'],['Tus categorías y palabras clave','Cambia el nombre, añade o quita categorías, marca cada gasto como Fijo o Variable y pon límites mensuales. Una palabra clave como «netflix» pone sola cada fila que la contenga en su categoría.']],
+  tour_nwAccounts:[['Accounts and gains','Each account’s value, its change since last month and its Gains: how much it grew on its own (prices, interest, dividends), apart from money you put in. “How is this calculated?” under the table explains it.'],['Cuentas y ganancias','El valor de cada cuenta, su cambio desde el mes pasado y sus Ganancias: cuánto creció por sí sola (precios, intereses, dividendos), sin contar lo que aportaste. «¿Cómo se calcula?» debajo de la tabla lo explica.']],
   tour_nwTop:[['What you own','Once a month, type what each account is worth, or import several months from Excel. Accounts are grouped by how soon you could use the money.'],['Lo que tienes','Una vez al mes, escribe lo que vale cada cuenta o importa varios meses desde Excel. Las cuentas se agrupan según lo pronto que podrías usar el dinero.']],
-  tour_nwChart:[['How it grows','Your month-end totals with a trend line. Pick one year or several.'],['Cómo crece','Tus totales a fin de mes con una línea de tendencia. Elige un año o varios.']],
   tour_nwCards:[['Why it changed, and your goal','What changed splits each month into what you saved and what markets added. Goal shows what you need a month and how much would have to come from growth.'],['Por qué cambió y tu objetivo','Qué ha cambiado reparte cada mes entre lo que ahorraste y lo que aportaron los mercados. Objetivo muestra cuánto hace falta al mes y cuánto tendría que venir del crecimiento.']],
-  tour_save:[['Saved as you go','Every change is saved straight away. The eye hides all amounts on screen, and Download backup keeps a copy of everything.'],['Se guarda solo','Cada cambio se guarda al momento. El ojo oculta todos los importes de la pantalla y Descargar copia guarda una copia de todo.']],
-  tour_end:[['That’s the tour','The button below puts the example away and brings back your own tracker, just as you left it. You can take the tour again from Settings, and the i buttons next to titles explain each figure.'],['Fin del recorrido','El botón de abajo quita el ejemplo y te devuelve tu propio control, tal como lo dejaste. Puedes repetir el recorrido desde Ajustes, y los botones i junto a los títulos explican cada cifra.']],
-  tour_endNew:[['That’s the tour','Now it’s your turn. The button below puts the example away and starts the setup guide: first your accounts on Net worth, then your transactions. You can take the tour again from Settings, and the i buttons next to titles explain each figure.'],['Fin del recorrido','Ahora te toca a ti. El botón de abajo quita el ejemplo y empieza la guía de configuración: primero tus cuentas en Patrimonio y luego tus movimientos. Puedes repetir el recorrido desde Ajustes, y los botones i junto a los títulos explican cada cifra.']],
+  tour_end:[['That’s the tour','The button below puts the example away and brings back your own tracker, just as you left it. Everything you change there is saved straight away; the eye hides all amounts on screen. You can take the tour again from Settings, and the i buttons next to titles explain each figure.'],['Fin del recorrido','El botón de abajo quita el ejemplo y te devuelve tu propio control, tal como lo dejaste. Todo lo que cambies en él se guarda al momento; el ojo oculta todos los importes de la pantalla. Puedes repetir el recorrido desde Ajustes, y los botones i junto a los títulos explican cada cifra.']],
+  tour_endNew:[['That’s the tour','Now it’s your turn. The button below puts the example away and starts the setup guide: first your accounts on Net worth, then your transactions. In your own tracker every change is saved straight away. You can take the tour again from Settings, and the i buttons next to titles explain each figure.'],['Fin del recorrido','Ahora te toca a ti. El botón de abajo quita el ejemplo y empieza la guía de configuración: primero tus cuentas en Patrimonio y luego tus movimientos. En tu propio control cada cambio se guarda al momento. Puedes repetir el recorrido desde Ajustes, y los botones i junto a los títulos explican cada cifra.']],
   hideAmounts:['Hide amounts','Ocultar importes'], showAmounts:['Show amounts','Mostrar importes'],
   amountsHidden:['Amounts hidden. Tap the eye to show them again.','Importes ocultos. Pulsa el ojo para volver a verlos.'], amountsShown:['Amounts shown','Importes visibles'], nwTitle:['Net worth','Patrimonio neto'],
   nwSub:['What everything you own is worth at the end of each month. Type the figures in once a month.','Lo que vale todo lo que tienes al final de cada mes. Introduce las cifras una vez al mes.'],
@@ -1856,17 +1896,18 @@ const STR={
   nwSavedIn:[m=>`Saved in ${m}, according to your tracker (income minus expenses, without interest, dividends or gains).`,m=>`Ahorrado en ${m}, según tu control (ingresos menos gastos, sin intereses, dividendos ni plusvalías).`],
   nwNoPrev:['Add next month’s figures to see how much of the change came from your saving and how much from markets.','Añade las cifras del mes que viene para ver cuánto del cambio viene de tu ahorro y cuánto de los mercados.'],
   nwNoTracker:[m=>`Your tracker has no transactions for ${m}, so the change can’t be split yet.`,m=>`Tu control no tiene movimientos de ${m}, así que todavía no se puede repartir el cambio.`],
-  fhTitle:['Financial health','Salud financiera'], fh_emerg:['Emergency fund','Fondo de emergencia'], fh_fi:['Financial independence','Independencia financiera'],
-  fh_save:['Savings rate','Tasa de ahorro'], fh_passive:['Passive income coverage','Cobertura con rentas pasivas'], fh_age:['Net worth for your age','Patrimonio para tu edad'],
+  fhTitle:['Financial health','Salud financiera'], fh_emerg:['Emergency fund','Fondo de emergencia'], fh_fi:['Enough to stop working','Para dejar de trabajar'],
+  fh_save:['Savings rate','Tasa de ahorro'], fh_passive:['Spending your investments could pay','Gasto que pagarían tus inversiones'], fh_age:['Net worth for your age','Patrimonio para tu edad'],
   fhSub:[(m,n)=>`As of the end of ${m}. ${n>=12?'Averages over the last 12 months.':`Averages based on ${n} month${n===1?'':'s'}.`}`,(m,n)=>`A final de ${m}. ${n>=12?'Medias de los últimos 12 meses.':`Medias de ${n} mes${n===1?'':'es'}.`}`],
   fhNoData:['No finished month with transactions up to this one yet, so there are no averages.','Aún no hay ningún mes terminado con movimientos hasta este, así que no hay medias.'],
   fhMonths:[v=>`${v} months`,v=>`${v} meses`], fhTarget:[(n,v)=>`Target ${n} months · ${v}`,(n,v)=>`Objetivo ${n} meses · ${v}`],
   fhSpare:[v=>`+${v} could be invested`,v=>`+${v} se podrían invertir`], fhToGo:[v=>`${v} to go`,v=>`Faltan ${v}`],
   fhNoExp:['No spending recorded yet','Aún no hay gastos registrados'], fhNoInc:['No income recorded yet','Aún no hay ingresos registrados'],
+  fhWait:[m=>`Shows once ${m} is over`,m=>`Aparece cuando termine ${m}`],
   fhOf:[(a,b)=>`${a} of ${b}`,(a,b)=>`${a} de ${b}`],
-  fhMonthRate:[(m,v,ar,soFar)=>`${m}${soFar?' so far':''}: ${v} ${ar} vs average`,(m,v,ar,soFar)=>`${m}${soFar?' hasta hoy':''}: ${v} ${ar} frente a la media`],
-  fhFire:['FIRE pace','Ritmo FIRE'], fhCovers:['Covers your spending','Cubre tus gastos'], fhProdigious:['Prodigious accumulator','Acumulador prodigioso'],
-  fhPassiveSub:[(a,b)=>`Portfolio could pay ${a}/month of your ${b}/month spending`,(a,b)=>`Tu cartera podría pagar ${a}/mes de tus ${b}/mes de gasto`],
+  fhMonthRate:[(m,v,ar,soFar)=>`${m}${soFar?' so far':''}: ${v}, ${ar==='↑'?'above':ar==='↓'?'below':'in line with'} your average`,(m,v,ar,soFar)=>`${m}${soFar?' hasta hoy':''}: ${v}, ${ar==='↑'?'por encima de':ar==='↓'?'por debajo de':'en línea con'} tu media`],
+  fhFire:['Excellent','Excelente'], fhCovers:['Covers your spending','Cubre tus gastos'], fhProdigious:['Well ahead','Muy por delante'],
+  fhPassiveSub:[(a,b)=>`Could pay ${a} a month of the ${b} you spend a month`,(a,b)=>`Podrían pagar ${a} al mes de los ${b} que gastas al mes`],
   fhAgeSub:[(age,b)=>`Benchmark for your age (${age}) and salary: ${b}`,(age,b)=>`Referencia para tu edad (${age}) y salario: ${b}`],
   fhAgeNeeds:['Needs your year of birth and salary.','Necesita tu año de nacimiento y tu salario.'], fhAddDetails:['Add details in Settings','Añadir datos en Ajustes'],
   fhLvl_good:['Healthy','Sano'], fhLvl_warn:['Getting there','En camino'], fhLvl_bad:['Low','Bajo'],
@@ -1891,6 +1932,7 @@ const STR={
   nwLinkTitle:['Which account did this money go into?','¿A qué cuenta fue este dinero?'],
   nwLinkSub:['Investments rows from every month that aren’t linked yet. We’ve suggested an account where we could: check each one and pick another if it’s wrong. MyAhorros remembers your choice, so future rows link by themselves.','Filas de Inversiones de todos los meses que aún no están vinculadas. Hemos sugerido una cuenta donde hemos podido: revisa cada una y elige otra si no es correcta. MyAhorros recuerda tu elección, así que las filas futuras se vincularán solas.'],
   nwLinkUntracked:['An account I don’t track here','Una cuenta que no sigo aquí'],
+  nwAccMore:['More options','Más opciones'], nwAccMoreHint:['Statement words and “at risk”: only needed to fine-tune Gains.','Palabras del extracto y «en riesgo»: solo hacen falta para afinar las Ganancias.'],
   nwAccUntracked:['Statement words of accounts you don’t track here','Palabras del extracto de cuentas que no sigues aquí'],
   nwLinkMeta:[(n,a,out,ms)=>`${pl(n,'row')} · ${a} ${out?'taken out':'put in'} · ${ms}`,(n,a,out,ms)=>`${pl(n,'row')} · ${a} ${out?'retirados':'aportados'} · ${ms}`],
   nwLinkPick:[d=>`Account for “${d}”`,d=>`Cuenta para «${d}»`], nwLinkNone:['Not sure yet','Aún no lo sé'],
@@ -1934,9 +1976,9 @@ const STR={
   nwStSave:['You save a month','Ahorras al mes'], nwStSaveSub:[n=>n===1?'last month':`average of ${pl(n,'month')}`,n=>n===1?'el mes pasado':`media de ${pl(n,'month')}`], nwStSaveNone:['no tracker data yet','aún sin datos'],
   nwProgress:[(p,a,b)=>`${p} · ${a} of ${b}`,(p,a,b)=>`${p} · ${a} de ${b}`],
   nwFromSavingRow:['From your saving','Con tu ahorro'], nwFromGrowthRow:['From growth','Con crecimiento'],
-  nwGrow:[(a,p,y)=>`So your investments, illiquid and retirement accounts (${a} now) would need to grow ${p} in total${y?`, about ${y} a year`:''}.`,(a,p,y)=>`Así que tus inversiones, ilíquido y jubilación (${a} ahora) tendrían que crecer un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
-  nwGrowNoPace:[(a,p,y)=>`With no saving counted, your investments, illiquid and retirement accounts (${a} now) would need to grow ${p} in total${y?`, about ${y} a year`:''}.`,(a,p,y)=>`Sin contar ahorro, tus inversiones, ilíquido y jubilación (${a} ahora) tendrían que crecer un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
-  nwGrowNeg:[(a,p,y)=>`As you’re spending more than you earn, your investments, illiquid and retirement accounts (${a} now) would need to grow ${p} in total${y?`, about ${y} a year`:''}.`,(a,p,y)=>`Como gastas más de lo que ganas, tus inversiones, ilíquido y jubilación (${a} ahora) tendrían que crecer un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
+  nwGrow:[(a,p,y)=>`So your investment, long-term and retirement accounts (${a} now) would need to grow ${p} in total${y?`, about ${y} a year`:''}.`,(a,p,y)=>`Así que tus cuentas de inversión, a largo plazo y de jubilación (${a} ahora) tendrían que crecer un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
+  nwGrowNoPace:[(a,p,y)=>`With no saving counted, your investment, long-term and retirement accounts (${a} now) would need to grow ${p} in total${y?`, about ${y} a year`:''}.`,(a,p,y)=>`Sin contar ahorro, tus cuentas de inversión, a largo plazo y de jubilación (${a} ahora) tendrían que crecer un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
+  nwGrowNeg:[(a,p,y)=>`As you’re spending more than you earn, your investment, long-term and retirement accounts (${a} now) would need to grow ${p} in total${y?`, about ${y} a year`:''}.`,(a,p,y)=>`Como gastas más de lo que ganas, tus cuentas de inversión, a largo plazo y de jubilación (${a} ahora) tendrían que crecer un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
   nwGoalFootProj:[(v,m,y)=>`At this pace you’d have about ${v} by ${m} ${y}, before any market growth.`,(v,m,y)=>`A este ritmo tendrías unos ${v} a final de ${m} de ${y}, sin contar lo que crezcan los mercados.`],
   nwRetTitle:['Interest, dividends and gains','Intereses, dividendos y plusvalías'],
   nwRetSub:['Tick the categories that are returns on what you own rather than money from your pay. They count under Markets, interest and gains instead of You saved.','Marca las categorías que son rendimientos de lo que tienes y no dinero de tu sueldo. Cuentan en Mercados, intereses y plusvalías en lugar de en Has ahorrado.'],
@@ -1945,11 +1987,11 @@ const STR={
   nwRetNoneInc:['No income categories yet.','Todavía no hay categorías de ingresos.'],
   /* goal: growth needed */
   nwFromSaving:[v=>`From saving ${v}`,v=>`Con tu ahorro ${v}`], nwFromGrowth:[v=>`From growth ${v}`,v=>`Con crecimiento ${v}`],
-  nwGoalGrowth:[(a,v,p,y)=>`On top of your saving, your investments, illiquid and retirement accounts (${a} now) would need to grow by ${v}: ${p} in total${y?`, about ${y} a year`:''}.`,(a,v,p,y)=>`Además de tu ahorro, tus inversiones, ilíquido y jubilación (${a} ahora) tendrían que crecer ${v}: un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
-  nwGoalGrowthNoPace:[(a,v,p,y)=>`With no saving counted, your investments, illiquid and retirement accounts (${a} now) would need to grow by ${v}: ${p} in total${y?`, about ${y} a year`:''}.`,(a,v,p,y)=>`Sin contar ahorro, tus inversiones, ilíquido y jubilación (${a} ahora) tendrían que crecer ${v}: un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
-  nwGoalGrowthNeg:[(a,v,p,y)=>`As you’re spending more than you earn, your investments, illiquid and retirement accounts (${a} now) would need to grow by ${v} to get there: ${p} in total${y?`, about ${y} a year`:''}.`,(a,v,p,y)=>`Como gastas más de lo que ganas, tus inversiones, ilíquido y jubilación (${a} ahora) tendrían que crecer ${v} para llegar: un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
+  nwGoalGrowth:[(a,v,p,y)=>`On top of your saving, your investment, long-term and retirement accounts (${a} now) would need to grow by ${v}: ${p} in total${y?`, about ${y} a year`:''}.`,(a,v,p,y)=>`Además de tu ahorro, tus cuentas de inversión, a largo plazo y de jubilación (${a} ahora) tendrían que crecer ${v}: un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
+  nwGoalGrowthNoPace:[(a,v,p,y)=>`With no saving counted, your investment, long-term and retirement accounts (${a} now) would need to grow by ${v}: ${p} in total${y?`, about ${y} a year`:''}.`,(a,v,p,y)=>`Sin contar ahorro, tus cuentas de inversión, a largo plazo y de jubilación (${a} ahora) tendrían que crecer ${v}: un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
+  nwGoalGrowthNeg:[(a,v,p,y)=>`As you’re spending more than you earn, your investment, long-term and retirement accounts (${a} now) would need to grow by ${v} to get there: ${p} in total${y?`, about ${y} a year`:''}.`,(a,v,p,y)=>`Como gastas más de lo que ganas, tus cuentas de inversión, a largo plazo y de jubilación (${a} ahora) tendrían que crecer ${v} para llegar: un ${p} en total${y?`, alrededor de un ${y} al año`:''}.`],
   nwGoalGrowthNote:['Growth on the money you add along the way isn’t counted, so this is on the safe side.','No cuenta lo que crezca el dinero que vayas añadiendo, así que es una cifra prudente.'],
-  nwGoalSavingEnough:['Your saving alone gets you there. Any growth on your investments, illiquid and retirement accounts is extra.','Solo con tu ahorro llegas. Lo que crezcan tus inversiones, ilíquido y jubilación es un extra.'],
+  nwGoalSavingEnough:['Your saving alone gets you there. Any growth on your investment, long-term and retirement accounts is extra.','Solo con tu ahorro llegas. Lo que crezcan tus cuentas de inversión, a largo plazo y de jubilación es un extra.'],
   nwGoalNoInvest:[v=>`${v} would have to come from growth on top of your saving.`,v=>`${v} tendrían que venir del crecimiento, además de tu ahorro.`],
   /* accounts at 0 */
   nwTotalRow:['Total, all accounts','Total, todas las cuentas'],
@@ -2357,7 +2399,7 @@ const OLD_NEED=new Set(['Rent','Utilities','Phone','Insurance','Transport','Groc
   'Alquiler','Suministros','Teléfono','Seguros','Transporte','Supermercado','Salud','Trámites legales','Pérdidas en inversiones','Impuestos','Efectivo']);
 function fixedVarOnce(){
   if(!S.canWrite||S.demo||TOUR||!S.cats||!S.settings||S.settings.fixedVar) return;
-  const def=new Map([...DEFAULT_CATS.expenses,...DEFAULT_CATS_ES.expenses].map(c=>[c.name,c.type]));
+  const def=new Map([...DEFAULT_CATS.expenses,...DEFAULT_CATS_ES.expenses].map(c=>[c.name,c.type]).concat(LEGACY_CATS.expenses.flatMap(([en,es,ty])=>[[en,ty],[es,ty]])));
   for(const c of S.cats.expenses) if(def.has(c.name)&&(c.type||'Want')===(OLD_NEED.has(c.name)?'Need':'Want')) c.type=def.get(c.name);
   const tg=S.settings.targets, patch={fixedVar:1};
   if(tg&&tg.need===.3&&tg.want===.2) patch.targets=Object.assign({},tg,{need:DEFAULT_TARGETS.need,want:DEFAULT_TARGETS.want});
@@ -2440,7 +2482,7 @@ function wantLang(){
   if(S.ui.langLocal) return S.ui.langLocal;
   if(S.settings&&S.settings.lang) return S.settings.lang;
   if(S.mode==='live'&&S.gotMonths&&S.gotConfig) return isOnboarding()?S.ui.obLang:'en';
-  return BOOT_LANG;
+  return S.ui.obLang||BOOT_LANG;   /* still loading: the language picked on the landing page (ybt-lang) */
 }
 let chromeLang=null;
 function applyLang(){
@@ -2524,9 +2566,9 @@ function renderHeader(){
   const nUn=TKEYS.reduce((a,t)=>a+un[t].uncatCount,0);
   setTxTab(nUn);
   $('#tab-networth').classList.toggle('due',!!(S.canWrite&&S.gotConfig&&nwDue()));
-  $('#btn-backup').hidden=!(S.downloads && allRows().length && !isOnboarding());
+  $('#btn-backup').hidden=!(S.downloads && allRows().length && !isOnboarding() && !S.demo);
   { const tb=$('#btn-local-top'); let tp=null; try{ tp=S.local&&typeof S.local.top==='function'?S.local.top(LANG):null; }catch(_){}
-    if(tb){ tb.hidden=!tp; if(tp&&tb.dataset.key!==tp.fn+'|'+tp.label){ tb.dataset.fn=tp.fn; tb.innerHTML=(tp.icon||'')+'<span>'+esc(tp.label)+'</span>'; tb.title=tp.help||''; tb.dataset.key=tp.fn+'|'+tp.label; } } }
+    if(tb){ tb.hidden=!tp||S.demo; if(tp&&tb.dataset.key!==tp.fn+'|'+tp.label){ tb.dataset.fn=tp.fn; tb.innerHTML=(tp.icon||'')+'<span>'+esc(tp.label)+'</span>'; tb.title=tp.help||''; tb.dataset.key=tp.fn+'|'+tp.label; } } }
   const hb=$('#btn-hide'); if(hb){ hb.hidden=!allRows().length&&!(S.nw&&S.nw.accounts.length)||isOnboarding(); hb.setAttribute('aria-pressed',String(HIDE));
     hb.innerHTML=(HIDE?ICON.eyeOff:ICON.eye)+`<span class="sr">${esc(L(HIDE?'showAmounts':'hideAmounts'))}</span>`; hb.title=L(HIDE?'showAmounts':'hideAmounts'); }
 }
@@ -2586,7 +2628,7 @@ function obStartPick(){ const box=$('#ob-month-box'), now=new Date();
   if(box&&box.open){ const y=+$('#ob-year').value, m=+$('#ob-month').value; if(y!==now.getFullYear()||m!==now.getMonth()) return {y,m,auto:false}; }
   return {y:now.getFullYear(),m:now.getMonth(),auto:true}; }
 function obApply(lang,y,m,auto){
-  setSettings(Object.assign({lang,start:{y,m},guide:{on:true},startAuto:!!auto,fixedVar:1},S.settings&&S.settings.numFmt?{}:{numFmt:lang==='en'?'en':'eu'},S.settings&&S.settings.currency?{}:{currency:regionCurrency()}));
+  setSettings(Object.assign({lang,start:{y,m},guide:{on:true},startAuto:!!auto,fixedVar:1},S.settings&&S.settings.numFmt?{}:{numFmt:regionNum()},S.settings&&S.settings.currency?{}:{currency:regionCurrency()}));
   if(!S.cats||(isStockCats(S.cats)&&!TKEYS.some(t=>(kws()[t]||[]).length))){ S.cats=clone(lang==='es'?DEFAULT_CATS_ES:DEFAULT_CATS); markDirty('config/categories'); }
   if(!S.kw||!TKEYS.some(t=>(S.kw[t]||[]).length)){ const st=STARTER_KW[lang], keep=kwRegionKeep(); S.kw={}; for(const t of TKEYS) S.kw[t]=st[t].concat(t==='expenses'&&st.extra?st.extra:[]).filter(q=>isKnown(t,q[1])&&keep(q[0])).map(q=>q.slice()); markDirty('config/keywords'); }
   S.ui.year=y; bump();
@@ -2689,7 +2731,7 @@ const CAT_EXTRA={
   expenses:[['Pets','Mascotas'],['Car','Coche'],['Home','Hogar'],['Beauty','Belleza'],['Personal Care','Cuidado personal'],['Charity','Donaciones'],['Fees','Comisiones'],['Bank Fees','Comisiones bancarias'],['Kids','Hijos'],['Furniture','Muebles'],['Electronics','Electrónica'],['Books','Libros'],['Coffee','Café'],['Parking','Aparcamiento'],['Fuel','Gasolina'],['Hobbies','Aficiones'],['Sports','Deporte'],['Doctor','Médico'],['Pharmacy','Farmacia'],['Haircut','Peluquería'],['Takeaway','Comida a domicilio'],['Streaming','Streaming'],['Internet','Internet'],['Electricity','Luz'],['Water','Agua'],['Gas','Gas'],['Mortgage','Hipoteca'],['Loans','Préstamos'],['Travel','Viajes'],['Shopping','Compras'],['Food','Comida']],
   investments:[['Crypto','Criptomonedas'],['Bonds','Bonos'],['Savings','Ahorro'],['Deposits','Depósitos'],['Crowdlending','Crowdlending'],['Gold','Oro']]
 };
-function catPairs(t){ return memo('catpairs|'+t,()=>{ const out=DEFAULT_CATS[t].map((c,i)=>[c.name,DEFAULT_CATS_ES[t][i]&&DEFAULT_CATS_ES[t][i].name]).filter(p=>p[1]); return out.concat(CAT_EXTRA[t]||[]); }); }
+function catPairs(t){ return memo('catpairs|'+t,()=>{ const out=DEFAULT_CATS[t].map((c,i)=>[c.name,DEFAULT_CATS_ES[t][i]&&DEFAULT_CATS_ES[t][i].name]).filter(p=>p[1]); return out.concat((LEGACY_CATS[t]||[]).map(p=>[p[0],p[1]]),CAT_EXTRA[t]||[]); }); }
 /* renames every category that has a name in the other language; returns [[table,from,to]...] */
 function translateCats(to){
   const done=[]; if(!S.cats) return done;
@@ -2747,7 +2789,7 @@ function viewOverview(){
   const nm=nowYM(), partialOut=y===nm.y&&idx.includes(nm.m)&&ai.length<idx.length;
   const rn=rentName(), un=roleName('expenses','utilities');
   const nUn=TKEYS.reduce((a,t)=>a+AF[t].uncatCount,0);
-  const notice=nUn?`<div class="notice">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(L('uncatNotice',nUn,y))}</span><button class="linkish" data-action="goto-uncat">${esc(L('reviewThem',nUn))}</button></div>`:'';
+  const notice=nUn&&!S.demo?`<div class="notice">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(L('uncatNotice',nUn,y))}</span><button class="linkish" data-action="goto-uncat">${esc(L('reviewThem',nUn))}</button></div>`:'';
   const inds=[
     {k:'rentUtilities',label:L('ind_rentUtil'),sub:L('ind_rentUtilSub',rn||ROLE_NAMES.rent[LANG==='es'?1:0],un||ROLE_NAMES.utilities[LANG==='es'?1:0]),amt:Y.rentUtil,dir:'max'},
     {k:'need',label:L('ind_need'),sub:L('ind_needSub'),amt:Y.need,dir:'max'},
@@ -2771,10 +2813,10 @@ function viewOverview(){
   const multi=yearsWithData().length>1;
   const mmT=S.ui.mm.table, mmD=!!S.ui.mm.days&&mmT!=='all', mc=mmCat(A);
   return pageHead('overview',yearStepper())+`<div class="stack">
-    ${notice}${backupNudge()}${monthlyCard()}
+    ${notice||backupNudge()}${monthlyCard()}
     <section class="ov-top" aria-label="${esc(L('yearSummary'))}">
       <div class="hero">
-        <p class="eyebrow">${esc(L('savedIn',y,ms.length?monthRange([idx[0],idx[idx.length-1]].filter((v,i,a)=>a.indexOf(v)===i)):L('noMonths')))}${info('ovSaved')}</p>
+        <p class="eyebrow">${esc(L('savedIn',y,ms.length?monthRange([idx[0],idx[idx.length-1]].filter((v,i,a)=>a.indexOf(v)===i)):L('noMonths'),ms.length&&ymOf(y,idx[idx.length-1])===ymNow()))}${info('ovSaved')}</p>
         <p class="hero-num">${fmtEUR(Y.sav)}</p>
         <p class="hero-sub">${Y.inc>0?L('keptAfter',fmtPct(Y.savRate)):esc(L('noIncomeYet'))}</p>
         <p class="hint" style="margin:var(--s8) 0 0">${esc(L('savedDef'))}</p>
@@ -3308,7 +3350,7 @@ async function remindIcs(){
 }
 /* website: a gentle nudge to keep a backup of your own (the Windows app backs up by itself) */
 function backupNudge(){
-  if((S.local&&!S.local.nudge)||!(S.downloads||S.local)||!S.canWrite||allRows().length<20) return '';
+  if(S.demo||(S.local&&!S.local.nudge)||!(S.downloads||S.local)||!S.canWrite||allRows().length<20) return '';
   const st=S.settings||{}, today=todayYmd();
   if(st.backupSnooze&&st.backupSnooze>today) return '';
   const days=st.lastBackup?Math.round((new Date(today)-new Date(st.lastBackup))/864e5):null;
@@ -3319,15 +3361,20 @@ function backupNudge(){
    The default path for a new tracker: one focused dialog, one thing per step. Each button opens the existing
    dialog for that job; when that one closes, the wizard comes back (see closeModal). Progress comes from the data. */
 const WZ_STEPS=5;
+/* the latest income row that is a salary or pension (by its category's name), for the wizard's salary step */
+function salaryRow(rows){ let best=null; for(const r of rows) if(r.table==='income'&&r.amount>0&&/^(salary|n[oó]mina|pension|pensi[oó]n|wages?|sueldo)$/i.test((r.category||'').trim())&&(!best||r.date>best.date)) best=r; return best; }
+/* the step the wizard is on (or would open on), so the strip on the pages and the wizard never disagree */
+const wzStep=G=>S.wizard&&S.wizard.on!==false?S.wizard.step:(G&&G.cur==='tx'?2:0);
 function wizardOpen(step){ S.wizard={on:true,step:step==null?0:step}; openModal({type:'wizard',mid:true}); }
 function maybeWizard(){
   const G=guideState();
-  if(!G||G.cur==='done'||S.modal||S.wizardShown||!S.canWrite||S.mode!=='live'||S.tourPending||TOUR) return;
+  if(!G||G.cur==='done'||S.modal||S.wizardShown||!S.canWrite||S.mode!=='live'||S.tourPending||S.placePending||TOUR) return;
   S.wizardShown=true; wizardOpen(G.cur==='tx'?2:0);
 }
 function modalWizard(){
   const w=S.wizard, i=w.step, N=nw(), k=guideFigMonth();
-  const nAcc=N.accounts.length, nMon=nwMonths().length, rows=allRows(), nTx=rows.length, nInc=rows.filter(r=>r.table==='income').length;
+  const nAcc=N.accounts.length, nMon=nwMonths().length, rows=allRows(), nTx=rows.length, nInc=rows.filter(r=>r.table==='income').length, sal=salaryRow(rows);
+  const done=[nAcc>0&&nMon>0,nMon>1,nTx>0,!!sal];   /* from the data: a step skipped without doing it gets no tick */
   const act=(a,label,extra,cls)=>`<button type="button" class="btn ${cls||''}" data-action="${a}"${extra||''}>${label}</button>`;
   const ok=(on,text)=>on?`<p class="wz-ok">${ICON.ok}<span>${esc(text)}</span></p>`:'';
   let body='';
@@ -3346,20 +3393,23 @@ function modalWizard(){
         ${S.ai?`<button type="button" class="ob-way" data-action="ai-tx"><span class="ob-t">${ICON.ai}${esc(L('wzWayAi'))}</span><span class="ob-s">${esc(L('wzWayAiSub'))}</span></button>`:''}
       </div>${ok(nTx,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[2])}`;
   } else if(i===3){
-    body=`<p>${esc(L('wz3Text'))}</p><div class="wz-acts">${act('guide-income',esc(L('wzAddSalary')),'',nInc?'':'primary')}</div>${ok(nInc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[3])}`;
+    body=`<p>${esc(L('wz3Text'))}</p><div class="wz-acts">${act('guide-income',esc(L('wzAddSalary')),'',sal?'':'primary')}</div>${sal?ok(true,L('wzSalaryFound',fmtEUR(sal.amount),fmtDate(sal.date))):ok(nInc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[3])}`;
   } else {
-    body=`<p>${esc(L('wz4Text'))}</p><p class="wz-sum">${esc(L('wzCounts',nAcc,nMon,nTx,nInc))}</p><p class="hint">${esc(S.local?LT('gSafeApp'):L('gSafeWeb'))}</p>`;
+    const place=S.local&&Array.isArray(S.local.actions)&&S.local.actions.includes('changeStorage');
+    body=`<p>${esc(L('wz4Text'))}</p><p class="wz-sum">${esc(L('wzCounts',nAcc,nMon,nTx,nInc))}</p><p class="hint">${esc(S.local?LT('gSafeApp'):L('gSafeWeb'))}</p>
+      <div class="wz-acts">${place?act('wz-place',esc(L('wzPlace'))):''}${S.downloads||S.local?act('remind-ics',esc(L('remindBtn'))):''}</div>`;
   }
   const names=L('wzNames');
-  const dots=names.map((n,j)=>`<li class="${j===i?'cur':j<i?'done':''}"${j===i?' aria-current="step"':''}><span>${j<i?'✓':j+1}</span><small>${esc(n)}</small></li>`).join('');
-  const last=i===WZ_STEPS-1, optional=i===1||i===2||i===3;
+  const dots=names.map((n,j)=>{ const tick=j<WZ_STEPS-1&&done[j], skipped=j<i&&!tick; return `<li class="${j===i?'cur':tick?'done':skipped?'skipped':''}"${j===i?' aria-current="step"':''}><span>${tick?'✓':skipped?'–':j+1}</span><small>${esc(n)}</small>${skipped?`<i class="sr"> (${esc(L('wzSkipped'))})</i>`:''}</li>`; }).join('');
+  const last=i===WZ_STEPS-1, optional=(i===1||i===2||i===3)&&!done[i];
   return `<div class="m-head"><div><p class="eyebrow">${esc(L('wzEyebrow',i+1,WZ_STEPS))}</p><h3 id="m-title">${esc(L('wz'+i+'Title'))}</h3></div><button class="icon-btn" data-action="wz-later" aria-label="${esc(L('wzLater'))}" title="${esc(L('wzLater'))}">${ICON.x}</button></div>
   <div class="m-body wz-body"><ol class="wz-dots">${dots}</ol>${body}</div>
   <div class="m-foot"><span>${i>0?act('wz-back',esc(L('wzBack'))):act('wz-later',esc(L('wzLater')),'','ghost')}</span><span class="r">${optional?act('wz-next',esc(L('wzSkip')),'','ghost'):''}${last?act('guide-finish',esc(L('wzFinish')),'','primary'):act('wz-next',esc(L('wzNext')),'',optional?'':'primary')}</span></div>`;
 }
 /* the strip that stays on the pages until setup is finished */
 function guideStrip(G){
-  return `<section class="card guide guide-strip"><span class="eyebrow">${esc(L('gEyebrow',G.n))}</span><span class="grow">${esc(L('gTitle_'+G.cur))}</span><button class="btn primary" type="button" data-action="wz-open">${esc(L('wzContinue'))}</button><button class="icon-btn" type="button" data-action="guide-hide" aria-label="${esc(L('gHide'))}" title="${esc(L('gHide'))}">${ICON.x}</button></section>`;
+  const w=wzStep(G);
+  return `<section class="card guide guide-strip"><span class="eyebrow">${esc(L('gEyebrow',w+1))}</span><span class="grow">${esc(L('wz'+w+'Title'))}</span><button class="btn primary" type="button" data-action="wz-open">${esc(L('wzContinue'))}</button><button class="icon-btn" type="button" data-action="guide-hide" aria-label="${esc(L('gHide'))}" title="${esc(L('gHide'))}">${ICON.x}</button></section>`;
 }
 function guideCard(G){
   if(G.cur!=='done') return guideStrip(G);
@@ -3389,8 +3439,9 @@ function guideCard(G){
 }
 /* on Yearly, Transactions and Categories: one line pointing back to the step in progress; once done, only Transactions (where the last step happens) points to Overview */
 function guideBar(G){
-  if(G.cur==='done') return S.ui.tab==='transactions'?`<div class="guide-bar"><span><b>${esc(L('gTitle_done'))}</b></span><button class="linkish" type="button" data-action="tab" data-tab="overview">${esc(L('gToOverview'))}</button></div>`:'';
-  return `<div class="guide-bar"><span><b>${esc(L('gEyebrow',G.n))}</b> · ${esc(L('gTitle_'+G.cur))}</span><button class="linkish" type="button" data-action="guide-continue">${esc(L('gContinue'))}</button></div>`;
+  if(G.cur==='done') return S.ui.tab==='transactions'&&!(S.wizard&&S.wizard.on)?`<div class="guide-bar"><span><b>${esc(L('gTitle_done'))}</b></span><button class="linkish" type="button" data-action="tab" data-tab="overview">${esc(L('gToOverview'))}</button></div>`:'';
+  const w=wzStep(G);
+  return `<div class="guide-bar"><span><b>${esc(L('gEyebrow',w+1))}</b> · ${esc(L('wz'+w+'Title'))}</span><button class="linkish" type="button" data-action="guide-continue">${esc(L('gContinue'))}</button></div>`;
 }
 function viewNetworth(){
   const N=nw(), ms=nwMonths(), cw=S.canWrite, due=nwDue(), G0=guideState(), G=G0&&G0.cur!=='done'?G0:null;   /* the "you're set up" card lives on Overview only */
@@ -3414,7 +3465,7 @@ function viewNetworth(){
   const hero=`<section class="ov-top" aria-label="${esc(L('nwTitle'))}">
     <div class="hero">
       <p class="eyebrow">${esc(L('nwEyebrow',ymM(k),yk))}${info('nwGroups')}</p>
-      <p class="hero-num">${fmtEUR(T.total)}</p>
+      <p class="hero-num">${fmtEUR(T.total,0)}</p>
       <p class="hero-sub">${esc(L('nwWithoutPension',fmtEUR(T.total-T.g.pension,0)))}${T.risk>0.004?` · <span class="warn-text" style="font-size:inherit">${esc(L('nwAtRisk',fmtEUR(T.risk,0)))}</span>`:''}</p>
       <div class="nw-alloc" role="img" aria-label="${esc(NW_GROUPS.map(g=>L('g_'+g)+' '+fmtPct(share(T.g[g]),0)).join(', '))}">${NW_GROUPS.map(g=>T.g[g]>0?`<i class="${g}" data-nwg="${g}" data-v="${T.g[g]}" data-p="${share(T.g[g])}" style="width:${(T.g[g]/posSum*100).toFixed(2)}%"></i>`:'').join('')}</div>
       ${T.missing?`<p class="warn-text">${esc(L('nwMissing',T.missing))}</p>`:''}
@@ -3506,7 +3557,9 @@ function healthCard(k,T){
   const sub=t=>`<span class="tile-sub">${esc(t)}</span>`;
   /* the same slots in every card: label, value, meta line(s), footer (a bar, a badge or a button: one at most), footers lined up at the bottom */
   const card=(key,val,meta,foot)=>`<div class="fh-c"><span class="tile-label">${esc(L('fh_'+key))}${info('fh_'+key)}</span><span class="tile-val${val===DASH?' fh-none':''}">${val}</span><div class="fh-meta">${meta}</div><div class="fh-foot">${foot||''}</div></div>`;
-  const noExp=sub(L('fhNoExp')), hasExp=avgExp>0.5;
+  /* rows only in the month still running: say when the figures arrive, not that nothing was recorded */
+  const first=n?null:allRows().reduce((a,r)=>!a||r.date<a?r.date:a,null), wait=first&&first.slice(0,7)>=ymNow()?sub(L('fhWait',ymIn(first.slice(0,7)))):null;
+  const noExp=wait||sub(L('fhNoExp')), hasExp=avgExp>0.5;
   /* 1. months of spending the spendable cash would cover */
   let c1=card('emerg',DASH,noExp);
   if(hasExp){ const mo=Math.max(0,cash/avgExp), tg=H.emergencyMonthsTarget*avgExp, d=r2(cash-tg), lv=lvl(mo,H.emergencyMonthsTarget/2,H.emergencyMonthsTarget);
@@ -3516,7 +3569,7 @@ function healthCard(k,T){
   if(hasExp){ const tg=H.fiMultiple*avgExp*12, p=fi/tg;
     c2=card('fi',fmtPct(p,0),sub(L('fhOf',fmtEUR(fi,0),fmtEUR(tg,0))),`<span class="nw-bar" role="img" aria-label="${esc(fmtPct(p,0))}"><i class="saved" style="width:${(Math.max(0,Math.min(1,p))*100).toFixed(1)}%"></i></span>`); }
   /* 3. share of income kept, on average and in month k itself (so far, if k is still running) */
-  let c3=card('save',DASH,sub(L('fhNoInc')));
+  let c3=card('save',DASH,wait||sub(L('fhNoInc')));
   if(avgInc>0.5){ const r=(avgInc-avgExp)/avgInc, tk=trackerSaved(ymAdd(k,-1),k), ki=sum(tk.income), kr=ki>0.5?tk.saved/ki:null, tg=H.savingsRateTarget;
     const ar=kr==null?'':kr>r+0.005?'↑':kr<r-0.005?'↓':'=';
     c3=card('save',fmtPct(r,0),kr==null?'':sub(L('fhMonthRate',M()[+k.slice(5,7)-1],fmtPct(kr,0),ar,k===ymNow())),r>=0.4?pill('good',L('fhFire')):lp(lvl(r,tg/2,tg))); }
@@ -3884,6 +3937,9 @@ function readNwSnap(){ const m=S.modal; document.querySelectorAll('#nw-snap-form
 function modalNwAccounts(){
   const m=S.modal; if(!m.list) m.list=clone(nw().accounts);
   const L2=m.list, used=new Set(Object.values(nw().snaps).flatMap(s=>Object.keys(s)));
+  /* statement words and "at risk" are for people who already know they need them: shown at once when one is set, else behind More options */
+  if(m.adv==null) m.adv=L2.some(a=>a.risk||String(a.words||'').trim())||!!String(nw().untracked||'').trim();
+  const adv=m.adv;
   const dropped=nw().accounts.filter(a=>used.has(a.id)&&!L2.some(b=>b.id===a.id)).length;
   /* descriptions from Investments rows and interest/dividend income not yet in any account's statement words; for each
      account those sharing a word with its name first. A Cash account only gets interest ones (see nwGains) */
@@ -3895,9 +3951,9 @@ function modalNwAccounts(){
   const rows=L2.map((a,i)=>`<div class="acc-row">
       <label class="sr" for="na-n-${i}">${esc(L('nwAccName'))}</label><input type="text" id="na-n-${i}" data-i="${i}" data-f="name" value="${esc(a.name)}" autocomplete="off">
       <label class="sr" for="na-g-${i}">${esc(L('nwAccGroup'))}</label><select id="na-g-${i}" data-i="${i}" data-f="group">${NW_GROUPS.map(g=>`<option value="${g}"${a.group===g?' selected':''}>${esc(L('g_'+g))}</option>`).join('')}</select>
-      <label class="check" title="${esc(L('nwRiskHelp'))}"><input type="checkbox" id="na-r-${i}" data-i="${i}" data-f="risk"${a.risk?' checked':''}>${esc(L('nwRisk'))}</label>
+      ${adv?`<label class="check" title="${esc(L('nwRiskHelp'))}"><input type="checkbox" id="na-r-${i}" data-i="${i}" data-f="risk"${a.risk?' checked':''}>${esc(L('nwRisk'))}</label>`:'<span class="check" aria-hidden="true"></span>'}
       <span class="acts"><button type="button" class="icon-btn" data-action="na-up" data-i="${i}" aria-label="${esc(L('nwMoveUp',a.name||''))}"${i?'':' disabled'}>↑</button><button type="button" class="icon-btn" data-action="na-down" data-i="${i}" aria-label="${esc(L('nwMoveDown',a.name||''))}"${i<L2.length-1?'':' disabled'}>↓</button><button type="button" class="icon-btn" data-action="na-del" data-i="${i}" aria-label="${esc(L('nwRemoveAcc',a.name||''))}">${ICON.x}</button></span>
-      <label class="acc-words" for="na-w-${i}"><span>${esc(L('nwAccWords'))}</span><input type="text" id="na-w-${i}" data-i="${i}" data-f="words" value="${esc(a.words||'')}" placeholder="${esc(L('nwAccWordsPh'))}" autocomplete="off"></label>${pick(a,i)}</div>`).join('');
+      ${adv?`<label class="acc-words" for="na-w-${i}"><span>${esc(L('nwAccWords'))}</span><input type="text" id="na-w-${i}" data-i="${i}" data-f="words" value="${esc(a.words||'')}" placeholder="${esc(L('nwAccWordsPh'))}" autocomplete="off"></label>${pick(a,i)}`:''}</div>`).join('');
   const sug=NW_GROUPS.flatMap(g=>STR['nwSug_'+g][LANG==='es'?1:0].map(n=>[g,n])).filter(([,n])=>!L2.some(a=>a.name.toLowerCase()===n.toLowerCase()));
   const chip=([g,n])=>`<button type="button" class="kchip nw-sug" data-action="na-add" data-g="${g}" data-n="${esc(n)}">${gSw(g)} ${esc(n)}</button>`;
   /* a new list (or the setup guide): the ideas by group, with what each group means */
@@ -3907,8 +3963,9 @@ function modalNwAccounts(){
     <div class="ctrls" style="margin-top:var(--s12)"><button type="button" class="btn sm" data-action="na-add">${esc(L('nwAddOther'))}</button></div></div>`:'';
   return `${mHead(esc(L('nwAccTitle')),esc(L('nwAccSub')))}
   <form id="nw-acc-form" novalidate><div class="m-body">
-    ${L2.length?`<div class="acc-list">${rows}</div><p class="hint" style="margin-top:var(--s12)">${esc(L('nwAccWordsHelp'))}</p>
-    <label class="acc-words" for="na-untracked" style="margin-top:var(--s12)"><span>${esc(L('nwAccUntracked'))}</span><input type="text" id="na-untracked" value="${esc(m.untracked!=null?m.untracked:nw().untracked||'')}" autocomplete="off"></label>`:''}
+    ${L2.length?`<div class="acc-list">${rows}</div>${adv?`<p class="hint" style="margin-top:var(--s12)">${esc(L('nwAccWordsHelp'))}</p>
+    <label class="acc-words" for="na-untracked" style="margin-top:var(--s12)"><span>${esc(L('nwAccUntracked'))}</span><input type="text" id="na-untracked" value="${esc(m.untracked!=null?m.untracked:nw().untracked||'')}" autocomplete="off"></label>`
+      :`<p style="margin-top:var(--s12)"><button type="button" class="linkish" data-action="na-adv" aria-expanded="false">${esc(L('nwAccMore'))}</button> <span class="hint">${esc(L('nwAccMoreHint'))}</span></p>`}`:''}
     ${start?startBox:`<div class="ctrls"><button type="button" class="btn sm" data-action="na-add">${esc(L('nwAddAccount'))}</button>${sug.length?`<span class="hint">${esc(L('nwSuggest'))}</span>${sug.map(chip).join('')}`:''}</div>`}
     ${dropped?`<p class="warn-text">${esc(L('nwAccDropWarn',dropped))}</p>`:''}
     <p class="err" id="na-err" aria-live="polite"></p>
@@ -4550,10 +4607,13 @@ function viewYearly(){
   const heat=M3().map((_,i)=>{ const vals=heatNames.map(n=>A.expenses.rows.get(n)[i]).sort((a,b)=>a-b); return vals.length?{min:vals[0],mid:percentileInc(vals,.5),max:vals[vals.length-1]}:null; });
   const expTot=A.expenses.total, minMonthV=Math.min(...expTot);
   const catTotals=heatNames.map(n=>rowSum(A,'expenses',n)); const minCatV=Math.min(...catTotals);
-  let body='';
+  let body='', nEmpty=0, nHidden=0;
   for(const t of TKEYS){
     body+=`<tr class="sec"><th colspan="${colsN}"><i class="sw ${t}"></i>${esc(TL(t))}</th></tr>`;
-    catRowsFor(A,t).forEach((n,ri)=>{
+    /* categories with no rows this year (nor a limit, nor rows in other years) are left out unless asked for */
+    const allRowsT=catRowsFor(A,t), used=n=>sum(A[t].counts.get(n)||[0])>0, shown=S.ui.yAll?allRowsT:allRowsT.filter(n=>used(n)||(t==='expenses'&&limitFor(n))||(multi&&Math.abs(rowSum(ALL,t,n))>0.004));
+    nEmpty+=allRowsT.filter(n=>!used(n)).length; nHidden+=allRowsT.length-shown.length;
+    shown.forEach((n,ri)=>{
       const arr=A[t].rows.get(n), tot=r2(sum(arr)); const isUn=n===UNCAT;
       const ty=t==='expenses'&&!isUn?catType(n):null;
       const chip=ty?`<span class="nw ${ty==='Need'?'need':''}">${esc(nwLabel(ty))}</span>`:'';
@@ -4590,7 +4650,7 @@ function viewYearly(){
       <div class="heat-legend">
         <button type="button" class="switch" role="switch" aria-checked="${S.ui.heat}" data-action="toggle-heat" id="heat-switch"><span class="knob" aria-hidden="true"></span>${esc(L('heatMap'))}</button>
         <span class="cell-flag">${ICON.flag}${esc(L('bigMonthCat'))}</span>
-        <span class="heat-scale${S.ui.heat?'':' off'}" ${S.ui.heat?'':'aria-hidden="true"'}>${esc(L('mostSpent'))}<i></i>${esc(L('leastSpent'))}</span><span class="heat-note${S.ui.heat?'':' off'}" ${S.ui.heat?'':'aria-hidden="true"'}>${esc(L('withinMonth',rn))}</span>${anyLim?`<span class="lim-legend"><i class="u"></i>${esc(L('underLimit'))}<i class="o"></i>${esc(L('overLimit'))}</span>`:''}</div>
+        <span class="heat-scale${S.ui.heat?'':' off'}" ${S.ui.heat?'':'aria-hidden="true"'}>${esc(L('mostSpent'))}<i></i>${esc(L('leastSpent'))}</span><span class="heat-note${S.ui.heat?'':' off'}" ${S.ui.heat?'':'aria-hidden="true"'}>${esc(L('withinMonth',rn))}</span>${anyLim?`<span class="lim-legend"><i class="u"></i>${esc(L('underLimit'))}<i class="o"></i>${esc(L('overLimit'))}</span>`:''}${nHidden||S.ui.yAll&&nEmpty?`<button type="button" class="linkish" data-action="y-empty" aria-pressed="${!!S.ui.yAll}">${esc(S.ui.yAll?L('yHideEmpty'):L('yShowEmpty',nHidden))}</button>`:''}</div>
     </div>
     <div class="frame yframe"><table class="grid"><colgroup><col class="c-rh">${'<col>'.repeat(12)}<col class="c-tot">${multi?'<col class="c-tot">':''}</colgroup><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
 }
@@ -4620,13 +4680,17 @@ function viewTransactions(){
   const total=r2(sum(rows.map(r=>r.amount)));
   const unInTable=A[u.table].uncatCount;
   const sortBtn=(k,label)=>{ const [sk,sd]=u.sort.split('-'); const on=sk===k; return `<button data-action="tx-sort" data-k="${k}" aria-label="${esc(L('sortBy',label))}">${esc(label)}${on?(sd==='asc'?' ↑':' ↓'):''}</button>`; };
+  /* sorted by date over several months: a heading with the month's total before each month's rows */
+  const byMonth=u.sort.startsWith('date')&&u.month==='all', mTot=new Map(); if(byMonth) for(const r of rows){ const k=r.date.slice(0,7); mTot.set(k,(mTot.get(k)||0)+r.amount); }
+  let lastM=null;
   const tr=shown.map(r=>{
     const ref=`data-mk="${r.mk}" data-t="${r.table}" data-id="${esc(r.id)}"`;
+    const mk=r.date.slice(0,7), head=byMonth&&mk!==lastM?`<tr class="tx-month"><th scope="rowgroup" colspan="3">${esc(ymLabel(mk,true))}</th><td class="amt r">${fmtEUR(r2(mTot.get(mk)))}</td></tr>`:''; lastM=mk;
     const known=isKnown(r.table,r.category);
     const mg=S.canWrite&&!known?mlGuess(r.table,r.concept):null;
     const cat=S.canWrite?`<label class="sr" for="cs-${esc(r.id)}">${esc(L('category'))}</label><select id="cs-${esc(r.id)}" class="${known?'':'missing'}" data-action="set-cat" ${ref}>${catOptions(r.table,r.category,false)}</select>${mlLevel(mg)?`<button type="button" class="linkish ml-maybe" data-action="use-ml-row" ${ref} data-c="${esc(mg.cat)}" title="${esc(mg.like?L('mlLike',mg.like):'')}">${esc(L('mlMaybe',mg.cat))}</button>`:''}`
       :`<span class="cat-text ${known?'':'missing'}">${known?esc(r.category):esc(L('uncat'))}</span>`;
-    return `<tr id="txr-${esc(r.id)}" data-action="edit-tx" ${ref} tabindex="0"><td class="d">${fmtDate(r.date)}</td><td class="c">${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}</td><td class="k">${cat}</td><td class="amt r">${r.amount>0&&u.table!=='income'?'+':''}${fmtEUR(r.amount)}</td></tr>`;
+    return head+`<tr id="txr-${esc(r.id)}" data-action="edit-tx" ${ref} tabindex="0"><td class="d">${fmtDate(r.date)}</td><td class="c">${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}</td><td class="k">${cat}</td><td class="amt r">${r.amount>0&&u.table!=='income'?'+':''}${fmtEUR(r.amount)}</td></tr>`;
   }).join('');
   return pageHead('transactions',yearStepper(),S.canWrite?`
         ${unInTable?`<button class="btn" data-action="categorise" title="${esc(L('categoriseTitle'))}">${esc(L('categoriseBlanks'))}</button>`:''}
@@ -4886,7 +4950,8 @@ function submitEdit(){
   if(Math.abs(parsed)<0.005) return err(L('errZero'));
   /* unlikely but possible: say so once, a second press keeps it */
   const n=nowYM(), today=ymOf(n.y,n.m)+'-'+String(n.day).padStart(2,'0'), btn=L(m.ref?'saveChanges':'addTx');
-  const warn=date>today?L('warnFuture',fmtDate(date),btn):date<'1990-01-01'?L('warnOld',fmtDate(date),btn):!d.concept.trim()?L('warnNoDesc',btn):'';
+  const amb=amtMeant(raw,parsed);
+  const warn=date>today?L('warnFuture',fmtDate(date),btn):date<'1990-01-01'?L('warnOld',fmtDate(date),btn):!d.concept.trim()?L('warnNoDesc',btn):amb!=null?L('warnAmbig',fmtEUR(Math.abs(parsed)),fmtEUR(amb),btn):'';
   if(warn&&m.warned!==warn){ m.warned=warn; return err(warn); }
   /* typed without a sign: the Spent / Refund choice decides; a typed minus always means money out */
   const amount=parsed>0&&d.dir==='out'&&!/^\+/.test(raw)?-parsed:parsed;
@@ -4894,7 +4959,7 @@ function submitEdit(){
   if(!category && !m.ref){ const sug=matchKeyword(d.table,d.concept); if(sug&&isKnown(d.table,sug.cat)) category=sug.cat; }
   upsertTx(m.ref,{table:d.table,date,amount,concept:d.concept.trim(),category});
   closeModal(); render();
-  toast(m.ref?L('savedToast'):(category?L('addedAs',TL(d.table),category):L('addedUncat',TL(d.table))));
+  toast(m.ref?L('savedToast'):(category?L('addedAs',TL(d.table),category,fmtEUR(amount)):L('addedUncat',TL(d.table),fmtEUR(amount))));
   coverStart(date);
   if(d.category&&d.category!==m.origCat) offerKeyword(d.table,d.concept,d.category);
 }
@@ -4948,7 +5013,6 @@ function modalImport(){
       <span class="help">${esc(L('impPasteShort'))}</span></div>
     <div class="field"><label for="imp-table">${esc(L('putRowsIn'))}</label><select id="imp-table" style="max-width:360px"><option value="auto"${m.table==='auto'?' selected':''}>${esc(L('sortAuto'))}</option>${TKEYS.map(t=>`<option value="${t}"${t===m.table?' selected':''}>${esc(L('allInto',TL(t)))}</option>`).join('')}</select>
       <span class="help">${esc(L('sortAutoHelp'))}</span></div>
-    ${S.downloads?`<p class="template-note">${esc(L('needFile'))} <button type="button" class="linkish" data-action="import-template">${esc(L('dlTemplate'))}</button> ${esc(L('templateNote'))}</p>`:''}
     <p class="template-note">${esc(L('skipNote',sk.length?sk.slice(0,4).map(quote).join(', ')+(sk.length>4?', …':''):L('emptyForNow')))} <button type="button" class="linkish" data-action="goto-skip">${esc(L('editSkip'))}</button></p>
     ${m.msg?`<p class="field"><span class="err">${esc(m.msg)}</span></p>`:''}
   </div>
@@ -4977,7 +5041,7 @@ function modalImport(){
     <td class="a r num"><label class="sr" for="imp-a-${i}">${esc(L('amtForRow',i+1))}</label><input type="text" class="ed" id="imp-a-${i}" data-action="imp-amt" data-i="${i}" inputmode="decimal" value="${esc(fmtEUR(r.amount,2,true))}"></td>
     <td class="tb">${impTableSel(r,i)}</td>
     <td class="k"><label class="sr" for="imp-c-${i}">${esc(L('catForRow',i+1))}</label><select id="imp-c-${i}" data-action="imp-cat" data-i="${i}" class="${r.category?(r.ml?'guess':''):'missing'}"${r.ml?` title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}"`:''}>${catOptions(r.table,r.category,true)}</select></td>
-    <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${greyed(r)?`<span class="note why">${esc(whyText(r))}</span> `:''}${r.like&&!r.dup&&!greyed(r)?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${greyed(r)?'':r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
+    <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${greyed(r)?`<span class="note why">${esc(whyText(r))}</span> `:''}${r.like&&!r.dup&&!greyed(r)?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.table==='expenses'&&isBizum(r)?`<span class="note">${esc(L('noteBizum'))}</span> `:''}${greyed(r)?'':r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
     ${aiReviewNote(m)}${impChecksNote(m)}
@@ -5183,8 +5247,9 @@ function guessTable(p){
     return ok('investments',v)&&(!ok('expenses',e)||v.k.length>e.k.length)?'investments':'expenses';
   }
   if(p.category){ for(const t of TKEYS) if(isKnown(t,p.category)) return t; }
-  /* money back on a card, or with a refund word, is a refund, not income */
-  const refund=CARD_RE.test(loose(p.concept))||REFUND_RE.test(loose(p.concept));
+  /* money back on a card, or with a refund word, is a refund, not income. A Bizum received is mostly a friend paying back
+     their share of a dinner or a bill, so it counts the same way (the review says so, and Type can change it) */
+  const refund=CARD_RE.test(loose(p.concept))||REFUND_RE.test(loose(p.concept))||isBizum(p);
   for(const t of TKEYS){ const mt=matchKeyword(t,p.concept); if(!ok(t,mt)) continue;
     /* a shop's name in money coming in isn't enough: a client called "Supermercados Iberia" paying 1,704 € is income.
        It's a refund when it looks like one, or is no bigger than the most you've spent there at once */
@@ -5193,6 +5258,7 @@ function guessTable(p){
   return refund?'expenses':'income';
 }
 const REFUND_RE=/\b(devolucion|refund|reembolso|retrocesion|chargeback)\b/;
+const isBizum=r=>r.amount>0&&/\bbizum\b/.test(loose(r.concept||''));
 const biggestSpend=cat=>memo('bigSpend|'+cat,()=>Math.max(0,...allRows().filter(r=>r.table==='expenses'&&r.category===cat).map(r=>-r.amount)));
 const CARD_RE=/^(tarjeta|card payment|pago con tarjeta|pago en|compra|compra comercio|compra en comercio)\b|\bpago con tarjeta\b/;
 function autoCat(r,raw){ if(raw&&isKnown(r.table,raw)) return raw; const mt=matchKeyword(r.table,r.concept); return mt&&isKnown(r.table,mt.cat)?mt.cat:''; }
@@ -5698,23 +5764,16 @@ let TOUR=null;
 const tourSec=sel=>()=>{ const e=$(sel); return e?e.closest('section')||e:null; };
 const TOUR_STEPS=[
   {k:'intro'},
-  {k:'tabs',tab:'networth',el:()=>$('.tabs')},
+  {k:'tabs',tab:'networth',el:()=>$('.tabs'),pos:'right'},   /* right: the card would otherwise cover the net worth figure under the tabs */
   {k:'nwTop',tab:'networth',el:()=>$('#view .ov-top')},
-  {k:'nwChart',tab:'networth',el:tourSec('#ch-nw')},
   {k:'nwCards',tab:'networth',el:()=>$('#view .nw-two')},
   {k:'nwAccounts',tab:'networth',el:()=>$('#view table.nwt')},
   {k:'ovTop',tab:'overview',el:()=>$('#view .ov-top')},
   {k:'ovMonth',tab:'overview',el:tourSec('#tm-title')},
   {k:'ovMonthly',tab:'overview',el:tourSec('#ch-monthly')},
-  {k:'ovCats',tab:'overview',el:tourSec('#ch-cats')},
-  {k:'ovInd',tab:'overview',el:tourSec('.inds')},
   {k:'yearly',tab:'yearly',el:()=>$('#view .yframe')},
   {k:'txImport',tab:'transactions',el:()=>$('#view .page-head [data-action=import]')},
-  {k:'txAi',tab:'transactions',el:()=>$('#view .page-head [data-action=ai-tx]')||$('#view .page-head [data-action=import]')},
-  {k:'txGuess',tab:'transactions',el:()=>{ const b=$('#view [data-action=use-ml-row]'); return b?b.closest('tr'):$('#view table'); }},
-  {k:'catKw',tab:'categories',el:tourSec('#kw-test')},
   {k:'catList',tab:'categories',el:tourSec('.cat-list')},
-  {k:'save',el:()=>$('.tabbar-end')},
   {k:'end'}
 ];
 /* the example: this year so far (last year if it's only just begun), in the tracker's language */
@@ -5736,35 +5795,36 @@ function sampleDataset(){
     if(m%2===1) add('expenses',12,-pick(18,27),'CANAL DE ISABEL II',E[1]);
     add('expenses',3,-12.99,'NETFLIX.COM',E[2]); add('expenses',9,-10.99,'SPOTIFY',E[2]);
     add('expenses',5,-25,'VODAFONE',E[3]); add('expenses',2,-38.4,'MAPFRE SEGUROS',E[4]);
-    add('expenses',1,-21.8,es?'ABONO TRANSPORTE':'TRAVEL PASS',E[6]);
-    for(let j=0;j<2;j++) if(rnd()<.6) add('expenses',4+Math.floor(rnd()*24),-pick(9,24),'CABIFY',E[6]);
-    for(let j=0;j<5;j++) add('expenses',2+j*6,-pick(24,86),j%3===2?'LIDL':'MERCADONA',E[7]);
-    for(let j=0;j<3;j++) add('expenses',3+Math.floor(rnd()*25),-pick(1.8,6.5),es?'PANADERIA':'BAKERY',E[8]);
-    for(let j=0;j<3;j++) add('expenses',5+Math.floor(rnd()*22),-pick(14,52),['RESTAURANTE LA TASCA','TELEPIZZA','VIPS'][j],E[9]);
-    for(let j=0;j<2;j++) add('expenses',6+Math.floor(rnd()*22),-pick(6,26),'BAR EL RINCON',E[10]);
-    add('expenses',14+Math.floor(rnd()*10),-pick(8,22),'CINESA',E[11]);
-    if(m%2===0) add('expenses',16,-pick(25,75),'ZARA',E[12]);
-    if(rnd()<.5) add('expenses',20,-pick(12,60),'AMAZON.ES',E[13]);
-    if(m===3) add('expenses',10,-212,'RYANAIR',E[14]);
-    if(m===7){ add('expenses',4,-642,'BOOKING.COM',E[14]); add('expenses',3,-176.4,'RENFE',E[14]); }
-    if(rnd()<.4) add('expenses',11,-pick(6,22),es?'FARMACIA':'PHARMACY',E[15]);
-    if(m===11) add('expenses',15,-180,'EL CORTE INGLES',E[17]);
+    add('expenses',1,-21.8,es?'ABONO TRANSPORTE':'TRAVEL PASS',E[5]);
+    for(let j=0;j<2;j++) if(rnd()<.6) add('expenses',4+Math.floor(rnd()*24),-pick(9,24),'CABIFY',E[5]);
+    for(let j=0;j<5;j++) add('expenses',2+j*6,-pick(24,86),j%3===2?'LIDL':'MERCADONA',E[6]);
+    for(let j=0;j<3;j++) add('expenses',3+Math.floor(rnd()*25),-pick(1.8,6.5),es?'PANADERIA':'BAKERY',E[6]);
+    for(let j=0;j<3;j++) add('expenses',5+Math.floor(rnd()*22),-pick(14,52),['RESTAURANTE LA TASCA','TELEPIZZA','VIPS'][j],E[7]);
+    for(let j=0;j<2;j++) add('expenses',6+Math.floor(rnd()*22),-pick(6,26),'BAR EL RINCON',E[8]);
+    add('expenses',14+Math.floor(rnd()*10),-pick(8,22),'CINESA',E[9]);
+    if(m%2===0) add('expenses',16,-pick(25,75),'ZARA',E[10]);
+    if(rnd()<.5) add('expenses',20,-pick(12,60),'AMAZON.ES',E[11]);
+    if(m===3) add('expenses',10,-212,'RYANAIR',E[12]);
+    if(m===7){ add('expenses',4,-642,'BOOKING.COM',E[12]); add('expenses',3,-176.4,'RENFE',E[12]); }
+    if(rnd()<.4) add('expenses',11,-pick(6,22),es?'FARMACIA':'PHARMACY',E[13]);
+    if(m===11) add('expenses',15,-180,'EL CORTE INGLES',E[14]);
     add('investments',3,-500,'INDEXA CAPITAL',V[0]); add('investments',3,-150,es?'PLAN DE PENSIONES':'PENSION PLAN',V[2]);
     months[k]=doc;
   }
   /* one row no keyword matches, so the list shows a guess */
   months[ymOf(y,lastM)].expenses.push({id:'demo-guess',date:ymOf(y,lastM)+'-01',amount:-37.45,concept:'MERCADONA CHAMBERI',category:''});
   const kw={income:[['nomina',I[0]],['paga extra',I[0]],['bonus',I[0]],['intereses',I[4]],['interest',I[4]],['irpf',I[5]],['tax refund',I[5]]],
-    expenses:[['alquiler',E[0]],['rent flat',E[0]],['iberdrola',E[1]],['canal de isabel',E[1]],['netflix',E[2]],['spotify',E[2]],['vodafone',E[3]],['mapfre',E[4]],['abono transporte',E[6]],['travel pass',E[6]],['cabify',E[6]],['lidl',E[7]],['panaderia',E[8]],['bakery',E[8]],['restaurante',E[9]],['telepizza',E[9]],['vips',E[9]],['bar',E[10]],['cinesa',E[11]],['zara',E[12]],['amazon',E[13]],['booking',E[14]],['renfe',E[14]],['ryanair',E[14]],['farmacia',E[15]],['pharmacy',E[15]],['corte ingles',E[17]]],
+    expenses:[['alquiler',E[0]],['rent flat',E[0]],['iberdrola',E[1]],['canal de isabel',E[1]],['netflix',E[2]],['spotify',E[2]],['vodafone',E[3]],['mapfre',E[4]],['abono transporte',E[5]],['travel pass',E[5]],['cabify',E[5]],['lidl',E[6]],['panaderia',E[6]],['bakery',E[6]],['restaurante',E[7]],['telepizza',E[7]],['vips',E[7]],['bar',E[8]],['cinesa',E[9]],['zara',E[10]],['amazon',E[11]],['booking',E[12]],['renfe',E[12]],['ryanair',E[12]],['farmacia',E[13]],['pharmacy',E[13]],['corte ingles',E[14]]],
     investments:[['indexa',V[0]],['plan de pensiones',V[2]],['pension plan',V[2]]]};
-  /* net worth: the everyday account takes what's left each month, 400 € a month goes to savings, funds and pension move with the market */
-  const acc=[{id:'d-cash',name:es?'Cuenta corriente':'Current account',group:'cash'},{id:'d-save',name:es?'Cuenta de ahorro':'Savings account',group:'cash'},{id:'d-fund',name:es?'Fondos indexados':'Index funds',group:'invest'},{id:'d-crowd',name:'Crowdlending',group:'illiquid'},{id:'d-pp',name:es?'Plan de pensiones':'Pension plan',group:'pension'}];
+  /* net worth: the everyday account takes what's left each month, 400 € a month and the interest rows go to savings, funds and pension
+     move with the market. Every figure is explained by a row or a Gains figure, so What changed has nothing left over */
+  const acc=[{id:'d-cash',name:es?'Cuenta corriente':'Current account',group:'cash'},{id:'d-save',name:es?'Cuenta de ahorro':'Savings account',group:'cash',words:es?'intereses cuenta remunerada':'savings interest'},{id:'d-fund',name:es?'Fondos indexados':'Index funds',group:'invest',words:'indexa'},{id:'d-crowd',name:'Crowdlending',group:'illiquid'},{id:'d-pp',name:es?'Plan de pensiones':'Pension plan',group:'pension'}];
   let cash=2600, save=8000, fund=11800, crowd=4000, pp=3200; const snaps={}, fin=early?11:n.m-1;
-  for(let m=0;m<=fin;m++){ const k=ymOf(y,m), d=months[k], flow=sum(TKEYS.flatMap(t=>d[t].map(r=>r.amount)));
-    cash+=flow-400; save+=400+save*0.0015; fund=(fund+500)*(1+pick(-0.025,0.035)); crowd+=crowd*0.006; pp=(pp+150)*(1+pick(-0.015,0.022));
+  for(let m=0;m<=fin;m++){ const k=ymOf(y,m), d=months[k], flow=sum(TKEYS.flatMap(t=>d[t].map(r=>r.amount))), int=sum(d.income.filter(r=>r.category===I[4]).map(r=>r.amount));
+    cash+=flow-int-400; save+=400+int; fund=(fund+500)*(1+pick(-0.025,0.035)); crowd+=crowd*0.006; pp=(pp+150)*(1+pick(-0.015,0.022));
     snaps[k]={'d-cash':r2(cash),'d-save':r2(save),'d-fund':r2(fund),'d-crowd':r2(crowd),'d-pp':r2(pp)}; }
   const settings=Object.assign({},clone(S.settings||{}),{lang:LANG}); delete settings.start; delete settings.hideAmounts;
-  settings.limits={[E[9]]:180,[E[10]]:70,[E[13]]:60};
+  settings.limits={[E[7]]:180,[E[8]]:70,[E[11]]:60};
   return {year:y,months,cats:C,kw,settings,nw:{accounts:acc,snaps,goal:{amount:80000,month:ymOf(y+1,11)}}};
 }
 async function startTour(opts){
@@ -5775,30 +5835,45 @@ async function startTour(opts){
   if(flushing||dirty.size||busy.size){ toast(L('tourWait')); render(); return; }
   closeModal(); hideTip(); hideInfo();
   const D=sampleDataset();
-  TOUR={i:0,fresh:!!(opts&&opts.fresh),hide:HIDE,ui:clone(S.ui),real:{months:S.months,cats:S.cats,kw:S.kw,settings:S.settings,nw:S.nw}};
+  /* demo: the visitor came for the example ("See a demo"), so leaving the tour keeps the example to look around in */
+  TOUR={i:0,fresh:!!(opts&&opts.fresh),demo:!!(opts&&opts.demo),free:false,hide:HIDE,ui:clone(S.ui),real:{months:S.months,cats:S.cats,kw:S.kw,settings:S.settings,nw:S.nw}};
   S.demo=true; HIDE=false;
   S.months=D.months; S.cats=D.cats; S.kw=D.kw; S.settings=D.settings; S.nw=normNw(D.nw);
   Object.assign(S.ui,{year:D.year,editTarget:null,tx:Object.assign(S.ui.tx,{table:'expenses',q:'',month:'all',cat:'all',limit:150,sort:'date-desc',allYears:false}),
     ct:Object.assign(S.ui.ct,{table:'expenses',q:'',cq:'',test:''}),mm:{table:'expenses',cat:null},oc:Object.assign(S.ui.oc,{table:'expenses',month:'all'}),nw:{month:null}});
   bump();
-  const layer=document.createElement('div'); layer.id='tour-layer'; layer.className='tour-layer';
-  const spot=document.createElement('div'); spot.id='tour-spot'; spot.className='tour-spot';
-  const card=document.createElement('div'); card.id='tour-card'; card.className='tour-card'; card.setAttribute('role','dialog'); card.setAttribute('aria-modal','true'); card.setAttribute('aria-labelledby','tour-title'); card.setAttribute('aria-describedby','tour-text'); card.style.visibility='hidden';   /* shown once tourPlace has put it in place */
-  card.addEventListener('click',e=>{ const b=e.target.closest('[data-tour]'); if(!b) return; const a=b.dataset.tour; if(a==='next') tourGo(TOUR.i+1); else if(a==='back') tourGo(TOUR.i-1); else endTour(); });
-  document.body.append(layer,spot,card);
+  tourMount();
   setTab('networth','replace');
   tourGo(0);
 }
+function tourMount(){
+  const layer=document.createElement('div'); layer.id='tour-layer'; layer.className='tour-layer';
+  const spot=document.createElement('div'); spot.id='tour-spot'; spot.className='tour-spot';
+  const card=document.createElement('div'); card.id='tour-card'; card.className='tour-card'; card.setAttribute('role','dialog'); card.setAttribute('aria-modal','true'); card.setAttribute('aria-labelledby','tour-title'); card.setAttribute('aria-describedby','tour-text'); card.style.visibility='hidden';   /* shown once tourPlace has put it in place */
+  card.addEventListener('click',e=>{ const b=e.target.closest('[data-tour]'); if(!b) return; const a=b.dataset.tour; if(a==='next') tourGo(TOUR.i+1); else if(a==='back') tourGo(TOUR.i-1); else if(a==='free') tourFree(); else endTour(); });
+  document.body.append(layer,spot,card);
+}
+const tourUnmount=()=>{ for(const id of ['tour-layer','tour-spot','tour-card','demo-bar']){ const e=document.getElementById(id); if(e) e.remove(); } };
+/* the example stays, the guided part goes: a bar at the bottom offers the tour again or the visitor's own tracker */
+function tourFree(){
+  if(!TOUR) return; TOUR.free=true; tourUnmount();
+  const bar=document.createElement('div'); bar.id='demo-bar'; bar.className='demo-bar'; bar.setAttribute('role','region'); bar.setAttribute('aria-label',L('tourBadge'));
+  bar.innerHTML=`<span>${esc(L('demoBar'))}</span><span class="demo-acts"><button class="btn sm" type="button" data-tour="again">${esc(L('tourBtn'))}</button><button class="btn primary sm" type="button" data-tour="end">${esc(L('tourSetup'))}</button></span>`;
+  bar.addEventListener('click',e=>{ const b=e.target.closest('[data-tour]'); if(!b) return; if(b.dataset.tour==='again'){ TOUR.free=false; tourUnmount(); closeModal(); tourMount(); tourGo(1); } else endTour(); });
+  document.body.appendChild(bar); document.body.classList.add('demo-on');
+  render(); window.scrollTo({top:0});
+}
 function tourRender(){
-  const st=TOUR_STEPS[TOUR.i], key=TOUR.fresh&&(st.k==='end'||st.k==='intro')?st.k+'New':st.k, [title,body]=L('tour_'+key), n=TOUR_STEPS.length-2, mid=TOUR.i>0&&TOUR.i<TOUR_STEPS.length-1;
+  const st=TOUR_STEPS[TOUR.i], end=st.k==='end'||st.k==='intro', key=end&&TOUR.demo?st.k+'Demo':TOUR.fresh&&end?st.k+'New':st.k, [title,body]=L('tour_'+key), n=TOUR_STEPS.length-2, mid=TOUR.i>0&&TOUR.i<TOUR_STEPS.length-1;
+  const leave=TOUR.demo?`<button class="btn ghost sm" type="button" data-tour="free">${esc(L('tourEnd'))}</button>`:`<button class="btn ghost sm" type="button" data-tour="end">${esc(L('tourEnd'))}</button>`;
   $('#tour-card').innerHTML=`<div class="tour-eyebrow"><span>${esc(L('tourBadge'))}</span>${mid?`<span>${esc(L('tourStep',TOUR.i,n))}</span>`:''}</div>
     <h3 id="tour-title">${esc(title)}</h3><p id="tour-text">${esc(body)}</p>
-    <div class="tour-acts">${st.k==='intro'?`<button class="btn ghost" type="button" data-tour="end">${esc(L(TOUR.fresh?'tourSkipNew':'tourSkip'))}</button><button class="btn primary" type="button" data-tour="next">${esc(L('tourStart'))}</button>`
-      :st.k==='end'?`<span></span><button class="btn primary" type="button" data-tour="end">${esc(L(TOUR.fresh?'tourSetup':'tourDone'))}</button>`
-      :`<button class="btn ghost sm" type="button" data-tour="end">${esc(L('tourEnd'))}</button><span class="tour-nav"><button class="btn sm" type="button" data-tour="back">${esc(L('tourBack'))}</button><button class="btn primary sm" type="button" data-tour="next">${esc(L('tourNext'))}</button></span>`}</div>`;
+    <div class="tour-acts">${st.k==='intro'?(TOUR.demo?`<button class="btn ghost" type="button" data-tour="free">${esc(L('tourFree'))}</button>`:`<button class="btn ghost" type="button" data-tour="end">${esc(L(TOUR.fresh?'tourSkipNew':'tourSkip'))}</button>`)+`<button class="btn primary" type="button" data-tour="next">${esc(L('tourStart'))}</button>`
+      :st.k==='end'?(TOUR.demo?`<button class="btn" type="button" data-tour="free">${esc(L('tourKeep'))}</button>`:'<span></span>')+`<button class="btn primary" type="button" data-tour="end">${esc(L(TOUR.fresh?'tourSetup':'tourDone'))}</button>`
+      :`${leave}<span class="tour-nav"><button class="btn sm" type="button" data-tour="back">${esc(L('tourBack'))}</button><button class="btn primary sm" type="button" data-tour="next">${esc(L('tourNext'))}</button></span>`}</div>`;
 }
 async function tourGo(i){
-  if(!TOUR) return;
+  if(!TOUR||TOUR.free) return;
   TOUR.i=Math.max(0,Math.min(TOUR_STEPS.length-1,i)); const st=TOUR_STEPS[TOUR.i];
   if(st.tab&&S.ui.tab!==st.tab) setTab(st.tab,'replace');
   tourRender(); await sleep(70); if(!TOUR) return;
@@ -5806,7 +5881,7 @@ async function tourGo(i){
   const f=$('#tour-card [data-tour=next]')||$('#tour-card [data-tour=end]:last-of-type'); if(f) f.focus({preventScroll:true});
 }
 function tourPlace(scroll){
-  if(!TOUR) return;
+  if(!TOUR||TOUR.free||!$('#tour-card')) return;
   const st=TOUR_STEPS[TOUR.i], el=st.el?st.el():null, layer=$('#tour-layer'), spot=$('#tour-spot'), card=$('#tour-card'), vw=document.documentElement.clientWidth, vh=window.innerHeight, phone=vw<640;
   card.style.left=card.style.top=card.style.bottom=''; card.style.visibility='';
   if(!el){ layer.classList.add('dim'); spot.hidden=true; card.classList.add('center'); return; }
@@ -5819,28 +5894,33 @@ function tourPlace(scroll){
   const ch=card.offsetHeight, cw=card.offsetWidth;
   /* phones: the card goes to the half the target isn't in; a target taller than half the screen keeps its top (its heading) in view */
   if(phone){ if(bottom-top<vh/2&&(top+bottom)/2>vh/2){ card.style.top='12px'; } else { card.style.bottom='12px'; } return; }
-  let cx=Math.min(Math.max(12,left),vw-cw-12), cy;
+  let cx=st.pos==='right'?vw-cw-12:Math.min(Math.max(12,left),vw-cw-12), cy;
   if(bottom+12+ch<vh-8) cy=bottom+12; else if(top-12-ch>8) cy=top-12-ch; else { cy=vh-ch-16; cx=vw-cw-16; }
   card.style.left=cx+'px'; card.style.top=cy+'px';
 }
-function endTour(){
+async function endTour(){
   if(!TOUR) return; const T=TOUR; TOUR=null;
+  closeModal();
+  /* changes made to the example are marks for documents of the example: none of them may reach the real tracker */
+  dirty.clear(); clearTimeout(flushTimer);
   S.months=T.real.months; S.cats=T.real.cats; S.kw=T.real.kw; S.settings=T.real.settings; S.nw=T.real.nw;
   S.ui=T.ui; HIDE=T.hide; S.demo=false; try{ history.replaceState(null,'','#'+S.ui.tab); }catch(_){}
-  for(const id of ['tour-layer','tour-spot','tour-card']){ const e=document.getElementById(id); if(e) e.remove(); }
+  tourUnmount(); document.body.classList.remove('demo-on');
+  if(T.sync) loadDataset(T.sync,false,true);   /* a copy that arrived from Drive or the folder while the example was showing */
+  /* the demo put the tracker in this browser without asking: ask now, before the setup wizard */
+  if(T.demo&&S.local&&typeof S.local.needsPlace==='function'&&S.local.needsPlace()){ S.placePending=true; render(); await localAction('choosePlace'); S.placePending=false; }
   bump(); render(); window.scrollTo({top:0});
-  if(dirty.size){ clearTimeout(flushTimer); flushTimer=setTimeout(flush,250); }
 }
 document.addEventListener('keydown',e=>{
-  if(!TOUR) return;
-  if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); endTour(); return; }
+  if(!TOUR||TOUR.free) return;
+  if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); if(TOUR.demo) tourFree(); else endTour(); return; }
   if(e.key==='ArrowRight'&&TOUR_STEPS[TOUR.i].k!=='end'){ e.preventDefault(); e.stopPropagation(); tourGo(TOUR.i+1); return; }
   if(e.key==='ArrowLeft'&&TOUR.i>0){ e.preventDefault(); e.stopPropagation(); tourGo(TOUR.i-1); return; }
   if(e.key==='Tab'){ const bs=[...document.querySelectorAll('#tour-card button')]; if(!bs.length) return; const i=bs.indexOf(document.activeElement); e.preventDefault(); e.stopPropagation(); bs[(i+(e.shiftKey?-1:1)+bs.length)%bs.length].focus(); return; }
   /* nothing else reaches the page while the tour runs */
   if(!(e.target.closest&&e.target.closest('#tour-card'))){ e.preventDefault(); e.stopPropagation(); }
 },true);
-let tourRaf=0; const tourRe=()=>{ if(!TOUR) return; cancelAnimationFrame(tourRaf); tourRaf=requestAnimationFrame(()=>tourPlace(false)); };
+let tourRaf=0; const tourRe=()=>{ if(!TOUR||TOUR.free) return; cancelAnimationFrame(tourRaf); tourRaf=requestAnimationFrame(()=>tourPlace(false)); };
 window.addEventListener('resize',tourRe); window.addEventListener('scroll',tourRe,{passive:true});
 
 /* ───────── toast ───────── */
@@ -5866,6 +5946,7 @@ window.addEventListener('ybt-prefs',()=>{
 /* how: 'replace' (the tour: no history entry per step), 'pop' (Back/Forward already moved); otherwise a new entry, so the phone's Back returns to the previous tab */
 function setTab(t,how){ if(!TABS.includes(t)) return; S.ui.tab=t; S.ui.editTarget=null;
   try{ if(how==='replace') history.replaceState(null,'','#'+t); else if(how!=='pop'&&location.hash!=='#'+t) history.pushState(null,'','#'+t); }catch(_){} render(); window.scrollTo({top:0}); }
+const DEMO_OFF=new Set(['local-x','local-open','local-fresh','backup','restore','restore-yes','remind-ics']);
 const ACTIONS={
   'tab':el=>setTab(el.dataset.tab),
   'year-step':el=>{ const ys=yearList(); const i=ys.indexOf(S.ui.year)+(+el.dataset.step); if(i>=0&&i<ys.length){ S.ui.year=ys[i]; S.ui.tx.month='all'; S.ui.oc.month='all'; render(); } },
@@ -5947,14 +6028,15 @@ const ACTIONS={
   'kw-del':el=>{ const t=S.ui.ct.table, i=+el.dataset.i, K=ensureKw(); const [p]=K[t].splice(i,1); markDirty('config/keywords'); bump(); render();
     toast(L('kwRemoved',p[0]),{label:L('undo'),fn:()=>{ const K2=ensureKw(); if(!K2[t].some(q=>q[0].toLowerCase()===p[0].toLowerCase())) K2[t].splice(Math.min(i,K2[t].length),0,p); markDirty('config/keywords'); bump(); render(); }}); },
   /* welcome */
-  'ob-start':()=>{
+  'ob-start':el=>{
     if(!S.canWrite) return;
+    const demo=!!(el&&el.demo);   /* "See a demo" on the landing page: the visitor came for the example */
     const lang=S.ui.obLang==='es'?'es':'en', {y,m,auto}=obStartPick();
     obApply(lang,y,m,auto);
     S.ui.tab='networth'; try{ history.replaceState(null,'','#networth'); }catch(_){}
     S.tourPending=true;   /* the tour comes first; the setup wizard follows when it ends */
     bump(); render(); window.scrollTo({top:0});
-    setTimeout(()=>startTour({fresh:true}),350);
+    setTimeout(()=>startTour({fresh:true,demo}),350);
   },
   'ob-ai':()=>{ if(!S.canWrite||!S.ai) return; const lang=S.ui.obLang==='es'?'es':'en'; aiOpen({type:'ai',mode:'start',files:[],lang,mid:true}); },
   'ob-import':()=>{ if(!S.canWrite) return; const lang=S.ui.obLang==='es'?'es':'en', {y,m,auto}=obStartPick();
@@ -5999,7 +6081,8 @@ const ACTIONS={
   'guide-import':()=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS.import(); },
   'guide-income':()=>{ if(!S.canWrite) return; S.ui.tx.table='income'; if(S.ui.tab!=='transactions') setTab('transactions'); else render(); ACTIONS['add-tx'](); },
   'guide-add':()=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS['add-tx'](); },
-  'wz-open':()=>{ const G=guideState(); wizardOpen(G&&G.cur==='tx'?2:0); },
+  'wz-open':()=>{ wizardOpen(wzStep(guideState())); },
+  'wz-place':async()=>{ await localAction('changeStorage'); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); },
   'wz-next':()=>{ if(!S.wizard) return; S.wizard.step=Math.min(WZ_STEPS-1,S.wizard.step+1); renderModalKeepScroll(); },
   'wz-back':()=>{ if(!S.wizard) return; S.wizard.step=Math.max(0,S.wizard.step-1); renderModalKeepScroll(); },
   'wz-later':()=>{ if(S.wizard) S.wizard.on=false; closeModal(); },
@@ -6029,6 +6112,8 @@ const ACTIONS={
   'nw-year':el=>{ const all=nwYearsAll(); let sel=nwYearsSel(); const y=el.dataset.y;
     if(y==='all') sel=all.slice(); else { const v=+y; sel=sel.includes(v)?(sel.length>1?sel.filter(x=>x!==v):sel):[...sel,v]; }
     S.ui.nw.years=sel; render(); },
+  'na-adv':()=>{ const m=S.modal; if(!m||!m.list) return; readNwAccounts(); m.adv=true; renderModalKeepScroll(); const f=$('#na-w-0'); if(f) f.focus(); },
+  'y-empty':()=>{ S.ui.yAll=!S.ui.yAll; render(); },
   'ng-remove':()=>{ ensureNw().goal=null; saveNw(); closeModal(); render(); toast(L('nwGoalRemoved')); },
   'restore':()=>{ if(S.canWrite) openModal({type:'restore',msg:''}); },
   'restore-yes':()=>{ const m=S.modal; if(!m||!m.data||!S.canWrite) return; const prev=currentDataset(), n=countDataset(m.data);
@@ -6042,6 +6127,8 @@ document.addEventListener('click',e=>{
   if(a==='set-cat'||a==='kw-cat'||a==='imp-cat'||a==='imp-on'||a==='imp-table') return;
   if(a==='edit-tx' && e.target.closest('select,input,label,button,a')) return;
   if(a==='close' && el.classList.contains('scrim') && e.target!==el) return;
+  /* the example is never saved, so nothing that saves, moves or opens files runs while it shows */
+  if(S.demo&&DEMO_OFF.has(a)){ e.preventDefault(); toast(L('demoNoSave')); return; }
   const fn=ACTIONS[a]; if(fn){ e.preventDefault(); fn(el,e); }
 });
 document.addEventListener('keydown',e=>{
@@ -6061,6 +6148,7 @@ document.addEventListener('focusout',e=>{ if(e.target.id==='target-input') setTi
 let qTimer=null;
 document.addEventListener('input',e=>{
   const id=e.target.id;
+  if(id&&AMT_FIELD.test(id)) amtRead(e.target);
   if(id==='tx-q'){ S.ui.tx.q=e.target.value; S.ui.tx.limit=150; clearTimeout(qTimer); qTimer=setTimeout(render,140); }
   else if(id==='kw-q'){ S.ui.ct.q=e.target.value; S.ui.ct.kwLimit=25; clearTimeout(qTimer); qTimer=setTimeout(render,140); }
   else if(id==='cat-q'){ S.ui.ct.cq=e.target.value; clearTimeout(qTimer); qTimer=setTimeout(render,140); }
@@ -6249,7 +6337,7 @@ async function boot(){
   if(window.Neutralino||window.YBT_WEB){ try{ S.local=await C.use('local'); }catch(_){ S.local=null; } }
   subscribe(); render();
   let auto=false; try{ auto=sessionStorage.getItem('ybt.autotour')==='1'; sessionStorage.removeItem('ybt.autotour'); }catch(_){}
-  if(auto){ let n=0; const iv=setInterval(()=>{ if(isOnboarding()){ clearInterval(iv); ACTIONS['ob-start'](); } else if(++n>40) clearInterval(iv); },150); }
+  if(auto){ let n=0; const iv=setInterval(()=>{ if(isOnboarding()){ clearInterval(iv); ACTIONS['ob-start']({demo:true}); } else if(++n>40) clearInterval(iv); },150); }
   C.use('downloads').then(d=>{ S.downloads=d||null; render(); }).catch(()=>{});
   C.use('sample').then(f=>{ S.ai=typeof f==='function'&&typeof f.json==='function'?f:null; if(S.ai) render(); }).catch(()=>{});
 }
@@ -6278,16 +6366,16 @@ function currentDataset(){
   return {months:clone(S.months),config};
 }
 /* desktop app only: its storage layer replaces the whole dataset (open another file / start fresh) */
-window.addEventListener('ybt-replace-data',e=>loadDataset((e&&e.detail)||{},false));
+window.addEventListener('ybt-replace-data',e=>{ if(TOUR){ TOUR.sync=(e&&e.detail)||{}; return; } loadDataset((e&&e.detail)||{},false); });
 /* a newer copy arrived by itself (Drive, or the folder changed elsewhere): never closes a dialog or cancels an AI request */
 window.addEventListener('ybt-wizard-check',()=>maybeWizard());
-window.addEventListener('ybt-sync-data',e=>loadDataset((e&&e.detail)||{},false,true));
+window.addEventListener('ybt-sync-data',e=>{ if(TOUR){ TOUR.sync=(e&&e.detail)||{}; return; } loadDataset((e&&e.detail)||{},false,true); });   /* the example is on screen: kept for when it ends */
 /* the storage layer asks before it swaps data or asks a question: wait while a dialog is open or edits are on their way */
-window.YBT_BUSY=()=>!!S.modal||dirty.size>0||busy.size>0||flushing;
+window.YBT_BUSY=()=>!!S.modal||dirty.size>0||busy.size>0||flushing||S.demo;
 window.addEventListener('ybt-lang',e=>{ const v=e&&e.detail==='es'?'es':'en'; S.ui.obLang=v; if(S.settings&&S.settings.lang&&S.canWrite&&S.settings.lang!==v) setSettings({lang:v}); render(); });
 window.addEventListener('ybt-local-render',()=>{ if(S.mode==='live'){ render(); if(S.modal) renderModalKeepScroll(); } });
 /* Back/Forward between tabs. An open dialog closes first, except an import review with rows: Back then stays put so the rows aren't lost */
-function onHistory(){ const h=(location.hash||'').replace('#',''); if(!TABS.includes(h)||h===S.ui.tab||TOUR) return;
+function onHistory(){ const h=(location.hash||'').replace('#',''); if(!TABS.includes(h)||h===S.ui.tab||(TOUR&&!TOUR.free)) return;
   if(S.modal){ if(wantsDiscardCheck()){ try{ history.pushState(null,'','#'+S.ui.tab); }catch(_){} return; } closeModal(); }
   setTab(h,'pop'); }
 window.addEventListener('popstate',onHistory);

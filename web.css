@@ -76,6 +76,7 @@
 .ai-badge.paid{background:var(--warn-soft,#fbf0d2);color:var(--warn-ink,#6e4b00)}
 .ai-reco ul{margin:4px 0 0;padding-left:18px;display:grid;gap:3px;font-size:12.5px;color:var(--ink-2,#44554f)}
 .ai-reco p{margin:0}
+.ai-adv{display:grid;gap:8px}.ai-adv[hidden]{display:none}.ai-adv>summary{cursor:pointer;font-weight:600;font-size:13px;color:var(--accent,#0d5c63)}.ai-adv[open]>summary{margin-bottom:4px}
 @media (max-width:640px){.ai-cols{grid-template-columns:1fr}}
 .web-way .ai-badge{display:inline-block;width:auto;justify-self:start;margin-left:6px}
 /* ---- landing page ---- */

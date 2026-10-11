@@ -7,7 +7,7 @@ const assert = require('assert');
 const START = process.env.START_URL || 'http://localhost:8000/';
 (async () => {
   const browser = await chromium.launch({ channel: 'msedge' });
-  const p = await (await browser.newContext({ viewport: { width: 1280, height: 860 } })).newPage();
+  const p = await (await browser.newContext({ viewport: { width: 1280, height: 860 }, locale: 'en-GB' })   /* a new tracker takes its number format from the region */).newPage();
   p.on('pageerror', e => console.log('pageerror:', String(e).slice(0, 200)));
   await p.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
   await p.route('https://accounts.google.com/gsi/client', r => r.fulfill({ contentType: 'text/javascript', body: 'window.google={accounts:{oauth2:{}}};' }));
@@ -134,8 +134,10 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await expect('2026-09', { 'Indexa Capital': '+40.00', 'MyInvestor Fund': '−50.00' });
   const unlinked = () => p.locator('.warn-text', { hasText: 'linked to an account' }).allTextContents().then(t => t.join(' '));
   assert.ok((await unlinked()).includes('“GAMMA GLOBAL FI”'), 'no warning for the unlinked Gamma row');
+  /* statement words sit behind "More options" until an account has some */
+  const moreOptions = async () => { const b = await p.$('#nw-acc-form [data-action="na-adv"]'); if (b) await b.click(); };
   const words = async w => {
-    await p.click('[data-action=tab][data-tab=networth]'); await p.click('[data-action="nw-accounts"]');
+    await p.click('[data-action=tab][data-tab=networth]'); await p.click('[data-action="nw-accounts"]'); await moreOptions();
     for (const [n, v] of Object.entries(w)) await p.locator('#nw-acc-form .acc-row').filter({ has: p.locator(`input[data-f=name][value="${n}"]`) }).locator('input[data-f=words]').fill(v);
     await p.click('#nw-acc-form button[type=submit]'); await p.waitForSelector('#nw-acc-form', { state: 'detached' });
   };
@@ -169,7 +171,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   /* 4d. interest on a Cash account, linked with the "Add from your statements" list in Edit accounts */
   await add('income', '2026-09-28', 'Intereses cuenta remunerada', 12, 'in', 'Interest');
   await expect('2026-09', { 'Current account': '—', 'Total': '+1,240.00' });   // names no account yet: nothing for Cash
-  await p.click('[data-action=tab][data-tab=networth]'); await p.click('[data-action="nw-accounts"]');
+  await p.click('[data-action=tab][data-tab=networth]'); await p.click('[data-action="nw-accounts"]'); await moreOptions();
   const row = n => p.locator('#nw-acc-form .acc-row').filter({ has: p.locator(`input[data-f=name][value="${n}"]`) });
   const opts = n => row(n).locator('select.acc-pick option').allTextContents();
   assert.ok((await opts('Current account')).includes('Intereses cuenta remunerada'), 'interest row not offered for the Cash account');

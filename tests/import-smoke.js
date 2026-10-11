@@ -62,7 +62,7 @@ assert.ok(INV_CONCEPT.test(loose('SUSCRIPCIÓN FONDO')) && INV_CONCEPT.test(loos
   const guessTable = new Function('loose', 'KW', 'ROWS',
     "const TKEYS=['income','expenses','investments'], isKnown=()=>true, memo=(k,f)=>f(), allRows=()=>ROWS;" +
     "const matchKeyword=(t,c)=>{ const k=Object.keys(KW[t]).find(k=>loose(c).includes(k)); return k?{cat:KW[t][k],k}:null; };" +
-    line('const CARD_RE=') + line('const REFUND_RE=') + line('const biggestSpend=') + grab('guessTable') + 'return guessTable;')(loose, KW, ROWS);
+    line('const CARD_RE=') + line('const REFUND_RE=') + line('const isBizum=') + line('const biggestSpend=') + grab('guessTable') + 'return guessTable;')(loose, KW, ROWS);
   const g = (concept, amount) => guessTable({ concept, amount, category: '' });
   assert.strictEqual(g('PENSION INSS', 1100), 'income');
   assert.strictEqual(g('APORTACION PLAN PENSION', -125), 'investments');
@@ -71,6 +71,21 @@ assert.ok(INV_CONCEPT.test(loose('SUSCRIPCIÓN FONDO')) && INV_CONCEPT.test(loos
   assert.strictEqual(g('AMAZON', 25), 'expenses');
   assert.strictEqual(g('AMAZON', 400), 'income');
   assert.strictEqual(g('TARJETA AMAZON', 400), 'expenses');
+  /* a Bizum received is someone paying you back; one sent is spending, and a Bizum with an income keyword stays income */
+  assert.strictEqual(g('BIZUM DE ANA CENA', 15), 'expenses');
+  assert.strictEqual(g('BIZUM A ANA', -15), 'expenses');
+  assert.strictEqual(g('BIZUM PENSION MAMA', 300), 'income');
+}
+
+/* typed amounts: one separator and exactly three digits read as decimals gets a question (amtMeant) */
+{
+  const amtMeant = new Function(grab('amtMeant') + 'return amtMeant;')();
+  assert.strictEqual(amtMeant('8.500', 8.5), 8500);
+  assert.strictEqual(amtMeant('1,250', 1.25), 1250);
+  assert.strictEqual(amtMeant('0,500', 0.5), null);
+  assert.strictEqual(amtMeant('8.500', 8500), null);
+  assert.strictEqual(amtMeant('8,50', 8.5), null);
+  assert.strictEqual(amtMeant('12.345,67', 12345.67), null);
 }
 
 /* review: amounts typed in Spanish keep their sign; the tracker's own symbol is stripped first (impEdit) */

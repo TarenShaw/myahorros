@@ -51,7 +51,7 @@ const TX={
     label:'AI', change:'Change AI…',
     errWhat:'What went wrong', copyDetails:'Copy details', detailsCopied:'Copied',
     badgePaid:'Paid', badgeFree:'Free', colPaste:'Copy and paste', colApi:'API (your own key)',
-    recoTitle:'Which model should I pick?',
+    recoTitle:'Which model should I pick?', advanced:'Advanced: model and effort (the defaults suit one statement)',
     use_big:'12 or more months of data, or several files.', use_mid:'About 6 months of data with several files.', use_small:'1 month of data, or a couple of files. Fast and inexpensive.',
     gLabels:['1 file','Several files','Several months'],
     guide_openai:['A small model (its name has “mini”) is enough: fast and inexpensive.','Use the full-size model.','Use the full-size model and send a few months at a time.'],
@@ -98,7 +98,7 @@ const TX={
     label:'la IA', change:'Cambiar la IA…',
     errWhat:'Qué ha fallado', copyDetails:'Copiar detalles', detailsCopied:'Copiado',
     badgePaid:'De pago', badgeFree:'Gratis', colPaste:'Copiar y pegar', colApi:'API (tu propia clave)',
-    recoTitle:'¿Qué modelo elijo?',
+    recoTitle:'¿Qué modelo elijo?', advanced:'Avanzado: modelo y esfuerzo (lo predeterminado sirve para un extracto)',
     use_big:'12 o más meses de datos, o varios archivos.', use_mid:'Unos 6 meses de datos con varios archivos.', use_small:'1 mes de datos, o un par de archivos. Rápido y barato.',
     gLabels:['1 archivo','Varios archivos','Varios meses'],
     guide_openai:['Basta un modelo pequeño (su nombre lleva «mini»): rápido y barato.','Usa el modelo de tamaño completo.','Usa el modelo de tamaño completo y envía unos pocos meses cada vez.'],
@@ -257,9 +257,10 @@ function setup(){
         <input id="ai-key" type="password" autocomplete="off" spellcheck="false">
         <p class="web-hint"><a id="ai-getkey" target="_blank" rel="noopener noreferrer"></a> · ${esc(t('keyPrivacy'))}</p>
         <label class="ai-check"><input type="checkbox" id="ai-remember"${c.remember?' checked':''}> ${esc(t('remember'))}</label>
+        <details class="ai-adv"><summary>${esc(t('advanced'))}</summary>
         <div id="ai-modelbox" hidden><label for="ai-model">${esc(t('model'))}</label><select id="ai-model"></select><p class="web-hint">${esc(t('modelHelp'))}</p></div>
         <div id="ai-effortbox" hidden><label for="ai-effort">${esc(t('effort'))}</label><select id="ai-effort">${(((M().providers||{}).anthropic||{}).efforts||[]).map(e=>`<option value="${e}"${e===effortOf(c.provider==='anthropic'?c.effort:'')?' selected':''}>${esc(t('eff_'+e))}</option>`).join('')}</select><p class="web-hint">${esc(t('effortHelp'))}</p></div>
-        <div id="ai-reco" class="ai-reco" hidden></div>
+        <div id="ai-reco" class="ai-reco" hidden></div></details>
       </div>
       <div class="web-acts"><button type="button" class="btn primary" data-x="go"></button><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`);
     const $=s=>el.querySelector(s), keyIn=$('#ai-key');
@@ -271,6 +272,8 @@ function setup(){
       $('#ai-modelbox').hidden=!(api&&models&&models.length>1);
       $('#ai-effortbox').hidden=sel!=='anthropic';
       const rc=$('#ai-reco'); rc.innerHTML=api?reco(sel):''; rc.hidden=!api;
+      /* model, effort and the guide to them fold away: the defaults suit one statement */
+      $('.ai-adv').hidden=!api||$('#ai-modelbox').hidden&&$('#ai-effortbox').hidden&&!rc.innerHTML;
       $('[data-x=go]').textContent=api?t('check'):t('usePaste'); el.msg('');
     };
     show();

@@ -40,7 +40,7 @@ const TX={
     driveT:'Your Google Drive', driveS:'Saved in your own Google Drive, so it’s the same on your phone and computer. Works offline and catches up when you’re back online. The site can only see the files it creates.',
     driveNo:'Not available on this site yet.', driveOffline:'Needs an internet connection to set up.',
     browserT:'Only in this browser', browserS:'Nothing to set up. Clearing your browsing data deletes it, so download a backup now and then.',
-    recommended:'Recommended', cancel:'Cancel', exampleBtn:'Just looking? Try it with example data',
+    recommended:'Recommended', cancel:'Cancel', keepBrowser:'Keep it in this browser', exampleBtn:'Just looking? Try it with example data',
     pickHint:'Pick a folder such as Documents. A “Yearly Budget Tracker” folder is made inside it, unless you pick one that already has your tracker.',
     pickedNotAllowed:'The browser didn’t allow saving in that folder. Pick another one, such as Documents.',
     reTitle:'Allow access to your tracker folder', reText:n=>`Your tracker is saved in the folder “${n}”. Your browser asks you to allow access again before the site can open it.`,
@@ -134,7 +134,7 @@ const TX={
     driveT:'Tu Google Drive', driveS:'Se guarda en tu propio Google Drive, así que es el mismo en el móvil y en el ordenador. Funciona sin conexión y se pone al día al volver a conectarte. La web solo puede ver los archivos que crea.',
     driveNo:'Todavía no está disponible en esta web.', driveOffline:'Necesita conexión a internet para configurarlo.',
     browserT:'Solo en este navegador', browserS:'No hay nada que configurar. Si borras los datos de navegación se borra, así que descarga una copia de vez en cuando.',
-    recommended:'Recomendado', cancel:'Cancelar', exampleBtn:'¿Solo quieres echar un vistazo? Pruébalo con datos de ejemplo',
+    recommended:'Recomendado', cancel:'Cancelar', keepBrowser:'Dejarlo en este navegador', exampleBtn:'¿Solo quieres echar un vistazo? Pruébalo con datos de ejemplo',
     pickHint:'Elige una carpeta como Documentos. Dentro se crea una carpeta «Yearly Budget Tracker», salvo que elijas una que ya tenga tu control.',
     pickedNotAllowed:'El navegador no permite guardar en esa carpeta. Elige otra, como Documentos.',
     reTitle:'Permite el acceso a la carpeta de tu control', reText:n=>`Tu control se guarda en la carpeta «${n}». El navegador pide que vuelvas a permitir el acceso antes de abrirlo.`,
@@ -223,7 +223,7 @@ const TX={
 let store=null;   /* {months:{YYYY-MM:{income,expenses,investments}}, config:{categories,keywords,settings,networth}} */
 /* the page passes its language whenever it asks for text; that's the one on screen */
 let pageLang=null;
-const seeLang=l=>{ if(l==='es'||l==='en') pageLang=l; };
+const seeLang=l=>{ if(l==='es'||l==='en'){ pageLang=l; document.documentElement.lang=l; } };   /* lang: screen readers read the page in it */
 function lang(){
   if(pageLang) return pageLang;
   const s=store&&store.config&&store.config.settings; if(s&&(s.lang==='es'||s.lang==='en')) return s.lang;
@@ -479,12 +479,12 @@ function landing(known){
   return new Promise(resolve=>{
     const el=document.createElement('div'); el.className='web-landing'; el.setAttribute('role','dialog'); el.setAttribute('aria-label','MyAhorros');
     const draw=()=>{
-      const L0=lang(), F=t('landF'), H=t('landHowSteps');
+      const L0=lang(), F=t('landF'), H=t('landHowSteps'); document.documentElement.lang=L0;
       const cta=known?`<button type="button" class="btn primary" data-x="open">${esc(t('landOpen'))}</button>`:`<button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button>`;
       const ico=['<path d="M4 16.5V10M10 16.5V4M16 16.5V8"/>','<path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/>','<path d="M3 14.5l4.5-4.5 3 3L17 6.5"/><path d="M12.5 6.5H17V11"/>','<path d="M3 15.5l3.5-3.5 3 2 2.5-3"/><path d="M14 9.5l3.5-3.5" stroke-dasharray="1.2 2.6"/><path d="M3 18h14"/>'],
         shield='<path d="M10 2.5l6 2.5v4.5c0 4-2.6 6.8-6 8-3.4-1.2-6-4-6-8V5z"/><path d="M7.5 10l2 2 3.5-4"/>', svg=(d,n)=>`<svg viewBox="0 0 20 20" width="${n}" height="${n}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
       /* the product shots (made by tools/landing-shot.js from made-up data) in the tracker's light or dark look */
-      const th=document.documentElement.getAttribute('data-ybt-theme'), dark=th?th==='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches), shot=n=>`images/landing-${n}-${dark?'dark':'light'}.webp`;
+      const th=document.documentElement.getAttribute('data-ybt-theme'), dark=th?th==='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches), shot=n=>`images/landing-${n}-${dark?'dark':'light'}${L0==='es'?'-es':''}.webp`;   /* the shots are in the landing page's language */
       const callIco=[shield,'<rect x="3" y="3.5" width="14" height="13" rx="2"/><path d="M3 8h14M8 8v8.5"/>','<path d="M10 3l1.6 4.4L16 9l-4.4 1.6L10 15l-1.6-4.4L4 9l4.4-1.6z"/>'];
       el.innerHTML=`<header class="wl-top"><span class="wl-brand">MyAhorros</span>
           <div class="wl-top-r"><div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>
@@ -494,8 +494,8 @@ function landing(known){
             <div class="wl-cta">${cta}</div>
             <p class="wl-fine">${esc(t('landNoSignup'))}</p></div>
             <figure class="wl-frame"><div class="wl-glow" aria-hidden="true"></div><div class="wl-view"><div class="wl-pages">
-              <img src="${shot('networth')}" alt="${esc(t('landShotAlt'))}" width="1280" height="853" fetchpriority="high" decoding="async">
-              <img src="${shot('overview')}" alt="" width="1280" height="1028" loading="lazy" decoding="async">
+              <img src="${shot('networth')}" alt="${esc(t('landShotAlt'))}" width="1280" height="899" fetchpriority="high" decoding="async">
+              <img src="${shot('overview')}" alt="" width="1280" height="1088" loading="lazy" decoding="async">
               <img src="${shot('yearly')}" alt="" width="1280" height="900" loading="lazy" decoding="async"></div></div></figure>
             <ul class="wl-calls">${t('landCalls').map((c,i)=>`<li class="wl-call c${i+1}"><span class="wl-ico">${svg(callIco[i],20)}</span>${esc(c)}</li>`).join('')}</ul></div></section>
           <div class="wl-body">
@@ -533,7 +533,7 @@ function landing(known){
   });
 }
 /* the three choices; resolves with the mode picked, or null (cancelled from Settings) */
-function chooseMode(fromSettings){
+function chooseMode(fromSettings,opts){   /* opts.keep: label for the button that keeps things as they are (default Cancel) */
   return new Promise(resolve=>{
     const fOk=canFolder(), dOk=canDrive()&&navigator.onLine!==false;
     const card=(m,title,sub,ok,why,rec)=>`<button type="button" class="web-way${mode===m&&fromSettings?' current':''}" data-m="${m}"${ok?'':' disabled'}>${ICONS[m]}<span><b>${esc(title)}${rec&&ok?` <i class="web-rec">${esc(t('recommended'))}</i>`:''}</b><small>${esc(sub)}</small>${ok?'':`<small class="web-why">${esc(why)}</small>`}</span></button>`;
@@ -547,10 +547,10 @@ function chooseMode(fromSettings){
       ${fOk?`<p class="web-hint">${esc(t('pickHint'))}</p>`:''}
       ${fromSettings?'':`<div class="web-acts"><button type="button" class="btn ghost" data-x="example">${esc(t('exampleBtn'))}</button></div>`}
       ${fromSettings?'':`<p class="web-hint web-about">${esc(t('about'))} <a href="privacy.html">${esc(t('privacyLink'))}</a></p>`}
-      ${fromSettings?`<div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`:''}`,{overlay:fromSettings});
+      ${fromSettings?`<div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(opts&&opts.keep||t('cancel'))}</button></div>`:''}`,{overlay:fromSettings});
     el.addEventListener('click',async e=>{
       const b=e.target.closest('button'); if(!b||b.disabled) return;
-      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); el.remove(); chooseMode(fromSettings).then(resolve); return; }
+      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); el.remove(); chooseMode(fromSettings,opts).then(resolve); return; }
       if(b.dataset.x==='cancel'){ el.remove(); resolve(null); return; }
       if(b.dataset.x==='example'){ try{ sessionStorage.setItem('ybt.autotour','1'); }catch(_){} el.remove(); resolve({mode:'browser'}); return; }
       const m=b.dataset.m; if(!m) return;
@@ -909,7 +909,15 @@ const local={
     if(k==='saveCopyHelp') return t('saveCopyHelp');
     return null;
   },
-  actions:['changeStorage','syncNow','connectDrive','driveRestore','browserRestore'],
+  actions:['changeStorage','choosePlace','syncNow','connectDrive','driveRestore','browserRestore'],
+  /* the demo put the tracker in this browser without asking; the page asks before its setup wizard */
+  needsPlace(){ return mode==='browser'&&!lsGet(PICKED_KEY); },
+  async choosePlace(){
+    const c=await chooseMode(true,{keep:t('keepBrowser')}); lsSet(PICKED_KEY,'1');
+    if(!c||c.mode==='browser') return null;
+    try{ const msg=await moveTo(c); window.dispatchEvent(new CustomEvent('ybt-local-render')); return msg?{message:msg}:null; }
+    catch(_){ return {message:t('writeFail'),bad:true}; }
+  },
   async driveRestore(){ return driveRestore(); },
   async browserRestore(){ return browserRestore(); },
   /* the top-bar button: Connect Google Drive, while it isn't connected */
