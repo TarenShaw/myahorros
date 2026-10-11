@@ -105,6 +105,24 @@ const SHOTS = process.env.SHOTS;
   await p.click('.web-landing .wl-hero [data-x=demo]');
   await p.waitForSelector('#tour-card', { timeout: 10000 });
   console.log('5. demo opens the tour');
+
+  /* 6. a small phone at 200% zoom (375x667 -> 187x333 CSS px): the where-to-save card fits, and the add dialog's
+     sticky title and buttons leave its fields reachable */
+  p = await (await browser.newContext({ viewport: { width: 187, height: 333 }, hasTouch: true })).newPage();
+  await p.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'es'); } catch (_) {} });
+  await p.goto(START, { waitUntil: 'load' });
+  await p.click('.web-landing .wl-hero [data-x=start]');
+  await p.waitForSelector('button.web-way[data-m=browser]');
+  assert.ok(await p.evaluate(() => document.querySelector('.web-panel-card').getBoundingClientRect().right <= innerWidth), 'where-to-save card wider than the screen');
+  await p.click('button.web-way[data-m=browser]'); await p.click('[data-action="ob-start"]');
+  await p.waitForSelector('#tour-card', { timeout: 8000 }); await p.keyboard.press('Escape');
+  await p.waitForSelector('.wz-body', { timeout: 8000 }); await p.keyboard.press('Escape');
+  await p.waitForSelector('#overlay.on', { state: 'detached' }).catch(() => {});
+  await p.click('#tab-transactions'); await p.click('#view [data-action="add-tx"]'); await p.waitForSelector('#f-amount');
+  const reach = await p.evaluate(() => { const f = document.getElementById('f-amount'); f.scrollIntoView({ block: 'center' });
+    const r = f.getBoundingClientRect(), hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return hit === f || f.contains(hit); });
+  assert.ok(reach, 'amount field hidden under the dialog title or buttons');
+  console.log('6. small phone at 200% zoom: card fits, add dialog fields reachable');
   await browser.close();
   console.log('landing + wizard e2e: all passed');
 })().catch(e => { console.error(e); process.exit(1); });

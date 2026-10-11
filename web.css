@@ -1,7 +1,7 @@
 /* web version: where-to-save panels and the strip at the bottom (uses the tracker's own colours) */
-.web-panel{position:fixed;inset:0;z-index:120;background:var(--bg,#f1f4f2);display:grid;place-items:center;padding:24px 16px;overflow:auto}
+.web-panel{position:fixed;inset:0;z-index:120;background:var(--bg,#f1f4f2);display:grid;grid-template-columns:minmax(0,620px);justify-content:center;align-items:center;padding:24px 16px;overflow:auto}
 .web-panel.overlay{background:rgba(10,20,18,.45);backdrop-filter:blur(2px)}
-.web-panel-card{max-width:620px;width:100%;background:var(--surface,#fff);border:1px solid var(--line,#dde3e0);border-radius:12px;padding:26px;display:grid;gap:14px;box-shadow:var(--shadow,0 10px 40px rgba(0,0,0,.12));color:var(--ink,#13201c)}
+.web-panel-card{max-width:620px;width:100%;background:var(--surface,#fff);border:1px solid var(--line,#dde3e0);border-radius:12px;padding:26px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;box-shadow:var(--shadow,0 10px 40px rgba(0,0,0,.12));color:var(--ink,#13201c)}
 .web-panel h2{margin:0;font:650 24px/1.2 var(--f-display,system-ui);letter-spacing:-.01em}
 .web-eyebrow{margin:0;font:500 11px/1 var(--f-mono,ui-monospace,monospace);letter-spacing:.12em;text-transform:uppercase;color:var(--muted,#5c6a65)}
 .web-sub{margin:0;color:var(--ink-2,#3f4b47);line-height:1.5}
@@ -19,6 +19,7 @@
 .web-way small.web-why{color:var(--warn-ink,#8a5a00);font-weight:500}
 .web-rec{font-style:normal;font-size:11px;font-weight:600;padding:2px 7px;border-radius:99px;background:var(--accent,#0d5c63);color:#fff;margin-left:6px;vertical-align:1px}
 .web-acts{display:flex;flex-wrap:wrap;gap:8px}
+.web-panel .btn{white-space:normal;max-width:100%;height:auto;min-height:34px;padding-block:6px}
 .web-msg{margin:0;font-weight:600;color:var(--bad-ink,#a82727)}
 .web-bar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:90;display:flex;align-items:center;gap:12px;max-width:min(720px,calc(100vw - 32px));width:max-content;padding:10px 12px 10px 16px;border-radius:10px;background:var(--surface,#fff);border:1px solid var(--line,#dde3e0);box-shadow:var(--shadow,0 6px 24px rgba(0,0,0,.14));font-size:13px;line-height:1.45;color:var(--ink,#13201c)}
 .web-bar.signin,.web-bar.folder,.web-bar.folderfail{border-color:var(--warn,#c98a12)}
