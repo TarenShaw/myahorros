@@ -1044,8 +1044,13 @@ async function takeTab(){
   const ac=new AbortController();
   if(!(await Promise.race([grab({signal:ac.signal}),sleep(3000).then(()=>false)]))){ ac.abort(); await grab({steal:true}); }
 }
+let leaving=false;
 if(tabCh) tabCh.onmessage=async e=>{
-  if(e.data!=='take'||asleep) return;
+  if(e.data!=='take'||asleep||leaving) return;
+  /* an edit from the last moment may still be in the page: have it saved before stopping (at most 2 s) */
+  leaving=true;
+  await new Promise(r=>{ window.dispatchEvent(new CustomEvent('ybt-flush',{detail:{done:r}})); setTimeout(r,2000); });
+  await queue;
   asleep=true; clearTimeout(upT); clearTimeout(busyT);
   const el=panel(`<p class="web-eyebrow">MyAhorros</p><h2 id="wp-title">${esc(t('tabTitle'))}</h2><p class="web-sub">${esc(t('tabText'))}</p>
     <div class="web-acts"><button type="button" class="btn primary" data-x="here">${esc(t('tabHere'))}</button></div>`);

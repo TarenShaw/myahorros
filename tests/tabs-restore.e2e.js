@@ -54,6 +54,18 @@ const TRACKER = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months
   assert.strictEqual(await txCount(b), 1);
   console.log('3. start fresh, then restore from this browser');
 
+  /* 4. another tab takes over right after an edit (inside the 250 ms before it's saved): the edit is saved first */
+  for (let i = 0; i < 3; i++) { await b.keyboard.press('Escape'); await b.waitForTimeout(150); }
+  await b.click('#tab-transactions'); await b.click('#view [data-action="add-tx"]'); await b.waitForSelector('#tx-form');
+  await b.fill('#f-date', '2026-09-15'); await b.fill('#f-concept', 'Last-moment edit'); await b.fill('#f-amount', '12');
+  const c = await ctx.newPage(); await c.goto(START + 'privacy.html');
+  await b.$eval('#tx-form', f => f.requestSubmit());
+  await c.evaluate(() => new BroadcastChannel('myahorros-tab').postMessage('take'));
+  await b.waitForSelector('.web-panel [data-x=here]');
+  const saved = await b.evaluate(async () => JSON.stringify(await window.__ybtWeb.idb.get('data')));
+  assert.ok(/Last-moment edit/.test(saved), 'edit lost when another tab took over');
+  console.log('4. an edit made just before another tab takes over is saved');
+
   await browser.close();
   console.log('tabs-restore: all passed');
 })().catch(e => { console.error(e); process.exit(1); });
