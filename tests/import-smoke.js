@@ -119,3 +119,29 @@ assert.strictEqual(parseAmount('1.234,5'), 1234.5);
 }
 
 console.log('import smoke: all passed');
+
+/* a new tracker's currency and number format come from the device's time zone (user report 2026-10-12: an
+   "en-US" browser in Spain showed dollars); a zone not listed returns null and the browser language decides */
+{
+  const a = html.indexOf('const TZ_REGION='), b = html.indexOf('\nconst langRegion=');
+  const tzRegion = new Function(html.slice(a, b) + 'return tzRegion;')();
+  const t = z => { const r = tzRegion(z); return r ? r.cur + ' ' + r.num : null; };
+  assert.strictEqual(t('Europe/Madrid'), 'EUR eu');
+  assert.strictEqual(t('Atlantic/Canary'), 'EUR eu');
+  assert.strictEqual(t('Europe/Berlin'), 'EUR eu');
+  assert.strictEqual(t('Europe/Dublin'), 'EUR en');
+  assert.strictEqual(t('Europe/London'), 'GBP en');
+  assert.strictEqual(t('Europe/Zurich'), 'CHF en');
+  assert.strictEqual(t('Europe/Stockholm'), 'SEK eu');
+  assert.strictEqual(t('Europe/Warsaw'), 'PLN eu');
+  assert.strictEqual(t('America/New_York'), 'USD en');
+  assert.strictEqual(t('America/Indiana/Indianapolis'), 'USD en');
+  assert.strictEqual(t('Pacific/Honolulu'), 'USD en');
+  assert.strictEqual(t('America/Toronto'), 'CAD en');
+  assert.strictEqual(t('America/Mexico_City'), 'MXN en');
+  assert.strictEqual(t('Australia/Sydney'), 'AUD en');
+  assert.strictEqual(t('America/Bogota'), null);
+  assert.strictEqual(t('Asia/Tokyo'), null);
+  assert.strictEqual(t(''), null);
+  console.log('time-zone region: all passed');
+}

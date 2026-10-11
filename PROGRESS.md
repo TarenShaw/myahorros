@@ -33,6 +33,7 @@ Personal-data notes, local paths, real figures: `PRIVATE_NOTES.md` (git-ignored)
 
 ## Decisions
 
+- 2026-10-12: User: an en-US browser showed dollars in Spain → a new tracker's currency and number format come from the device time zone (`tzRegion`, `TZ_REGION`; read locally, nothing sent), else the browser language; rest of Europe → euros; currency picker on wizard step 1 (`#wz-cur`). SW 1.0.39.
 - 2026-10-12: User audit, "implement all". Claude's calls: Net worth top block in whole euros (table keeps cents); a received Bizum is Expenses (payback) unless an income keyword matches; starter categories drop Education, Snacks, Legal, Capital Gains Losses, Lottery (old trackers keep theirs); Yearly hides categories with no rows this year (unless a limit or rows in other years); "Get started" path unchanged (Escape on its tour still goes to the wizard).
 
 - 2026-10-10: Name **MyAhorros**; "Yearly Budget Tracker" only where it identifies stored data. Default AI Claude Haiku 5.5 (`js/models.js`); copy-paste column "API (your own key)", card keeps "ChatGPT".

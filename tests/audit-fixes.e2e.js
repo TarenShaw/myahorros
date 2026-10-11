@@ -7,7 +7,7 @@ const assert = require('assert');
 const START = process.env.START_URL || 'http://localhost:8000/';
 (async () => {
   const browser = await chromium.launch({ channel: 'msedge' });
-  const newPage = async (locale = 'es-ES') => { const p = await (await browser.newContext({ viewport: { width: 1280, height: 860 }, locale })).newPage();
+  const newPage = async (locale = 'es-ES', timezoneId = 'Europe/Madrid') => { const p = await (await browser.newContext({ viewport: { width: 1280, height: 860 }, locale, timezoneId })).newPage();
     p.on('pageerror', e => console.log('pageerror:', String(e).slice(0, 200)));
     await p.route('https://accounts.google.com/gsi/client', r => r.fulfill({ contentType: 'text/javascript', body: 'window.google={accounts:{oauth2:{}}};' }));
     return p; };
@@ -74,6 +74,21 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await btn.click(); await p.waitForTimeout(200);
   assert.ok(await p.$$eval('table.grid tbody th.rh', t => t.length) > shown + 10, 'empty categories not shown on demand');
   console.log('4. Bizum payback note; Yearly folds empty categories');
+
+  /* 5. an "en-US" browser in Spain: euros and 1.234,56 from the time zone; the wizard's currency picker changes it */
+  for (const [tz, cur, sym] of [['Europe/Madrid', 'EUR', '€'], ['America/New_York', 'USD', '$']]) {
+    p = await newPage('en-US', tz);
+    await p.goto(START, { waitUntil: 'load' });
+    await p.click('.web-landing .wl-hero [data-x=demo]');
+    await p.waitForSelector('#tour-card [data-tour=free]', { timeout: 10000 });
+    assert.ok((await p.innerText('#view .hero-num')).includes(sym), tz + ': demo not in ' + sym);
+    await p.click('#tour-card [data-tour=free]'); await p.click('#demo-bar [data-tour=end]');
+    await p.click('.web-panel [data-x=cancel]'); await p.waitForSelector('#wz-cur');
+    assert.strictEqual(await p.inputValue('#wz-cur'), cur, tz + ': wizard currency');
+  }
+  await p.selectOption('#wz-cur', 'EUR'); await p.waitForTimeout(300);
+  assert.strictEqual(await p.evaluate(() => window.__ybtWeb.store.config.settings.currency), 'EUR', 'wizard currency not saved');
+  console.log('5. currency from the time zone; the wizard picker changes it');
 
   await browser.close();
   console.log('audit fixes e2e: all passed');

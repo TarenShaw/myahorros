@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Cg+KBNEiolURlRdyENfPd+/GnmsR2awTr+VxtU68Sbc=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-HhLjocutFjHKtg69h8mpkyD5n5U3ipU4CFV5Ni9VLvg=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -168,6 +168,7 @@ html{scrollbar-gutter:stable}
 .wz-dots li{display:flex;align-items:center;gap:var(--s8);font-size:var(--fs-sm);color:var(--muted)}
 .wz-dots li span{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1px solid var(--line-2);font-weight:700;font-size:var(--fs-sm)}
 .wz-dots li.cur{color:var(--ink)}.wz-dots li.cur span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.wz-cur{display:flex;align-items:center;gap:var(--s8);flex-wrap:wrap;margin:var(--s8) 0 0;font-size:var(--fs-meta);color:var(--ink-2)}.wz-cur select{width:auto}
 .wz-dots li.done span{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 .wz-dots li+li::before{content:"";width:14px;height:1px;background:var(--line-2)}
 .wz-body p{margin:0}
@@ -1185,10 +1186,27 @@ function foreignCode(raw,own){
   if(raw.indexOf('$')>-1) return ['USD','CAD','AUD','MXN'].includes(own)?null:'USD';
   return null;
 }
-/* the number format of the browser's region, not of the language picked: a Spanish visitor reading in English still writes 1.234,56 */
-function regionNum(){ try{ return new Intl.NumberFormat((navigator.languages&&navigator.languages[0])||navigator.language||'en').format(1.5).includes(',')?'eu':'en'; }catch(_){ return 'eu'; } }
-function regionCurrency(){ const rg=(((navigator.languages&&navigator.languages[0])||navigator.language||'').split('-')[1]||'').toUpperCase();
-  return {GB:'GBP',UK:'GBP',IE:'EUR',US:'USD',CA:'CAD',AU:'AUD',CH:'CHF',MX:'MXN',SE:'SEK',PL:'PLN'}[rg]||'EUR'; }
+/* Where the visitor is, for a new tracker's currency and number format: the device's time zone first (set by the
+   device, read locally, nothing is sent anywhere), so someone in Madrid with an "en-US" browser gets euros and 1.234,56.
+   Returns {cur, num} or null for a zone not listed; then the browser language's region decides, as before. */
+const TZ_REGION=[
+  [/^Europe\/(London|Belfast|Guernsey|Jersey|Isle_of_Man)$/,'GBP','en'],
+  [/^Europe\/(Dublin|Malta)$/,'EUR','en'],
+  [/^Europe\/(Zurich|Vaduz)$/,'CHF','en'],
+  [/^Europe\/Stockholm$/,'SEK','eu'],
+  [/^Europe\/Warsaw$/,'PLN','eu'],
+  [/^(Europe\/|Atlantic\/(Canary|Madeira|Azores)$|Africa\/Ceuta$|Asia\/(Nicosia|Famagusta)$)/,'EUR','eu'],   /* the rest of Europe: euros (other European currencies aren't offered) */
+  [/^Australia\//,'AUD','en'],
+  [/^America\/(Toronto|Montreal|Vancouver|Edmonton|Winnipeg|Regina|Swift_Current|Halifax|Glace_Bay|Moncton|Goose_Bay|St_Johns|Whitehorse|Dawson|Dawson_Creek|Fort_Nelson|Creston|Yellowknife|Inuvik|Cambridge_Bay|Rankin_Inlet|Resolute|Iqaluit|Pangnirtung|Atikokan|Blanc-Sablon|Nipigon|Thunder_Bay|Rainy_River)$/,'CAD','en'],
+  [/^America\/(Mexico_City|Cancun|Merida|Monterrey|Matamoros|Chihuahua|Ciudad_Juarez|Ojinaga|Mazatlan|Bahia_Banderas|Hermosillo|Tijuana)$/,'MXN','en'],
+  [/^(America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Juneau|Sitka|Nome|Yakutat|Metlakatla|Adak|Detroit|Boise|Menominee|Indiana\/.+|Kentucky\/.+|North_Dakota\/.+)|Pacific\/Honolulu)$/,'USD','en']];
+function tzRegion(z){ if(z==null){ try{ z=Intl.DateTimeFormat().resolvedOptions().timeZone||''; }catch(_){ z=''; } }
+  const h=TZ_REGION.find(x=>x[0].test(z)); return h?{cur:h[1],num:h[2]}:null; }
+const langRegion=()=>(((navigator.languages&&navigator.languages[0])||navigator.language||'').split('-')[1]||'').toUpperCase();
+/* the number format of where the visitor is, not of the language picked: a Spanish visitor reading in English still writes 1.234,56 */
+function regionNum(){ const t=tzRegion(); if(t) return t.num; try{ return new Intl.NumberFormat((navigator.languages&&navigator.languages[0])||navigator.language||'en').format(1.5).includes(',')?'eu':'en'; }catch(_){ return 'eu'; } }
+function regionCurrency(){ const t=tzRegion(); if(t) return t.cur;
+  return {GB:'GBP',UK:'GBP',IE:'EUR',US:'USD',CA:'CAD',AU:'AUD',CH:'CHF',MX:'MXN',SE:'SEK',PL:'PLN'}[langRegion()]||'EUR'; }
 function applyCur(){ const c=S.settings&&S.settings.currency; CUR=CURRENCIES[c]?c:'EUR'; }
 function setCurrency(v){ v=CURRENCIES[v]?v:'EUR'; if(!S.canWrite) return; setSettings({currency:v}); render(); toast(L('currencySaved',fmtEUR(1234.56))); }
 const fmtCell=v=>Math.abs(v)<0.005?DASH:HIDE?MASK:fmtNum(v);
@@ -1796,6 +1814,7 @@ const STR={
   wz3Title:['Last, your salary or pension','Por último, tu nómina o pensión'],
   wz3Text:['Add your salary (or pension) so the tracker can show what you kept. From now on, at the start of each month you fill in the previous month: its balances, its transactions and its salary.','Añade tu nómina (o pensión) para que el control muestre lo que has ahorrado. A partir de ahora, al empezar cada mes rellenas el mes anterior: sus saldos, sus movimientos y su nómina.'],
   wzAddSalary:['Add my salary or pension','Añadir mi nómina o pensión'],
+  wzCurrency:['Amounts in','Importes en'],
   wzSalaryFound:[(a,d)=>`Salary found: ${a} on ${d}`,(a,d)=>`Nómina encontrada: ${a} el ${d}`], wzSkipped:['skipped','saltado'],
   wzPlace:['Change where it’s saved','Cambiar dónde se guarda'],
   wz4Title:['You’re all set','Ya está todo listo'],
@@ -3379,7 +3398,9 @@ function modalWizard(){
   const ok=(on,text)=>on?`<p class="wz-ok">${ICON.ok}<span>${esc(text)}</span></p>`:'';
   let body='';
   if(i===0){
+    /* the currency was guessed from where the device is: shown here so a wrong guess is fixed before any figure is typed */
     body=`<p>${esc(L('wz0Text',ymIn(k)))}</p>
+      <p class="wz-cur"><label for="wz-cur">${esc(L('wzCurrency'))}</label> <select id="wz-cur">${Object.entries(CURRENCIES).map(([c,x])=>`<option value="${c}"${c===CUR?' selected':''}>${esc(x.n)}</option>`).join('')}</select></p>
       <div class="wz-acts">${act('guide-acc',esc(L('nwAddAccounts')),'',nAcc?'':'primary')}${act('guide-val',esc(L('nwEnter',ymIn(k))),` data-k="${k}"`,nAcc&&!nMon?'primary':'')}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):''}</div>
       ${ok(nAcc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[0])}${ok(nMon,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[1])}`;
   } else if(i===1){
@@ -6167,6 +6188,7 @@ document.addEventListener('change',e=>{
   if(el.name==='st-theme'){ setTheme(el.value); return; }
   if(el.name==='st-num'){ setNumFmt(el.value); return; }
   if(id==='st-cur'){ setCurrency(el.value); return; }
+  if(id==='wz-cur'){ setCurrency(el.value); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); return; }
   if(id==='st-ml'){ setSettings({mlGuess:el.checked}); render(); return; }
   if(id==='st-born'||id==='st-salary'){ const v=+el.value, ok=id==='st-born'?Number.isInteger(v)&&v>=1900&&v<=new Date().getFullYear():v>0&&v<1e9;
     setSettings({[id==='st-born'?'birthYear':'salary']:ok?(id==='st-born'?v:r2(v)):null}); if(!ok) el.value=''; return; }

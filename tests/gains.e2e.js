@@ -7,7 +7,7 @@ const assert = require('assert');
 const START = process.env.START_URL || 'http://localhost:8000/';
 (async () => {
   const browser = await chromium.launch({ channel: 'msedge' });
-  const p = await (await browser.newContext({ viewport: { width: 1280, height: 860 }, locale: 'en-GB' })   /* a new tracker takes its number format from the region */).newPage();
+  const p = await (await browser.newContext({ viewport: { width: 1280, height: 860 }, locale: 'en-GB', timezoneId: 'Europe/London' })   /* a new tracker takes its number format from where the device is */).newPage();
   p.on('pageerror', e => console.log('pageerror:', String(e).slice(0, 200)));
   await p.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
   await p.route('https://accounts.google.com/gsi/client', r => r.fulfill({ contentType: 'text/javascript', body: 'window.google={accounts:{oauth2:{}}};' }));
