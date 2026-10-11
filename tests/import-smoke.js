@@ -18,6 +18,16 @@ assert.strictEqual(parseAmount('(23,45)'), -23.45);
 assert.strictEqual(parseAmount('49 091 536 01'), null);
 assert.strictEqual(parseAmount('4909153601'), null);
 assert.strictEqual(parseAmount(4909153601), null);
+/* typed amounts follow the person's number format: the format's lone decimal mark is always the decimal */
+assert.strictEqual(parseAmount('12,500'), 12500);            /* bank file: thousands */
+assert.strictEqual(parseAmount('12,500', 'eu'), 12.5);
+assert.strictEqual(parseAmount('12.500', 'eu'), 12500);
+assert.strictEqual(parseAmount('12.50', 'eu'), 12.5);
+assert.strictEqual(parseAmount('1.234,56', 'eu'), 1234.56);
+assert.strictEqual(parseAmount('1.000', 'en'), 1);
+assert.strictEqual(parseAmount('1,000', 'en'), 1000);
+assert.strictEqual(parseAmount('12,50', 'en'), 12.5);
+assert.strictEqual(parseAmount('1,234,567', 'eu'), 1234567);
 
 /* keywords match only at the start of a word */
 const kw = (c, k) => hasKw(loose(c), loose(k));

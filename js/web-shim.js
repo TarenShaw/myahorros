@@ -15,7 +15,7 @@ const FOLDER='Yearly Budget Tracker', FILE='tracker-data.json', BACKUPS='Backups
 const DAILY=/^tracker-data \d{4}-\d{2}-\d{2}\.json$/;
 const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.file';
 const API='https://www.googleapis.com/drive/v3', UPLOAD='https://www.googleapis.com/upload/drive/v3';
-const MODE_KEY='ybt.storage', DRIVE_KEY='ybt.drive';
+const MODE_KEY='ybt.storage', DRIVE_KEY='ybt.drive', PICKED_KEY='ybt.picked'; /* PICKED_KEY: the person chose where to save (the demo picks browser storage for them) */
 
 const clone=o=>JSON.parse(JSON.stringify(o));
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -913,7 +913,7 @@ const local={
 
   async changeStorage(){
     const c=await chooseMode(true); if(!c) return null;
-    try{ const msg=await moveTo(c); window.dispatchEvent(new CustomEvent('ybt-local-render')); return msg?{message:msg}:null; }
+    try{ const msg=await moveTo(c); lsSet(PICKED_KEY,'1'); window.dispatchEvent(new CustomEvent('ybt-local-render')); return msg?{message:msg}:null; }
     catch(e){ return {message:t('writeFail'),bad:true}; }
   },
   async syncNow(){
@@ -1029,14 +1029,15 @@ async function start(){
   if(m==='folder'&&!(await startFolder())) m=mode;
   if(m==='drive'&&!(await startDrive().catch(()=>false))) m=mode||'browser';
   if(!store&&m==='browser'){ setMode('browser'); const text=await browser.read().catch(()=>null); store=await readStored(text); }
-  /* nothing added yet (no transactions, no accounts or figures): the choice isn't final, so ask again */
-  if(store&&nothingAdded(store)){ store=null; bar(null); }
+  /* nothing added yet (no transactions, no accounts or figures): ask again only if the demo chose for them, or they asked for the demo now.
+     A place the person picked themselves stays picked, so a refresh in the middle of setting up doesn't ask twice */
+  if(store&&nothingAdded(store)&&(first==='demo'||!lsGet(PICKED_KEY))){ store=null; bar(null); }
   if(!store){
     /* nothing here yet: where should it live? (a reload skipped the landing above, so show it now to people who never picked a place) */
     if(!first) first=m?'start':await landing();
     let c;
     if(first==='demo'){ try{ sessionStorage.setItem('ybt.autotour','1'); }catch(_){} c={mode:'browser'}; }
-    else c=await chooseMode(false);
+    else { c=await chooseMode(false); lsSet(PICKED_KEY,'1'); }
     if(c.mode==='folder'){ folder.dir=c.dir; await idb.set('folder',c.dir); setMode('folder'); const text=await folder.read(); store=await readStored(text); }
     else if(c.mode==='drive'){ setMode('drive'); const mm=drive.meta; let text=null, v=null; if(mm.fileId){ text=await drive.download(mm.fileId); v=(mm.remote||{}).version; }
       store=await readStored(text); await idb.set('drive',{text:serialise(),version:v,dirty:false}); drive.lastSync=new Date(); drive.state='idle'; }

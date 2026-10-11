@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-AkZ7gZoSOonUnlh006z78l81Vh6YTudUrFqP0KMwbQ8=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-L1vsq0iaG53JkgB4rwbiJCXpZS01UojpyFOhafuKFIs=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -234,6 +234,8 @@ tr.ai-ask td.n{min-width:220px;white-space:normal}
   .acc-start-grid{grid-template-columns:1fr}.guide-skip{margin-left:0}.guide-steps{gap:6px 16px}.guide .nw-groups-help{grid-template-columns:1fr 1fr;gap:8px}.guide .nw-groups-help>div{padding:9px 10px}}
 @media (max-width:360px){.guide .nw-groups-help{grid-template-columns:1fr}}
 .info-btn{display:inline-grid;place-items:center;width:17px;height:17px;margin-left:7px;padding:0;border-radius:50%;border:1px solid var(--line-2);background:var(--surface);color:var(--muted);font:700 11px/1 var(--f-body);font-style:normal;text-transform:none;letter-spacing:0;cursor:help;vertical-align:2px;flex:none}
+/* the click area is 25 px (WCAG 2.2 target size) without making the circle bigger; touch screens widen it further below */
+.info-btn{position:relative}.info-btn::after{content:"";position:absolute;inset:-4px;border-radius:50%}
 .info-btn:hover,.info-btn[aria-expanded="true"]{color:var(--ink);border-color:var(--ink-2)}
 .info-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .toolbar .left .info-btn{margin-left:10px;align-self:center}
@@ -310,7 +312,7 @@ select{padding-right:28px}
 .tile-sub{font-size:12px;color:var(--muted)}
 
 .inds{display:grid;gap:0}
-.ind{display:grid;grid-template-columns:minmax(170px,1.1fr) minmax(180px,2.6fr) 96px 132px 128px;grid-template-areas:"l m v t s";align-items:center;gap:8px 20px;padding:12px 0;border-top:1px solid var(--line)}
+.ind{display:grid;grid-template-columns:minmax(170px,1.1fr) minmax(180px,2.6fr) 96px 132px minmax(128px,max-content);grid-template-areas:"l m v t s";align-items:center;gap:8px 20px;padding:12px 0;border-top:1px solid var(--line)}
 .ind-label{grid-area:l}.ind-val{grid-area:v}.ind .meter{grid-area:m}.ind-target-wrap{grid-area:t;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}.ind .pill{grid-area:s;justify-self:end}
 .ind:first-child{border-top:0;padding-top:2px}
 .ind-label{font-weight:600}
@@ -1185,8 +1187,10 @@ function parseDate(v){
   if((m=f.match(/^([a-z]{3,10})\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})(?:\D.*)?$/))&&MM[m[1]]) return isoOf(+m[3],MM[m[1]],+m[2]);
   return null;
 }
-/* "1.234,56", "1,234.56", "1 234,56", "(23,45)", "23,45-", "€ 12", "$12.50", "£1,200.00": null when it isn't a plausible amount (a billion or more is a misread number) */
-function parseAmount(v){
+/* "1.234,56", "1,234.56", "1 234,56", "(23,45)", "23,45-", "€ 12", "$12.50", "£1,200.00": null when it isn't a plausible amount (a billion or more is a misread number).
+   fmt ('eu'|'en'): the person's number format, for amounts they type. Then a lone decimal mark of that format is always the decimal ("12,500" is 12,5 in 'eu');
+   without it (bank files) one separator before exactly 3 digits is read as thousands */
+function parseAmount(v,fmt){
   if(typeof v==='number') return isFinite(v)&&Math.abs(v)<1e9?r2(v):null;
   if(v==null) return null;
   let s=String(v).trim().replace(/US\$/gi,'').replace(/[€$£¥]|EUR|USD|GBP/gi,'').trim();
@@ -1201,10 +1205,10 @@ function parseAmount(v){
   if(lc>-1&&ld>-1){ const dec=lc>ld?',':'.'; if(cnt(dec)!==1) return null; s = dec===',' ? s.replace(/\./g,'').replace(',','.') : s.replace(/,/g,''); }
   else if(lc>-1){ const many=cnt(',')>1, dec=s.length-lc-1, ip=s.slice(0,lc).replace(/^[+-]/,'');
     if(many&&!/^[+-]?\d{1,3}(,\d{3})+$/.test(s)) return null;
-    s = (many||(dec===3&&ip!=='0'&&ip!==''))? s.replace(/,/g,'') : s.replace(',','.'); }
+    s = (many||(dec===3&&ip!=='0'&&ip!==''&&fmt!=='eu'))? s.replace(/,/g,'') : s.replace(',','.'); }
   else if(ld>-1){ const many=cnt('.')>1, dec=s.length-ld-1, ip=s.slice(0,ld).replace(/^[+-]/,'');
     if(many&&!/^[+-]?\d{1,3}(\.\d{3})+$/.test(s)) return null;
-    if(many||(dec===3&&ip!=='0'&&ip!=='')) s=s.replace(/\./g,''); }
+    if(many||(dec===3&&ip!=='0'&&ip!==''&&fmt!=='en')) s=s.replace(/\./g,''); }
   const n=parseFloat(s); if(!isFinite(n)||Math.abs(n)>=1e9) return null;
   return r2(neg?-n:n);
 }
@@ -1424,7 +1428,11 @@ const STR={
   mlImpNote:[n=>`${pl(n,'category')} guessed from your past transactions, marked Guess. Check ${n===1?'it':'them'} before adding.`,n=>`${pl(n,'category')} ${n===1?'adivinada':'adivinadas'} a partir de tus movimientos, marcada${n===1?'':'s'} como Suposición. Revísa${n===1?'la':'las'} antes de añadir.`],
   nGuessed:[n=>` · ${n} guessed`,n=>` · ${n} adivinada${n===1?'':'s'}`],
   delTxQ:['Delete this transaction?','¿Eliminar este movimiento?'], keep:['Keep','Conservar'], saveChanges:['Save changes','Guardar cambios'],
-  errDate:['Enter a date.','Introduce una fecha.'], errAmount:[x=>`Enter the amount as a number, for example ${x}.`,x=>`Introduce el importe como número, por ejemplo ${x}.`],
+  errDate:['Enter a date.','Introduce una fecha.'], errZero:['Enter an amount other than 0.','Introduce un importe distinto de 0.'],
+  warnFuture:[(d,b)=>`This date is in the future (${d}). Press ${b} again to keep it.`,(d,b)=>`Esta fecha es futura (${d}). Pulsa ${b} otra vez para mantenerla.`],
+  warnOld:[(d,b)=>`This date is a long time ago (${d}). Press ${b} again to keep it.`,(d,b)=>`Esta fecha es de hace mucho (${d}). Pulsa ${b} otra vez para mantenerla.`],
+  warnNoDesc:[b=>`There’s no description. Press ${b} again to save it anyway.`,b=>`No hay descripción. Pulsa ${b} otra vez para guardarlo igualmente.`],
+  errAmount:[x=>`Enter the amount as a number, for example ${x}.`,x=>`Introduce el importe como número, por ejemplo ${x}.`],
   savedToast:['Saved','Guardado'], addedAs:[(t,c)=>`Added to ${t} as ${c}`,(t,c)=>`Añadido a ${t} como ${c}`], addedUncat:[t=>`Added to ${t}, uncategorised`,t=>`Añadido a ${t}, sin categoría`],
   txDeleted:['Transaction deleted','Movimiento eliminado'],
   /* drill */
@@ -1580,7 +1588,7 @@ const STR={
   preDataBtn:['Start at the first month with data','Empezar en el primer mes con datos'],
   nodbDeskTitle:['The tracker couldn’t start','El control no ha podido arrancar'],
   nodbDeskText:['Its data file couldn’t be opened. Close the app and open it again.','No se ha podido abrir su archivo de datos. Cierra la aplicación y vuelve a abrirla.'],
-  dlAllHelp:['Every transaction, the year summary, categories and keywords in one .xlsx.','Todos los movimientos, el resumen del año, las categorías y las palabras clave en un .xlsx.'],
+  dlAllHelp:['Every transaction, a summary for each year, categories and keywords in one .xlsx.','Todos los movimientos, un resumen de cada año, las categorías y las palabras clave en un .xlsx.'],
   h_date:['Date','Fecha'], h_amount:['Amount','Importe'], h_concept:['CONCEPT','CONCEPTO'], h_category:['Category','Categoría'], h_month:['MONTH','MES'], h_year:['YEAR','AÑO'],
   sh_yearly:[y=>'YEARLY TRACKING '+y,y=>'SEGUIMIENTO ANUAL '+y], sh_cats:['CATEGORIES','CATEGORÍAS'], nwHead:['Fixed / Variable','Fijo / Variable'],
   sh_kw:[s=>s+' KEYWORDS',s=>'PALABRAS CLAVE '+s], sh_catNames:['CATEGORY NAMES','NOMBRES DE CATEGORÍAS'], sh_how:['HOW TO','CÓMO RELLENAR'],
@@ -2325,7 +2333,9 @@ function subscribe(){ subMonths(); subConfig(); }
 /* opening the tracker: Net worth is the default tab, but someone who only tracks spending (no accounts) opens on the Overview */
 let tabPicked=false;
 function pickStartTab(){ if(tabPicked||!S.gotMonths||!S.gotConfig) return; tabPicked=true;
-  if(!location.hash&&S.ui.tab==='networth'&&!(nw().accounts||[]).length&&allRows().length) S.ui.tab='overview'; }
+  if(!location.hash&&S.ui.tab==='networth'&&!(nw().accounts||[]).length&&allRows().length) S.ui.tab='overview';
+  /* the first history entry names its tab too, so Back from the second tab returns to it */
+  if(!location.hash) try{ history.replaceState(null,'','#'+S.ui.tab); }catch(_){} }
 function subErr(again){ return e=>{ if(e&&e.code==='unavailable'){ setTimeout(again,3000); return; } if(e&&e.code==='revoked'){ S.canWrite=false; syncStatus(); return; } toast(L('lostConn')); }; }
 function subMonths(){
   S.db.collection('months').limit(1000).onSnapshot(snap=>{
@@ -4785,10 +4795,15 @@ function refreshEditSuggest(){ const m=S.modal, d=m.draft;
   const el=$('#f-sug'); if(el) el.innerHTML=sugHtml(d); }
 function submitEdit(){
   readEditForm(); const m=S.modal, d=m.draft;
-  const raw=String(d.amountText==null?'':d.amountText).trim(), date=parseDate(d.date), parsed=parseAmount(raw);
+  const raw=String(d.amountText==null?'':d.amountText).trim(), date=parseDate(d.date), parsed=parseAmount(raw,wantNum());
   const err=msg=>{ const e=$('#f-err'); e.hidden=false; e.querySelector('.err').textContent=msg; };
   if(!date) return err(L('errDate'));
   if(parsed===null) return err(L('errAmount',fmtNum(23.45)));
+  if(Math.abs(parsed)<0.005) return err(L('errZero'));
+  /* unlikely but possible: say so once, a second press keeps it */
+  const n=nowYM(), today=ymOf(n.y,n.m)+'-'+String(n.day).padStart(2,'0'), btn=L(m.ref?'saveChanges':'addTx');
+  const warn=date>today?L('warnFuture',fmtDate(date),btn):date<'1990-01-01'?L('warnOld',fmtDate(date),btn):!d.concept.trim()?L('warnNoDesc',btn):'';
+  if(warn&&m.warned!==warn){ m.warned=warn; return err(warn); }
   /* typed without a sign: the Spent / Refund choice decides; a typed minus always means money out */
   const amount=parsed>0&&d.dir==='out'&&!/^\+/.test(raw)?-parsed:parsed;
   let category=d.category;
@@ -5103,7 +5118,7 @@ function impEdit(el,focusId){
   const m=S.modal, r=m&&m.type==='import'&&m.rows&&m.rows[+el.dataset.i]; if(!r) return;
   const bad=on=>{ el.classList.toggle('bad',on); if(on) el.setAttribute('aria-invalid','true'); else el.removeAttribute('aria-invalid'); };
   if(el.dataset.action==='imp-amt'){
-    const v=parseAmount(el.value.split(cs()).join(''));
+    const v=parseAmount(el.value.split(cs()).join(''),wantNum());
     if(v==null||Math.abs(v)<0.005){ bad(true); toast(L('impBadAmt')); return; }
     bad(false); if(v===r.amount) return;
     r.amount=v; if(r.guessed){ const t=guessTable(r); if(t!==r.table){ setImpTable(r,t); r.guessed=true; } }
@@ -5471,12 +5486,14 @@ async function exportXlsx(){
     ws['!cols']=[{wch:12},{wch:12},{wch:50},{wch:26},{wch:11},{wch:7}];
     X.utils.book_append_sheet(wb,ws,sheetName(t));
   }
-  const y=S.ui.year, A=agg(y);
-  const sumAoa=[[String(y),...M(),L('total')]];
-  for(const t of TKEYS){ sumAoa.push([TL(t)]); for(const n of catRowsFor(A,t)){ const a=A[t].rows.get(n); sumAoa.push([dispCat(n),...a,r2(sum(a))]); } sumAoa.push([L('total'),...A[t].total,r2(sum(A[t].total))]); sumAoa.push([]); }
-  sumAoa.push([L('totalSavings'),...A.savings,r2(sum(A.savings))]);
-  const sws=X.utils.aoa_to_sheet(sumAoa); sws['!cols']=[{wch:26},...M().map(()=>({wch:11})),{wch:12}];
-  X.utils.book_append_sheet(wb,sws,L('sh_yearly',y));
+  /* one summary sheet per year with transactions, newest first (not only the year on screen) */
+  for(const y of yearsWithData().slice().reverse()){
+    const A=agg(y), sumAoa=[[String(y),...M(),L('total')]];
+    for(const t of TKEYS){ sumAoa.push([TL(t)]); for(const n of catRowsFor(A,t)){ const a=A[t].rows.get(n); sumAoa.push([dispCat(n),...a,r2(sum(a))]); } sumAoa.push([L('total'),...A[t].total,r2(sum(A[t].total))]); sumAoa.push([]); }
+    sumAoa.push([L('totalSavings'),...A.savings,r2(sum(A.savings))]);
+    const sws=X.utils.aoa_to_sheet(sumAoa); sws['!cols']=[{wch:26},...M().map(()=>({wch:11})),{wch:12}];
+    X.utils.book_append_sheet(wb,sws,L('sh_yearly',y));
+  }
   const cAoa=[[L('table'),L('h_category'),L('nwHead'),L('limitHead')],...TKEYS.flatMap(t=>cats()[t].map(c=>[TL(t),c.name,t==='expenses'?nwLabel(c.type||'Want'):'',t==='expenses'&&limitFor(c.name)?limitFor(c.name):'']))];
   X.utils.book_append_sheet(wb,X.utils.aoa_to_sheet(cAoa),L('sh_cats'));
   if(nwMonths().length){
@@ -5685,7 +5702,7 @@ async function startTour(opts){
   const card=document.createElement('div'); card.id='tour-card'; card.className='tour-card'; card.setAttribute('role','dialog'); card.setAttribute('aria-modal','true'); card.setAttribute('aria-labelledby','tour-title'); card.setAttribute('aria-describedby','tour-text'); card.style.visibility='hidden';   /* shown once tourPlace has put it in place */
   card.addEventListener('click',e=>{ const b=e.target.closest('[data-tour]'); if(!b) return; const a=b.dataset.tour; if(a==='next') tourGo(TOUR.i+1); else if(a==='back') tourGo(TOUR.i-1); else endTour(); });
   document.body.append(layer,spot,card);
-  setTab('networth');
+  setTab('networth','replace');
   tourGo(0);
 }
 function tourRender(){
@@ -5699,7 +5716,7 @@ function tourRender(){
 async function tourGo(i){
   if(!TOUR) return;
   TOUR.i=Math.max(0,Math.min(TOUR_STEPS.length-1,i)); const st=TOUR_STEPS[TOUR.i];
-  if(st.tab&&S.ui.tab!==st.tab) setTab(st.tab);
+  if(st.tab&&S.ui.tab!==st.tab) setTab(st.tab,'replace');
   tourRender(); await sleep(70); if(!TOUR) return;
   tourPlace(true);
   const f=$('#tour-card [data-tour=next]')||$('#tour-card [data-tour=end]:last-of-type'); if(f) f.focus({preventScroll:true});
@@ -5762,7 +5779,9 @@ window.addEventListener('ybt-prefs',()=>{
   if(TOUR) TOUR.hide=h; else HIDE=h;
   render();
 });
-function setTab(t){ if(!TABS.includes(t)) return; S.ui.tab=t; S.ui.editTarget=null; try{ history.replaceState(null,'','#'+t); }catch(_){} render(); window.scrollTo({top:0}); }
+/* how: 'replace' (the tour: no history entry per step), 'pop' (Back/Forward already moved); otherwise a new entry, so the phone's Back returns to the previous tab */
+function setTab(t,how){ if(!TABS.includes(t)) return; S.ui.tab=t; S.ui.editTarget=null;
+  try{ if(how==='replace') history.replaceState(null,'','#'+t); else if(how!=='pop'&&location.hash!=='#'+t) history.pushState(null,'','#'+t); }catch(_){} render(); window.scrollTo({top:0}); }
 const ACTIONS={
   'tab':el=>setTab(el.dataset.tab),
   'year-step':el=>{ const ys=yearList(); const i=ys.indexOf(S.ui.year)+(+el.dataset.step); if(i>=0&&i<ys.length){ S.ui.year=ys[i]; S.ui.tx.month='all'; S.ui.oc.month='all'; render(); } },
@@ -5949,7 +5968,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&e.target.id==='target-input'){ e.preventDefault(); commitTarget(e.target); }
 });
 function commitTarget(inp){
-  if(!S.ui.editTarget) return; const v=parseAmount(inp.value);
+  if(!S.ui.editTarget) return; const v=parseAmount(inp.value,wantNum());
   const key=inp.dataset.key; S.ui.editTarget=null;
   if(v!==null && v>=0 && v<=100){ setSettings({targets:Object.assign(targets(),{[key]:Math.round(v*10)/1000})}); }
   render();
@@ -6031,7 +6050,7 @@ document.addEventListener('submit',e=>{
   }
   else if(f.id==='nw-snap-form'){
     readNwSnap(); const m=S.modal, N=ensureNw(), out={}; let bad=null;
-    for(const a of N.accounts){ const raw=String(m.vals[a.id]||'').trim(); if(!raw) continue; const v=parseAmount(raw); if(v===null){ bad=a; break; } out[a.id]=v; }
+    for(const a of N.accounts){ const raw=String(m.vals[a.id]||'').trim(); if(!raw) continue; const v=parseAmount(raw,wantNum()); if(v===null){ bad=a; break; } out[a.id]=v; }
     if(bad){ $('#nw-err').textContent=L('nwBadNumber',bad.name); const i=document.getElementById('nwv-'+bad.id); if(i) i.focus(); return; }
     const k=m.k; if(Object.keys(out).length) N.snaps[k]=out; else delete N.snaps[k];
     S.ui.nw.month=k; saveNw(); closeModal(); render(); toast(L('nwSavedToast',ymM(k),k.slice(0,4)));
@@ -6061,12 +6080,12 @@ document.addEventListener('submit',e=>{
     saveNw(); closeModal(); render(); toast(L('nwRetSaved'));
   }
   else if(f.id==='nw-goal-form'){
-    const v=parseAmount($('#ng-amt').value);
+    const v=parseAmount($('#ng-amt').value,wantNum());
     if(v===null||v<=0){ $('#ng-err').textContent=L('nwGoalErr'); $('#ng-amt').focus(); return; }
     ensureNw().goal={amount:r2(v),month:ymOf(+$('#ng-y').value,+$('#ng-m').value)}; saveNw(); closeModal(); render(); toast(L('nwGoalSaved'));
   }
   else if(f.id==='limit-form'){
-    const m=S.modal, raw=$('#lim-amt').value.trim(), v=parseAmount(raw), err=$('#lim-err');
+    const m=S.modal, raw=$('#lim-amt').value.trim(), v=parseAmount(raw,wantNum()), err=$('#lim-err');
     if(!raw){ const had=limitFor(m.name); setLimit(m.name,0); closeModal(); render(); if(had) toast(L('limitRemoved',m.name)); return; }
     if(v===null||v===0){ err.textContent=L('limitErr'); $('#lim-amt').focus(); return; }
     setLimit(m.name,Math.abs(v)); closeModal(); render(); toast(L('limitSaved',m.name,fmtEUR(Math.abs(v),0)));
@@ -6183,7 +6202,12 @@ window.addEventListener('ybt-sync-data',e=>loadDataset((e&&e.detail)||{},false,t
 window.YBT_BUSY=()=>!!S.modal||dirty.size>0||busy.size>0||flushing;
 window.addEventListener('ybt-lang',e=>{ const v=e&&e.detail==='es'?'es':'en'; S.ui.obLang=v; if(S.settings&&S.settings.lang&&S.canWrite&&S.settings.lang!==v) setSettings({lang:v}); render(); });
 window.addEventListener('ybt-local-render',()=>{ if(S.mode==='live'){ render(); if(S.modal) renderModalKeepScroll(); } });
-window.addEventListener('hashchange',()=>{ const h=(location.hash||'').replace('#',''); if(TABS.includes(h)&&h!==S.ui.tab) setTab(h); });
+/* Back/Forward between tabs. An open dialog closes first, except an import review with rows: Back then stays put so the rows aren't lost */
+function onHistory(){ const h=(location.hash||'').replace('#',''); if(!TABS.includes(h)||h===S.ui.tab||TOUR) return;
+  if(S.modal){ if(wantsDiscardCheck()){ try{ history.pushState(null,'','#'+S.ui.tab); }catch(_){} return; } closeModal(); }
+  setTab(h,'pop'); }
+window.addEventListener('popstate',onHistory);
+window.addEventListener('hashchange',onHistory);
 if(window.__ybtTest) window.__ybt={kwHealth,parseAmount,parseDate,parseCSV,parseRows,findHeader,parseCells,guessTable,matchKeyword,allMatches,hasKw,fold,loose,agg,upsertTx,finishImport,splitLine,kwSuggestion,skipMatch,fmtNum,fmtEUR,CURRENCIES,foreignCode,isoOf,allRows,rowFromCols,readPasted,importChecks,detectDateOrder,monthlyCard,catNames,cats,kws,deleteTx,normCats,normKw,startOf,ymNow,aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
 boot();
 })();
