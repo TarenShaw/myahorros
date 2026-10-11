@@ -39,17 +39,22 @@ const claudeText = t => [{ type: 'content_block_delta', delta: { type: 'text_del
 
   /* 3. model's own output limit is lower: asked again within it */
   useCfg('anthropic', 'claude-haiku-5-5');
-  const sent = [], efforts = [];
-  fetch = async (u, o) => { const b = JSON.parse(o.body), mt = b.max_tokens; sent.push(mt); efforts.push(b.output_config && b.output_config.effort);
-    return mt > 8192 ? fail(400, '{"error":{"type":"invalid_request_error","message":"max_tokens: 32000 > 8192, which is the maximum allowed number of output tokens for claude-haiku-5-5"}}')
+  const sent = [], bodies = [];
+  fetch = async (u, o) => { const b = JSON.parse(o.body), mt = b.max_tokens; sent.push(mt); bodies.push(b);
+    return mt > 8192 ? fail(400, '{"error":{"type":"invalid_request_error","message":"max_tokens: 64000 > 8192, which is the maximum allowed number of output tokens for claude-haiku-5-5"}}')
       : sse(claudeText('{"done":true}')); };
   assert.deepStrictEqual(await sample.json('p'), { done: true });
-  assert.deepStrictEqual(sent, [32000, 8192]);
-  /* Claude 5 models get low effort, so their thinking doesn't use up the answer's length; older models don't take the field */
-  assert.deepStrictEqual(efforts, ['low', 'low']);
-  useCfg('anthropic', 'claude-haiku-4-5'); efforts.length = 0;
-  assert.deepStrictEqual(await sample.json('p'), { done: true });
-  assert.deepStrictEqual(efforts, [undefined, undefined]);
+  assert.deepStrictEqual(sent, [64000, 8192]);
+  /* every Claude request, retries included, carries the chosen model and effort: Haiku 5.5 at high unless the person picked others */
+  const claude = async (model, effort) => { store['ybt.ai'] = JSON.stringify({ provider: 'anthropic', model, effort, key: KEY }); bodies.length = 0;
+    assert.deepStrictEqual(await sample.json('p'), { done: true }); assert.ok(bodies.length);
+    return [...new Set(bodies.map(b => b.model + ' ' + (b.output_config ? b.output_config.effort : '-')))]; };
+  assert.deepStrictEqual(await claude('claude-haiku-5-5'), ['claude-haiku-5-5 high']);
+  assert.deepStrictEqual(await claude('', undefined), ['claude-haiku-5-5 high']);
+  assert.deepStrictEqual(await claude('claude-opus-5-5', 'max'), ['claude-opus-5-5 max']);
+  assert.deepStrictEqual(await claude('claude-sonnet-5-5', 'low'), ['claude-sonnet-5-5 low']);
+  assert.deepStrictEqual(await claude('claude-haiku-5-5', 'turbo'), ['claude-haiku-5-5 high']);   /* unknown level: the default */
+  assert.deepStrictEqual(await claude('claude-haiku-4-5', 'high'), ['claude-haiku-4-5 -']);       /* older models reject the field */
   useCfg('anthropic', 'claude-haiku-5-5');
 
   /* 4. answer cut off by the output limit is reported as such, with the status and no key */

@@ -65,7 +65,7 @@ const file = (months, cfg) => JSON.stringify({ app: 'Yearly Budget Tracker', for
   await importDialog();
   await p.setInputFiles('#imp-file', require('path').join(__dirname, 'fixtures', 'dimension.xlsx'));
   await p.waitForSelector('#imp-r-0', { timeout: 10000 });
-  assert.ok(/CAFE/.test(await p.innerText('#imp-r-0')));
+  assert.ok(/CAFE/.test(await p.inputValue('#imp-d-0')));
   await p.keyboard.press('Escape'); await p.locator('[data-action="imp-discard"]').click().catch(() => {});
   await p.waitForSelector('#overlay .modal', { state: 'detached' }).catch(() => {});
   const lines = ['Fecha;Importe;Concepto', ...Array.from({ length: 450 }, (_, i) => `0${1 + i % 9}/03/2025;-${i + 1},00;Shop ${i}`)].join(String.fromCharCode(10));

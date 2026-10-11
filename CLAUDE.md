@@ -24,7 +24,7 @@ node tests/import-smoke.js      # import: amounts, keyword matching, IBKR sectio
 node tools/update-csp-hash.js   # after ANY edit to index.html's inline <script>
 ```
 
-Browser tests need Playwright (Edge channel) and the server above: `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` (fake Drive: deferral, conflict, merge) and `tests/landing-wizard.e2e.js` (landing, wizard, tour hand-off) and `tests/tabs-restore.e2e.js` (one tab at a time, browser backup restore, Start fresh).
+Browser tests need Playwright (Edge channel) and the server above: `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` (fake Drive: deferral, conflict, merge) and `tests/landing-wizard.e2e.js` (landing, wizard, tour hand-off) and `tests/tabs-restore.e2e.js` (one tab at a time, browser backup restore, Start fresh) and `tests/import-review.e2e.js` (review dialog fits, inline description/amount edits).
 
 ## Line endings
 

@@ -86,7 +86,7 @@ The **Do it with AI** and **Read statements with AI** buttons work on the websit
 | **Copy and paste** | Nothing | Free. The tracker shows the request, they paste it into ChatGPT (a Plus account works), Claude or Gemini, then paste the answer back. Scanned pages and photos can't go this way. |
 
 How it works:
-- **Checking the key:** the tracker checks the key and asks the service which models it offers. It picks a sensible default, which can be changed in **Settings › Reading statements with AI**.
+- **Checking the key:** the tracker checks the key and asks the service which models it offers. It picks a sensible default (Claude: Haiku 5.5 at high effort, set in `js/models.js`), which can be changed in **Settings › Reading statements with AI**; Claude's effort can be changed there too.
 - **Where things go:** the key is kept only in that browser (or only until the tab closes, if they untick "Remember"). Statements go straight from the browser to the service they chose, never through your site.
 - **Checking the answer:** every answer goes through the same checks and review screen as on the Claude website before anything is saved.
 
@@ -106,7 +106,7 @@ Data files keep the same format as the Windows app, and new versions can always 
 | `config.js` | Your settings (the Google Client ID) |
 | `js/web-shim.js` | Saving: folder, Google Drive or browser |
 | `js/web-ai.js` | Reading statements with Claude, ChatGPT or Gemini (the visitor's own key), or copy and paste |
-| `js/models.js` | The AI model names, defaults, recommendations and request limits, in one place |
+| `js/models.js` | The AI model names, defaults (Claude's model and effort), recommendations and request limits, in one place |
 | `js/web-boot.js`, `sw.js` | Offline support |
 | `vendor/` | The Excel and PDF readers, served by the site itself |
 | `fonts/`, `icons/`, `manifest.webmanifest` | Fonts, app icons, install details |

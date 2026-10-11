@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-aoXNmgIjsTHLtykLB8yucZJEjG8TN3cY2rff7sxVyHk=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-0l2+GBA+FRsoOv2MupoZRw6BeU9KXHRg/YY6mTSMhbc=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -545,9 +545,10 @@ code,.kw{font:12.5px var(--f-mono);background:var(--surface-2);border-radius:4px
 .m-head p{color:var(--muted);font-size:12.5px;margin-top:2px}
 .m-body{padding:16px 20px;display:grid;gap:14px;flex:none}
 .m-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 20px 18px;border-top:1px solid var(--line);position:sticky;bottom:0;background:var(--surface)}
-/* with large text the sticky title and buttons could fill the whole dialog and hide the form: each keeps to a share of the screen and scrolls inside */
-.m-head{max-height:24vh;overflow-y:auto}
-.m-foot{max-height:30vh;overflow-y:auto}
+/* with large text the sticky title and buttons could fill the whole dialog and hide the form: each keeps to a share of the screen and scrolls inside;
+   flex:none, or a tall dialog squeezes them to a sliver (the title clipped, the buttons cut off) */
+.m-head{max-height:24vh;overflow-y:auto;flex:none}
+.m-foot{max-height:30vh;overflow-y:auto;flex:none}
 .m-foot .r{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
 .field{display:grid;gap:5px}
 .field label,.field .lab{font-weight:600;font-size:12.5px;color:var(--ink-2)}
@@ -597,22 +598,27 @@ code,.kw{font:12.5px var(--f-mono);background:var(--surface-2);border-radius:4px
 .imp-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
 table.imp{width:100%;border-collapse:collapse;font-size:13px}
 .imp th{text-align:left;font:600 10.5px/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line-2);background:var(--surface-2);white-space:nowrap}
-.imp td{padding:5px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.imp td{padding:5px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
 .imp td.r,.imp th.r{text-align:right}
 .imp tr.off td{opacity:.5}
 .imp select{height:28px;font-size:12.5px;max-width:200px}
 .imp .note{font-size:12px;color:var(--warn-ink);font-weight:600;white-space:normal;overflow-wrap:anywhere}
-.imp td.n{min-width:220px;max-width:380px;white-space:normal}
+.imp td.n{min-width:140px;max-width:380px;white-space:normal;overflow-wrap:anywhere}
 .imp .note.ml{color:var(--accent);font-weight:600;white-space:normal;display:inline-block;max-width:240px;line-height:1.3}
 .imp select.guess{border-style:dashed;border-color:var(--accent)}
 .ml-maybe{font-size:12px;margin-left:8px;white-space:nowrap}
 .ml-note{margin-bottom:8px}
 .imp td.d{font-family:var(--f-mono);white-space:nowrap}
 .imp td.a{white-space:nowrap}
-.imp td.c{min-width:170px;word-break:break-word}
+.imp td.c{min-width:150px;width:32%;word-break:break-word}
+.imp input.ed{width:100%;min-width:0;height:28px;padding:0 6px;font:inherit;color:inherit;background:transparent;border:1px solid transparent;border-radius:6px}
+.imp input.ed:hover{border-color:var(--line-2)}.imp input.ed:focus{background:var(--surface);border-color:var(--accent)}
+.imp input.ed.bad{border-color:var(--bad-ink);background:var(--surface)}
+.imp td.a input.ed{width:12ch;text-align:right;font-variant-numeric:tabular-nums}
 select.tsel{border-left:4px solid var(--tc,var(--line-2));padding-left:8px;max-width:150px}
-.imp td.k select{width:100%;min-width:150px;max-width:230px}
-@media (max-width:640px){
+.imp td.k select{width:100%;min-width:120px;max-width:230px}
+/* stacked rows below 860 px: seven columns don't fit side by side without scrolling sideways */
+@media (max-width:860px){
   table.imp thead{display:none}
   table.imp,table.imp tbody,table.imp tr,table.imp td{display:block}
   table.imp tr{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr);grid-template-areas:"on c c" "on d a" "on tb k" "on n n";gap:5px 10px;padding:10px 12px;border-bottom:1px solid var(--line)}
@@ -1118,8 +1124,8 @@ const MASK='••••';
 const CURRENCIES={EUR:{s:'€',after:true,n:'Euro (€)'},GBP:{s:'£',after:false,n:'Pound sterling (£)'},USD:{s:'$',after:false,n:'US dollar ($)'},CAD:{s:'CA$',after:false,n:'Canadian dollar (CA$)'},AUD:{s:'A$',after:false,n:'Australian dollar (A$)'},CHF:{s:'CHF',after:true,n:'Swiss franc (CHF)'},MXN:{s:'MX$',after:false,n:'Mexican peso (MX$)'},SEK:{s:'kr',after:true,n:'Swedish krona (kr)'},PLN:{s:'zł',after:true,n:'Polish złoty (zł)'}};
 let CUR='EUR';
 const cs=()=>(CURRENCIES[CUR]||CURRENCIES.EUR).s;
-function fmtEUR(v,dec=2){
-  const c=CURRENCIES[CUR]||CURRENCIES.EUR, t=HIDE?(v<-0.004?'−':'')+MASK:fmtNum(v,dec);
+function fmtEUR(v,dec=2,real){
+  const c=CURRENCIES[CUR]||CURRENCIES.EUR, t=HIDE&&!real?(v<-0.004?'−':'')+MASK:fmtNum(v,dec);
   if(c.after) return t+' '+c.s;
   const neg=t.charAt(0)==='−'; return (neg?'−':'')+c.s+(neg?t.slice(1):t);
 }
@@ -1439,9 +1445,13 @@ const STR={
   rs_inv:['Positive in Investments: money coming back out of an investment.','Positivo en Inversiones: dinero que sale de una inversión.'],
   backToRows:['Back to the rows','Volver a las filas'], yesAdd:[n=>`Yes, add ${pl(n,'row')}`,n=>`Sí, añadir ${pl(n,'row')}`],
   checkRows:['Check the rows','Revisa las filas'], rowsRead:[(n,f)=>`${pl(n,'row')} read${f?' from '+f:''}`,(n,f)=>`${pl(n,'row')} ${n===1?'leída':'leídas'}${f?' de '+f:''}`],
-  dupUnticked:[n=>`${pl(n,'row')} already in the tracker ${n===1?'is':'are'} unticked`,n=>`${pl(n,'row')} que ya ${n===1?'está':'están'} en el control ${n===1?'aparece':'aparecen'} sin marcar`],
+  dupUnticked:[n=>`${pl(n,'row')} ${n===1?'is':'are'} already in your tracker (same date, amount and description), so ${n===1?'it is':'they are'} greyed out and unticked: ${n===1?'it isn’t':'they aren’t'} imported twice. Tick ${n===1?'it':'any'} to import anyway.`,n=>`${pl(n,'row')} ya ${n===1?'está':'están'} en tu control (misma fecha, importe y concepto), así que ${n===1?'aparece':'aparecen'} en gris y sin marcar: no se ${n===1?'importa':'importan'} dos veces. ${n===1?'Márcala para importarla':'Marca las que quieras para importarlas'} igualmente.`],
   skipUnticked:[n=>`${pl(n,'row')} on your skip list ${n===1?'is':'are'} unticked. Tick ${n===1?'it':'any'} you do want.`,n=>`${pl(n,'row')} con palabras a omitir ${n===1?'aparece':'aparecen'} sin marcar. Marca las que sí quieras.`],
   includeRow:[i=>`Include row ${i}`,i=>`Incluir la fila ${i}`], alreadyIn:['Already in tracker','Ya está en el control'],
+  alreadyInTip:['Already in your tracker: unticked so it isn’t imported twice. Tick to import anyway.','Ya está en tu control: sin marcar para no importarla dos veces. Márcala para importarla igualmente.'],
+  noteNoDesc:['No description: type one so you can tell this row apart later','Sin concepto: escribe uno para reconocer esta fila más adelante'],
+  impBadAmt:['That isn’t an amount. Type a number such as -14,90.','Eso no es un importe. Escribe un número como -14,90.'],
+  descForRow:[i=>`Description of row ${i}`,i=>`Concepto de la fila ${i}`], amtForRow:[i=>`Amount of row ${i}`,i=>`Importe de la fila ${i}`],
   impXfer:[n=>`${pl(n,'row')} ${n===1?'looks':'look'} like a transfer between your own accounts (the same amount out and in, within 3 days), so ${n===1?'it is':'they are'} unticked. Tick ${n===1?'it':'any'} you do want.`,n=>`${pl(n,'row')} ${n===1?'parece':'parecen'} un traspaso entre tus cuentas (el mismo importe sale y entra con menos de 3 días de diferencia), así que ${n===1?'aparece':'aparecen'} sin marcar. Marca ${n===1?'la':'las'} que sí quieras.`],
   impPossDup:[n=>`${pl(n,'row')} ${n===1?'has':'have'} the same date and amount as something already in the tracker, under another description. ${n===1?'It stays':'They stay'} ticked: untick ${n===1?'it':'any'} that ${n===1?'is':'are'} a repeat.`,n=>`${pl(n,'row')} ${n===1?'tiene':'tienen'} la misma fecha e importe que algo que ya está en el control, con otro concepto. ${n===1?'Sigue marcada':'Siguen marcadas'}: desmarca ${n===1?'la que sea repetida':'las que sean repetidas'}.`],
   impBalOk:[(ok,t)=>`The running balance in your file adds up for ${fmtCount(ok)} of ${fmtCount(t)} steps, so nothing looks missing.`,(ok,t)=>`El saldo de tu archivo cuadra en ${fmtCount(ok)} de ${fmtCount(t)} pasos, así que no parece faltar nada.`],
@@ -4853,11 +4863,11 @@ function modalImport(){
   const body=rows.slice(0,shown).map((r,i)=>`<tr class="${r.on?'':'off'}${r.aiQ&&!r.aiA?' ai-ask':''}" id="imp-r-${i}">
     <td class="on"><input type="checkbox" id="imp-on-${i}" data-action="imp-on" data-i="${i}" ${r.on?'checked':''} aria-label="${esc(L('includeRow',i+1))}"></td>
     <td class="d">${fmtDate(r.date)}</td>
-    <td class="c">${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}</td>
-    <td class="a r num">${fmtEUR(r.amount)}</td>
+    <td class="c"><label class="sr" for="imp-d-${i}">${esc(L('descForRow',i+1))}</label><input type="text" class="ed" id="imp-d-${i}" data-action="imp-desc" data-i="${i}" maxlength="140" value="${esc(r.concept)}" placeholder="${esc(L('noConcept'))}" title="${esc(r.concept)}"></td>
+    <td class="a r num"><label class="sr" for="imp-a-${i}">${esc(L('amtForRow',i+1))}</label><input type="text" class="ed" id="imp-a-${i}" data-action="imp-amt" data-i="${i}" inputmode="decimal" value="${esc(fmtEUR(r.amount,2,true))}"></td>
     <td class="tb">${impTableSel(r,i)}</td>
     <td class="k"><label class="sr" for="imp-c-${i}">${esc(L('catForRow',i+1))}</label><select id="imp-c-${i}" data-action="imp-cat" data-i="${i}" class="${r.category?(r.ml?'guess':''):'missing'}"${r.ml?` title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}"`:''}>${catOptions(r.table,r.category,true)}</select></td>
-    <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${r.xfer?`<span class="note">${esc(r.xferWith?L('noteXferWith',r.xferWith.length>30?r.xferWith.slice(0,29).trim()+'…':r.xferWith):L('noteXfer'))}</span> `:''}${r.future?`<span class="note">${esc(L('noteFuture'))}</span> `:''}${r.like&&!r.dup?`<span class="note">${esc(L('noteLike',r.like.length>30?r.like.slice(0,29).trim()+'…':r.like))}</span> `:''}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.xfer?'':r.dup?`<span class="note">${esc(L('alreadyIn'))}</span>`:r.skip?`<span class="note">${esc(L('skipListNote',r.skip))}</span>`:r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',r.ml.like.length>24?r.ml.like.slice(0,23).trim()+'…':r.ml.like))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
+    <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${r.xfer?`<span class="note">${esc(r.xferWith?L('noteXferWith',shortDesc(r.xferWith,30)):L('noteXfer'))}</span> `:''}${r.future?`<span class="note">${esc(L('noteFuture'))}</span> `:''}${r.like&&!r.dup?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.xfer?'':r.dup?`<span class="note" title="${esc(L('alreadyInTip'))}">${esc(L('alreadyIn'))}</span>`:r.skip?`<span class="note">${esc(L('skipListNote',r.skip))}</span>`:r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
     ${aiReviewNote(m)}${impChecksNote(m)}
@@ -5076,6 +5086,33 @@ const REFUND_RE=/\b(devolucion|refund|reembolso|retrocesion|chargeback)\b/;
 const biggestSpend=cat=>memo('bigSpend|'+cat,()=>Math.max(0,...allRows().filter(r=>r.table==='expenses'&&r.category===cat).map(r=>-r.amount)));
 const CARD_RE=/^(tarjeta|card payment|pago con tarjeta|pago en|compra|compra comercio|compra en comercio)\b|\bpago con tarjeta\b/;
 function autoCat(r,raw){ if(raw&&isKnown(r.table,raw)) return raw; const mt=matchKeyword(r.table,r.concept); return mt&&isKnown(r.table,mt.cat)?mt.cat:''; }
+/* a description or amount typed in the review: kept on the row, so it is what gets imported, then every row is checked against the tracker again.
+   focusId: where focus goes after the redraw; 'quiet' when focus moved to a button or box whose own action redraws (a redraw now would swallow that click) */
+function impEdit(el,focusId){
+  const m=S.modal, r=m&&m.type==='import'&&m.rows&&m.rows[+el.dataset.i]; if(!r) return;
+  const bad=on=>{ el.classList.toggle('bad',on); if(on) el.setAttribute('aria-invalid','true'); else el.removeAttribute('aria-invalid'); };
+  if(el.dataset.action==='imp-amt'){
+    const v=parseAmount(el.value.split(cs()).join(''));
+    if(v==null||Math.abs(v)<0.005){ bad(true); toast(L('impBadAmt')); return; }
+    bad(false); if(v===r.amount) return;
+    r.amount=v; if(r.guessed){ const t=guessTable(r); if(t!==r.table){ setImpTable(r,t); r.guessed=true; } }
+  } else {
+    const v=el.value.replace(/\s+/g,' ').trim().slice(0,140); if(v===r.concept) return;
+    r.concept=v; r.skip=skipMatch(v); if(r.skip) r.on=false;
+  }
+  const was=m.rows.map(x=>x.dup); markDups(m.rows,allRows());
+  m.rows.forEach((x,j)=>{ if(x.dup!==was[j]) x.on=!x.dup&&!x.skip&&!x.future&&!(m.checks&&m.checks.invest); });
+  if(!r.manual&&(!r.category||r.ml)){ r.category=autoCat(r,''); impGuess(r); }
+  if(m.checks&&!m.checks.same) m.checks.like=m.rows.filter(x=>x.like&&!x.dup).length;
+  if(focusId!=='quiet') renderModalKeepScroll(focusId);
+}
+/* review edit boxes: Enter saves, Esc puts back what was there (and doesn't close the review), leaving the box saves */
+document.addEventListener('keydown',e=>{ const el=e.target; if(!el.matches||!el.matches('#overlay input.ed[data-action]')) return;
+  if(e.key==='Enter'){ e.preventDefault(); impEdit(el,el.id); }
+  else if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); el.value=el.defaultValue; el.classList.remove('bad'); el.removeAttribute('aria-invalid'); } },true);
+document.addEventListener('focusout',e=>{ const el=e.target; if(!el.matches||!el.matches('#overlay input.ed[data-action]')||!el.isConnected) return;
+  const to=e.relatedTarget, inside=to&&to.closest&&to.closest('#overlay');
+  impEdit(el,inside&&to.matches('button,select,input[type=checkbox]')?'quiet':inside&&to.id?to.id:undefined); });
 function setImpTable(r,t){ if(!TKEYS.includes(t)||r.table===t) return; r.table=t; r.guessed=false; if(!r.manual||!isKnown(t,r.category)){ r.manual=false; r.category=autoCat(r,''); impGuess(r); } }
 /* checks on the rows read, before anything is saved:
    - money moved between your own accounts is unticked: within one file, the same amount out and in within 3 days with both
@@ -5132,6 +5169,18 @@ function impChecksNote(m){
       p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impPreStart',pre.length,ymIn(iso)))} <button type="button" class="btn sm" data-action="imp-start" data-k="${k}">${esc(L('impPreStartBtn',ymIn(k)))}</button></span></p>`); } }
   return p.length?`<div class="ai-review">${p.join('')}</div>`:'';
 }
+/* each read row against the saved ones, by signed amount (a +0,85 refund never matches a −0,85 charge); every saved row is matched once:
+   dup = same date, amount and description (letters and digits only, so "VENDING ACME \" is "VENDING ACME"), so it arrives unticked;
+   like = same date and amount under another description, kept ticked but pointed out */
+function markDups(rows,saved){
+  const key=r=>r.date+'|'+r2(r.amount).toFixed(2), left=new Map();
+  for(const s of saved){ const k=key(s); if(!left.has(k)) left.set(k,[]); left.get(k).push(s); }
+  for(const r of rows){ r.dup=false; r.like=null; const la=left.get(key(r)); if(!la) continue;
+    const d=loose(r.concept), fi=la.findIndex(s=>loose(s.concept)===d); if(fi>-1){ la.splice(fi,1); r.dup=true; } }
+  for(const r of rows){ if(r.dup) continue; const la=left.get(key(r)); if(la&&la.length) r.like=la.shift().concept; }
+}
+/* a description inside a note: the bank's trailing separators dropped ("VENDING ACME \"), long ones cut with … */
+function shortDesc(s,n){ s=String(s==null?'':s).replace(/[\s\\/|·.,;:_-]+$/u,'').trim(); return s.length>n?s.slice(0,n-1).trim()+'…':s; }
 const INV_CONCEPT=/\b(suscripcion|reembolso|buy trade|sell trade|aportacion|compra de valores|venta de valores|comision de gestion|comision custodia)\b/;
 function finishImport(parsed,bad,fileName,opt){
   parsed=parsed.filter(p=>Math.abs(p.amount)>=0.005);
@@ -5139,24 +5188,9 @@ function finishImport(parsed,bad,fileName,opt){
      every row arrives unticked, since that money already left a bank account as an investment */
   const invest=!!(opt&&opt.invest)||(parsed.length>=3&&parsed.filter(p=>INV_CONCEPT.test(loose(p.concept))).length>=0.25*parsed.length);
   const today=todayIso();
-  /* a row already in the tracker (same date, amount and description, in any table) arrives unticked */
-  const key=r=>[r.date,r2(r.amount).toFixed(2),fold(r.concept).replace(/\s+/g,' ').trim()].join('|');
-  const exist=new Map(); for(const r of allRows()){ const k=key(r); exist.set(k,(exist.get(k)||0)+1); }
-  const seen=new Map();
-  const sameDA=new Map(); for(const r of allRows()){ const k=r.date+'|'+r2(r.amount).toFixed(2); if(!sameDA.has(k)) sameDA.set(k,[]); sameDA.get(k).push({c:r.concept,f:fold(r.concept).replace(/\s+/g,' ').trim()}); }
-  const rows=parsed.map(p=>{
-    const k=key(p); const n=(seen.get(k)||0)+1; seen.set(k,n);
-    const dup=n<=(exist.get(k)||0);
-    const skip=dup?null:skipMatch(p.concept);
-    const guessed=p.table==='auto';
-    const future=p.date>today;
-    const r=Object.assign({},p,{table:guessed?guessTable(p):p.table,guessed,dup,skip,future,on:!dup&&!skip&&!future&&!invest,manual:false});
-    r.category=autoCat(r,p.category); impGuess(r);
-    /* same day and amount as a saved row under another description: kept ticked, but pointed out */
-    const la=sameDA.get(p.date+'|'+r2(p.amount).toFixed(2));
-    if(la&&la.length){ const fi=la.findIndex(x=>x.f===fold(p.concept).replace(/\s+/g,' ').trim()); if(fi>-1) la.splice(fi,1); else if(!dup){ r.like=la.shift().c; } }
-    return r;
-  });
+  const rows=parsed.map(p=>{ const guessed=p.table==='auto'; return Object.assign({},p,{table:guessed?guessTable(p):p.table,guessed,future:p.date>today,manual:false}); });
+  markDups(rows,allRows());
+  for(const r of rows){ const raw=r.category; r.skip=r.dup?null:skipMatch(r.concept); r.on=!r.dup&&!r.skip&&!r.future&&!invest; r.category=autoCat(r,raw); impGuess(r); }
   /* most of the file already saved under other wording (another export of the same account): those rows arrive unticked too */
   const likeRows=rows.filter(r=>r.like&&!r.dup), same=likeRows.length>=3&&likeRows.length+rows.filter(r=>r.dup).length>=0.5*rows.length;
   if(same) for(const r of likeRows) r.on=false;

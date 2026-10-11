@@ -1,2 +1,8 @@
 audit/
 PRIVATE_NOTES.md
+# keys and secrets never go in the repo: the site only ever uses the visitor's own key, kept in their browser
+.env
+.env.*
+*.key
+*.pem
+secrets*

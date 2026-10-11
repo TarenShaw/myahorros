@@ -63,4 +63,34 @@ assert.ok(INV_CONCEPT.test(loose('SUSCRIPCIÓN FONDO')) && INV_CONCEPT.test(loos
   assert.strictEqual(g('TARJETA AMAZON', 400), 'expenses');
 }
 
+/* review: amounts typed in Spanish keep their sign; the tracker's own symbol is stripped first (impEdit) */
+assert.strictEqual(parseAmount('-14,90'), -14.9);
+assert.strictEqual(parseAmount('−14,90 €'), -14.9);
+assert.strictEqual(parseAmount('14,90'), 14.9);
+assert.strictEqual(parseAmount('+0,85'), 0.85);
+assert.strictEqual(parseAmount('14,90-'), -14.9);
+assert.strictEqual(parseAmount('catorce'), null);
+assert.strictEqual(parseAmount('1.234,5'), 1234.5);
+
+/* duplicates: matched by signed amount, description by letters and digits only, each saved row once */
+{
+  const { markDups, shortDesc } = new Function(line('const r2=') + line('const fold=') + line('const loose=') + grab('markDups') + line('function shortDesc(') +
+    'return {markDups,shortDesc};')();
+  const saved = [{ date: '2026-09-03', amount: -0.85, concept: 'VENDING ACME \\' }, { date: '2026-09-04', amount: -3, concept: 'BAR PEPE' }];
+  let rows = [{ date: '2026-09-03', amount: 0.85, concept: 'VENDING ACME' }, { date: '2026-09-03', amount: -0.85, concept: 'VENDING ACME' },
+    { date: '2026-09-03', amount: -0.85, concept: 'VENDING ACME' }, { date: '2026-09-04', amount: -3, concept: 'CAFE' }];
+  markDups(rows, saved);
+  assert.deepStrictEqual(rows.map(r => [r.dup, r.like]), [[false, null], [true, null], [false, null], [false, 'BAR PEPE']]);
+  /* a refund is never matched to the charge it undoes, even with the same date and description */
+  markDups(rows = [{ date: '2026-09-03', amount: 0.85, concept: 'VENDING ACME \\' }], saved);
+  assert.deepStrictEqual([rows[0].dup, rows[0].like], [false, null]);
+  /* an edit is checked again: the amount changed back to the charge's makes it a duplicate */
+  rows[0].amount = -0.85; markDups(rows, saved); assert.strictEqual(rows[0].dup, true);
+  /* notes: no stray backslash before the closing quote, long text cut with … */
+  assert.strictEqual(shortDesc('VENDING ACME \\', 30), 'VENDING ACME');
+  assert.strictEqual(shortDesc('PAGO / ', 30), 'PAGO');
+  assert.strictEqual(shortDesc('A'.repeat(40), 30), 'A'.repeat(29) + '…');
+  assert.strictEqual(shortDesc(null, 30), '');
+}
+
 console.log('import smoke: all passed');

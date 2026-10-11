@@ -34,6 +34,8 @@ const TX={
     keyPrivacy:'The key stays in this browser. It’s only ever sent to the company it belongs to.',
     check:'Check the key and save', checking:'Checking…', usePaste:'Use copy and paste', cancel:'Cancel',
     model:'Model', modelHelp:'Picked for you; change it if you prefer another.',
+    effort:'Effort', effortHelp:'How much Claude thinks before answering. Higher reads tricky statements better, but is slower and costs more. High is recommended.',
+    eff_low:'Low', eff_medium:'Medium', eff_high:'High (recommended)', eff_xhigh:'Extra high', eff_max:'Maximum',
     badKey:'That key wasn’t accepted. Check you copied all of it.', noKey:'Paste your API key first.', wrongKey:(n,h)=>`That doesn’t look like a ${n} key. It should start with ${h}`,
     netFail:'Couldn’t reach the service. Check your connection and try again.', noModels:'Your key works, but no suitable model was found for it.',
     saved:n=>`${n} is ready to read your statements.`, savedPaste:'Copy and paste is ready.',
@@ -79,6 +81,8 @@ const TX={
     keyPrivacy:'La clave se queda en este navegador. Solo se envía a la empresa a la que pertenece.',
     check:'Comprobar la clave y guardar', checking:'Comprobando…', usePaste:'Usar copiar y pegar', cancel:'Cancelar',
     model:'Modelo', modelHelp:'Elegido por ti; cámbialo si prefieres otro.',
+    effort:'Esfuerzo', effortHelp:'Cuánto piensa Claude antes de responder. Más alto lee mejor los extractos difíciles, pero tarda más y cuesta más. Se recomienda Alto.',
+    eff_low:'Bajo', eff_medium:'Medio', eff_high:'Alto (recomendado)', eff_xhigh:'Muy alto', eff_max:'Máximo',
     badKey:'Esa clave no se ha aceptado. Comprueba que la has copiado entera.', noKey:'Primero pega tu clave de API.', wrongKey:(n,h)=>`No parece una clave de ${n}. Debería empezar por ${h}`,
     netFail:'No se ha podido conectar con el servicio. Revisa la conexión y vuelve a intentarlo.', noModels:'Tu clave funciona, pero no se ha encontrado ningún modelo adecuado.',
     saved:n=>`${n} ya puede leer tus extractos.`, savedPaste:'Copiar y pegar está listo.',
@@ -118,8 +122,12 @@ const TX={
 function t(k,...a){ const v=TX[lang()][k]; return typeof v==='function'?v(...a):v; }
 
 /* ---------- saved choice ---------- */
-function cfg(){ let c={}; try{ c=JSON.parse(ls.get(KEY)||'{}')||{}; }catch(_){} const k=c.key||ss.get(SKEY)||''; return {provider:P[c.provider]?c.provider:null,model:c.model||'',key:k,remember:!!c.key}; }
-function saveCfg(c){ ls.set(KEY,JSON.stringify({provider:c.provider,model:c.model||'',key:c.remember&&c.key?c.key:undefined})); ss.set(SKEY,!c.remember&&c.key?c.key:null); }
+function cfg(){ let c={}; try{ c=JSON.parse(ls.get(KEY)||'{}')||{}; }catch(_){} const k=c.key||ss.get(SKEY)||'', provider=P[c.provider]?c.provider:null;
+  const A=(M().providers||{}).anthropic||{};
+  return {provider,model:c.model||(provider==='anthropic'?A.default||'':''),effort:provider==='anthropic'?effortOf(c.effort):'',key:k,remember:!!c.key}; }
+function saveCfg(c){ ls.set(KEY,JSON.stringify({provider:c.provider,model:c.model||'',effort:c.effort||undefined,key:c.remember&&c.key?c.key:undefined})); ss.set(SKEY,!c.remember&&c.key?c.key:null); }
+/* Claude's effort: the saved one if it's a known level, else the default in js/models.js */
+function effortOf(e){ const A=(M().providers||{}).anthropic||{}; return (A.efforts||[]).includes(e)?e:A.effort||''; }
 function ready(){ const c=cfg(); return c.provider==='paste'||(c.provider&&c.key&&c.model)?c:null; }
 
 /* ---------- talking to each service ---------- */
@@ -129,11 +137,13 @@ const API={
     async models(k){ const r=await req('https://api.anthropic.com/v1/models?limit=100',{headers:this.headers(k)}); return ((await r.json()).data||[]).map(m=>m.id); },
     pick(ids){ const d=((M().providers||{}).anthropic||{}).default||'';
       return (d&&(ids.find(i=>i===d)||ids.find(i=>i.startsWith(d))))||ids.find(i=>/haiku/.test(i))||ids.find(i=>/sonnet/.test(i))||ids.find(i=>/opus/.test(i))||ids[0]; },
-    request(k,model,prompt,imgs,maxTok){ const A=(M().providers||{}).anthropic||{};
+    /* the only place a Claude request is built: the chosen model (Haiku 5.5 unless changed) at the chosen effort (high unless changed) */
+    request(k,model,prompt,imgs,maxTok,effort){ const A=(M().providers||{}).anthropic||{};
+      model=model||A.default; effort=effortOf(effort);
       const body={model,max_tokens:maxTok||A.maxOutput||outMax(),stream:true,
         messages:[{role:'user',content:[...imgs.map(i=>({type:'image',source:{type:'base64',media_type:i.type,data:i.data}})),{type:'text',text:prompt}]}]};
-      /* Claude 5 models think before answering, and that thinking counts against max_tokens: reading statements needs little of it */
-      if(A.effort&&/^claude-[a-z]+-([5-9]|\d\d)(-|$)/.test(model)) body.output_config={effort:A.effort};
+      /* Claude 5 models take an effort level (older ones reject the field) */
+      if(effort&&/^claude-[a-z]+-([5-9]|\d\d)(-|$)/.test(model)) body.output_config={effort};
       return ['https://api.anthropic.com/v1/messages',{method:'POST',headers:this.headers(k),body:JSON.stringify(body)}]; },
     delta(ev){ if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta') return ev.delta.text; if(ev.type==='error') throw mapErr(400,JSON.stringify(ev)); if(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='refusal') throw {code:'refused'}; if(ev.type==='message_delta'&&ev.delta&&ev.delta.stop_reason==='max_tokens') throw {code:'output_truncated'}; return ''; }
   },
@@ -248,6 +258,7 @@ function setup(){
         <p class="web-hint"><a id="ai-getkey" target="_blank" rel="noopener noreferrer"></a> · ${esc(t('keyPrivacy'))}</p>
         <label class="ai-check"><input type="checkbox" id="ai-remember"${c.remember?' checked':''}> ${esc(t('remember'))}</label>
         <div id="ai-modelbox" hidden><label for="ai-model">${esc(t('model'))}</label><select id="ai-model"></select><p class="web-hint">${esc(t('modelHelp'))}</p></div>
+        <div id="ai-effortbox" hidden><label for="ai-effort">${esc(t('effort'))}</label><select id="ai-effort">${(((M().providers||{}).anthropic||{}).efforts||[]).map(e=>`<option value="${e}"${e===effortOf(c.provider==='anthropic'?c.effort:'')?' selected':''}>${esc(t('eff_'+e))}</option>`).join('')}</select><p class="web-hint">${esc(t('effortHelp'))}</p></div>
         <div id="ai-reco" class="ai-reco" hidden></div>
       </div>
       <div class="web-acts"><button type="button" class="btn primary" data-x="go"></button><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`);
@@ -258,6 +269,7 @@ function setup(){
       const api=sel!=='paste'; $('#ai-keybox').hidden=!api;
       if(api){ const p=P[sel]; keyIn.placeholder=p.keyHint; const a=$('#ai-getkey'); a.href=p.keyUrl; a.textContent=t('getKey',p.company); }
       $('#ai-modelbox').hidden=!(api&&models&&models.length>1);
+      $('#ai-effortbox').hidden=sel!=='anthropic';
       const rc=$('#ai-reco'); rc.innerHTML=api?reco(sel):''; rc.hidden=!api;
       $('[data-x=go]').textContent=api?t('check'):t('usePaste'); el.msg('');
     };
@@ -285,7 +297,7 @@ function setup(){
         if(!models){ models=await API[sel].models(key); }
         const model=chosen||(c.provider===sel&&c.model&&models.includes(c.model)?c.model:API[sel].pick(models));
         if(!model){ el.msg(t('noModels')); return; }
-        const n={provider:sel,model,key,remember:$('#ai-remember').checked}; saveCfg(n);
+        const n={provider:sel,model,effort:sel==='anthropic'?effortOf($('#ai-effort').value):'',key,remember:$('#ai-remember').checked}; saveCfg(n);
         done(n); toast(t('saved',P[sel].name));
       }catch(err){ el.fail(Object.assign({provider:P[sel].name},err&&err.code?err:{code:'other',message:String(err&&err.message||err)})); }
       finally{ if(el.isConnected){ b.disabled=false; b.textContent=was; } }
@@ -330,7 +342,7 @@ async function once(c,A,prompt,imgs,opts,maxTok){
   const onAbort=()=>ac.abort();
   if(opts.signal){ if(opts.signal.aborted) throw {code:'cancelled'}; opts.signal.addEventListener('abort',onAbort,{once:true}); }
   try{
-    const [url,o]=A.request(c.key,c.model,prompt,imgs,maxTok);
+    const [url,o]=A.request(c.key,c.model,prompt,imgs,maxTok,c.effort);
     arm(HEAD_MS);
     const r=await req(url,Object.assign(o,{signal:ac.signal}));
     let text='';
@@ -347,7 +359,7 @@ async function once(c,A,prompt,imgs,opts,maxTok){
 function explain(e,lg){
   seeLang(lg); e=e||{}; const c=cfg(), n=e.provider||(c.provider&&P[c.provider]&&P[c.provider].name)||(lang()==='es'?'la IA':'the AI');
   const k=TX[lang()]['why_'+e.code]?e.code:'other', model=e.model||c.model;
-  const lines=['Provider: '+n, model?'Model: '+model:'', 'Problem: '+(e.code||'other'), e.status?'HTTP status: '+e.status:'', e.message?'Message from '+n+': '+clean(e.message):'', e.part?'Request: '+e.part:'', 'Time: '+(e.at||new Date().toISOString())].filter(Boolean);
+  const lines=['Provider: '+n, model?'Model: '+model:'', c.provider==='anthropic'&&c.effort?'Effort: '+c.effort:'', 'Problem: '+(e.code||'other'), e.status?'HTTP status: '+e.status:'', e.message?'Message from '+n+': '+clean(e.message):'', e.part?'Request: '+e.part:'', 'Time: '+(e.at||new Date().toISOString())].filter(Boolean);
   return {why:t('why_'+k,n), code:e.code||'other', status:e.status||null, message:e.message||'', details:lines.join('\n')};
 }
 async function json(prompt,opts){
@@ -380,7 +392,7 @@ const sample=Object.assign(async(...a)=>json(...a),{
 Object.assign(sample,{
   actions:['aiSetup','aiForget'],
   extra(lg){ seeLang(lg); const c=cfg(), r=ready();
-    const out=[{fn:'aiSetup',label:r?t('setTitle',c.provider==='paste'?t('pasteT'):P[c.provider].name):t('setTitleNone'),help:r?(c.provider==='paste'?t('setHelpPaste'):t('setHelp',P[c.provider].name,c.model)):t('setHelpNone')}];
+    const out=[{fn:'aiSetup',label:r?t('setTitle',c.provider==='paste'?t('pasteT'):P[c.provider].name):t('setTitleNone'),help:r?(c.provider==='paste'?t('setHelpPaste'):t('setHelp',P[c.provider].name,c.model+(c.effort?' · '+t('eff_'+c.effort):''))):t('setHelpNone')}];
     if(c.key) out.push({fn:'aiForget',label:t('forget'),help:t('forgetHelp')});
     return out; },
   async aiSetup(){ await setup(); window.dispatchEvent(new CustomEvent('ybt-local-render')); return null; },

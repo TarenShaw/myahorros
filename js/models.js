@@ -12,10 +12,11 @@ window.YBT_MODELS={
   providers:{
     /* the model Claude starts with, and the ones shown next to the picker (use: big | mid | small) */
     anthropic:{
-      /* Claude 5 models think first, and the thinking counts against the answer's length: low effort keeps it short,
-         and a larger limit leaves room for the answer (requests stream, so a long one doesn't time out) */
-      effort:'low',
-      maxOutput:32000,
+      /* Claude 5 models think first: effort (output_config.effort) sets how much. The visitor can pick another; these are the defaults.
+         The thinking counts against max_tokens, so the limit leaves room for it and the answer (requests stream, so a long one doesn't time out) */
+      effort:'high',
+      efforts:['low','medium','high','xhigh','max'],
+      maxOutput:64000,
       default:'claude-haiku-5-5',
       tiers:[
         {id:'claude-opus-5-5',   name:'Opus 5.5',   use:'big'},
