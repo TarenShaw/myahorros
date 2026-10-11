@@ -22,6 +22,7 @@ const TRACKER = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months
 
   /* 1. a second tab takes over; the first one stops and says so */
   const b = await open();
+  await b.click('.web-landing .wl-hero [data-x=open]');
   await b.waitForFunction(() => window.__ybtWeb && window.__ybtWeb.store);
   await a.waitForSelector('.web-panel [data-x=here]');
   assert.ok(/another tab/i.test(await a.innerText('#wp-title')));

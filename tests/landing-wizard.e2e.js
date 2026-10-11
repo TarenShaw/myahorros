@@ -71,6 +71,17 @@ const SHOTS = process.env.SHOTS;
   assert.ok(!(await p.$('.web-landing')), 'landing shown again to a returning visitor');
   console.log('4. returning visit goes straight to the app');
 
+  /* 4b. typing the address again shows the landing; with a tracker saved here it offers only "Open my tracker" */
+  await p.evaluate(async () => { localStorage.setItem('ybt.storage', 'browser');
+    await window.__ybtWeb.idb.set('data', JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months: { '2026-09': { income: [{ id: 'a1', date: '2026-09-01', desc: 'Salary', amount: 2000, cat: 'Salary' }], expenses: [], investments: [] } }, config: {} })); });
+  await p.goto(START, { waitUntil: 'load' });
+  await p.waitForSelector('.web-landing [data-x=open]');
+  assert.ok(!(await p.$('.web-landing [data-x=demo]')) && !(await p.$('.web-landing [data-x=start]')), 'returning visitor offered demo/start');
+  await p.click('.web-landing .wl-hero [data-x=open]');
+  await p.waitForFunction(() => window.__ybtWeb.store && window.__ybtWeb.store.months['2026-09']);
+  assert.ok(!(await p.$('.web-panel')), 'where-to-save asked again');
+  console.log('4b. typed visit: landing, then Open my tracker');
+
   /* 5. See a demo starts the tour */
   p = await newPage();
   await p.goto(START, { waitUntil: 'load' });

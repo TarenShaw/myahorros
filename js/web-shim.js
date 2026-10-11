@@ -72,7 +72,7 @@ const TX={
     useTheirs:'Open the newer one', useMine:'Keep the one on this screen', useMerge:'Merge both',
     conflictNote:'Whichever you don’t keep is saved as a backup first. “Merge both” keeps every transaction, account and setting from both versions; where both changed the same one, it keeps the one on this screen.',
     mergedBoth:'Merged both versions. The other one was kept as a backup.',
-    landDemo:'See a demo', landStart:'Get started', landMenu:'Sections',
+    landDemo:'See a demo', landStart:'Get started', landOpen:'Open my tracker', landMenu:'Sections',
     landH1:'Know where your money goes, and what you’re worth.',
     landSub:'A free yearly budget and net worth tracker that keeps your data on your side: in a folder on your computer, in your Google Drive, or in your browser.',
     landNoSignup:'No account. No sign-up. Nothing leaves your device unless you choose.',
@@ -161,7 +161,7 @@ const TX={
     useTheirs:'Abrir la versión más nueva', useMine:'Quedarme con la de esta pantalla', useMerge:'Combinar las dos',
     conflictNote:'La que no elijas se guarda antes como copia de seguridad. «Combinar las dos» conserva todos los movimientos, cuentas y ajustes de ambas versiones; si las dos cambiaron el mismo, se queda con el de esta pantalla.',
     mergedBoth:'Se han combinado las dos versiones. La otra se guardó como copia de seguridad.',
-    landDemo:'Ver una demo', landStart:'Empezar', landMenu:'Secciones',
+    landDemo:'Ver una demo', landStart:'Empezar', landOpen:'Abrir mi control', landMenu:'Secciones',
     landH1:'Sabe a dónde va tu dinero y cuánto vales.',
     landSub:'Un control de presupuesto anual y patrimonio, gratuito, que guarda tus datos de tu lado: en una carpeta de tu ordenador, en tu Google Drive o en tu navegador.',
     landNoSignup:'Sin cuenta. Sin registro. Nada sale de tu dispositivo si tú no quieres.',
@@ -458,24 +458,26 @@ const ICONS={
   drive:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M8.5 3.5h7l6 10.5-3.5 6H6L2.5 14z"/><path d="M8.5 3.5 15 14.5H2.5M15.5 3.5 9 14.5l-3 5.5M21.5 14H9"/></svg>',
   browser:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M3 9h18"/></svg>'
 };
-/* the page a new visitor sees first: what the tracker is, then "See a demo" or "Get started". Resolves 'demo' | 'start'. */
-function landing(){
+/* the page every typed visit starts on: what the tracker is, then "See a demo" or "Get started",
+   or only "Open my tracker" when this browser already has one. Resolves 'demo' | 'start' | 'open'. */
+function landing(known){
   return new Promise(resolve=>{
     const el=document.createElement('div'); el.className='web-landing'; el.setAttribute('role','dialog'); el.setAttribute('aria-label','MyAhorros');
     const draw=()=>{
       const L0=lang(), F=t('landF'), H=t('landHowSteps');
+      const cta=known?`<button type="button" class="btn primary" data-x="open">${esc(t('landOpen'))}</button>`:`<button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button>`;
       const ico=['<path d="M4 16.5V10M10 16.5V4M16 16.5V8"/>','<path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/>','<rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8.5h14M8 8.5V17M12.5 8.5V17"/>','<path d="M10 2.5l6 2.5v4.5c0 4-2.6 6.8-6 8-3.4-1.2-6-4-6-8V5z"/><path d="M7.5 10l2 2 3.5-4"/>'];
       el.innerHTML=`<header class="wl-top"><span class="wl-brand">MyAhorros</span>
           <div class="wl-top-r"><div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>
-          <button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button></div></header>
+          ${cta}</div></header>
         <main>
           <section class="wl-hero"><h1>${esc(t('landH1'))}</h1><p>${esc(t('landSub'))}</p>
-            <div class="wl-cta"><button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button></div>
+            <div class="wl-cta">${cta}</div>
             <p class="wl-fine">${esc(t('landNoSignup'))}</p></section>
           ${F.map((f,i)=>`<section class="wl-sec wl-reveal${i%2?' alt':''}"><svg viewBox="0 0 20 20" width="44" height="44" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${ico[i]}</svg><div><h2>${esc(f[0])}</h2><p>${esc(f[1])}</p></div></section>`).join('')}
           <section class="wl-how wl-reveal"><h2>${esc(t('landHow'))}</h2><ol>${H.map((h,i)=>`<li><b>${esc(h[0])}</b><span>${esc(h[1])}</span></li>`).join('')}</ol></section>
           <section class="wl-end wl-reveal"><h2>${esc(t('landEnd'))}</h2><p>${esc(t('landEndSub'))}</p>
-            <div class="wl-cta"><button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button></div></section>
+            <div class="wl-cta">${cta}</div></section>
         </main>
         <footer class="wl-foot"><a href="privacy.html">${esc(t('landPrivacy'))}</a></footer>`;
       /* sections fade in as they scroll into view (not for people who asked for less motion) */
@@ -994,16 +996,25 @@ async function startDrive(){
   if(!ok){ setMode('browser'); return false; }
   return true;
 }
+/* does this browser already hold a tracker? A folder can't be read before access is allowed again, so a chosen folder counts */
+async function hasData(m){
+  if(m==='folder') return true;
+  const text=m==='drive'?((await idb.get('drive').catch(()=>null))||{}).text:await browser.read().catch(()=>null);
+  const s=text&&parseData(text); return !!s&&!nothingAdded(s);
+}
 async function start(){
   let m=lsGet(MODE_KEY);
+  /* typing the address always shows the landing page first; a reload goes straight back to the tracker */
+  const nav=(performance.getEntriesByType&&performance.getEntriesByType('navigation')[0])||{};
+  let first=nav.type==='reload'?null:await landing(!!m&&await hasData(m));
   if(m==='folder'&&!(await startFolder())) m=mode;
   if(m==='drive'&&!(await startDrive().catch(()=>false))) m=mode||'browser';
   if(!store&&m==='browser'){ setMode('browser'); const text=await browser.read().catch(()=>null); store=(text&&parseData(text))||empty(); }
   /* nothing added yet (no transactions, no accounts or figures): the choice isn't final, so ask again */
   if(store&&nothingAdded(store)){ store=null; bar(null); }
   if(!store){
-    /* first visit: what is this, then where should it live? (people who already picked a place go straight to the choice) */
-    const first=m?'start':await landing();
+    /* nothing here yet: where should it live? (a reload skipped the landing above, so show it now to people who never picked a place) */
+    if(!first) first=m?'start':await landing();
     let c;
     if(first==='demo'){ try{ sessionStorage.setItem('ybt.autotour','1'); }catch(_){} c={mode:'browser'}; }
     else c=await chooseMode(false);
