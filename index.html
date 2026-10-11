@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-702zkCNZJbuej9/TmcTzjh2bSFlWw9zc3BBxbaMKhKQ=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-yvH0ccDM+cebsI+pxrqQJeK98PBQO4ryDbk9lM4jJig=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1001,16 +1001,16 @@ function mkCats(inc,exp,inv,roles){
 }
 const DEFAULT_CATS=mkCats(
   ['Salary','Tickets Comida','Dividends','Flex','Interest','Rent received','Tax Return','Other'],
-  [['Rent','Need'],['Utilities','Need'],['Subscriptions','Want'],['Phone','Need'],['Insurance','Need'],['Education','Want'],['Transport','Need'],['Groceries','Need'],['Snacks','Want'],['Restaurants','Want'],['Alcohol + Bars','Want'],['Entertainment','Want'],['Clothes','Want'],['Non Essential Shopping','Want'],['Vacation + Hotel + Travel','Want'],['Health','Need'],['Legal','Need'],['Gifts','Want'],['Capital Gains Losses','Need'],['Taxes','Need'],['Cash','Need'],['Lottery','Want'],['Gym','Want'],['Other','Want']],
+  [['Rent','Need'],['Utilities','Need'],['Subscriptions','Need'],['Phone','Need'],['Insurance','Need'],['Education','Need'],['Transport','Want'],['Groceries','Want'],['Snacks','Want'],['Restaurants','Want'],['Alcohol + Bars','Want'],['Entertainment','Want'],['Clothes','Want'],['Non Essential Shopping','Want'],['Vacation + Hotel + Travel','Want'],['Health','Want'],['Legal','Want'],['Gifts','Want'],['Capital Gains Losses','Want'],['Taxes','Need'],['Cash','Want'],['Lottery','Want'],['Gym','Need'],['Other','Want']],
   ['Funds/ETFs','Stocks','Pension','Real Estate','Other'],
   {rent:'Rent',utilities:'Utilities',other:'Other'});
 const DEFAULT_CATS_ES=mkCats(
   ['Nómina','Tickets comida','Dividendos','Beneficios de empresa','Intereses','Alquileres cobrados','Devolución de impuestos','Otros'],
-  [['Alquiler','Need'],['Suministros','Need'],['Suscripciones','Want'],['Teléfono','Need'],['Seguros','Need'],['Formación','Want'],['Transporte','Need'],['Supermercado','Need'],['Picoteo','Want'],['Restaurantes','Want'],['Bares y copas','Want'],['Ocio','Want'],['Ropa','Want'],['Compras no esenciales','Want'],['Vacaciones y viajes','Want'],['Salud','Need'],['Trámites legales','Need'],['Regalos','Want'],['Pérdidas en inversiones','Need'],['Impuestos','Need'],['Efectivo','Need'],['Lotería','Want'],['Gimnasio','Want'],['Otros','Want']],
+  [['Alquiler','Need'],['Suministros','Need'],['Suscripciones','Need'],['Teléfono','Need'],['Seguros','Need'],['Formación','Need'],['Transporte','Want'],['Supermercado','Want'],['Picoteo','Want'],['Restaurantes','Want'],['Bares y copas','Want'],['Ocio','Want'],['Ropa','Want'],['Compras no esenciales','Want'],['Vacaciones y viajes','Want'],['Salud','Want'],['Trámites legales','Want'],['Regalos','Want'],['Pérdidas en inversiones','Want'],['Impuestos','Need'],['Efectivo','Want'],['Lotería','Want'],['Gimnasio','Need'],['Otros','Want']],
   ['Fondos/ETFs','Acciones','Plan de pensiones','Inmuebles','Otros'],
   {rent:'Alquiler',utilities:'Suministros',other:'Otros'});
 const ROLE_NAMES={rent:['Rent','Alquiler'],utilities:['Utilities','Suministros'],other:['Other','Otros']};
-const DEFAULT_TARGETS={rentUtilities:.30,need:.30,want:.20,investments:.20};
+const DEFAULT_TARGETS={rentUtilities:.30,need:.50,want:.30,investments:.20};
 const DEFAULT_SKIP=['traspaso'];
 /* starter keywords for a brand-new tracker: common shops and services. Category names match the default categories of each language. */
 const kwPack=o=>Object.entries(o).flatMap(([cat,s])=>s.split('|').map(k=>[k,cat]));
@@ -1233,11 +1233,11 @@ const STR={
   sync_err:['Not saved','Sin guardar'], sync_ro:['Read-only','Solo lectura'], sync_ok:['Saved','Guardado'],
   loading:['Loading your tracker…','Cargando tu control…'],
   T_income:['Income','Ingresos'], T_expenses:['Expenses','Gastos'], T_investments:['Investments','Inversiones'],
-  need:['Need','Necesario'], want:['Want','Capricho'],
+  need:['Fixed','Fijo'], want:['Variable','Variable'],
   uncat:['Uncategorised','Sin categoría'],
   close:['Close','Cerrar'], cancel:['Cancel','Cancelar'], back:['Back','Atrás'], undo:['Undo','Deshacer'], total:['Total','Total'],
   date:['Date','Fecha'], concept:['Description','Concepto'], amount:['Amount','Importe'], category:['Category','Categoría'], table:['Type','Tipo'],
-  month:['Month','Mes'], search:['Search','Buscar'], name:['Name','Nombre'], type:['Need or want?','¿Necesario o capricho?'], del:['Delete','Eliminar'],
+  month:['Month','Mes'], search:['Search','Buscar'], name:['Name','Nombre'], type:['Fixed or variable?','¿Fijo o variable?'], del:['Delete','Eliminar'],
   /* states */
   nodbTitle:['Your figures live in Claude','Tus cifras se guardan en Claude'],
   nodbText:['This tracker keeps its transactions in Claude’s storage for this page. Open it from your Claude account to see and edit them.','Este control guarda sus movimientos en el almacenamiento de Claude para esta página. Ábrelo desde tu cuenta de Claude para verlos y editarlos.'],
@@ -1258,8 +1258,8 @@ const STR={
   reviewThem:[n=>n===1?'Review it':'Review them',n=>n===1?'Revisarlo':'Revisarlos'],
   ind_rentUtil:['Rent + utilities','Alquiler + suministros'],
   ind_rentUtilSub:[(a,b)=>`${a} and ${b} rows`,(a,b)=>`Filas de ${a} y ${b}`],
-  ind_need:['Need expenses','Gastos necesarios'], ind_needSub:['Categories marked Need','Categorías marcadas como Necesario'],
-  ind_want:['Want expenses','Caprichos'], ind_wantSub:['Categories marked Want','Categorías marcadas como Capricho'],
+  ind_need:['Fixed expenses','Gastos fijos'], ind_needSub:['Categories marked Fixed','Categorías marcadas como Fijo'],
+  ind_want:['Variable expenses','Gastos variables'], ind_wantSub:['Categories marked Variable','Categorías marcadas como Variable'],
   ind_inv:['Investments','Inversiones'], ind_invSub:['Money put into investments','Dinero destinado a inversiones'],
   st_within:['Within target','Dentro del objetivo'], st_over:['Over target','Por encima del objetivo'], st_on:['On target','Objetivo cumplido'], st_below:['Below target','Por debajo del objetivo'],
   target:['Target','Objetivo'], targetPct:['Target, in %','Objetivo, en %'], targetFor:[l=>`Target for ${l} in percent`,l=>`Objetivo de ${l} en porcentaje`],
@@ -1328,9 +1328,9 @@ const STR={
   /* categories */
   catsOf:[t=>`${t} categories`,t=>`Categorías de ${t}`],
   catsSub:['Each one is a row on Yearly tracking, in this order.','Cada una es una fila del Seguimiento anual, en este orden.'],
-  catsSubNW:[' Need is for essentials like rent, groceries and bills, Want for everything else: they feed the Indicators.',' Necesario es para lo esencial, como alquiler, comida y facturas, y Capricho para todo lo demás: alimentan los Indicadores.'],
+  catsSubNW:[' Fixed is for costs that are about the same every month, like rent, bills and subscriptions, Variable for everything else: they feed the Indicators.',' Fijo es para gastos casi iguales cada mes, como alquiler, facturas y suscripciones, y Variable para todo lo demás: alimentan los Indicadores.'],
   addCategory:['Add category','Añadir categoría'],
-  filterCats:['Filter categories','Filtrar categorías'], filterCatsNW:[' (or type need / want)',' (o escribe necesario / capricho)'],
+  filterCats:['Filter categories','Filtrar categorías'], filterCatsNW:[' (or type fixed / variable)',' (o escribe fijo / variable)'],
   noCatsMatch:['No categories match.','Ninguna categoría coincide.'], switchTo:[x=>`Switch to ${x}`,x=>`Cambiar a ${x}`],
   rename:['Rename','Renombrar'],
   keywords:['Keywords','Palabras clave'],
@@ -1464,9 +1464,9 @@ const STR={
   renamedTo:[n=>`Renamed to ${n}`,n=>`Renombrada como ${n}`],
   addCatSub:[(t,o)=>o?`${t} · it appears as a new row on Yearly tracking, just above ${o}`:`${t} · it appears as a new row at the end of Yearly tracking`,(t,o)=>o?`${t} · aparecerá como una fila nueva en el Seguimiento anual, justo encima de ${o}`:`${t} · aparecerá como una fila nueva al final del Seguimiento anual`],
   ph_expenses:['e.g. Pets','p. ej. Mascotas'], ph_income:['e.g. Freelance','p. ej. Trabajos extra'], ph_investments:['e.g. Crypto','p. ej. Cripto'],
-  needDesc:['Essentials: rent, bills, groceries, transport.','Lo esencial: alquiler, facturas, supermercado, transporte.'],
-  wantDesc:['Nice-to-haves: eating out, trips, shopping.','Lo prescindible: comer fuera, viajes, compras.'],
-  nwHelp:['This decides whether it counts towards the Need or Want indicator.','Decide si cuenta para el indicador de gastos necesarios o de caprichos.'],
+  needDesc:['About the same every month: rent, bills, subscriptions.','Casi igual cada mes: alquiler, facturas, suscripciones.'],
+  wantDesc:['Changes from month to month: groceries, eating out, trips.','Cambia de un mes a otro: supermercado, comer fuera, viajes.'],
+  nwHelp:['This decides whether it counts towards the Fixed or Variable indicator.','Decide si cuenta para el indicador de gastos fijos o variables.'],
   catAlready:[(t,n)=>`${t} already has a category called ${n}.`,(t,n)=>`${t} ya tiene una categoría llamada ${n}.`],
   addedCat:[n=>`Added ${n}`,n=>`Añadida ${n}`],
   delCatQ:[n=>`Delete ${n}?`,n=>`¿Eliminar ${n}?`], catOfTable:[t=>`${t} category`,t=>`Categoría de ${t}`],
@@ -1557,7 +1557,7 @@ const STR={
   nodbDeskText:['Its data file couldn’t be opened. Close the app and open it again.','No se ha podido abrir su archivo de datos. Cierra la aplicación y vuelve a abrirla.'],
   dlAllHelp:['Every transaction, the year summary, categories and keywords in one .xlsx.','Todos los movimientos, el resumen del año, las categorías y las palabras clave en un .xlsx.'],
   h_date:['Date','Fecha'], h_amount:['Amount','Importe'], h_concept:['CONCEPT','CONCEPTO'], h_category:['Category','Categoría'], h_month:['MONTH','MES'], h_year:['YEAR','AÑO'],
-  sh_yearly:[y=>'YEARLY TRACKING '+y,y=>'SEGUIMIENTO ANUAL '+y], sh_cats:['CATEGORIES','CATEGORÍAS'], nwHead:['Need / Want','Necesario / Capricho'],
+  sh_yearly:[y=>'YEARLY TRACKING '+y,y=>'SEGUIMIENTO ANUAL '+y], sh_cats:['CATEGORIES','CATEGORÍAS'], nwHead:['Fixed / Variable','Fijo / Variable'],
   sh_kw:[s=>s+' KEYWORDS',s=>'PALABRAS CLAVE '+s], sh_catNames:['CATEGORY NAMES','NOMBRES DE CATEGORÍAS'], sh_how:['HOW TO','CÓMO RELLENAR'],
   kwHead:['Keyword','Palabra clave'],
   kwWarnSheet:['⚠ WARNING: importing this file REPLACES the keyword list. Any keyword you delete from this sheet is also deleted from the tracker.','⚠ AVISO: al importar este archivo se SUSTITUYE la lista de palabras clave. Cualquier palabra que borres de esta hoja también se borrará del control.'],
@@ -1721,14 +1721,14 @@ const STR={
   info_ovSaved:['Income minus expenses for the months shown. Money you put into investments still counts as saved: it’s still yours, just not in your current account.','Ingresos menos gastos de los meses mostrados. El dinero que pasas a inversiones cuenta como ahorrado: sigue siendo tuyo, solo que no está en tu cuenta corriente.'],
   info_ovLeft:['Income minus expenses minus what you invested: roughly how much more money there is in your everyday accounts than at the start of the year.','Ingresos menos gastos menos lo invertido: más o menos cuánto dinero más hay en tus cuentas del día a día que a principios de año.'],
   info_ovThisMonth:['The month in progress: what you’ve spent so far against a normal month, and against any monthly limits you set in Categories. It fills in as you add transactions.','El mes en curso: lo que llevas gastado frente a un mes normal y frente a los límites mensuales que pongas en Categorías. Se completa según añades movimientos.'],
-  info_ovInd:['Each bar is a share of your income for the year, and the tick is its target: green means you’re within it. Need expenses are the essentials (marked Need in Categories), Want expenses the rest. The targets are only suggestions: tap one to change it.','Cada barra es una parte de tus ingresos del año y la marca es su objetivo: en verde, estás dentro. Los gastos necesarios son lo esencial (marcado como Necesario en Categorías) y los caprichos, el resto. Los objetivos son orientativos: toca uno para cambiarlo.'],
+  info_ovInd:['Each bar is a share of your income for the year, and the tick is its target: green means you’re within it. Fixed expenses are the ones about the same every month (marked Fixed in Categories), Variable expenses the rest. The targets are only suggestions: tap one to change it.','Cada barra es una parte de tus ingresos del año y la marca es su objetivo: en verde, estás dentro. Los gastos fijos son los que se repiten casi iguales cada mes (marcados como Fijo en Categorías) y los variables, el resto. Los objetivos son orientativos: toca uno para cambiarlo.'],
   info_ovShare:['For each month, expenses and investments as a percentage of that month’s income. Above the 100% line more went out than came in, so that month drew on savings.','Para cada mes, los gastos y las inversiones como porcentaje de los ingresos de ese mes. Por encima de la línea del 100% salió más de lo que entró, así que ese mes se tiró de ahorros.'],
   info_ovMonthly:['Totals for each month. Pick Income, Expenses or Investments to see one on its own with a dashed trend line: the general direction, without the month-to-month ups and downs. Click a bar to see its transactions.','Totales de cada mes. Elige Ingresos, Gastos o Inversiones para ver solo eso con una línea de tendencia discontinua: la dirección general, sin los altibajos de cada mes. Pulsa una barra para ver sus movimientos.'],
   info_ovCats:['Where the money went in the period you pick, biggest first. Click a category to follow it month by month.','A dónde fue el dinero en el periodo que elijas, de más a menos. Pulsa una categoría para seguirla mes a mes.'],
   info_ovYears:['Each year’s totals side by side, so you can compare whole years.','Los totales de cada año, uno al lado del otro, para comparar años completos.'],
   info_yTable:['Every figure is the total of the transactions behind it: click one to see them. The heat map colours each expense within its month, from least (green) to most (red) spent, leaving rent out so it doesn’t drown the rest. The flag marks the single biggest month and category.','Cada cifra es el total de los movimientos que hay detrás: pulsa una para verlos. El mapa de calor colorea cada gasto dentro de su mes, de menos (verde) a más (rojo), sin el alquiler para que no tape lo demás. La bandera marca el mes y la categoría con más gasto.'],
   info_txKinds:['Income is money coming in. Expenses is money going out; a refund goes here too, as a positive amount. Investments is money moved into funds, shares, a pension or property (negative) or taken back out (positive): it’s still yours, so it doesn’t count as spending.','Ingresos es el dinero que entra. Gastos, el que sale; una devolución también va aquí, en positivo. Inversiones es el dinero que pasas a fondos, acciones, un plan de pensiones o inmuebles (en negativo) o que retiras (en positivo): sigue siendo tuyo, así que no cuenta como gasto.'],
-  info_catList:['Categories group your transactions; renaming one moves its transactions and keywords with it. Mark each expense category Need (essentials you’d pay anyway) or Want (nice to have): it feeds the indicators on Overview. A monthly limit shows in This month how much is left.','Las categorías agrupan tus movimientos; al cambiar el nombre de una, sus movimientos y palabras clave pasan con ella. Marca cada categoría de gasto como Necesario (lo esencial, que pagarías igualmente) o Capricho: alimenta los indicadores del Resumen. Un límite mensual muestra en Este mes cuánto queda.'],
+  info_catList:['Categories group your transactions; renaming one moves its transactions and keywords with it. Mark each expense category Fixed (about the same every month) or Variable (changes from month to month): it feeds the indicators on Overview. A monthly limit shows in This month how much is left.','Las categorías agrupan tus movimientos; al cambiar el nombre de una, sus movimientos y palabras clave pasan con ella. Marca cada categoría de gasto como Fijo (casi igual cada mes) o Variable (cambia de un mes a otro): alimenta los indicadores del Resumen. Un límite mensual muestra en Este mes cuánto queda.'],
   info_catKw:['When a description contains a keyword, the transaction gets that category by itself, on import and when you add a row. If several match, the longest keyword wins. A keyword only matches at the start of a word. Type a description in the test box to see which keyword picks it.','Si una descripción contiene una palabra clave, el movimiento recibe esa categoría solo, al importar y al añadirlo. Si coinciden varias, gana la más larga. Una palabra clave solo cuenta al principio de una palabra. Escribe una descripción en la casilla de prueba para ver qué palabra la elige.'],
   info_catSkip:['Rows whose description contains one of these words arrive unticked when you import: for example transfers between your own accounts, which are neither income nor spending.','Las filas cuya descripción contiene una de estas palabras llegan sin marcar al importar: por ejemplo, traspasos entre tus propias cuentas, que no son ni ingresos ni gastos.'],
   info_nwWhat:['Net worth is what everything you own is worth, minus what you owe. Once a month, type what each account is worth at the end of the month, or import several months from Excel, and the tracker shows how it grows and why.','El patrimonio neto es lo que vale todo lo que tienes, menos lo que debes. Una vez al mes, escribe lo que vale cada cuenta a final de mes, o importa varios meses desde Excel, y el control muestra cómo crece y por qué.'],
@@ -1755,14 +1755,14 @@ const STR={
   tour_tabs:[['Six pages','Net worth for what you own, Overview for the big picture, Yearly for every figure, Transactions for the rows themselves, Categories for how they’re sorted, and Settings.'],['Seis páginas','Patrimonio para lo que tienes, Resumen para la visión general, Seguimiento para cada cifra, Movimientos para las filas en sí, Categorías para cómo se ordenan, y Ajustes.']],
   tour_ovTop:[['Your year at a glance','How much you kept after expenses this year, and your totals for income, expenses and investments. Any i button explains what a figure means.'],['Tu año de un vistazo','Cuánto has conservado este año tras los gastos y tus totales de ingresos, gastos e inversiones. Cualquier botón i explica qué significa una cifra.']],
   tour_ovMonth:[['This month','How the month in progress is going: what you’ve spent so far against a normal month, and against any monthly limits.'],['Este mes','Cómo va el mes en curso: lo que llevas gastado frente a un mes normal y frente a los límites mensuales.']],
-  tour_ovInd:[['Indicators','How your income splits between rent, essentials, wants and investing, against targets you can change.'],['Indicadores','Cómo se reparten tus ingresos entre alquiler, gastos necesarios, caprichos e inversión, frente a objetivos que puedes cambiar.']],
+  tour_ovInd:[['Indicators','How your income splits between rent, fixed and variable spending and investing, against targets you can change.'],['Indicadores','Cómo se reparten tus ingresos entre alquiler, gastos fijos y variables e inversión, frente a objetivos que puedes cambiar.']],
   tour_ovMonthly:[['Month by month','Each month’s income, expenses or investments. Click a bar to see the transactions behind it.'],['Mes a mes','Los ingresos, gastos o inversiones de cada mes. Pulsa una barra para ver los movimientos que hay detrás.']],
   tour_ovCats:[['Where it went','Your categories, biggest first. Click one to follow it month by month.'],['A dónde fue','Tus categorías, de más a menos. Pulsa una para seguirla mes a mes.']],
   tour_yearly:[['Every figure, every month','Laid out like a spreadsheet: categories down the side, months across. Click any figure to see its transactions. The heat map shows where most of the money went each month.'],['Cada cifra, cada mes','Como una hoja de cálculo: categorías a un lado y meses en columnas. Pulsa cualquier cifra para ver sus movimientos. El mapa de calor muestra a dónde fue más dinero cada mes.']],
   tour_txImport:[['Bring in your bank’s export','Paste rows or choose your bank’s file (.csv or .xlsx), or download the empty template and fill it in. Each row is sorted into Income, Expenses or Investments and gets its category from your keywords. Rows already in the tracker are spotted.'],['Trae el extracto de tu banco','Pega filas o elige el archivo de tu banco (.csv o .xlsx), o descarga la plantilla vacía y rellénala. Cada fila va a Ingresos, Gastos o Inversiones y recibe su categoría según tus palabras clave. Las filas que ya están en el control se detectan.']],
   tour_txGuess:[['Categories, guessed','When no keyword matches a row, the tracker suggests a category learned from your past transactions. One click accepts it, and it offers to remember a keyword for next time.'],['Categorías sugeridas','Si ninguna palabra clave coincide, el control sugiere una categoría aprendida de tus movimientos anteriores. Un clic la acepta, y te ofrece guardar una palabra clave para la próxima vez.']],
   tour_catKw:[['Keywords do the sorting','A keyword like “netflix” puts every matching row in its category by itself. Type any description in the test box to see which keyword picks it.'],['Las palabras clave ordenan','Una palabra clave como «netflix» pone sola cada fila que la contenga en su categoría. Escribe cualquier descripción en la casilla de prueba para ver qué palabra la elige.']],
-  tour_catList:[['Your categories','Rename, add or remove categories, mark each expense as Need or Want, and set monthly limits.'],['Tus categorías','Cambia el nombre, añade o quita categorías, marca cada gasto como Necesario o Capricho y pon límites mensuales.']],
+  tour_catList:[['Your categories','Rename, add or remove categories, mark each expense as Fixed or Variable, and set monthly limits.'],['Tus categorías','Cambia el nombre, añade o quita categorías, marca cada gasto como Fijo o Variable y pon límites mensuales.']],
   tour_nwAccounts:[['Accounts and gains','Each account’s value, its change since last month and its Gains: how much it grew on its own (prices, interest, dividends), apart from money you put in. Hover Gains for how it’s worked out.'],['Cuentas y ganancias','El valor de cada cuenta, su cambio desde el mes pasado y sus Ganancias: cuánto creció por sí sola (precios, intereses, dividendos), sin contar lo que aportaste. Pasa el ratón por Ganancias para ver cómo se calcula.']],
   tour_txAi:[['Let an AI read your statements','Do it with AI reads statements and PDFs for you. The first time you pick which AI: Copy and paste is free, Gemini has a free tier, Claude and GPT are paid with your own key. A recommendation next to the model picker says which model suits one file or many months. Change AI switches it any time, and you check every row before it’s saved.'],['Deja que una IA lea tus extractos','Hacerlo con IA lee extractos y PDF por ti. La primera vez eliges qué IA: Copiar y pegar es gratis, Gemini tiene un nivel gratuito, Claude y GPT son de pago con tu propia clave. Una recomendación junto al selector de modelo indica cuál sirve para un archivo o para muchos meses. Cambiar la IA lo cambia cuando quieras, y revisas cada fila antes de guardarla.']],
   tour_nwTop:[['What you own','Once a month, type what each account is worth, or import several months from Excel. Accounts are grouped by how soon you could use the money.'],['Lo que tienes','Una vez al mes, escribe lo que vale cada cuenta o importa varios meses desde Excel. Las cuentas se agrupan según lo pronto que podrías usar el dinero.']],
@@ -2251,6 +2251,18 @@ function normCats(d){
   return o;
 }
 function normKw(d){ const o={}; for(const t of TKEYS) o[t]=Array.isArray(d&&d[t])? d[t].filter(p=>Array.isArray(p)&&p[0]).map(p=>[String(p[0]),String(p[1]||'')]) : []; return o; }
+/* 2026-10: Need/Want became Fixed/Variable. Still stored as type 'Need'/'Want' (Need = Fixed) so the file stays
+   the same for the Windows app. Once per tracker (settings.fixedVar): expense categories with a default name get
+   the new default mark, and targets still at the old defaults (30% / 20%) move to the new ones. Needs the settings
+   document to be there, so it never writes a settings document that hasn't arrived yet. */
+function fixedVarOnce(){
+  if(!S.canWrite||S.demo||TOUR||!S.cats||!S.settings||S.settings.fixedVar) return;
+  const def=new Map([...DEFAULT_CATS.expenses,...DEFAULT_CATS_ES.expenses].map(c=>[c.name,c.type]));
+  for(const c of S.cats.expenses) if(def.has(c.name)) c.type=def.get(c.name);
+  const tg=S.settings.targets, patch={fixedVar:1};
+  if(tg&&tg.need===.3&&tg.want===.2) patch.targets=Object.assign({},tg,{need:DEFAULT_TARGETS.need,want:DEFAULT_TARGETS.want});
+  markDirty('config/categories'); setSettings(patch);
+}
 function isStockCats(c){ const sig=x=>TKEYS.map(t=>(x[t]||[]).map(c=>c.name).join('|')).join('#'); const s=sig(c); return s===sig(DEFAULT_CATS)||s===sig(DEFAULT_CATS_ES); }
 
 function subscribe(){ subMonths(); subConfig(); }
@@ -2269,7 +2281,7 @@ function subConfig(){
       const R=S.demo&&TOUR?TOUR.real:null;
       if(R){ if(d.id==='categories') R.cats=normCats(v); else if(d.id==='keywords') R.kw=normKw(v); else if(d.id==='settings') R.settings=v; else if(d.id==='networth') R.nw=normNw(v); continue; }
       if(d.id==='categories') S.cats=normCats(v); else if(d.id==='keywords') S.kw=normKw(v); else if(d.id==='settings') S.settings=v; else if(d.id==='networth') S.nw=normNw(v); }
-    S.gotConfig=true; bump(); renderSoon();
+    S.gotConfig=true; fixedVarOnce(); bump(); renderSoon();
   },subErr(subConfig));
 }
 
@@ -2469,7 +2481,7 @@ function obStartPick(){ const box=$('#ob-month-box'), now=new Date();
   if(box&&box.open){ const y=+$('#ob-year').value, m=+$('#ob-month').value; if(y!==now.getFullYear()||m!==now.getMonth()) return {y,m,auto:false}; }
   return {y:now.getFullYear(),m:now.getMonth(),auto:true}; }
 function obApply(lang,y,m,auto){
-  setSettings(Object.assign({lang,start:{y,m},guide:{on:true},startAuto:!!auto},S.settings&&S.settings.numFmt?{}:{numFmt:lang==='en'?'en':'eu'},S.settings&&S.settings.currency?{}:{currency:regionCurrency()}));
+  setSettings(Object.assign({lang,start:{y,m},guide:{on:true},startAuto:!!auto,fixedVar:1},S.settings&&S.settings.numFmt?{}:{numFmt:lang==='en'?'en':'eu'},S.settings&&S.settings.currency?{}:{currency:regionCurrency()}));
   if(!S.cats||(isStockCats(S.cats)&&!TKEYS.some(t=>(kws()[t]||[]).length))){ S.cats=clone(lang==='es'?DEFAULT_CATS_ES:DEFAULT_CATS); markDirty('config/categories'); }
   if(!S.kw||!TKEYS.some(t=>(S.kw[t]||[]).length)){ const st=STARTER_KW[lang], keep=kwRegionKeep(); S.kw={}; for(const t of TKEYS) S.kw[t]=st[t].concat(t==='expenses'&&st.extra?st.extra:[]).filter(q=>isKnown(t,q[1])&&keep(q[0])).map(q=>q.slice()); markDirty('config/keywords'); }
   S.ui.year=y; bump();
@@ -3981,7 +3993,7 @@ async function aiReadFile(file){
 function aiContext(mode){
   const cats=mode==='start'?clone(LANG==='es'?DEFAULT_CATS_ES:DEFAULT_CATS):S.cats||clone(DEFAULT_CATS);
   const ctx={today:new Date().toISOString().slice(0,10),
-    categories:{income:(cats.income||[]).map(c=>c.name),expenses:(cats.expenses||[]).map(c=>c.type?`${c.name} (${c.type})`:c.name),investments:(cats.investments||[]).map(c=>c.name)}};
+    categories:{income:(cats.income||[]).map(c=>c.name),expenses:(cats.expenses||[]).map(c=>c.type?`${c.name} (${c.type==='Need'?'fixed':'variable'})`:c.name),investments:(cats.investments||[]).map(c=>c.name)}};
   if(mode!=='start'){ const kw=kws(); let n=0; ctx.keywords={}; for(const t of TKEYS){ ctx.keywords[t]={}; for(const [k,c] of (kw[t]||[])){ if(n>=1500) break; (ctx.keywords[t][c]=ctx.keywords[t][c]||[]).push(k); n++; } } }
   if(mode!=='tx') ctx.my_accounts=nw().accounts.map(a=>({id:a.id,name:a.name,group:a.group}));
   const st=startOf(); if(st&&mode==='tx') ctx.tracker_starts=ymOf(st.y,st.m);
@@ -4016,7 +4028,7 @@ function aiTxResult(res,catsFor){
   for(const x of Array.isArray(res.rows)?res.rows:[]){ const a=Array.isArray(x)?x:[x.date,x.amount,x.description,x.table,x.category,x.source,x.question,x.combined];
     const date=aiDate(a[0]), amount=aiNum(a[1]); if(!date||amount==null) continue;
     const table=TKEYS.includes(a[3])?a[3]:amount>=0?'income':'expenses';
-    const cat=typeof a[4]==='string'?a[4].replace(/\s+\((Need|Want)\)$/,'').trim():'';
+    const cat=typeof a[4]==='string'?a[4].replace(/\s+\((Need|Want|fixed|variable)\)$/i,'').trim():'';
     rows.push({date,amount,concept:String(a[2]||'').trim().slice(0,140),table,category:catsFor(table).includes(cat)?cat:'',aiSrc:String(a[5]||''),aiQ:String(a[6]||'').trim(),aiNet:!!+a[7]}); }
   for(const x of Array.isArray(res.left_out)?res.left_out:[]){ const a=Array.isArray(x)?x:[x.date,x.amount,x.description,x.source,x.reason];
     const amount=aiNum(a[1]); if(amount==null) continue; out.push({date:aiDate(a[0])||'',amount,concept:String(a[2]||''),src:String(a[3]||''),why:String(a[4]||'')}); }
@@ -5875,6 +5887,7 @@ function loadDataset(d,persist,soft){
   }
   /* soft: data that arrived from another device or file: the screen, filters and any open dialog stay as they are */
   if(!soft){ S.ui.year=null; S.ui.mm={table:S.ui.mm.table,cat:null,days:S.ui.mm.days}; S.ui.oc.month='all'; S.ui.tx.cat='all'; S.ui.tx.month='all'; S.ui.editTarget=null; S.ui.obY=null; S.ui.yScroll=null; S.lastImport=null; closeModal(); }
+  fixedVarOnce();
   bump(); render();
 }
 function currentDataset(){
