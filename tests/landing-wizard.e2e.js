@@ -70,6 +70,7 @@ const SHOTS = process.env.SHOTS;
   await p.click('#view [data-action="add-tx"]'); await p.waitForSelector('#tx-form');
   await p.selectOption('#f-table', 'income'); await p.fill('#f-date', '2025-01-28');
   await p.fill('#f-concept', 'Salary'); await p.fill('#f-amount', '2100');
+  assert.strictEqual(await p.inputValue('#f-cat'), 'Salary', 'keyword category not shown while typing');
   await p.$eval('#tx-form', f => f.requestSubmit());
   await p.waitForFunction(() => { const s = window.__ybtWeb.store.config.settings; return s && s.start && s.start.y === 2025 && s.start.m === 0; }, null, { timeout: 5000 });
   console.log('3c. hand-typed earlier row moves an automatic start back');
@@ -96,6 +97,7 @@ const SHOTS = process.env.SHOTS;
   await p.waitForFunction(() => { const s = window.__ybtWeb.store.config.settings; return s && s.fixedVar; }, null, { timeout: 5000 });
   const marks = await p.evaluate(() => Object.fromEntries(window.__ybtWeb.store.config.categories.expenses.map(c => [c.name, c.type])));
   assert.deepStrictEqual(marks, { Groceries: 'Want', Gym: 'Need' }, 'Fixed/Variable migration: ' + JSON.stringify(marks));
+  assert.strictEqual(await p.getAttribute('#tab-overview', 'aria-selected'), 'true', 'a tracker with rows and no accounts should open on the Overview');
   console.log('4c. Fixed/Variable migration keeps marks the user changed');
 
   /* 5. See a demo starts the tour */

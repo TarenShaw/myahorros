@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-17Q0d0G85u3JDZipkjJjM8unqrKMt9d8tmapgr1/o9k=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-lDd2KjCv+OPq2mtW60GHgg96erGqXHe88xf6Spt9NuI=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1018,11 +1018,12 @@ const DEFAULT_SKIP=['traspaso'];
 const kwPack=o=>Object.entries(o).flatMap(([cat,s])=>s.split('|').map(k=>[k,cat]));
 const STARTER_KW={
   en:{
-    income:kwPack({'Salary':'salary|payroll|nomina','Dividends':'dividend','Interest':'interest','Rent received':'rent received|rental income','Tax Return':'tax refund|hmrc refund','Pension':'pension|state pension|inss'}),
+    income:kwPack({'Salary':'salary|payroll|nomina|salario|paga extra','Dividends':'dividend','Interest':'interest','Rent received':'rent received|rental income','Tax Return':'tax refund|hmrc refund','Pension':'pension|state pension|inss'}),
     expenses:kwPack({
-      'Groceries':'tesco|sainsbury|asda|aldi|lidl|morrisons|waitrose|whole foods|walmart|kroger|trader joe|costco|mercadona|carrefour|alcampo|eroski|consum s coop|consum coop',
+      'Rent':'alquiler|"rent"',
+      'Groceries':'tesco|sainsbury|asda|aldi|lidl|morrisons|waitrose|whole foods|walmart|kroger|trader joe|costco|mercadona|carrefour|alcampo|eroski|consum s coop|consum coop|"consum"|"dia"',
       'Restaurants':'uber eats|deliveroo|just eat|glovo|mcdonald|burger king|kfc|starbucks|pret a manger|nando|domino|telepizza|restaurant',
-      'Transport':'uber|lyft|bolt.eu|cabify|trainline|renfe|shell|esso|repsol|cepsa|parking',
+      'Transport':'uber|lyft|bolt.eu|cabify|trainline|renfe|shell|esso|repsol|cepsa|parking|metrovalencia|"metro"|"emt"',
       'Subscriptions':'netflix|spotify|disney|amazon prime|apple.com/bill|youtube|audible|icloud',
       'Phone':'vodafone|movistar|orange|giffgaff|lebara',
       'Utilities':'iberdrola|endesa|naturgy|british gas|octopus energy|thames water',
@@ -1040,13 +1041,13 @@ const STARTER_KW={
     investments:kwPack({'Funds/ETFs':'vanguard|indexa|myinvestor','Stocks':'trading 212|degiro|interactive brokers|trade republic|etoro|freetrade','Pension':'pension'})
   },
   es:{
-    income:kwPack({'Nómina':'nomina|salario','Dividendos':'dividendo|dividend','Intereses':'intereses|liq intereses','Alquileres cobrados':'alquiler','Devolución de impuestos':'devolucion irpf|devolucion hacienda|agencia tributaria','Pensión':'pension|inss|jubilacion'}),
+    income:kwPack({'Nómina':'nomina|salario|paga extra','Dividendos':'dividendo|dividend','Intereses':'intereses|liq intereses','Alquileres cobrados':'alquiler','Devolución de impuestos':'devolucion irpf|devolucion hacienda|agencia tributaria','Pensión':'pension|inss|jubilacion'}),
     expenses:kwPack({
-      'Supermercado':'mercadona|carrefour|lidl|aldi|alcampo|eroski|consum s coop|consum coop|ahorramas|hipercor|supercor|caprabo|condis|bonpreu|gadis|froiz|masymas|supeco|lupa|primaprix|bm supermercados|coviran|family cash|"spar"',
+      'Supermercado':'mercadona|carrefour|lidl|aldi|alcampo|eroski|consum s coop|consum coop|ahorramas|hipercor|supercor|caprabo|condis|bonpreu|gadis|froiz|masymas|supeco|lupa|primaprix|bm supermercados|coviran|family cash|"spar"|"consum"|"dia"',
       'Alquiler':'alquiler|"renta piso"',
       'Restaurantes':'uber eats|glovo|just eat|deliveroo|telepizza|domino|mcdonald|mc donald|burger king|kfc|starbucks|rodilla|restaurante|papa john|five guys|goiko|vips|foster|100 montaditos|taco bell|popeyes|sushi|pizzeria|kebab',
       'Bares y copas':'cerveceria|taberna|"bar"|"cafe"|cafeteria|"pub"|irish',
-      'Transporte':'renfe|cabify|uber|bolt.eu|blablacar|alsa|ouigo|iryo|repsol|cepsa|galp|gasolinera|parking|metro de|"emt"|empresa municipal de transportes|crtm|"taxi"|free now|freenow|bicimad|cercanias',
+      'Transporte':'renfe|cabify|uber|bolt.eu|blablacar|alsa|ouigo|iryo|repsol|cepsa|galp|gasolinera|parking|metro de|"metro"|metrovalencia|metro bilbao|"tmb"|"emt"|empresa municipal de transportes|crtm|"taxi"|free now|freenow|bicimad|cercanias',
       'Suscripciones':'netflix|spotify|hbo|disney|amazon prime|apple.com/bill|youtube|dazn|filmin|audible|icloud|google one|openai|chatgpt|anthropic',
       'Teléfono':'movistar|vodafone|orange|yoigo|masmovil|pepephone|simyo|lowi|jazztel|"digi"|finetwork|"o2"',
       'Suministros':'iberdrola|endesa|naturgy|holaluz|canal de isabel|aguas de',
@@ -2286,12 +2287,16 @@ function fixedVarOnce(){
 function isStockCats(c){ const sig=x=>TKEYS.map(t=>(x[t]||[]).map(c=>c.name).join('|')).join('#'); const s=sig(c); return s===sig(DEFAULT_CATS)||s===sig(DEFAULT_CATS_ES); }
 
 function subscribe(){ subMonths(); subConfig(); }
+/* opening the tracker: Net worth is the default tab, but someone who only tracks spending (no accounts) opens on the Overview */
+let tabPicked=false;
+function pickStartTab(){ if(tabPicked||!S.gotMonths||!S.gotConfig) return; tabPicked=true;
+  if(!location.hash&&S.ui.tab==='networth'&&!(nw().accounts||[]).length&&allRows().length) S.ui.tab='overview'; }
 function subErr(again){ return e=>{ if(e&&e.code==='unavailable'){ setTimeout(again,3000); return; } if(e&&e.code==='revoked'){ S.canWrite=false; syncStatus(); return; } toast(L('lostConn')); }; }
 function subMonths(){
   S.db.collection('months').limit(1000).onSnapshot(snap=>{
     const MS=S.demo&&TOUR?TOUR.real.months:S.months;
     for(const d of snap.docs){ const p='months/'+d.id; if(dirty.has(p)||busy.has(p)) continue; MS[d.id]=normMonth(d.data()); }
-    S.gotMonths=true; bump(); renderSoon();
+    S.gotMonths=true; bump(); pickStartTab(); renderSoon();
   },subErr(subMonths));
 }
 function subConfig(){
@@ -2301,7 +2306,7 @@ function subConfig(){
       const R=S.demo&&TOUR?TOUR.real:null;
       if(R){ if(d.id==='categories') R.cats=normCats(v); else if(d.id==='keywords') R.kw=normKw(v); else if(d.id==='settings') R.settings=normSettings(v); else if(d.id==='networth') R.nw=normNw(v); continue; }
       if(d.id==='categories') S.cats=normCats(v); else if(d.id==='keywords') S.kw=normKw(v); else if(d.id==='settings') S.settings=normSettings(v); else if(d.id==='networth') S.nw=normNw(v); }
-    S.gotConfig=true; fixedVarOnce(); bump(); renderSoon();
+    S.gotConfig=true; fixedVarOnce(); bump(); pickStartTab(); renderSoon();
   },subErr(subConfig));
 }
 
@@ -4595,7 +4600,10 @@ function readEditForm(){
   d.table=$('#f-table').value; d.date=$('#f-date').value; d.concept=$('#f-concept').value; d.amountText=$('#f-amount').value; d.category=$('#f-cat').value;
   const dr=document.querySelector('input[name="f-dir"]:checked'); if(dr) d.dir=dr.value;
 }
-function refreshEditSuggest(){ const el=$('#f-sug'); if(el) el.innerHTML=sugHtml(S.modal.draft); }
+function refreshEditSuggest(){ const m=S.modal, d=m.draft;
+  /* a new row shows the keyword's category as you type, until you pick a category yourself */
+  if(!m.ref&&!d.manual){ const s=matchKeyword(d.table,d.concept), c=s&&isKnown(d.table,s.cat)?s.cat:'', f=$('#f-cat'); if(f&&c!==d.category){ f.value=c; d.category=c; } }
+  const el=$('#f-sug'); if(el) el.innerHTML=sugHtml(d); }
 function submitEdit(){
   readEditForm(); const m=S.modal, d=m.draft;
   const raw=String(d.amountText==null?'':d.amountText).trim(), date=parseDate(d.date), parsed=parseAmount(raw);
@@ -5566,7 +5574,7 @@ const ACTIONS={
     openModal({type:'edit',ref:Object.assign(ref,{date:f.row.date}),origCat:cat,draft:{table:ref.table,date:f.row.date,concept:f.row.concept,amount:f.row.amount,dir:f.row.amount<0?'out':f.row.amount>0?'in':defaultDir(ref.table),category:cat}}); },
   'add-tx':()=>{ const t=S.ui.tab==='transactions'?S.ui.tx.table:'expenses';
     openModal({type:'edit',ref:null,origCat:'',draft:{table:t,date:todayIso(),concept:'',amount:null,dir:defaultDir(t),category:''}}); },
-  'use-ml':()=>{ readEditForm(); const d=S.modal.draft, g=mlGuess(d.table,d.concept); if(g){ $('#f-cat').value=g.cat; d.category=g.cat; refreshEditSuggest(); } },
+  'use-ml':()=>{ readEditForm(); const d=S.modal.draft, g=mlGuess(d.table,d.concept); if(g){ $('#f-cat').value=g.cat; d.category=g.cat; d.manual=true; refreshEditSuggest(); } },
   'use-ml-row':el=>{ const ref=refOf(el), c=el.dataset.c; setTxCategory(ref,c); render(); const f=findRow(ref.mk,ref.table,ref.id); if(f.row) offerKeyword(ref.table,f.row.concept,c); },
   'imp-start':el=>{ const k=el.dataset.k; if(!/^\d{4}-\d{2}$/.test(k||'')) return; setSettings({start:{y:+k.slice(0,4),m:+k.slice(5,7)-1}}); renderModalKeepScroll(); toast(L('startSaved',M()[+k.slice(5,7)-1],+k.slice(0,4))); },
   'imp-maybe':el=>{ const r=S.modal.rows[+el.dataset.i]; if(!r||!r.maybe) return; r.category=r.maybe.cat; r.manual=true; const c=r.category; r.maybe=null; renderModalKeepScroll(); offerKeyword(r.table,r.concept,c); },
@@ -5786,8 +5794,8 @@ document.addEventListener('change',e=>{
   if(id==='nw-k'&&S.modal&&S.modal.type==='nwsnap'){ S.modal.k=el.value; S.modal.vals=null; S.modal.touched=null; S.modal.confirmDel=false; renderModal(); return; }
   if(S.modal&&S.modal.type==='edit'&&(id==='f-table'||id==='f-cat')){
     readEditForm();
-    if(id==='f-table'){ const d=S.modal.draft; if(!isKnown(d.table,d.category)) d.category=''; if(!S.modal.ref) d.dir=defaultDir(d.table); renderModal(); $('#f-table').focus(); }
-    else refreshEditSuggest();
+    if(id==='f-table'){ const d=S.modal.draft; if(!isKnown(d.table,d.category)) d.category=''; if(!S.modal.ref) d.dir=defaultDir(d.table); renderModal(); refreshEditSuggest(); $('#f-table').focus(); }
+    else { S.modal.draft.manual=true; refreshEditSuggest(); }
   }
 });
 function renderModalKeepScroll(focusId){ const a=document.activeElement; const keep=focusId!==undefined?focusId:(a&&a.id&&$('#overlay').contains(a)?a.id:null);
