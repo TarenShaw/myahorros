@@ -183,6 +183,19 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await expect('2026-07', { 'Current account': '' });
   console.log('4d. Cash account shows only its interest; the statements list adds the phrase');
 
+  /* 4e. an account opened in September with money from your pay: "It didn't exist before" makes August 0 */
+  await p.click('[data-action="nw-accounts"]'); await p.click('#nw-acc-form [data-action="na-add"]:not([data-n])');
+  await p.locator('#nw-acc-form .acc-row').last().locator('input[data-f=name]').fill('Big Broker');
+  await p.click('#nw-acc-form button[type=submit]'); await p.waitForSelector('#nw-acc-form', { state: 'detached' });
+  await p.click('[data-action="nw-snap"] >> nth=0'); await p.selectOption('#nw-k', '2026-09');
+  await p.locator('#nw-snap-form').getByLabel('Big Broker', { exact: true }).fill('6000');
+  await p.click('#nw-snap-form button[type=submit]'); await p.waitForSelector('#nw-snap-form', { state: 'detached' });
+  await add('investments', '2026-09-03', 'Big Broker deposit', 5000, 'out');
+  await expect('2026-09', { 'Big Broker': '' });   // no August figure: no gain yet
+  await p.locator('.nw-faded li', { hasText: 'Big Broker' }).locator('[data-action="nw-from"]').click();
+  await expect('2026-09', { 'Big Broker': '+1,000.00' });   // August counts as 0: 5,000 put in, 6,000 now
+  console.log('4e. "It didn\'t exist before": the month before counts as 0');
+
   /* 7. phones show Gains too */
   await p.setViewportSize({ width: 390, height: 844 });
   await p.click('[data-action=tab][data-tab=networth]');
