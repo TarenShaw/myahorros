@@ -58,6 +58,31 @@ const file = (months, cfg) => JSON.stringify({ app: 'Yearly Budget Tracker', for
   assert.strictEqual(await p.evaluate(() => window.__ybtWeb.idb.get('data')), '{"months":{"2026-09":', 'stored text overwritten');
   console.log('4. unreadable stored data is kept as a backup');
 
+  /* 5. imports: a 1.5 KB workbook claiming the whole sheet (A1:XFD1048576) used to hang the tab; a long file shows
+     200 rows at a time; a file over 20 MB isn't read */
+  ({ p, errs } = await openTracker(file(month([], []), {})));
+  const importDialog = async () => { await p.click('#tab-transactions'); await p.locator('[data-action="import"]').first().click(); await p.waitForSelector('#imp-file', { state: 'attached' }); };
+  await importDialog();
+  await p.setInputFiles('#imp-file', require('path').join(__dirname, 'fixtures', 'dimension.xlsx'));
+  await p.waitForSelector('#imp-r-0', { timeout: 10000 });
+  assert.ok(/CAFE/.test(await p.innerText('#imp-r-0')));
+  await p.keyboard.press('Escape'); await p.locator('[data-action="imp-discard"]').click().catch(() => {});
+  await p.waitForSelector('#overlay .modal', { state: 'detached' }).catch(() => {});
+  const lines = ['Fecha;Importe;Concepto', ...Array.from({ length: 450 }, (_, i) => `0${1 + i % 9}/03/2025;-${i + 1},00;Shop ${i}`)].join(String.fromCharCode(10));
+  await importDialog();
+  await p.setInputFiles('#imp-file', { name: 'long.csv', mimeType: 'text/csv', buffer: Buffer.from(lines) });
+  await p.waitForSelector('#imp-r-199');
+  assert.ok(!(await p.$('#imp-r-200')), 'more than 200 rows drawn');
+  await p.click('[data-action="imp-more"]'); await p.waitForSelector('#imp-r-399');
+  assert.ok(/450/.test(await p.innerText('[data-action="imp-add"]')), 'all rows still added');
+  await p.keyboard.press('Escape'); await p.locator('[data-action="imp-discard"]').click().catch(() => {});
+  await p.waitForSelector('#overlay .modal', { state: 'detached' }).catch(() => {});
+  await importDialog();
+  await p.setInputFiles('#imp-file', { name: 'huge.csv', mimeType: 'text/csv', buffer: Buffer.alloc(21e6, 'a') });
+  await p.waitForFunction(() => /20 MB/.test(document.querySelector('#overlay').innerText), null, { timeout: 5000 });
+  assert.deepStrictEqual(errs, []);
+  console.log('5. imports: inflated sheet range, 200 rows at a time, 20 MB limit');
+
   await browser.close();
   console.log('bad-data e2e: all passed');
 })().catch(e => { console.error(e); process.exit(1); });

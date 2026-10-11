@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-fIu7K6rV6APXg10vEFKSOLlppVE65Lb9/k9PToPKPt4=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-NXCOV3fsE7wUmbF6Hp1loRPSvvQ4l/KiHZWVQ/uKVOw=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1456,6 +1456,7 @@ const STR={
   nothingToRead:['Nothing to read yet. Paste some rows or choose a file.','Aún no hay nada que leer. Pega algunas filas o elige un archivo.'],
   readerFail:['The spreadsheet reader didn’t load. Copy the rows from Excel and paste them above instead.','El lector de hojas de cálculo no se ha cargado. Copia las filas de Excel y pégalas arriba.'],
   notSpreadsheet:['That file couldn’t be read as a spreadsheet.','Ese archivo no se ha podido leer como hoja de cálculo.'],
+  fileTooBig:[n=>`That file is too big (${n} MB). Files up to 20 MB can be read.`,n=>`Ese archivo es demasiado grande (${n} MB). Se pueden leer archivos de hasta 20 MB.`],
   addedParts:[p=>`Added ${p}`,p=>`Añadido: ${p}`],
   /* rename / add / delete category */
   renameCat:['Rename category','Renombrar categoría'], newName:['New name','Nombre nuevo'],
@@ -3869,7 +3870,8 @@ async function readNwFile(file){
   const m=S.modal; if(!m||m.type!=='nwimp') return;
   let X; try{ X=await getXLSX(); }catch(e){ m.msg=L('readerFail'); renderModal(); return; }
   if(/\.json$/i.test(file.name)){ m.msg=L('nwImpJson'); renderModal(); return; }
-  let wb; try{ wb=/\.(csv|txt)$/i.test(file.name)?X.read(await fileText(file),{type:'string',raw:true}):X.read(await file.arrayBuffer(),{type:'array',raw:true}); }catch(e){ m.msg=L('notSpreadsheet'); renderModal(); return; }
+  if(tooBig(m,file)) return;
+  let wb; try{ wb=/\.(csv|txt)$/i.test(file.name)?readBook(X,await fileText(file),{type:'string',raw:true}):readBook(X,await file.arrayBuffer(),{type:'array',raw:true}); }catch(e){ m.msg=L('notSpreadsheet'); renderModal(); return; }
   let found=null, any=false;
   let tx=false;
   for(const name of wb.SheetNames){ const r=parseNwSheet(X,wb.Sheets[name],name); if(!r) continue; any=true; if(r.txLike){ tx=true; continue; } if(r.months.length){ found=r; break; } }
@@ -4013,7 +4015,7 @@ async function aiReadFile(file){
     return {text:out.join('\n\n'),images};
   }
   /* Excel, old .xls (some banks send HTML tables with that name), OpenDocument */
-  const X=await getXLSX(); const wb=X.read(await file.arrayBuffer(),{type:'array',raw:false});
+  const X=await getXLSX(); const wb=readBook(X,await file.arrayBuffer(),{type:'array',raw:false});
   return {text:wb.SheetNames.map(n=>{ const csv=X.utils.sheet_to_csv(wb.Sheets[n],{blankrows:false}).replace(/^[,;\s]+$/gm,'').replace(/\n{2,}/g,'\n').trim(); return csv?`[sheet ${n}]\n${csv}`:''; }).filter(Boolean).join('\n\n'),images:[]};
 }
 function aiContext(mode){
@@ -4671,7 +4673,9 @@ function modalImport(){
   const rows=m.rows, on=rows.filter(r=>r.on), dup=rows.filter(r=>r.dup).length, skp=rows.filter(r=>r.skip).length, noCat=on.filter(r=>!r.category).length, nMl=on.filter(r=>r.ml&&r.category===r.ml.cat).length;
   const guessed=rows.some(r=>r.guessed);
   const byT=TKEYS.map(t=>[t,on.filter(r=>r.table===t).length]).filter(x=>x[1]);
-  const body=rows.map((r,i)=>`<tr class="${r.on?'':'off'}${r.aiQ&&!r.aiA?' ai-ask':''}" id="imp-r-${i}">
+  /* every change redraws the review, so a long file shows 200 rows at a time; the rest are still added */
+  const shown=m.shown||200;
+  const body=rows.slice(0,shown).map((r,i)=>`<tr class="${r.on?'':'off'}${r.aiQ&&!r.aiA?' ai-ask':''}" id="imp-r-${i}">
     <td class="on"><input type="checkbox" id="imp-on-${i}" data-action="imp-on" data-i="${i}" ${r.on?'checked':''} aria-label="${esc(L('includeRow',i+1))}"></td>
     <td class="d">${fmtDate(r.date)}</td>
     <td class="c">${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}</td>
@@ -4687,6 +4691,7 @@ function modalImport(){
     ${nMl?`<p class="hint ml-note">${esc(L('mlImpNote',nMl))}</p>`:''}
     ${dup||skp?`<div class="legend">${dup?`<span>${esc(L('dupUnticked',dup))}</span>`:''}${skp?`<span>${esc(L('skipUnticked',skp))}</span>`:''}</div>`:''}
     <div class="imp-table-wrap"><table class="imp"><thead><tr><th><span class="sr">${esc(L('include'))}</span></th><th>${esc(L('date'))}</th><th>${esc(L('concept'))}</th><th class="r">${esc(L('amount'))}</th><th>${esc(L('table'))}</th><th>${esc(L('category'))}</th><th></th></tr></thead><tbody>${body}</tbody></table></div>
+    ${rows.length>shown?`<div class="more"><button class="btn" data-action="imp-more">${esc(L('showMore',fmtCount(Math.min(200,rows.length-shown))))}</button></div>`:''}
     ${m.bad.length?`<div class="field"><span class="lab">${esc(L('badLines',m.bad.length))}</span><div class="bad-lines">${esc(m.bad.slice(0,30).join('\n'))}${m.bad.length>30?'\n…':''}</div></div>`:''}
   </div>
   <div class="m-foot">${m.confirmClose?impConfirmBar(m):`<button class="btn" data-action="imp-back">${esc(L('back'))}</button><span class="r"><span class="hint" id="imp-summary" style="align-self:center">${esc(byT.map(([t,n])=>L('nToT',fmtCount(n),TL(t))).join(' · ')+(nMl?L('nGuessed',nMl):'')+(noCat?L('nUncat',noCat):''))}</span><button class="btn primary" data-action="imp-add" ${on.length?'':'disabled'}>${esc(L('addRows',on.length))}</button></span>`}</div>`;
@@ -4834,6 +4839,17 @@ function readSplitwise(){
   finishImport(r.parsed,r.bad,w.fileName);
 }
 function trySplitwise(rows,fileName){ const people=splitwisePeople(rows); if(!people) return false; S.modal.sw={people,rows,who:0,fileName}; readSplitwise(); return true; }
+/* a file that big isn't a statement or a tracker, and reading it would freeze the page */
+function tooBig(m,file){ if(file.size<=20e6) return false; m.msg=L('fileTooBig',fmtNum(file.size/1e6,0)); renderModal(); return true; }
+/* every workbook goes through here: a file can claim a sheet far bigger than its cells (A1:XFD1048576), and the
+   readers walk that whole range, so each sheet's range is cut down to the cells it has */
+function readBook(X,data,opts){
+  const wb=X.read(data,opts);
+  for(const ws of Object.values(wb.Sheets||{})){ let r0=Infinity,c0=Infinity,r1=-1,c1=-1;
+    for(const k in ws){ if(k[0]==='!') continue; const a=X.utils.decode_cell(k); if(a.r<r0) r0=a.r; if(a.c<c0) c0=a.c; if(a.r>r1) r1=a.r; if(a.c>c1) c1=a.c; }
+    ws['!ref']=r1<0?'A1':X.utils.encode_range({s:{r:r0,c:c0},e:{r:r1,c:c1}}); }
+  return wb;
+}
 /* bank CSVs are often not UTF-8 */
 async function fileText(file){ const buf=await file.arrayBuffer(); try{ return new TextDecoder('utf-8',{fatal:true}).decode(buf); }catch(_){ return new TextDecoder('windows-1252').decode(buf); } }
 /* spreadsheet cells -> rows; cells formatted as dates become dates, so a second date column is never read as the amount */
@@ -4967,7 +4983,7 @@ function finishImport(parsed,bad,fileName,opt){
   checks.invest=invest; checks.future=rows.filter(r=>r.future).length;
   if(same){ checks.same=checks.like; checks.like=0; }
   if(!rows.length){ S.modal.msg=bad.length?L('noDateAmount'):L('nothingToRead'); renderModal(); return; }
-  Object.assign(S.modal,{step:'preview',rows,bad,fileName,wide:true,msg:'',confirmClose:false,checks}); renderModal();
+  Object.assign(S.modal,{step:'preview',rows,bad,fileName,wide:true,msg:'',confirmClose:false,checks,shown:200}); renderModal();
 }
 function readPasted(fileName){
   const m=S.modal; m.text=$('#imp-text').value; m.table=$('#imp-table').value;
@@ -4983,6 +4999,7 @@ function loadScript(src){ return new Promise((res,rej)=>{ const s=document.creat
 async function getXLSX(){ if(window.XLSX) return window.XLSX; try{ await loadScript(XLSX_SRC); }catch(e){ await loadScript(XLSX_SRC2); } return window.XLSX; }
 async function readFile(file){
   const m=S.modal; m.table=($('#imp-table')||{}).value||m.table; m.text=($('#imp-text')||{}).value||m.text;
+  if(tooBig(m,file)) return;
   delete m.sw;
   /* a file with no extension (Trade Republic's export) is read as CSV unless it starts like a workbook or a web page */
   const textLike=async()=>{ const b=new Uint8Array(await file.slice(0,4096).arrayBuffer()), h=new TextDecoder('latin1').decode(b);
@@ -4994,7 +5011,7 @@ async function readFile(file){
     /* many banks' ".xls" is really a web page: its cells are read as the text shown, so "12/05/2026" and "-9,70" keep their Spanish meaning */
     const buf=await file.arrayBuffer(), html=/<(html|table)\b/i.test(new TextDecoder('latin1').decode(new Uint8Array(buf.slice(0,4096))));
     /* and is often not UTF-8: decoded here, as a bank CSV is, so "Fecha operación" stays a heading */
-    const wb=html?X.read(await fileText(file),{type:'string',raw:true}):X.read(buf,{type:'array',cellNF:true});
+    const wb=html?readBook(X,await fileText(file),{type:'string',raw:true}):readBook(X,buf,{type:'array',cellNF:true});
     const parsed=[],bad=[]; const named=wb.SheetNames.filter(n=>sheetTable(n)); let invest=false;
     const sheets=named.length?named.map(n=>[n,sheetTable(n)]):[[wb.SheetNames[0],m.table]];
     if(sheets.length===1&&trySplitwise(sheetRows(X,wb.Sheets[sheets[0][0]]),file.name)) return;
@@ -5114,7 +5131,8 @@ async function downloadKeywords(){
 async function readKeywordFile(file){
   const m=S.modal; if(!m||m.type!=='kwimport') return;
   let X; try{ X=await getXLSX(); }catch(e){ m.msg=L('readerFail'); renderModal(); return; }
-  let wb; try{ wb=X.read(await file.arrayBuffer(),{type:'array'}); }catch(e){ m.msg=L('notSpreadsheet'); renderModal(); return; }
+  if(tooBig(m,file)) return;
+  let wb; try{ wb=readBook(X,await file.arrayBuffer(),{type:'array'}); }catch(e){ m.msg=L('notSpreadsheet'); renderModal(); return; }
   const tables={};
   const WHY={'no keyword':'why_noKw','no category':'why_noCat','bad':'why_badCat','twice':'why_twice'};
   for(const name of wb.SheetNames){
@@ -5280,6 +5298,7 @@ function parseBackup(text){
 const countDataset=d=>Object.values(d.months).reduce((a,m)=>a+TKEYS.reduce((b,t)=>b+m[t].length,0),0);
 async function readBackupFile(file){
   const m=S.modal; if(!m||m.type!=='restore') return;
+  if(tooBig(m,file)) return;
   let d=null; try{ d=parseBackup(await fileText(file)); }catch(_){ d=null; }
   if(!d){ m.msg=L('notBackup'); renderModal(); return; }
   Object.assign(m,{data:d,fileName:file.name,msg:''}); renderModal();
@@ -5532,6 +5551,7 @@ const ACTIONS={
   'tx-table':el=>{ Object.assign(S.ui.tx,{table:el.dataset.t,cat:'all',limit:150}); render(); },
   'tx-sort':el=>{ const [k,d]=S.ui.tx.sort.split('-'); const nk=el.dataset.k; S.ui.tx.sort=nk+'-'+(k===nk?(d==='asc'?'desc':'asc'):(nk==='amount'?'asc':'desc')); render(); },
   'tx-more':()=>{ S.ui.tx.limit+=150; render(); },
+  'imp-more':()=>{ S.modal.shown=(S.modal.shown||200)+200; renderModalKeepScroll(); },
   'tx-clear':()=>{ Object.assign(S.ui.tx,{q:'',month:'all',cat:'all',limit:150,allYears:false}); render(); },
   'edit-tx':el=>{ if(!S.canWrite) return; const ref=refOf(el); const f=findRow(ref.mk,ref.table,ref.id); if(!f.row) return;
     const cat=isKnown(ref.table,f.row.category)?f.row.category:'';
