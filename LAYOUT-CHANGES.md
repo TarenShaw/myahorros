@@ -102,6 +102,8 @@ A presentation-only pass over the whole tracker (branch `overhaul`, commits `fef
 
 ## Needs a decision
 
+Decided 2026-10-11: the user chose to keep all eight as they are.
+
 1. **Account names as "Provider · Product".** Names are the user's own data, stored as typed. Relabelling them would change stored data, and real provider names must not go in the repo. Rename them in Edit accounts (each account keeps its figures and links).
 2. **Net worth import label.** It stays "Import from Excel". That dialog only takes a file, so "Paste or import" would promise a paste box it doesn't have. The options are to rename it anyway or to add a paste box (a new feature).
 3. **Landing page captions.** They still say "Import from Excel" and "Read statements with AI". They describe features, not buttons.
