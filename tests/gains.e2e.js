@@ -106,8 +106,8 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await imp('05/08/2026\t-400,00\tAportación Indexa', 'investments');
 
   const expect = async (k, want) => { const g = await gains(k); for (const [n, v] of Object.entries(want)) assert.strictEqual(g[n], v, `${k} ${n}: got ${g[n]}, want ${v}`); };
-  const JUL = { 'Indexa Capital': '+150.00', 'Trade Republic': '+70.00', 'ING': '+10.00', 'MyInvestor Fund': '+100.00', 'MyInvestor Pension': '+50.00', 'Flat Madrid': '—', 'Crowdlend': '—', 'Current account': '', 'Total': '+380.00' };
-  const SEP = { 'Indexa Capital': '+65.00', 'Trade Republic': '+150.00', 'ING': '+60.00', 'MyInvestor Fund': '+50.00', 'MyInvestor Pension': '+300.00', 'Flat Madrid': '+1,000.00', 'New Broker': '', 'Crowdlend': '+80.00', 'Total': '+1,705.00' };
+  const JUL = { 'Indexa Capital': '+150.00', 'Trade Republic': '+70.00', 'ING': '+10.00', 'MyInvestor Fund': '+100.00', 'MyInvestor Pension': '+50.00', 'Flat Madrid': '—', 'Crowdlend': '—', 'Current account': '—', 'Total': '+380.00' };
+  const SEP = { 'Indexa Capital': '+65.00', 'Trade Republic': '+150.00', 'ING': '+60.00', 'MyInvestor Fund': '+50.00', 'MyInvestor Pension': '+300.00', 'Flat Madrid': '+1,000.00', 'New Broker': '—', 'Crowdlend': '+80.00', 'Total': '+1,705.00' };
   await expect('2026-07', JUL); await expect('2026-09', SEP);
   console.log('2. gains after dialog + import rows: July and September (across the August gap)');
 
@@ -168,7 +168,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
 
   /* 4d. interest on a Cash account, linked with the "Add from your statements" list in Edit accounts */
   await add('income', '2026-09-28', 'Intereses cuenta remunerada', 12, 'in', 'Interest');
-  await expect('2026-09', { 'Current account': '', 'Total': '+1,240.00' });   // names no account yet: nothing for Cash
+  await expect('2026-09', { 'Current account': '—', 'Total': '+1,240.00' });   // names no account yet: nothing for Cash
   await p.click('[data-action=tab][data-tab=networth]'); await p.click('[data-action="nw-accounts"]');
   const row = n => p.locator('#nw-acc-form .acc-row').filter({ has: p.locator(`input[data-f=name][value="${n}"]`) });
   const opts = n => row(n).locator('select.acc-pick option').allTextContents();
@@ -180,7 +180,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   assert.ok(!(await opts('Indexa Capital')).includes('Intereses cuenta remunerada'), 'picked phrase still offered elsewhere');
   await p.click('#nw-acc-form button[type=submit]'); await p.waitForSelector('#nw-acc-form', { state: 'detached' });
   await expect('2026-09', { 'Current account': '+12.00', 'Total': '+1,252.00' });
-  await expect('2026-07', { 'Current account': '' });
+  await expect('2026-07', { 'Current account': '—' });
   console.log('4d. Cash account shows only its interest; the statements list adds the phrase');
 
   /* 4e. an account opened in September with money from your pay: "It didn't exist before" makes August 0 */
@@ -191,7 +191,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await p.locator('#nw-snap-form').getByLabel('Big Broker', { exact: true }).fill('6000');
   await p.click('#nw-snap-form button[type=submit]'); await p.waitForSelector('#nw-snap-form', { state: 'detached' });
   await add('investments', '2026-09-03', 'Big Broker deposit', 5000, 'out');
-  await expect('2026-09', { 'Big Broker': '' });   // no August figure: no gain yet
+  await expect('2026-09', { 'Big Broker': '—' });   // no August figure: no gain yet
   await p.locator('.nw-faded li', { hasText: 'Big Broker' }).locator('[data-action="nw-from"]').click();
   await expect('2026-09', { 'Big Broker': '+1,000.00' });   // August counts as 0: 5,000 put in, 6,000 now
   console.log('4e. "It didn\'t exist before": the month before counts as 0');

@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-v17Zm2x3dAjMGqXnttFut3rqL4vtBuhoLXACYJJv6po=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-WoT5y4fLZQTcLJMUuSR3MdNxL1jIrzTc19+w3n32RNE=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -451,8 +451,8 @@ table.grid{border-collapse:separate;border-spacing:0;width:100%;table-layout:fix
 .switch .knob::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
 .switch[aria-checked="true"] .knob{background:var(--accent)}
 .switch[aria-checked="true"] .knob::after{transform:translateX(12px)}
-.nw{display:inline-flex;align-items:center;justify-content:center;font:500 var(--fs-eyebrow)/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:3px var(--s4);border-radius:var(--r-inner);color:var(--ink-2);border:1px solid var(--line-2);flex:none}
-.nw.need{background:var(--surface-3);border-color:var(--surface-3)}
+.nw{display:inline-flex;align-items:center;justify-content:center;font:600 var(--fs-sm)/1 var(--f-body);padding:var(--s4) var(--s8);border-radius:var(--r-pill);color:var(--ink-2);background:var(--surface-2);border:1px solid transparent;flex:none}
+.nw.need{background:var(--surface-3)}
 .cell-flag{display:inline-flex;align-items:center;gap:var(--s4)}
 
 /* transactions */
@@ -474,6 +474,10 @@ table.tx{width:100%;border-collapse:collapse;font-size:var(--fs-meta)}
 .tx .c{word-break:break-word;min-width:160px}
 .tx .amt{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
 .tx select{height:30px;font-size:var(--fs-meta);max-width:230px;width:100%}
+/* a category reads as a chip; pointing at it or tabbing to it shows it is a menu (a native select all along) */
+.tx td.k select,.kw-row select{appearance:none;-webkit-appearance:none;width:auto;max-width:230px;height:28px;padding:0 var(--s12);border-radius:var(--r-pill);border-color:transparent;background:var(--surface-2);font-weight:600;color:var(--ink-2);cursor:pointer;field-sizing:content}
+.tx td.k select:hover,.tx td.k select:focus,.kw-row select:hover,.kw-row select:focus{border-color:var(--line-2);background:var(--surface);color:var(--ink)}
+.tx td.k select.missing,.kw-row select.missing{border-color:color-mix(in srgb,var(--warn-ink) 55%,var(--line-2))}
 .tx select.missing{border-color:color-mix(in srgb,var(--warn-ink) 55%,var(--line-2));background:var(--warn-soft);color:var(--warn-ink)}
 .cat-text.missing{color:var(--warn-ink);font-weight:600}
 .more{display:flex;justify-content:center;padding:var(--s16)}
@@ -523,6 +527,8 @@ button.lim-btn:hover{border-style:solid;color:var(--ink)}
 .cat-name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .uses{font:var(--fs-sm) var(--f-mono);color:var(--muted);white-space:nowrap}
 .acts{display:flex;gap:2px}
+.acts .del{color:var(--muted)}.acts .del:hover:not(:disabled){color:var(--bad-ink)}
+@media (hover:hover) and (pointer:fine){.cat-list .acts{opacity:0;transition:opacity .12s}.cat-list li:hover .acts,.cat-list li:focus-within .acts{opacity:1}}
 button.nw{cursor:pointer}
 button.nw:hover{border-color:var(--ink-2);color:var(--ink)}
 .inline-form{display:flex;gap:var(--s8);flex-wrap:wrap;align-items:center;margin-top:var(--s16);padding-top:var(--s16);border-top:1px solid var(--line)}
@@ -537,7 +543,7 @@ code,.kw{font:var(--fs-sm) var(--f-mono);background:var(--surface-2);border-radi
 .kw-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(120px,190px) 30px;gap:var(--s12);align-items:center;padding:var(--s4) 0;border-top:1px solid var(--line)}
 .kw-row:first-child{border-top:0}
 .kw-row .kw{justify-self:start;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.kw-row select{height:30px;font-size:var(--fs-sm)}
+.kw-row select{font-size:var(--fs-sm);justify-self:start}
 .warn-text{color:var(--warn-ink);font-size:var(--fs-sm)}
 .skip-list{list-style:none;margin:0;padding:0}
 .skip-list li{display:grid;grid-template-columns:auto minmax(0,1fr) 30px;gap:var(--s12);align-items:center;padding:var(--s8) 0;border-top:1px solid var(--line)}
@@ -892,6 +898,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 .nwt tr.grp .hint{font-weight:400}
 .nwt tr.grp .grp-sub::before{content:"· "}
 .nwt td.an{padding-left:var(--s32)}
+.nwt td.na{color:var(--muted)}
 .nwt .missing{color:var(--warn-ink);font-size:var(--fs-sm)}
 .chip-risk{display:inline-flex;align-items:center;font:600 var(--fs-eyebrow)/1 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;padding:3px var(--s8);border-radius:var(--r-inner);background:var(--bad-soft);color:var(--bad-ink);vertical-align:1px}
 .nw-form{display:grid;gap:var(--s8)}
@@ -932,7 +939,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
   .nwt td{border:0;padding:0}
   .nwt td.an{padding-left:var(--s8)}
   .nwt td:nth-child(3){grid-column:2;grid-row:2;font-size:var(--fs-sm)}
-  .nwt td:nth-child(3):empty,.nwt td:nth-child(4):empty{display:none}
+  .nwt td:nth-child(3):empty,.nwt td:nth-child(4):empty,.nwt td.na{display:none}
   .nwt td:nth-child(4){grid-column:2;font-size:var(--fs-sm)}
   .nwt td:nth-child(n+3)[data-l]:not(:empty)::before{content:attr(data-l) " ";color:var(--muted)}
   .nwt td:nth-child(5){grid-column:1;grid-row:2;text-align:left;font-size:var(--fs-sm)}
@@ -3620,13 +3627,16 @@ function accountsCard(k){
   const N=nw(), s=k?N.snaps[k]||{}:{}, prev=k?nwMonths()[nwMonths().indexOf(k)-1]:null, s0=prev?N.snaps[prev]:null, T=k?nwTotals(k):{total:0,g:{}};
   const st=k?nwState(k):null, shown=st?st.shown:N.accounts;
   const lC=` data-l="${esc(L('nwChangeCol'))}"`, lS=` data-l="${esc(L('nwShare'))}"`;   /* labels for the phone layout, where the header row is hidden */
-  const G=k&&prev?nwGains(prev,k):new Map(), gc=v=>`<td class="r ${v==null?'':v<-0.004?'down':v>0.004?'up':''}" data-l="${esc(L('nwGains'))}">${v==null?'':Math.abs(v)<0.005?DASH:signed(v)}</td>`;
+  /* Change and Gains cells: signed, coloured by sign; a muted dash when there is no figure (once there is a month before to compare with) */
+  const na=k&&prev?DASH:'', cell=(v,lab)=>`<td class="r ${v==null?'na':v<-0.004?'down':v>0.004?'up':''}"${lab}>${v==null?na:Math.abs(v)<0.005?DASH:signed(v)}</td>`;
+  const G=k&&prev?nwGains(prev,k):new Map(), gc=v=>cell(v,` data-l="${esc(L('nwGains'))}"`), dc=v=>cell(v,lC);
+  const dOf=a=>{ const v=s[a.id], v0=s0?nwBefore(a,s0,prev,k):null; return v!=null&&v0!=null?r2(v-v0):null; };
   const rows=NW_GROUPS.map(g=>{ const accs=shown.filter(a=>a.group===g); if(!accs.length) return '';
-    const gg=accs.filter(a=>G.has(a.id));
-    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td><td></td>${gc(gg.length?sum(gg.map(a=>cents(G.get(a.id))))/100:null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,1):''}</td></tr>`+
-      accs.map(a=>{ const v=s[a.id], v0=s0?nwBefore(a,s0,prev,k):null, d=v!=null&&v0!=null?r2(v-v0):null;
+    const gg=accs.filter(a=>G.has(a.id)), gd=accs.map(dOf).filter(d=>d!=null);
+    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td>${dc(gd.length?sum(gd.map(cents))/100:null)}${gc(gg.length?sum(gg.map(a=>cents(G.get(a.id))))/100:null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,1):''}</td></tr>`+
+      accs.map(a=>{ const v=s[a.id], d=dOf(a);
         return `<tr><td class="an">${esc(a.name)}${a.risk?` <span class="chip-risk">${esc(L('nwRisk'))}</span>`:''}</td><td class="r">${v!=null?fmtEUR(v):`<span class="missing">${esc(L('nwNoFigure'))}</span>`}</td>
-          <td class="r ${d==null?'':d<-0.004?'down':d>0.004?'up':''}"${lC}>${d==null?'':Math.abs(d)<0.005?DASH:signed(d)}</td>${gc(G.has(a.id)?G.get(a.id):null)}<td class="r"${lS}>${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
+          ${dc(d)}${gc(G.has(a.id)?G.get(a.id):null)}<td class="r"${lS}>${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
   const dT=k&&prev?r2(T.total-nwTotals(prev).total):null;
   const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?DASH:signed(dT)}</td>${gc(G.size?sum([...G.values()].map(cents))/100:null)}<td class="r"${lS}>${T.total>0?fmtPct(1,1):''}</td></tr></tfoot>`:'';
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
@@ -4650,7 +4660,7 @@ function viewCategories(){
       <span class="cat-name"><span>${esc(cg.name)}</span>${t==='expenses'?(S.canWrite?`<button class="nw ${ty==='Need'?'need':''}" data-action="toggle-nw" data-name="${esc(cg.name)}" title="${esc(L('switchTo',nwLabel(other)))}">${esc(nwLabel(ty))}</button>`:`<span class="nw ${ty==='Need'?'need':''}">${esc(nwLabel(ty))}</span>`):''}</span>
       <span class="uses">${esc([useCount.get(cg.name)?pl(useCount.get(cg.name),'txn'):'',kwCount.get(cg.name)?pl(kwCount.get(cg.name),'keyword'):''].filter(Boolean).join(' · '))}</span>
       ${limBtn}
-      ${S.canWrite?`<span class="acts"><button class="btn ghost sm" data-action="rename-cat" data-name="${esc(cg.name)}">${esc(L('rename'))}</button><button class="btn ghost sm" data-action="delete-cat" data-name="${esc(cg.name)}">${esc(L('del'))}</button></span>`:''}
+      ${S.canWrite?`<span class="acts"><button class="btn ghost sm" data-action="rename-cat" data-name="${esc(cg.name)}">${esc(L('rename'))}</button><button class="btn ghost sm del" data-action="delete-cat" data-name="${esc(cg.name)}">${esc(L('del'))}</button></span>`:''}
     </li>`; }).join('');
   const q=c.q.trim().toLowerCase();
   const fq=fold(q);
@@ -4664,7 +4674,7 @@ function viewCategories(){
     <div class="stack">
     <section class="card">
       <div class="card-head"><div><h2>${esc(L('catsOf',TL(t)))}${info('catList')}</h2><p class="sub">${esc(L('catsSub'))}${t==='expenses'?esc(L('catsSubNW')):''}</p></div>
-        ${S.canWrite?`<button class="btn primary sm" type="button" data-action="add-cat">${esc(L('addCategory'))}</button>`:''}</div>
+        ${S.canWrite?`<button class="btn sm" type="button" data-action="add-cat">${esc(L('addCategory'))}</button>`:''}</div>
       <div><label class="sr" for="cat-q">${esc(L('filterCats'))}</label><input type="search" id="cat-q" placeholder="${esc(L('filterCats')+(t==='expenses'?L('filterCatsNW'):''))}" value="${esc(c.cq||'')}" style="width:100%" autocomplete="off"></div>
       <ul class="cat-list" style="margin-top:var(--s8)">${items||`<li><span class="hint">${esc(L('noCatsMatch'))}</span></li>`}</ul>
     </section>
