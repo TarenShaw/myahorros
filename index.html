@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-yvH0ccDM+cebsI+pxrqQJeK98PBQO4ryDbk9lM4jJig=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Rc5FRuVi+5ZCozYlXH79V4b6dic3zSu8EEIzw8gCd5I=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -2252,13 +2252,16 @@ function normCats(d){
 }
 function normKw(d){ const o={}; for(const t of TKEYS) o[t]=Array.isArray(d&&d[t])? d[t].filter(p=>Array.isArray(p)&&p[0]).map(p=>[String(p[0]),String(p[1]||'')]) : []; return o; }
 /* 2026-10: Need/Want became Fixed/Variable. Still stored as type 'Need'/'Want' (Need = Fixed) so the file stays
-   the same for the Windows app. Once per tracker (settings.fixedVar): expense categories with a default name get
-   the new default mark, and targets still at the old defaults (30% / 20%) move to the new ones. Needs the settings
-   document to be there, so it never writes a settings document that hasn't arrived yet. */
+   the same for the Windows app. Once per tracker (settings.fixedVar): expense categories with a default name that
+   still have the old default Need/Want mark get the new default mark (a mark the user changed is kept), and targets
+   still at the old defaults (30% / 20%) move to the new ones. Needs the settings document to be there, so it never
+   writes a settings document that hasn't arrived yet. */
+const OLD_NEED=new Set(['Rent','Utilities','Phone','Insurance','Transport','Groceries','Health','Legal','Capital Gains Losses','Taxes','Cash',
+  'Alquiler','Suministros','Teléfono','Seguros','Transporte','Supermercado','Salud','Trámites legales','Pérdidas en inversiones','Impuestos','Efectivo']);
 function fixedVarOnce(){
   if(!S.canWrite||S.demo||TOUR||!S.cats||!S.settings||S.settings.fixedVar) return;
   const def=new Map([...DEFAULT_CATS.expenses,...DEFAULT_CATS_ES.expenses].map(c=>[c.name,c.type]));
-  for(const c of S.cats.expenses) if(def.has(c.name)) c.type=def.get(c.name);
+  for(const c of S.cats.expenses) if(def.has(c.name)&&(c.type||'Want')===(OLD_NEED.has(c.name)?'Need':'Want')) c.type=def.get(c.name);
   const tg=S.settings.targets, patch={fixedVar:1};
   if(tg&&tg.need===.3&&tg.want===.2) patch.targets=Object.assign({},tg,{need:DEFAULT_TARGETS.need,want:DEFAULT_TARGETS.want});
   markDirty('config/categories'); setSettings(patch);
@@ -2616,6 +2619,15 @@ function setStart(st){
   const s=Object.assign({},S.settings||{}); if(st) s.start=st; else delete s.start;
   S.settings=s; markDirty('config/settings'); bump(); render();
   toast(st?L('startSaved',M()[st.m],st.y):L('startCleared'));
+}
+/* a row dated before the tracker's first month is saved but left out of the Overview. A new tracker's automatic
+   start follows it back; a start the user chose is offered a move */
+function coverStart(date){
+  const st=startOf(); if(!st) return;
+  const fk={y:+date.slice(0,4),m:+date.slice(5,7)-1};
+  if(fk.y*12+fk.m>=st.y*12+st.m) return;
+  if(S.settings.startAuto){ S.settings=Object.assign({},S.settings,{start:fk}); markDirty('config/settings'); bump(); render(); return; }
+  toast(L('impPreStart',1,ymIn(st.y+'-'+String(st.m+1).padStart(2,'0'))),{label:L('impPreStartBtn',ymIn(date.slice(0,7))),fn:()=>setStart(fk)},12000);
 }
 function LT(k){ const f=S.local&&S.local.text; let v=null; try{ v=typeof f==='function'?f.call(S.local,k,LANG):null; }catch(_){} return v||L(k); }
 async function localAction(fn){
@@ -4579,6 +4591,7 @@ function submitEdit(){
   upsertTx(m.ref,{table:d.table,date,amount,concept:d.concept.trim(),category});
   closeModal(); render();
   toast(m.ref?L('savedToast'):(category?L('addedAs',TL(d.table),category):L('addedUncat',TL(d.table))));
+  coverStart(date);
   if(d.category&&d.category!==m.origCat) offerKeyword(d.table,d.concept,d.category);
 }
 

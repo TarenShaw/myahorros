@@ -65,15 +65,27 @@ const SHOTS = process.env.SHOTS;
   assert.ok(!(await p.$('.wz-body')), 'wizard came back after Esc');
   console.log('3b. Esc closes the wizard for good');
 
+  /* 3c. a row typed by hand for a month before the new tracker's automatic start moves the start back,
+     so the Overview shows it instead of "no income yet" */
+  await p.click('#view [data-action="add-tx"]'); await p.waitForSelector('#tx-form');
+  await p.selectOption('#f-table', 'income'); await p.fill('#f-date', '2025-01-28');
+  await p.fill('#f-concept', 'Salary'); await p.fill('#f-amount', '2100');
+  await p.$eval('#tx-form', f => f.requestSubmit());
+  await p.waitForFunction(() => { const s = window.__ybtWeb.store.config.settings; return s && s.start && s.start.y === 2025 && s.start.m === 0; }, null, { timeout: 5000 });
+  console.log('3c. hand-typed earlier row moves an automatic start back');
+
   /* 4. returning visitors don't see the landing again */
   await p.reload({ waitUntil: 'load' });
   await p.waitForTimeout(1500);
   assert.ok(!(await p.$('.web-landing')), 'landing shown again to a returning visitor');
   console.log('4. returning visit goes straight to the app');
 
-  /* 4b. typing the address again shows the landing; with a tracker saved here it offers only "Open my tracker" */
+  /* 4b. typing the address again shows the landing; with a tracker saved here it offers only "Open my tracker".
+     The tracker predates Fixed/Variable: Gym still has its old default mark (moves to Fixed), Groceries was
+     changed by the user (kept) */
   await p.evaluate(async () => { localStorage.setItem('ybt.storage', 'browser');
-    await window.__ybtWeb.idb.set('data', JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months: { '2026-09': { income: [{ id: 'a1', date: '2026-09-01', desc: 'Salary', amount: 2000, cat: 'Salary' }], expenses: [], investments: [] } }, config: {} })); });
+    await window.__ybtWeb.idb.set('data', JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months: { '2026-09': { income: [{ id: 'a1', date: '2026-09-01', desc: 'Salary', amount: 2000, cat: 'Salary' }], expenses: [], investments: [] } },
+      config: { categories: { expenses: [{ name: 'Groceries', type: 'Want' }, { name: 'Gym', type: 'Want' }] }, settings: { lang: 'en' } } })); });
   await p.goto(START, { waitUntil: 'load' });
   await p.waitForSelector('.web-landing [data-x=open]');
   assert.ok(!(await p.$('.web-landing [data-x=demo]')) && !(await p.$('.web-landing [data-x=start]')), 'returning visitor offered demo/start');
@@ -81,6 +93,10 @@ const SHOTS = process.env.SHOTS;
   await p.waitForFunction(() => window.__ybtWeb.store && window.__ybtWeb.store.months['2026-09']);
   assert.ok(!(await p.$('.web-panel')), 'where-to-save asked again');
   console.log('4b. typed visit: landing, then Open my tracker');
+  await p.waitForFunction(() => { const s = window.__ybtWeb.store.config.settings; return s && s.fixedVar; }, null, { timeout: 5000 });
+  const marks = await p.evaluate(() => Object.fromEntries(window.__ybtWeb.store.config.categories.expenses.map(c => [c.name, c.type])));
+  assert.deepStrictEqual(marks, { Groceries: 'Want', Gym: 'Need' }, 'Fixed/Variable migration: ' + JSON.stringify(marks));
+  console.log('4c. Fixed/Variable migration keeps marks the user changed');
 
   /* 5. See a demo starts the tour */
   p = await newPage();
