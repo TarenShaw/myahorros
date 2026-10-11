@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-jzV+A4o8xwyE0YG3KfyN7apDLsMZcYHUE04wVLBIM5A=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+qFnbm2QVzrALujNqxKnXHGRLQ2VlcpFSyFpzV4H18M=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -347,10 +347,9 @@ select{padding-right:var(--s32)}
 .pill.bad{background:var(--bad-soft);color:var(--bad-ink)}
 .pill.warn{background:var(--warn-soft);color:var(--warn-ink)}
 .fh{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--s12)}
-.fh-c{border:1px solid var(--line);border-radius:var(--r-inner);padding:var(--s16) var(--s16);display:flex;flex-direction:column;gap:var(--s8);min-width:0}
-.fh-c .nw-bar{margin:var(--s4) 0 2px}
-.fh-pill{margin-top:auto;padding-top:var(--s8)}.fh-link{align-self:flex-start;text-align:left}
-.fh-good{color:var(--good-ink)}.fh-warn{color:var(--warn-ink)}.fh-bad{color:var(--bad-ink)}
+.fh-c{border:1px solid var(--line);border-radius:var(--r-inner);padding:var(--s16);display:grid;grid-template-rows:auto auto 1fr auto;gap:var(--s8);min-width:0}
+.fh-meta{display:grid;gap:var(--s4);align-content:start}.fh-foot:empty{display:none}.fh-foot .btn{justify-self:start}.fh-none{color:var(--muted)}
+
 @media (max-width:1180px){.fh{grid-template-columns:repeat(6,minmax(0,1fr))}.fh-c{grid-column:span 2}.fh-c:nth-child(n+4){grid-column:span 3}}
 @media (max-width:860px){.fh{grid-template-columns:repeat(2,minmax(0,1fr))}.fh-c,.fh-c:nth-child(n+4){grid-column:auto}}
 @media (max-width:520px){.fh{grid-template-columns:1fr}}
@@ -780,7 +779,8 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 .nw-delta{font:700 var(--fs-kpi)/1.1 var(--f-body);letter-spacing:-.015em;font-variant-numeric:tabular-nums}
 .nw-delta.up,.nwt .up,.nw-sval.up{color:var(--good-ink)}.nw-delta.down,.nwt .down,.nw-sval.down{color:var(--bad-ink)}
 .nw-card{display:flex;flex-direction:column}
-.two.nw-two{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}
+.two.nw-two{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:start}
+.nw-cmp .nw-bar{background:none}
 @media (max-width:980px){.two.nw-two{grid-template-columns:1fr}.tiles[style*="--n"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .nw-split{display:grid;gap:var(--s16);margin-top:var(--s16)}
 .nw-srow{display:grid;gap:var(--s8)}
@@ -963,7 +963,8 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 }
 .foot-note,.legend,.heat-legend,.ind-target-wrap,.pill,.ind-label small,.ind-val small,.nw-stat-l,.nw-stat-s,.nw-srow small,.nw-foot,.lim-val small,.field .help{font-size:var(--fs-meta)}
 /* footnotes sit at the bottom of the net worth cards, so the two cards line up */
-.nw-card>.nw-foot{margin-top:auto}.nw-card>:has(+ .nw-foot){margin-bottom:var(--s16)}
+.nw-card>:has(+ .nw-foot){margin-bottom:var(--s16)}
+.nw-how summary{cursor:pointer;font-weight:600;color:var(--ink-2)}.nw-how ul{list-style:none;margin:var(--s8) 0 0;padding:0;display:grid;gap:var(--s8)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -1265,7 +1266,7 @@ const STR={
   sections:['Sections','Secciones'],
   tab_overview:['Overview','Resumen'], tab_yearly:['Yearly','Seguimiento'], tab_yearly_long:[' tracking',' anual'],
   tab_transactions:['Transactions','Movimientos'], tab_categories:['Categories','Categorías'], tab_settings:['Settings','Ajustes'],
-  pt_yearly:['Yearly tracking','Seguimiento anual'],
+  pt_yearly:['Yearly tracking','Seguimiento anual'], howCalc:['How is this calculated?','¿Cómo se calcula?'],
   ovSub:['Your year at a glance: what came in, what went out and what you kept.','Tu año de un vistazo: lo que entró, lo que salió y lo que te quedó.'],
   txSub:['Every income, expense and investment row. Click a row to change it.','Cada fila de ingresos, gastos e inversiones. Pulsa una fila para cambiarla.'],
   ctSub:['How your transactions are grouped, and the words that sort new ones by themselves.','Cómo se agrupan tus movimientos y las palabras que ordenan solos los nuevos.'],
@@ -1302,7 +1303,7 @@ const STR={
   ind_need:['Fixed expenses','Gastos fijos'], ind_needSub:['Categories marked Fixed','Categorías marcadas como Fijo'],
   ind_want:['Variable expenses','Gastos variables'], ind_wantSub:['Categories marked Variable','Categorías marcadas como Variable'],
   ind_inv:['Investments','Inversiones'], ind_invSub:['Money put into investments','Dinero destinado a inversiones'],
-  st_within:['Within target','Dentro del objetivo'], st_over:['Over target','Por encima del objetivo'], st_on:['On target','Objetivo cumplido'], st_below:['Below target','Por debajo del objetivo'],
+  st_over:['Over target','Por encima del objetivo'], st_on:['On target','En el objetivo'], st_under:['Under target','Por debajo del objetivo'],
   target:['Target','Objetivo'], targetPct:['Target, in %','Objetivo, en %'], targetFor:[l=>`Target for ${l} in percent`,l=>`Objetivo de ${l} en porcentaje`],
   changeTarget:['Change the target','Cambiar el objetivo'],
   meterAria:[(l,v,tg)=>`${l} ${v} of income, target ${tg}`,(l,v,tg)=>`${l}: ${v} de los ingresos, objetivo ${tg}`],
@@ -1854,7 +1855,7 @@ const STR={
   fhFire:['FIRE pace','Ritmo FIRE'], fhCovers:['Covers your spending','Cubre tus gastos'], fhProdigious:['Prodigious accumulator','Acumulador prodigioso'],
   fhPassiveSub:[(a,b)=>`Portfolio could pay ${a}/month of your ${b}/month spending`,(a,b)=>`Tu cartera podría pagar ${a}/mes de tus ${b}/mes de gasto`],
   fhAgeSub:[(age,b)=>`Benchmark for your age (${age}) and salary: ${b}`,(age,b)=>`Referencia para tu edad (${age}) y salario: ${b}`],
-  fhAddAge:['Add your year of birth and salary in Settings','Añade tu año de nacimiento y salario en Ajustes'],
+  fhAgeNeeds:['Needs your year of birth and salary.','Necesita tu año de nacimiento y tu salario.'], fhAddDetails:['Add details in Settings','Añadir datos en Ajustes'],
   fhLvl_good:['Healthy','Sano'], fhLvl_warn:['Getting there','En camino'], fhLvl_bad:['Low','Bajo'],
   aboutTitle:['About you','Sobre ti'], aboutSub:['Only used for “Net worth for your age” on Net worth. Saved in your tracker like the rest.','Solo se usa para «Patrimonio para tu edad» en Patrimonio. Se guarda en tu control como lo demás.'],
   birthYear:['Year of birth','Año de nacimiento'], grossSalary:['Gross yearly salary','Salario bruto anual'],
@@ -2742,7 +2743,7 @@ function viewOverview(){
     {k:'investments',label:L('ind_inv'),sub:L('ind_invSub'),amt:Y.inv,dir:'min'}
   ].map(d=>{
     const v=Y.ind[d.k], tg=T[d.k], ok=d.dir==='max'? v<=tg+1e-9 : v>=tg-1e-9;
-    const status=d.dir==='max'? L(ok?'st_within':'st_over') : L(ok?'st_on':'st_below');
+    const status=d.dir==='max'? L(ok?'st_on':'st_over') : L(ok?'st_on':'st_under');
     const tgt= S.ui.editTarget===d.k
       ? `<span class="ind-target-wrap">${esc(L('targetPct'))}<label class="sr" for="target-input">${esc(L('targetFor',d.label))}</label><input id="target-input" type="number" min="0" max="100" step="1" value="${Math.round(tg*1000)/10}" data-key="${d.k}"></span>`
       : `<span class="ind-target-wrap">${esc(L('target'))}<button class="ind-target" data-action="edit-target" data-key="${d.k}" ${S.canWrite?'':'disabled'} title="${S.canWrite?esc(L('changeTarget')):''}">${d.dir==='max'?'≤':'≥'} ${fmtPct(tg,0)}</button></span>`;
@@ -2835,7 +2836,7 @@ function thisMonthCard(){
       <span class="lim-track"><span class="lim-fill ${cls}" style="width:${(Math.min(1,Math.max(0,r))*100).toFixed(1)}%"></span><span class="lim-pace" style="left:${(pace*100).toFixed(1)}%" title="${esc(L('evenPace'))}"></span></span>
       <span class="lim-val">${fmtEUR(Math.max(0,d.s),0)} <small>/ ${fmtEUR(d.lim,0)}</small></span>
       <span class="lim-left${over?' over':''}">${esc(over?L('overBy',fmtEUR(d.s-d.lim,0)):L('leftOf',fmtEUR(d.lim-Math.max(0,d.s),0)))}</span></div>`; }).join('');
-  const top=catRowsFor(A,'expenses').map(c=>({n:c,v:r2(-A.expenses.rows.get(c)[m])})).filter(d=>d.v>0.004&&!limitFor(d.n)).sort((a,b)=>b.v-a.v).slice(0,6), topMax=top.length?top[0].v:1;
+  const top=catRowsFor(A,'expenses').map(c=>({n:c,v:r2(-A.expenses.rows.get(c)[m])})).filter(d=>d.v>0.004&&!limitFor(d.n)).sort((a,b)=>b.v-a.v).slice(0,6), monthOut=Math.max(1,-A.expenses.total[m],sum(top.map(d=>d.v)));
   /* one column per type, all alike: so far, the average month, a bar of so far against that average with a mark for
      where an average month would be by today, and where the month is heading (mmForecast) */
   const kpi=(t,lab)=>{ const sg=t==='expenses'?-1:1, now=sg*A[t].total[m], avg=prev.length?sg*sum(prev.map(i=>A[t].total[i]))/prev.length:null, F=mmForecast(t,null), end=F&&F.months.get(m);
@@ -2848,7 +2849,7 @@ function thisMonthCard(){
     ${cnt?`<div class="tm-stats">${kpi('expenses','spentSoFar')}${kpi('income','inSoFar')}${kpi('investments','invSoFar')}</div>`:`<p class="hint">${esc(L('nothingThisMonth',M()[m]))}</p>`}
     ${lims.length?`<h3 class="tm-h">${esc(L('monthlyLimits'))}</h3><div class="lims">${limRows}</div>`:''}
     ${cnt&&(top.length||!lims.length)?`<h3 class="tm-h">${esc(lims.length?L('otherSpending'):L('topThisMonth'))}</h3>${top.length?`<div class="hbars${top.length>3?' cols':''}"${top.length>3?` style="grid-template-rows:repeat(${Math.ceil(top.length/2)},auto)"`:''}>${top.map(d=>`<div class="hb" data-action="drill" data-t="expenses" data-c="${esc(d.n)}" data-m="${m}" role="button" tabindex="0">
-      <span class="hb-label">${esc(dispCat(d.n))}</span><span class="hb-track"><span class="hb-bar" style="width:${(d.v/topMax*100).toFixed(2)}%;background:${TCOLOR.expenses}"></span></span><span class="hb-val">${fmtEUR(d.v,0)}</span></div>`).join('')}</div>`:`<p class="hint">${esc(L('noSpendYet'))}</p>`}`:''}
+      <span class="hb-label">${esc(dispCat(d.n))}</span><span class="hb-track"><span class="hb-bar" style="width:${(d.v/monthOut*100).toFixed(2)}%;background:${TCOLOR.expenses}"></span></span><span class="hb-val">${fmtEUR(d.v,0)}</span></div>`).join('')}</div>`:`<p class="hint">${esc(L('noSpendYet'))}</p>`}`:''}
     ${!lims.length&&S.canWrite?`<p class="hint tm-foot">${esc(L('limitsHint'))} <button type="button" class="linkish" data-action="goto-limits">${esc(L('setLimits'))}</button></p>`:''}
   </section>`;
 }
@@ -3413,6 +3414,8 @@ function viewNetworth(){
   const nwBarEl=(cls,frac,neg)=>`<span class="nw-bar"><i class="${cls}${neg?' neg':''}" style="width:${(Math.max(0,Math.min(1,frac))*100).toFixed(1)}%"></i></span>`;
   const row=(lab,sub,v,frac,cls,plain)=>`<div class="nw-srow"><div class="nw-stop"><b>${esc(lab)}</b><span class="nw-sval${plain?'':v<-0.004?' down':' up'}">${plain?fmtEUR(v,0):signed(v)}</span></div>${nwBarEl(cls,frac,!plain&&v<-0.004)}${sub?`<small>${esc(sub)}</small>`:''}</div>`;
   const foot=items=>{ const x=items.filter(Boolean); return x.length?`<ul class="nw-foot">${x.map(t=>`<li>${t}</li>`).join('')}</ul>`:''; };
+  /* explanations fold away under "How is this calculated?"; foot() stays for what the reader must see */
+  const how=items=>{ const x=items.filter(Boolean); return x.length?`<details class="nw-foot nw-how"><summary>${esc(L('howCalc'))}</summary><ul>${x.map(t=>`<li>${t}</li>`).join('')}</ul></details>`:''; };
   const warnBox=t=>`<p class="notice nw-repay">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(t)}</span></p>`;
   const retLink=cw?`<button class="linkish nw-retlink" type="button" data-action="nw-ret">${esc(L('nwRetWhich'))}</button>`:'';
   if(!prev){ const tr=trackerSaved(ymAdd(k,-1),k);
@@ -3426,9 +3429,9 @@ function viewNetworth(){
     const health=`<p class="nw-health ${hasLeft?'bad':'ok'}">${(hasLeft?ICON.warn:ICON.ok).replace('<svg','<svg width="14" height="14"')}<span>${esc(hasLeft?L('nwHealthBad',fmtEUR(Math.abs(sp.left))):L('nwHealthOk'))}</span></p>`;
     change=`<p class="nw-delta ${sp.change<-0.004?'down':'up'}">${signed(sp.change)}</p><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>`+
       (sp.missing.length?foot([esc(noTrackerText(sp.missing)),sp.added>0.004?esc(L('nwNewAccIncl',fmtEUR(sp.added,0))):''])
-      :`${health}<div class="nw-split">${row(L('nwSaved'),L('nwSavedSub'),sp.saved,Math.abs(sp.saved)/mx,'saved')}${row(L('nwMarket'),L('nwMarketSub'),sp.gains,Math.abs(sp.gains)/mx,'market')}${Math.abs(sp.fresh)>0.004?row(L('nwNewAccRow'),L('nwNewAccRowSub'),sp.fresh,Math.abs(sp.fresh)/mx,'fresh'):''}${hasLeft?row(L('nwLeftRow'),L('nwLeftRowSub'),sp.left,Math.abs(sp.left)/mx,'left'):''}</div>${review}
+      :`${health}<div class="nw-split nw-cmp">${row(L('nwSaved'),L('nwSavedSub'),sp.saved,Math.abs(sp.saved)/mx,'saved')}${row(L('nwMarket'),L('nwMarketSub'),sp.gains,Math.abs(sp.gains)/mx,'market')}${Math.abs(sp.fresh)>0.004?row(L('nwNewAccRow'),L('nwNewAccRowSub'),sp.fresh,Math.abs(sp.fresh)/mx,'fresh'):''}${hasLeft?row(L('nwLeftRow'),L('nwLeftRowSub'),sp.left,Math.abs(sp.left)/mx,'left'):''}</div>${review}
         ${nwLateBox(nwLate(prev,k)||nwLate(k,ms[ms.indexOf(k)+1]))}${sp.blind.length&&Math.abs(sp.left)>=200?warnBox(L('nwBlindHint',listJoin(sp.blind),ymIn(k))):''}${sp.repay?warnBox(L('nwRepayHint',sp.repay)):''}
-        ${foot([Math.abs(sp.returns)>0.004?esc(L('nwRetIncl',fmtEUR(sp.returns))):'',sp.moved>0.004?esc(L('nwMovedNote',fmtEUR(sp.moved,0))):''])}${retLink}`);
+        ${how([Math.abs(sp.returns)>0.004?esc(L('nwRetIncl',fmtEUR(sp.returns))):'',sp.moved>0.004?esc(L('nwMovedNote',fmtEUR(sp.moved,0))):''])}${retLink}`);
   }
   const changeCard=`<section class="card nw-card"><div class="card-head"><div><h2>${esc(L('nwChange'))}${info('nwChange')}</h2></div></div>${change}</section>`;
   /* goal: progress, three key figures, where the rest has to come from */
@@ -3452,7 +3455,7 @@ function viewNetworth(){
       body=`<div class="nw-stats">${stat(L('nwStToGo'),fmtEUR(rest,0),L('nwStToGoSub',left))}${stat(L('nwStNeed'),fmtEUR(need,0),L('nwStNeedSub',M3()[+G.month.slice(5,7)-1],gy))}${stat(L('nwStSave'),pace?fmtEUR(pace.avg,0):DASH,pace?L('nwStSaveSub',pace.n):L('nwStSaveNone'))}</div>
         <div class="nw-split">${row(L('nwFromSavingRow'),'',sv,sv/tt,'saved',true)}${row(L('nwFromGrowthRow'),'',gp,gp/tt,'growth',true)}</div>
         <p class="nw-growth-txt">${esc(txt)}</p>
-        ${foot([pace?esc(L('nwGoalFootProj',fmtEUR(TG.total+pace.avg*left,0),ymM(G.month),gy)):'',c.tot!=null&&c.gap>0?esc(L('nwGoalGrowthNote')):'',kG!==k?esc(L('nwGoalAsOf',ymIn(kG))):''])}`;
+        ${how([pace?esc(L('nwGoalFootProj',fmtEUR(TG.total+pace.avg*left,0),ymM(G.month),gy)):'',c.tot!=null&&c.gap>0?esc(L('nwGoalGrowthNote')):'',kG!==k?esc(L('nwGoalAsOf',ymIn(kG))):''])}`;
     }
     goal=`<p class="nw-goal-line">${esc(L('nwGoalLine',fmtEUR(G.amount,0),ymM(G.month),gy))}</p>
       <span class="nw-bar" role="img" aria-label="${esc(fmtPct(pr,0))}"><i class="saved" style="width:${(pr*100).toFixed(1)}%"></i></span>
@@ -3483,31 +3486,32 @@ function healthCard(k,T){
   const fi=r2(sum((H.fiGroups||[]).map(g=>T.g[g]||0)));
   const lvl=(v,lo,hi)=>v>=hi?'good':v>=lo?'warn':'bad';
   const pill=(c,t)=>`<span class="pill ${c}">${c==='good'?ICON.ok:ICON.warn}${esc(t)}</span>`, lp=c=>pill(c,L('fhLvl_'+c));
-  const sub=(t,c)=>`<span class="tile-sub${c?' fh-'+c:''}">${esc(t)}</span>`;
-  const card=(key,sw,val,body,pl,vc)=>`<div class="fh-c"><span class="tile-label">${sw?gSw(sw):''}${esc(L('fh_'+key))}${info('fh_'+key)}</span><span class="tile-val${vc?' fh-'+vc:''}">${val}</span>${body}${pl?`<span class="fh-pill">${pl}</span>`:''}</div>`;
+  const sub=t=>`<span class="tile-sub">${esc(t)}</span>`;
+  /* the same slots in every card: label, value, meta line(s), footer (a bar, a badge or a button: one at most), footers lined up at the bottom */
+  const card=(key,val,meta,foot)=>`<div class="fh-c"><span class="tile-label">${esc(L('fh_'+key))}${info('fh_'+key)}</span><span class="tile-val${val===DASH?' fh-none':''}">${val}</span><div class="fh-meta">${meta}</div><div class="fh-foot">${foot||''}</div></div>`;
   const noExp=sub(L('fhNoExp')), hasExp=avgExp>0.5;
   /* 1. months of spending the spendable cash would cover */
-  let c1=card('emerg','cash','—',noExp);
+  let c1=card('emerg',DASH,noExp);
   if(hasExp){ const mo=Math.max(0,cash/avgExp), tg=H.emergencyMonthsTarget*avgExp, d=r2(cash-tg), lv=lvl(mo,H.emergencyMonthsTarget/2,H.emergencyMonthsTarget);
-    c1=card('emerg','cash',esc(L('fhMonths',fmtNum(mo,1))),sub(L('fhTarget',H.emergencyMonthsTarget,fmtEUR(tg,0)))+sub(d>=0?L('fhSpare',fmtEUR(d,0)):L('fhToGo',fmtEUR(-d,0)),d>=0?'good':lv),lp(lv)); }
+    c1=card('emerg',esc(L('fhMonths',fmtNum(mo,1))),sub(L('fhTarget',H.emergencyMonthsTarget,fmtEUR(tg,0)))+sub(d>=0?L('fhSpare',fmtEUR(d,0)):L('fhToGo',fmtEUR(-d,0))),lp(lv)); }
   /* 2. invested money against fiMultiple × a year of spending */
-  let c2=card('fi','invest','—',noExp);
+  let c2=card('fi',DASH,noExp);
   if(hasExp){ const tg=H.fiMultiple*avgExp*12, p=fi/tg;
-    c2=card('fi','invest',fmtPct(p,0),`<span class="nw-bar" role="img" aria-label="${esc(fmtPct(p,0))}"><i class="saved" style="width:${(Math.max(0,Math.min(1,p))*100).toFixed(1)}%"></i></span>`+sub(L('fhOf',fmtEUR(fi,0),fmtEUR(tg,0)))); }
+    c2=card('fi',fmtPct(p,0),sub(L('fhOf',fmtEUR(fi,0),fmtEUR(tg,0))),`<span class="nw-bar" role="img" aria-label="${esc(fmtPct(p,0))}"><i class="saved" style="width:${(Math.max(0,Math.min(1,p))*100).toFixed(1)}%"></i></span>`); }
   /* 3. share of income kept, on average and in month k itself (so far, if k is still running) */
-  let c3=card('save','','—',sub(L('fhNoInc')));
+  let c3=card('save',DASH,sub(L('fhNoInc')));
   if(avgInc>0.5){ const r=(avgInc-avgExp)/avgInc, tk=trackerSaved(ymAdd(k,-1),k), ki=sum(tk.income), kr=ki>0.5?tk.saved/ki:null, tg=H.savingsRateTarget;
     const ar=kr==null?'':kr>r+0.005?'↑':kr<r-0.005?'↓':'=';
-    c3=card('save','',fmtPct(r,0),kr==null?'':sub(L('fhMonthRate',M()[+k.slice(5,7)-1],fmtPct(kr,0),ar,k===ymNow())),r>=0.4?pill('good',L('fhFire')):lp(lvl(r,tg/2,tg)),r<0?'bad':''); }
+    c3=card('save',fmtPct(r,0),kr==null?'':sub(L('fhMonthRate',M()[+k.slice(5,7)-1],fmtPct(kr,0),ar,k===ymNow())),r>=0.4?pill('good',L('fhFire')):lp(lvl(r,tg/2,tg))); }
   /* 4. what the invested money could pay each month at withdrawalRate a year, against spending */
-  let c4=card('passive','invest','—',noExp);
+  let c4=card('passive',DASH,noExp);
   if(hasExp){ const pm=fi*H.withdrawalRate/12, c=pm/avgExp;
-    c4=card('passive','invest',fmtPct(c,0),sub(L('fhPassiveSub',fmtEUR(pm,0),fmtEUR(avgExp,0))),c>=1?pill('good',L('fhCovers')):''); }
+    c4=card('passive',fmtPct(c,0),sub(L('fhPassiveSub',fmtEUR(pm,0),fmtEUR(avgExp,0))),c>=1?pill('good',L('fhCovers')):''); }
   /* 5. net worth against age × gross yearly salary ÷ 10 (age in the year of month k) */
   const by=+(S.settings&&S.settings.birthYear)||0, sal=+(S.settings&&S.settings.salary)||0, age=by?+k.slice(0,4)-by:0;
-  let c5=card('age','','—',`<button class="linkish fh-link" type="button" data-action="tab" data-tab="settings">${esc(L('fhAddAge'))}</button>`);
+  let c5=card('age',DASH,sub(L('fhAgeNeeds')),`<button class="btn sm" type="button" data-action="tab" data-tab="settings">${esc(L('fhAddDetails'))}</button>`);
   if(age>0&&sal>0){ const b=age*sal/10, x=T.total/b, lv=lvl(x,0.5,1);
-    c5=card('age','',esc(fmtNum(x,1)+'×'),sub(L('fhAgeSub',age,fmtEUR(b,0))),x>=2?pill('good',L('fhProdigious')):lp(lv),x<0.5?'bad':''); }
+    c5=card('age',esc(fmtNum(x,1)+'×'),sub(L('fhAgeSub',age,fmtEUR(b,0))),x>=2?pill('good',L('fhProdigious')):lp(lv)); }
   return `<section class="card" aria-labelledby="fh-title"><div class="card-head"><div><h2 id="fh-title">${esc(L('fhTitle'))}${info('fhTitle')}</h2><p class="sub">${esc(n?L('fhSub',ymIn(k),n):L('fhNoData'))}</p></div></div>
     <div class="fh">${c1}${c2}${c3}${c4}${c5}</div></section>`;
 }
@@ -3627,7 +3631,7 @@ function accountsCard(k){
     <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
     ${G.size&&G.unlinked.length?(()=>{ const u=G.unlinked, ds=nwUnlinked(u.map(r=>({r,k}))).map(g=>g.label);
       return `<p class="warn-text" style="margin-top:var(--s12)">${esc(L('nwUnlinked',u.length,fmtEUR(Math.abs(sum(u.map(r=>r.amount)))),listJoin(ds.slice(0,5).map(d=>`“${d}”`))+(ds.length>5?' …':'')))}${S.canWrite?` <button class="btn sm primary" type="button" data-action="nw-link">${esc(L('nwUnlinkedFix'))}</button>`:''}</p>`; })():''}
-    ${k&&prev?`<p class="hint" style="margin-top:var(--s12)">${esc(L('nwGainsTip'))}</p>`:''}
+    ${k&&prev?`<details class="nw-foot nw-how"><summary>${esc(L('howCalc'))}</summary><p class="hint">${esc(L('nwGainsTip'))}</p></details>`:''}
     ${st&&st.closed.size?`<p class="hint" style="margin-top:var(--s12)">${esc(L('nwClosedNote',st.closed.size))}</p>`:''}</section>`;
 }
 /* years in the Over time chart: the current year by default (or the latest with figures), any mix on request */
