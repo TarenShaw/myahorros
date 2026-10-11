@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-Mg8jQcGGxWtxAAGlaJ8j4BjvWTK7TyvgoP9IyyHlmI4=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-x08Ltk5FWuLIE4gvw6i4q3DPQKoHbvm2HAt3NClWRd0=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -229,7 +229,7 @@ tr.ai-ask td.n{min-width:220px;white-space:normal}
 .acc-start-chips{display:flex;flex-wrap:wrap;gap:6px}
 .local-top{display:inline-flex;align-items:center;gap:6px}
 .local-top svg{flex:none}
-@media (max-width:640px){#btn-backup,#btn-export{display:none!important}
+@media (max-width:640px){#btn-backup{display:none!important}
   .guide{display:flex;flex-direction:column}.guide .guide-groups{order:6}.guide .guide-acts{order:5}.guide .guide-tour{order:7}
   .bk-nudge .bk-acts{margin-left:0}
   .acc-start-grid{grid-template-columns:1fr}.guide-skip{margin-left:0}.guide-steps{gap:6px 16px}.guide .nw-groups-help{grid-template-columns:1fr 1fr;gap:8px}.guide .nw-groups-help>div{padding:9px 10px}}
@@ -337,7 +337,7 @@ select{padding-right:28px}
 .lkey{display:inline-block;width:14px;height:2px;border-radius:1px}
 .chart{position:relative;width:100%;min-height:200px}
 .chart svg{display:block;max-width:100%;overflow:visible}
-#ch-prop{height:330px}
+#ch-monthly{height:290px}#ch-prop{height:330px}
 @media (max-width:900px){.tab-long{display:none}}
 @media (min-width:641px) and (max-width:767px){.tab .ti{display:none}}
 .chart .gl{stroke:var(--line);stroke-width:1}
@@ -461,7 +461,7 @@ table.tx{width:100%;border-collapse:collapse;font-size:13.5px}
 .cat-list li{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n a" "u a";align-items:center;gap:2px 12px;padding:8px 0;border-top:1px solid var(--line)}
 .cat-list li.has-lim{grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"n l a" "u l a"}
 .cat-list .cat-name{grid-area:n}.cat-list .uses{grid-area:u}.cat-list .lim-btn{grid-area:l}.cat-list .acts{grid-area:a}
-.lim-btn{justify-self:end;border:1px dashed var(--line-2);background:transparent;border-radius:6px;padding:3px 8px;font:500 12px/1.3 var(--f-mono);color:var(--muted);cursor:pointer;white-space:nowrap}
+.lim-btn{justify-self:end;border:1px dashed var(--line-2);background:transparent;border-radius:6px;padding:3px 8px;font:600 12.5px/1.3 var(--f-body);color:var(--muted);cursor:pointer;white-space:nowrap}
 .lim-btn.on{border-style:solid;color:var(--ink);background:var(--surface-2)}
 button.lim-btn:hover{border-style:solid;color:var(--ink)}
 .lim-tag{display:block;font:500 10.5px/1.3 var(--f-mono);color:var(--muted);font-style:normal}
@@ -913,6 +913,24 @@ table.nwt{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-nume
   .kw-row{grid-template-columns:minmax(0,1fr) minmax(120px,190px) 40px}
 }
 @media (max-width:640px){.kw-row{grid-template-columns:minmax(0,1fr) 40px}}
+/* desktop: bigger figures and small print, so wide screens don't look tiny */
+@media (min-width:1200px){
+  .ov-top{grid-template-columns:minmax(0,.9fr) minmax(0,2fr)}
+  .tile{padding:22px 22px 18px;gap:6px}
+  .tile-label{font-size:14px}
+  .tile-val,.tm-num{font-size:clamp(24px,1.75vw,32px)}
+  .tile-sub{font-size:13.5px}
+  .tm-stats{grid-template-columns:repeat(3,max-content);column-gap:clamp(48px,6vw,112px)}
+  .eyebrow{font-size:12px}
+  .card .sub,.hint{font-size:13.5px}
+  .foot-note,.legend,.heat-legend,.ind-target-wrap,.pill,.ind-label small,.ind-val small,.nw-stat-l,.nw-stat-s,.nw-srow small,.nw-foot,.lim-val small,.field .help{font-size:13px}
+  .ind-val{font-size:18px}
+  .ind-target{font-size:13.5px}
+  .nw-stat-v{font-size:22px}
+  #ch-monthly,#ch-prop{height:340px}
+}
+/* footnotes sit at the bottom of the net worth cards, so the two cards line up */
+.nw-card>.nw-foot{margin-top:auto}.nw-card>:has(+ .nw-foot){margin-bottom:18px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -948,7 +966,6 @@ table.nwt{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-nume
       <button class="btn sm local-top" type="button" data-action="local-x" id="btn-local-top" hidden></button>
       <button class="btn sm eye-btn" type="button" data-action="toggle-hide" id="btn-hide" aria-pressed="false" hidden></button>
       <button class="btn sm" type="button" data-action="backup" id="btn-backup" hidden>Download backup</button>
-      <button class="btn sm" type="button" data-action="export" id="btn-export" hidden>Download .xlsx</button>
     </div>
   </div>
   <main id="view">
@@ -1206,7 +1223,6 @@ const STR={
   withoutCat:[n=>`${n} without a category`,n=>`${n} sin categoría`],
   sync_connecting:['Connecting','Conectando'], sync_nodb:['Not connected','Sin conexión'], sync_saving:['Saving…','Guardando…'],
   sync_err:['Not saved','Sin guardar'], sync_ro:['Read-only','Solo lectura'], sync_ok:['Saved','Guardado'],
-  downloadXlsx:['Download .xlsx','Descargar .xlsx'],
   loading:['Loading your tracker…','Cargando tu control…'],
   T_income:['Income','Ingresos'], T_expenses:['Expenses','Gastos'], T_investments:['Investments','Inversiones'],
   need:['Need','Necesario'], want:['Want','Capricho'],
@@ -2293,7 +2309,6 @@ function applyLang(){
   $('#tab-categories .tl').textContent=L('tab_categories');
   $('#tab-settings .tl').textContent=L('tab_settings');
   $('#tab-networth .tl').textContent=L('tab_networth');
-  $('#btn-export').textContent=L('downloadXlsx');
   $('#btn-backup').textContent=L('dlBackup');
 }
 
@@ -2370,7 +2385,7 @@ function renderHeader(){
   const nUn=TKEYS.reduce((a,t)=>a+un[t].uncatCount,0);
   setTxTab(nUn);
   $('#tab-networth').classList.toggle('due',!!(S.canWrite&&S.gotConfig&&nwDue()));
-  $('#btn-export').hidden=$('#btn-backup').hidden=!(S.downloads && allRows().length && !isOnboarding());
+  $('#btn-backup').hidden=!(S.downloads && allRows().length && !isOnboarding());
   { const tb=$('#btn-local-top'); let tp=null; try{ tp=S.local&&typeof S.local.top==='function'?S.local.top(LANG):null; }catch(_){}
     if(tb){ tb.hidden=!tp; if(tp&&tb.dataset.key!==tp.fn+'|'+tp.label){ tb.dataset.fn=tp.fn; tb.innerHTML=(tp.icon||'')+'<span>'+esc(tp.label)+'</span>'; tb.title=tp.help||''; tb.dataset.key=tp.fn+'|'+tp.label; } } }
   const hb=$('#btn-hide'); if(hb){ hb.hidden=!allRows().length&&!(S.nw&&S.nw.accounts.length)||isOnboarding(); hb.setAttribute('aria-pressed',String(HIDE));
@@ -2616,7 +2631,7 @@ function viewOverview(){
       <div class="card-head"><div><h2>${esc(L('monthByMonth'))}${info('ovMonthly')}</h2><p class="sub">${esc(mmSummary(A))} ${esc(L('clickBar'))}</p></div>
         <div class="seg" role="group" aria-label="${esc(L('show'))}"><button data-action="mm-table" data-t="all" aria-pressed="${mmT==='all'}">${esc(L('all'))}</button>${TKEYS.map(t=>`<button data-action="mm-table" data-t="${t}" aria-pressed="${mmT===t}"><i class="sw ${t}"></i>${esc(TL(t))}</button>`).join('')}</div></div>
       ${mmT!=='all'&&mc?`<div class="legend" style="margin-bottom:6px"><button type="button" class="cat-chip" data-action="mm-clear-cat">${esc(L('onlyCat',dispCat(mc)))}<span aria-hidden="true">${ICON.x}</span><span class="sr">${esc(L('backToAll',mmT))}</span></button></div>`:''}
-      <div class="chart" id="ch-monthly" style="height:290px"></div>
+      <div class="chart" id="ch-monthly"></div>
       ${partialOut?`<p class="foot-note">${esc(L('partialNote',M()[nm.m]))}</p>`:''}
     </section>
     <section class="card">
@@ -2862,8 +2877,10 @@ function drawOverviewCharts(){
   const ep=$('#ch-prop');
   if(ep){
     /* a month without positive income has no meaningful share */
-    const pe=idx.map(i=>A.income.total[i]>0?-A.expenses.total[i]/A.income.total[i]:null);
-    const pi=idx.map(i=>A.income.total[i]>0?A.investments.total[i]/A.income.total[i]:null);
+    /* nor does the month in progress: a few days of income would blow up the scale */
+    const ok=(i,p)=>p!==pp&&A.income.total[i]>0;
+    const pe=idx.map((i,p)=>ok(i,p)?-A.expenses.total[i]/A.income.total[i]:null);
+    const pi=idx.map((i,p)=>ok(i,p)?A.investments.total[i]/A.income.total[i]:null);
     drawLines(ep,labels,[{values:pe,color:TCOLOR.expenses},{values:pi,color:TCOLOR.investments}],{
       label:L('shareAria',y), ref:1, refLabel:L('pct100'),
       tip:p=>tipRows(M()[idx[p]]+' '+y,[{sw:'expenses',label:TL('expenses'),value:fmtPct(pe[p])},{sw:'investments',label:TL('investments'),value:fmtPct(pi[p])}],`<div class="tr"><span>${esc(L('kept'))}</span><b>${pe[p]==null?'–':fmtPct(1-pe[p])}</b></div>`)

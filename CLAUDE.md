@@ -45,7 +45,7 @@ The repo is LF (`.gitattributes`). The CSP hash is computed on the LF text, whic
 
 - **CSP lives in a `<meta>` in `index.html`.** The inline script is allowed by a `sha256-...` hash in `script-src`. Any edit to that inline `<script>` changes the hash; the page then silently fails to run until the hash is updated. Run `node tools/update-csp-hash.js` after every edit.
 - New external hosts (APIs, scripts) must be added to the CSP `connect-src`/`script-src`, and to the README's privacy statement and `privacy.html`.
-- `sw.js` has a hard-coded `FILES` precache list and a `VERSION`. Adding/removing/renaming a shipped file means updating `FILES`; bump `VERSION` so clients drop the old `ybt-*` cache. A missing file in `FILES` makes SW install fail (`addAll`).
+- `sw.js` has a hard-coded `FILES` precache list and a `VERSION`. Adding/removing/renaming a shipped file means updating `FILES`; bump `VERSION` so clients drop the old `ybt-*` cache. Set `config.js` `version` to the same number (Settings shows it). A missing file in `FILES` makes SW install fail (`addAll`).
 - `config.js` is fetched fresh by the SW so the Client ID can be changed on its own; keep it a plain `window.YBT_CONFIG = {...}` assignment.
 - GoatCounter (`myahorrosapp.goatcounter.com`, script from `gc.zgo.at`) is the only analytics. It is whitelisted in the CSP of `index.html` only; `privacy.html` has `script-src 'none'` so that page is not counted. Any new third party needs a CSP entry plus an update to `privacy.html` (both languages) and the README.
 - Bilingual (en/es): UI strings exist in both languages in `index.html`, `web-shim.js` (`TX`) and `web-ai.js`; `privacy.html` is also bilingual. Update both.
