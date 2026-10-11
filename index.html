@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-p2rijQGVCLP8WX50KaYvoi7zrfsrCJpY4vj/P+RK1OU=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-aoXNmgIjsTHLtykLB8yucZJEjG8TN3cY2rff7sxVyHk=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -480,8 +480,11 @@ button.lim-btn:hover{border-style:solid;color:var(--ink)}
 .lim-legend i{display:inline-block;width:16px;height:3px;border-radius:2px}
 .lim-legend i.u{background:color-mix(in srgb,var(--good) 60%,transparent)}
 .lim-legend i.o{background:var(--bad);margin-left:8px}
-.tm-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 20px}
-.tm-stats>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.tm-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:8px}
+.tm-kpi{padding:16px 18px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.tm-kpi+.tm-kpi{border-left:1px solid var(--line)}
+.tm-pace{position:relative;height:6px;border-radius:3px;background:var(--surface-3);margin:6px 0 3px}
+.tm-pace-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
 .tm-num{font:650 20px/1.15 var(--f-body);letter-spacing:-.01em;white-space:nowrap}
 .tm-h{font:600 13px/1.3 var(--f-body);color:var(--ink-2);margin:18px 0 6px}
 .lims{display:grid}
@@ -498,11 +501,7 @@ button.lim-btn:hover{border-style:solid;color:var(--ink)}
 .lim-val small{font-weight:400;color:var(--muted);font-size:12px}
 .lim-left{font-size:12.5px;color:var(--good-ink);font-weight:600;text-align:right;white-space:nowrap}
 .lim-left.over{color:var(--bad-ink)}
-.tm-top{display:flex;flex-wrap:wrap;gap:6px}
-.tm-chip{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:4px 11px;font-size:13px;cursor:pointer;color:var(--ink)}
-.tm-chip:hover{background:var(--surface-2)}
-.tm-chip b{font-variant-numeric:tabular-nums;font-weight:600}
-.tm-hint{margin-top:14px}
+.tm-foot{margin:16px 0 0;padding-top:12px;border-top:1px solid var(--line)}
 .cat-list li:first-child{border-top:0}
 .cat-name{font-weight:600;display:flex;align-items:center;gap:8px;min-width:0}
 .cat-name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -713,7 +712,9 @@ fieldset.plain legend{padding:0;margin-bottom:6px}
   .kw-row .kw{grid-area:k}.kw-row select{grid-area:s}.kw-row .icon-btn{grid-area:x}
   .cat-list li.has-lim{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n n" "u u" "l a";row-gap:6px}
   .cat-list li.has-lim .lim-btn{justify-self:start}
-  .tm-stats{grid-template-columns:1fr 1fr}
+  .tm-stats{grid-template-columns:1fr}
+  .tm-kpi{padding:14px}
+  .tm-kpi+.tm-kpi{border-left:0;border-top:1px solid var(--line)}
   .lim-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n v" "t t" "l l";gap:4px 10px}
   .lim-name{grid-area:n}.lim-val{grid-area:v}.lim-track{grid-area:t}.lim-left{grid-area:l;text-align:left}
   .grid .rh{min-width:150px;max-width:170px;white-space:normal}
@@ -804,9 +805,9 @@ fieldset.plain legend{padding:0;margin-bottom:6px}
 .nw-closed .linkish{justify-self:start}
 .nw-years button{font-variant-numeric:tabular-nums}
 .chart .nw-inc{opacity:.38}
-.chart .nw-fc{opacity:.32;filter:saturate(.25)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]):not([data-ybt-theme="light"]) .chart .nw-fc{opacity:.45}}
-:root[data-theme="dark"] .chart .nw-fc,:root[data-ybt-theme="dark"] .chart .nw-fc{opacity:.45}
+.chart .nw-fc,.chart path.bar.fc{opacity:.32;filter:saturate(.25)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]):not([data-ybt-theme="light"]) .chart .nw-fc,:root:not([data-theme="light"]):not([data-ybt-theme="light"]) .chart path.bar.fc{opacity:.45}}
+:root[data-theme="dark"] .chart .nw-fc,:root[data-ybt-theme="dark"] .chart .nw-fc,:root[data-theme="dark"] .chart path.bar.fc,:root[data-ybt-theme="dark"] .chart path.bar.fc{opacity:.45}
 .chart .trend.fc{stroke-dasharray:1.5 5;opacity:.45}
 .lkey.fc{width:10px;height:10px;border-radius:2px;background:var(--g-invest);opacity:.3;filter:saturate(.25);vertical-align:-1px}
 .chart text.lbl.inc{fill:var(--muted)}
@@ -936,7 +937,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:14.5px;font-variant-nume
   .tile-label{font-size:14px}
   .tile-val,.tm-num{font-size:clamp(24px,1.75vw,32px)}
   .tile-sub{font-size:13.5px}
-  .tm-stats{grid-template-columns:repeat(3,max-content);column-gap:clamp(48px,6vw,112px)}
+  .tm-kpi{padding:22px 22px 18px;gap:6px}
   .eyebrow{font-size:12px}
   .card .sub,.hint{font-size:13.5px}
   .foot-note,.legend,.heat-legend,.ind-target-wrap,.pill,.ind-label small,.ind-val small,.nw-stat-l,.nw-stat-s,.nw-srow small,.nw-foot,.lim-val small,.field .help{font-size:13px}
@@ -1289,8 +1290,6 @@ const STR={
   shareAria:[y=>`Expenses and investments as a share of income per month in ${y}`,y=>`Gastos e inversiones como porcentaje de los ingresos por mes en ${y}`],
   monthByMonth:['Month by month','Mes a mes'], mmView:['Months or days','Meses o días'], mmMonths:['Months','Meses'], mmDays:['Days','Días'],
   mmDaysOff:['Daily view is available for Income, Expenses or Investments individually.','La vista por días está disponible para Ingresos, Gastos o Inversiones por separado.'],
-  dayPos_expenses:['Spent','Gastado'], dayNeg_expenses:['Refunds','Devoluciones'], dayPos_income:['Received','Recibido'], dayNeg_income:['Taken back','Devuelto'],
-  dayPos_investments:['Put in','Aportado'], dayNeg_investments:['Taken out','Retirado'], dayNet:['Net','Neto'],
   dayAria:[(n,y)=>`${n} per day in ${y}`,(n,y)=>`${n} por día en ${y}`], clickBar:['Click a bar to see that month by category.','Pulsa una barra para ver ese mes por categoría.'],
   all:['All','Todo'], show:['Show','Mostrar'],
   perMonth:[n=>`${n} per month`,n=>`${n} por mes`], trendFor:[y=>`Trend line for ${y}`,y=>`Línea de tendencia ${y}`],
@@ -2020,9 +2019,19 @@ const STR={
   thisMonth:['This month','Este mes'], dayOf:[(d,n)=>`Day ${d} of ${n}`,(d,n)=>`Día ${d} de ${n}`],
   spentSoFar:['Spent so far','Gastado hasta hoy'], inSoFar:['Income so far','Ingresado hasta hoy'], invSoFar:['Invested so far','Invertido hasta hoy'],
   avgMonthIs:[v=>`Your average month: ${v}`,v=>`Tu mes medio: ${v}`],
+  onTrack:[v=>`On track for about ${v}`,v=>`A este ritmo, unos ${v}`], noSpendYet:['No spending yet this month.','Aún no hay gastos este mes.'],
+  avgPace:[d=>`Where an average month would be by day ${d}`,d=>`Dónde estaría un mes medio el día ${d}`],
+  paceAria:[(p,d,n)=>`So far ${p} of an average month, on day ${d} of ${n}`,(p,d,n)=>`Llevas el ${p} de un mes medio, en el día ${d} de ${n}`],
   nothingThisMonth:[m=>`Nothing recorded for ${m} yet.`,m=>`Todavía no hay nada registrado en ${m.toLowerCase()}.`],
   topThisMonth:['Where it went','En qué se ha ido'], otherSpending:['Other spending this month','Otros gastos de este mes'],
   soFar:['so far','hasta hoy'],
+  projTag:['Projected','Previsto'], soFarLbl:['So far','Hasta hoy'], projRest:['Projected rest of the month','Previsto para el resto del mes'], monthTotal:['Month total','Total del mes'],
+  mmFcHow:[(n,se)=>n===1?'A projection, not real data. With only one month so far, it repeats that month.':`A projection, not real data: a typical month from your last ${n} months (the middle value, so one unusual month doesn’t skew it), plus the recent trend, eased off${se?', mixed with the same month last year':''}.`,
+    (n,se)=>n===1?'Una previsión, no datos reales. Con un solo mes hasta ahora, repite ese mes.':`Una previsión, no datos reales: un mes típico de tus últimos ${n} meses (el valor del medio, para que un mes raro no lo desvíe), más la tendencia reciente, suavizada${se?', mezclado con el mismo mes del año pasado':''}.`],
+  mmFcNote:[n=>`Greyed bars are projected from your last ${n===1?'month':n+' months'}.`,n=>`Las barras en gris son una previsión a partir de ${n===1?'tu único mes':'tus últimos '+n+' meses'}.`],
+  mmFcDays:[n=>`Greyed days are projected from your last ${n===1?'month':n+' months'}: things that repeat every month (like pay or rent) on their usual day, the rest spread over the week the way it usually goes.`,n=>`Los días en gris son una previsión a partir de ${n===1?'tu único mes':'tus últimos '+n+' meses'}: lo que se repite cada mes (como la nómina o el alquiler) en su día habitual y el resto repartido por la semana como suele ir.`],
+  dayRec:[v=>`${v} (every month)`,v=>`${v} (cada mes)`],
+  dayEst_expenses:['Estimated everyday spending','Gasto diario estimado'], dayEst_income:['Estimated other income','Otros ingresos estimados'], dayEst_investments:['Estimated other investing','Otras inversiones estimadas'],
   partialNote:[m=>`${m} is still in progress, so it’s left out of the averages and the trend line.`,m=>`${m} aún no ha terminado, así que no cuenta en las medias ni en la línea de tendencia.`],
   /* monthly limits */
   monthlyLimits:['Monthly limits','Límites mensuales'],
@@ -2727,6 +2736,7 @@ function viewOverview(){
       ${mmT!=='all'&&mc?`<div class="legend" style="margin-bottom:6px"><button type="button" class="cat-chip" data-action="mm-clear-cat">${esc(L('onlyCat',dispCat(mc)))}<span aria-hidden="true">${ICON.x}</span><span class="sr">${esc(L('backToAll',mmT))}</span></button></div>`:''}
       <div class="chart" id="ch-monthly"></div>
       ${partialOut&&!mmD?`<p class="foot-note">${esc(L('partialNote',M()[nm.m]))}</p>`:''}
+      ${(F=>F?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L(mmD?'mmFcDays':'mmFcNote',F.n))}</p>`:'')(y===nm.y?(mmT==='all'?TKEYS.map(t=>mmForecast(t,null)).find(Boolean):mmForecast(mmT,mc)):null)}
     </section>
     <section class="card">
       <div class="card-head"><div><h2>${esc(L('byCategory'))}${info('ovCats')}</h2><p class="sub">${esc(oc.table==='expenses'&&oc.exRent&&rn?L('rentLeftOut',rn):L('totalsPeriod'))}${esc(L('clickCat'))}</p></div>
@@ -2771,8 +2781,7 @@ function thisMonthCard(){
   const A=agg(n.y), m=n.m;
   const spent=-A.expenses.total[m], inc=A.income.total[m], inv=A.investments.total[m];
   let cnt=0; for(const t of TKEYS) for(const c of A[t].counts.values()) cnt+=c[m];
-  const prev=avgIdx(n.y).filter(i=>i!==m), avgSpent=prev.length?-sum(prev.map(i=>A.expenses.total[i]))/prev.length:null;
-  const pace=n.day/n.days;
+  const prev=avgIdx(n.y).filter(i=>i!==m), pace=n.day/n.days;
   const lims=cats().expenses.filter(c=>limitFor(c.name)).map(c=>({n:c.name,lim:limitFor(c.name),s:r2(-((A.expenses.rows.get(c.name)||[])[m]||0))}));
   const limRows=lims.map(d=>{ const r=d.s/d.lim, over=d.s>d.lim+0.005, cls=over?'bad':r>=0.85?'warn':'good';
     return `<div class="lim-row" data-action="drill" data-t="expenses" data-c="${esc(d.n)}" data-m="${m}" role="button" tabindex="0" aria-label="${esc(L('limAria',d.n,fmtEUR(Math.max(0,d.s),0),fmtEUR(d.lim,0)))}">
@@ -2780,18 +2789,21 @@ function thisMonthCard(){
       <span class="lim-track"><span class="lim-fill ${cls}" style="width:${(Math.min(1,Math.max(0,r))*100).toFixed(1)}%"></span><span class="lim-pace" style="left:${(pace*100).toFixed(1)}%" title="${esc(L('evenPace'))}"></span></span>
       <span class="lim-val">${fmtEUR(Math.max(0,d.s),0)} <small>/ ${fmtEUR(d.lim,0)}</small></span>
       <span class="lim-left${over?' over':''}">${esc(over?L('overBy',fmtEUR(d.s-d.lim,0)):L('leftOf',fmtEUR(d.lim-Math.max(0,d.s),0)))}</span></div>`; }).join('');
-  const top=catRowsFor(A,'expenses').map(c=>({n:c,v:r2(-A.expenses.rows.get(c)[m])})).filter(d=>d.v>0.004&&!limitFor(d.n)).sort((a,b)=>b.v-a.v).slice(0,6);
+  const top=catRowsFor(A,'expenses').map(c=>({n:c,v:r2(-A.expenses.rows.get(c)[m])})).filter(d=>d.v>0.004&&!limitFor(d.n)).sort((a,b)=>b.v-a.v).slice(0,6), topMax=top.length?top[0].v:1;
+  /* one column per type, all alike: so far, the average month, a bar of so far against that average with a mark for
+     where an average month would be by today, and where the month is heading (mmForecast) */
+  const kpi=(t,lab)=>{ const sg=t==='expenses'?-1:1, now=sg*A[t].total[m], avg=prev.length?sg*sum(prev.map(i=>A[t].total[i]))/prev.length:null, F=mmForecast(t,null), end=F&&F.months.get(m);
+    return `<div class="tm-kpi"><span class="tile-label"><i class="sw ${t}"></i>${esc(L(lab))}</span><span class="tm-num">${fmtEUR(now)}</span>
+      ${avg!=null?`<span class="tile-sub">${esc(L('avgMonthIs',fmtEUR(avg,0)))}</span>${avg>0?`<span class="tm-pace" role="img" aria-label="${esc(L('paceAria',fmtPct(Math.max(0,now)/avg),n.day,n.days))}"><span class="tm-pace-fill" style="width:${(Math.min(1,Math.max(0,now/avg))*100).toFixed(1)}%;background:${TCOLOR[t]}"></span><span class="lim-pace" style="left:${(pace*100).toFixed(1)}%" title="${esc(L('avgPace',n.day))}"></span></span>`:''}`:''}
+      ${end?`<span class="tile-sub">${esc(L('onTrack',fmtEUR(end.total,0)))}</span>`:''}</div>`; };
   return `<section class="card tm" aria-labelledby="tm-title">
     <div class="card-head"><div><h2 id="tm-title">${esc(L('thisMonth'))} · ${esc(M()[m])}${info('ovThisMonth')}</h2><p class="sub">${esc(L('dayOf',n.day,n.days))}</p></div>
       ${S.canWrite?`<div class="ctrls"><button class="btn sm" type="button" data-action="add-tx">${esc(L('addTx'))}</button><button class="btn sm" type="button" data-action="import">${esc(L('pasteImport'))}</button>${S.ai?`<button class="btn sm" type="button" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}</div>`:''}</div>
-    ${cnt?`<div class="tm-stats">
-      <div><span class="tile-label"><i class="sw expenses"></i>${esc(L('spentSoFar'))}</span><span class="tm-num">${fmtEUR(spent)}</span>${avgSpent!=null?`<span class="tile-sub">${esc(L('avgMonthIs',fmtEUR(avgSpent,0)))}</span>`:''}</div>
-      <div><span class="tile-label"><i class="sw income"></i>${esc(L('inSoFar'))}</span><span class="tm-num">${fmtEUR(inc)}</span></div>
-      <div><span class="tile-label"><i class="sw investments"></i>${esc(L('invSoFar'))}</span><span class="tm-num">${fmtEUR(inv)}</span></div>
-    </div>`:`<p class="hint">${esc(L('nothingThisMonth',M()[m]))}</p>`}
+    ${cnt?`<div class="tm-stats">${kpi('expenses','spentSoFar')}${kpi('income','inSoFar')}${kpi('investments','invSoFar')}</div>`:`<p class="hint">${esc(L('nothingThisMonth',M()[m]))}</p>`}
     ${lims.length?`<h3 class="tm-h">${esc(L('monthlyLimits'))}</h3><div class="lims">${limRows}</div>`:''}
-    ${top.length?`<h3 class="tm-h">${esc(lims.length?L('otherSpending'):L('topThisMonth'))}</h3><div class="tm-top">${top.map(d=>`<button type="button" class="tm-chip" data-action="drill" data-t="expenses" data-c="${esc(d.n)}" data-m="${m}"><span>${esc(dispCat(d.n))}</span><b>${fmtEUR(d.v,0)}</b></button>`).join('')}</div>`:''}
-    ${!lims.length&&S.canWrite?`<p class="hint tm-hint">${esc(L('limitsHint'))} <button type="button" class="linkish" data-action="goto-limits">${esc(L('setLimits'))}</button></p>`:''}
+    ${cnt&&(top.length||!lims.length)?`<h3 class="tm-h">${esc(lims.length?L('otherSpending'):L('topThisMonth'))}</h3>${top.length?`<div class="hbars${top.length>3?' cols':''}"${top.length>3?` style="grid-template-rows:repeat(${Math.ceil(top.length/2)},auto)"`:''}>${top.map(d=>`<div class="hb" data-action="drill" data-t="expenses" data-c="${esc(d.n)}" data-m="${m}" role="button" tabindex="0">
+      <span class="hb-label">${esc(dispCat(d.n))}</span><span class="hb-track"><span class="hb-bar" style="width:${(d.v/topMax*100).toFixed(2)}%;background:${TCOLOR.expenses}"></span></span><span class="hb-val">${fmtEUR(d.v,0)}</span></div>`).join('')}</div>`:`<p class="hint">${esc(L('noSpendYet'))}</p>`}`:''}
+    ${!lims.length&&S.canWrite?`<p class="hint tm-foot">${esc(L('limitsHint'))} <button type="button" class="linkish" data-action="goto-limits">${esc(L('setLimits'))}</button></p>`:''}
   </section>`;
 }
 function catBars(A){
@@ -2828,17 +2840,18 @@ function colPathDown(x,y0,w,h,r){ r=Math.max(0,Math.min(r,w/2,h)); const yb=y0+h
 function colPath(x,yTop,w,h,r){ r=Math.max(0,Math.min(r,w/2,h)); const yb=yTop+h; return `M${x},${yb}V${yTop+r}Q${x},${yTop} ${x+r},${yTop}H${x+w-r}Q${x+w},${yTop} ${x+w},${yTop+r}V${yb}Z`; }
 function mmCat(A){ const c=S.ui.mm.cat, t=S.ui.mm.table; return c&&t!=='all'&&A[t]&&A[t].rows.has(c)?c:null; }
 function mmValues(A,t,idx,cat){ const src=cat?A[t].rows.get(cat):A[t].total; return idx.map(i=>r2(t==='expenses'?-src[i]:src[i])); }
-/* the Days view: per day of the chart months (up to today in the month in progress), signs as in mmValues:
-   pos and neg are the rows each way (purchases and refunds), vals the net */
+/* the Days view: one value per day of the whole year, signs as in mmValues. vals = the day's net (purchases minus
+   refunds: below the line only when refunds are bigger); fc = the projection on top of it, info = its monthDays entry */
 function mmDaily(y,t,cat){
-  const idx=chartIdx(y), n=nowYM(), f=ovFirst(y), known=agg(y,true)[t].rows, by=new Map();
+  const f=ovFirst(y), known=agg(y,true)[t].rows, by=new Map(), F=y===nowYM().y?mmForecast(t,cat):null;
   for(const r of allRows()){ if(r.table!==t||+r.date.slice(0,4)!==y||+r.date.slice(5,7)-1<f) continue;
     if(cat&&((r.category&&r.category!==UNCAT&&known.has(r.category))?r.category:UNCAT)!==cat) continue;
-    /* kept apart, not netted: a refund on a day with purchases would otherwise vanish into that day's total */
-    const d=r.date.slice(0,10), v=t==='income'?r.amount:-r.amount, b=by.get(d)||{pos:0,neg:0}; b[v<0?'neg':'pos']+=v; by.set(d,b); }
-  const dates=[]; for(const m of idx){ const dn=y===n.y&&m===n.m?n.day:new Date(y,m+1,0).getDate(); for(let d=1;d<=dn;d++) dates.push(ymOf(y,m)+'-'+String(d).padStart(2,'0')); }
-  const pos=dates.map(d=>r2((by.get(d)||{}).pos||0)), neg=dates.map(d=>r2((by.get(d)||{}).neg||0));
-  return {dates,pos,neg,vals:pos.map((v,i)=>r2(v+neg[i]))};
+    const d=r.date.slice(0,10); by.set(d,(by.get(d)||0)+(t==='income'?r.amount:-r.amount)); }
+  const dates=[], vals=[], fc=[], info=[];
+  for(let m=0;m<12;m++){ const D=F&&F.days.get(m), x0=D&&D.days.length?D.days[0].d:99;
+    for(let d=1,dn=new Date(y,m+1,0).getDate();d<=dn;d++){ const k=ymOf(y,m)+'-'+String(d).padStart(2,'0'), x=d>=x0?D.days[d-x0]:null;
+      dates.push(k); vals.push(r2(by.get(k)||0)); fc.push(x?x.v:0); info.push(x); } }
+  return {dates,vals,fc,info,F};
 }
 /* least-squares line through {x,v} points; x0..x1 is the stretch it is drawn over */
 function linFitXY(pts){
@@ -2863,10 +2876,9 @@ function drawColumns(el,labels,series,opts){
   const m={l:52,r:6,t:10,b:26}, pw=W-m.l-m.r, ph=H-m.t-m.b;
   const n=labels.length,k=series.length,band=pw/n,gap=2;
   const TR=opts.trend, tr=TR&&TR.x1>TR.x0?[TR.at(TR.x0),TR.at(TR.x1)]:null;
-  const allv=[...series.flatMap(s=>s.values),...(tr||[])].filter(v=>v!=null&&isFinite(v));
+  const allv=[...series.flatMap(s=>s.values.map((v,i)=>s.fc&&s.fc[i]?Math.max(0,v||0)+s.fc[i]:v)),...(tr||[])].filter(v=>v!=null&&isFinite(v));
   const {top,bot,arr}=niceRange(Math.min(0,...allv),Math.max(0,...allv),4); const y=v=>m.t+ph-((v-bot)/(top-bot))*ph;
-  /* overlay: the series share one column (one above the line, one below), as in the Days view */
-  const kk=opts.overlay?1:k, bw=Math.max(2,Math.min(kk===1?34:24,(band*(kk===1?0.5:0.74)-gap*(kk-1))/kk)), gw=bw*kk+gap*(kk-1), xj=j=>opts.overlay?0:j*(bw+gap);
+  const bw=Math.max(2,Math.min(k===1?34:24,(band*(k===1?0.5:0.74)-gap*(k-1))/k)), gw=bw*k+gap*(k-1), xj=j=>j*(bw+gap);
   let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opts.label)}">`;
   if(opts.selected!=null&&opts.selected>=0&&opts.selected<n) s+=`<rect class="sel" x="${m.l+band*opts.selected}" y="${m.t}" width="${band}" height="${ph}" rx="4"/>`;
   s+=`<rect class="hl" id="${el.id}-hl" x="0" y="${m.t}" width="${band}" height="${ph}" rx="4"/>`;
@@ -2874,9 +2886,11 @@ function drawColumns(el,labels,series,opts){
   for(const v of arr) s+=`<text class="tk" x="${m.l-8}" y="${(y(v)+3.5).toFixed(1)}" text-anchor="end">${fmtTick(v)}</text>`;
   labels.forEach((lab,i)=>{
     const x0=m.l+band*i+(band-gw)/2;
-    series.forEach((se,j)=>{ const v=se.values[i]; if(!(Math.abs(v)>=0.005)) return; const y0=y(0), h=Math.max(2,Math.abs(y(v)-y0));
-      const d=v>0?colPath(x0+xj(j),y0-h,bw,h,4):colPathDown(x0+xj(j),y0,bw,h,4);
-      s+=`<path class="bar${i===opts.partial?' partial':''}" data-i="${i}" data-j="${j}" d="${d}" style="fill:${se.color}"/>`; });
+    /* fc: a projection, greyed and stacked on top of the actual part (a split bar for the month in progress) */
+    series.forEach((se,j)=>{ const v=se.values[i]||0, f=se.fc&&se.fc[i]>=0.005?se.fc[i]:0, y0=y(0);
+      if(Math.abs(v)>=0.005){ const h=Math.max(2,Math.abs(y(v)-y0)), d=v>0?colPath(x0+xj(j),y0-h,bw,h,f?0:4):colPathDown(x0+xj(j),y0,bw,h,4);
+        s+=`<path class="bar${i===opts.partial&&!se.fc?' partial':''}" data-i="${i}" data-j="${j}" d="${d}" style="fill:${se.color}"/>`; }
+      if(f){ const b=Math.max(0,v), yb=y(b), h=Math.max(2,yb-y(b+f)); s+=`<path class="bar fc" data-i="${i}" data-j="${j}" d="${colPath(x0+xj(j),yb-h,bw,h,4)}" style="fill:${se.color}"/>`; } });
     if(!lab) return;
     /* sparse: a label only here and there (Days view), written out in full from the start of its bar */
     const short=band<34&&!opts.sparse? lab.slice(0,1) : lab;
@@ -2890,7 +2904,7 @@ function drawColumns(el,labels,series,opts){
   const pos=e=>{ const r=svg.getBoundingClientRect(); const x=(e.clientX-r.left)*(W/r.width)-m.l; const i=Math.max(0,Math.min(n-1,Math.floor(x/band)));
     const xin=x-band*i; let j=0,best=Infinity; for(let q=0;q<k;q++){ const c=(band-gw)/2+xj(q)+bw/2, dd=Math.abs(xin-c); if(dd<best){ best=dd; j=q; } } return {i,j}; };
   const bars=[...svg.querySelectorAll('path.bar')];
-  const mark=(i,j)=>{ if(!opts.onClick||k<2||opts.overlay) return; bars.forEach(b=>b.classList.toggle('dim',+b.dataset.i===i&&+b.dataset.j!==j)); };
+  const mark=(i,j)=>{ if(!opts.onClick||k<2) return; bars.forEach(b=>b.classList.toggle('dim',+b.dataset.i===i&&+b.dataset.j!==j)); };
   if(opts.onClick) svg.style.cursor='pointer';
   const move=e=>{ const {i,j}=pos(e); hl.setAttribute('x',m.l+band*i); hl.style.opacity='.7'; mark(i,j); showTip(opts.tip(i,j),e); };
   svg.addEventListener('pointermove',move);
@@ -2964,32 +2978,42 @@ function drawOverviewCharts(){
   const y=S.ui.year, A=agg(y,true), idx=chartIdx(y);
   const labels=idx.map(i=>M3()[i]);
   const el=$('#ch-monthly');
-  const oc=S.ui.oc, selFor=t=>{ if(oc.month==='all'||!(t==='all'||t===oc.table)) return null; const p=idx.indexOf(+oc.month); return p<0?null:p; };
+  const oc=S.ui.oc, selFor=t=>{ if(oc.month==='all'||!(t==='all'||t===oc.table)) return null; const p=+oc.month; return idx.includes(p)?p:null; };
   const clickHint=(t,i)=>`<div class="hint">${esc(oc.table===t&&String(oc.month)===String(i)?L('clickAgainYear'):L('clickSeeMonth',tl(t),M()[i]))}</div>`;
-  const pp=partialPos(y,idx), ttl=p=>M()[idx[p]]+' '+y+(p===pp?' · '+L('soFar'):'');
+  const pp=partialPos(y,idx);
+  /* Month by month: always January to December (one position per month); the year in progress gets a forecast
+     (mmForecast) for this month's rest and the months after it */
+  const M12=[...Array(12).keys()], nn=nowYM(), FC=t=>y===nn.y?mmForecast(t,t===S.ui.mm.table?mmCat(A):null):null;
+  const fcOf=t=>{ const F=FC(t); return F?M12.map(m=>F.months.has(m)?F.months.get(m).fc:0):null; };
+  const later=m=>y===nn.y&&m>nn.m, cur12=y===nn.y?nn.m:-1, ttl=m=>M()[m]+' '+y+(m===cur12?' · '+L('soFar'):later(m)?' · '+L('projTag'):'');
+  const fv=(v,f)=>!f?fmtEUR(v):Math.abs(v)>=0.005?fmtEUR(v)+' + ≈ '+fmtEUR(f):'≈ '+fmtEUR(f);
+  const fcHow=t=>{ const F=FC(t); return F?`<div class="hint" style="margin-top:6px;max-width:32ch">${esc(L('mmFcHow',F.n,F.season))}</div>`:''; };
   if(el&&S.ui.mm.days&&S.ui.mm.table!=='all'){
-    /* one type at a time (three bars a day don't fit in a year); a day with refunds gets a bar below the line too */
+    /* one type at a time (three bars a day don't fit in a year): each day's net, the days ahead projected */
     const t=S.ui.mm.table, cat=mmCat(A), name=cat?dispCat(cat):TL(t), D=mmDaily(y,t,cat), mOf=p=>+D.dates[p].slice(5,7)-1;
-    drawColumns(el,D.dates.map(d=>d.slice(8)==='01'?M3()[+d.slice(5,7)-1]:''),[{values:D.pos,color:TCOLOR[t]},{values:D.neg,color:TCOLOR[t]}],{
-      label:L('dayAria',name,y), sparse:true, overlay:true,
-      onClick:p=>showMonthByCategory(t,mOf(p)),
-      tip:p=>tipRows(fmtDate(D.dates[p]),D.pos[p]&&D.neg[p]?[{sw:t,label:L('dayPos_'+t),value:fmtEUR(D.pos[p])},{label:L('dayNeg_'+t),value:fmtEUR(D.neg[p])},{label:L('dayNet'),value:fmtEUR(D.vals[p])}]:[{sw:t,label:name,value:fmtEUR(D.vals[p])}],clickHint(t,mOf(p)))
+    drawColumns(el,D.dates.map(d=>d.slice(8)==='01'?M3()[+d.slice(5,7)-1]:''),[{values:D.vals,fc:D.fc,color:TCOLOR[t]}],{
+      label:L('dayAria',name,y), sparse:true,
+      onClick:p=>{ if(!later(mOf(p))) showMonthByCategory(t,mOf(p)); },
+      tip:p=>{ const x=D.info[p]; if(!x||!(x.v>=0.005)) return tipRows(fmtDate(D.dates[p]),[{sw:t,label:name,value:fmtEUR(D.vals[p])}],later(mOf(p))?'':clickHint(t,mOf(p)));
+        return tipRows(fmtDate(D.dates[p])+' · '+L('projTag'),[...x.rec.map(r=>({sw:t,label:L('dayRec',r.name),value:'≈ '+fmtEUR(r.v)})),...(x.est>=0.005?[{sw:x.rec.length?null:t,label:L('dayEst_'+t),value:'≈ '+fmtEUR(x.est)}]:[])],fcHow(t)); }
     });
   }
   else if(el&&S.ui.mm.table==='all'){
-    const inc=mmValues(A,'income',idx), exp=mmValues(A,'expenses',idx), inv=mmValues(A,'investments',idx);
-    drawColumns(el,labels,[{values:inc,color:TCOLOR.income},{values:exp,color:TCOLOR.expenses},{values:inv,color:TCOLOR.investments}],{
-      label:L('allAria',y), selected:selFor('all'), partial:pp,
-      onClick:(p,j)=>showMonthByCategory(TKEYS[j],idx[p]),
-      tip:(p,j)=>{ const i=idx[p]; return tipRows(ttl(p),[{sw:'income',label:TL('income'),value:fmtEUR(inc[p])},{sw:'expenses',label:TL('expenses'),value:fmtEUR(exp[p])},{sw:'investments',label:TL('investments'),value:fmtEUR(inv[p])}],`<div class="tr"><span>${esc(L('savedLbl'))}</span><b>${fmtEUR(A.savings[i])}</b></div>`+clickHint(TKEYS[j],i)); }
+    const inc=mmValues(A,'income',M12), exp=mmValues(A,'expenses',M12), inv=mmValues(A,'investments',M12), fi=fcOf('income'), fe=fcOf('expenses'), fn=fcOf('investments');
+    drawColumns(el,M12.map(i=>M3()[i]),[{values:inc,fc:fi,color:TCOLOR.income},{values:exp,fc:fe,color:TCOLOR.expenses},{values:inv,fc:fn,color:TCOLOR.investments}],{
+      label:L('allAria',y), selected:selFor('all'), partial:pp>-1?idx[pp]:-1,
+      onClick:(m,j)=>{ if(!later(m)) showMonthByCategory(TKEYS[j],m); },
+      tip:(m,j)=>tipRows(ttl(m),[{sw:'income',label:TL('income'),value:fv(inc[m],fi&&fi[m])},{sw:'expenses',label:TL('expenses'),value:fv(exp[m],fe&&fe[m])},{sw:'investments',label:TL('investments'),value:fv(inv[m],fn&&fn[m])}],
+        later(m)?fcHow('expenses'):`<div class="tr"><span>${esc(L('savedLbl'))}</span><b>${fmtEUR(A.savings[m])}</b></div>`+(m===cur12&&fe&&fe[m]?fcHow('expenses'):'')+clickHint(TKEYS[j],m))
     });
   }
   else if(el){
-    const t=S.ui.mm.table, cat=mmCat(A), name=cat?dispCat(cat):TL(t), vals=mmValues(A,t,idx,cat), pts=avgPoints(y,idx,vals), fit=linFitXY(pts), avg=pts.length?sum(pts.map(q=>q.v))/pts.length:0;
-    drawColumns(el,labels,[{values:vals,color:TCOLOR[t]}],{
-      label:L('oneAria',name,y), trend:fit, selected:selFor(t), partial:pp,
-      onClick:p=>showMonthByCategory(t,idx[p]),
-      tip:p=>{ const i=idx[p]; return tipRows(ttl(p),[{sw:t,label:name,value:fmtEUR(vals[p])},...(fit?[{label:L('trendLine'),value:fmtEUR(fit.at(p))}]:[]),{label:L('yearAvg'),value:fmtEUR(avg)}],clickHint(t,i)); }
+    const t=S.ui.mm.table, cat=mmCat(A), name=cat?dispCat(cat):TL(t), vals=mmValues(A,t,M12,cat), f=fcOf(t)||M12.map(()=>0), pts=avgPoints(y,M12,vals), fit=linFitXY(pts), avg=pts.length?sum(pts.map(q=>q.v))/pts.length:0;
+    drawColumns(el,M12.map(i=>M3()[i]),[{values:vals,fc:FC(t)?f:null,color:TCOLOR[t]}],{
+      label:L('oneAria',name,y), trend:fit, selected:selFor(t), partial:pp>-1?idx[pp]:-1,
+      onClick:m=>{ if(!later(m)) showMonthByCategory(t,m); },
+      tip:m=>tipRows(ttl(m),[...(f[m]&&!later(m)?[{sw:t,label:L('soFarLbl'),value:fmtEUR(vals[m])},{label:L('projRest'),value:'≈ '+fmtEUR(f[m])},{label:L('monthTotal'),value:'≈ '+fmtEUR(vals[m]+f[m])}]:[{sw:t,label:name,value:fv(vals[m],f[m])}]),
+        ...(fit&&!later(m)?[{label:L('trendLine'),value:fmtEUR(fit.at(m))}]:[]),{label:L('yearAvg'),value:fmtEUR(avg)}],f[m]?fcHow(t)+(later(m)?'':clickHint(t,m)):clickHint(t,m))
     });
   }
   const ep=$('#ch-prop');
@@ -3537,7 +3561,7 @@ function nwForecast(pts,at){
   if(!pts.length) return at.map(()=>null);
   const last=pts[pts.length-1], use=pts.filter(p=>p.i>last.i-12), groups=[...new Set(use.flatMap(p=>Object.keys(p.g)))], step={};
   for(const g of groups){ const d=[]; for(let j=1;j<use.length;j++) d.push(((use[j].g[g]||0)-(use[j-1].g[g]||0))/(use[j].i-use[j-1].i));
-    d.sort((a,b)=>a-b); const h=d.length>>1; step[g]=!d.length?0:d.length%2?d[h]:(d[h-1]+d[h])/2; }
+    step[g]=d.length?median(d):0; }
   return at.map(i=>{ const g={}; let total=0;
     for(const k of groups){ const v0=last.g[k]||0, v=v0+step[k]*(i-last.i); g[k]=Math.round((v0>=0?Math.max(0,v):Math.min(0,v))*100)/100; total+=g[k]; }
     return {g,total:Math.round(total*100)/100}; });
@@ -3551,6 +3575,101 @@ function nwChartForecast(ms){
   const pts=(full.length?full:all).map(k=>({i:ix(k),g:nwTotals(k).g})), li=pts[pts.length-1].i;
   nwForecast(pts,fut.map(x=>ix(x.k))).forEach((p,j)=>{ F[fut[j].i]=p; });
   return {F,n:pts.filter(p=>p.i>li-12).length};
+}
+/* ── Month by month forecast (Overview): the flow counterpart of nwForecast ── */
+/* middle value of a list (the mean of the two middle ones for an even count); null for an empty list */
+function median(a){
+  if(!a.length) return null; const s=[...a].sort((x,y)=>x-y), h=s.length>>1; return s.length%2?s[h]:(s[h-1]+s[h])/2;
+}
+/* hist: complete months, oldest first, as {i: month number (year*12+month), v: what came in or went out that month};
+   at: the month numbers to project. A value per month (never below 0), null with no history.
+   Monthly totals are flows, not balances, so nwForecast's "carry on from the last figure" doesn't fit. Instead:
+   - level: a Theil-Sen line through the last 12 months (all of them with fewer). Its slope is the median of the slopes
+     between every pair of months and its height the median of what's left, so one 1.400 € month moves neither (a mean
+     or a least-squares line would). Under 4 months there's no trend to speak of: the median month, flat.
+   - damped trend: each month ahead adds 0.7 times the previous month's step, so a trend levels off (at most 2.3 slopes
+     past the last month) instead of running away through December.
+   - seasonality: when the same month a year earlier is in the history, it makes up a quarter of the projection
+     (December gifts, a yearly bill). Capped at twice the level: with one year of history a one-off can't be told
+     from a season, so a single big month lifts that month next year by a quarter of a normal month at most. */
+function flowForecast(hist,at){
+  if(!hist.length) return at.map(()=>null);
+  const last=hist[hist.length-1].i, use=hist.filter(p=>p.i>last-12), sl=[], byI=new Map(hist.map(p=>[p.i,p.v])), PHI=0.7;
+  for(let a=0;a<use.length;a++) for(let b=a+1;b<use.length;b++) sl.push((use[b].v-use[a].v)/(use[b].i-use[a].i));
+  const slope=use.length>=4?median(sl):0, level=median(use.map(p=>p.v-slope*(p.i-last)));
+  return at.map(i=>{ const h=Math.max(0,i-last); let v=level+slope*PHI*(1-Math.pow(PHI,h))/(1-PHI);
+    if(byI.has(i-12)) v=0.75*v+0.25*Math.min(byI.get(i-12),2*Math.max(0,level));
+    return Math.round(Math.max(0,v)*100)/100; });
+}
+/* what makes two rows "the same item" for findRecurring: the wording without numbers (dates, references), case or extra spaces */
+function recKey(s){
+  return String(s||'').toLowerCase().replace(/\d+/g,' ').replace(/\s+/g,' ').trim();
+}
+/* recurring items for the Days forecast: salary, rent, subscriptions, a monthly transfer to a fund.
+   rows: {k: concept (else category), i: month number, d: day of month, v} from complete months; last: the latest of those
+   months, n: how many months they cover. An item is recurring when it shows up about once a month (at most 1.5 rows per
+   month it's in), in at least 3 months and 60% of them, in 2 of the last 3 (still going), at a similar amount (3 in 4
+   within 20% of its median). It comes back on its median day for its median amount. Under 3 months: none (too little to tell). */
+function findRecurring(rows,last,n){
+  if(n<3) return [];
+  const by=new Map(), out=[];
+  for(const r of rows){ const k=recKey(r.k); if(!k) continue; if(!by.has(k)) by.set(k,[]); by.get(k).push(r); }
+  for(const [k,rs] of by){ const ms=new Set(rs.map(r=>r.i)), amt=median(rs.map(r=>r.v));
+    if(ms.size<3||ms.size<0.6*n||rs.length>1.5*ms.size||[last,last-1,last-2].filter(i=>ms.has(i)).length<2) continue;
+    if(!amt||rs.filter(r=>Math.abs(r.v-amt)<=Math.abs(amt)*0.2).length<0.75*rs.length) continue;
+    out.push({k,name:String(rs[rs.length-1].k),day:Math.round(median(rs.map(r=>r.d))),v:Math.round(amt*100)/100}); }
+  return out;
+}
+/* weight per weekday (0 = Sunday) for spreading the rest of a month over its days: the average per weekday in the history.
+   days: one {w: weekday, v} per calendar day of the history, recurring rows left out (they have their own day).
+   Under 4 weeks of history: flat. A weekday that comes out negative (refunds) gets 0. */
+function dayProfile(days){
+  if(days.length<28) return [1,1,1,1,1,1,1];
+  const s=[0,0,0,0,0,0,0], c=[0,0,0,0,0,0,0]; for(const x of days){ s[x.w]+=x.v; c[x.w]++; }
+  return s.map((v,j)=>c[j]?Math.max(0,v/c[j]):0);
+}
+/* one month of the Days forecast. total: the month's projection (flowForecast); y, m: the month; from: the first day to
+   project (1, or tomorrow in the month in progress); have: what's already in this month; rec: recurring items not in yet;
+   prof: dayProfile. Recurring items go on their day (the last day in a shorter month; one whose day has passed is left out);
+   the rest of the month (total - have - recurring, not below 0) is spread over the days left by weekday weight, evenly when
+   those weights are all 0. Returns {total, days:[{d, v, rec, est}]} with total = have + the days, so Days and Months agree
+   (if the recurring items alone come to more than the projection, they win and total comes out above it). */
+function monthDays(total,y,m,from,have,rec,prof){
+  const n=new Date(y,m+1,0).getDate(), days=[], r2=v=>Math.round(v*100)/100;
+  for(let d=from;d<=n;d++) days.push({d,v:0,rec:[],est:0});
+  if(!days.length) return {total:r2(have),days};
+  let rs=0; for(const r of rec){ const d=Math.min(r.day,n); if(d<from) continue; days[d-from].rec.push(r); days[d-from].v+=r.v; rs+=r.v; }
+  const rest=Math.max(0,(total||0)-have-rs), w=days.map(x=>prof[new Date(y,m,x.d).getDay()]||0), ws=w.reduce((a,b)=>a+b,0);
+  let left=r2(rest);
+  days.forEach((x,j)=>{ x.est=j===days.length-1?left:r2(rest*(ws>0?w[j]/ws:1/days.length)); left=r2(left-x.est); x.v=r2(x.v+x.est); });
+  return {total:r2(have+rs+rest),days};
+}
+/* the forecast for the year in progress, type t (one category with cat), from the complete months before this one.
+   null when there's nothing to go on (no complete month, or nothing yet this year: an empty year stays empty).
+   months: Map month -> {have, fc (projected on top), total} for this month and the rest of the year; days: Map month ->
+   monthDays; n: months it was based on; season: a same-month-last-year figure was used. */
+function mmForecast(t,cat){
+  return memo('mmfc'+t+'|'+(cat||''),()=>{
+    const N=nowYM(), cur=N.y*12+N.m, st=startOf(), from=st?st.y*12+st.m:-Infinity, ix=d=>+d.slice(0,4)*12+ +d.slice(5,7)-1;
+    const known=agg(N.y,true)[t].rows, sign=t==='income'?1:-1, tracked=new Set(), mine=[];
+    for(const r of allRows()){ const i=ix(r.date); if(i<from||i>cur) continue; tracked.add(i);
+      if(r.table!==t||(cat&&((r.category&&r.category!==UNCAT&&known.has(r.category))?r.category:UNCAT)!==cat)) continue; mine.push(r); }
+    const past=[...tracked].filter(i=>i<cur).sort((a,b)=>a-b);
+    if(!past.length||![...tracked].some(i=>i>=N.y*12)) return null;
+    const last=past[past.length-1], win=new Set(past.filter(i=>i>last-12)), mv=new Map(past.map(i=>[i,0])), dv=new Map(), key=r=>r.concept||r.category;
+    for(const r of mine){ const i=ix(r.date); if(mv.has(i)) mv.set(i,mv.get(i)+sign*r.amount); }
+    const rec=findRecurring(mine.filter(r=>win.has(ix(r.date))).map(r=>({k:key(r),i:ix(r.date),d:+r.date.slice(8,10),v:sign*r.amount})),last,win.size), isRec=new Set(rec.map(r=>r.k));
+    for(const r of mine){ const k=r.date.slice(0,10); if(win.has(ix(k))&&!isRec.has(recKey(key(r)))) dv.set(k,(dv.get(k)||0)+sign*r.amount); }
+    const pd=[]; for(const i of win){ const y=Math.floor(i/12), m=i%12;
+      for(let d=1,dn=new Date(y,m+1,0).getDate();d<=dn;d++) pd.push({w:new Date(y,m,d).getDay(),v:dv.get(ymOf(y,m)+'-'+String(d).padStart(2,'0'))||0}); }
+    const prof=dayProfile(pd), at=[]; for(let i=cur;i<(N.y+1)*12;i++) at.push(i);
+    const F=flowForecast(past.map(i=>({i,v:mv.get(i)})),at), months=new Map(), days=new Map(), now=mine.filter(r=>ix(r.date)===cur);
+    const haveNow=sum(now.map(r=>sign*r.amount)), seen=new Set(now.map(r=>recKey(key(r))));
+    at.forEach((i,j)=>{ const m=i%12, isNow=i===cur, have=isNow?haveNow:0;
+      const D=monthDays(F[j],N.y,m,isNow?N.day+1:1,have,isNow?rec.filter(r=>!seen.has(r.k)):rec,prof);
+      days.set(m,D); months.set(m,{have:r2(have),fc:r2(D.total-have),total:D.total}); });
+    return {months,days,n:win.size,season:at.some(i=>mv.has(i-12))};
+  });
 }
 function nwChartNote(){
   const N=nw(), cw=S.canWrite, later=new Map(), gaps=new Map();
@@ -5775,7 +5894,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&document.getElementById('local-panel')) return;
   if(e.key==='Escape'&&S.modal){ if(wantsDiscardCheck()){ const m=S.modal; m.confirmClose=!m.confirmClose; renderModalKeepScroll(m.confirmClose?'imp-keep':null); return; } closeModal(); return; }
   if(e.key==='Escape'&&S.ui.editTarget){ S.ui.editTarget=null; render(); return; }
-  if((e.key==='Enter'||e.key===' ')&&e.target.matches('tr[data-action="edit-tx"],td[data-action="drill"],.hb[data-action="cat-month"],.lim-row[data-action="drill"]')){ e.preventDefault(); e.target.click(); }
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('tr[data-action="edit-tx"],td[data-action="drill"],.hb[data-action],.lim-row[data-action="drill"]')){ e.preventDefault(); e.target.click(); }
   if(e.key==='Enter'&&e.target.id==='target-input'){ e.preventDefault(); commitTarget(e.target); }
 });
 function commitTarget(inp){
@@ -5939,7 +6058,7 @@ document.addEventListener('drop',e=>{ const d=e.target.closest&&e.target.closest
 document.addEventListener('mouseover',e=>{
   const ga=e.target.closest&&e.target.closest('.nw-alloc i[data-nwg]');
   if(ga){ const g=ga.dataset.nwg; showTip(tipRows(L('g_'+g),[{sw:g,label:L('nwValue'),value:fmtEUR(+ga.dataset.v)},{label:L('share'),value:fmtPct(+ga.dataset.p)}]),e); return; }
-  const hb=e.target.closest&&e.target.closest('.hb'); if(!hb) return;
+  const hb=e.target.closest&&e.target.closest('.hb[data-tip-cat]'); if(!hb) return;
   const t=S.ui.oc.table, m=S.ui.oc.month, c=hb.dataset.tipCat;
   showTip(tipRows(dispCat(c),[{sw:t,label:m==='all'?String(S.ui.year):M()[+m],value:fmtEUR(+hb.dataset.v)},{label:L('share'),value:fmtPct(+hb.dataset.share)},{label:L('txsLbl'),value:fmtCount(+hb.dataset.cnt)}],`<div class="hint">${esc(S.ui.mm.cat===c&&S.ui.mm.table===t?L('clickAgainAll',t):L('clickCatMonths'))}</div>`),e);
 });

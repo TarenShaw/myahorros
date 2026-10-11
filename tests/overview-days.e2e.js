@@ -1,4 +1,4 @@
-/* Browser check: Net worth forecast months, Days off for "All", every refund visible in Days.
+/* Browser check: Net worth forecast months, Days off for "All", Days shows each day's net, Month by month forecast.
      python -m http.server 8000   (repo root)     NODE_PATH=<playwright folder> node tests/overview-days.e2e.js
    SHOTS=<folder> also saves screenshots there. */
 const { chromium } = require('playwright');
@@ -67,16 +67,57 @@ const data = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, c
   assert.ok(!/Days show one type/.test(await p.innerText('#view')), 'old helper text');
   console.log('2. Days is off for All and All goes back to Months');
 
-  /* 3. Days + Expenses: every refund is a bar below the line, the purchase on the same day too, axis reaches the biggest refund */
+  /* 3. Days + Expenses: one net bar a day. Feb 3 (80 spent, 30 back) is one bar of 50 above the line; refund-only days
+     are below it; the axis reaches the biggest refund */
   await p.click('[data-action=mm-table][data-t=expenses]');
   await p.click(daysBtn);
   await p.waitForTimeout(200);
-  const d = await p.evaluate(() => ({ neg: document.querySelectorAll('#ch-monthly path.bar[data-j="1"]').length,
-    ticks: [...document.querySelectorAll('#ch-monthly text.tk')].map(t => t.textContent) }));
-  assert.strictEqual(d.neg, refunds.length, 'refund bars: ' + d.neg);
+  /* a bar's path starts on the base line: M x,base V end; below the line when the end is lower down (a bigger y) */
+  const d = await p.evaluate(() => { const bars = [...document.querySelectorAll('#ch-monthly path.bar:not(.fc)')].map(b => /^M[\d.]+,([\d.]+)V([\d.]+)/.exec(b.getAttribute('d')));
+    return { j1: document.querySelectorAll('#ch-monthly path.bar[data-j="1"]').length, below: bars.filter(m => m && +m[2] > +m[1]).length,
+      ticks: [...document.querySelectorAll('#ch-monthly text.tk')].map(t => t.textContent) }; });
+  assert.strictEqual(d.j1, 0, 'no second (refund) series');
+  const netDays = refunds.filter(([m, dd]) => !(m === 1 && dd === 3)).length;
+  assert.strictEqual(d.below, netDays, 'bars below the line: ' + d.below);
   assert.ok(d.ticks.some(t => /^[-−]\s?[\d.,]+k?$/.test(t.trim())), 'no negative tick: ' + d.ticks.join(' '));
+  if (months[ym(1)]) {
+    await p.locator('#ch-monthly').scrollIntoViewIfNeeded();
+    const box3 = await p.locator('#ch-monthly svg').boundingBox(), feb3 = (31 + 2 + 0.5) / (365 + (Y % 4 === 0 ? 1 : 0));
+    await p.mouse.move(box3.x + 52 + (box3.width - 58) * feb3, box3.y + box3.height / 2);
+    assert.match(await p.innerText('#tip'), /\/02\/[\s\S]*50/, 'Feb 3 shows its net');
+  }
   if (SHOTS) await p.locator('#ch-monthly').screenshot({ path: SHOTS + '/days-expenses.png' });
+  console.log('3. Days + Expenses shows one net bar a day, ' + netDays + ' below the line');
+
+  /* 4. Months: Jan-Dec for every filter, months after this one greyed, the subtitle from real months only */
+  await p.click(monthsBtn);
+  for (const t of ['all', 'income', 'expenses', 'investments']) {
+    await p.click(`[data-action=mm-table][data-t=${t}]`); await p.waitForTimeout(150);
+    const r = await p.evaluate(() => ({ labels: [...document.querySelectorAll('#ch-monthly text.tk')].filter(x => /^[A-Z][a-z]{2}$/.test(x.textContent)).length,
+      fcI: [...new Set([...document.querySelectorAll('#ch-monthly path.bar.fc')].map(b => +b.dataset.i))] }));
+    assert.strictEqual(r.labels, 12, t + ' month labels');
+    if (t !== 'investments') assert.deepStrictEqual(r.fcI, Array.from({ length: 12 - CM }, (_, j) => CM + j), t + ' projected months');
+  }
+  await p.click('[data-action=mm-table][data-t=expenses]');
+  const avgExp = Object.values(months).reduce((a, mo) => a - mo.expenses.reduce((x, r) => x + r.amount, 0), 0) / Object.keys(months).length;
+  assert.match(await p.innerText('#view'), new RegExp('On average [^0-9]*' + Math.round(avgExp) + '[^0-9]'), 'subtitle average');
+  assert.match(await p.innerText('#view'), /Greyed bars are projected from your last \d+ months/);
+  await p.locator('#ch-monthly').scrollIntoViewIfNeeded();
+  const box4 = await p.locator('#ch-monthly svg').boundingBox();
+  await p.mouse.move(box4.x + box4.width - 20, box4.y + box4.height - 40);
+  assert.match(await p.innerText('#tip'), /Dec[\s\S]*Projected[\s\S]*≈[\s\S]*A projection, not real data/);
+  if (SHOTS) await p.locator('#ch-monthly').screenshot({ path: SHOTS + '/months-expenses.png' });
+  console.log('4. Months show Jan-Dec, ' + (12 - CM) + ' projected');
+
+  /* 5. Days + Income: the salary comes back on the 1st of every month ahead */
+  await p.click('[data-action=mm-table][data-t=income]'); await p.click(daysBtn); await p.waitForTimeout(150);
+  const firsts = await p.evaluate(() => { const fc = [...document.querySelectorAll('#ch-monthly path.bar.fc')], top = {};
+    for (const b of fc) { const r = b.getBBox(); top[b.dataset.i] = r.height; } return top; });
+  const doy = m => Math.round((new Date(Y, m, 1) - new Date(Y, 0, 1)) / 864e5);
+  for (let m = CM + 1; m < 12; m++) assert.ok((firsts[doy(m)] || 0) > 20, 'salary bar on the 1st of month ' + (m + 1));
+  assert.match(await p.innerText('#view'), /Greyed days are projected/);
+  if (SHOTS) await p.locator('#ch-monthly').screenshot({ path: SHOTS + '/days-income.png' });
+  console.log('5. Days + Income: salary projected on the 1st');
   assert.deepStrictEqual(errs, []);
-  console.log('3. Days + Expenses shows all ' + refunds.length + ' refunds');
   await browser.close();
 })().catch(e => { console.error(e); process.exit(1); });
