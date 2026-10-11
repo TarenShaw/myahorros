@@ -40,7 +40,7 @@ for (let i = 0; i < 40; i++) lines.push(`${String(1 + (i % 28)).padStart(2, '0')
   const row = i => p.evaluate(i => { const tr = document.getElementById('imp-r-' + i);
     return { on: tr.querySelector('[data-action=imp-on]').checked, desc: tr.querySelector('[data-action=imp-desc]').value, amt: tr.querySelector('[data-action=imp-amt]').value, note: tr.querySelector('td.n').innerText }; }, i);
   /* the refund is not taken for the charge; the empty description is pointed out */
-  assert.ok(!/Already in tracker|Same date/.test((await row(0)).note), 'refund matched: ' + (await row(0)).note);
+  assert.ok(!/Already in your tracker|Same date/.test((await row(0)).note), 'refund matched: ' + (await row(0)).note);
   assert.ok(/No description/.test((await row(2)).note));
   /* Esc puts the text back and leaves the review open */
   await p.fill('#imp-d-2', 'typo'); await p.press('#imp-d-2', 'Escape');
@@ -60,7 +60,7 @@ for (let i = 0; i < 40; i++) lines.push(`${String(1 + (i % 28)).padStart(2, '0')
   /* changing −0,90 to −0,85 makes it the saved charge: checked again, unticked as a duplicate */
   assert.strictEqual((await row(1)).on, true);
   await p.fill('#imp-a-1', '-0,85'); await p.click('table.imp thead');   /* leaving the box saves too */
-  await p.waitForFunction(() => /Already in tracker/.test(document.querySelector('#imp-r-1 td.n').innerText));
+  await p.waitForFunction(() => /Already in your tracker/.test(document.querySelector('#imp-r-1 td.n').innerText));
   assert.strictEqual((await row(1)).on, false);
   /* the edits are what gets saved */
   await p.click('[data-action=imp-add]');
@@ -71,5 +71,59 @@ for (let i = 0; i < 40; i++) lines.push(`${String(1 + (i % 28)).padStart(2, '0')
   assert.strictEqual(sep.filter(([c]) => /VENDING/.test(c)).length, 1, 'the duplicate was imported');
   assert.deepStrictEqual(errs, []);
   console.log('2. descriptions and amounts edit inline, are checked again and are saved');
+  await p.context().close();
+
+  /* 3. a bank statement and an investment statement read by AI together (made-up rows; Claude's answer is faked):
+     the investment rule applies to that file's rows only, and every greyed row says why */
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    await ctx.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en');
+      localStorage.setItem('ybt.ai', JSON.stringify({ provider: 'anthropic', model: 'claude-haiku-5-5', key: 'sk-ant-test-not-a-real-key' })); } catch (_) {} });
+    const bank = 'bank.csv', fund = 'fund-statement.csv';
+    const answer = { rows: [
+      { date: '2026-09-05', amount: -30, description: 'HOME FIBRE', table: 'expenses', source: bank },
+      { date: '2026-09-06', amount: -12.5, description: 'WEB HOSTING', table: 'expenses', source: bank },
+      { date: '2026-09-07', amount: -20, description: 'AI SUBSCRIPTION', table: 'expenses', source: bank },
+      { date: '2026-09-08', amount: -10, description: 'MOBILE LINE', table: 'expenses', source: bank },
+      { date: '2026-09-03', amount: -0.85, description: 'VENDING ACME', table: 'expenses', source: bank },
+      { date: '2026-09-10', amount: -300, description: 'SUSCRIPCION FONDO INDEXADO', table: 'investments', source: fund },
+      { date: '2026-09-11', amount: -100, description: 'APORTACION PLAN PENSIONES', table: 'investments', source: fund },
+      { date: '2026-09-12', amount: -200, description: 'SUSCRIPCION FONDO GLOBAL', table: 'investments', source: fund }],
+      left_out: [], statements: [], notes: '' };
+    await ctx.route('https://api.anthropic.com/v1/messages', r => r.fulfill({ status: 200, contentType: 'text/event-stream',
+      body: 'data: ' + JSON.stringify({ type: 'content_block_delta', delta: { type: 'text_delta', text: JSON.stringify(answer) } }) + '\n\n' }));
+    const p = await ctx.newPage(), errs = []; p.on('pageerror', e => errs.push(String(e).slice(0, 200)));
+    await p.goto(START); await p.evaluate(async t => { localStorage.setItem('ybt.storage', 'browser'); await window.__ybtWeb.idb.set('data', t); }, file);
+    await p.goto(START); await p.click('.web-landing .wl-hero [data-x=open]');
+    await p.waitForFunction(() => window.__ybtWeb.store && window.__ybtWeb.store.months['2026-09']);
+    await p.click('#tab-transactions'); await p.click('[data-action=ai-tx]');
+    await p.setInputFiles('#ai-file', [{ name: bank, mimeType: 'text/csv', buffer: Buffer.from('date;amount;concept\n05/09/2026;-30;HOME FIBRE\n') },
+      { name: fund, mimeType: 'text/csv', buffer: Buffer.from('fecha;importe;concepto\n10/09/2026;-300;SUSCRIPCION FONDO INDEXADO\n') }]);
+    await p.click('[data-action=ai-send]'); await p.waitForSelector('table.imp');
+    const rows = () => p.evaluate(() => [...document.querySelectorAll('table.imp tbody tr')].map(tr => ({
+      desc: tr.querySelector('[data-action=imp-desc]').value, on: tr.querySelector('[data-action=imp-on]').checked,
+      grey: tr.classList.contains('off'), why: (tr.querySelector('.note.why') || {}).innerText || '' })));
+    const by = async () => Object.fromEntries((await rows()).map(r => [r.desc, r]));
+    let r = await by();
+    for (const d of ['HOME FIBRE', 'WEB HOSTING', 'AI SUBSCRIPTION', 'MOBILE LINE']) assert.ok(r[d].on && !r[d].grey && !r[d].why, d + ' ' + JSON.stringify(r[d]));
+    assert.ok(!r['VENDING ACME'].on && r['VENDING ACME'].grey && /Already in your tracker/.test(r['VENDING ACME'].why));
+    for (const d of ['SUSCRIPCION FONDO INDEXADO', 'APORTACION PLAN PENSIONES', 'SUSCRIPCION FONDO GLOBAL'])
+      assert.ok(!r[d].on && r[d].grey && /investment statement/.test(r[d].why), d + ' ' + JSON.stringify(r[d]));
+    assert.ok(/fund-statement\.csv/.test(await p.evaluate(() => [...document.querySelectorAll('.ai-review')].map(e => e.innerText).join(' '))), 'banner names the investment file');
+    assert.ok(/Greyed rows won’t be/.test(await p.innerText('.imp-key')));
+    /* never greyed without a reason, never unticked by the app without one */
+    const noReason = rs => rs.filter(x => (x.grey && !x.why) || (!x.on && !x.grey && x.why));
+    assert.deepStrictEqual(noReason(await rows()), []);
+    assert.ok((await rows()).every(x => x.on || x.grey), 'unticked by the app but not greyed');
+    /* unticked by the person: not greyed, no note; ticked again: imported */
+    await p.click('#imp-on-0'); r = await by();
+    assert.ok(!r['HOME FIBRE'].on && !r['HOME FIBRE'].grey && !r['HOME FIBRE'].why);
+    /* ticking a greyed row takes the grey and the reason away */
+    await p.click('#imp-on-5'); r = await by();
+    assert.ok(r['SUSCRIPCION FONDO INDEXADO'].on && !r['SUSCRIPCION FONDO INDEXADO'].grey && !r['SUSCRIPCION FONDO INDEXADO'].why);
+    assert.deepStrictEqual(noReason(await rows()), []);
+    assert.deepStrictEqual(errs, []);
+    console.log('3. bank + investment statement: only the investment rows are unticked, each greyed row says why');
+  }
   await browser.close();
 })().catch(e => { console.error(e); process.exit(1); });

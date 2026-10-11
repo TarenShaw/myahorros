@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-0l2+GBA+FRsoOv2MupoZRw6BeU9KXHRg/YY6mTSMhbc=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-AkZ7gZoSOonUnlh006z78l81Vh6YTudUrFqP0KMwbQ8=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -601,6 +601,8 @@ table.imp{width:100%;border-collapse:collapse;font-size:13px}
 .imp td{padding:5px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
 .imp td.r,.imp th.r{text-align:right}
 .imp tr.off td{opacity:.5}
+/* the reason a greyed row won't be imported stays readable */
+.imp tr.off td.n{opacity:1}.imp .note.why{color:var(--ink-2);font-weight:500}
 .imp select{height:28px;font-size:12.5px;max-width:200px}
 .imp .note{font-size:12px;color:var(--warn-ink);font-weight:600;white-space:normal;overflow-wrap:anywhere}
 .imp td.n{min-width:140px;max-width:380px;white-space:normal;overflow-wrap:anywhere}
@@ -1445,10 +1447,7 @@ const STR={
   rs_inv:['Positive in Investments: money coming back out of an investment.','Positivo en Inversiones: dinero que sale de una inversión.'],
   backToRows:['Back to the rows','Volver a las filas'], yesAdd:[n=>`Yes, add ${pl(n,'row')}`,n=>`Sí, añadir ${pl(n,'row')}`],
   checkRows:['Check the rows','Revisa las filas'], rowsRead:[(n,f)=>`${pl(n,'row')} read${f?' from '+f:''}`,(n,f)=>`${pl(n,'row')} ${n===1?'leída':'leídas'}${f?' de '+f:''}`],
-  dupUnticked:[n=>`${pl(n,'row')} ${n===1?'is':'are'} already in your tracker (same date, amount and description), so ${n===1?'it is':'they are'} greyed out and unticked: ${n===1?'it isn’t':'they aren’t'} imported twice. Tick ${n===1?'it':'any'} to import anyway.`,n=>`${pl(n,'row')} ya ${n===1?'está':'están'} en tu control (misma fecha, importe y concepto), así que ${n===1?'aparece':'aparecen'} en gris y sin marcar: no se ${n===1?'importa':'importan'} dos veces. ${n===1?'Márcala para importarla':'Marca las que quieras para importarlas'} igualmente.`],
-  skipUnticked:[n=>`${pl(n,'row')} on your skip list ${n===1?'is':'are'} unticked. Tick ${n===1?'it':'any'} you do want.`,n=>`${pl(n,'row')} con palabras a omitir ${n===1?'aparece':'aparecen'} sin marcar. Marca las que sí quieras.`],
-  includeRow:[i=>`Include row ${i}`,i=>`Incluir la fila ${i}`], alreadyIn:['Already in tracker','Ya está en el control'],
-  alreadyInTip:['Already in your tracker: unticked so it isn’t imported twice. Tick to import anyway.','Ya está en tu control: sin marcar para no importarla dos veces. Márcala para importarla igualmente.'],
+  includeRow:[i=>`Include row ${i}`,i=>`Incluir la fila ${i}`],
   noteNoDesc:['No description: type one so you can tell this row apart later','Sin concepto: escribe uno para reconocer esta fila más adelante'],
   impBadAmt:['That isn’t an amount. Type a number such as -14,90.','Eso no es un importe. Escribe un número como -14,90.'],
   descForRow:[i=>`Description of row ${i}`,i=>`Concepto de la fila ${i}`], amtForRow:[i=>`Amount of row ${i}`,i=>`Importe de la fila ${i}`],
@@ -1456,19 +1455,24 @@ const STR={
   impPossDup:[n=>`${pl(n,'row')} ${n===1?'has':'have'} the same date and amount as something already in the tracker, under another description. ${n===1?'It stays':'They stay'} ticked: untick ${n===1?'it':'any'} that ${n===1?'is':'are'} a repeat.`,n=>`${pl(n,'row')} ${n===1?'tiene':'tienen'} la misma fecha e importe que algo que ya está en el control, con otro concepto. ${n===1?'Sigue marcada':'Siguen marcadas'}: desmarca ${n===1?'la que sea repetida':'las que sean repetidas'}.`],
   impBalOk:[(ok,t)=>`The running balance in your file adds up for ${fmtCount(ok)} of ${fmtCount(t)} steps, so nothing looks missing.`,(ok,t)=>`El saldo de tu archivo cuadra en ${fmtCount(ok)} de ${fmtCount(t)} pasos, así que no parece faltar nada.`],
   impBalBad:[(ok,t,b)=>`The running balance in your file adds up for ${fmtCount(ok)} of ${fmtCount(t)} steps. ${pl(b,'row')} ${b===1?'does':'do'} not follow from the row before: a row may be missing, or an amount may have the wrong sign. ${b===1?'It is':'They are'} marked below.`,(ok,t,b)=>`El saldo de tu archivo cuadra en ${fmtCount(ok)} de ${fmtCount(t)} pasos. ${pl(b,'row')} no ${b===1?'sale':'salen'} de la fila anterior: puede faltar alguna fila o algún importe tener el signo cambiado. ${b===1?'Aparece marcada':'Aparecen marcadas'} abajo.`],
-  noteXfer:['Looks like a transfer between your accounts','Parece un traspaso entre tus cuentas'],
-  noteXferWith:[s=>`Looks like the other side of “${s}”, already in the tracker`,s=>`Parece la otra mitad de «${s}», que ya está en el control`],
-  impInvest:['This file looks like an investment account or a pension plan. Its buys, sells and contributions are not income or spending: the money already left your bank as an investment. Every row arrives unticked; tick only what you want to count. To follow what it’s worth, enter its balance in Net worth.','Este archivo parece de una cuenta de inversión o de un plan de pensiones. Sus compras, ventas y aportaciones no son ingresos ni gastos: el dinero ya salió de tu banco como inversión. Todas las filas llegan sin marcar; marca solo las que quieras contar. Para seguir lo que vale, apunta su saldo en Patrimonio.'],
+  impKey:['Ticked rows will be imported. Greyed rows won’t be; the reason is on the right.','Las filas marcadas se importarán. Las que están en gris no; el motivo aparece a la derecha.'],
+  why_exact_duplicate:['Already in your tracker. Tick to import it anyway.','Ya está en tu control. Márcala para importarla igualmente.'],
+  why_possible_duplicate:[s=>`Probably already in your tracker as “${s}” (same date and amount). Tick to import it anyway.`,s=>`Seguramente ya está en tu control como «${s}» (misma fecha e importe). Márcala para importarla igualmente.`],
+  why_investment_file:['From your investment statement. Buys and contributions aren’t spending, so it’s unticked.','De tu extracto de inversión. Las compras y aportaciones no son gastos, así que va sin marcar.'],
+  why_transfer:['Looks like money moved between your own accounts, which isn’t spending. Tick to import it anyway.','Parece dinero movido entre tus propias cuentas, que no es un gasto. Márcala para importarla igualmente.'],
+  why_transferWith:[s=>`Looks like the other side of “${s}”, already in your tracker: money moved between your own accounts. Tick to import it anyway.`,s=>`Parece la otra mitad de «${s}», que ya está en tu control: dinero movido entre tus cuentas. Márcala para importarla igualmente.`],
+  why_skip_list:[w=>`Contains “${w}”, a word on your skip list. Tick to import it anyway.`,w=>`Contiene «${w}», una palabra de tu lista de omitidos. Márcala para importarla igualmente.`],
+  why_future_date:['Dated in the future (a scheduled payment?). Tick to import it anyway.','Con fecha futura (¿un pago programado?). Márcala para importarla igualmente.'],
+  impInvest:[f=>`${typeof f==='string'&&f?quote(f)+' looks':'This file looks'} like an investment account or a pension plan. Its buys, sells and contributions are not income or spending: the money already left your bank as an investment. Its rows arrive unticked; tick only what you want to count. To follow what it’s worth, enter its balance in Net worth.`,f=>`${typeof f==='string'&&f?quote(f)+' parece':'Este archivo parece'} de una cuenta de inversión o de un plan de pensiones. Sus compras, ventas y aportaciones no son ingresos ni gastos: el dinero ya salió de tu banco como inversión. Sus filas llegan sin marcar; marca solo las que quieras contar. Para seguir lo que vale, apunta su saldo en Patrimonio.`],
   impFuture:[n=>`${pl(n,'row')} ${n===1?'has':'have'} a date that hasn’t happened yet (a payment schedule?), so ${n===1?'it arrives':'they arrive'} unticked.`,n=>`${pl(n,'row')} ${n===1?'tiene':'tienen'} una fecha que aún no ha llegado (¿un calendario de pagos?), así que ${n===1?'llega':'llegan'} sin marcar.`],
-  noteFuture:['Date in the future','Fecha futura'],
   impSame:[n=>`Most of this file is already in the tracker, worded differently (another export of the same account?). The ${pl(n,'row')} with the same date and amount as a saved one arrive unticked.`,n=>`Casi todo este archivo ya está en el control con otras palabras (¿otra exportación de la misma cuenta?). ${n===1?'La fila':'Las '+pl(n,'row')} con la misma fecha e importe que una guardada ${n===1?'llega':'llegan'} sin marcar.`],
   impPreStart:[(n,m)=>`${pl(n,'row')} ${n===1?'is':'are'} dated before your tracker starts (${m}), so the Overview won’t show ${n===1?'it':'them'}.`,(n,m)=>`${pl(n,'row')} ${n===1?'tiene':'tienen'} fecha anterior al inicio de tu control (${m}), así que el Resumen no ${n===1?'la':'las'} mostrará.`],
   impPreStartBtn:[m=>`Start the tracker in ${m}`,m=>`Empezar el control en ${m}`],
   swWho:['Which one is you in Splitwise?','¿Quién eres tú en Splitwise?'],
   swHelp:['Each row is what that expense changed for you: what you owe is spending, and what others owe you after you paid makes it smaller.','Cada fila es lo que ese gasto cambió para ti: lo que debes es gasto, y lo que te deben por haber pagado tú lo reduce.'],
   noteLike:[c=>`Same date and amount as “${c}”`,c=>`Misma fecha e importe que «${c}»`],
+  noKeyword:['No keyword','Sin palabra clave'],
   noteBal:['Doesn’t follow from the balance','No cuadra con el saldo'],
-  skipListNote:[w=>`Skip list: “${w}”`,w=>`Palabra a omitir: «${w}»`], noKeyword:['No keyword','Sin palabra clave'],
   badLines:[n=>`${pl(n,'line')} couldn’t be read and will be skipped`,n=>`${pl(n,'line')} no se ${n===1?'ha':'han'} podido leer y se ${n===1?'omitirá':'omitirán'}`],
   nToT:[(n,t)=>`${n} to ${t}`,(n,t)=>`${n} a ${t}`], nUncat:[n=>` · ${n} uncategorised`,n=>` · ${n} sin categoría`],
   addRows:[n=>`Add ${pl(n,'row')}`,n=>`Añadir ${pl(n,'row')}`],
@@ -4821,6 +4825,13 @@ const quote=w=>LANG==='es'?'«'+w+'»':'“'+w+'”';
 function impTableSel(r,i){
   return `<label class="sr" for="imp-t-${i}">${esc(L('kindFor',i+1))}</label><select id="imp-t-${i}" class="tsel" data-action="imp-table" data-i="${i}" style="--tc:${TCOLOR[r.table]}">${TKEYS.map(t=>`<option value="${t}"${t===r.table?' selected':''}>${esc(TL(t))}</option>`).join('')}</select>`;
 }
+/* grey means "won't be imported, and here is why": only rows unticked for a reason; one the person unticked just shows the empty box */
+const greyed=r=>!r.on&&!!r.why&&r.why!=='user';
+function whyText(r){ const w=r.why;
+  if(w==='transfer') return r.xferWith?L('why_transferWith',shortDesc(r.xferWith,30)):L('why_transfer');
+  if(w==='skip_list') return L('why_skip_list',r.skip);
+  if(w==='possible_duplicate') return L('why_possible_duplicate',shortDesc(r.like,30));
+  return L('why_'+w); }
 function impConfirmBar(m){
   return `<span class="confirm-inline">${esc(L('discardQ',m.rows.length))} <button type="button" class="btn danger solid sm" data-action="imp-discard">${esc(L('discard'))}</button><button type="button" class="btn sm" id="imp-keep" data-action="imp-keep" data-autofocus>${esc(L('keepChecking'))}</button></span>`;
 }
@@ -4855,26 +4866,26 @@ function modalImport(){
     </div>
     <div class="m-foot">${m.confirmClose?impConfirmBar(m):`<button class="btn" data-action="imp-signback">${esc(L('backToRows'))}</button><span class="r"><button class="btn primary" data-action="imp-add-confirm">${esc(L('yesAdd',m.rows.filter(r=>r.on).length))}</button></span>`}</div>`;
   }
-  const rows=m.rows, on=rows.filter(r=>r.on), dup=rows.filter(r=>r.dup).length, skp=rows.filter(r=>r.skip).length, noCat=on.filter(r=>!r.category).length, nMl=on.filter(r=>r.ml&&r.category===r.ml.cat).length;
+  const rows=m.rows, on=rows.filter(r=>r.on), noCat=on.filter(r=>!r.category).length, nMl=on.filter(r=>r.ml&&r.category===r.ml.cat).length;
   const guessed=rows.some(r=>r.guessed);
   const byT=TKEYS.map(t=>[t,on.filter(r=>r.table===t).length]).filter(x=>x[1]);
   /* every change redraws the review, so a long file shows 200 rows at a time; the rest are still added */
   const shown=m.shown||200;
-  const body=rows.slice(0,shown).map((r,i)=>`<tr class="${r.on?'':'off'}${r.aiQ&&!r.aiA?' ai-ask':''}" id="imp-r-${i}">
+  const body=rows.slice(0,shown).map((r,i)=>`<tr class="${greyed(r)?'off':''}${r.aiQ&&!r.aiA?' ai-ask':''}" id="imp-r-${i}">
     <td class="on"><input type="checkbox" id="imp-on-${i}" data-action="imp-on" data-i="${i}" ${r.on?'checked':''} aria-label="${esc(L('includeRow',i+1))}"></td>
     <td class="d">${fmtDate(r.date)}</td>
     <td class="c"><label class="sr" for="imp-d-${i}">${esc(L('descForRow',i+1))}</label><input type="text" class="ed" id="imp-d-${i}" data-action="imp-desc" data-i="${i}" maxlength="140" value="${esc(r.concept)}" placeholder="${esc(L('noConcept'))}" title="${esc(r.concept)}"></td>
     <td class="a r num"><label class="sr" for="imp-a-${i}">${esc(L('amtForRow',i+1))}</label><input type="text" class="ed" id="imp-a-${i}" data-action="imp-amt" data-i="${i}" inputmode="decimal" value="${esc(fmtEUR(r.amount,2,true))}"></td>
     <td class="tb">${impTableSel(r,i)}</td>
     <td class="k"><label class="sr" for="imp-c-${i}">${esc(L('catForRow',i+1))}</label><select id="imp-c-${i}" data-action="imp-cat" data-i="${i}" class="${r.category?(r.ml?'guess':''):'missing'}"${r.ml?` title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}"`:''}>${catOptions(r.table,r.category,true)}</select></td>
-    <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${r.xfer?`<span class="note">${esc(r.xferWith?L('noteXferWith',shortDesc(r.xferWith,30)):L('noteXfer'))}</span> `:''}${r.future?`<span class="note">${esc(L('noteFuture'))}</span> `:''}${r.like&&!r.dup?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.xfer?'':r.dup?`<span class="note" title="${esc(L('alreadyInTip'))}">${esc(L('alreadyIn'))}</span>`:r.skip?`<span class="note">${esc(L('skipListNote',r.skip))}</span>`:r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
+    <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${greyed(r)?`<span class="note why">${esc(whyText(r))}</span> `:''}${r.like&&!r.dup&&!greyed(r)?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${greyed(r)?'':r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
     ${aiReviewNote(m)}${impChecksNote(m)}
     ${m.sw&&m.sw.people.length>1?`<div class="field"><label class="lab" for="imp-sw-who">${esc(L('swWho'))}</label><select id="imp-sw-who" style="max-width:320px">${m.sw.people.map((p,i)=>`<option value="${i}"${i===m.sw.who?' selected':''}>${esc(p)}</option>`).join('')}</select><span class="help">${esc(L('swHelp'))}</span></div>`:''}
     ${guessed?`<p class="hint">${esc(L('sortedNote'))}</p>`:''}
     ${nMl?`<p class="hint ml-note">${esc(L('mlImpNote',nMl))}</p>`:''}
-    ${dup||skp?`<div class="legend">${dup?`<span>${esc(L('dupUnticked',dup))}</span>`:''}${skp?`<span>${esc(L('skipUnticked',skp))}</span>`:''}</div>`:''}
+    <p class="hint imp-key">${esc(L('impKey'))}</p>
     <div class="imp-table-wrap"><table class="imp"><thead><tr><th><span class="sr">${esc(L('include'))}</span></th><th>${esc(L('date'))}</th><th>${esc(L('concept'))}</th><th class="r">${esc(L('amount'))}</th><th>${esc(L('table'))}</th><th>${esc(L('category'))}</th><th></th></tr></thead><tbody>${body}</tbody></table></div>
     ${rows.length>shown?`<div class="more"><button class="btn" data-action="imp-more">${esc(L('showMore',fmtCount(Math.min(200,rows.length-shown))))}</button></div>`:''}
     ${m.bad.length?`<div class="field"><span class="lab">${esc(L('badLines',m.bad.length))}</span><div class="bad-lines">${esc(m.bad.slice(0,30).join('\n'))}${m.bad.length>30?'\n…':''}</div></div>`:''}
@@ -5098,10 +5109,9 @@ function impEdit(el,focusId){
     r.amount=v; if(r.guessed){ const t=guessTable(r); if(t!==r.table){ setImpTable(r,t); r.guessed=true; } }
   } else {
     const v=el.value.replace(/\s+/g,' ').trim().slice(0,140); if(v===r.concept) return;
-    r.concept=v; r.skip=skipMatch(v); if(r.skip) r.on=false;
+    r.concept=v; r.skip=skipMatch(v);
   }
-  const was=m.rows.map(x=>x.dup); markDups(m.rows,allRows());
-  m.rows.forEach((x,j)=>{ if(x.dup!==was[j]) x.on=!x.dup&&!x.skip&&!x.future&&!(m.checks&&m.checks.invest); });
+  markDups(m.rows,allRows()); m.rows.forEach(setWhy);
   if(!r.manual&&(!r.category||r.ml)){ r.category=autoCat(r,''); impGuess(r); }
   if(m.checks&&!m.checks.same) m.checks.like=m.rows.filter(x=>x.like&&!x.dup).length;
   if(focusId!=='quiet') renderModalKeepScroll(focusId);
@@ -5130,12 +5140,12 @@ function importChecks(rows){
       if(Math.abs(a.amount+b.amount)>0.005||a.amount===b.amount) continue;
       if(!isX(a)||!isX(b)) continue;
       const d=Math.abs(dayNum(a.date)-dayNum(b.date)); if(d<=3&&d<bd){ best=j; bd=d; } }
-    if(best>-1){ used.add(i); used.add(best); for(const k of [i,best]){ rows[k].xfer=true; rows[k].on=false; } out.xfer+=2; } }
+    if(best>-1){ used.add(i); used.add(best); for(const k of [i,best]){ rows[k].xfer=true; setWhy(rows[k]); } out.xfer+=2; } }
   const saved=new Map(); for(const r of allRows()){ const k=r2(-r.amount).toFixed(2); if(!saved.has(k)) saved.set(k,[]); saved.get(k).push(r); }
   const taken=new Set();
   for(const i of cand){ const a=rows[i]; if(used.has(i)||!a.on) continue;
     const o=(saved.get(r2(a.amount).toFixed(2))||[]).find(r=>!taken.has(r)&&Math.abs(dayNum(r.date)-dayNum(a.date))<=3&&(isX(a)||isX(r)));
-    if(o){ taken.add(o); a.xfer=true; a.on=false; a.xferWith=o.concept; out.xfer++; } }
+    if(o){ taken.add(o); a.xfer=true; a.xferWith=o.concept; setWhy(a); out.xfer++; } }
   out.like=rows.filter(r=>r.like&&!r.dup).length;
   /* far larger than anything usual for the category (over 3 times its 90th percentile, 8 or more saved rows to judge by) */
   const hist=new Map(); for(const r of allRows()){ if(!isKnown(r.table,r.category)) continue; const k=r.table+'|'+r.category; if(!hist.has(k)) hist.set(k,[]); hist.get(k).push(Math.abs(r.amount)); }
@@ -5159,7 +5169,7 @@ function impChecksNote(m){
   if(c.like) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impPossDup',c.like))}</span></p>`);
   if(c.odd) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impOdd',c.odd))}</span></p>`);
   if(c.fx) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impFx',c.fx,c.fxCodes))}</span></p>`);
-  if(c.invest) p.unshift(`<p class="ai-check bad">${ICON.warn}<span>${esc(L('impInvest'))}</span></p>`);
+  if(c.invest) p.unshift(`<p class="ai-check bad">${ICON.warn}<span>${esc(L('impInvest',c.invest))}</span></p>`);
   if(c.future) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impFuture',c.future))}</span></p>`);
   if(c.same) p.push(`<p class="ai-check q">${ICON.warn}<span>${esc(L('impSame',c.same))}</span></p>`);
   /* ticked rows before the tracker's first month would be saved but not shown in the Overview */
@@ -5182,20 +5192,26 @@ function markDups(rows,saved){
 /* a description inside a note: the bank's trailing separators dropped ("VENDING ACME \"), long ones cut with … */
 function shortDesc(s,n){ s=String(s==null?'':s).replace(/[\s\\/|·.,;:_-]+$/u,'').trim(); return s.length>n?s.slice(0,n-1).trim()+'…':s; }
 const INV_CONCEPT=/\b(suscripcion|reembolso|buy trade|sell trade|aportacion|compra de valores|venta de valores|comision de gestion|comision custodia)\b/;
+/* why a row arrives unticked, the first that applies (null: it is imported); the review shows it next to the row */
+function untickWhy(r){ return r.dup?'exact_duplicate':r.xfer?'transfer':r.inv?'investment_file':r.skip?'skip_list':r.future?'future_date':r.same?'possible_duplicate':null; }
+/* a row's tick follows its reason, unless the person ticked or unticked it themselves */
+function setWhy(r){ if(r.why==='user'||r.picked) return; r.why=untickWhy(r); r.on=!r.why; }
 function finishImport(parsed,bad,fileName,opt){
   parsed=parsed.filter(p=>Math.abs(p.amount)>=0.005);
-  /* a file from an investment account or pension plan (its headings, or a quarter of its rows being buys and contributions):
-     every row arrives unticked, since that money already left a bank account as an investment */
-  const invest=!!(opt&&opt.invest)||(parsed.length>=3&&parsed.filter(p=>INV_CONCEPT.test(loose(p.concept))).length>=0.25*parsed.length);
+  /* a file from an investment account or pension plan (its headings or sheet, or a quarter of its rows being buys and contributions):
+     its rows arrive unticked, since that money already left a bank account as an investment. Judged file by file: several statements
+     read by AI together come back as one list, each row naming its file, and a bank statement next to a fund's stays ticked */
+  const src=p=>p.aiSrc||'', bySrc=new Map(); for(const p of parsed){ const k=src(p); if(!bySrc.has(k)) bySrc.set(k,[]); bySrc.get(k).push(p); }
+  const invSrc=new Set([...bySrc].filter(([,ps])=>ps.length>=3&&ps.filter(p=>INV_CONCEPT.test(loose(p.concept))).length>=0.25*ps.length).map(([k])=>k));
   const today=todayIso();
-  const rows=parsed.map(p=>{ const guessed=p.table==='auto'; return Object.assign({},p,{table:guessed?guessTable(p):p.table,guessed,future:p.date>today,manual:false}); });
+  const rows=parsed.map(p=>{ const guessed=p.table==='auto'; return Object.assign({},p,{table:guessed?guessTable(p):p.table,guessed,future:p.date>today,manual:false,inv:!!(opt&&opt.invest)||!!p.inv||invSrc.has(src(p))}); });
   markDups(rows,allRows());
-  for(const r of rows){ const raw=r.category; r.skip=r.dup?null:skipMatch(r.concept); r.on=!r.dup&&!r.skip&&!r.future&&!invest; r.category=autoCat(r,raw); impGuess(r); }
+  for(const r of rows){ const raw=r.category; r.skip=r.dup?null:skipMatch(r.concept); setWhy(r); r.category=autoCat(r,raw); impGuess(r); }
   /* most of the file already saved under other wording (another export of the same account): those rows arrive unticked too */
   const likeRows=rows.filter(r=>r.like&&!r.dup), same=likeRows.length>=3&&likeRows.length+rows.filter(r=>r.dup).length>=0.5*rows.length;
-  if(same) for(const r of likeRows) r.on=false;
+  if(same) for(const r of likeRows){ r.same=true; setWhy(r); }
   const checks=importChecks(rows);
-  checks.invest=invest; checks.future=rows.filter(r=>r.future).length;
+  checks.invest=rows.some(r=>r.inv)?[...new Set(rows.filter(r=>r.inv).map(r=>r.aiSrc||fileName||''))].join(', ')||true:false; checks.future=rows.filter(r=>r.future).length;
   if(same){ checks.same=checks.like; checks.like=0; }
   if(!rows.length){ S.modal.msg=bad.length?L('noDateAmount'):L('nothingToRead'); renderModal(); return; }
   Object.assign(S.modal,{step:'preview',rows,bad,fileName,wide:true,msg:'',confirmClose:false,checks,shown:200}); renderModal();
@@ -5227,14 +5243,15 @@ async function readFile(file){
     const buf=await file.arrayBuffer(), html=/<(html|table)\b/i.test(new TextDecoder('latin1').decode(new Uint8Array(buf.slice(0,4096))));
     /* and is often not UTF-8: decoded here, as a bank CSV is, so "Fecha operación" stays a heading */
     const wb=html?readBook(X,await fileText(file),{type:'string',raw:true}):readBook(X,buf,{type:'array',cellNF:true});
-    const parsed=[],bad=[]; const named=wb.SheetNames.filter(n=>sheetTable(n)); let invest=false;
+    const parsed=[],bad=[]; const named=wb.SheetNames.filter(n=>sheetTable(n));
     const sheets=named.length?named.map(n=>[n,sheetTable(n)]):[[wb.SheetNames[0],m.table]];
     if(sheets.length===1&&trySplitwise(sheetRows(X,wb.Sheets[sheets[0][0]]),file.name)) return;
     for(const [name,table] of sheets){
       const r=parseAny(sheetRows(X,wb.Sheets[name]),table,cells=>`${name}: ${cells.join(' | ')}`);
-      parsed.push(...r.parsed); bad.push(...r.bad); invest=invest||r.invest;
+      if(r.invest) for(const p of r.parsed) p.inv=true;
+      parsed.push(...r.parsed); bad.push(...r.bad);
     }
-    finishImport(parsed,bad,file.name,{invest});
+    finishImport(parsed,bad,file.name);
   }catch(e){ m.msg=L('notSpreadsheet'); renderModal(); }
 }
 function addImported(){
@@ -5977,7 +5994,7 @@ document.addEventListener('change',e=>{
   if(a==='kw-cat'){ const K=ensureKw(); const p=K[S.ui.ct.table][+el.dataset.i]; if(p){ p[1]=el.value; markDirty('config/keywords'); bump(); render(); } return; }
   if(a==='na-word'&&el.value){ readNwAccounts(); const i=el.dataset.i, r=S.modal.list[+i], w=String(r.words||'').split(',').map(x=>x.trim()).filter(Boolean);
     if(!w.some(x=>loose(x)===loose(el.value))) w.push(el.value); r.words=w.join(', '); renderModalKeepScroll(); const n=document.getElementById('na-w-'+i); if(n) n.focus(); return; }
-  if(a==='imp-on'){ const r=S.modal.rows[+el.dataset.i]; r.on=el.checked; renderModalKeepScroll(); return; }
+  if(a==='imp-on'){ const r=S.modal.rows[+el.dataset.i]; r.on=el.checked; r.picked=true; r.why=el.checked?null:'user'; renderModalKeepScroll(); return; }
   if(a==='imp-cat'){ const r=S.modal.rows[+el.dataset.i]; r.category=el.value; r.manual=!!el.value; r.ml=null; r.maybe=null; renderModalKeepScroll(); if(el.value) offerKeyword(r.table,r.concept,el.value); return; }
   if(a==='imp-table'){ setImpTable(S.modal.rows[+el.dataset.i],el.value); renderModalKeepScroll(); return; }
   if(id==='imp-table'&&S.modal&&S.modal.type==='import'){ S.modal.table=el.value; try{ localStorage.setItem('ybt.impTable',el.value); }catch(_){} return; }
