@@ -1,6 +1,6 @@
 # PROGRESS
 
-Branch: main checkout on `overhaul`, identical to `origin/main` at `38a25c8` (live site, SW 1.0.30). Worktree `worktree-quick-wins` (`.claude/worktrees/quick-wins`, locked by another session) still has the OLD history: never force-push from it; recreate it from `main`. Last handoff: 2026-10-11 (third).
+Branch: main checkout on `overhaul`; `origin/main` = `071fc69` (live site, SW 1.0.32). Push with `git push origin overhaul:main`. Worktree `worktree-quick-wins` (`.claude/worktrees/quick-wins`, locked by another session) still has the OLD history: never force-push from it; recreate it from `main`. Last handoff: 2026-10-11 (fourth).
 Product name: **MyAhorros** (myahorros.app). Remote: `https://github.com/TarenShaw/myahorros.git` (public; Pages serves the repo root).
 History rewritten 2026-10-11 to remove personal data: commit ids from before that date (in older notes) refer to the old history. Never put bank names, balances, people's names or local paths in committed files or commit messages; they go in `PRIVATE_NOTES.md` (git-ignored).
 
@@ -9,24 +9,25 @@ History rewritten 2026-10-11 to remove personal data: commit ids from before tha
 | Phase | Commit | Summary |
 |---|---|---|
 | 0-9d5c54c (pre-rewrite ids) | up to `b51c798` | Phases 0-7, rename, release (PRs #1, #2), audit quick wins, Gains, 8.3, review council + fixes, real-data import fixes, CLS/layout/default tab Net worth, Days view, Financial health (`HEALTH`, About you), Fixed/Variable (stored Need/Want). Details in git log |
-| Full audit (`AUDIT_PROMPT.md`) | (not committed) | 4 agents (new user, analyst, red team, low-literacy). `audit/AUDIT_REPORT.md` + agent reports, git-ignored, local only (holds real data). Real workbook reconciles 561/563 (2 = Need/Want vs Fixed/Variable definition) |
-| P0 fixes | `f963ca1` | Hand-typed rows before the start month: automatic start moves back (`coverStart`), chosen start gets a toast offer. `fixedVarOnce` changes only categories still at the old default mark (`OLD_NEED`). e2e landing-wizard 3c/4c. SW 1.0.27 |
-| Personal data out | `132faf0`, `505e8c8` + history rewrite | PROGRESS.md personal lines → `PRIVATE_NOTES.md`; `audit/` + `PRIVATE_NOTES.md` git-ignored. git filter-repo: PROGRESS.md removed from all old commits, real names/defaults in code+tests replaced, 2 messages scrubbed, CSP hash recomputed per commit; force-pushed main/overhaul/worktree-quick-wins |
+| Audit + fixes, personal data out | `f963ca1`, `3830236`…`5331539`, `2f6b474`, `132faf0`, `505e8c8` | Full audit (`audit/`, git-ignored, real data); P0 fixes (`coverStart`, `OLD_NEED`); top-10 fixes (load checks, imports 200 rows/20 MB, Pension income, refund rule, dialog caps, GoatCounter image, tab takeover flush, ES/EN keywords); history rewrite removing personal data |
 | Forecast, Days, landing | `36aa8d6` (pushed) | Net worth Over time = Jan-Dec; months after last figure greyed (`nw-fc`), ≈ labels, dotted trend, tooltip + note; `nwForecast` (pure) + `nwChartForecast`. Overview: Days `aria-disabled` for All, All resets to Months (`mmDaysAll` removed). Days bug: `mmDaily` netted refunds into same-day purchases; now `pos`/`neg` series drawn overlaid (`drawColumns` `overlay`), 2 px min bar. Landing redesign (`landing()` in web-shim, web.css): chip, hero + product shot `images/landing-hero-{dark,light}.webp` + `.jpg` fallback from `tools/landing-shot.js` (made-up seeded data), 4 feature cards, privacy band, footer. Tests `forecast-smoke.js`, `overview-days.e2e.js` |
 | Overview forecast + tile | `38a25c8` (pushed) | Days = one net bar a day again (split/`overlay` removed). Month by month always Jan-Dec; year in progress: greyed forecast bars (`path.bar.fc`, shares `nw-fc` style) + split bar for this month; tooltips "Projected" + method; foot note. Module next to `nwForecast`: `median`, `flowForecast`, `recKey`, `findRecurring`, `dayProfile`, `monthDays`, `mmForecast` (memo). This month tile: 3 equal columns (`.tm-kpi`), average month, pace bar + day marker, "On track for about"; Where it went = `.hbars` list; limits hint footer `.tm-foot`. Tests: forecast-smoke (flows), overview-days e2e rewritten. SW 1.0.30 |
-| Audit top-10 fixes | `3830236` `07552d1` `44d8fc3` `dc3f700` `48600e2` `64a149e` `5331539` | Load checks (`finAmt`, `normSettings`, `normCats` filter, `readStored` keeps unreadable data as `bk:unreadable`); imports (`readBook` trims sheet range, review 200 rows + Show more, 20 MB cap `tooBig`); Pension income category + refund rule (`REFUND_RE`, `biggestSpend`); dialog head/foot capped 24vh/30vh, where-to-save card fits 375 px; GoatCounter = image from `js/web-boot.js`; tab takeover flushes first; ES/EN keywords (dia, consum, metro, paga extra, alquiler), category shown while typing, no accounts + rows → Overview. `tests/bad-data.e2e.js`, `tests/fixtures/dimension.xlsx`. SW 1.0.28 `2f6b474`. Pushed |
+| Import review + AI settings | `d894232` (pushed) | Security audit: no real key in repo/history (fake Gemini placeholder in `tests/ai-smoke.js` only); `.gitignore` covers `.env`/keys. Review dialog: `.m-head`/`.m-foot` `flex:none` (were squeezed in tall dialogs, all dialogs); import table stacks below 860 px. Inline Description/Amount edits (`impEdit`; Enter/leave saves, Esc reverts, `parseAmount`, `fmtEUR(v,2,true)`), re-check via `markDups` (signed amount, `loose` description), `shortDesc` for notes. Claude: model picker kept + Effort select; defaults `claude-haiku-5-5` + `high` in `js/models.js` (`efforts`, `maxOutput` 64000); `effortOf`, one builder `API.anthropic.request`. Tests: ai-smoke, import-smoke, new `tests/import-review.e2e.js`. SW 1.0.31 |
+| Untick reasons | `071fc69` (pushed) | Investment/pension rule judged per source file (`aiSrc`, sheet `p.inv`), was whole batch (AI multi-file unticked bank rows). Each row `why` (`untickWhy`/`setWhy`): exact_duplicate, possible_duplicate, investment_file, transfer, skip_list, future_date, user; grey (`greyed`) only with a reason, note `whyText`; legend `impKey`; banner names the file. e2e part 3 (bank + fund statement). SW 1.0.32 |
 
 ## In progress
 
-Nothing uncommitted. Untracked: `.agents/`, `.codex/`, `AGENTS.md` (appeared 10:33, not created by Claude), `.claude/worktrees/`, `.graphifyignore`, `graphify-out/`.
+Nothing uncommitted. Untracked: `.agents/`, `.codex/`, `AGENTS.md` (appeared 10:33, not created by Claude), `.claude/worktrees/`, `.graphifyignore`, `graphify-out/`, `qa/`.
 Personal-data notes, local paths, real figures: `PRIVATE_NOTES.md` (git-ignored).
 
 ## Pending
 
+- QA run: `qa/` (untracked, not created by Claude: `QA_PROMPT.md`, results, screenshots, tests). User: "do qa later" (2026-10-11). Read `qa/QA_PROMPT.md` first.
 - User: GitHub Support "Remove sensitive data" request (delete PRs #1/#2 refs, purge cached commits such as old `0b4a9f3`); PR #2's head still has an old PROGRESS.md. Text was given in chat.
 - User: delete the backup `myahorros-before-rewrite.bundle` (session scratchpad, holds old data) when happy; recreate the quick-wins worktree from new `main`.
 - Offered, not answered: audit fix #7, publish only shipped files via a GitHub Actions Pages workflow (user switches Pages source); until then PLAN.md, CLAUDE.md, tests/, .claude/ are served.
-- 8.2 Live-key verification: AI import with a rotated Claude key on Haiku 5.5 (confirm low-effort fix), then Gemini.
+- 8.2 Live-key verification: AI import with a rotated Claude key on Haiku 5.5 at high effort (user confirmed import works live 2026-10-11; large statement + truncation at high effort not checked), then Gemini.
+- PLAN.md is stale: 8.1, 8.3, 8.4 done; not updated yet (offered, not answered).
 - Remaining audit findings (Known issues), only as the user picks them.
 - User checks the Gains link dialog on their live tracker (details in `PRIVATE_NOTES.md`).
 - 8.5 Post-release checks; 9.x follow-ups only if asked. Offered, not answered: list unlinked interest/dividend rows in the "not linked" warning.
@@ -60,11 +61,18 @@ Personal-data notes, local paths, real figures: `PRIVATE_NOTES.md` (git-ignored)
 - 2026-10-11: User reversed the Days split: Days + Expenses = one NET bar per day (negative only when refunds beat purchases).
 - 2026-10-11: Month by month forecast (user spec, Claude's method): Theil-Sen level+slope over last 12 complete months (all if fewer; no trend under 4), damped trend φ=0.7, 25% same-month-last-year capped at 2× level, ≥0. Only the year in progress; past/empty years none. Subtitle stats actual-only. Days: recurring = ~1×/month, ≥3 months and ≥60%, 2 of last 3, ±20% amount, median day; rest spread by weekday profile (flat under 4 weeks); days sum to the month (recurring wins if bigger). Current month: recurring item whose day passed is dropped. Days stays off for All. User approved push of `38a25c8`.
 - 2026-10-11: User: "i dont want my bank info to ever be on the public repo, get rid of it" → history rewritten and force-pushed; tests use made-up names (Crowdlend, Ben).
+- 2026-10-11: Claude defaults Haiku 5.5 at **high** effort (was low); user first asked for Haiku only, then: "keep the picker, just allow them to pick the model and effort". Effort levels low/medium/high/xhigh/max; older models get no effort field.
+- 2026-10-11: Keep option (a) for keys (visitor's own key in their browser); no proxy (would bill the owner, route statements through a server).
+- 2026-10-11: Import review: description/amount editable; duplicates compare signed amounts and letters/digits only; every unticked row says why; grey only with a reason; rows the person unticked: no grey, no note (user spec). "Left out" rows stay in the fold-out (not table rows); AI questions don't untick.
+- 2026-10-11: Real merchant names from the user's statements are replaced by made-up ones in tests/comments (e.g. VENDING ACME, HOME FIBRE). User approved pushes of `d894232` and `071fc69`.
 
 ## Known issues
 
 - Rotate the Gemini API key pasted into an earlier chat and the Anthropic key pasted into a 2026-10-11 chat. Use a new key for 8.2.
 - Audit open items (details, P-numbers in `audit/AUDIT_REPORT.md`): 7-day Safari warning jargon (#12); learned guess matches place words (#16); indicators ignore Uncategorised (#18); currency from browser language (#19); bad-date rows with heading words vanish (`parseRowsCore` HEADER_RE, #20); no month-over-month (#21); non-JSON AI answer re-sent 4× and called truncated (#22); API key unexplained, paid option preselected (#23); date "ayer"/Hoy-Ayer (#25); Seguimiento opens on current month, dimmed contrast (#26); large-text list wrapping (#27); help hidden (#28); 4.7 MB first load on 3G (#29); Drive "Recomendado" needs Google login (#30); storage-full message never shown (shim `save()` maps all to unavailable, #33); Back right after an edit loses it (#35); clearing site data → dead IndexedDB (#36); axe label-in-name (#37); P3 #38-59.
+- `INV_CONCEPT` includes `reembolso`, which Spanish banks also use for card refunds: a bank file with many refunds could be judged an investment file (`index.html`, `INV_CONCEPT`).
+- Review at 960 px: description input ~180 px wide (full text in `title`). Notes on one row run together inline. `+0,85` refund lands in Income via the refund rule (unchanged).
+- Not verified live: Claude at high effort on a big statement (thinking counts toward `max_tokens` 64000); `possible_duplicate` (`r.same`) not cleared by an edit.
 - Refunds classified as Income (refund rule) don't show in Days + Expenses; the user's real data has a few.
 - Forecast not checked on the user's real data or in Spanish UI; seasonality with one year can't tell a one-off from a season (capped). Days forecast weekend weights look small next to rent/salary spikes. Category filter forecasts per category (not in user spec, kept consistent). Future months not clickable in Month by month.
 - Landing: mobile top bar wraps to two rows; JPEG fallback is dark only; the product shot is English with es number format. Forecast not shown for a year with no figures (year buttons only list years with figures).
@@ -82,8 +90,8 @@ Personal-data notes, local paths, real figures: `PRIVATE_NOTES.md` (git-ignored)
 - Serve: `python -m http.server 8000` (8000 often busy: use 8080 or 8123 and `START_URL=http://localhost:8080/`)
 - After editing index.html's inline script: `node tools/update-csp-hash.js`
 - Tests: `node tests/ai-smoke.js`, `node tests/chunk-smoke.js`, `node tests/merge-smoke.js`, `node tests/import-smoke.js`, `node tests/forecast-smoke.js`
-- Browser tests (Playwright, Edge, server running): `NODE_PATH=$APPDATA/npm/node_modules/@playwright/cli/node_modules node tests/<name>.e2e.js` for `drive-sync`, `landing-wizard`, `gains`, `tabs-restore`, `bad-data`, `overview-days`
+- Browser tests (Playwright, Edge, server running): `NODE_PATH=$APPDATA/npm/node_modules/@playwright/cli/node_modules node tests/<name>.e2e.js` for `drive-sync`, `landing-wizard`, `gains`, `tabs-restore`, `bad-data`, `overview-days`, `import-review`
 - Landing product shot (server running): `NODE_PATH=... START_URL=http://localhost:8123/ node tools/landing-shot.js` → `images/`
-- Bump `VERSION` in `sw.js` (now 1.0.30) and `config.js` `version` to match; update `FILES` when shipped files change.
+- Bump `VERSION` in `sw.js` (now 1.0.32) and `config.js` `version` to match; update `FILES` when shipped files change.
 - `gh` installed, logged in as TarenShaw; call as `"C:\Program Files\GitHub CLI\gh.exe"` until a restart. `git filter-repo` installed (pip).
 - playwright-cli: run from the scratchpad so `.playwright-cli/` logs stay out of the repo; debug inline functions by routing the page, stripping the CSP `<meta>` and injecting `window.__dbg` after `(function(){`.
