@@ -166,6 +166,23 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   assert.ok(!left.includes('ZETA') && !left.includes('ACME'), 'linked rows still listed: ' + left);
   console.log('4c. pension rows prefer Retirement; link dialog guesses by amount, "not tracked here" clears the warning');
 
+  /* 4d. interest on a Cash account, linked with the "Add from your statements" list in Edit accounts */
+  await add('income', '2026-09-28', 'Intereses cuenta remunerada', 12, 'in', 'Interest');
+  await expect('2026-09', { 'Current account': '', 'Total': '+1,240.00' });   // names no account yet: nothing for Cash
+  await p.click('[data-action=tab][data-tab=networth]'); await p.click('[data-action="nw-accounts"]');
+  const row = n => p.locator('#nw-acc-form .acc-row').filter({ has: p.locator(`input[data-f=name][value="${n}"]`) });
+  const opts = n => row(n).locator('select.acc-pick option').allTextContents();
+  assert.ok((await opts('Current account')).includes('Intereses cuenta remunerada'), 'interest row not offered for the Cash account');
+  assert.ok(!(await opts('Current account')).includes('Buy ETF'), 'Investments row offered for a Cash account');
+  assert.ok((await opts('Indexa Capital')).includes('Buy ETF'), 'Investments row not offered for an Investments account');
+  await row('Current account').locator('select.acc-pick').selectOption('Intereses cuenta remunerada');
+  assert.strictEqual(await row('Current account').locator('input[data-f=words]').inputValue(), 'Intereses cuenta remunerada');
+  assert.ok(!(await opts('Indexa Capital')).includes('Intereses cuenta remunerada'), 'picked phrase still offered elsewhere');
+  await p.click('#nw-acc-form button[type=submit]'); await p.waitForSelector('#nw-acc-form', { state: 'detached' });
+  await expect('2026-09', { 'Current account': '+12.00', 'Total': '+1,252.00' });
+  await expect('2026-07', { 'Current account': '' });
+  console.log('4d. Cash account shows only its interest; the statements list adds the phrase');
+
   /* 7. phones show Gains too */
   await p.setViewportSize({ width: 390, height: 844 });
   await p.click('[data-action=tab][data-tab=networth]');
