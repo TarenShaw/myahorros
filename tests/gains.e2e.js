@@ -53,7 +53,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
     await p.click('[data-action=tab][data-tab=networth]');
     await p.selectOption('#nw-month', k);
     return p.evaluate(() => Object.fromEntries([...document.querySelectorAll('table.nwt tbody tr:not(.grp), table.nwt tfoot tr')]
-      .map(tr => [tr.children[0].innerText.trim().replace(/,.*/, ''), tr.children[3].innerText.trim().replace(/[^\d.,–−+-]/g, '')])));
+      .map(tr => [tr.children[0].innerText.trim().replace(/,.*/, ''), tr.children[3].innerText.trim().replace(/[^\d.,—−+-]/g, '')])));
   };
   /* no transactions yet: gain = change */
   assert.strictEqual((await gains('2026-09')).ING, '+310.00');
@@ -106,7 +106,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await imp('05/08/2026\t-400,00\tAportación Indexa', 'investments');
 
   const expect = async (k, want) => { const g = await gains(k); for (const [n, v] of Object.entries(want)) assert.strictEqual(g[n], v, `${k} ${n}: got ${g[n]}, want ${v}`); };
-  const JUL = { 'Indexa Capital': '+150.00', 'Trade Republic': '+70.00', 'ING': '+10.00', 'MyInvestor Fund': '+100.00', 'MyInvestor Pension': '+50.00', 'Flat Madrid': '–', 'Crowdlend': '–', 'Current account': '', 'Total': '+380.00' };
+  const JUL = { 'Indexa Capital': '+150.00', 'Trade Republic': '+70.00', 'ING': '+10.00', 'MyInvestor Fund': '+100.00', 'MyInvestor Pension': '+50.00', 'Flat Madrid': '—', 'Crowdlend': '—', 'Current account': '', 'Total': '+380.00' };
   const SEP = { 'Indexa Capital': '+65.00', 'Trade Republic': '+150.00', 'ING': '+60.00', 'MyInvestor Fund': '+50.00', 'MyInvestor Pension': '+300.00', 'Flat Madrid': '+1,000.00', 'New Broker': '', 'Crowdlend': '+80.00', 'Total': '+1,705.00' };
   await expect('2026-07', JUL); await expect('2026-09', SEP);
   console.log('2. gains after dialog + import rows: July and September (across the August gap)');
@@ -161,7 +161,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   assert.strictEqual(await shown('ACME PAYMENT'), 'Not sure yet', 'ACME guessed without a close fit');
   await pickFor('ACME PAYMENT').selectOption('-');
   await p.click('#nw-link-form button[type=submit]'); await p.waitForSelector('#nw-link-form', { state: 'detached' });
-  await expect('2026-09', { 'MyInvestor Pension': '+135.00', 'Trade Republic': '–', 'Total': '+1,240.00' });
+  await expect('2026-09', { 'MyInvestor Pension': '+135.00', 'Trade Republic': '—', 'Total': '+1,240.00' });
   const left = await unlinked();
   assert.ok(!left.includes('ZETA') && !left.includes('ACME'), 'linked rows still listed: ' + left);
   console.log('4c. pension rows prefer Retirement; link dialog guesses by amount, "not tracked here" clears the warning');

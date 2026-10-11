@@ -79,7 +79,7 @@ const data = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, c
   assert.strictEqual(d.j1, 0, 'no second (refund) series');
   const netDays = refunds.filter(([m, dd]) => !(m === 1 && dd === 3)).length;
   assert.strictEqual(d.below, netDays, 'bars below the line: ' + d.below);
-  assert.ok(d.ticks.some(t => /^[-−]\s?[\d.,]+k?$/.test(t.trim())), 'no negative tick: ' + d.ticks.join(' '));
+  assert.ok(d.ticks.some(t => /^[-−]\s?[\d.,]+(\s?k)?(\s?€)?$/.test(t.trim())), 'no negative tick: ' + d.ticks.join(' '));
   if (months[ym(1)]) {
     await p.locator('#ch-monthly').scrollIntoViewIfNeeded();
     const box3 = await p.locator('#ch-monthly svg').boundingBox(), feb3 = (31 + 2 + 0.5) / (365 + (Y % 4 === 0 ? 1 : 0));

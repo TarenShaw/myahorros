@@ -102,6 +102,7 @@ Before uploading, run the checks (Node.js, no install needed), for example the N
 
 ```
 node tests/reconcile-smoke.js
+node tests/format-smoke.js
 ```
 
 The full list is in CLAUDE.md. On `localhost`, the page also prints a console warning for any month whose Net worth figures don't reconcile.

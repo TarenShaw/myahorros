@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-9fn4JLxTJi2NzvwgR3I4Ut/RqWyfae1lrM6YalOUhaI=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-oQZM97kdYJKbOwRkbSNuatuZCXV2jJhI4kSH+vpR+UU=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1115,9 +1115,11 @@ const sum=a=>a.reduce((x,y)=>x+y,0);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 /* number format: 1.234,56 (default) or 1,234.56, chosen in Settings */
 let NF={t:'.',d:','};
+/* the one mark for "no figure": an em dash (muted where it sits in a table) */
+const DASH='—';
 const BOOT_NUM=(()=>{ try{ const v=localStorage.getItem('ybt.num'); if(v==='eu'||v==='en') return v; }catch(_){} return 'eu'; })();
 function fmtNum(v,dec=2){
-  if(!isFinite(v)) return '–';
+  if(!isFinite(v)) return DASH;
   const neg=v<0 && Math.abs(v)>=0.5*Math.pow(10,-dec);
   const s=Math.abs(v).toFixed(dec); const [i,f]=s.split('.');
   return (neg?'−':'')+i.replace(/\B(?=(\d{3})+(?!\d))/g,NF.t)+(dec?NF.d+f:'');
@@ -1130,10 +1132,19 @@ const MASK='••••';
 const CURRENCIES={EUR:{s:'€',after:true,n:'Euro (€)'},GBP:{s:'£',after:false,n:'Pound sterling (£)'},USD:{s:'$',after:false,n:'US dollar ($)'},CAD:{s:'CA$',after:false,n:'Canadian dollar (CA$)'},AUD:{s:'A$',after:false,n:'Australian dollar (A$)'},CHF:{s:'CHF',after:true,n:'Swiss franc (CHF)'},MXN:{s:'MX$',after:false,n:'Mexican peso (MX$)'},SEK:{s:'kr',after:true,n:'Swedish krona (kr)'},PLN:{s:'zł',after:true,n:'Polish złoty (zł)'}};
 let CUR='EUR';
 const cs=()=>(CURRENCIES[CUR]||CURRENCIES.EUR).s;
-function fmtEUR(v,dec=2,real){
-  const c=CURRENCIES[CUR]||CURRENCIES.EUR, t=HIDE&&!real?(v<-0.004?'−':'')+MASK:fmtNum(v,dec);
+/* money: 2 decimals for headline figures and table cells, 0 (dec=0) for KPI cards, goal tiles and sentences */
+function fmtEUR(v,dec=2,real){ return withCur(HIDE&&!real?(v<-0.004?'−':'')+MASK:fmtNum(v,dec)); }
+function withCur(t){
+  const c=CURRENCIES[CUR]||CURRENCIES.EUR;
   if(c.after) return t+' '+c.s;
   const neg=t.charAt(0)==='−'; return (neg?'−':'')+c.s+(neg?t.slice(1):t);
+}
+/* charts only, axis ticks and bar labels alike: 63,3 k €; ticks drop a ,0 (dec forces it, for a row of bar labels); under 1.000 the plain figure */
+function fmtCompact(v,dec){
+  if(Math.abs(v)<0.005) return '0';
+  if(HIDE) return '';
+  const k=Math.abs(v)>=1000, n=k?v/1000:v, d=k&&Math.abs(n)<100?(dec!=null?dec:Math.round(n*10)%10?1:0):0;
+  return withCur(fmtNum(n,d)+(k?' k':''));
 }
 /* a symbol or code in an amount that isn't the tracker's own currency: the row is flagged, never converted */
 function foreignCode(raw,own){
@@ -1149,9 +1160,12 @@ function regionCurrency(){ const rg=(((navigator.languages&&navigator.languages[
   return {GB:'GBP',UK:'GBP',IE:'EUR',US:'USD',CA:'CAD',AU:'AUD',CH:'CHF',MX:'MXN',SE:'SEK',PL:'PLN'}[rg]||'EUR'; }
 function applyCur(){ const c=S.settings&&S.settings.currency; CUR=CURRENCIES[c]?c:'EUR'; }
 function setCurrency(v){ v=CURRENCIES[v]?v:'EUR'; if(!S.canWrite) return; setSettings({currency:v}); render(); toast(L('currencySaved',fmtEUR(1234.56))); }
-const fmtCell=v=>Math.abs(v)<0.005?'–':HIDE?MASK:fmtNum(v);
-const fmtTick=v=>HIDE&&Math.abs(v)>0.004?'':fmtNum(v,0);
-function fmtPct(r,dec=1){ if(!isFinite(r)) return '–'; return fmtNum(r*100,dec)+'%'; }
+const fmtCell=v=>Math.abs(v)<0.005?DASH:HIDE?MASK:fmtNum(v);
+const fmtTick=fmtCompact;
+/* percentages: 0 decimals in KPI cards and badges, 1 in tables and indicators; a tiny share reads <0,1%, not 0,0% */
+function fmtPct(r,dec=1){ if(!isFinite(r)) return DASH; const p=r*100, min=Math.pow(10,-dec);
+  if(p!==0&&Math.abs(p)<min/2) return (p<0?'>−':'<')+fmtNum(min,dec)+'%';
+  return fmtNum(p,dec)+'%'; }
 const fmtCount=n=>fmtNum(n,0);
 function fmtDate(iso){ return iso? iso.slice(8,10)+'/'+iso.slice(5,7)+'/'+iso.slice(0,4):''; }
 function isoOf(y,m,d){
@@ -3057,7 +3071,7 @@ function drawOverviewCharts(){
     const pi=idx.map((i,p)=>ok(i,p)?A.investments.total[i]/A.income.total[i]:null);
     drawLines(ep,labels,[{values:pe,color:TCOLOR.expenses},{values:pi,color:TCOLOR.investments}],{
       label:L('shareAria',y), ref:1, refLabel:L('pct100'),
-      tip:p=>tipRows(M()[idx[p]]+' '+y,[{sw:'expenses',label:TL('expenses'),value:fmtPct(pe[p])},{sw:'investments',label:TL('investments'),value:fmtPct(pi[p])}],`<div class="tr"><span>${esc(L('kept'))}</span><b>${pe[p]==null?'–':fmtPct(1-pe[p])}</b></div>`)
+      tip:p=>tipRows(M()[idx[p]]+' '+y,[{sw:'expenses',label:TL('expenses'),value:fmtPct(pe[p])},{sw:'investments',label:TL('investments'),value:fmtPct(pi[p])}],`<div class="tr"><span>${esc(L('kept'))}</span><b>${pe[p]==null?DASH:fmtPct(1-pe[p])}</b></div>`)
     });
   }
   const ey=$('#ch-years');
@@ -3434,14 +3448,14 @@ function viewNetworth(){
       const c=goalGrowthCalc(TG,rest,left,pace), sv=Math.max(0,Math.min(rest,c.fromSaving)), gp=Math.max(0,c.gap), tt=Math.max(sv+gp,1);
       const stat=(lab,val,sub)=>`<div class="nw-stat"><span class="nw-stat-l">${esc(lab)}</span><span class="nw-stat-v">${val}</span><span class="nw-stat-s">${esc(sub)}</span></div>`;
       const txt=pace&&c.gap<=0?L('nwGoalSavingEnough'):c.tot!=null?L(!pace?'nwGrowNoPace':pace.avg<0?'nwGrowNeg':'nwGrow',fmtEUR(c.inv,0),fmtPct(c.tot,1),left>=12?fmtPct(c.yr,1):null):L('nwGoalNoInvest',fmtEUR(c.gap,0));
-      body=`<div class="nw-stats">${stat(L('nwStToGo'),fmtEUR(rest,0),L('nwStToGoSub',left))}${stat(L('nwStNeed'),fmtEUR(need,0),L('nwStNeedSub',M3()[+G.month.slice(5,7)-1],gy))}${stat(L('nwStSave'),pace?fmtEUR(pace.avg,0):'–',pace?L('nwStSaveSub',pace.n):L('nwStSaveNone'))}</div>
+      body=`<div class="nw-stats">${stat(L('nwStToGo'),fmtEUR(rest,0),L('nwStToGoSub',left))}${stat(L('nwStNeed'),fmtEUR(need,0),L('nwStNeedSub',M3()[+G.month.slice(5,7)-1],gy))}${stat(L('nwStSave'),pace?fmtEUR(pace.avg,0):DASH,pace?L('nwStSaveSub',pace.n):L('nwStSaveNone'))}</div>
         <div class="nw-split">${row(L('nwFromSavingRow'),'',sv,sv/tt,'saved',true)}${row(L('nwFromGrowthRow'),'',gp,gp/tt,'growth',true)}</div>
         <p class="nw-growth-txt">${esc(txt)}</p>
         ${foot([pace?esc(L('nwGoalFootProj',fmtEUR(TG.total+pace.avg*left,0),ymM(G.month),gy)):'',c.tot!=null&&c.gap>0?esc(L('nwGoalGrowthNote')):'',kG!==k?esc(L('nwGoalAsOf',ymIn(kG))):''])}`;
     }
     goal=`<p class="nw-goal-line">${esc(L('nwGoalLine',fmtEUR(G.amount,0),ymM(G.month),gy))}</p>
       <span class="nw-bar" role="img" aria-label="${esc(fmtPct(pr,0))}"><i class="saved" style="width:${(pr*100).toFixed(1)}%"></i></span>
-      <div class="nw-goal-cap"><span class="hint">${esc(L('nwProgress',fmtPct(pr,0),fmtEUR(TG.total,0),fmtEUR(G.amount,0)))}</span>${status}</div>
+      <div class="nw-goal-cap"><span class="hint">${esc(L('nwProgress',fmtPct(pr,0),fmtEUR(TG.total),fmtEUR(G.amount,0)))}</span>${status}</div>
       ${body}`;
   }
   const goalCard=`<section class="card nw-card"><div class="card-head"><div><h2>${esc(L('nwGoal'))}${info('nwGoal')}</h2></div>${goalBtn}</div>${goal}</section>`;
@@ -3598,15 +3612,15 @@ function accountsCard(k){
   const N=nw(), s=k?N.snaps[k]||{}:{}, prev=k?nwMonths()[nwMonths().indexOf(k)-1]:null, s0=prev?N.snaps[prev]:null, T=k?nwTotals(k):{total:0,g:{}};
   const st=k?nwState(k):null, shown=st?st.shown:N.accounts;
   const lC=` data-l="${esc(L('nwChangeCol'))}"`, lS=` data-l="${esc(L('nwShare'))}"`;   /* labels for the phone layout, where the header row is hidden */
-  const G=k&&prev?nwGains(prev,k):new Map(), gc=v=>`<td class="r ${v==null?'':v<-0.004?'down':v>0.004?'up':''}" data-l="${esc(L('nwGains'))}">${v==null?'':Math.abs(v)<0.005?'–':signed(v)}</td>`;
+  const G=k&&prev?nwGains(prev,k):new Map(), gc=v=>`<td class="r ${v==null?'':v<-0.004?'down':v>0.004?'up':''}" data-l="${esc(L('nwGains'))}">${v==null?'':Math.abs(v)<0.005?DASH:signed(v)}</td>`;
   const rows=NW_GROUPS.map(g=>{ const accs=shown.filter(a=>a.group===g); if(!accs.length) return '';
     const gg=accs.filter(a=>G.has(a.id));
-    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td><td></td>${gc(gg.length?sum(gg.map(a=>cents(G.get(a.id))))/100:null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,0):''}</td></tr>`+
+    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td><td></td>${gc(gg.length?sum(gg.map(a=>cents(G.get(a.id))))/100:null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,1):''}</td></tr>`+
       accs.map(a=>{ const v=s[a.id], v0=s0?nwBefore(a,s0,prev,k):null, d=v!=null&&v0!=null?r2(v-v0):null;
         return `<tr><td class="an">${esc(a.name)}${a.risk?` <span class="chip-risk">${esc(L('nwRisk'))}</span>`:''}</td><td class="r">${v!=null?fmtEUR(v):`<span class="missing">${esc(L('nwNoFigure'))}</span>`}</td>
-          <td class="r ${d==null?'':d<-0.004?'down':d>0.004?'up':''}"${lC}>${d==null?'':Math.abs(d)<0.005?'–':signed(d)}</td>${gc(G.has(a.id)?G.get(a.id):null)}<td class="r"${lS}>${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
+          <td class="r ${d==null?'':d<-0.004?'down':d>0.004?'up':''}"${lC}>${d==null?'':Math.abs(d)<0.005?DASH:signed(d)}</td>${gc(G.has(a.id)?G.get(a.id):null)}<td class="r"${lS}>${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
   const dT=k&&prev?r2(T.total-nwTotals(prev).total):null;
-  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?'–':signed(dT)}</td>${gc(G.size?sum([...G.values()].map(cents))/100:null)}<td class="r"${lS}>${T.total>0?fmtPct(1,0):''}</td></tr></tfoot>`:'';
+  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?DASH:signed(dT)}</td>${gc(G.size?sum([...G.values()].map(cents))/100:null)}<td class="r"${lS}>${T.total>0?fmtPct(1,1):''}</td></tr></tfoot>`:'';
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
       ${S.canWrite?`<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button>`:''}</div>
     <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
@@ -3780,8 +3794,8 @@ function drawNwChart(){
       if(i>0) s+=`<line class="gl" x1="${(m.l+band*i).toFixed(1)}" x2="${(m.l+band*i).toFixed(1)}" y1="${m.t}" y2="${H-4}"/>`;
       s+=`<text class="tk nw-yr" x="${(m.l+band*(i+j)/2).toFixed(1)}" y="${H-6}" text-anchor="middle">${yr}</text>`; i=j; } }
   ms.forEach((k,i)=>{
-    const mi=+k.slice(5,7)-1, lab=multi?(band<22?M3()[mi].slice(0,1):M3()[mi]):ymLabel(k,false), lx=(m.l+band*i+band/2).toFixed(1);
-    if(multi?(band>=22||mi%step===0):(band>=44||i%step===0)) s+=`<text class="tk${i===selI?' nw-sel-lbl':''}" x="${lx}" y="${multi?H-24:H-8}" text-anchor="middle">${esc(!multi&&band<44?lab.slice(0,3):lab)}</text>`;
+    const mi=+k.slice(5,7)-1, lab=multi&&band<22?M3()[mi].slice(0,1):M3()[mi], lx=(m.l+band*i+band/2).toFixed(1);
+    if(multi?(band>=22||mi%step===0):(band>=44||i%step===0)) s+=`<text class="tk${i===selI?' nw-sel-lbl':''}" x="${lx}" y="${multi?H-24:H-8}" text-anchor="middle">${esc(lab)}</text>`;
     const t=TF[i]; if(!t) return;
     /* a projected month: the same stack, greyed (nw-fc), its total marked ≈ */
     const fc=!T[i], inc=!fc&&nwIncomplete(k); if(fc||inc) s+=`<g class="${fc?'nw-fc':'nw-inc'}">`;
@@ -3790,7 +3804,7 @@ function drawNwChart(){
     segs.forEach((z,j)=>{ const yt=y(acc+z.v), yb=y(acc); acc+=z.v;
       s+=j===segs.length-1?`<path d="${colPath(x0,yt,bw,yb-yt,4)}" style="fill:var(--g-${z.g})"/>`:`<rect x="${x0}" y="${yt.toFixed(1)}" width="${bw}" height="${Math.max(0,yb-yt).toFixed(1)}" style="fill:var(--g-${z.g})"/>`; });
     if(fc||inc) s+='</g>';
-    const net=t.total; if(band>44&&!HIDE) lbls+=`<text class="lbl nw-lbl${fc||inc?' inc':''}" x="${(x0+bw/2).toFixed(1)}" y="${(y(acc)-6).toFixed(1)}" text-anchor="middle">${fc?'≈':''}${fmtNum(net/1000,Math.abs(net)>=100000?0:1)}k</text>`;
+    const net=t.total; if(band>44&&!HIDE) lbls+=`<text class="lbl nw-lbl${fc||inc?' inc':''}" x="${(x0+bw/2).toFixed(1)}" y="${(y(acc)-6).toFixed(1)}" text-anchor="middle">${fc?'≈':''}${fmtCompact(net,1)}</text>`;
   });
   /* trend line over the bars (dotted over the projected months), the total labels on top of it */
   if(fit){ const xo=i=>(m.l+band*i+band/2).toFixed(1); s+=`<line class="trend" x1="${xo(fit.x0)}" y1="${y(fit.at(fit.x0)).toFixed(1)}" x2="${xo(fit.x1)}" y2="${y(fit.at(fit.x1)).toFixed(1)}"/>`;
@@ -3824,7 +3838,7 @@ function modalNwSnap(){
   const opts=[]; for(let x=ymNow(),i=0;i<36;i++,x=ymAdd(x,-1)) opts.push(x); if(!opts.includes(k)) opts.push(k);
   const field=a=>{ const pv=prev&&N.snaps[prev][a.id]!=null?N.snaps[prev][a.id]:null, zc=closed.get(a.id);
       return `<div class="nw-row"><label for="nwv-${a.id}">${esc(a.name)}${a.risk?` <span class="chip-risk">${esc(L('nwRisk'))}</span>`:''}</label>
-        <input type="text" id="nwv-${a.id}" data-acc="${a.id}" inputmode="decimal" autocomplete="off" value="${esc(vals[a.id]||'')}" class="${carried&&!m.touched?.[a.id]&&vals[a.id]?'carried':''}" placeholder="–">
+        <input type="text" id="nwv-${a.id}" data-acc="${a.id}" inputmode="decimal" autocomplete="off" value="${esc(vals[a.id]||'')}" class="${carried&&!m.touched?.[a.id]&&vals[a.id]?'carried':''}" placeholder="—">
         ${zc?`<span class="last">${esc(L('nwClosedSince',ymLabel(zc,true)))}</span>`:pv!=null&&(has||!carried)?`<span class="last">${esc(L('nwBefore',fmtEUR(pv)))}</span>`:''}</div>`; };
   const body=NW_GROUPS.map(g=>{ const accs=N.accounts.filter(a=>a.group===g&&!closed.has(a.id)); if(!accs.length) return '';
     return `<div class="nw-fgrp">${gSw(g)} ${esc(L('g_'+g))}</div>`+accs.map(field).join(''); }).join('')+
@@ -4539,14 +4553,14 @@ function viewYearly(){
       return `<td class="${Math.abs(v)<0.005?'zero':''}${cnt?' click':''}${pc(i)}"${cnt?` data-action="drill" data-t="${t}" data-c="*" data-m="${i}" tabindex="0"`:''}>${flag?`<span class="flagmark" title="${esc(L('bigMonth'))}">${ICON.flag}</span>`:''}${fmtCell(v)}</td>`; }).join('')}<td class="tot">${fmtCell(r2(sum(tot)))}</td>${multi?`<td class="tot">${fmtCell(r2(sum(ALL[t].total)))}</td>`:''}</tr>`;
     if(t!=='income'){
       const inc=A.income.total, sign=t==='expenses'?-1:1;
-      const pct=(a,b)=>b?fmtPct(sign*a/b):'–';
-      body+=`<tr class="prop"><th class="rh" scope="row">${esc(L('pctIncome'))}</th>${tot.map((v,i)=>`<td class="${pc(i).trim()}">${Math.abs(v)<0.005?'–':pct(v,inc[i])}</td>`).join('')}<td class="tot">${pct(sum(tot),sum(inc))}</td>${multi?`<td class="tot">${pct(sum(ALL[t].total),sum(ALL.income.total))}</td>`:''}</tr>`;
+      const pct=(a,b)=>b?fmtPct(sign*a/b):DASH;
+      body+=`<tr class="prop"><th class="rh" scope="row">${esc(L('pctIncome'))}</th>${tot.map((v,i)=>`<td class="${pc(i).trim()}">${Math.abs(v)<0.005?DASH:pct(v,inc[i])}</td>`).join('')}<td class="tot">${pct(sum(tot),sum(inc))}</td>${multi?`<td class="tot">${pct(sum(ALL[t].total),sum(ALL.income.total))}</td>`:''}</tr>`;
     }
   }
   const sv=A.savings, inc=A.income.total;
   body+=`<tr class="sec"><th colspan="${colsN}">${esc(L('savings'))}</th></tr>`;
   body+=`<tr class="savings"><th class="rh" scope="row">${esc(L('totalSavings'))}</th>${sv.map((v,i)=>`<td class="${pc(i).trim()}">${fmtCell(v)}</td>`).join('')}<td class="tot">${fmtCell(r2(sum(sv)))}</td>${multi?`<td class="tot">${fmtCell(r2(sum(ALL.savings)))}</td>`:''}</tr>`;
-  body+=`<tr class="prop"><th class="rh" scope="row">${esc(L('pctIncome'))}</th>${sv.map((v,i)=>`<td class="${pc(i).trim()}">${inc[i]?fmtPct(v/inc[i]):'–'}</td>`).join('')}<td class="tot">${sum(inc)?fmtPct(sum(sv)/sum(inc)):'–'}</td>${multi?`<td class="tot">${sum(ALL.income.total)?fmtPct(sum(ALL.savings)/sum(ALL.income.total)):'–'}</td>`:''}</tr>`;
+  body+=`<tr class="prop"><th class="rh" scope="row">${esc(L('pctIncome'))}</th>${sv.map((v,i)=>`<td class="${pc(i).trim()}">${inc[i]?fmtPct(v/inc[i]):DASH}</td>`).join('')}<td class="tot">${sum(inc)?fmtPct(sum(sv)/sum(inc)):DASH}</td>${multi?`<td class="tot">${sum(ALL.income.total)?fmtPct(sum(ALL.savings)/sum(ALL.income.total)):DASH}</td>`:''}</tr>`;
   return `<div class="grid-head">
       <div><h2 class="sec-title">${esc(L('yMonthByMonth',y))}${info('yTable')}</h2><p class="hint">${esc(L('yHint'))}</p></div>
       <div class="heat-legend">
@@ -5611,11 +5625,11 @@ function modalRestore(){
   const d=m.data, n=countDataset(d), ms=Object.keys(d.months).filter(k=>TKEYS.some(t=>d.months[k][t].length)).sort();
   const ml=k=>M3()[+k.slice(5,7)-1]+' '+k.slice(0,4);
   const a=ms[0], z=ms[ms.length-1];
-  const span=!ms.length?'–':ms.length===1?ml(a):a.slice(0,4)===z.slice(0,4)?M3()[+a.slice(5,7)-1]+'–'+ml(z):ml(a)+' – '+ml(z);
+  const span=!ms.length?DASH:ms.length===1?ml(a):a.slice(0,4)===z.slice(0,4)?M3()[+a.slice(5,7)-1]+'–'+ml(z):ml(a)+' – '+ml(z);
   return `${mHead(esc(L('restoreCheck')),esc(m.fileName||''))}
   <div class="m-body">
     <div class="rs-sum">
-      <div><span class="eyebrow">${esc(L('bkSaved'))}</span><b>${d.savedAt&&/^\d{4}-\d{2}-\d{2}/.test(d.savedAt)?fmtDate(d.savedAt.slice(0,10)):'–'}</b></div>
+      <div><span class="eyebrow">${esc(L('bkSaved'))}</span><b>${d.savedAt&&/^\d{4}-\d{2}-\d{2}/.test(d.savedAt)?fmtDate(d.savedAt.slice(0,10)):DASH}</b></div>
       <div><span class="eyebrow">${esc(L('bkTx'))}</span><b>${fmtCount(n)}</b></div>
       <div><span class="eyebrow">${esc(L('bkMonths'))}</span><b>${esc(span)}</b></div>
     </div>
