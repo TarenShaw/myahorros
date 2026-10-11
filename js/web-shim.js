@@ -77,6 +77,7 @@ const TX={
     landSub:'A free, simple way to follow what you earn, spend and own. Your figures stay on your device or in your own Google Drive.',
     landNoSignup:'No account. No sign-up. Nothing leaves your device unless you choose.',
     landChip:'Free · No sign-up · Private',
+    landCalls:['Your data stays on your device','Import from Excel','Read statements with AI'],
     landShotAlt:'The Net worth page with example figures: a total of 39.065 € and a chart of month-end totals that grows each month, with the last four months of the year in grey as a forecast.',
     landFeatT:'Everything in one place', landFeatSub:'Made for people who just want to know how they’re doing. No finance words needed.',
     landF:[['Income and expenses','Add what comes in and what goes out, by hand or with your bank’s file. It sorts everything into categories and puts each month side by side.'],
@@ -170,6 +171,7 @@ const TX={
     landSub:'Una forma gratuita y sencilla de seguir lo que ganas, gastas y tienes. Tus cifras se quedan en tu dispositivo o en tu propio Google Drive.',
     landNoSignup:'Sin cuenta. Sin registro. Nada sale de tu dispositivo si tú no quieres.',
     landChip:'Gratis · Sin registro · Privado',
+    landCalls:['Tus datos se quedan en tu dispositivo','Importa desde Excel','Lee extractos con IA'],
     landShotAlt:'La página de Patrimonio con cifras de ejemplo: un total de 39.065 € y un gráfico de totales a fin de mes que crece cada mes, con los cuatro últimos meses del año en gris como previsión.',
     landFeatT:'Todo en un mismo sitio', landFeatSub:'Pensado para quien solo quiere saber cómo va. Sin palabras de finanzas.',
     landF:[['Ingresos y gastos','Apunta lo que entra y lo que sale, a mano o con el archivo de tu banco. Lo ordena todo en categorías y pone cada mes al lado del anterior.'],
@@ -481,22 +483,29 @@ function landing(known){
       const cta=known?`<button type="button" class="btn primary" data-x="open">${esc(t('landOpen'))}</button>`:`<button type="button" class="btn" data-x="demo">${esc(t('landDemo'))}</button><button type="button" class="btn primary" data-x="start">${esc(t('landStart'))}</button>`;
       const ico=['<path d="M4 16.5V10M10 16.5V4M16 16.5V8"/>','<path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/>','<path d="M3 14.5l4.5-4.5 3 3L17 6.5"/><path d="M12.5 6.5H17V11"/>','<path d="M3 15.5l3.5-3.5 3 2 2.5-3"/><path d="M14 9.5l3.5-3.5" stroke-dasharray="1.2 2.6"/><path d="M3 18h14"/>'],
         shield='<path d="M10 2.5l6 2.5v4.5c0 4-2.6 6.8-6 8-3.4-1.2-6-4-6-8V5z"/><path d="M7.5 10l2 2 3.5-4"/>', svg=(d,n)=>`<svg viewBox="0 0 20 20" width="${n}" height="${n}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
-      /* the product shot (made by tools/landing-shot.js from made-up data) in the tracker's light or dark look */
-      const th=document.documentElement.getAttribute('data-ybt-theme'), dark=th?th==='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);
+      /* the product shots (made by tools/landing-shot.js from made-up data) in the tracker's light or dark look */
+      const th=document.documentElement.getAttribute('data-ybt-theme'), dark=th?th==='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches), shot=n=>`images/landing-${n}-${dark?'dark':'light'}.webp`;
+      const callIco=[shield,'<rect x="3" y="3.5" width="14" height="13" rx="2"/><path d="M3 8h14M8 8v8.5"/>','<path d="M10 3l1.6 4.4L16 9l-4.4 1.6L10 15l-1.6-4.4L4 9l4.4-1.6z"/>'];
       el.innerHTML=`<header class="wl-top"><span class="wl-brand">MyAhorros</span>
           <div class="wl-top-r"><div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>
           ${cta}</div></header>
         <main>
-          <section class="wl-hero"><div class="wl-hero-text"><p class="wl-chip">${esc(t('landChip'))}</p><h1>${esc(t('landH1'))}</h1><p class="wl-lead">${esc(t('landSub'))}</p>
+          <section class="wl-hero"><div class="wl-stage"><div class="wl-hero-text"><p class="wl-chip">${esc(t('landChip'))}</p><h1>${esc(t('landH1'))}</h1><p class="wl-lead">${esc(t('landSub'))}</p>
             <div class="wl-cta">${cta}</div>
             <p class="wl-fine">${esc(t('landNoSignup'))}</p></div>
-            <figure class="wl-shot"><picture><source type="image/webp" srcset="images/landing-hero-${dark?'dark':'light'}.webp"><img src="images/landing-hero.jpg" alt="${esc(t('landShotAlt'))}" width="1280" height="1010" fetchpriority="high" decoding="async"></picture></figure></section>
+            <figure class="wl-frame"><div class="wl-glow" aria-hidden="true"></div><div class="wl-view"><div class="wl-pages">
+              <img src="${shot('networth')}" alt="${esc(t('landShotAlt'))}" width="1280" height="853" fetchpriority="high" decoding="async">
+              <img src="${shot('overview')}" alt="" width="1280" height="1028" loading="lazy" decoding="async">
+              <img src="${shot('yearly')}" alt="" width="1280" height="900" loading="lazy" decoding="async"></div></div></figure>
+            <ul class="wl-calls">${t('landCalls').map((c,i)=>`<li class="wl-call c${i+1}"><span class="wl-ico">${svg(callIco[i],20)}</span>${esc(c)}</li>`).join('')}</ul></div></section>
+          <div class="wl-body">
           <section class="wl-feats wl-reveal"><h2>${esc(t('landFeatT'))}</h2><p class="wl-sub">${esc(t('landFeatSub'))}</p>
             <div class="wl-grid">${F.map((f,i)=>`<article class="wl-card"><span class="wl-ico">${svg(ico[i],22)}</span><h3>${esc(f[0])}</h3><p>${esc(f[1])}</p></article>`).join('')}</div></section>
           <section class="wl-safe wl-reveal"><span class="wl-ico big">${svg(shield,30)}</span><div><h2>${esc(t('landSafeT'))}</h2><p>${esc(t('landSafe'))}</p></div></section>
           <section class="wl-how wl-reveal"><h2>${esc(t('landHow'))}</h2><ol>${H.map((h,i)=>`<li><b>${esc(h[0])}</b><span>${esc(h[1])}</span></li>`).join('')}</ol></section>
           <section class="wl-end wl-reveal"><h2>${esc(t('landEnd'))}</h2><p>${esc(t('landEndSub'))}</p>
             <div class="wl-cta">${cta}</div></section>
+          </div>
         </main>
         <footer class="wl-foot"><span class="wl-brand">MyAhorros</span><a href="privacy.html">${esc(t('landPrivacy'))}</a><span>© ${new Date().getFullYear()}</span></footer>`;
       /* sections fade in as they scroll into view (not for people who asked for less motion) */
@@ -505,9 +514,21 @@ function landing(known){
       const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }),{root:el,threshold:.15});
       secs.forEach(x=>io.observe(x));
     };
-    draw(); document.body.appendChild(el); document.body.classList.add('web-landing-on');
+    /* the hero's scroll progress --wl-p (0-1, read by web.css): CSS drives it where scroll-driven animations exist,
+       this sets it elsewhere. Phones and reduced motion get a still picture, so nothing runs there. */
+    const motion=window.matchMedia&&matchMedia('(min-width:768px) and (prefers-reduced-motion:no-preference)'), cssDriven=!!(window.CSS&&CSS.supports&&CSS.supports('animation-timeline','view()'));
+    const prog=()=>{ const h=el.querySelector('.wl-hero'); if(!h||cssDriven||!motion||!motion.matches) return;
+      const r=h.getBoundingClientRect(), d=r.height-el.clientHeight; h.style.setProperty('--wl-p',d>0?Math.min(1,Math.max(0,-r.top/d)).toFixed(4):'0'); };
+    let raf=0;
+    el.addEventListener('scroll',()=>{ if(raf) return; raf=requestAnimationFrame(()=>{ raf=0;
+      /* the later pages inside the frame load once scrolling starts (clipped by the frame, lazy loading alone would wait until they show) */
+      if(motion&&motion.matches) el.querySelectorAll('.wl-pages img[loading=lazy]').forEach(i=>{ i.loading='eager'; });
+      prog(); }); },{passive:true});
+    /* the hero's buttons fade out as the preview covers them: tabbing back to them scrolls back up */
+    el.addEventListener('focusin',e=>{ if(motion&&motion.matches&&e.target.closest('.wl-hero-text')&&el.scrollTop>0) el.scrollTop=0; });
+    draw(); document.body.appendChild(el); document.body.classList.add('web-landing-on'); prog();
     el.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
-      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); const y=el.scrollTop; draw(); el.scrollTop=y; return; }
+      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); const y=el.scrollTop; draw(); el.scrollTop=y; prog(); return; }
       if(!b.dataset.x) return; el.remove(); document.body.classList.remove('web-landing-on'); resolve(b.dataset.x); });
   });
 }

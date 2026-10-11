@@ -32,11 +32,18 @@ function demo() {
       { id: 'f', name: 'Index fund', group: 'invest' }, { id: 'p', name: 'Pension plan', group: 'pension' }], snaps, goal: { amount: 30000, month: '2027-12' } } } });
 }
 
+/* the part of each tab to keep, in page pixels: from the top of the first section named (or matched by a selector) to the bottom of the last (or + height) */
+const SHOTS = [
+  { tab: 'networth', from: null, to: 'Over time' },
+  { tab: 'overview', from: 'Saved in', to: 'By category' },
+  { tab: 'yearly', from: '#view > *', height: 900 }
+];
+
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
   const browser = await chromium.launch({ channel: 'msedge' });
   for (const scheme of ['dark', 'light']) {
-    const ctx = await browser.newContext({ viewport: { width: 1280, height: 1010 }, deviceScaleFactor: 2, colorScheme: scheme });
+    const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2, colorScheme: scheme });
     await ctx.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
     const p = await ctx.newPage();
     await p.goto(START, { waitUntil: 'load' });
@@ -44,23 +51,34 @@ function demo() {
     await p.goto(START, { waitUntil: 'load' });
     await p.click('.web-landing .wl-hero [data-x=open]');
     await p.waitForFunction(() => window.__ybtWeb.store && Object.keys(window.__ybtWeb.store.months).length);
-    await p.click('#tab-networth');
-    /* category names are the defaults, so nothing waits to be sorted */
-    /* the year buttons: show 2026 only (Jan-Aug figures, Sep-Dec forecast) */
-    const y26 = await p.$('[data-action=nw-year][data-y="2026"]'); if (y26 && (await y26.getAttribute('aria-pressed')) !== 'true') await y26.click();
     await p.addStyleTag({ content: '#view .notice,.toast,.guide,.guide-bar,.web-bar,.web-foot{display:none!important}' });
-    await p.mouse.move(0, 0); await p.waitForTimeout(600);
-    const png = await p.screenshot({ type: 'png' });
-    /* WebP from the browser itself (no image tools needed), 2200 px wide */
-    const webp = await p.evaluate(async b64 => {
-      const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
-      const c = document.createElement('canvas'); c.width = 2200; c.height = Math.round(img.height * 2200 / img.width);
-      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-      const blob = await new Promise(r => c.toBlob(r, 'image/webp', 0.8));
-      return btoa(String.fromCharCode(...new Uint8Array(await blob.arrayBuffer())));
-    }, png.toString('base64'));
-    fs.writeFileSync(path.join(OUT, `landing-hero-${scheme}.webp`), Buffer.from(webp, 'base64'));
-    if (scheme === 'dark') await p.screenshot({ type: 'jpeg', quality: 72, path: path.join(OUT, 'landing-hero.jpg') });
+    for (const s of SHOTS) {
+      await p.click('#tab-' + s.tab);
+      /* the year buttons: show 2026 only (Jan-Aug figures, Sep-Dec forecast) */
+      const y26 = await p.$('[data-action=nw-year][data-y="2026"]'); if (y26 && (await y26.getAttribute('aria-pressed')) !== 'true') await y26.click();
+      await p.mouse.move(0, 0); await p.waitForTimeout(600);
+      const clip = await p.evaluate(s => {
+        /* the demo stops in August, so the reminders about this month only add noise */
+        const secs = [...document.querySelectorAll('#view section, #view .card')], named = w => w[0] === '#' ? document.querySelector(w) : secs.find(x => (x.textContent || '').trim().toLowerCase().startsWith(w.toLowerCase()));
+        for (const w of ['Monthly check', 'This month']) { const x = named(w); if (x) x.style.display = 'none'; }
+        const a = s.from ? named(s.from) : null, b = s.to ? named(s.to) : null;
+        if ((s.from && !a) || (s.to && !b)) throw new Error('section not found: ' + (a ? s.to : s.from));
+        const top = a ? a.getBoundingClientRect().top + scrollY - 16 : 0, bottom = b ? b.getBoundingClientRect().bottom + scrollY + 20 : top + s.height;
+        return { x: 0, y: Math.round(top), width: 1280, height: Math.round(bottom - top) };
+      }, s);
+      const png = await p.screenshot({ type: 'png', fullPage: true, clip });
+      /* WebP from the browser itself (no image tools needed), 2200 px wide */
+      const webp = await p.evaluate(async b64 => {
+        const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
+        const c = document.createElement('canvas'); c.width = 2200; c.height = Math.round(img.height * 2200 / img.width);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        const blob = await new Promise(r => c.toBlob(r, 'image/webp', 0.8));
+        const u = new Uint8Array(await blob.arrayBuffer()); let bin = ''; for (let i = 0; i < u.length; i += 0x8000) bin += String.fromCharCode(...u.subarray(i, i + 0x8000));
+        return btoa(bin);
+      }, png.toString('base64'));
+      fs.writeFileSync(path.join(OUT, `landing-${s.tab}-${scheme}.webp`), Buffer.from(webp, 'base64'));
+      console.log(s.tab, scheme, clip.height + ' px tall');
+    }
     await ctx.close();
   }
   await browser.close();
