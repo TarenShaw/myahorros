@@ -44,7 +44,7 @@ const data = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, c
   assert.strictEqual(nw.approx, 11 - last, '≈ labels');
   assert.strictEqual(nw.labels, 12, 'month labels');
   assert.ok(nw.fcLine, 'dotted trend over the forecast');
-  assert.match(await p.innerText('#view'), /Greyed months are projected from your last \d+ months\./);
+  assert.match(await p.innerText('#view'), /Shaded months are estimates based on your last \d+ months\./);
   const box = await p.locator('#ch-nw svg').boundingBox();
   await p.mouse.move(box.x + box.width - 30, box.y + box.height / 2);
   assert.match(await p.innerText('#tip'), /Forecast[\s\S]*A projection/);
@@ -101,7 +101,7 @@ const data = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, c
   await p.click('[data-action=mm-table][data-t=expenses]');
   const avgExp = Object.values(months).reduce((a, mo) => a - mo.expenses.reduce((x, r) => x + r.amount, 0), 0) / Object.keys(months).length;
   assert.match(await p.innerText('#view'), new RegExp('On average [^0-9]*' + Math.round(avgExp) + '[^0-9]'), 'subtitle average');
-  assert.match(await p.innerText('#view'), /Greyed bars are projected from your last \d+ months/);
+  assert.match(await p.innerText('#view'), /Shaded months are estimates based on your last \d+ months/);
   await p.locator('#ch-monthly').scrollIntoViewIfNeeded();
   const box4 = await p.locator('#ch-monthly svg').boundingBox();
   await p.mouse.move(box4.x + box4.width - 20, box4.y + box4.height - 40);
@@ -115,7 +115,7 @@ const data = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, c
     for (const b of fc) { const r = b.getBBox(); top[b.dataset.i] = r.height; } return top; });
   const doy = m => Math.round((new Date(Y, m, 1) - new Date(Y, 0, 1)) / 864e5);
   for (let m = CM + 1; m < 12; m++) assert.ok((firsts[doy(m)] || 0) > 20, 'salary bar on the 1st of month ' + (m + 1));
-  assert.match(await p.innerText('#view'), /Greyed days are projected/);
+  assert.match(await p.innerText('#view'), /Shaded days are estimates/);
   if (SHOTS) await p.locator('#ch-monthly').screenshot({ path: SHOTS + '/days-income.png' });
   console.log('5. Days + Income: salary projected on the 1st');
   assert.deepStrictEqual(errs, []);

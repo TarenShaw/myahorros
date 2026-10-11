@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+qFnbm2QVzrALujNqxKnXHGRLQ2VlcpFSyFpzV4H18M=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-v17Zm2x3dAjMGqXnttFut3rqL4vtBuhoLXACYJJv6po=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -357,6 +357,8 @@ select{padding-right:var(--s32)}
 .two{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:var(--s24);align-items:stretch}
 .legend{display:flex;flex-wrap:wrap;gap:var(--s8) var(--s16);font-size:var(--fs-sm);color:var(--ink-2)}
 .legend span{display:inline-flex;align-items:center;gap:var(--s8)}
+.ch-end{display:grid;justify-items:end;gap:var(--s8);margin-left:auto}
+@media (max-width:640px){.ch-end{justify-items:start;margin-left:0}}
 .lkey{display:inline-block;width:14px;height:2px;border-radius:var(--r-mark)}
 .chart{position:relative;width:100%;min-height:200px}
 .chart svg{display:block;max-width:100%;overflow:visible}
@@ -369,7 +371,7 @@ select{padding-right:var(--s32)}
 .chart .tk{fill:var(--muted);font:var(--fs-sm) var(--f-body);font-variant-numeric:tabular-nums}
 .chart .lbl{fill:var(--ink-2);font:600 var(--fs-sm) var(--f-body);font-variant-numeric:tabular-nums}
 .chart .hl{fill:var(--surface-3);opacity:0;transition:opacity .12s}
-.chart .sel{fill:var(--accent-soft)}
+.chart .sel{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1;stroke-dasharray:3 3}
 .chart path.bar{transition:opacity .1s}
 .chart path.bar.dim{opacity:.4}
 .chart path.bar.partial{opacity:.5}
@@ -397,7 +399,7 @@ select{padding-right:var(--s32)}
 .hb-label .rank{display:inline-block;min-width:20px;font:500 var(--fs-sm) var(--f-mono);color:var(--muted)}
 .hb-rest{display:flex;flex-wrap:wrap;gap:var(--s8) var(--s16);align-items:center;justify-content:space-between;margin-top:var(--s12);padding-top:var(--s12);border-top:1px solid var(--line);font-size:var(--fs-meta);color:var(--ink-2)}
 .hb-rest b{color:var(--ink);font-variant-numeric:tabular-nums}
-.chart .trend{stroke:var(--ink);stroke-width:2;stroke-dasharray:7 5;stroke-linecap:round;opacity:.75}
+.chart .trend{stroke:var(--ink);stroke-width:2;stroke-dasharray:7 5;stroke-linecap:round;opacity:.45}
 .lkey.trend{background:none;border-top:2px dashed var(--ink-2);height:0;width:18px}
 
 /* tooltip */
@@ -841,7 +843,6 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 .nw-faded ul{margin:0 0 var(--s8);padding-left:var(--s16);display:grid;gap:3px}
 .nw-faded .linkish{font-size:var(--fs-sm);margin-left:var(--s4)}
 #tip .tr.warn span{color:var(--warn-ink);font-weight:600;white-space:normal;max-width:260px}
-.nw-legend{margin:calc(-1*var(--s4)) 0 var(--s8)}
 .chart .tk.nw-yr{font-weight:700;fill:var(--ink-2)}
 .nwimp-steps{list-style:none;padding:0;margin:0;display:grid;gap:var(--s16);counter-reset:st}
 .nwimp-steps li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:var(--s4) var(--s12);counter-increment:st}
@@ -1944,7 +1945,6 @@ const STR={
   nwGainsTip:['Gains: what an account earned you. It is the change since last month, minus the money you put in, plus interest, dividends, capital gains or rent it paid out to you. Money put in or taken out comes from your Investments rows that contain the account’s statement words (Edit accounts) or, failing that, its name; payouts come from income rows with the account’s statement words or name, in a category ticked under “Interest, dividends and gains” on Net worth. If a dividend stayed inside the account, don’t also record it as income, or it counts twice. Cash accounts show only the interest they paid you. A row that matches no account, or fits two accounts equally well, isn’t counted for any account, so it shows up as gain: use “Link them to accounts” under the table to fix it. A row that says pension goes to a Retirement account. The Gains total is the same number as Markets, interest and gains in What changed.','Ganancias: lo que te ha hecho ganar una cuenta. Es el cambio desde el mes anterior, menos el dinero que aportaste, más los intereses, dividendos, plusvalías o alquiler que te pagó. Lo aportado o retirado sale de tus filas de Inversiones que contienen las palabras del extracto de la cuenta (Editar cuentas) o, si no, su nombre; los cobros, de los ingresos con las palabras del extracto o el nombre de la cuenta, en una categoría marcada en “Intereses, dividendos y plusvalías” de Patrimonio. Si un dividendo se quedó dentro de la cuenta, no lo apuntes también como ingreso o contará dos veces. Las cuentas de efectivo solo muestran los intereses que te pagaron. Una fila que no encaja con ninguna cuenta, o que encaja igual de bien con dos, no cuenta para ninguna y se muestra como ganancia: usa «Vincularlas a sus cuentas» debajo de la tabla para corregirlo. Una fila que dice pensión va a una cuenta de Jubilación. El total de Ganancias es la misma cifra que Mercados, intereses y plusvalías en Qué ha cambiado.'],
   nwLaterHero:[n=>`No figure yet this month for ${n}: ${n.includes(',')||n.includes(' and ')?'their':'its'} first figure comes later, so the total may be low.`,n=>`Sin cifra este mes para ${n}: su primera cifra es posterior, así que el total puede quedarse corto.`],
   nwFcTag:['Forecast','Previsión'],
-  nwFcNote:[n=>`Greyed months are projected from your last ${n===1?'month, so they stay flat':n+' months'}.`,n=>`Los meses en gris son una previsión a partir de ${n===1?'tu único mes, así que no cambian':'tus últimos '+n+' meses'}.`],
   nwFcHow:[n=>n===1?'A projection, not a figure you entered. With only one month of figures so far, it stays flat.':`A projection, not a figure you entered: each group carries on from its last month-end at its typical monthly change over your last ${n} months (the middle value, so one unusual month doesn’t skew it).`,
     n=>n===1?'Una previsión, no una cifra que hayas puesto. Con un solo mes de cifras, se queda igual.':`Una previsión, no una cifra que hayas puesto: cada grupo sigue desde su último fin de mes con su cambio mensual típico de tus últimos ${n} meses (el valor del medio, para que un mes raro no la desvíe).`],
   nwFaded:['Faded months are missing figures, so they look lower than they were:','Los meses atenuados no tienen todas las cifras, así que parecen más bajos de lo que fueron:'],
@@ -2074,8 +2074,8 @@ const STR={
   projTag:['Projected','Previsto'], soFarLbl:['So far','Hasta hoy'], projRest:['Projected rest of the month','Previsto para el resto del mes'], monthTotal:['Month total','Total del mes'],
   mmFcHow:[(n,se)=>n===1?'A projection, not real data. With only one month so far, it repeats that month.':`A projection, not real data: a typical month from your last ${n} months (the middle value, so one unusual month doesn’t skew it), plus the recent trend, eased off${se?', mixed with the same month last year':''}.`,
     (n,se)=>n===1?'Una previsión, no datos reales. Con un solo mes hasta ahora, repite ese mes.':`Una previsión, no datos reales: un mes típico de tus últimos ${n} meses (el valor del medio, para que un mes raro no lo desvíe), más la tendencia reciente, suavizada${se?', mezclado con el mismo mes del año pasado':''}.`],
-  mmFcNote:[n=>`Greyed bars are projected from your last ${n===1?'month':n+' months'}.`,n=>`Las barras en gris son una previsión a partir de ${n===1?'tu único mes':'tus últimos '+n+' meses'}.`],
-  mmFcDays:[n=>`Greyed days are projected from your last ${n===1?'month':n+' months'}: things that repeat every month (like pay or rent) on their usual day, the rest spread over the week the way it usually goes.`,n=>`Los días en gris son una previsión a partir de ${n===1?'tu único mes':'tus últimos '+n+' meses'}: lo que se repite cada mes (como la nómina o el alquiler) en su día habitual y el resto repartido por la semana como suele ir.`],
+  fcNote:[n=>`Shaded months are estimates based on your last ${n===1?'month':n+' months'}.`,n=>`Los meses sombreados son estimaciones a partir de ${n===1?'tu último mes':'tus últimos '+n+' meses'}.`],
+  mmFcDays:[n=>`Shaded days are estimates based on your last ${n===1?'month':n+' months'}: things that repeat every month (like pay or rent) on their usual day, the rest spread over the week the way it usually goes.`,n=>`Los días sombreados son estimaciones a partir de ${n===1?'tu último mes':'tus últimos '+n+' meses'}: lo que se repite cada mes (como la nómina o el alquiler) en su día habitual y el resto repartido por la semana como suele ir.`],
   dayRec:[v=>`${v} (every month)`,v=>`${v} (cada mes)`],
   dayEst_expenses:['Estimated everyday spending','Gasto diario estimado'], dayEst_income:['Estimated other income','Otros ingresos estimados'], dayEst_investments:['Estimated other investing','Otras inversiones estimadas'],
   partialNote:[m=>`${m} is still in progress, so it’s left out of the averages and the trend line.`,m=>`${m} aún no ha terminado, así que no cuenta en las medias ni en la línea de tendencia.`],
@@ -2778,12 +2778,12 @@ function viewOverview(){
     ${Y.inc>0?'':`<section class="card ov-first"><h2>${esc(L('ovFirstTitle'))}</h2><p class="sub">${esc(L('ovFirstText'))}</p>${S.canWrite?`<button class="btn primary" type="button" data-action="guide-income">${esc(L('ovAddIncome'))}</button>`:''}</section>`}
     <section class="card">
       <div class="card-head"><div><h2>${esc(L('monthByMonth'))}${info('ovMonthly')}</h2><p class="sub">${esc(mmSummary(A))} ${esc(L('clickBar'))}</p></div>
-        <div class="ctrls"><div class="seg" role="group" aria-label="${esc(L('show'))}"><button data-action="mm-table" data-t="all" aria-pressed="${mmT==='all'}">${esc(L('all'))}</button>${TKEYS.map(t=>`<button data-action="mm-table" data-t="${t}" aria-pressed="${mmT===t}"><i class="sw ${t}"></i>${esc(TL(t))}</button>`).join('')}</div>
-          <div class="seg" role="group" aria-label="${esc(L('mmView'))}"><button data-action="mm-days" data-v="0" aria-pressed="${!mmD}">${esc(L('mmMonths'))}</button><button data-action="mm-days" data-v="1" aria-pressed="${mmD}"${mmT==='all'?` aria-disabled="true" title="${esc(L('mmDaysOff'))}"`:''}>${esc(L('mmDays'))}</button></div></div></div>
+        <div class="ch-end">${chartLegend(mmT==='all'?TKEYS.map(t=>[t,TL(t)]):[[mmT,mc?dispCat(mc):TL(mmT)]],mmT!=='all'&&!mmD)}<div class="ctrls"><div class="seg" role="group" aria-label="${esc(L('show'))}"><button data-action="mm-table" data-t="all" aria-pressed="${mmT==='all'}">${esc(L('all'))}</button>${TKEYS.map(t=>`<button data-action="mm-table" data-t="${t}" aria-pressed="${mmT===t}"><i class="sw ${t}"></i>${esc(TL(t))}</button>`).join('')}</div>
+          <div class="seg" role="group" aria-label="${esc(L('mmView'))}"><button data-action="mm-days" data-v="0" aria-pressed="${!mmD}">${esc(L('mmMonths'))}</button><button data-action="mm-days" data-v="1" aria-pressed="${mmD}"${mmT==='all'?` aria-disabled="true" title="${esc(L('mmDaysOff'))}"`:''}>${esc(L('mmDays'))}</button></div></div></div></div>
       ${mmT!=='all'&&mc?`<div class="legend" style="margin-bottom:var(--s8)"><button type="button" class="cat-chip" data-action="mm-clear-cat">${esc(L('onlyCat',dispCat(mc)))}<span aria-hidden="true">${ICON.x}</span><span class="sr">${esc(L('backToAll',mmT))}</span></button></div>`:''}
       <div class="chart" id="ch-monthly"></div>
       ${partialOut&&!mmD?`<p class="foot-note">${esc(L('partialNote',M()[nm.m]))}</p>`:''}
-      ${(F=>F?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L(mmD?'mmFcDays':'mmFcNote',F.n))}</p>`:'')(y===nm.y?(mmT==='all'?TKEYS.map(t=>mmForecast(t,null)).find(Boolean):mmForecast(mmT,mc)):null)}
+      ${(F=>F?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L(mmD?'mmFcDays':'fcNote',F.n))}</p>`:'')(y===nm.y?(mmT==='all'?TKEYS.map(t=>mmForecast(t,null)).find(Boolean):mmForecast(mmT,mc)):null)}
     </section>
     <section class="card">
       <div class="card-head"><div><h2>${esc(L('byCategory'))}${info('ovCats')}</h2><p class="sub">${esc(oc.table==='expenses'&&oc.exRent&&rn?L('rentLeftOut',rn):L('totalsPeriod'))}${esc(L('clickCat'))}</p></div>
@@ -2806,7 +2806,7 @@ function viewOverview(){
       <div class="card-head"><div><h2>${esc(L('indicators'))}${info('ovInd')}</h2><p class="sub">${esc(L('indicatorsSub',y))}${AF.expenses.uncatCount?' '+esc(L('indUncat',AF.expenses.uncatCount)):''}</p></div></div>
       <div class="inds">${inds}</div>
     </section>`:''}
-    ${multi?`<section class="card"><div class="card-head"><div><h2>${esc(L('yearByYear'))}${info('ovYears')}</h2><p class="sub">${esc(L('eurosYear'))}</p></div><div class="legend">${TKEYS.map(t=>`<span><i class="sw ${t}"></i>${esc(TL(t))}</span>`).join('')}</div></div><div class="chart" id="ch-years" style="height:260px"></div></section>`:''}
+    ${multi?`<section class="card"><div class="card-head"><div><h2>${esc(L('yearByYear'))}${info('ovYears')}</h2><p class="sub">${esc(L('eurosYear'))}</p></div>${chartLegend(TKEYS.map(t=>[t,TL(t)]))}</div><div class="chart" id="ch-years" style="height:260px"></div></section>`:''}
   </div>`;
 }
 /* Monthly check: months with no transactions since the first one, and net worth figures not yet typed in */
@@ -2918,6 +2918,8 @@ function mmSummary(A){
   if(fit){ const d=fit.slope; s+= Math.abs(d)<0.5? L('trendFlat') : L('trendMove',d>0,fmtEUR(Math.abs(d),0)); }
   return s;
 }
+/* a chart's legend: [cls,label] squares in the series colours, then the trend line when the chart draws one */
+function chartLegend(items,trend){ return `<div class="legend">${items.map(([c,l])=>`<span><i class="sw ${c}"></i>${esc(l)}</span>`).join('')}${trend?`<span><i class="lkey trend"></i>${esc(L('trendLine'))}</span>`:''}</div>`; }
 function drawColumns(el,labels,series,opts){
   const W=Math.max(280,el.clientWidth), H=el.clientHeight||260;
   const m={l:52,r:6,t:10,b:26}, pw=W-m.l-m.r, ph=H-m.t-m.b;
@@ -2941,7 +2943,7 @@ function drawColumns(el,labels,series,opts){
     if(!lab) return;
     /* sparse: a label only here and there (Days view), written out in full from the start of its bar */
     const short=band<34&&!opts.sparse? lab.slice(0,1) : lab;
-    s+=`<text class="tk" x="${(m.l+band*i+(opts.sparse?0:band/2)).toFixed(1)}" y="${H-8}" text-anchor="${opts.sparse?'start':'middle'}">${esc(short)}</text>`;
+    s+=`<text class="tk${i===opts.selected?' nw-sel-lbl':''}" x="${(m.l+band*i+(opts.sparse?0:band/2)).toFixed(1)}" y="${H-8}" text-anchor="${opts.sparse?'start':'middle'}">${esc(short)}</text>`;
   });
   s+=`<line class="base" x1="${m.l}" x2="${W-m.r}" y1="${y(0)}" y2="${y(0)}"/>`;
   if(tr){ const xa=m.l+band*TR.x0+band/2, xb=m.l+band*TR.x1+band/2; s+=`<line class="trend" x1="${xa.toFixed(1)}" y1="${y(tr[0]).toFixed(1)}" x2="${xb.toFixed(1)}" y2="${y(tr[1]).toFixed(1)}"/>`; }
@@ -3070,7 +3072,8 @@ function drawOverviewCharts(){
     const ok=(i,p)=>p!==pp&&A.income.total[i]>0;
     const pe=idx.map((i,p)=>ok(i,p)?-A.expenses.total[i]/A.income.total[i]:null);
     const pi=idx.map((i,p)=>ok(i,p)?A.investments.total[i]/A.income.total[i]:null);
-    drawLines(ep,labels,[{values:pe,color:TCOLOR.expenses},{values:pi,color:TCOLOR.investments}],{
+    const nL=Math.max(1,...[pe,pi].map(a=>a.reduce((l,v,i)=>v!=null?i+1:l,0)));
+    drawLines(ep,labels.slice(0,nL),[{values:pe.slice(0,nL),color:TCOLOR.expenses},{values:pi.slice(0,nL),color:TCOLOR.investments}],{
       label:L('shareAria',y), ref:1, refLabel:L('pct100'),
       tip:p=>tipRows(M()[idx[p]]+' '+y,[{sw:'expenses',label:TL('expenses'),value:fmtPct(pe[p])},{sw:'investments',label:TL('investments'),value:fmtPct(pi[p])}],`<div class="tr"><span>${esc(L('kept'))}</span><b>${pe[p]==null?DASH:fmtPct(1-pe[p])}</b></div>`)
     });
@@ -3465,8 +3468,8 @@ function viewNetworth(){
   const goalCard=`<section class="card nw-card"><div class="card-head"><div><h2>${esc(L('nwGoal'))}${info('nwGoal')}</h2></div>${goalBtn}</div>${goal}</section>`;
   const ally=nwYearsAll(), sely=nwYearsSel();
   const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
-      ${ally.length<2?'':`<div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div>`}</div>
-      <div class="chart" id="ch-nw" style="height:260px"></div>${(n=>n?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L('nwFcNote',n))}</p>`:'')(nwChartForecast(nwChartMonths()).n)}${nwChartNote()}</section>`:'';
+      <div class="ch-end">${chartLegend(NW_GROUPS.filter(g=>N.accounts.some(a=>a.group===g)).map(g=>[g,L('g_'+g)]),ms.length>1)}${ally.length<2?'':`<div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div>`}</div></div>
+      <div class="chart" id="ch-nw" style="height:260px"></div>${(n=>n?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L('fcNote',n))}</p>`:'')(nwChartForecast(nwChartMonths()).n)}${nwChartNote()}</section>`:'';
   return head(per,ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${chart}${healthCard(k,T)}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
 }
 /* Financial health: rules of thumb as of the end of month k. Income and expenses are the ones behind "You saved"
