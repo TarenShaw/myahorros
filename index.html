@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-HhLjocutFjHKtg69h8mpkyD5n5U3ipU4CFV5Ni9VLvg=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-wujuEVo2IvPNEsueJgKi6Jg5LW59ZEB6Q+5ue6shULY=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -355,6 +355,8 @@ select{padding-right:var(--s32)}
 .pill.warn{background:var(--warn-soft);color:var(--warn-ink)}
 .fh{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--s12)}
 .fh-c{border:1px solid var(--line);border-radius:var(--r-inner);padding:var(--s16);display:grid;grid-template-rows:auto auto 1fr auto;gap:var(--s8);min-width:0}
+/* the cards in a row share their label, value, meta and footer rows, so a label on two lines never pushes one value below the others */
+@supports (grid-template-rows:subgrid){.fh-c{grid-row:span 4;grid-template-rows:subgrid;row-gap:var(--s8)}}
 .fh-meta{display:grid;gap:var(--s4);align-content:start}.fh-foot:empty{display:none}.fh-foot .btn{justify-self:start}.fh-none{color:var(--muted)}
 
 @media (max-width:1180px){.fh{grid-template-columns:repeat(6,minmax(0,1fr))}.fh-c{grid-column:span 2}.fh-c:nth-child(n+4){grid-column:span 3}}
@@ -1916,7 +1918,7 @@ const STR={
   nwNoPrev:['Add next month’s figures to see how much of the change came from your saving and how much from markets.','Añade las cifras del mes que viene para ver cuánto del cambio viene de tu ahorro y cuánto de los mercados.'],
   nwNoTracker:[m=>`Your tracker has no transactions for ${m}, so the change can’t be split yet.`,m=>`Tu control no tiene movimientos de ${m}, así que todavía no se puede repartir el cambio.`],
   fhTitle:['Financial health','Salud financiera'], fh_emerg:['Emergency fund','Fondo de emergencia'], fh_fi:['Enough to stop working','Para dejar de trabajar'],
-  fh_save:['Savings rate','Tasa de ahorro'], fh_passive:['Spending your investments could pay','Gasto que pagarían tus inversiones'], fh_age:['Net worth for your age','Patrimonio para tu edad'],
+  fh_save:['Savings rate','Tasa de ahorro'], fh_passive:['Investments could pay','Pagarían tus inversiones'], fh_age:['Net worth for your age','Patrimonio para tu edad'],
   fhSub:[(m,n)=>`As of the end of ${m}. ${n>=12?'Averages over the last 12 months.':`Averages based on ${n} month${n===1?'':'s'}.`}`,(m,n)=>`A final de ${m}. ${n>=12?'Medias de los últimos 12 meses.':`Medias de ${n} mes${n===1?'':'es'}.`}`],
   fhNoData:['No finished month with transactions up to this one yet, so there are no averages.','Aún no hay ningún mes terminado con movimientos hasta este, así que no hay medias.'],
   fhMonths:[v=>`${v} months`,v=>`${v} meses`], fhTarget:[(n,v)=>`Target ${n} months · ${v}`,(n,v)=>`Objetivo ${n} meses · ${v}`],
