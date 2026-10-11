@@ -21,6 +21,8 @@ node tests/ai-smoke.js          # AI layer: retries, limits, truncation, key scr
 node tests/chunk-smoke.js       # request splitting and merging pulled out of index.html
 node tests/merge-smoke.js       # "Merge both" (mergeData in web-shim.js)
 node tests/import-smoke.js      # import: amounts, keyword matching, IBKR sections, Splitwise, refunds
+node tests/forecast-smoke.js    # Net worth and Month by month forecasts
+node tests/reconcile-smoke.js   # Net worth: What changed = saved + Gains total + new accounts + not matched, to the cent
 node tools/update-csp-hash.js   # after ANY edit to index.html's inline <script>
 ```
 

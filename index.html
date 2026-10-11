@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-L1vsq0iaG53JkgB4rwbiJCXpZS01UojpyFOhafuKFIs=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-sLZdHPPsFwH6JrPyf7iMS8ALnehUSne+KrjENXQ75HY=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -780,7 +780,11 @@ fieldset.plain legend{padding:0;margin-bottom:6px}
 .nw-sval{font-weight:650;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .nw-bar{display:flex;gap:2px;height:8px;border-radius:4px;background:var(--surface-3);overflow:hidden}
 .nw-bar i{display:block;height:100%;border-radius:4px}
-.nw-bar i.saved{background:var(--c-income)}.nw-bar i.market,.nw-bar i.growth{background:var(--g-invest)}.nw-bar i.fresh{background:var(--g-cash)}.nw-bar i.neg{background:var(--bad)}
+.nw-bar i.saved{background:var(--c-income)}.nw-bar i.market,.nw-bar i.growth{background:var(--g-invest)}.nw-bar i.fresh{background:var(--g-cash)}.nw-bar i.neg{background:var(--bad)}.nw-bar i.left{background:var(--warn-ink)}
+.nw-health{display:flex;align-items:center;gap:6px;margin:6px 0 0;font-size:13px;font-weight:600}.nw-health.ok{color:var(--good-ink)}.nw-health.bad{color:var(--warn-ink)}
+.nw-srow:has(i.left) .nw-sval,.nw-review .nw-sval{color:var(--warn-ink)}
+.nw-review{margin-top:12px;font-size:13px}.nw-review summary{cursor:pointer;font-weight:600;color:var(--warn-ink)}.nw-review>ul{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:10px}
+.nw-rev-rows{list-style:none;padding:0;margin:4px 0 0;color:var(--muted);display:grid;gap:2px}.nw-rev-rows li{display:flex;justify-content:space-between;gap:12px}.nw-rev-rows li>span:first-child{overflow-wrap:anywhere}.nw-rev-rows li>span:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}
 .nw-since{margin-top:6px}
 .nw-foot{list-style:none;margin:18px 0 0;padding:12px 0 0;border-top:1px solid var(--line);display:grid;gap:6px;font-size:12.5px;line-height:1.45;color:var(--muted)}
 .nw-card .nw-repay{margin-top:16px;font-size:13px}
@@ -1109,6 +1113,7 @@ const S={
 const $=(s,r=document)=>r.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const r2=v=>Math.round((v+Number.EPSILON)*100)/100;
+const cents=v=>Math.round((v||0)*100);   /* money as whole cents, for sums that must add up exactly */
 const sum=a=>a.reduce((x,y)=>x+y,0);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 /* number format: 1.234,56 (default) or 1,234.56, chosen in Settings */
@@ -1766,7 +1771,7 @@ const STR={
   info_catSkip:['Rows whose description contains one of these words arrive unticked when you import: for example transfers between your own accounts, which are neither income nor spending.','Las filas cuya descripción contiene una de estas palabras llegan sin marcar al importar: por ejemplo, traspasos entre tus propias cuentas, que no son ni ingresos ni gastos.'],
   info_nwWhat:['Net worth is what everything you own is worth, minus what you owe. Once a month, type what each account is worth at the end of the month, or import several months from Excel, and the tracker shows how it grows and why.','El patrimonio neto es lo que vale todo lo que tienes, menos lo que debes. Una vez al mes, escribe lo que vale cada cuenta a final de mes, o importa varios meses desde Excel, y el control muestra cómo crece y por qué.'],
   info_nwGroups:['Accounts are grouped by how soon you could use the money: Cash now, Investments within days, Illiquid on its own schedule (loans, property), Retirement when you retire. “Without retirement savings” is what you could reach before then.','Las cuentas se agrupan según lo pronto que podrías usar el dinero: Efectivo ya, Inversiones en días, Ilíquido según su propio calendario (préstamos, inmuebles) y Jubilación al jubilarte. «Sin el ahorro para la jubilación» es lo que podrías usar antes.'],
-  info_nwChange:['How your net worth moved since the previous month with figures, in two parts. You saved: income minus expenses from your tracker. Markets, interest and gains: everything else, such as price moves, interest and dividends. Moving money between your own accounts changes neither.','Cómo ha cambiado tu patrimonio desde el mes anterior con cifras, en dos partes. Has ahorrado: ingresos menos gastos según tu control. Mercados, intereses y plusvalías: todo lo demás, como cambios de precio, intereses y dividendos. Mover dinero entre tus propias cuentas no cambia ninguna de las dos.'],
+  info_nwChange:['How your net worth moved since the previous month with figures. You saved: income minus expenses from your tracker. Markets, interest and gains: the Gains total of the Accounts table (price moves, interest, dividends). Moving money between your own accounts changes neither. Anything your transactions and account figures don’t explain shows on its own line, Not matched to an account, so the lines always add up to the total.','Cómo ha cambiado tu patrimonio desde el mes anterior con cifras. Has ahorrado: ingresos menos gastos según tu control. Mercados, intereses y plusvalías: el total de Ganancias de la tabla Cuentas (cambios de precio, intereses, dividendos). Mover dinero entre tus propias cuentas no cambia ninguna de las dos. Lo que tus movimientos y las cifras de tus cuentas no explican sale en su propia línea, Sin cuadrar con ninguna cuenta, así que las líneas siempre suman el total.'],
   info_fhTitle:['Rules of thumb, not advice.','Reglas orientativas, no asesoramiento.'],
   info_fh_emerg:['Cash you could use tomorrow divided by your average monthly spending. Rule of thumb: 3–6 months. Meal cards and money owed to you aren’t counted.','El efectivo que podrías usar mañana dividido entre tu gasto medio mensual. Regla orientativa: 3–6 meses. No cuentan las tarjetas de comida ni el dinero que te deben.'],
   info_fh_fi:['Invested money vs 25× your yearly spending, the amount that lets you live off 4% a year (the 4% rule).','Tu dinero invertido frente a 25 veces tu gasto anual, lo que te permitiría vivir retirando un 4% al año (la regla del 4%).'],
@@ -1820,7 +1825,7 @@ const STR={
   gs_cash:['Available now','Disponible ya'], gs_invest:['Can be sold within days','Se puede vender en días'], gs_illiquid:['Comes back on its own schedule','Vuelve según su propio calendario'], gs_pension:['Locked until retirement','Bloqueado hasta la jubilación'],
   nwChange:['What changed','Qué ha cambiado'], nwSinceEnd:[(m,y)=>`Since the end of ${m} ${y}.`,(m,y)=>`Desde el final de ${m} de ${y}.`],
   nwSaved:['You saved','Has ahorrado'], nwSavedSub:['Income minus expenses, without interest or gains','Ingresos menos gastos, sin intereses ni plusvalías'],
-  nwMarket:['Markets, interest and gains','Mercados, intereses y plusvalías'], nwMarketSub:['Prices, interest, dividends and gains','Precios, intereses, dividendos y plusvalías'],
+  nwMarket:['Markets, interest and gains','Mercados, intereses y plusvalías'], nwMarketSub:['Prices, interest, dividends and gains: the Gains total in Accounts','Precios, intereses, dividendos y plusvalías: el total de Ganancias en Cuentas'],
   nwNewAcc:[v=>`Plus ${v} in accounts tracked for the first time this month.`,v=>`Más ${v} de cuentas que se registran por primera vez este mes.`],
   nwSavedIn:[m=>`Saved in ${m}, according to your tracker (income minus expenses, without interest, dividends or gains).`,m=>`Ahorrado en ${m}, según tu control (ingresos menos gastos, sin intereses, dividendos ni plusvalías).`],
   nwNoPrev:['Add next month’s figures to see how much of the change came from your saving and how much from markets.','Añade las cifras del mes que viene para ver cuánto del cambio viene de tu ahorro y cuánto de los mercados.'],
@@ -1923,7 +1928,7 @@ const STR={
   /* accounts at 0 */
   nwTotalRow:['Total, all accounts','Total, todas las cuentas'],
   nwGains:['Gains','Ganancias'],
-  nwGainsTip:['Gains: what an account earned you. It is the change since last month, minus the money you put in, plus interest, dividends, capital gains or rent it paid out to you. Money put in or taken out comes from your Investments rows that contain the account’s statement words (Edit accounts) or, failing that, its name; payouts come from income rows with the account’s statement words or name, in a category ticked under “Interest, dividends and gains” on Net worth. If a dividend stayed inside the account, don’t also record it as income, or it counts twice. Cash accounts show only the interest they paid you. A row that matches no account, or fits two accounts equally well, isn’t counted for any account, so it shows up as gain: use “Link them to accounts” under the table to fix it. A row that says pension goes to a Retirement account.','Ganancias: lo que te ha hecho ganar una cuenta. Es el cambio desde el mes anterior, menos el dinero que aportaste, más los intereses, dividendos, plusvalías o alquiler que te pagó. Lo aportado o retirado sale de tus filas de Inversiones que contienen las palabras del extracto de la cuenta (Editar cuentas) o, si no, su nombre; los cobros, de los ingresos con las palabras del extracto o el nombre de la cuenta, en una categoría marcada en “Intereses, dividendos y plusvalías” de Patrimonio. Si un dividendo se quedó dentro de la cuenta, no lo apuntes también como ingreso o contará dos veces. Las cuentas de efectivo solo muestran los intereses que te pagaron. Una fila que no encaja con ninguna cuenta, o que encaja igual de bien con dos, no cuenta para ninguna y se muestra como ganancia: usa «Vincularlas a sus cuentas» debajo de la tabla para corregirlo. Una fila que dice pensión va a una cuenta de Jubilación.'],
+  nwGainsTip:['Gains: what an account earned you. It is the change since last month, minus the money you put in, plus interest, dividends, capital gains or rent it paid out to you. Money put in or taken out comes from your Investments rows that contain the account’s statement words (Edit accounts) or, failing that, its name; payouts come from income rows with the account’s statement words or name, in a category ticked under “Interest, dividends and gains” on Net worth. If a dividend stayed inside the account, don’t also record it as income, or it counts twice. Cash accounts show only the interest they paid you. A row that matches no account, or fits two accounts equally well, isn’t counted for any account, so it shows up as gain: use “Link them to accounts” under the table to fix it. A row that says pension goes to a Retirement account. The Gains total is the same number as Markets, interest and gains in What changed.','Ganancias: lo que te ha hecho ganar una cuenta. Es el cambio desde el mes anterior, menos el dinero que aportaste, más los intereses, dividendos, plusvalías o alquiler que te pagó. Lo aportado o retirado sale de tus filas de Inversiones que contienen las palabras del extracto de la cuenta (Editar cuentas) o, si no, su nombre; los cobros, de los ingresos con las palabras del extracto o el nombre de la cuenta, en una categoría marcada en “Intereses, dividendos y plusvalías” de Patrimonio. Si un dividendo se quedó dentro de la cuenta, no lo apuntes también como ingreso o contará dos veces. Las cuentas de efectivo solo muestran los intereses que te pagaron. Una fila que no encaja con ninguna cuenta, o que encaja igual de bien con dos, no cuenta para ninguna y se muestra como ganancia: usa «Vincularlas a sus cuentas» debajo de la tabla para corregirlo. Una fila que dice pensión va a una cuenta de Jubilación. El total de Ganancias es la misma cifra que Mercados, intereses y plusvalías en Qué ha cambiado.'],
   nwLaterHero:[n=>`No figure yet this month for ${n}: ${n.includes(',')||n.includes(' and ')?'their':'its'} first figure comes later, so the total may be low.`,n=>`Sin cifra este mes para ${n}: su primera cifra es posterior, así que el total puede quedarse corto.`],
   nwFcTag:['Forecast','Previsión'],
   nwFcNote:[n=>`Greyed months are projected from your last ${n===1?'month, so they stay flat':n+' months'}.`,n=>`Los meses en gris son una previsión a partir de ${n===1?'tu único mes, así que no cambian':'tus últimos '+n+' meses'}.`],
@@ -1935,7 +1940,7 @@ const STR={
   nwDidntExist:['It didn’t exist before','No existía antes'],
   nwFromSaved:[(n,m)=>`${n} counts from ${m} on`,(n,m)=>`${n} cuenta a partir de ${m}`],
   nwFillExcel:['Fill them in from Excel','Rellenarlas desde Excel'],
-  nwBlindHint:[(n,m)=>`No figure for ${n} in ${m}. Money that moved into or out of ${n.includes(',')||n.includes(' and ')||n.includes(' y ')?'them':'it'} shows here under Markets.`,(n,m)=>`No hay cifra de ${n} en ${m}. El dinero que entró o salió de ahí aparece aquí en Mercados.`],
+  nwBlindHint:[(n,m)=>`No figure for ${n} in ${m}. Money that moved into or out of ${n.includes(',')||n.includes(' and ')||n.includes(' y ')?'them':'it'} shows here under Not matched to an account.`,(n,m)=>`No hay cifra de ${n} en ${m}. El dinero que entró o salió de ahí aparece aquí en Sin cuadrar con ninguna cuenta.`],
   nwClosedNote:[n=>`${pl(n,'account')} at 0 since an earlier month ${n===1?'is':'are'} hidden. ${n===1?'It comes':'They come'} back if you type a figure for ${n===1?'it':'them'}.`,n=>`${pl(n,'account')} a 0 desde un mes anterior ${n===1?'está oculta':'están ocultas'}. ${n===1?'Vuelve':'Vuelven'} si ${n===1?'le':'les'} pones una cifra.`],
   nwShowClosed:[n=>`Show accounts at 0 (${n})`,n=>`Mostrar cuentas a 0 (${n})`], nwHideClosed:['Hide accounts at 0','Ocultar cuentas a 0'],
   nwClosedSince:[m=>`At 0 since ${m}`,m=>`A 0 desde ${m}`],
@@ -1976,7 +1981,13 @@ const STR={
   nwImpJson:['That’s a backup file, not a spreadsheet. Backups are restored from Settings → Restore from a backup.','Eso es una copia de seguridad, no una hoja de cálculo. Las copias se restauran en Ajustes → Restaurar una copia de seguridad.'],
   nwTplDone:['Saved to your downloads. Fill it in, then upload it below.','Guardada en tus descargas. Rellénala y súbela aquí abajo.'],
   /* what changed: new accounts and money moved into them */
-  nwNewAccRow:['New accounts','Cuentas nuevas'], nwNewAccRowSub:['First figure of an account, not growth','Primera cifra de una cuenta, no es crecimiento'],
+  nwNewAccRow:['New accounts','Cuentas nuevas'],
+  nwLeftRow:['Not matched to an account','Sin cuadrar con ninguna cuenta'], nwLeftRowSub:['Money your transactions and account figures don’t explain','Dinero que ni tus movimientos ni las cifras de tus cuentas explican'],
+  nwHealthOk:['Everything adds up','Todo cuadra'], nwHealthBad:[v=>`${v} to review`,v=>`${v} por revisar`], nwReview:['Review','Revisar'],
+  nwLeftCash:['Cash accounts don’t match your transactions: one may be missing or in another month, a figure may be from another day, or money came from or went to an account you don’t track.','Las cuentas de efectivo no cuadran con tus movimientos: puede faltar uno o estar en otro mes, una cifra puede ser de otro día, o el dinero vino de o fue a una cuenta que no sigues.'],
+  nwLeftRet:['Interest, dividends or gains that name no account with a figure this month:','Intereses, dividendos o plusvalías que no nombran ninguna cuenta con cifra este mes:'],
+  nwLeftPut:['Money moved to or from investments that no account here shows (no account matched, the account has no figure this month, or it’s not tracked here):','Dinero movido a o desde inversiones que ninguna cuenta de aquí muestra (no encaja con ninguna cuenta, la cuenta no tiene cifra este mes o no se sigue aquí):'],
+  nwLeftPutMoved:[v=>`${v} of it counts as moved into newly tracked accounts.`,v=>`${v} cuentan como pasados a cuentas nuevas.`], nwNewAccRowSub:['First figure of an account, not growth','Primera cifra de una cuenta, no es crecimiento'],
   nwMovedNote:[v=>`${v} moved into newly tracked accounts counts as a transfer, not a gain or a loss.`,v=>`${v} pasados a cuentas nuevas cuentan como traspaso, no como ganancia ni pérdida.`],
   nwNewAccIncl:[v=>`Includes ${v} in accounts tracked for the first time this month.`,v=>`Incluye ${v} de cuentas que se registran por primera vez este mes.`],
   nwNoTrackerBefore:[m=>`Your tracker starts in ${m}, so changes before then can’t be split into saving and markets.`,m=>`Tu control empieza en ${m}, así que los cambios anteriores no se pueden repartir entre ahorro y mercados.`],
@@ -3150,23 +3161,57 @@ function trackerSaved(from,to){
   const missing=[]; for(let k=ymAdd(from,1);k<=to;k=ymAdd(k,1)) if(!have.has(k)) missing.push(k);
   return {saved:r2(s),returns:r2(ret),putIn:r2(put),income:inc,missing};
 }
-/* What changed between two months with figures: the change in accounts that have a figure in both months,
-   split into what you saved from your pay (tracker) and everything else (markets, interest, dividends, gains). */
-/* Accounts with a figure for the first time: their first figure is either money you already had (now tracked)
-   or money moved in from your other accounts. Money put into investments in the tracker that month, up to the new
-   accounts' value, is taken as moved (a transfer, so it isn't a loss under Markets); the rest is shown as New accounts.
-   change = like-for-like change + new accounts = saved + markets + new accounts. */
+/* What changed between two months with figures, in whole cents so the card's lines add up exactly:
+     change = saved + gains + fresh + left
+   saved: income minus expenses from your pay (trackerSaved). gains: the Gains total of the accounts table (nwGains),
+   the only source of "Markets, interest and gains". fresh: first figures of accounts with no figure the month before
+   (and no `from`) that aren't money moved in from your other accounts: money put into investments in the tracker that
+   month, up to the new accounts' value, is taken as moved (a transfer, not a loss); the rest shows as New accounts.
+   left: what none of these explain, always shown as its own line. It is also worked out from its causes, and both
+   ways must agree to the cent (nwReconcile):
+     cash = change of the Cash accounts with figures in both months − (saved + returns + Investments rows): a missing
+            transaction, one in another month, a figure taken on another day, money from or to an untracked account
+     ret  = interest/dividend rows that reach no account with a Gains figure
+     put  = money moved into new accounts − Investments rows that reach no account with a Gains figure (no account
+            matched, a tie, "not tracked here", or the account has no figure this month)
+   Since gains = Cash returns + Σ other accounts (change − money put in + returns) and the Cash change is
+   saved + returns + Investments rows + cash, change − saved − gains − fresh = cash + ret + put. */
 function nwSplit(prev,k){
-  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}; let both=0, added=0, cashUp=0, drop=null;
-  for(const a of N.accounts){ const v1=s1[a.id], v0=nwBefore(a,s0,prev,k);
-    if(v1!=null&&v0!=null){ both+=v1-v0; if(a.group==='cash') cashUp+=v1-v0; else if(v0-v1>=300&&(!drop||v0-v1>drop.d)) drop={name:a.name,d:v0-v1}; }
-    else if(v1!=null) added+=v1; }
-  both=r2(both); added=r2(added); const tr=trackerSaved(prev,k), moved=r2(Math.max(0,Math.min(added,tr.putIn))), market=r2(both-tr.saved+moved);
+  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, C=cents, G=nwGains(prev,k), grp={}, putA=new Map();
+  let both=0, added=0, cashD=0, drop=null;
+  for(const [r,id] of G.link) if(G.has(id)) putA.set(id,(putA.get(id)||0)-C(r.amount));
+  for(const a of N.accounts){ const v1=s1[a.id], v0=nwBefore(a,s0,prev,k), g=grp[a.group]||(grp[a.group]={change:0,gains:0,flow:0});
+    if(G.has(a.id)) g.gains+=C(G.get(a.id));
+    if(v1!=null&&v0!=null){ const d=C(v1)-C(v0); both+=d; g.change+=d;
+      if(a.group==='cash') cashD+=d; else { g.flow+=putA.get(a.id)||0; if(-d>=30000&&(!drop||-d>drop.d)) drop={name:a.name,d:-d}; } }
+    else if(v1!=null){ added+=C(v1); g.change+=C(v1); g.flow+=C(v1); } }
+  const tr=trackerSaved(prev,k), saved=C(tr.saved), gains=Object.values(grp).reduce((s,g)=>s+g.gains,0);
+  const moved=Math.max(0,Math.min(added,C(tr.putIn))), fresh=added-moved, change=both+added, left=change-saved-gains-fresh;
+  /* the leftover from its causes */
+  let R=0, I=0, ret=0, putOff=0; const retRows=[], putRows=[];
+  for(const r of allRows()){ const m=r.date.slice(0,7), inv=r.table==='investments'; if(m<=prev||m>k||!inv&&!isReturn(r)) continue;
+    const v=C(r.amount); if(inv) I+=v; else R+=v;
+    if(G.has(G.link.get(r))) continue;   /* it reached an account with a Gains figure */
+    if(inv){ putOff+=v; putRows.push(r); } else { ret+=v; retRows.push(r); } }
+  const why={cash:cashD-saved-R-I,ret,put:moved+putOff};
+  const ok=nwReconcile({change,saved,gains,fresh,left,why,grp},prev,k), E=v=>v/100;
   /* a repayment entered as income: an invested account fell, about that much landed in cash,
-     an income row of about that size is in the tracker, and Markets shows a big fall */
-  const repay=drop&&market<-0.5*drop.d&&cashUp>=0.8*drop.d&&tr.income.some(v=>v>=0.9*drop.d&&v<=1.3*drop.d)?drop.name:null;
+     an income row of about that size is in the tracker, and the Gains total shows a big fall */
+  const repay=drop&&gains<-0.5*drop.d&&cashD>=0.8*drop.d&&tr.income.some(v=>C(v)>=0.9*drop.d&&C(v)<=1.3*drop.d)?drop.name:null;
   const blind=nwHoles(k).map(id=>(N.accounts.find(a=>a.id===id)||{}).name).filter(Boolean);
-  return {change:r2(both+added),lfl:both,added,moved,fresh:r2(added-moved),saved:tr.saved,returns:tr.returns,market,missing:tr.missing,repay,blind};
+  return {change:E(change),lfl:E(both),added:E(added),moved:E(moved),fresh:E(fresh),saved:E(saved),gains:E(gains),left:E(left),
+    why:{cash:E(why.cash),ret:E(why.ret),put:E(why.put),retRows,putRows},returns:E(R-ret),missing:tr.missing,repay,blind,ok};
+}
+/* The check behind "Everything adds up", in cents: the card's lines make the change, the leftover equals its causes,
+   and each non-Cash group's change is its gains plus the money put in (rows linked to its accounts) plus new accounts.
+   Returns true when it holds; otherwise false and, on localhost, a console warning with the numbers. */
+function nwReconcile(x,prev,k){
+  const bad=[], g=x.grp;
+  if(x.saved+x.gains+x.fresh+x.left!==x.change) bad.push('lines '+(x.saved+x.gains+x.fresh+x.left)+' ≠ change '+x.change);
+  if(x.why.cash+x.why.ret+x.why.put!==x.left) bad.push('causes '+(x.why.cash+x.why.ret+x.why.put)+' ≠ leftover '+x.left);
+  for(const n in g) if(n!=='cash'&&g[n].change!==g[n].gains+g[n].flow) bad.push(n+': change '+g[n].change+' ≠ gains '+g[n].gains+' + put in '+g[n].flow);
+  if(bad.length&&typeof location!=='undefined'&&/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) console.warn('MyAhorros: net worth does not reconcile for '+prev+' → '+k+' (cents): '+bad.join('; '));
+  return !bad.length;
 }
 /* Money put into an investment that its account only shows a month later: in the month it left, Markets shows
    about that much as a loss; in the next month, an account went up by about that much and Markets shows it as a gain.
@@ -3181,8 +3226,8 @@ function nwLate(prev,k){
     let best=null;
     for(const r of allRows()){ if(r.table!=='investments'||r.amount>-300||r.date.slice(0,7)!==prev) continue;
       const amt=-r.amount;
-      if(a1.market<0.6*amt) continue;
-      if(a0&&!a0.missing.length&&a0.market>-0.6*amt) continue;
+      if(a1.gains<0.6*amt) continue;
+      if(a0&&!a0.missing.length&&a0.gains>-0.6*amt) continue;
       for(const a of N.accounts){ if(a.group==='cash'||ok[prev+'|'+a.id]) continue;
         const v1=s1[a.id], v0=s0[a.id]; if(v1==null||v0==null) continue;
         const up=v1-v0; if(up<0.85*amt||up>1.15*amt+0.03*Math.abs(v0)) continue;
@@ -3361,11 +3406,16 @@ function viewNetworth(){
   if(!prev){ const tr=trackerSaved(ymAdd(k,-1),k);
     change=(tr.missing.length?'':`<p class="nw-delta ${tr.saved<-0.004?'down':'up'}">${signed(tr.saved)}</p><p class="hint nw-since">${esc(L('nwSavedIn',ymIn(k)))}</p>`)+foot([esc(L('nwNoPrev'))])+(tr.missing.length?'':retLink); }
   else {
-    const sp=nwSplit(prev,k), mx=Math.max(Math.abs(sp.saved),Math.abs(sp.market),Math.abs(sp.fresh),1);
+    const sp=nwSplit(prev,k), hasLeft=Math.abs(sp.left)>=0.005, mx=Math.max(Math.abs(sp.saved),Math.abs(sp.gains),Math.abs(sp.fresh),Math.abs(sp.left),1), w=sp.why;
+    /* the leftover's causes, each with the rows behind it (the cash part has none: no row explains it) */
+    const revRows=rs=>rs.length?`<ul class="nw-rev-rows">${rs.slice(0,8).map(r=>`<li><span>${esc(fmtDate(r.date))} · ${esc(r.concept)}</span><span>${signed(r.amount)}</span></li>`).join('')}${rs.length>8?'<li>…</li>':''}</ul>`:'';
+    const revItem=(v,t,rs)=>Math.abs(v)>=0.005?`<li><div class="nw-stop"><span>${esc(t)}</span><b class="nw-sval">${signed(v)}</b></div>${revRows(rs||[])}</li>`:'';
+    const review=hasLeft?`<details class="nw-review"><summary>${esc(L('nwReview'))}</summary><ul>${revItem(w.cash,L('nwLeftCash'))}${revItem(w.ret,L('nwLeftRet'),w.retRows)}${revItem(w.put,L('nwLeftPut')+(sp.moved>0.004?' '+L('nwLeftPutMoved',fmtEUR(sp.moved)):''),w.putRows)}</ul></details>`:'';
+    const health=`<p class="nw-health ${hasLeft?'bad':'ok'}">${(hasLeft?ICON.warn:ICON.ok).replace('<svg','<svg width="14" height="14"')}<span>${esc(hasLeft?L('nwHealthBad',fmtEUR(Math.abs(sp.left))):L('nwHealthOk'))}</span></p>`;
     change=`<p class="nw-delta ${sp.change<-0.004?'down':'up'}">${signed(sp.change)}</p><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>`+
       (sp.missing.length?foot([esc(noTrackerText(sp.missing)),sp.added>0.004?esc(L('nwNewAccIncl',fmtEUR(sp.added,0))):''])
-      :`<div class="nw-split">${row(L('nwSaved'),L('nwSavedSub'),sp.saved,Math.abs(sp.saved)/mx,'saved')}${row(L('nwMarket'),L('nwMarketSub'),sp.market,Math.abs(sp.market)/mx,'market')}${Math.abs(sp.fresh)>0.004?row(L('nwNewAccRow'),L('nwNewAccRowSub'),sp.fresh,Math.abs(sp.fresh)/mx,'fresh'):''}</div>
-        ${nwLateBox(nwLate(prev,k)||nwLate(k,ms[ms.indexOf(k)+1]))}${sp.blind.length&&Math.abs(sp.market)>=200?warnBox(L('nwBlindHint',listJoin(sp.blind),ymIn(k))):''}${sp.repay?warnBox(L('nwRepayHint',sp.repay)):''}
+      :`${health}<div class="nw-split">${row(L('nwSaved'),L('nwSavedSub'),sp.saved,Math.abs(sp.saved)/mx,'saved')}${row(L('nwMarket'),L('nwMarketSub'),sp.gains,Math.abs(sp.gains)/mx,'market')}${Math.abs(sp.fresh)>0.004?row(L('nwNewAccRow'),L('nwNewAccRowSub'),sp.fresh,Math.abs(sp.fresh)/mx,'fresh'):''}${hasLeft?row(L('nwLeftRow'),L('nwLeftRowSub'),sp.left,Math.abs(sp.left)/mx,'left'):''}</div>${review}
+        ${nwLateBox(nwLate(prev,k)||nwLate(k,ms[ms.indexOf(k)+1]))}${sp.blind.length&&Math.abs(sp.left)>=200?warnBox(L('nwBlindHint',listJoin(sp.blind),ymIn(k))):''}${sp.repay?warnBox(L('nwRepayHint',sp.repay)):''}
         ${foot([Math.abs(sp.returns)>0.004?esc(L('nwRetIncl',fmtEUR(sp.returns))):'',sp.moved>0.004?esc(L('nwMovedNote',fmtEUR(sp.moved,0))):''])}${retLink}`);
   }
   const changeCard=`<section class="card nw-card"><div class="card-head"><div><h2>${esc(L('nwChange'))}${info('nwChange')}</h2></div></div>${change}</section>`;
@@ -3474,7 +3524,7 @@ function goalGrowthCalc(T,rest,left,pace){
 const nwWords=s=>fold(s).split(/[^a-z0-9]+/).filter(x=>x.length>=3);
 const nwPensionish=s=>/pensi|jubil|retir/.test(fold(s));
 function nwGains(prev,k){
-  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map(), put=new Map(); out.unlinked=[];
+  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map(), put=new Map(); out.unlinked=[]; out.link=new Map();   /* row → account id */
   const words=nwWords, skip=String(N.untracked||'').split(',').map(loose).filter(Boolean);
   const all=N.accounts.map(a=>({id:a.id,cash:a.group==='cash',pen:a.group==='pension',w:new Set(words(a.name)),p:String(a.words||'').split(',').map(loose).filter(Boolean)})), nonCash=all.filter(a=>!a.cash);
   /* the one account with the best score; a tie goes to neither */
@@ -3487,7 +3537,7 @@ function nwGains(prev,k){
        one, whenever such an account shares a word with it ("Indexa Capital, plan de ahorro" is not "Indexa pension plan") */
     const sc=a=>{ let s=0; for(const x of a.w) if(cw.has(x)) s++; return s; }, pen=nwPensionish((r.category||'')+' '+r.concept), side=accs.some(a=>a.pen===pen&&sc(a));
     const best=byPhrase||(accs.some(a=>a.p.some(p=>c.includes(' '+p+' ')))?null:pick(accs,a=>side&&a.pen!==pen?0:sc(a)));
-    if(best) put.set(best,(put.get(best)||0)-r.amount); else if(r.table==='investments'&&!skip.some(p=>c.includes(' '+p+' '))) out.unlinked.push(r); }
+    if(best){ put.set(best,(put.get(best)||0)-r.amount); out.link.set(r,best); } else if(r.table==='investments'&&!skip.some(p=>c.includes(' '+p+' '))) out.unlinked.push(r); }
   for(const a of N.accounts){
     if(a.group==='cash'){ if(put.has(a.id)) out.set(a.id,r2(-put.get(a.id))); continue; }   /* only the interest it paid */
     const v1=s1[a.id], v0=nwBefore(a,s0,prev,k); if(v1==null||v0==null) continue;
@@ -3554,12 +3604,12 @@ function accountsCard(k){
   const G=k&&prev?nwGains(prev,k):new Map(), gc=v=>`<td class="r ${v==null?'':v<-0.004?'down':v>0.004?'up':''}" data-l="${esc(L('nwGains'))}">${v==null?'':Math.abs(v)<0.005?'–':signed(v)}</td>`;
   const rows=NW_GROUPS.map(g=>{ const accs=shown.filter(a=>a.group===g); if(!accs.length) return '';
     const gg=accs.filter(a=>G.has(a.id));
-    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td><td></td>${gc(gg.length?r2(sum(gg.map(a=>G.get(a.id)))):null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,0):''}</td></tr>`+
+    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td><td></td>${gc(gg.length?sum(gg.map(a=>cents(G.get(a.id))))/100:null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,0):''}</td></tr>`+
       accs.map(a=>{ const v=s[a.id], v0=s0?nwBefore(a,s0,prev,k):null, d=v!=null&&v0!=null?r2(v-v0):null;
         return `<tr><td class="an">${esc(a.name)}${a.risk?` <span class="chip-risk">${esc(L('nwRisk'))}</span>`:''}</td><td class="r">${v!=null?fmtEUR(v):`<span class="missing">${esc(L('nwNoFigure'))}</span>`}</td>
           <td class="r ${d==null?'':d<-0.004?'down':d>0.004?'up':''}"${lC}>${d==null?'':Math.abs(d)<0.005?'–':signed(d)}</td>${gc(G.has(a.id)?G.get(a.id):null)}<td class="r"${lS}>${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
   const dT=k&&prev?r2(T.total-nwTotals(prev).total):null;
-  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?'–':signed(dT)}</td>${gc(G.size?r2(sum([...G.values()])):null)}<td class="r"${lS}>${T.total>0?fmtPct(1,0):''}</td></tr></tfoot>`:'';
+  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?'–':signed(dT)}</td>${gc(G.size?sum([...G.values()].map(cents))/100:null)}<td class="r"${lS}>${T.total>0?fmtPct(1,0):''}</td></tr></tfoot>`:'';
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
       ${S.canWrite?`<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button>`:''}</div>
     <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>

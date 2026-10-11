@@ -98,6 +98,14 @@ Build a new version and upload the changed files to the repository the same way,
 
 Data files keep the same format as the Windows app, and new versions can always read older files.
 
+Before uploading, run the checks (Node.js, no install needed), for example the Net worth reconciliation check, which proves that "What changed" adds up to the cent and that "Markets, interest and gains" equals the Gains total of the Accounts table:
+
+```
+node tests/reconcile-smoke.js
+```
+
+The full list is in CLAUDE.md. On `localhost`, the page also prints a console warning for any month whose Net worth figures don't reconcile.
+
 ## What's in the folder
 
 | File | What it is |
