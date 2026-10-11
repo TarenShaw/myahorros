@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-x08Ltk5FWuLIE4gvw6i4q3DPQKoHbvm2HAt3NClWRd0=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pUduzVXRnmrCnWucxeirL9RUWY7MZSvEMH+80HENI/A=' https://accounts.google.com/gsi/client https://gc.zgo.at/count.js; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://myahorrosapp.goatcounter.com https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -394,7 +394,6 @@ select{padding-right:28px}
 .heat-scale i{display:inline-block;width:96px;height:10px;border-radius:3px;background:linear-gradient(90deg,var(--heat-lo),var(--heat-mid),var(--heat-hi));border:1px solid var(--line)}
 .flag{display:inline-block;width:12px;height:12px;vertical-align:-1px;color:var(--bad);flex:none}
 .frame{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
-.app.wide{max-width:1600px}
 table.grid{border-collapse:separate;border-spacing:0;width:100%;table-layout:fixed;font-size:12.5px;font-variant-numeric:tabular-nums}
 .grid col.c-rh{width:15%}
 .grid col.c-tot{width:8%}
@@ -1065,7 +1064,7 @@ const S={
   gotMonths:false, gotConfig:false,
   db:null, downloads:null, local:null, mode:'connecting', canWrite:false,
   ui:{
-    tab:'overview', year:null, editTarget:null,
+    tab:'networth', year:null, editTarget:null,
     obLang:BOOT_LANG, obY:null, obM:null, langLocal:null, themeLocal:null, numLocal:null, yScroll:null,
     heat:(()=>{ try{ return localStorage.getItem('ybt.heat')!=='off'; }catch(_){ return true; } })(),
     tx:{table:'expenses', q:'', month:'all', cat:'all', limit:150, sort:'date-desc', allYears:false},
@@ -2349,7 +2348,6 @@ function render(){
   applyCur(); applyLang(); applyTheme(); applyNum();
   renderHeader();
   const ob=isOnboarding(), app=$('.app');
-  app.classList.toggle('wide',S.ui.tab==='yearly'&&!ob);
   app.classList.toggle('onboarding',ob);
   app.classList.toggle('tab-settings',S.ui.tab==='settings'&&!ob);
   app.classList.toggle('tab-networth',S.ui.tab==='networth'&&!ob);
