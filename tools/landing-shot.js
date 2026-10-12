@@ -46,9 +46,9 @@ function demo(lang) {
 
 /* the part of each tab to keep, in page pixels: from the top of the first section named (or matched by a selector) to the bottom of the last (or + height) */
 const SHOTS = [
-  { tab: 'networth', from: null, to: { en: 'Over time', es: 'Evolución' } },
-  { tab: 'overview', from: { en: 'Saved in', es: 'Ahorrado en' }, to: { en: 'By category', es: 'Por categoría' } },
-  { tab: 'yearly', from: '#view > *', height: 900 }
+  { tab: 'networth', from: null, height: 900 },
+  { tab: 'overview', from: null, height: 900 },
+  { tab: 'yearly', from: null, height: 900 }
 ];
 const HIDE = { en: ['Monthly check', 'This month'], es: ['Revisión del mes', 'Este mes'] };
 

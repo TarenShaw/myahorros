@@ -1,6 +1,6 @@
 # PLAN: MyAhorros update
 
-Source: the user's brief (phases 0-7). Status as of 2026-10-10. Details of what was built are in PROGRESS.md.
+Source: the user's original brief (phases 0-7) plus approved follow-ups. Refreshed 2026-10-12 against `main` at `5699962` (previous published baseline 1.0.56; release 1.0.57 approved for publication). Details are in PROGRESS.md. Older commit references may predate the 2026-10-11 history rewrite.
 Ground rules: keep all existing features working; match existing style and UI language (en + es for every new string); small commits per phase; no secrets in the repo; commit to `main`, but ask the user for a yes before each push.
 
 ## Done
@@ -28,24 +28,49 @@ Ground rules: keep all existing features working; match existing style and UI la
 | 6 | Name proposals; MyAhorros chosen and applied | Done | `b6b7a96`, `d4462cc` |
 | 7 | Drive stability (retries, status, no silent overwrite) | Done | `d5b0dbe` |
 
-## Pending
+## Completed review, release and follow-ups
 
-### 8. Review and release
+| Section | Current status | Evidence |
+|---|---|---|
+| 8.1 User review | Completed; requested fixes and later user audit implemented | `afa80f0`, `9dbe239`, `226bfe0`, `6b23403` |
+| 8.3 Mobile and tour pass | Completed in browser checks; real-device coverage remains limited | PROGRESS.md, LAYOUT-CHANGES.md, QA report |
+| 8.4 Release | Published to `main`; current workspace tracks `origin/main` | `5699962`, release 1.0.56 |
+| Layout and financial follow-ups | Layout consistency, Gains, forecasts, import review and reconciliation implemented | PROGRESS.md completed history |
+| AI audit phases 1–3 | Transactions, Net worth and Settings implemented; period selection, review/Undo, answer choices and remembered answers | `7522b87`, `3e8ce91`, `3625567`, `fa3e76b` |
+| Drive and SW follow-ups | Hour-long access retention and cache-bypass installation implemented | `8598ae6`, `71009cc` |
+| Onboarding and monthly routine | Year-to-date account statements, Cash-only transaction import, monthly check-in implemented | `b4007e5`, `5fbf342`, `d76ee7a`, `1d9e7bf` |
+| Navigation and landing follow-ups | Five tabs, Categories in Settings, updated landing and Overview selection behaviour | `bbf9eed`, `1a66332`, `5699962` |
 
-8.1 **User review** of the site at http://localhost:8000 (branch `overhaul`). Collect change requests.
-8.2 **Live-key verification**: with a rotated Gemini key and a real Claude key, test a large statement on Haiku 5.5 and on Gemini; confirm the error box shows the true cause if anything fails. Fix what it reveals.
-8.3 **Mobile and tour pass**: check 390 px and 768 px widths for the landing page, wizard, overview, accounts table and import review; walk every tour step and fix any that point at a missing element.
-8.4 **Release decision**: push the `overhaul` branch for review, or merge into `main` (publishes via GitHub Pages). Needs explicit user approval.
-8.5 **Post-release**: confirm GoatCounter counts a visit on the live site and that existing users' data and installed copies update cleanly (service worker `VERSION` bump, CSP hash).
+## Newcomer/AI audit: all 17 recommendations implemented in release 1.0.57
 
-### 9. Possible follow-ups (only if the user asks)
+| Recommendations | Implementation |
+|---|---|
+| 1–3 | Nested AI focus, complete audit Undo, accurate mode-specific privacy; remembered answers can be edited/forgotten |
+| 4–5 | Quick start with last month or historical setup; optional tour; practical storage choices; optional income/balances |
+| 6–8 | Task-first AI connection choices; file-first local reading with AI fallback; guided copy/paste and answer repair |
+| 9–10 | Needs-attention review; deliberate duplicate deletions; per-source account mapping and confirmed coverage/no activity |
+| 11, 14–15 | Optional source/account/import batch, import history and export; bulk category changes with Undo; date/amount/account/source filters and saved views; readable rule matching with previews |
+| 12–13 | Compact phone header/actions/filters, one-month view; summary-first dashboards with expandable analysis |
+| 16–17 | Clearer bilingual landing and fresh product shots; month/year comparisons with transaction links; hypothetical savings scenario |
 
-9.1 Match deposits to accounts by amount when the description does not name the account (Gains).
-9.2 Send answered questions back to the AI for a second pass (2.6).
-9.3 Add `PROGRESS.md` / `PLAN.md` handling to CLAUDE.md if the handoff skills become routine.
+No dependencies or backend added. Saved data format remains 1; new metadata is optional. Existing trackers are supported; the Windows host has not been tested with optional provenance fields. User approved committing and pushing release 1.0.57 on 2026-10-12. Includes extra spacing below the month/year switch and above comparison buttons, plus green/red comparison changes with reversed expense colors and neutral zero changes.
+
+## Pending verification
+
+8.2 **Live-key verification:** test large statements and truncated answers with rotated Claude/Gemini keys; verify all three AI audits, period selection, answers, fixes and Undo. Earlier notes report a successful live Claude import, but not this complete coverage.
+8.5 **Post-release checks:** real Drive OAuth/renewal and conflicts; folder storage; offline use and service-worker updates; analytics on the live site; existing-data compatibility. Real Safari, phones, screen-reader and Windows-app coverage remains incomplete.
+
+Local validation: nine smoke suites and eleven browser suites exercised during implementation, including the new experience and newcomer suites; final CSP, precache and version checks. Live-provider and hardware checks below remain separate.
+
+## Earlier possible follow-ups (only if selected; separate from the implemented 17 recommendations)
+
+- Publish only shipped assets through a Pages workflow; review privacy owner/contact information; add a friendly 404 and optional robots/sitemap; improve mobile loading; glossary; import-discard Escape behaviour; QA simplifications. Monthly check-in is already done.
+- Recheck historical import, Gains, reconciliation, storage and accessibility findings in PROGRESS.md before fixing them; do not assume the older audit list still reproduces.
+- Finish the sensitive-history cleanup noted in PROGRESS.md; reconcile the old quick-wins worktree before removing it. Never force-push its old history.
+- Original 9.1: match deposits by amount when the description lacks an account name. 9.2: send answered questions back to AI for a second pass (local answers/fixes and memory are implemented; a second AI pass is not established). 9.3: further handoff integration only if useful; local start/handoff skills already exist.
 
 ## Testing rules
 
-- Before each commit: `node tests/ai-smoke.js`, `node tests/chunk-smoke.js`, `node tools/update-csp-hash.js`.
+- Before each commit: `node tests/ai-smoke.js`, `node tests/chunk-smoke.js`, `node tests/experience-smoke.js`, `node tools/update-csp-hash.js`.
 - For sync, landing or wizard changes: run the browser tests in `tests/` (Playwright, Edge, server on port 8000).
 - Any edit to the inline script in `index.html` needs the CSP hash refreshed; any shipped-file change needs `sw.js` `FILES` and `VERSION` updated.

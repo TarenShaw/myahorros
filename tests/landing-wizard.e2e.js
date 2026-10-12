@@ -32,16 +32,14 @@ const SHOTS = process.env.SHOTS;
   await p.waitForSelector('[data-action="ob-start"]');
   await shot(p, 'welcome');
   await p.click('[data-action="ob-start"]');
-  /* a new tracker gets the tour first; when it ends, the wizard follows */
-  await p.waitForSelector('#tour-card', { timeout: 8000 });
-  await p.keyboard.press('Escape');
+  /* History setup starts directly; the demo still offers its tour. */
   await p.waitForSelector('.wz-body', { timeout: 8000 });
   await shot(p, 'wizard-0');
-  assert.ok(/every account/i.test(await p.innerText('.wz-body')), 'step 1 should ask for every account');
+  assert.ok(/one everyday account/i.test(await p.innerText('.wz-body')), 'quick setup starts with one everyday account');
   /* one way forward: "Skip this step" while a step isn't done, "Next" once it is */
   assert.strictEqual((await p.innerText('.m-foot [data-action="wz-next"]')).trim(), 'Skip this step');
   await p.click('[data-action="wz-next"]');
-  assert.ok(/1 January/i.test(await p.innerText('.wz-body')), 'statements step should ask for 1 January');
+  assert.ok(/Add a statement|CSV|bank/i.test(await p.innerText('.wz-body')), 'statements step explains file import');
   await p.click('[data-action="wz-next"]');
   await p.click('[data-action="wz-next"]');
   assert.ok(/salary/i.test(await p.innerText('.wz-body')));
@@ -107,8 +105,7 @@ const SHOTS = process.env.SHOTS;
   p = await newPage();
   await p.goto(START, { waitUntil: 'load' });
   await p.click('.web-landing .wl-hero [data-x=start]');
-  await p.click('button.web-way[data-m=browser]'); await p.click('[data-action="ob-start"]');
-  await p.waitForSelector('#tour-card', { timeout: 8000 }); await p.keyboard.press('Escape');
+  await p.click('button.web-way[data-m=browser]'); await p.click('[data-action="ob-history"]');
   await p.waitForSelector('.wz-body', { timeout: 8000 });
   await p.click('[data-action="guide-acc"]'); await p.waitForSelector('#nw-acc-form');
   for (const n of ['Current account', 'Savings account']) await p.click(`#nw-acc-form [data-action="na-add"][data-n="${n}"]`);
@@ -135,7 +132,7 @@ const SHOTS = process.env.SHOTS;
   if (await p.$('[data-action="imp-add-confirm"]')) await p.click('[data-action="imp-add-confirm"]');
   await p.waitForSelector('.wz-body');
   assert.ok(/rows/.test(await p.innerText('.wz-list li')), 'the account shows its imported dates');
-  assert.strictEqual((await p.$$('.wz-year li:not(.ok):not(.now)')).length, 0, 'every month has transactions');
+  assert.ok(/Coverage not confirmed/.test(await p.innerText('.wz-body')), 'coverage must be confirmed separately for every account');
   /* December closes on the balance before the first row */
   await p.waitForFunction(k => { const n = window.__ybtWeb.store.config.networth; return n && n.snaps && n.snaps[k] && Object.values(n.snaps[k])[0] === 1000; }, (stmt.y - 1) + '-12', { timeout: 5000 });
   await p.click('[data-action="wz-next"]');
@@ -172,8 +169,7 @@ const SHOTS = process.env.SHOTS;
   await p.click('.web-landing .wl-hero [data-x=start]');
   await p.waitForSelector('button.web-way[data-m=browser]');
   assert.ok(await p.evaluate(() => document.querySelector('.web-panel-card').getBoundingClientRect().right <= innerWidth), 'where-to-save card wider than the screen');
-  await p.click('button.web-way[data-m=browser]'); await p.click('[data-action="ob-start"]');
-  await p.waitForSelector('#tour-card', { timeout: 8000 }); await p.keyboard.press('Escape');
+  await p.click('button.web-way[data-m=browser]'); await p.click('[data-action="ob-history"]');
   await p.waitForSelector('.wz-body', { timeout: 8000 }); await p.keyboard.press('Escape');
   await p.waitForSelector('#overlay.on', { state: 'detached' }).catch(() => {});
   await p.click('#tab-transactions'); await p.click('#view [data-action="add-tx"]'); await p.waitForSelector('#f-amount');

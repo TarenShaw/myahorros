@@ -10,6 +10,7 @@ const ym = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
 (async () => {
   const browser = await chromium.launch({ channel: 'msedge' });
   const p = await (await browser.newContext({ viewport: { width: 1280, height: 860 } })).newPage();
+  const confirmPeriod=async()=>{ await p.fill('#imp-period-from',ck+'-01'); await p.fill('#imp-period-to',ck+'-'+new Date(+ck.slice(0,4),+ck.slice(5,7),0).getDate()); await p.check('#imp-period-confirm'); };
   const shot = async n => { if (SHOTS) await p.screenshot({ path: `${SHOTS}/${n}.png` }); };
   p.on('pageerror', e => console.log('pageerror:', String(e).slice(0, 200)));
   await p.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
@@ -26,7 +27,8 @@ const ym = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
         networth: { accounts: [{ id: 'cur', name: 'Current account', group: 'cash' }, { id: 'sav', name: 'Savings account', group: 'cash' }, { id: 'fund', name: 'Index funds', group: 'invest' }],
           snaps: { [prev]: { cur: 1000, sav: 5000, fund: 8000 } } } } })); }, { ck, prev });
   await p.goto(START, { waitUntil: 'load' });
-  await p.click('.web-landing .wl-hero [data-x=open]');
+  await p.waitForFunction(()=>document.querySelector('.web-landing [data-x=open]')||document.querySelector('#view .page-head'));
+  if(await p.locator('.web-landing [data-x=open]').count()) await p.click('.web-landing .wl-hero [data-x=open]');
   await p.waitForSelector('[data-action="ci-open"]', { timeout: 8000 });
   await shot('checkin-strip');
   console.log('1. a check-in is offered');
@@ -42,13 +44,13 @@ const ym = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
   assert.strictEqual(await p.inputValue('#imp-acct'), 'cur', 'the known file goes to its account by itself');
   assert.ok(/file 1 of 2/.test(await p.innerText('.modal')));
   assert.ok(await p.isChecked('#imp-balfill'), 'its Balance column fills the month-end'); await shot('checkin-review');
-  await p.click('[data-action="imp-add"]');
+  await confirmPeriod(); await p.click('[data-action="imp-add"]');
   if (await p.$('[data-action="imp-add-confirm"]')) await p.click('[data-action="imp-add-confirm"]');
   await p.waitForFunction(() => /file 2 of 2/.test((document.querySelector('.modal') || {}).innerText || ''));
   assert.strictEqual(await p.inputValue('#imp-acct'), '', 'a new file asks which account');
   await p.selectOption('#imp-acct', 'sav');
   await p.waitForSelector('#imp-balfill');
-  await p.click('[data-action="imp-add"]');
+  await confirmPeriod(); await p.click('[data-action="imp-add"]');
   if (await p.$('[data-action="imp-add-confirm"]')) await p.click('[data-action="imp-add-confirm"]');
   await p.waitForSelector('.wz-body #ci-drop');
   assert.strictEqual((await p.$$('.wz-list .wz-st.ok')).length, 2, 'both accounts are covered');
@@ -96,9 +98,10 @@ const ym = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
   await q.evaluate(async ({ ck }) => { localStorage.setItem('ybt.storage', 'browser');
     await window.__ybtWeb.idb.set('data', JSON.stringify({ app: 'Yearly Budget Tracker', format: 1,
       months: { [ck]: { income: [{ id: 's1', date: ck + '-27', concept: 'ACME PAYROLL', amount: 2000, category: 'Salary' }], expenses: [], investments: [] } },
-      config: { settings: { lang: 'en' }, networth: { accounts: [{ id: 'cur', name: 'Current account', group: 'cash' }], snaps: { [ck]: { cur: 3000 } } } } })); }, { ck });
+      config: { settings: { lang: 'en',guide:{stmts:{cur:{coverFrom:ck+'-01',coverTo:ck+'-'+new Date(+ck.slice(0,4),+ck.slice(5,7),0).getDate()}}} }, networth: { accounts: [{ id: 'cur', name: 'Current account', group: 'cash' }], snaps: { [ck]: { cur: 3000 } } } } })); }, { ck });
   await q.goto(START, { waitUntil: 'load' });
-  await q.click('.web-landing .wl-hero [data-x=open]');
+  await q.waitForFunction(()=>document.querySelector('.web-landing [data-x=open]')||document.querySelector('#view .page-head'));
+  if(await q.locator('.web-landing [data-x=open]').count()) await q.click('.web-landing .wl-hero [data-x=open]');
   await q.waitForSelector('#view .page-head'); await q.waitForTimeout(500);
   assert.ok(!(await q.$('[data-action="ci-open"]')), 'a complete month offers no check-in');
   console.log('6. a month already complete offers no check-in');

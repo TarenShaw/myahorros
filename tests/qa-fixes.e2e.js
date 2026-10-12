@@ -77,7 +77,7 @@ const TRACKER = lang => JSON.stringify({ app: 'Yearly Budget Tracker', format: 1
 
   /* 5. Spanish Indicators at 1440 px: the status pill doesn't cover the target button */
   const es = await open('es');
-  await es.click('#tab-overview'); await es.waitForSelector('.ind .ind-target');
+  await es.click('#tab-overview'); await es.click('[data-action=analysis-toggle]'); await es.waitForSelector('.ind .ind-target');
   const overlap = await es.evaluate(() => [...document.querySelectorAll('.ind')].some(r => { const t = r.querySelector('.ind-target'), s = r.querySelector('.pill'); return t && s && t.getBoundingClientRect().right > s.getBoundingClientRect().left; }));
   assert.ok(!overlap, 'pill overlaps the target');
   /* the info buttons are at least 24 px to click (the ::after hit area) */

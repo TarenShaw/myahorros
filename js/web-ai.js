@@ -25,7 +25,8 @@ const P={
 };
 const TX={
   en:{
-    title:'Read statements with AI', sub:'Pick the AI that reads your statements. Your files go straight from this browser to the company you pick, never to this website.',
+    title:'How would you like to use AI?', sub:'Choose how to read statements and check your data. You review every result before saving.',
+    pasteWay:'Use my existing AI chat', automatic:'Read it automatically', automaticHelp:'Connect an AI service with your own key. API use is billed separately from chat subscriptions; some services have free limits.', chooseService:'Choose a service',
     anthropicS:'Your own Anthropic API key. Pay per use: usually a few cents per statement.',
     openaiS:'Your own OpenAI API key. The API is billed separately from a ChatGPT Plus subscription, per use.',
     geminiS:'Your own Google AI Studio key. Has a free tier; on the free tier Google may use what you send to improve its products, so a paid key is better for bank statements.',
@@ -39,15 +40,16 @@ const TX={
     badKey:'That key wasn’t accepted. Check you copied all of it.', noKey:'Paste your API key first.', wrongKey:(n,h)=>`That doesn’t look like a ${n} key. It should start with ${h}`,
     netFail:'Couldn’t reach the service. Check your connection and try again.', noModels:'Your key works, but no suitable model was found for it.',
     saved:n=>`${n} is ready to read your statements.`, savedPaste:'Copy and paste is ready.',
-    pTitle:'Copy and paste into an AI chat', p1:'Copy the request. It has the instructions and your statements’ text.', copy:'Copy the request', copied:'Copied',
+    pTitle:'Use your AI chat', stepCopy:'Copy request', stepChat:'Open AI chat', stepAnswer:'Paste answer', p1:'Copy the request. It includes the instructions and the data you selected.', copy:'Copy the request', copied:'Copied', copyFailed:'Copy didn’t work. Select the request below and copy it yourself.',
     p2:'Paste it into a new chat in ChatGPT, Claude or Gemini and send it.', p3:'When it has finished, copy its whole answer and paste it here:',
-    pPlaceholder:'Paste the AI’s answer here', read:'Read the answer', pBad:'That doesn’t look like the whole answer. Copy everything the AI wrote, from the first { to the last }, and try again.',
+    pPlaceholder:'Paste the AI’s answer here', read:'Create my review', pBad:'We couldn’t read that answer. Your pasted text is still here. Copy the repair request below into the same AI chat, then paste its new answer here.', repair:'Copy repair request', repairText:'Please redo your answer to my original request using exactly the requested JSON format. Return the complete answer, without commentary or missing sections. If it is too large, tell me so rather than cutting it off.',
     pSize:n=>`${n} characters. If the chat says it’s too long, send one month at a time.`, pTip:'Tip: use a new chat, so nothing from earlier conversations gets mixed in.',
     setTitleNone:'Set up AI…', setHelpNone:'Not set up yet. Use your own Claude, ChatGPT or Gemini key, or copy and paste into any AI chat.',
     setTitle:n=>'Change AI…', setHelp:(n,m)=>`Now using ${n}${m?' ('+m+')':''} with your own key.`, setHelpPaste:'Now using copy and paste: you paste the request into any AI chat and its answer back here.',
     forget:'Forget the AI key', forgetHelp:'Removes the key from this browser.', forgotten:'The AI key was removed from this browser.',
     privacy:n=>`Your files are read here, in this page, and their contents are sent from this browser straight to ${n} with your own key. Nothing goes to this website.`,
     privacyPaste:'Your files are read here, in this page. You copy their text into the AI chat yourself; nothing goes to this website.',
+    auditPrivacy:n=>`Your selected data is sent from this browser straight to ${n} with your own key. You review suggestions before saving.`, auditPrivacyPaste:'We prepare a request here. You choose whether to copy it into another AI service. You review suggestions before saving.', fileHelp:'PDF, spreadsheet, text or pictures. Every extracted row is reviewed before saving.', fileHelpPaste:'Text-based PDF, spreadsheet or text. Scans and pictures need an automatic connection. You choose whether to copy the extracted text into your AI chat.',
     label:'AI', change:'Change AI…',
     errWhat:'What went wrong', copyDetails:'Copy details', detailsCopied:'Copied',
     badgePaid:'Paid', badgeFree:'Free', colPaste:'Copy and paste', colApi:'API (your own key)',
@@ -72,7 +74,8 @@ const TX={
     cardTitle:'Reading statements with AI', cardSub:'The “Fill in with AI” buttons read your bank statements and fill in transactions and balances for you to check.'
   },
   es:{
-    title:'Leer extractos con IA', sub:'Elige la IA que lee tus extractos. Tus archivos van directamente de este navegador a la empresa que elijas, nunca a esta web.',
+    title:'¿Cómo quieres usar la IA?', sub:'Elige cómo leer extractos y comprobar tus datos. Revisas cada resultado antes de guardar.',
+    pasteWay:'Usar mi chat de IA', automatic:'Leer automáticamente', automaticHelp:'Conecta un servicio de IA con tu propia clave. La API se paga aparte de las suscripciones de chat; algunos servicios tienen límites gratuitos.', chooseService:'Elige un servicio',
     anthropicS:'Tu propia clave de API de Anthropic. Pagas por uso: normalmente unos céntimos por extracto.',
     openaiS:'Tu propia clave de API de OpenAI. La API se paga aparte de una suscripción ChatGPT Plus, por uso.',
     geminiS:'Tu propia clave de Google AI Studio. Tiene un nivel gratuito; en él Google puede usar lo que envías para mejorar sus productos, así que para extractos bancarios es mejor una clave de pago.',
@@ -86,15 +89,16 @@ const TX={
     badKey:'Esa clave no se ha aceptado. Comprueba que la has copiado entera.', noKey:'Primero pega tu clave de API.', wrongKey:(n,h)=>`No parece una clave de ${n}. Debería empezar por ${h}`,
     netFail:'No se ha podido conectar con el servicio. Revisa la conexión y vuelve a intentarlo.', noModels:'Tu clave funciona, pero no se ha encontrado ningún modelo adecuado.',
     saved:n=>`${n} ya puede leer tus extractos.`, savedPaste:'Copiar y pegar está listo.',
-    pTitle:'Copiar y pegar en un chat de IA', p1:'Copia la petición. Lleva las instrucciones y el texto de tus extractos.', copy:'Copiar la petición', copied:'Copiada',
+    pTitle:'Usar tu chat de IA', stepCopy:'Copiar petición', stepChat:'Abrir chat de IA', stepAnswer:'Pegar respuesta', p1:'Copia la petición. Lleva las instrucciones y los datos que has seleccionado.', copy:'Copiar la petición', copied:'Copiada', copyFailed:'No se ha podido copiar. Selecciona la petición de abajo y cópiala tú.',
     p2:'Pégala en un chat nuevo de ChatGPT, Claude o Gemini y envíala.', p3:'Cuando termine, copia toda su respuesta y pégala aquí:',
-    pPlaceholder:'Pega aquí la respuesta de la IA', read:'Leer la respuesta', pBad:'Eso no parece la respuesta completa. Copia todo lo que escribió la IA, desde la primera { hasta la última }, y vuelve a intentarlo.',
+    pPlaceholder:'Pega aquí la respuesta de la IA', read:'Crear mi revisión', pBad:'No hemos podido leer esa respuesta. El texto que pegaste sigue aquí. Copia la petición de reparación de abajo en el mismo chat de IA y pega aquí su nueva respuesta.', repair:'Copiar petición de reparación', repairText:'Repite la respuesta a mi petición original usando exactamente el formato JSON solicitado. Devuelve la respuesta completa, sin comentarios ni secciones omitidas. Si es demasiado grande, dímelo en lugar de cortarla.',
     pSize:n=>`${n} caracteres. Si el chat dice que es demasiado largo, envía un mes cada vez.`, pTip:'Consejo: usa un chat nuevo, para que no se mezcle nada de conversaciones anteriores.',
     setTitleNone:'Configurar la IA…', setHelpNone:'Aún sin configurar. Usa tu propia clave de Claude, ChatGPT o Gemini, o copia y pega en cualquier chat de IA.',
     setTitle:n=>'Cambiar la IA…', setHelp:(n,m)=>`Ahora con ${n}${m?' ('+m+')':''} y tu propia clave.`, setHelpPaste:'Ahora con copiar y pegar: pegas la petición en cualquier chat de IA y su respuesta aquí.',
     forget:'Olvidar la clave de IA', forgetHelp:'Quita la clave de este navegador.', forgotten:'La clave de IA se ha quitado de este navegador.',
     privacy:n=>`Tus archivos se leen aquí, en esta página, y su contenido se envía desde este navegador directamente a ${n} con tu propia clave. No llega nada a esta web.`,
     privacyPaste:'Tus archivos se leen aquí, en esta página. Tú copias su texto en el chat de IA; no llega nada a esta web.',
+    auditPrivacy:n=>`Tus datos seleccionados se envían desde este navegador directamente a ${n} con tu propia clave. Revisas las sugerencias antes de guardar.`, auditPrivacyPaste:'Preparamos una petición aquí. Tú decides si la copias en otro servicio de IA. Revisas las sugerencias antes de guardar.', fileHelp:'PDF, hoja de cálculo, texto o imágenes. Cada fila extraída se revisa antes de guardar.', fileHelpPaste:'PDF con texto, hoja de cálculo o texto. Los escaneos y las imágenes necesitan una conexión automática. Tú decides si copias el texto extraído en tu chat de IA.',
     label:'la IA', change:'Cambiar la IA…',
     errWhat:'Qué ha fallado', copyDetails:'Copiar detalles', detailsCopied:'Copiado',
     badgePaid:'De pago', badgeFree:'Gratis', colPaste:'Copiar y pegar', colApi:'API (tu propia clave)',
@@ -220,13 +224,29 @@ const b64=blob=>new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>
 
 /* ---------- panels ---------- */
 function panel(html){
+  const opener=document.activeElement;
   const el=document.createElement('div'); el.className='web-panel overlay ai-panel'; el.setAttribute('role','dialog'); el.setAttribute('aria-modal','true'); el.setAttribute('aria-labelledby','ap-title');
+  el.tabIndex=-1;
   el.innerHTML=`<div class="web-panel-card">${html}<p class="web-msg" role="status" hidden></p><div class="web-details" hidden><pre></pre><button type="button" class="btn sm" data-x="copydetails">${esc(t('copyDetails'))}</button></div></div>`;
   document.body.appendChild(el);
   el.msg=(s,good)=>{ const m=el.querySelector('.web-msg'); m.textContent=s||''; m.hidden=!s; m.classList.toggle('good',!!good); el.querySelector('.web-details').hidden=true; };
   el.fail=e=>{ const x=explain(e); el.msg(x.why); const d=el.querySelector('.web-details'); d.querySelector('pre').textContent=x.details; d.hidden=false; el._details=x.details; };
   el.addEventListener('click',async e=>{ const b=e.target.closest('[data-x=copydetails]'); if(!b) return; await copyText(el._details||''); b.textContent=t('detailsCopied'); setTimeout(()=>{ if(b.isConnected) b.textContent=t('copyDetails'); },2000); });
-  el.addEventListener('keydown',e=>{ if(e.key==='Escape'){ const c=el.querySelector('[data-x=cancel]'); if(c) c.click(); } e.stopPropagation(); });
+  const top=()=>[...document.querySelectorAll('.ai-panel')].pop()===el;
+  const focusable=()=>[...el.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled),summary,[tabindex="0"]')].filter(x=>x.getClientRects().length);
+  const trap=e=>{
+    if(!top()) return;
+    if(e.key==='Escape'){ e.preventDefault(); e.stopImmediatePropagation(); const c=el.querySelector('[data-x=cancel]'); if(c) c.click(); return; }
+    if(e.key!=='Tab') return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    const bs=focusable(), i=bs.indexOf(document.activeElement);
+    (bs.length?bs[i<0?(e.shiftKey?bs.length-1:0):(i+(e.shiftKey?-1:1)+bs.length)%bs.length]:el).focus();
+  };
+  const keepFocus=e=>{ if(top()&&!el.contains(e.target)) (focusable()[0]||el).focus(); };
+  /* Window capture runs before the wizard's document-level focus trap. */
+  window.addEventListener('keydown',trap,true); window.addEventListener('focusin',keepFocus,true);
+  el.close=()=>{ window.removeEventListener('keydown',trap,true); window.removeEventListener('focusin',keepFocus,true); el.remove(); if(opener&&opener.isConnected) opener.focus(); };
+  setTimeout(()=>{ if(el.isConnected&&top()) (focusable()[0]||el).focus(); },0);
   return el;
 }
 /* "Haiku 5.5 (claude-haiku-5-5)" for the models the config file names; everything else as the service calls it */
@@ -244,14 +264,15 @@ let setupOpen=null;
 function setup(){
   if(setupOpen) return setupOpen;
   setupOpen=new Promise(resolve=>{
-    const c=cfg(); let sel=c.provider||'anthropic', models=null;
+    const c=cfg(); let sel=c.provider||'paste', models=null;
     const badge=k=>k?`<span class="ai-badge ${k}">${esc(t(k==='paid'?'badgePaid':'badgeFree'))}</span>`:'';
     const card=(p,title,sub,b)=>`<button type="button" class="web-way ai-way${sel===p?' current':''}" data-p="${p}" aria-pressed="${sel===p}"><span><b>${esc(title)} ${badge(b)}</b><small>${esc(sub)}</small></span></button>`;
     const el=panel(`<p class="web-eyebrow">MyAhorros</p><h2 id="ap-title">${esc(t('title'))}</h2><p class="web-sub">${esc(t('sub'))}</p>
-      <div class="ai-cols">
-        <section class="ai-col"><h3>${esc(t('colPaste'))} ${badge('free')}</h3><div class="web-ways ai-ways">${card('paste',t('pasteT'),t('pasteS'))}</div></section>
-        <section class="ai-col"><h3>${esc(t('colApi'))}</h3><div class="web-ways ai-ways">${card('anthropic','Claude',t('anthropicS'),'paid')}${card('openai','ChatGPT',t('openaiS'),'paid')}${card('gemini','Gemini',t('geminiS'),'free')}</div></section>
+      <div class="web-ways ai-ways">
+        <button type="button" class="web-way" data-mode="paste"><span><b>${esc(t('pasteWay'))}</b><small>${esc(t('pasteS'))}</small></span></button>
+        <button type="button" class="web-way" data-mode="automatic"><span><b>${esc(t('automatic'))}</b><small>${esc(t('automaticHelp'))}</small></span></button>
       </div>
+      <section id="ai-providers" class="ai-col" hidden><h3>${esc(t('chooseService'))}</h3><div class="web-ways ai-ways">${card('anthropic','Claude',t('anthropicS'),'paid')}${card('openai','ChatGPT',t('openaiS'),'paid')}${card('gemini','Gemini',t('geminiS'),'free')}</div></section>
       <div class="ai-key" id="ai-keybox">
         <label for="ai-key">${esc(t('keyLabel'))}</label>
         <input id="ai-key" type="password" autocomplete="off" spellcheck="false">
@@ -268,6 +289,8 @@ function setup(){
     const show=()=>{
       el.querySelectorAll('.ai-way').forEach(b=>{ const on=b.dataset.p===sel; b.classList.toggle('current',on); b.setAttribute('aria-pressed',on); });
       const api=sel!=='paste'; $('#ai-keybox').hidden=!api;
+      $('#ai-providers').hidden=!api;
+      el.querySelectorAll('[data-mode]').forEach(b=>{ const on=(b.dataset.mode==='automatic')===api; b.classList.toggle('current',on); b.setAttribute('aria-pressed',on); });
       if(api){ const p=P[sel]; keyIn.placeholder=p.keyHint; const a=$('#ai-getkey'); a.href=p.keyUrl; a.textContent=t('getKey',p.company); }
       $('#ai-modelbox').hidden=!(api&&models&&models.length>1);
       $('#ai-effortbox').hidden=sel!=='anthropic';
@@ -277,61 +300,66 @@ function setup(){
       $('[data-x=go]').textContent=api?t('check'):t('usePaste'); el.msg('');
     };
     show();
-    setTimeout(()=>{ (sel!=='paste'?keyIn:$('[data-x=go]')).focus(); },0);
+    setTimeout(()=>{ if(el.isConnected) (c.key&&sel!=='paste'?keyIn:$('[data-mode="'+(sel==='paste'?'paste':'automatic')+'"]')).focus(); },0);
     /* already set up: list the models the key can use, so another can be picked */
-    const listModels=async()=>{ if(sel==='paste'||!keyIn.value.trim()) return; const p=sel;
-      try{ const ms=await API[p].models(keyIn.value.trim()); if(p!==sel||!el.isConnected) return; models=ms;
+    const listModels=async()=>{ if(sel==='paste'||!keyIn.value.trim()) return; const p=sel, key=keyIn.value.trim();
+      try{ const ms=await API[p].models(key); if(p!==sel||key!==keyIn.value.trim()||!el.isConnected) return; models=ms;
         const cur=c.provider===p&&c.model&&ms.includes(c.model)?c.model:API[p].pick(ms);
         $('#ai-model').innerHTML=ms.filter(m=>p!=='openai'||/^(gpt-|o\d)/.test(m)).map(m=>`<option value="${esc(m)}"${m===cur?' selected':''}>${esc(modelName(p,m))}</option>`).join(''); show(); }catch(_){} };
     if(c.key&&c.provider===sel) listModels();
     /* a different key is checked again from scratch */
     keyIn.addEventListener('input',()=>{ if(models){ models=null; show(); } });
-    const done=v=>{ el.remove(); setupOpen=null; resolve(v); };
+    const done=v=>{ el.close(); setupOpen=null; resolve(v); };
     el.addEventListener('click',async e=>{
+      const mode=e.target.closest('[data-mode]'); if(mode){ const p=mode.dataset.mode==='paste'?'paste':c.provider&&c.provider!=='paste'?c.provider:'anthropic'; if(p!==sel){ sel=p; models=null; keyIn.value=c.provider===sel?c.key:''; } show(); mode.focus(); if(c.key&&c.provider===sel) listModels(); return; }
       const w=e.target.closest('.ai-way'); if(w){ if(w.dataset.p!==sel){ sel=w.dataset.p; models=null; keyIn.value=c.provider===sel?c.key:''; } show(); if(sel!=='paste') keyIn.focus(); return; }
       const b=e.target.closest('button[data-x]'); if(!b||b.dataset.x==='copydetails') return;
       if(b.dataset.x==='cancel'){ done(null); return; }
       if(sel==='paste'){ const n={provider:'paste',model:'',key:'',remember:false}; saveCfg(n); done(n); toast(t('savedPaste')); return; }
-      const key=keyIn.value.trim(); if(!key){ el.msg(t('noKey')); keyIn.focus(); return; }
+      const p=sel, key=keyIn.value.trim(); if(!key){ el.msg(t('noKey')); keyIn.focus(); return; }
       if(!P[sel].keyRe.test(key)){ el.msg(t('wrongKey',P[sel].name,P[sel].keyHint)); keyIn.focus(); return; }
       const chosen=!$('#ai-modelbox').hidden?$('#ai-model').value:'';
       b.disabled=true; const was=b.textContent; b.textContent=t('checking');
       try{
-        if(!models){ models=await API[sel].models(key); }
+        if(!models){ const ms=await API[p].models(key); if(p!==sel||key!==keyIn.value.trim()||!el.isConnected) return; models=ms; }
         const model=chosen||(c.provider===sel&&c.model&&models.includes(c.model)?c.model:API[sel].pick(models));
         if(!model){ el.msg(t('noModels')); return; }
         const n={provider:sel,model,effort:sel==='anthropic'?effortOf($('#ai-effort').value):'',key,remember:$('#ai-remember').checked}; saveCfg(n);
         done(n); toast(t('saved',P[sel].name));
-      }catch(err){ el.fail(Object.assign({provider:P[sel].name},err&&err.code?err:{code:'other',message:String(err&&err.message||err)})); }
-      finally{ if(el.isConnected){ b.disabled=false; b.textContent=was; } }
+      }catch(err){ if(el.isConnected&&p===sel) el.fail(Object.assign({provider:P[p].name},err&&err.code?err:{code:'other',message:String(err&&err.message||err)})); }
+      finally{ if(el.isConnected){ b.disabled=false; b.textContent=sel==='paste'?t('usePaste'):was; } }
     });
   });
   return setupOpen;
 }
 async function copyText(s){ try{ await navigator.clipboard.writeText(s); return true; }catch(_){}
-  const ta=document.createElement('textarea'); ta.value=s; ta.style.cssText='position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); let ok=false; try{ ok=document.execCommand('copy'); }catch(_){} ta.remove(); return ok; }
+  const opener=document.activeElement, ta=document.createElement('textarea'); ta.value=s; ta.style.cssText='position:fixed;opacity:0'; ([...document.querySelectorAll('.ai-panel')].pop()||document.body).appendChild(ta); ta.select(); let ok=false; try{ ok=document.execCommand('copy'); }catch(_){} ta.remove(); if(opener&&opener.isConnected) opener.focus(); return ok; }
 function toast(s){ window.dispatchEvent(new CustomEvent('ybt-local-note',{detail:s})); }
 
 /* copy and paste: shows the request, waits for the answer */
 function pasteRound(prompt,signal){
   return new Promise((resolve,reject)=>{
+    if(signal&&signal.aborted){ reject({code:'cancelled'}); return; }
     const el=panel(`<h2 id="ap-title">${esc(t('pTitle'))}</h2>
+      <p class="web-sub">${esc(t('privacyPaste'))}</p>
       <ol class="ai-steps">
-        <li><p>${esc(t('p1'))}</p><div class="web-acts"><button type="button" class="btn primary" data-x="copy">${esc(t('copy'))}</button></div><p class="web-hint">${esc(t('pSize',prompt.length.toLocaleString(lang()==='es'?'es-ES':'en-GB')))}</p>
+        <li><b>${esc(t('stepCopy'))}</b><p>${esc(t('p1'))}</p><div class="web-acts"><button type="button" class="btn primary" data-x="copy">${esc(t('copy'))}</button></div><p class="web-hint">${esc(t('pSize',prompt.length.toLocaleString(lang()==='es'?'es-ES':'en-GB')))}</p>
           <textarea class="ai-req" readonly rows="3" aria-label="${esc(t('copy'))}"></textarea></li>
-        <li><p>${esc(t('p2'))}</p><p class="web-links"><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a><a href="https://claude.ai/new" target="_blank" rel="noopener noreferrer">Claude</a><a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer">Gemini</a></p><p class="web-hint">${esc(t('pTip'))}</p></li>
-        <li><p>${esc(t('p3'))}</p><textarea id="ai-answer" rows="7" placeholder="${esc(t('pPlaceholder'))}"></textarea></li>
+        <li><b>${esc(t('stepChat'))}</b><p>${esc(t('p2'))}</p><p class="web-links"><a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT</a><a href="https://claude.ai/new" target="_blank" rel="noopener noreferrer">Claude</a><a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer">Gemini</a></p><p class="web-hint">${esc(t('pTip'))}</p></li>
+        <li><b>${esc(t('stepAnswer'))}</b><p><label for="ai-answer">${esc(t('p3'))}</label></p><textarea id="ai-answer" rows="7" placeholder="${esc(t('pPlaceholder'))}"></textarea></li>
       </ol>
+      <div id="ai-repairbox" hidden><textarea id="ai-repair" readonly rows="3" aria-label="${esc(t('repair'))}">${esc(t('repairText'))}</textarea><button type="button" class="btn" data-x="repair">${esc(t('repair'))}</button></div>
       <div class="web-acts"><button type="button" class="btn primary" data-x="read">${esc(t('read'))}</button><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`);
     el.querySelector('.ai-req').value=prompt;
-    const fin=(fn,v)=>{ el.remove(); fn(v); };
-    if(signal) signal.addEventListener('abort',()=>{ if(el.isConnected) fin(reject,{code:'cancelled'}); },{once:true});
+    const fin=(fn,v)=>{ if(signal) signal.removeEventListener('abort',onAbort); el.close(); fn(v); };
+    const onAbort=()=>{ if(el.isConnected) fin(reject,{code:'cancelled'}); };
+    if(signal) signal.addEventListener('abort',onAbort,{once:true});
     el.addEventListener('click',async e=>{ const b=e.target.closest('button[data-x]'); if(!b) return;
       if(b.dataset.x==='cancel'){ fin(reject,{code:'cancelled'}); return; }
-      if(b.dataset.x==='copy'){ let ok=false; try{ await navigator.clipboard.writeText(prompt); ok=true; }catch(_){}
-        if(!ok){ const ta=el.querySelector('.ai-req'); ta.focus(); ta.select(); try{ ok=document.execCommand('copy'); }catch(_){} }
-        b.textContent=t('copied'); setTimeout(()=>{ if(b.isConnected) b.textContent=t('copy'); },2500); return; }
-      if(b.dataset.x==='read'){ const v=parseAnswer(el.querySelector('#ai-answer').value); if(!v||typeof v!=='object'){ el.msg(t('pBad')); return; } fin(resolve,v); }
+      if(b.dataset.x==='copy'||b.dataset.x==='repair'){ const repair=b.dataset.x==='repair', ok=await copyText(repair?t('repairText'):prompt);
+        if(!ok){ el.msg(t('copyFailed')); const ta=el.querySelector(repair?'#ai-repair':'.ai-req'); ta.focus(); ta.select(); return; }
+        b.textContent=t('copied'); setTimeout(()=>{ if(b.isConnected) b.textContent=t(repair?'repair':'copy'); },2500); return; }
+      if(b.dataset.x==='read'){ const v=parseAnswer(el.querySelector('#ai-answer').value); if(!v||typeof v!=='object'){ el.msg(t('pBad')); el.querySelector('#ai-repairbox').hidden=false; return; } fin(resolve,v); }
     });
   });
 }
@@ -368,7 +396,10 @@ function explain(e,lg){
 async function json(prompt,opts){
   opts=opts||{};
   const c=await ensure(); if(!c) throw {code:'cancelled'};
-  if(c.provider==='paste') return pasteRound(prompt,opts.signal);
+  if(c.provider==='paste'){
+    if((opts.images||[]).length) throw {code:'bad_request',provider:t('pasteT'),message:t('fileHelpPaste')};
+    return pasteRound(prompt,opts.signal);
+  }
   const imgs=[]; for(const b of opts.images||[]) imgs.push(await prep(c.provider,b));
   if(c.provider==='gemini'&&imgs.reduce((n,i)=>n+i.data.length,0)>18e6) throw {code:'prompt_too_large',provider:P.gemini.name,model:c.model,message:'pictures add up to more than 18 MB'};
   const A=API[c.provider]; let maxTok=null, err;
@@ -390,7 +421,7 @@ async function json(prompt,opts){
 async function limits(){ const c=await ensure(); if(!c) throw {code:'cancelled'}; return c.provider==='paste'?{images:null}:{images:{maxCount:20}}; }
 const sample=Object.assign(async(...a)=>json(...a),{
   json, limits, explain, setup:async()=>{ const r=await setup(); window.dispatchEvent(new CustomEvent('ybt-local-render')); return r; },
-  text(k,lg){ seeLang(lg); const c=cfg(); if(k==='aiPrivacy') return c.provider==='paste'?t('privacyPaste'):c.provider?t('privacy',P[c.provider].name):t('privacy',lang()==='es'?'la IA que elijas':'the AI you pick'); if(k==='aiChange') return t('change'); return null; }
+  text(k,lg){ seeLang(lg); const c=cfg(); if(k==='aiPrivacy') return c.provider==='paste'?t('privacyPaste'):c.provider?t('privacy',P[c.provider].name):t('sub'); if(k==='aiAuditPrivacy') return !c.provider||c.provider==='paste'?t('auditPrivacyPaste'):t('auditPrivacy',P[c.provider].name); if(k==='aiFileHelp') return !c.provider||c.provider==='paste'?t('fileHelpPaste'):t('fileHelp'); if(k==='aiChange') return t('change'); return null; }
 });
 Object.assign(sample,{
   actions:['aiSetup','aiForget'],
@@ -403,7 +434,7 @@ Object.assign(sample,{
   async aiForget(){ const c=cfg(); saveCfg({provider:null,model:'',key:'',remember:false}); ss.set(SKEY,null); window.dispatchEvent(new CustomEvent('ybt-local-render')); return {message:t('forgotten')}; },
   /* has an AI been chosen yet? (the page shows the picker before anything else on first use) */
   configured(){ return !!ready(); },
-  current(){ const c=cfg(); if(!ready()) return null; return {provider:c.provider,name:c.provider==='paste'?t('pasteT'):P[c.provider].name,model:c.model||''}; },
+  current(){ const c=cfg(); if(!ready()) return null; return {provider:c.provider,name:c.provider==='paste'?t('pasteT'):P[c.provider].name,model:c.model||'',images:c.provider!=='paste'}; },
   _parse:parseAnswer, _cfg:cfg
 });
 /* read each time: the choice and the language can change while the page is open */

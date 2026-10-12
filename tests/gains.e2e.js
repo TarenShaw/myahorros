@@ -13,13 +13,11 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await p.route('https://accounts.google.com/gsi/client', r => r.fulfill({ contentType: 'text/javascript', body: 'window.google={accounts:{oauth2:{}}};' }));
   const closeExtra = async () => { if (await p.$('#overlay .modal')) await p.keyboard.press('Escape'); };
 
-  /* new tracker in the browser, skip tour, wizard and setup strip */
+  /* new tracker in the browser, skip wizard and setup strip */
   await p.goto(START, { waitUntil: 'load' });
   await p.click('.web-landing .wl-hero [data-x=start]');
   await p.click('button.web-way[data-m=browser]');
   await p.click('[data-action="ob-start"]');
-  await p.waitForSelector('#tour-card', { timeout: 8000 });
-  await p.keyboard.press('Escape');
   await p.waitForSelector('.wz-body', { timeout: 8000 });
   await p.click('[data-action="wz-later"]');
   await p.click('[data-action="guide-hide"]');
@@ -52,6 +50,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   const gains = async k => {
     await p.click('[data-action=tab][data-tab=networth]');
     await p.selectOption('#nw-month', k);
+    if(await p.locator('[data-action=analysis-toggle][aria-expanded=false]').count()) await p.click('[data-action=analysis-toggle]');
     return p.evaluate(() => Object.fromEntries([...document.querySelectorAll('table.nwt tbody tr:not(.grp), table.nwt tfoot tr')]
       .map(tr => [tr.children[0].innerText.trim().replace(/,.*/, ''), tr.children[3].innerText.trim().replace(/[^\d.,—−+-]/g, '')])));
   };
@@ -94,7 +93,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   /* 4. pasted import: everyday rows sorted automatically, plus one investment row with an accent */
   const imp = async (text, table) => {
     await p.click('[data-action="import"] >> nth=0');
-    await p.fill('#imp-text', text); await p.selectOption('#imp-table', table);
+    await p.fill('#imp-text', text); await p.locator('details:has(#imp-table) summary').click(); await p.selectOption('#imp-table', table);
     await p.click('[data-action="imp-read"]'); await p.click('[data-action="imp-add"]');
     if (await p.$('[data-action="imp-add-confirm"]')) await p.click('[data-action="imp-add-confirm"]');
     await p.waitForTimeout(300); await closeExtra();

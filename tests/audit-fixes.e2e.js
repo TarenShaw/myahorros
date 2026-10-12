@@ -35,7 +35,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   /* 2. setting up from the demo asks where to save, then the wizard opens on its first step */
   await p.click('#demo-bar [data-tour=end]');
   await p.waitForSelector('button.web-way[data-m=browser]', { timeout: 8000 });
-  assert.ok(/Keep it in this browser/.test(await p.innerText('.web-panel')), 'keep-browser button missing');
+  assert.ok(/This device|Keep it in this browser/.test(await p.innerText('.web-panel')), 'keep-browser button missing');
   await p.click('.web-panel [data-x=cancel]');
   await p.waitForSelector('.wz-body', { timeout: 8000 });
   assert.ok(/step 1 of 5/i.test(await p.innerText('#overlay .eyebrow')));

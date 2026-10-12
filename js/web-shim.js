@@ -32,15 +32,14 @@ const lsSet=(k,v)=>{ try{ if(v==null) localStorage.removeItem(k); else localStor
 /* ---------- text ---------- */
 const TX={
   en:{
-    chooseTitle:'Where should your tracker be saved?',
-    about:'MyAhorros is a free budget and net worth tracker: income, expenses, investments and what you own, month by month, in English or Spanish.', privacyLink:'Privacy',
-    chooseSub:'Your figures never go to this website. Pick where they’re kept; you can change it later in Settings.',
-    folderT:'A folder on this computer', folderS:'One data file in a folder you choose, such as Documents, with a backup every day. Works offline. The same file the Windows app uses.',
+    chooseTitle:'Where would you like to use your tracker?',
+    chooseSub:'Choose what suits you. Your figures stay in the place you choose, and you can change it later in Settings.',
+    folderT:'A folder I manage', folderS:'Saved as a file on this computer, with daily backups in the same folder. Works offline. Keep a separate copy if you want protection from losing this computer.',
     folderNo:'Needs Chrome or Edge on a computer.',
-    driveT:'Your Google Drive', driveS:'Saved in your own Google Drive, so it’s the same on your phone and computer. Works offline and catches up when you’re back online. The site can only see the files it creates.',
+    driveT:'Across my devices', driveS:'Connect your Google Drive to use the same tracker on your phone and computer, with daily backups in Drive. Works offline and syncs when you reconnect. The site only sees files it creates.',
     driveNo:'Not available on this site yet.', driveOffline:'Needs an internet connection to set up.',
-    browserT:'Only in this browser', browserS:'Nothing to set up. Clearing your browsing data deletes it, so download a backup now and then.',
-    recommended:'Recommended', cancel:'Cancel', keepBrowser:'Keep it in this browser', exampleBtn:'Just looking? Try it with example data',
+    browserT:'This device', browserS:'Start straight away in this browser. Clearing browser data also deletes its backups. Download a backup from Settings to keep a separate copy.',
+    cancel:'Cancel', keepBrowser:'Keep it in this browser',
     pickHint:'Pick a folder such as Documents. A “Yearly Budget Tracker” folder is made inside it, unless you pick one that already has your tracker.',
     pickedNotAllowed:'The browser didn’t allow saving in that folder. Pick another one, such as Documents.',
     reTitle:'Allow access to your tracker folder', reText:n=>`Your tracker is saved in the folder “${n}”. Your browser asks you to allow access again before the site can open it.`,
@@ -73,19 +72,19 @@ const TX={
     conflictNote:'Whichever you don’t keep is saved as a backup first. “Merge both” keeps every transaction, account and setting from both versions; where both changed the same one, it keeps the one on this screen.',
     mergedBoth:'Merged both versions. The other one was kept as a backup.',
     landDemo:'See a demo', landStart:'Get started', landOpen:'Open my tracker', landMenu:'Sections',
-    landH1:'Know where your money goes, and what you’re worth.',
-    landSub:'A free, simple way to follow what you earn, spend and own. Your figures stay on your device or in your own Google Drive.',
-    landNoSignup:'No account. No sign-up. Nothing leaves your device unless you choose.',
+    landH1:'See where your money goes and how your savings change.',
+    landSub:'Import a bank statement, review your spending and follow your savings. Your figures stay on your device or in your own Google Drive.',
+    landNoSignup:'No sign-up. You add statements; banks are not connected automatically. AI is optional; automatic AI connections are billed separately.',
     landChip:'Free · No sign-up · Private',
     landCalls:['Your data stays on your device','Import from Excel','Read statements with AI'],
-    landShotAlt:'The Net worth page with example figures: a total of 39.065 € and a chart of month-end totals that grows each month, with the last four months of the year in grey as a forecast.',
+    landShotAlt:'The Net worth page with example figures: a total of 39.066 € and a chart of month-end totals that grows each month, with the last four months of the year in grey as a forecast.',
     landFeatT:'Everything in one place', landFeatSub:'Made for people who just want to know how they’re doing. No finance words needed.',
     landF:[['Income and expenses','Add what comes in and what goes out, by hand or with your bank’s file. It sorts everything into categories and puts each month side by side.'],
            ['Net worth over time','Once a month, type what each account holds. One chart shows your total growing through the year.'],
            ['Investments','See how much you put in, and how much your funds, shares or pension gained on their own.'],
            ['A look ahead','Grey months show where you’ll likely be by December if you carry on as you have this past year.']],
     landSafeT:'Your data stays yours', landSafe:'There is no account and no server holding your figures. Keep them in a folder, in your own Google Drive or only in this browser, with a daily backup. It works offline and installs like an app.',
-    landHow:'How it works', landHowSteps:[['Choose where it lives','A folder, your Google Drive or your browser. You can change it any time.'],['Add what you own','A few accounts and what they were worth last month.'],['Add your transactions','By hand, by pasting a statement, or with AI.']],
+    landHow:'How it works', landHowSteps:[['Choose where it lives','This device, your Google Drive or a folder you manage. You can change it any time.'],['Add a statement','Start with one account and one month, or bring in your history. Review the rows before saving.'],['See your money clearly','See a monthly spending summary, then add account balances to follow your savings.']],
     landEnd:'Ready when you are', landEndSub:'Take the two-minute tour with example data, or set up your own tracker.',
     landPrivacy:'Privacy',
     stDriveError:t=>`Couldn’t sync with Google Drive. Trying again at ${t}.`, stDrivePaused:'Sync is waiting until you finish what you’re doing.',
@@ -126,15 +125,14 @@ const TX={
     dlBackup:'Download a backup', jsonFilter:'Tracker data or backup'
   },
   es:{
-    chooseTitle:'¿Dónde quieres guardar tu control?',
-    about:'MyAhorros es un control gratuito de presupuesto y patrimonio: ingresos, gastos, inversiones y lo que tienes, mes a mes, en español o en inglés.', privacyLink:'Privacidad',
-    chooseSub:'Tus cifras nunca llegan a esta web. Elige dónde se guardan; puedes cambiarlo luego en Ajustes.',
-    folderT:'Una carpeta de este ordenador', folderS:'Un archivo de datos en la carpeta que elijas, como Documentos, con una copia cada día. Funciona sin conexión. Es el mismo archivo que usa la aplicación de Windows.',
+    chooseTitle:'¿Dónde quieres usar tu control?',
+    chooseSub:'Elige lo que te resulte más cómodo. Tus cifras se guardan donde tú decidas; puedes cambiarlo luego en Ajustes.',
+    folderT:'Una carpeta que yo gestiono', folderS:'Un archivo en este ordenador, con copias diarias en la misma carpeta. Funciona sin conexión. Guarda otra copia fuera del ordenador para protegerte si lo pierdes.',
     folderNo:'Necesita Chrome o Edge en un ordenador.',
-    driveT:'Tu Google Drive', driveS:'Se guarda en tu propio Google Drive, así que es el mismo en el móvil y en el ordenador. Funciona sin conexión y se pone al día al volver a conectarte. La web solo puede ver los archivos que crea.',
+    driveT:'En mis dispositivos', driveS:'Conecta tu Google Drive para usar el mismo control en el móvil y el ordenador, con copias diarias en Drive. Funciona sin conexión y sincroniza al volver a conectarte. La web solo ve los archivos que crea.',
     driveNo:'Todavía no está disponible en esta web.', driveOffline:'Necesita conexión a internet para configurarlo.',
-    browserT:'Solo en este navegador', browserS:'No hay nada que configurar. Si borras los datos de navegación se borra, así que descarga una copia de vez en cuando.',
-    recommended:'Recomendado', cancel:'Cancelar', keepBrowser:'Dejarlo en este navegador', exampleBtn:'¿Solo quieres echar un vistazo? Pruébalo con datos de ejemplo',
+    browserT:'Este dispositivo', browserS:'Empieza directamente en este navegador. Si borras sus datos, también se borran las copias. Descarga una copia desde Ajustes para guardarla aparte.',
+    cancel:'Cancelar', keepBrowser:'Dejarlo en este navegador',
     pickHint:'Elige una carpeta como Documentos. Dentro se crea una carpeta «Yearly Budget Tracker», salvo que elijas una que ya tenga tu control.',
     pickedNotAllowed:'El navegador no permite guardar en esa carpeta. Elige otra, como Documentos.',
     reTitle:'Permite el acceso a la carpeta de tu control', reText:n=>`Tu control se guarda en la carpeta «${n}». El navegador pide que vuelvas a permitir el acceso antes de abrirlo.`,
@@ -167,19 +165,19 @@ const TX={
     conflictNote:'La que no elijas se guarda antes como copia de seguridad. «Combinar las dos» conserva todos los movimientos, cuentas y ajustes de ambas versiones; si las dos cambiaron el mismo, se queda con el de esta pantalla.',
     mergedBoth:'Se han combinado las dos versiones. La otra se guardó como copia de seguridad.',
     landDemo:'Ver una demo', landStart:'Empezar', landOpen:'Abrir mi control', landMenu:'Secciones',
-    landH1:'Sabe a dónde va tu dinero y cuánto vales.',
-    landSub:'Una forma gratuita y sencilla de seguir lo que ganas, gastas y tienes. Tus cifras se quedan en tu dispositivo o en tu propio Google Drive.',
-    landNoSignup:'Sin cuenta. Sin registro. Nada sale de tu dispositivo si tú no quieres.',
+    landH1:'Ve a dónde va tu dinero y cómo cambian tus ahorros.',
+    landSub:'Importa un extracto, revisa tus gastos y sigue tus ahorros. Tus cifras se quedan en tu dispositivo o en tu propio Google Drive.',
+    landNoSignup:'Sin registro. Tú añades los extractos; no hay conexión automática con tu banco. La IA es opcional; las conexiones automáticas de IA se pagan aparte.',
     landChip:'Gratis · Sin registro · Privado',
     landCalls:['Tus datos se quedan en tu dispositivo','Importa desde Excel','Lee extractos con IA'],
-    landShotAlt:'La página de Patrimonio con cifras de ejemplo: un total de 39.065 € y un gráfico de totales a fin de mes que crece cada mes, con los cuatro últimos meses del año en gris como previsión.',
+    landShotAlt:'La página de Patrimonio con cifras de ejemplo: un total de 39.066 € y un gráfico de totales a fin de mes que crece cada mes, con los cuatro últimos meses del año en gris como previsión.',
     landFeatT:'Todo en un mismo sitio', landFeatSub:'Pensado para quien solo quiere saber cómo va. Sin palabras de finanzas.',
     landF:[['Ingresos y gastos','Apunta lo que entra y lo que sale, a mano o con el archivo de tu banco. Lo ordena todo en categorías y pone cada mes al lado del anterior.'],
            ['Tu patrimonio mes a mes','Una vez al mes, escribe cuánto hay en cada cuenta. Un gráfico te enseña cómo crece tu total a lo largo del año.'],
            ['Inversiones','Ve cuánto has aportado y cuánto han ganado solos tus fondos, acciones o plan de pensiones.'],
            ['Mirada al futuro','Los meses en gris te enseñan dónde estarás seguramente en diciembre si sigues como este último año.']],
     landSafeT:'Tus datos son tuyos', landSafe:'No hay cuenta ni servidor con tus cifras. Guárdalas en una carpeta, en tu propio Google Drive o solo en este navegador, con copia diaria. Funciona sin conexión y se instala como una app.',
-    landHow:'Cómo funciona', landHowSteps:[['Elige dónde vive','Una carpeta, tu Google Drive o tu navegador. Puedes cambiarlo cuando quieras.'],['Añade lo que tienes','Unas cuentas y lo que valían el mes pasado.'],['Añade tus movimientos','A mano, pegando un extracto o con IA.']],
+    landHow:'Cómo funciona', landHowSteps:[['Elige dónde vive','Este dispositivo, tu Google Drive o una carpeta que gestionas. Puedes cambiarlo cuando quieras.'],['Añade un extracto','Empieza con una cuenta y un mes, o trae tu historial. Revisa las filas antes de guardar.'],['Ve tu dinero con claridad','Consulta el resumen de gastos del mes y añade saldos para seguir tus ahorros.']],
     landEnd:'Cuando quieras', landEndSub:'Haz el recorrido de dos minutos con datos de ejemplo, o configura tu propio control.',
     landPrivacy:'Privacidad',
     stDriveError:t=>`No se ha podido sincronizar con Google Drive. Se reintentará a las ${t}.`, stDrivePaused:'La sincronización espera a que termines lo que estás haciendo.',
@@ -503,8 +501,7 @@ function landing(known){
             <p class="wl-fine">${esc(t('landNoSignup'))}</p></div>
             <figure class="wl-frame"><div class="wl-glow" aria-hidden="true"></div><div class="wl-view"><div class="wl-pages">
               <img src="${shot('networth')}" alt="${esc(t('landShotAlt'))}" width="1280" height="899" fetchpriority="high" decoding="async">
-              <img src="${shot('overview')}" alt="" width="1280" height="1088" loading="lazy" decoding="async">
-              <img src="${shot('yearly')}" alt="" width="1280" height="900" loading="lazy" decoding="async"></div></div></figure>
+</div></div></figure>
             <ul class="wl-calls">${t('landCalls').map((c,i)=>`<li class="wl-call c${i+1}"><span class="wl-ico">${svg(callIco[i],20)}</span>${esc(c)}</li>`).join('')}</ul></div></section>
           <div class="wl-body">
           <section class="wl-feats wl-reveal"><h2>${esc(t('landFeatT'))}</h2><p class="wl-sub">${esc(t('landFeatSub'))}</p>
@@ -522,21 +519,9 @@ function landing(known){
       const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }),{root:el,threshold:.15});
       secs.forEach(x=>io.observe(x));
     };
-    /* the hero's scroll progress --wl-p (0-1, read by web.css): CSS drives it where scroll-driven animations exist,
-       this sets it elsewhere. Phones and reduced motion get a still picture, so nothing runs there. */
-    const motion=window.matchMedia&&matchMedia('(min-width:768px) and (prefers-reduced-motion:no-preference)'), cssDriven=!!(window.CSS&&CSS.supports&&CSS.supports('animation-timeline','view()'));
-    const prog=()=>{ const h=el.querySelector('.wl-hero'); if(!h||cssDriven||!motion||!motion.matches) return;
-      const r=h.getBoundingClientRect(), d=r.height-el.clientHeight; h.style.setProperty('--wl-p',d>0?Math.min(1,Math.max(0,-r.top/d)).toFixed(4):'0'); };
-    let raf=0;
-    el.addEventListener('scroll',()=>{ if(raf) return; raf=requestAnimationFrame(()=>{ raf=0;
-      /* the later pages inside the frame load once scrolling starts (clipped by the frame, lazy loading alone would wait until they show) */
-      if(motion&&motion.matches) el.querySelectorAll('.wl-pages img[loading=lazy]').forEach(i=>{ i.loading='eager'; });
-      prog(); }); },{passive:true});
-    /* the hero's buttons fade out as the preview covers them: tabbing back to them scrolls back up */
-    el.addEventListener('focusin',e=>{ if(motion&&motion.matches&&e.target.closest('.wl-hero-text')&&el.scrollTop>0) el.scrollTop=0; });
-    draw(); document.body.appendChild(el); document.body.classList.add('web-landing-on'); prog();
+    draw(); document.body.appendChild(el); document.body.classList.add('web-landing-on');
     el.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return;
-      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); const y=el.scrollTop; draw(); el.scrollTop=y; prog(); return; }
+      if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); const y=el.scrollTop; draw(); el.scrollTop=y; return; }
       if(!b.dataset.x) return; el.remove(); document.body.classList.remove('web-landing-on'); resolve(b.dataset.x); });
   });
 }
@@ -544,23 +529,20 @@ function landing(known){
 function chooseMode(fromSettings,opts){   /* opts.keep: label for the button that keeps things as they are (default Cancel) */
   return new Promise(resolve=>{
     const fOk=canFolder(), dOk=canDrive()&&navigator.onLine!==false;
-    const card=(m,title,sub,ok,why,rec)=>`<button type="button" class="web-way${mode===m&&fromSettings?' current':''}" data-m="${m}"${ok?'':' disabled'}>${ICONS[m]}<span><b>${esc(title)}${rec&&ok?` <i class="web-rec">${esc(t('recommended'))}</i>`:''}</b><small>${esc(sub)}</small>${ok?'':`<small class="web-why">${esc(why)}</small>`}</span></button>`;
+    const card=(m,title,sub,ok,why)=>`<button type="button" class="web-way${mode===m&&fromSettings?' current':''}" data-m="${m}"${ok?'':' disabled'}>${ICONS[m]}<span><b>${esc(title)}</b><small>${esc(sub)}</small>${ok?'':`<small class="web-why">${esc(why)}</small>`}</span></button>`;
     const L0=lang(), langSw=fromSettings?'':`<div class="web-lang" role="group" aria-label="Language / Idioma"><button type="button" data-lang="en" aria-pressed="${L0==='en'}">English</button><button type="button" data-lang="es" aria-pressed="${L0==='es'}">Español</button></div>`;
     const el=panel(`<div class="web-top"><p class="web-eyebrow">MyAhorros</p>${langSw}</div><h2 id="wp-title">${esc(t('chooseTitle'))}</h2><p class="web-sub">${esc(t('chooseSub'))}</p>
       <div class="web-ways">
-        ${card('folder',t('folderT'),t('folderS'),fOk,t('folderNo'),true)}
-        ${card('drive',t('driveT'),t('driveS')+(fromSettings?'':' '+t('driveHave')),dOk,canDrive()?t('driveOffline'):t('driveNo'),!fOk)}
-        ${card('browser',t('browserT'),t('browserS')+(itp()?' '+t('itpWarn'):''),true,'',false)}
+        ${card('browser',t('browserT'),t('browserS')+(itp()?' '+t('itpWarn'):''),true,'')}
+        ${card('drive',t('driveT'),t('driveS')+(fromSettings?'':' '+t('driveHave')),dOk,canDrive()?t('driveOffline'):t('driveNo'))}
+        ${card('folder',t('folderT'),t('folderS'),fOk,t('folderNo'))}
       </div>
       ${fOk?`<p class="web-hint">${esc(t('pickHint'))}</p>`:''}
-      ${fromSettings?'':`<div class="web-acts"><button type="button" class="btn ghost" data-x="example">${esc(t('exampleBtn'))}</button></div>`}
-      ${fromSettings?'':`<p class="web-hint web-about">${esc(t('about'))} <a href="privacy.html">${esc(t('privacyLink'))}</a></p>`}
       ${fromSettings?`<div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(opts&&opts.keep||t('cancel'))}</button></div>`:''}`,{overlay:fromSettings});
     el.addEventListener('click',async e=>{
       const b=e.target.closest('button'); if(!b||b.disabled) return;
       if(b.dataset.lang){ const v=b.dataset.lang; seeLang(v); lsSet('ybt.lang',v); document.title=v==='es'?'MyAhorros':'MyAhorros'; window.dispatchEvent(new CustomEvent('ybt-lang',{detail:v})); el.remove(); chooseMode(fromSettings,opts).then(resolve); return; }
       if(b.dataset.x==='cancel'){ el.remove(); resolve(null); return; }
-      if(b.dataset.x==='example'){ try{ sessionStorage.setItem('ybt.autotour','1'); }catch(_){} el.remove(); resolve({mode:'browser'}); return; }
       const m=b.dataset.m; if(!m) return;
       el.busy(true); el.msg('');
       try{
@@ -941,9 +923,9 @@ const local={
   async driveRestore(){ return driveRestore(); },
   async browserRestore(){ return browserRestore(); },
   /* the top-bar button: Connect Google Drive, while it isn't connected */
-  top(lg){ seeLang(lg); if(!canDrive()) return null;
-    if(mode==='drive'&&drive.valid()) return null;
-    return {fn:mode==='drive'?'syncNow':'connectDrive',label:t('topDrive'),help:t('topDriveHelp'),icon:ICONS.drive.replace(/width="22" height="22"/,'width="16" height="16"')}; },
+  top(lg){ seeLang(lg); if(mode!=='drive'||!canDrive()) return null;
+    if(drive.valid()) return null;
+    return {fn:'syncNow',label:t('topDrive'),help:t('topDriveHelp'),icon:ICONS.drive.replace(/width="22" height="22"/,'width="16" height="16"')}; },
   async connectDrive(){
     if(navigator.onLine===false) return {message:t('driveOffline'),bad:true};
     try{ await drive.signIn(); await drive.locate(); }

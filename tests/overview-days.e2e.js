@@ -37,6 +37,7 @@ const data = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, c
 
   /* 1. Net worth: Jan-Dec, months after the last figure greyed, the note under the chart, a tooltip that says forecast */
   await tab('networth');
+  await p.click('[data-action=analysis-toggle]');
   const nw = await p.evaluate(() => ({ fc: document.querySelectorAll('#ch-nw g.nw-fc').length, fcLine: !!document.querySelector('#ch-nw line.trend.fc'),
     labels: [...document.querySelectorAll('#ch-nw text.tk')].map(t => t.textContent).filter(t => /^[A-Z][a-z]/.test(t)).length,
     approx: [...document.querySelectorAll('#ch-nw text.nw-lbl')].filter(t => t.textContent.startsWith('≈')).length }));
@@ -45,6 +46,7 @@ const data = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, c
   assert.strictEqual(nw.labels, 12, 'month labels');
   assert.ok(nw.fcLine, 'dotted trend over the forecast');
   assert.match(await p.innerText('#view'), /Shaded months are estimates based on your last \d+ months\./);
+  await p.locator('#ch-nw').scrollIntoViewIfNeeded();
   const box = await p.locator('#ch-nw svg').boundingBox();
   await p.mouse.move(box.x + box.width - 30, box.y + box.height / 2);
   assert.match(await p.innerText('#tip'), /Forecast[\s\S]*A projection/);
@@ -53,6 +55,7 @@ const data = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, c
 
   /* 2. Days is off for All; All sends Days back to Months */
   await tab('overview');
+  await p.click('[data-action=analysis-toggle]');
   const daysBtn = '[data-action=mm-days][data-v="1"]', monthsBtn = '[data-action=mm-days][data-v="0"]';
   await p.click('[data-action=mm-table][data-t=all]');
   assert.strictEqual(await p.getAttribute(daysBtn, 'aria-disabled'), 'true');

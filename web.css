@@ -17,7 +17,6 @@
 .web-way b{font-weight:600;font-size:15px}
 .web-way small{font-size:13px;line-height:1.45;color:var(--ink-2,#3f4b47)}
 .web-way small.web-why{color:var(--warn-ink,#8a5a00);font-weight:500}
-.web-rec{font-style:normal;font-size:11px;font-weight:600;padding:2px 7px;border-radius:99px;background:var(--accent,#0d5c63);color:#fff;margin-left:6px;vertical-align:1px}
 .web-acts{display:flex;flex-wrap:wrap;gap:8px}
 .web-panel .btn{white-space:normal;max-width:100%;height:auto;min-height:34px;padding-block:6px}
 .web-msg{margin:0;font-weight:600;color:var(--bad-ink,#a82727)}
@@ -88,64 +87,34 @@
 .wl-top{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px clamp(16px,4vw,48px);background:color-mix(in srgb,var(--bg,#f1f4f2) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line,#d8dfdc)}
 .wl-brand{font:800 18px/1 var(--f-display,system-ui,sans-serif);letter-spacing:-.01em}
 .wl-top-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-/* hero: a tall section (420vh) whose sticky stage plays one progress value --wl-p, 0 to 1, as it scrolls by.
-   0-.2: the preview rises and flattens while the headline fades; .2-1: the pages inside the frame scroll by and the
-   callouts take turns (each stays for most of a screen of scrolling).
-   Scroll-driven animations set --wl-p here; other browsers get it from landing() in web-shim.js. */
-@property --wl-p{syntax:'<number>';inherits:true;initial-value:0}
-@keyframes wl-p{from{--wl-p:0}to{--wl-p:1}}
-.wl-hero{--head:69px;--peek:clamp(90px,16svh,170px);--fw:min(1280px,92vw);--ft:calc(var(--head) + 20px);--fh:calc(100svh - var(--ft) - 24px);
-  --a:clamp(0,var(--wl-p)/.2,1);--b:clamp(0,(var(--wl-p) - .2)/.8,1);
-  position:relative;height:420vh;margin-top:calc(-1*var(--head));text-align:center}
-@supports (animation-timeline:view()){.wl-hero{animation:wl-p linear both;animation-timeline:view();animation-range:contain 0% contain 100%}}
-.wl-stage{position:sticky;top:0;height:100svh;overflow-x:clip}
-.wl-hero-text{position:relative;z-index:1;box-sizing:border-box;height:calc(100svh - var(--peek));padding:calc(var(--head) + 16px) clamp(16px,4vw,48px) 24px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  opacity:calc(1 - var(--a)*1.25);transform:translateY(calc(var(--a)*-40px));will-change:opacity,transform}
-.wl-chip{display:inline-block;margin:0 0 18px!important;padding:5px 12px;border-radius:999px;background:var(--accent-soft,#d9ebea);color:var(--accent,#0d5c63)!important;border:1px solid color-mix(in srgb,var(--accent,#0d5c63) 30%,transparent);font:600 13px/1.3 var(--f-body,system-ui,sans-serif)!important}
-.wl-hero h1{margin:0 auto 18px;max-width:17ch;font:800 clamp(3rem,min(7vw,12svh),6.5rem)/.95 var(--f-display,system-ui,sans-serif);letter-spacing:-.03em;text-wrap:balance}
-.wl-hero p{margin:0 auto;color:var(--ink-2,#44554f)}
-.wl-lead{max-width:42ch;font-size:clamp(1.1rem,1.6vw,1.4rem);text-wrap:pretty}
-.wl-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:28px 0 12px}
+/* Product and first action stay visible together; no scroll choreography before setup. */
+.wl-hero{--fw:min(1280px,92vw);padding:36px clamp(16px,4vw,48px) 0;text-align:left}
+.wl-stage{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:24px 40px;align-items:center}
+.wl-hero-text{min-width:0}
+.wl-chip{display:inline-block;margin:0 0 16px!important;padding:5px 12px;border-radius:999px;background:var(--accent-soft,#d9ebea);color:var(--accent,#0d5c63)!important;border:1px solid color-mix(in srgb,var(--accent,#0d5c63) 30%,transparent);font:600 13px/1.3 var(--f-body,system-ui,sans-serif)!important}
+.wl-hero h1{margin:0 0 18px;max-width:17ch;font:800 clamp(2.5rem,4.4vw,4rem)/1.04 var(--f-display,system-ui,sans-serif);letter-spacing:-.03em;text-wrap:balance}
+.wl-hero p{margin:0;color:var(--ink-2,#44554f)}
+.wl-lead{max-width:42ch;font-size:clamp(1.05rem,1.6vw,1.25rem);text-wrap:pretty}
+.wl-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:24px 0 12px}
+.wl-hero .wl-cta{justify-content:flex-start}
 .wl-cta .btn,.wl-top .btn{min-height:44px;padding-inline:22px;font-size:15px;border-radius:10px}
 .wl-cta .btn.primary{box-shadow:0 8px 24px -8px color-mix(in srgb,var(--accent,#0d5c63) 70%,transparent)}
-.wl-fine{font-size:13px!important;color:var(--muted,#5c6a65)!important}
-/* the preview: starts low (its top edge peeking in), tilted back and smaller, and settles flat under the top bar */
-.wl-frame{position:absolute;z-index:2;top:var(--ft);left:0;right:0;width:var(--fw);height:var(--fh);margin:0 auto;transform-origin:50% 0;
-  transform:perspective(1600px) translateY(calc((1 - var(--a))*(100svh - var(--peek) - var(--ft)))) rotateX(calc((1 - var(--a))*18deg)) scale(calc(.88 + var(--a)*.12));will-change:transform}
-.wl-glow{position:absolute;inset:-10% -6% 8%;z-index:-1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--accent,#0d5c63) 50%,transparent),transparent);
-  opacity:calc(.25 + var(--a)*.75);will-change:opacity}
-.wl-view{position:relative;height:100%;overflow:hidden;border-radius:16px;border:1px solid var(--line-2,#bcc8c3);background:var(--bg,#f1f4f2);box-shadow:0 40px 90px -30px rgb(0 0 0/.5)}
-/* soft edges: the shots' own background colour fading over the top and bottom */
-.wl-view::before,.wl-view::after{content:"";position:absolute;left:0;right:0;z-index:1;pointer-events:none}
-.wl-view::before{top:0;height:28px;background:linear-gradient(var(--bg,#f1f4f2),transparent)}
-.wl-view::after{bottom:0;height:72px;background:linear-gradient(transparent,var(--bg,#f1f4f2))}
-.wl-pages{transform:translateY(calc((var(--fh) - 100%)*var(--b)));will-change:transform}
+.wl-fine{max-width:66ch;font-size:13px!important;color:var(--muted,#5c6a65)!important}
+.wl-frame{position:relative;min-width:0;width:100%;margin:0}
+.wl-glow{position:absolute;inset:-6% 0 8%;z-index:-1;pointer-events:none;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--accent,#0d5c63) 35%,transparent),transparent)}
+.wl-view{position:relative;overflow:hidden;border-radius:16px;border:1px solid var(--line-2,#bcc8c3);background:var(--bg,#f1f4f2);box-shadow:0 24px 64px -24px rgb(0 0 0/.35)}
 .wl-pages img{display:block;width:100%;height:auto}
-/* callouts beside the frame, each in for its own stretch of the scroll and drifting a little faster than the frame */
-.wl-calls{list-style:none;margin:0;padding:0}
-.wl-call{--in:clamp(0,(var(--wl-p) - var(--s))/.04,1);--out:clamp(0,(var(--e) - var(--wl-p))/.04,1);
-  position:absolute;z-index:3;display:flex;align-items:center;gap:12px;max-width:260px;padding:12px 18px 12px 12px;border-radius:14px;text-align:left;
-  background:var(--surface,#fcfdfc);border:1px solid color-mix(in srgb,var(--accent,#0d5c63) 35%,var(--line,#d8dfdc));box-shadow:0 18px 40px -16px rgb(0 0 0/.55);
-  font:600 15px/1.3 var(--f-body,system-ui,sans-serif);
-  opacity:calc(var(--in)*var(--out));transform:translate(calc((1 - var(--in))*var(--dx)),calc((var(--wl-p) - var(--s))*-160px));will-change:opacity,transform}
-.wl-call .wl-ico{flex:none}
-.wl-call.c1{--s:.14;--e:.42;--dx:-40px;top:40%;left:max(12px,calc(50% - var(--fw)/2 - 24px))}
-.wl-call.c2{--s:.43;--e:.71;--dx:40px;top:44%;right:max(12px,calc(50% - var(--fw)/2 - 24px))}
-.wl-call.c3{--s:.72;--e:1.2;--dx:-40px;top:58%;left:max(12px,calc(50% - var(--fw)/2 - 24px))}
-/* phones and reduced motion: no tilt, no sticky stage; headline, then the flat preview, then the callouts as a list */
-@media (max-width:767px),(prefers-reduced-motion:reduce){
-  .wl-hero{--fw:calc(100% - 2*clamp(16px,4vw,48px));height:auto;margin-top:0;animation:none}
-  .wl-stage{position:static;height:auto;overflow:visible}
-  .wl-hero-text{height:auto;padding-top:clamp(40px,8vw,96px);padding-bottom:0}
-  .wl-hero-text,.wl-frame,.wl-pages,.wl-call{opacity:1;transform:none;will-change:auto}
-  .wl-frame{position:relative;top:auto;height:auto;margin-top:clamp(28px,6vw,56px)}
-  .wl-glow{inset:-6% 0 8%;opacity:.6}
-  .wl-view{height:auto}
-  .wl-pages img+img{display:none}
-  .wl-calls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;width:var(--fw);margin:20px auto 0}
-  .wl-call{position:static;max-width:none;gap:10px;padding:8px 12px 8px 8px;border-radius:12px;font-size:14px}
-  .wl-call .wl-ico{width:32px;height:32px;border-radius:9px}
+.wl-calls{grid-column:1/-1;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.wl-call{display:flex;align-items:center;gap:10px;padding:8px 12px 8px 8px;border-radius:12px;background:var(--surface,#fcfdfc);border:1px solid var(--line,#d8dfdc);font:600 14px/1.3 var(--f-body,system-ui,sans-serif)}
+.wl-call .wl-ico{flex:none;width:32px;height:32px;border-radius:9px}
+@media (max-width:767px){
+  .wl-hero{padding-top:24px;text-align:center}
+  .wl-stage{grid-template-columns:minmax(0,1fr);gap:24px}
+  .wl-hero h1{max-width:22ch;margin:0 auto 14px;font-size:clamp(2.2rem,6vw,3.2rem)}
+  .wl-hero p{margin-inline:auto}
+  .wl-chip{margin-bottom:12px!important}
+  .wl-hero .wl-cta{justify-content:center;margin-top:18px}
+  .wl-calls{grid-template-columns:1fr;text-align:left}
 }
 .web-landing main{padding:0}
 .wl-body{position:relative;isolation:isolate;max-width:calc(1280px + 2*clamp(16px,4vw,48px));margin:0 auto;padding:0 clamp(16px,4vw,48px)}

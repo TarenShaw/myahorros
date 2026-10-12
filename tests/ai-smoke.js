@@ -13,7 +13,8 @@ global.CustomEvent = class {};
 global.dispatchEvent = () => {};
 global.addEventListener = () => {};
 eval(fs.readFileSync(path.join(__dirname, '..', 'js', 'models.js'), 'utf8'));
-eval(fs.readFileSync(path.join(__dirname, '..', 'js', 'web-ai.js'), 'utf8'));
+/* Expose the existing panel constructor only in this test to exercise focus without a browser. */
+eval(fs.readFileSync(path.join(__dirname, '..', 'js', 'web-ai.js'), 'utf8').replace('window.YBT_AI={sample};','sample._panel=panel; window.YBT_AI={sample};'));
 store['ybt.lang'] = 'en';
 const sample = window.YBT_AI.sample;
 const KEY = 'AIzaSyFAKEFAKEFAKEFAKEFAKEFAKE1234567';
@@ -70,5 +71,42 @@ const claudeText = t => [{ type: 'content_block_delta', delta: { type: 'text_del
   const x = sample.explain(err);
   assert.strictEqual(x.code, 'bad_key'); assert.strictEqual(x.status, 400);
   assert.ok(x.details.includes('HTTP status: 400') && !x.details.includes(KEY), x.details);
+
+  /* Copy/paste disclosure never claims a key or automatic upload; pictures cannot be silently lost. */
+  useCfg('paste', '');
+  assert.strictEqual(sample.current().images, false);
+  assert.ok(!/own key/.test(sample.text('aiAuditPrivacy', 'en')));
+  assert.ok(/choose whether/.test(sample.text('aiAuditPrivacy', 'en')));
+  assert.ok(/Tú decides/.test(sample.text('aiAuditPrivacy', 'es')));
+  assert.ok(/Scans and pictures/.test(sample.text('aiFileHelp', 'en')));
+  await assert.rejects(sample.json('p', { images: [{}] }), e => e.code === 'bad_request');
+  const stopped = new AbortController(); stopped.abort();
+  await assert.rejects(sample.json('p', { signal: stopped.signal }), e => e.code === 'cancelled');
+  useCfg('gemini', 'gemini-test');
+  assert.strictEqual(sample.current().images, true);
+  assert.ok(/Gemini.*own key/.test(sample.text('aiAuditPrivacy', 'en')));
+
+  /* The top AI dialog handles Tab before the wizard and restores its launching button. */
+  const oldDocument = document, oldAdd = addEventListener, listeners = {}, panels = [];
+  global.addEventListener = (type, fn, capture) => { assert.strictEqual(capture, true); (listeners[type] ||= []).push(fn); };
+  global.removeEventListener = (type, fn) => { listeners[type] = listeners[type].filter(x => x !== fn); };
+  const focusNode = visible => ({ isConnected: true, getClientRects: () => visible ? [{}] : [], focus() { document.activeElement = this; } });
+  const opener = focusNode(true), first = focusNode(true), hidden = focusNode(false), last = focusNode(true);
+  global.document = {
+    activeElement: opener,
+    querySelectorAll: () => panels.filter(p => p.isConnected),
+    createElement: () => ({ style: {}, setAttribute() {}, addEventListener() {}, focus() { document.activeElement = this; },
+      querySelectorAll: () => [first, hidden, last], contains: node => [first, hidden, last].includes(node),
+      remove() { this.isConnected = false; } }),
+    body: { appendChild(el) { el.isConnected = true; panels.push(el); } }
+  };
+  const panel = sample._panel('test');
+  const tab = shiftKey => { let prevented = 0, stopped = 0; listeners.keydown[0]({ key: 'Tab', shiftKey, preventDefault() { prevented++; }, stopImmediatePropagation() { stopped++; } }); assert.strictEqual(prevented, 1); assert.strictEqual(stopped, 1); };
+  last.focus(); tab(false); assert.strictEqual(document.activeElement, first);
+  first.focus(); tab(true); assert.strictEqual(document.activeElement, last);
+  opener.focus(); listeners.focusin[0]({ target: opener }); assert.strictEqual(document.activeElement, first);
+  panel.close(); assert.strictEqual(document.activeElement, opener);
+  assert.strictEqual(listeners.keydown.length, 0); assert.strictEqual(listeners.focusin.length, 0);
+  global.document = oldDocument; global.addEventListener = oldAdd;
   console.log('web-ai smoke: all passed');
 })().catch(e => { console.error(e); process.exit(1); });

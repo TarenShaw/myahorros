@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-GDITR2VncCqgAJhHewS3M+J4sJgaH5x7T9WivBtYBl4=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1DotI7CtTgv3CuR+TFB+OQDLimo8IsKVcGHHOmef2xM=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1033,6 +1033,24 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 .foot-note,.legend,.heat-legend,.ind-target-wrap,.pill,.ind-label small,.ind-val small,.nw-stat-l,.nw-stat-s,.nw-srow small,.nw-foot,.lim-val small,.field .help{font-size:var(--fs-meta)}
 .nw-how summary{cursor:pointer;font-weight:600;color:var(--ink-2)}.nw-how ul{list-style:none;margin:var(--s8) 0 0;padding:0;display:grid;gap:var(--s8)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.mobile-more{display:none}
+.tx-filter-panel>summary{cursor:pointer;font-weight:600;margin-bottom:var(--s8)}
+.tx-filter-panel .filters{padding:var(--s12);border:1px solid var(--line);border-radius:var(--r-card)}
+.filters label{display:grid;gap:var(--s4);font-size:var(--fs-meta)}
+.filters input{max-width:200px}.tx-source{display:block;overflow-wrap:anywhere}.tx input[type=checkbox]{margin-right:var(--s8)}
+.bulk-tools{display:flex;align-items:center;flex-wrap:wrap;gap:var(--s8);margin-bottom:var(--s12)}
+.more-analysis{display:grid;gap:var(--s24)}.more-analysis[hidden]{display:none}
+.compare-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s12);margin-top:var(--s12)}
+.compare-grid b{display:block;font-size:var(--fs-kpi)}.compare-grid small{display:block}
+.compare-grid .good{color:var(--good-ink)}.compare-grid .bad{color:var(--bad-ink)}
+.compare-grid [data-action="compare-rows"]{margin-top:var(--s8)}
+.year-view{margin-bottom:var(--s12)}
+.compare-controls,.scenario-fields{display:flex;flex-wrap:wrap;gap:var(--s12)}
+.compare-controls label,.scenario-fields label{display:grid;gap:var(--s4)}
+.month-list li{display:flex;justify-content:space-between;gap:var(--s12);padding:var(--s8);border-bottom:1px solid var(--line)}
+@media(max-width:600px){.app{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}.mast{grid-column:1;grid-row:1;min-width:0}.tabbar{grid-column:2;grid-row:1;border-bottom:0;justify-content:flex-end}.app>main,.app>footer{grid-column:1/-1}.tabbar-end{max-width:max(84px,calc(100vw - 160px));flex-wrap:wrap;justify-content:flex-end}.tabbar-end #btn-local-top{max-width:100%;white-space:normal;overflow-wrap:anywhere}.mast{padding-top:var(--s8);padding-bottom:var(--s8)}.mast .kicker{display:none}.mast .brand{font-size:24px}.page-head{margin-bottom:var(--s12)}.ph-meta{font-size:var(--fs-meta)}.ph-acts{gap:var(--s4)}.ph-acts:not(.show-all)>.btn:not(.primary):not([data-action=import]):not(.mobile-more){display:none}.ph-acts>.btn[data-action=import],.ph-acts>.btn.mobile-more,.ph-acts.show-all>.btn{display:inline-flex}.tx-filter-panel:not([open])+.tx-sum{margin-top:var(--s8)}.compare-grid{grid-template-columns:1fr}.filters input{max-width:100%}.ov-top{gap:var(--s12)}.more-analysis{gap:var(--s16)}}
+@media(max-width:320px){.app{grid-template-columns:minmax(0,1fr)}.tabbar{grid-column:1;grid-row:2}.tabbar-end{max-width:100%}}
 </style>
 
 <script src="config.js"></script>
@@ -1166,7 +1184,7 @@ const S={
     tab:'overview', year:null, editTarget:null,
     obLang:BOOT_LANG, obY:null, obM:null, langLocal:null, themeLocal:null, numLocal:null, yScroll:null,
     heat:(()=>{ try{ return localStorage.getItem('ybt.heat')!=='off'; }catch(_){ return true; } })(),
-    tx:{table:'expenses', q:'', month:'all', cat:'all', limit:150, sort:'date-desc', allYears:false},
+    tx:{table:'expenses', q:'', month:'all', cat:'all', limit:150, sort:'date-desc', allYears:false,from:'',to:'',min:'',max:'',account:'',source:'',batch:'',selection:new Set()},
     ct:{table:'expenses', q:'', cq:'', test:'', kwLimit:25, newKw:'', newKwCat:''},
     oc:{table:'expenses', month:'all', exRent:true, top:(()=>{ try{ return localStorage.getItem('ybt.top')!=='all'; }catch(_){ return true; } })()},
     mm:{table:'all', cat:null, days:false},
@@ -1464,7 +1482,7 @@ const STR={
   beforeStart:['Before tracking started','Antes de empezar el registro'],
   /* transactions */
   categoriseBlanks:['Categorise blanks','Categorizar vacíos'], categoriseTitle:['Fill blank categories from your keywords','Rellena las categorías vacías con tus palabras clave'],
-  pasteImport:['Paste or import','Pegar o importar'], addTx:['Add transaction','Añadir movimiento'],
+  pasteImport:['Add a statement','Añadir un extracto'], addTx:['Add transaction','Añadir movimiento'],
   searchPh:['Search description or category','Buscar concepto o categoría'], wholeOf:[y=>`Whole of ${y}`,y=>`Todo ${y}`],
   allCategories:['All categories','Todas las categorías'], clearFilters:['Clear filters','Quitar filtros'],
   showingFirst:[n=>` · showing the first ${n}`,n=>` · se muestran los primeros ${n}`],
@@ -2275,6 +2293,9 @@ const STR={
   numFmt:['Number format','Formato de números'], numEu:['Comma for decimals','Coma para los decimales'], numEn:['Point for decimals','Punto para los decimales'],
   numSaved:[s=>`Numbers now look like ${s}`,s=>`Los números se ven ahora así: ${s}`]
 };
+Object.assign(STR,{coverageDateError:['Check the statement period: the start date must be on or before the end date.','Revisa el periodo del extracto: la fecha inicial debe ser anterior o igual a la final.'],coverageAccountError:['Choose an account before confirming statement coverage.','Elige una cuenta antes de confirmar la cobertura del extracto.'],seeSummary:['See my summary','Ver mi resumen'],optionalBalances:['Add balances (optional)','Añadir saldos (opcional)'],moreActions:['More actions','Más acciones'],fewerActions:['Fewer actions','Menos acciones'],activeFilters:[n=>`${n} active`,n=>`${n} activos`],comparisonHelp:['Based on recorded rows; incomplete statements can change these totals.','Basado en movimientos guardados; los extractos incompletos pueden cambiar estos totales.'],aiTitle_statement:['Read my statement','Leer mi extracto'],aiSub_statement:['Review transactions and month-end balances before saving.','Revisa los movimientos y saldos de fin de mes antes de guardar.'],advanced:['Advanced options','Opciones avanzadas'], inspectMonth:['See this month’s transactions','Ver los movimientos de este mes'], ruleWhen:['When the description','Cuando la descripción'], ruleUse:['Use category','Usar categoría'],
+ quickStart:['Start with last month','Empezar con el mes pasado'], historyStart:['Bring in my history','Traer mi historial'], quickHelp:['One account and one statement give you your first summary. Add more later.','Una cuenta y un extracto bastan para ver tu primer resumen. Añade más después.'], historyHelp:['Choose how far back to go, then add statements and balances at your own pace.','Elige desde cuándo empezar y añade extractos y saldos a tu ritmo.'], addStatement:['Add a statement','Añadir un extracto'], quickBalances:['Add the previous and latest month-end balances if you want to see what changed. You can do this later.','Añade los saldos del mes anterior y del último mes si quieres ver el cambio. Puedes hacerlo después.'], incomeOptional:['Optional: mark your regular income, or skip if you do not have a salary or pension.','Opcional: marca tus ingresos habituales o sáltalo si no tienes nómina ni pensión.'], historyFrom:['Start from','Empezar desde'], noActivity:['No activity in this period','Sin movimientos en este periodo'], periodConfirm:['This statement covers the full period shown below','Este extracto cubre todo el periodo indicado abajo'], needsAttention:['Needs attention','Necesita revisión'], allRowsReview:['All rows','Todas las filas'], reviewSummary:[(n,q,d)=>`${n} ready · ${q} to review · ${d} left out`,(n,q,d)=>`${n} listas · ${q} por revisar · ${d} excluidas`], reviewSafety:['Matching totals check the amounts, not the categories. Check questions and possible duplicates before adding.','Que los totales coincidan comprueba los importes, no las categorías. Revisa las preguntas y posibles duplicados antes de añadir.'], useAiFallback:['Read this file with AI','Leer este archivo con IA'], localReadHelp:['CSV and Excel are read on this device first. PDFs and pictures use your chosen AI method.','CSV y Excel se leen primero en este dispositivo. PDF e imágenes usan el método de IA que elijas.'], rememberAnswers:['Answers AI remembers','Respuestas que recuerda la IA'], forgetAnswer:['Forget answer','Olvidar respuesta'], rememberedNone:['No answers remembered yet.','Aún no hay respuestas guardadas.'], editAnswer:['Edit answer','Editar respuesta'], saveAnswer:['Save answer','Guardar respuesta'], deleteOptIn:['Possible duplicates are not selected. Compare both rows before selecting a deletion.','Los posibles duplicados no están seleccionados. Compara ambas filas antes de marcar un borrado.'], filters:['Filters','Filtros'], fromDate:['From date','Desde la fecha'], toDate:['To date','Hasta la fecha'], minAmount:['Minimum amount (absolute)','Importe mínimo (absoluto)'], maxAmount:['Maximum amount (absolute)','Importe máximo (absoluto)'], source:['Source file','Archivo de origen'], accountFilter:['Account','Cuenta'], anyAccount:['All accounts / unknown','Todas las cuentas / sin cuenta'], anySource:['All sources','Todos los orígenes'], saveView:['Save these filters','Guardar estos filtros'], viewName:['View name','Nombre de la vista'], savedViews:['Saved views','Vistas guardadas'], defaultView:['Choose a view','Elegir una vista'], deleteView:['Delete this view','Borrar esta vista'], selectFiltered:['Select filtered rows','Seleccionar filas filtradas'], clearSelection:['Clear selection','Quitar selección'], selectedCount:[n=>`${n} selected`,n=>`${n} seleccionadas`], bulkCategory:['Change category for selected rows','Cambiar categoría de las filas seleccionadas'], bulkPreview:[n=>`Review ${n} selected rows. Only their category will change.`,n=>`Revisa ${n} filas seleccionadas. Solo cambiará su categoría.`], bulkApply:['Apply category','Aplicar categoría'], batchChanged:[n=>`${n} categories changed`,n=>`${n} categorías cambiadas`], importHistory:['Import history','Historial de importaciones'], importHistoryHelp:['Files and statements added here. Older rows may not have source details.','Archivos y extractos añadidos aquí. Las filas antiguas pueden no tener origen.'], noImports:['No recorded imports yet.','Aún no hay importaciones registradas.'], viewImport:['View these transactions','Ver estos movimientos'], unknownSource:['Manually entered or older import','Entrada manual o importación antigua'], period:['Period','Periodo'], importCount:[n=>`${n} ${n===1?'row':'rows'} imported`,n=>`${n} ${n===1?'fila importada':'filas importadas'}`], analysisMore:['More analysis','Más análisis'], analysisLess:['Show the summary','Ver el resumen'], latestSummary:['Latest recorded month','Último mes con datos'], compareTitle:['Compare months','Comparar meses'], compareAgainst:['Compare with','Comparar con'], previousMonth:['Previous month','Mes anterior'], previousYear:['Same month last year','Mismo mes del año anterior'], missingComparison:['No transactions recorded for one of these months. Add or confirm its statement before comparing.','No hay movimientos registrados en uno de estos meses. Añade o confirma su extracto antes de comparar.'], scenario:['Try a savings scenario','Probar un escenario de ahorro'], scenarioExtra:['Extra saved each month','Ahorro adicional cada mes'], scenarioMonths:['Number of months','Número de meses'], scenarioHelp:['Hypothetical only: current total + your recent average saving + the extra amount each month. No market growth, fees or inflation assumed. Recorded figures and forecasts stay unchanged.','Solo hipotético: total actual + ahorro medio reciente + importe adicional mensual. Sin crecimiento de mercado, comisiones ni inflación. Las cifras y previsiones guardadas no cambian.'], scenarioResult:['Hypothetical total','Total hipotético'], ruleMode:['Match','Coincidencia'], contains:['Contains this text','Contiene este texto'], wholeWord:['Whole word or phrase','Palabra o frase completa'], rulePriority:['Longer matching rules win. At equal length, the first rule in the list wins. Test a description below.','Gana la regla coincidente más larga. A igual longitud, gana la primera de la lista. Prueba una descripción abajo.'], affectedRows:[n=>`${n} existing descriptions match this rule`,n=>`${n} descripciones existentes coinciden con esta regla`], monthView:['One month','Un mes'], gridView:['Year grid','Tabla anual'], noActivitySaved:['Period marked as having no activity.','Periodo marcado sin movimientos.'], importFileHelp:['Choose a bank export, PDF or picture. AI is optional; no automatic bank connection.','Elige una exportación bancaria, PDF o imagen. La IA es opcional; no hay conexión bancaria automática.'], setupScope:['How would you like to start?','¿Cómo quieres empezar?'], quickAccounts:['Start with one everyday account. Add savings, investments and other accounts whenever you are ready.','Empieza con una cuenta de uso diario. Añade ahorro, inversiones y otras cuentas cuando quieras.'], confirmCoverage:['Confirm statement coverage per account','Confirmar cobertura por cuenta'], notConfirmed:['Coverage not confirmed','Cobertura sin confirmar']
+});
 function L(k,...a){ const e=STR[k]; if(!e) return k; const v=e[LANG==='es'?1:0]; const out=typeof v==='function'?v(...a):v; return aiWord(k,out); }
 /* web version: the AI screens name the AI the visitor picked */
 const AI_KEYS=/^(ai|obWayAiSub|obAiHelp)/;
@@ -2485,7 +2506,7 @@ function syncStatus(){
 /* files can come from anywhere (backups, the Windows app, hand edits): amounts must be finite and under the 1e9 the
    import accepts, rows need a YYYY-MM-DD date, categories a name */
 const finAmt=v=>{ const n=Number(v); return Number.isFinite(n)&&Math.abs(n)<1e9?n:0; };
-function normRow(r){ return {id:String(r.id||newId()),date:String(r.date||''),amount:finAmt(r.amount),concept:String(r.concept==null?'':r.concept),category:String(r.category||'')}; }
+function normRow(r){ const o={id:String(r.id||newId()),date:String(r.date||''),amount:finAmt(r.amount),concept:String(r.concept==null?'':r.concept),category:String(r.category||'')}; for(const k of ['source','account','batch']) if(typeof r[k]==='string'&&r[k]) o[k]=r[k].slice(0,500); return o; }
 function normMonth(d){ const o={}; for(const t of TKEYS) o[t]=Array.isArray(d&&d[t])?d[t].filter(r=>r&&typeof r==='object'&&/^\d{4}-\d{2}-\d{2}/.test(r.date)).map(normRow):[]; return o; }
 function normCats(d){
   const o={};
@@ -2506,6 +2527,7 @@ function normSettings(v){
     for(const [k,d] of Object.entries(HEALTH)) if(Array.isArray(d)?Array.isArray(s.health[k]):Number.isFinite(s.health[k])) h[k]=Array.isArray(d)?s.health[k].map(String):s.health[k];
     s.health=h; } else delete s.health;
   for(const k of ['birthYear','salary']) if(k in s&&!(typeof s[k]==='number'&&Number.isFinite(s[k]))) delete s[k];
+  if(Array.isArray(s.imports)) s.imports=s.imports.filter(x=>x&&typeof x.id==='string'&&typeof x.from==='string'&&typeof x.to==='string'&&Number.isInteger(x.n)&&x.n>=0).map(x=>({id:x.id.slice(0,500),date:typeof x.date==='string'?x.date.slice(0,10):'',from:x.from.slice(0,10),to:x.to.slice(0,10),source:typeof x.source==='string'?x.source.slice(0,500):'',account:typeof x.account==='string'?x.account.slice(0,500):'',n:x.n,undone:x.undone===true})); else delete s.imports;
   return s;
 }
 function normKw(d){ const o={}; for(const t of TKEYS) o[t]=Array.isArray(d&&d[t])? d[t].filter(p=>Array.isArray(p)&&p[0]).map(p=>[String(p[0]),String(p[1]||'')]) : []; return o; }
@@ -2570,6 +2592,7 @@ function ensureMonth(mk){ if(!S.months[mk]) S.months[mk]={income:[],expenses:[],
 function insertSorted(arr,row){ let i=arr.findIndex(r=>r.date<row.date); if(i<0) i=arr.length; arr.splice(i,0,row); }
 function findRow(mk,t,id){ const arr=S.months[mk]&&S.months[mk][t]; const i=arr?arr.findIndex(r=>r.id===id):-1; return {arr,i,row:i>-1?arr[i]:null}; }
 function upsertTx(old,next){
+  const origin=old&&findRow(old.mk,old.table,old.id).row;
   if(old){
     const f=findRow(old.mk,old.table,old.id);
     if(f.row && old.mk===next.date.slice(0,7) && old.table===next.table && f.row.date===next.date){
@@ -2579,7 +2602,7 @@ function upsertTx(old,next){
     if(f.i>-1){ f.arr.splice(f.i,1); markDirty('months/'+old.mk); }
   }
   const mk=next.date.slice(0,7); const doc=ensureMonth(mk);
-  insertSorted(doc[next.table],{id:(old&&old.id)||newId(),date:next.date,amount:r2(next.amount),concept:next.concept,category:next.category||''});
+  insertSorted(doc[next.table],normRow(Object.assign({},origin||{},{id:(old&&old.id)||newId(),date:next.date,amount:r2(next.amount),concept:next.concept,category:next.category||''})));
   markDirty('months/'+mk); bump();
 }
 function deleteTx(ref){ const f=findRow(ref.mk,ref.table,ref.id); if(f.i<0) return null; const [row]=f.arr.splice(f.i,1); markDirty('months/'+ref.mk); bump(); return {row,index:f.i}; }
@@ -2698,7 +2721,7 @@ const setSub=()=>`<div class="st-sub"><div class="seg" role="group" aria-label="
 /* the one page header: title (+ info) and a one-line description on the left; the period control and the page's actions on the right */
 const PH={networth:['tab_networth','nwSub','nwWhat'],overview:['tab_overview','ovSub'],yearly:['pt_yearly','yHint','yTable'],transactions:['tab_transactions','txSub'],categories:['tab_categories','ctSub'],settings:['tab_settings','stSub']};
 function pageHead(t,period,actions){ const [tk,sk,ik]=PH[t];
-  return `<header class="page-head"><div><h1 class="page-title">${esc(L(tk))}${ik?info(ik):''}</h1><p class="ph-meta">${esc(L(sk))}</p></div>${period||actions?`<div class="ph-end">${period||''}${actions?`<div class="ph-acts">${actions}</div>`:''}</div>`:''}</header>`; }
+  return `<header class="page-head"><div><h1 class="page-title">${esc(L(tk))}${ik?info(ik):''}</h1><p class="ph-meta">${esc(L(sk))}</p></div>${period||actions?`<div class="ph-end">${period||''}${actions?`<div class="ph-acts${S.ui.pageActions&&S.ui.pageActions[t]?' show-all':''}" id="actions-${t}">${actions}<button class="btn sm mobile-more" data-action="page-actions" data-tab="${t}" aria-expanded="${!!(S.ui.pageActions&&S.ui.pageActions[t])}" aria-controls="actions-${t}">${esc(L(S.ui.pageActions&&S.ui.pageActions[t]?'fewerActions':'moreActions'))}</button></div>`:''}</div>`:''}</header>`; }
 /* the year control, in the page header of the tabs that show one year */
 function yearStepper(){ const ys=yearList(), i=ys.indexOf(S.ui.year);
   return `<div class="yearbox"><button class="icon-btn" type="button" data-action="year-step" data-step="-1" id="year-prev" aria-label="${esc(L('prevYear'))}"${i<=0?' disabled':''}>‹</button><label class="sr" for="year-select">${esc(L('year'))}</label><select id="year-select">${ys.map(y=>`<option value="${y}"${y===S.ui.year?' selected':''}>${y}</option>`).join('')}</select><button class="icon-btn" type="button" data-action="year-step" data-step="1" id="year-next" aria-label="${esc(L('nextYear'))}"${i>=ys.length-1?' disabled':''}>›</button></div>`; }
@@ -2756,26 +2779,10 @@ function obApply(lang,y,m,auto){
   S.ui.year=y; bump();
 }
 function viewWelcome(){
-  const u=S.ui, now=new Date(), cy=now.getFullYear();
-  if(u.obY==null){ u.obY=cy; u.obM=now.getMonth(); }
-  const way=(id,action,icon,title,sub,tag)=>`<button type="button" class="ob-way" data-action="${action}" id="${id}">${icon}<span class="ob-way-t"><b>${esc(title)}</b>${tag?`<em>${esc(tag)}</em>`:''}</span><span class="ob-way-s">${esc(sub)}</span></button>`;
-  return `<section class="card welcome" aria-labelledby="ob-title">
-    <div><p class="eyebrow">${esc(L('welcome'))}</p><h2 id="ob-title">${esc(L('welcomeTitle'))}</h2><p class="lead">${esc(L('obLead'))}</p></div>
-    <fieldset class="field plain"><legend class="lab">${esc(L('language'))}</legend>${langCards('ob',u.obLang==='es'?'es':'en',false)}</fieldset>
-    <fieldset class="field plain"><legend class="lab">${esc(L('obHowQ'))}</legend>
-      <div class="ob-ways">
-        ${way('ob-import','ob-import',ICON.xl,L('obWayImp'),L('obWayImpSub'))}
-        ${S.ai?way('ob-ai','ob-ai',ICON.ai,L('obWayAi'),L('obWayAiSub'),''):''}
-        ${way('ob-start','ob-start',ICON.plus,L('obWayEmpty'),L('obWayEmptySub'))}
-      </div></fieldset>
-    <details class="ob-month" id="ob-month-box"${u.obMonthOpen?' open':''}><summary>${esc(L('obEarlier'))}</summary>
-      <div class="start-row"><label class="sr" for="ob-month">${esc(L('month'))}</label><select id="ob-month">${M().map((n,i)=>`<option value="${i}"${i===u.obM?' selected':''}>${n}</option>`).join('')}</select>
-      <label class="sr" for="ob-year">${esc(L('year'))}</label><select id="ob-year">${yearRange(cy-5,cy+1).map(y=>`<option${y===u.obY?' selected':''}>${y}</option>`).join('')}</select></div>
-      <span class="help">${esc(L('obEarlierHelp'))}</span></details>
-    <p class="hint">${esc(L('welcomeCats'))}</p>
-    ${S.local?`<div class="ob-desk"><p class="hint">${esc(LT('dataFileSub'))}</p><code class="path">${esc(S.local.file)}</code><p class="hint">${esc(L('haveFile'))} <button type="button" class="linkish" data-action="local-open">${esc(L('openIt'))}</button></p>${S.local.backups&&!window.YBT_WEB?`<p class="hint">${esc(L('haveFileHint',S.local.backups))}</p>`:''}</div>`
-      :`<div class="ob-desk"><p class="hint">${esc(L('webHaveBackup'))} <button type="button" class="linkish" data-action="restore">${esc(L('restoreIt'))}</button></p></div>`}
-  </section>`;
+  const u=S.ui;
+  return `<section class="card welcome" aria-labelledby="ob-title"><p class="eyebrow">${esc(L('welcome'))}</p><h2 id="ob-title">${esc(L('setupScope'))}</h2><p>${esc(L('quickHelp'))}</p>
+  <div class="ob-ways"><button class="ob-way" id="ob-start" data-action="ob-start"><b>${esc(L('quickStart'))}</b><span>${esc(L('quickHelp'))}</span></button><button class="ob-way" id="ob-history" data-action="ob-history"><b>${esc(L('historyStart'))}</b><span>${esc(L('historyHelp'))}</span></button></div>
+  <p class="hint">${esc(L('webHaveBackup'))} <button class="linkish" data-action="restore">${esc(L('restoreIt'))}</button></p></section>`;
 }
 
 /* ───────── settings ───────── */
@@ -2830,7 +2837,7 @@ function viewSettings(){
     ${themeCards(wantTheme(),false)}${cw?'':`<p class="hint" style="margin-top:var(--s12)">${esc(L('themeLocal'))}</p>`}</section>`;
   const aiX=S.ai&&typeof S.ai.extra==='function'?S.ai.extra(LANG)||[]:[];
   const aiCard=aiX.length?`<section class="card" id="ai-card"><div class="card-head"><div><h2>${esc(S.ai.title)}</h2><p class="sub">${esc(S.ai.sub)}</p></div></div>
-    <div class="set-acts">${cw&&allRows().length?`<div class="set-act"><button class="btn" type="button" data-action="audit" data-f="settings">${ICON.ai}${esc(L('auBtn_settings'))}</button><span class="hint">${esc(L('auHelp_settings'))}</span></div>`:''}${aiX.map(x=>`<div class="set-act"><button class="btn" type="button" data-action="ai-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button><span class="hint">${esc(x.help)}</span></div>`).join('')}</div></section>`:'';
+    <div class="set-acts">${cw&&allRows().length?`<div class="set-act"><button class="btn" type="button" data-action="audit" data-f="settings">${ICON.ai}${esc(L('auBtn_settings'))}</button><span class="hint">${esc(L('auHelp_settings'))}</span></div>`:''}<div class="set-act"><button class="btn" data-action="audit-answers">${esc(L('rememberAnswers'))}</button></div>${aiX.map(x=>`<div class="set-act"><button class="btn" type="button" data-action="ai-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button><span class="hint">${esc(x.help)}</span></div>`).join('')}</div></section>`:'';
   const helpCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('helpTitle'))}</h2><p class="sub">${esc(L('helpSub'))}</p></div></div>
     <div class="ctrls"><button class="btn" type="button" data-action="tour">${esc(L('tourBtn'))}</button>${S.downloads||S.local?`<button class="btn" type="button" data-action="remind-ics">${esc(L('remindBtn'))}</button>`:''}${S.canWrite&&!guideState()&&(!nw().accounts.length||!nwMonths().length||!allRows().length)?`<button class="btn" type="button" data-action="guide-show">${esc(L('gShow'))}</button>`:''}</div><p class="hint" style="margin-top:var(--s12)">${esc(L('helpInfo'))}</p></section>`;
   return pageHead('settings')+`<div class="settings"><div class="stack">${langCard}${startCard}${aboutCard}${mlCard}</div><div class="stack">${themeCard}${dataCard}${aiCard}${helpCard}</div></div>`;
@@ -2905,6 +2912,41 @@ async function localAction(fn){
 
 /* ───────── overview ───────── */
 function monthRange(ms){ if(!ms.length) return L('noMonths'); return ms.length===1? M()[ms[0]] : M3()[ms[0]]+'–'+M3()[ms[ms.length-1]]; }
+function analysisOpen(tab){ if(S.ui.analysis&&tab in S.ui.analysis) return S.ui.analysis[tab]; try{ return localStorage.getItem('ybt.analysis.'+tab)==='1'; }catch(_){ return false; } }
+function analysisToggle(tab){ return `<button class="btn" data-action="analysis-toggle" data-tab="${tab}" aria-expanded="${analysisOpen(tab)}" aria-controls="analysis-${tab}">${esc(L(analysisOpen(tab)?'analysisLess':'analysisMore'))}</button>`; }
+function monthComparison(rows,k,base){
+  const prev=base==='year'?ymAdd(k,-12):ymAdd(k,-1);
+  const totals=key=>{ const a=rows.filter(r=>r.date.slice(0,7)===key), out={income:0,expenses:0,investments:0,saved:0,n:a.length};
+    for(const r of a) if(r.table==='income') out.income+=cents(r.amount); else if(r.table==='expenses') out.expenses-=cents(r.amount); else if(r.table==='investments') out.investments-=cents(r.amount);
+    out.saved=out.income-out.expenses; for(const x of ['income','expenses','investments','saved']) out[x]/=100; return out; };
+  const current=totals(k), previous=totals(prev), change={}; for(const t of ['income','expenses','investments','saved']) change[t]=r2(current[t]-previous[t]);
+  return {month:k,previousMonth:prev,current,previous,change,complete:!!(current.n&&previous.n)};
+}
+function comparisonCard(){
+  const ms=[...new Set(allRows().map(r=>r.date.slice(0,7)))].filter(k=>+k.slice(0,4)===S.ui.year).sort(); if(!ms.length) return '';
+  const done=ms.filter(k=>k<ymNow()), k=ms.includes(S.ui.compareMonth)?S.ui.compareMonth:done[done.length-1]||ms[ms.length-1], base=S.ui.compareBase||'month', C=monthComparison(allRows(),k,base);
+  return `<section class="card" id="month-comparison"><div class="card-head"><h2>${esc(L('compareTitle'))}</h2></div><div class="compare-controls"><label>${esc(L('month'))}<select id="compare-month">${ms.map(m=>`<option value="${m}"${m===k?' selected':''}>${esc(ymLabel(m,true))}</option>`).join('')}</select></label><label>${esc(L('compareAgainst'))}<select id="compare-base"><option value="month"${base==='month'?' selected':''}>${esc(L('previousMonth'))}</option><option value="year"${base==='year'?' selected':''}>${esc(L('previousYear'))}</option></select></label></div>
+  ${C.complete?`<p class="hint">${esc(ymLabel(k,true))} – ${esc(ymLabel(C.previousMonth,true))}. ${esc(L('comparisonHelp'))}</p><div class="compare-grid">${['income','expenses','saved'].map(t=>`<div><span>${esc(t==='saved'?L('savings'):TL(t))}</span><b>${fmtEUR(C.current[t])}</b><small>${esc(ymLabel(C.previousMonth,true))}: ${fmtEUR(C.previous[t])}</small><small class="${C.change[t]===0?'':(t==='expenses'?C.change[t]<0:C.change[t]>0)?'good':'bad'}">Δ ${signed(C.change[t])}</small><button class="linkish" data-action="compare-rows" data-k="${k}" data-t="${t==='saved'?'expenses':t}">${esc(L('inspectMonth'))}</button></div>`).join('')}</div>`:`<p class="hint">${esc(L('missingComparison'))}</p>`}</section>`;
+}
+function scenarioTotal(current,monthly,extra,n){
+  if(![current,monthly,extra,n].every(Number.isFinite)||extra<0||extra>=1e9||!Number.isInteger(n)||n<1||n>600) return null;
+  return (cents(current)+(cents(monthly)+cents(extra))*n)/100;
+}
+function scenarioCard(){
+  const ms=nwMonths(); if(!ms.length) return ''; const current=nwTotals(ms[ms.length-1]).total, pace=savingPace();
+  const extra=S.ui.scenarioExtra==null?100:S.ui.scenarioExtra, n=S.ui.scenarioMonths==null?12:S.ui.scenarioMonths, v=scenarioTotal(current,pace?pace.avg:0,extra,n);
+  return `<section class="card" id="savings-scenario"><h2>${esc(L('scenario'))}</h2><p class="hint">${esc(L('scenarioHelp'))}</p><p>${esc(L('nwValue'))}: ${fmtEUR(current)} · ${esc(L('avgMonth',fmtEUR(pace?pace.avg:0)))}</p><div class="scenario-fields"><label>${esc(L('scenarioExtra'))}<input id="scenario-extra" type="text" inputmode="decimal" value="${esc(S.ui.scenarioRaw==null?fmtNum(extra):S.ui.scenarioRaw)}"></label><label>${esc(L('scenarioMonths'))}<input id="scenario-months" type="number" min="1" max="600" step="1" value="${n}"></label></div><p aria-live="polite">${esc(L('scenarioResult'))}: <b id="scenario-result">${v==null?DASH:fmtEUR(v)}</b></p></section>`;
+}
+function latestMonthCard(){
+  if(allRows().some(r=>r.date.slice(0,7)===ymNow())) return '';
+  const ms=[...new Set(allRows().map(r=>r.date.slice(0,7)))].filter(k=>k<ymNow()&&+k.slice(0,4)===S.ui.year).sort(), k=ms[ms.length-1]; if(!k) return '';
+  const C=monthComparison(allRows(),k,'month').current;
+  return `<section class="card"><h2>${esc(L('latestSummary'))} · ${esc(ymLabel(k,true))}</h2><p>${esc(L('savings'))}: <b>${fmtEUR(C.saved)}</b> · ${esc(L('income'))}: ${fmtEUR(C.income)} · ${esc(L('expenses'))}: ${fmtEUR(C.expenses)}</p><button class="btn" data-action="compare-rows" data-k="${k}" data-t="expenses">${esc(L('inspectMonth'))}</button></section>`;
+}
+function yearMonthCard(y,A){
+  const ms=activeMonths(y), m=ms.includes(S.ui.yearMonth)?S.ui.yearMonth:ms[ms.length-1]||0;
+  return `<section class="card"><label>${esc(L('month'))}<select id="year-month-pick">${ms.map(i=>`<option value="${i}"${i===m?' selected':''}>${esc(M()[i])}</option>`).join('')}</select></label>${TKEYS.map(t=>`<h2>${esc(TL(t))} · ${fmtEUR(t==='income'?A[t].total[m]:-A[t].total[m])}</h2><ul class="month-list">${catRowsFor(A,t).map(c=>({c,v:(A[t].rows.get(c)||[])[m]||0})).filter(x=>Math.abs(x.v)>=.005).map(x=>`<li><button class="linkish" data-action="drill" data-t="${t}" data-c="${esc(x.c)}" data-m="${m}">${esc(dispCat(x.c))}</button><b>${fmtEUR(x.v)}</b></li>`).join('')}</ul>`).join('')}</section>`;
+}
 function viewOverview(){
   const y=S.ui.year, A=agg(y,true), Y=A.Y, ms=ovMonths(y), idx=chartIdx(y), T=targets(), AF=agg(y);
   const ai=avgIdx(y), incAvg=ai.length?sum(ai.map(i=>A.income.total[i]))/ai.length:0;
@@ -2950,7 +2992,8 @@ function viewOverview(){
         <div class="tile"><span class="tile-label">${esc(L('liquid'))}${info('ovLeft')}</span><span class="tile-val">${fmtEUR(Y.liquid)}</span><span class="tile-sub">${esc(L('liquidSub'))}</span></div>
       </div>
     </section>
-    ${thisMonthCard()}
+    ${latestMonthCard()}${comparisonCard()}${thisMonthCard()}
+    ${analysisToggle('overview')}<div class="more-analysis" id="analysis-overview"${analysisOpen('overview')?'':' hidden'}>
     ${Y.inc>0?'':`<section class="card ov-first"><h2>${esc(L('ovFirstTitle'))}</h2><p class="sub">${esc(L('ovFirstText'))}</p>${S.canWrite?`<button class="btn primary" type="button" data-action="guide-income">${esc(L('ovAddIncome'))}</button>`:''}</section>`}
     <section class="card">
       <div class="card-head"><div><h2>${esc(L('monthByMonth'))}${info('ovMonthly')}</h2><p class="sub">${esc(mmSummary(A))} ${esc(L('clickBar'))}</p></div>
@@ -2983,6 +3026,7 @@ function viewOverview(){
       <div class="inds">${inds}</div>
     </section>`:''}
     ${multi?`<section class="card"><div class="card-head"><div><h2>${esc(L('yearByYear'))}${info('ovYears')}</h2><p class="sub">${esc(L('eurosYear'))}</p></div>${chartLegend(TKEYS.map(t=>[t,TL(t)]))}</div><div class="chart" id="ch-years" style="height:260px"></div></section>`:''}
+    </div>
   </div>`;
 }
 /* Monthly check: months with no transactions since the first one, and net worth figures not yet typed in */
@@ -3455,7 +3499,7 @@ const signed=v=>(v>0.004?'+':'')+fmtEUR(v);
 function guideState(){
   const g=S.settings&&S.settings.guide;
   if(!g||!g.on||S.demo||!S.canWrite||S.mode!=='live') return null;
-  const acc=nw().accounts.length>0, val=nwMonths().length>0, tx=allRows().length>0, skip=!!g.skipNw;
+  const C=wzCover(), acc=nw().accounts.length>0, val=acc&&!C.balMiss.length, tx=!C.txMiss.length&&(allRows().length>0||nw().accounts.some(a=>a.group==='cash'&&statementCovered(a,C.from,ymAdd(C.now,-1)))), skip=!!g.skipNw;
   const cur=!skip&&!acc?'acc':!tx?'tx':!skip&&!val?'val':'done';
   return {acc,val,tx,skip,cur,n:{acc:1,tx:2,val:3,done:3}[cur]};
 }
@@ -3501,15 +3545,35 @@ function maybeWizard(){
   if(!G||G.cur==='done'||S.modal||S.wizardShown||!S.canWrite||S.mode!=='live'||S.tourPending||S.placePending||TOUR) return;
   S.wizardShown=true; wizardOpen(wzOf(G));
 }
-/* the year the wizard asks for: from January (last year's while this one has under two finished months), or an earlier start */
-function wzFrom(){ const n=nowYM(), f=ymOf(n.m<2?n.y-1:n.y,0), st=startOf(), s=st?ymOf(st.y,st.m):null; return s&&s<f?s:f; }
+/* Quick setup starts last month; history setup respects the chosen start month. */
+function wzFrom(){ const st=startOf(); if(st) return ymOf(st.y,st.m); const n=nowYM(); return ymOf(n.m<2?n.y-1:n.y,0); }
+
 const ymRange=(a,b)=>{ const o=[]; for(let k=a;k<=b;k=ymAdd(k,1)) o.push(k); return o; };
 /* what is still missing: months without transactions (the month in progress doesn't count) and month-ends without a figure
    for every account (one at 0 since before counts), from the end of the year before. balAt: 'ok' (all accounts), 'part' (some) or '' */
+function coveragePeriods(st,from,to){
+  const all=Array.isArray(st&&st.periods)?st.periods.slice():st&&st.coverFrom&&st.coverTo?[[st.coverFrom,st.coverTo]]:[];
+  if(from&&to) all.push([from,to]);
+  const sorted=all.filter(x=>Array.isArray(x)&&parseDate(x[0])===x[0]&&parseDate(x[1])===x[1]&&x[0]<=x[1]).map(x=>x.slice(0,2)).sort((a,b)=>a[0].localeCompare(b[0])), out=[];
+  for(const p of sorted){ const last=out[out.length-1]; if(last&&p[0]<=ymdAdd(last[1],1)){ if(p[1]>last[1]) last[1]=p[1]; } else out.push(p); }
+  return out;
+}
+function statementCovered(a,from,to){
+  const st=(S.settings&&S.settings.guide&&S.settings.guide.stmts||{})[a.id], f=from+'-01', t=ymdAdd(ymAdd(to,1)+'-01',-1);
+  return coveragePeriods(st).some(p=>p[0]<=f&&p[1]>=t);
+}
+function statementMonthCovered(k){
+  const cash=nw().accounts.filter(a=>a.group==='cash');
+  return cash.length?cash.every(a=>statementCovered(a,k,k)):allRows().some(r=>r.date.slice(0,7)===k);
+}
+function coverageList(from,to){
+  const cash=nw().accounts.filter(a=>a.group==='cash');
+  return `<p class="hint">${esc(L('confirmCoverage'))}</p><ul class="wz-list">${cash.map(a=>`<li><b>${esc(a.name)}</b><span>${esc(L(statementCovered(a,from,to)?'wzHave':'notConfirmed'))}</span>${statementCovered(a,from,to)?'':`<button class="btn sm" data-action="wz-noactivity" data-acc="${esc(a.id)}" data-from="${from}" data-to="${to}">${esc(L('noActivity'))}</button>`}</li>`).join('')}</ul>`;
+}
 function wzCover(){ const now=ymNow(), from=wzFrom(), have=new Set(allRows().map(r=>r.mk)), N=nw();
   const tx=ymRange(from,now), bal=ymRange(ymAdd(from,-1),ymAdd(now,-1));
   const balAt=k=>{ const s=N.snaps[k]; if(!s) return ''; const cl=nwState(k).closed; return N.accounts.every(a=>s[a.id]!=null||cl.has(a.id))?'ok':'part'; };
-  return {now,from,tx,bal,balAt,txMiss:tx.filter(k=>k<now&&!have.has(k)),balMiss:bal.filter(k=>balAt(k)!=='ok'),txAt:k=>have.has(k)?'ok':'',have}; }
+  return {now,from,tx,bal,balAt,txMiss:tx.filter(k=>k<now&&!statementMonthCovered(k)),balMiss:bal.filter(k=>balAt(k)!=='ok'),txAt:k=>have.has(k)?'ok':'',have}; }
 /* a few months by name, many as a range */
 const wzMonths=ks=>ks.length>3?L('wzMonthsN',ks.length,ymIn(ks[0]),ymIn(ks[ks.length-1])):listJoin(ks.map(ymIn));
 function wzStrip(ks,at,now,cap){
@@ -3524,7 +3588,7 @@ function modalWizard(){
   const w=S.wizard, i=w.step, N=nw(), C=wzCover(), st=(S.settings&&S.settings.guide&&S.settings.guide.stmts)||{};
   const nAcc=N.accounts.length, nMon=nwMonths().length, rows=allRows(), nTx=rows.length, nInc=rows.filter(r=>r.table==='income').length, sal=salaryRow(rows);
   const salCat=catNames('income').find(n=>SALARY_RE.test(n));
-  const fin=C.tx.filter(k=>k<C.now).length, txOk=nTx>0&&!C.txMiss.length, balOk=nAcc>0&&!C.balMiss.length;
+  const fin=C.tx.filter(k=>k<C.now).length, txOk=!C.txMiss.length&&(nTx>0||N.accounts.some(a=>a.group==='cash'&&statementCovered(a,C.from,ymAdd(C.now,-1)))), balOk=nAcc>0&&!C.balMiss.length;
   const done=[nAcc>0,txOk,balOk,!!sal];   /* from the data: a step skipped without doing it gets no tick */
   const act=(a,label,extra,cls)=>`<button type="button" class="btn ${cls||''}" data-action="${a}"${extra||''}>${label}</button>`;
   const ok=(on,text)=>on?`<p class="wz-ok">${ICON.ok}<span>${esc(text)}</span></p>`:'';
@@ -3532,27 +3596,29 @@ function modalWizard(){
   let body='';
   if(i===0){
     /* the currency was guessed from where the device is: shown here so a wrong guess is fixed before any figure is typed */
-    body=`<p>${esc(L('wz0Text'))}</p>
+    body=`<p>${esc(L(S.settings.guide.quick?'quickAccounts':'wz0Text'))}</p>
+      <div class="seg"><button type="button" data-action="wz-scope" data-v="quick" aria-pressed="${!!S.settings.guide.quick}">${esc(L('quickStart'))}</button><button type="button" data-action="wz-scope" data-v="history" aria-pressed="${!S.settings.guide.quick}">${esc(L('historyStart'))}</button></div>
+      ${!S.settings.guide.quick?`<label>${esc(L('historyFrom'))} <input id="wz-from" type="month" value="${wzFrom()}" max="${ymNow()}"></label>`:''}
       <p class="wz-cur"><label for="wz-cur">${esc(L('wzCurrency'))}</label> <select id="wz-cur">${Object.entries(CURRENCIES).map(([c,x])=>`<option value="${c}"${c===CUR?' selected':''}>${esc(x.n)}</option>`).join('')}</select></p>
       ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>`<li>${accName(a)}<span class="wz-st">${esc(L('g_'+a.group))}</span></li>`).join('')}</ul>`:''}
       <div class="wz-acts">${act('guide-acc',esc(L(nAcc?'nwEditAccounts':'nwAddAccounts')),'',nAcc?'':'primary')}</div>`;
   } else if(i===1){
-    const stat=a=>{ const s=st[a.id]; return s?`<span class="wz-st ok">${esc(L('wzStmtGot',fmtDate(s.from),fmtDate(s.to),s.n))}</span>`:`<span class="wz-st">${esc(L('wzStmtNone'))}</span>`; };
+    const stat=a=>{ const s=st[a.id]; if(s&&s.noActivity) return `<span class="wz-st ok">${esc(L('noActivity'))}</span>`; return s?`<span class="wz-st ok">${esc(L('wzStmtGot',fmtDate(s.from||s.coverFrom),fmtDate(s.to||s.coverTo),s.n||0))}</span>`:`<span class="wz-st">${esc(L('wzStmtNone'))}</span>`; };
     /* statements only from Cash accounts: an investment or pension account's buys, sells and fees happen inside it; what went in is the
        Investments row on the bank side, and the rest is its value on the next step */
     const next=txOk?null:N.accounts.find(a=>a.group==='cash'&&!st[a.id]);
-    body=`<p>${esc(L('wz1Text',ymIn(C.from)))}</p>
-      ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>a.group==='cash'?`<li>${accName(a)}${stat(a)}${act('guide-import',esc(L('wzImport')),` data-acc="${a.id}" aria-label="${esc(L('wzImport')+': '+a.name)}"`,a===next?'primary sm':'sm')}</li>`:`<li>${accName(a)}<span class="wz-st">${esc(L('wzValueOnly'))}</span></li>`).join('')}</ul>`:`<p class="hint">${esc(L('wzNoAccs'))}</p><div class="wz-acts">${act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`}
+    body=`<p>${esc(L('historyFrom'))}: ${esc(ymLabel(C.from,true))}. ${esc(L('importFileHelp'))}</p>
+      ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>a.group==='cash'?`<li>${accName(a)}${stat(a)}${act('guide-import',esc(L('addStatement')),` data-acc="${a.id}" aria-label="${esc(L('wzImport')+': '+a.name)}"`,a===next?'primary sm':'sm')}</li>`:`<li>${accName(a)}<span class="wz-st">${esc(L('wzValueOnly'))}</span></li>`).join('')}</ul>`:`<p class="hint">${esc(L('wzNoAccs'))}</p><div class="wz-acts">${act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`}
       ${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('wzAi')))}</div>`:''}
-      ${wzStrip(C.tx,C.txAt,C.now,C.txMiss.length?L('wzTxCover',fin-C.txMiss.length,fin):L('wzTxAll'))}`;
+      ${coverageList(C.from,ymAdd(C.now,-1))}`;
   } else if(i===2){
     const k=C.balMiss[0]||C.bal[C.bal.length-1];
-    body=`<p>${esc(L('wz2Text',ymIn(C.bal[0])))}</p>
+    body=`<p>${esc(S.settings.guide.quick?L('quickBalances'):L('wz2Text',ymIn(C.bal[0])))}</p>
       ${nAcc?wzStrip(C.bal,C.balAt,C.now,C.balMiss.length?L('wzBalCover',C.bal.length-C.balMiss.length,C.bal.length):L('wzBalAll')):''}
       <div class="wz-acts">${nAcc?act('guide-val',esc(L(N.snaps[k]?'nwEdit':'nwEnter',ymIn(k))),` data-k="${k}"`,balOk?'':'primary')+act('guide-nwimport',ICON.xl+esc(L('nwImport')))+(S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):''):act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`;
   } else if(i===3){
     const cands=sal||!salCat?[]:salaryCands(rows);
-    body=`<p>${esc(L('wz3Text'))}</p>
+    body=`<p>${esc(L('incomeOptional'))}</p>
       ${cands.length?`<p>${esc(L('wzSalaryQ'))}</p><ul class="wz-list">${cands.map(r=>`<li><span class="wz-n">${esc(shortDesc(r.concept,48))}</span><span class="wz-st">${fmtEUR(r.amount)} · ${esc(fmtDate(r.date))}</span>${act('wz-salary',esc(L('wzSalaryIs')),` data-mk="${r.mk}" data-id="${r.id}" aria-label="${esc(L('wzSalaryIsFor',shortDesc(r.concept,48)))}"`,'sm')}</li>`).join('')}</ul>`:''}
       ${sal?ok(true,L('wzSalaryFound',fmtEUR(sal.amount),fmtDate(sal.date))):`<div class="wz-acts">${act('guide-income',esc(L('wzAddSalary')),'',cands.length?'':'primary')}</div>`}`;
   } else {
@@ -3568,7 +3634,7 @@ function modalWizard(){
   const dots=names.map((n,j)=>{ const tick=j<WZ_STEPS-1&&done[j], skipped=j<i&&!tick; return `<li class="${j===i?'cur':tick?'done':skipped?'skipped':''}"${j===i?' aria-current="step"':''}><span>${tick?'✓':skipped?'–':j+1}</span><small>${esc(n)}</small>${skipped?`<i class="sr"> (${esc(L('wzSkipped'))})</i>`:''}</li>`; }).join('');
   const last=i===WZ_STEPS-1;
   /* one way forward: "Next" once the step is done, "Skip this step" while it isn't */
-  const fwd=last?act('guide-finish',esc(L('wzFinish')),'','primary'):done[i]?act('wz-next',esc(L('wzNext')),'','primary'):act('wz-next',esc(L('wzSkip')),'','ghost');
+  const fwd=!last&&i===1&&S.settings.guide.quick&&nTx>0?act('wz-next',esc(L('optionalBalances')),'','ghost')+act('guide-finish',esc(L('seeSummary')),'','primary'):last?act('guide-finish',esc(L('wzFinish')),'','primary'):done[i]?act('wz-next',esc(L('wzNext')),'','primary'):act('wz-next',esc(L('wzSkip')),'','ghost');
   return `<div class="m-head"><div><p class="eyebrow">${esc(L('wzEyebrow',i+1,WZ_STEPS))}</p><h3 id="m-title">${esc(L(last&&w.gaps?'wz4TitleGaps':'wz'+i+'Title'))}</h3></div><button class="icon-btn" data-action="wz-later" aria-label="${esc(L('wzLater'))}" title="${esc(L('wzLater'))}">${ICON.x}</button></div>
   <div class="m-body wz-body"><ol class="wz-dots">${dots}</ol>${body}</div>
   <div class="m-foot"><span>${i>0?act('wz-back',esc(L('wzBack'))):act('wz-later',esc(L('wzLater')),'','ghost')}</span><span class="r">${fwd}</span></div>`;
@@ -3583,8 +3649,8 @@ const ciMonth=()=>ymAdd(ymNow(),-1);
    reaches the month's end; the others only need the month to have rows) and every account's month-end figure.
    ponytail: a statement reaching the 25th counts as covering the month (the last days may have no movements) */
 function ciState(k){ const N=nw(), C=wzCover(), st=(S.settings&&S.settings.guide&&S.settings.guide.stmts)||{}, cash=N.accounts.filter(a=>a.group==='cash');
-  const covered=a=>!!st[a.id]&&st[a.id].to>=k+'-25';
-  return {N,C,st,cash,covered,txOk:C.have.has(k)&&cash.every(a=>!st[a.id]||covered(a)),balOk:!N.accounts.length||C.balAt(k)==='ok'}; }
+  const covered=a=>statementCovered(a,k,k)||!!st[a.id]&&st[a.id].coverageVersion!==1&&!st[a.id].coverFrom&&st[a.id].to>=k+'-25';
+  return {N,C,st,cash,covered,txOk:cash.length?cash.every(covered):C.have.has(k),balOk:!N.accounts.length||C.balAt(k)==='ok'}; }
 /* offered from the 1st for the month that just ended, until it's checked, skipped, or already complete */
 function ciDue(){ if(!S.canWrite||S.demo||S.mode!=='live'||!allRows().length) return false; const G=guideState(); if(G&&G.cur!=='done') return false;
   const k=ciMonth(), l=S.settings&&S.settings.lastCheckin; if(typeof l==='string'&&l>=k) return false;
@@ -3604,8 +3670,8 @@ function modalCheckin(){
   if(i===0){
     body=`<p>${esc(L('ci0Text'))}</p>
       <div class="drop" id="ci-drop"><span>${esc(L('ciDrop'))}</span><label class="btn sm primary" for="ci-file">${esc(L('ciChoose'))}</label><input type="file" id="ci-file" accept=".xlsx,.xlsm,.xls,.csv,.txt" multiple class="sr"></div>
-      ${cash.length?`<ul class="wz-list">${cash.map(a=>`<li>${accName(a)}<span class="wz-st${covered(a)?' ok':''}">${esc(st[a.id]?L('ciUpTo',fmtDate(st[a.id].to)):L('wzStmtNone'))}</span></li>`).join('')}</ul>`:''}
-      ${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('wzAi')))}</div>`:''}`;
+      ${cash.length?`<ul class="wz-list">${cash.map(a=>`<li>${accName(a)}<span class="wz-st${covered(a)?' ok':''}">${esc(st[a.id]&&st[a.id].noActivity?L('noActivity'):st[a.id]?L('ciUpTo',fmtDate(st[a.id].to||st[a.id].coverTo)):L('wzStmtNone'))}</span></li>`).join('')}</ul>`:''}
+      ${coverageList(k,k)}${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('wzAi')))}</div>`:''}`;
   } else if(i===1){
     const s=N.snaps[k]||{}, cl=nwState(k).closed, miss=N.accounts.filter(a=>s[a.id]==null&&!cl.has(a.id));
     body=`<p>${esc(miss.length?L('ci1Text',ymIn(k)):L('ciAllBal',ymIn(k)))}</p>
@@ -3762,7 +3828,7 @@ function viewNetworth(){
   const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
       <div class="ch-end">${chartLegend(NW_GROUPS.filter(g=>N.accounts.some(a=>a.group===g)).map(g=>[g,L('g_'+g)]),ms.length>1)}${ally.length<2?'':`<div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div>`}</div></div>
       <div class="chart" id="ch-nw" style="height:260px"></div>${(n=>n?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L('fcNote',n))}</p>`:'')(nwChartForecast(nwChartMonths()).n)}${nwChartNote()}</section>`:'';
-  return head(per,ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${chart}${healthCard(k,T)}<div class="two nw-two">${changeCard}${goalCard}</div>${accountsCard(k)}</div>`;
+  return head(per,ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${changeCard}${accountsCard(k)}${analysisToggle('networth')}<div class="more-analysis" id="analysis-networth"${analysisOpen('networth')?'':' hidden'}>${chart}${healthCard(k,T)}${goalCard}${scenarioCard()}</div></div>`;
 }
 /* Financial health: rules of thumb as of the end of month k. Income and expenses are the ones behind "You saved"
    (trackerSaved: from your pay, without returns or Investments rows), averaged over the finished months with
@@ -4439,7 +4505,7 @@ async function readNwFile(file){
   let X; try{ X=await getXLSX(); }catch(e){ m.msg=L('readerFail'); renderModal(); return; }
   if(/\.json$/i.test(file.name)){ m.msg=L('nwImpJson'); renderModal(); return; }
   if(tooBig(m,file)) return;
-  let wb; try{ wb=/\.(csv|txt)$/i.test(file.name)?readBook(X,await fileText(file),{type:'string',raw:true}):readBook(X,await file.arrayBuffer(),{type:'array',raw:true}); }catch(e){ m.msg=L('notSpreadsheet'); renderModal(); return; }
+  let wb; try{ wb=/\.(csv|txt|tsv)$/i.test(file.name)?readBook(X,await fileText(file),{type:'string',raw:true}):readBook(X,await file.arrayBuffer(),{type:'array',raw:true}); }catch(e){ m.msg=L('notSpreadsheet'); renderModal(); return; }
   let found=null, any=false;
   let tx=false;
   for(const name of wb.SheetNames){ const r=parseNwSheet(X,wb.Sheets[name],name); if(!r) continue; any=true; if(r.txLike){ tx=true; continue; } if(r.months.length){ found=r; break; } }
@@ -4703,7 +4769,8 @@ function aiMerge(rs){
 async function aiRunJob(m,job,i,n,depth,label){
   const prompt=m.build?m.build(job):aiPrompt(m.mode,m.rules,job.files,aiContext(m.mode));
   const hit=m.cache&&m.cache.get(prompt); if(hit) return hit;
-  const lim=await S.ai.limits().catch(()=>null);
+  const lim=await S.ai.limits().catch(e=>{ if(e&&e.code==='cancelled') throw e; return null; });
+  if(m.ctl&&m.ctl.signal.aborted) throw {code:'cancelled'};
   if(job.images.length){ if(!lim||!lim.images) throw {local:L('aiNoImages')}; if(job.images.length>lim.images.maxCount) throw {local:L('aiTooManyImages',lim.images.maxCount)}; }
   const say=s=>{ if(S.modal!==m) return; m.phase=s; const el=$('#ai-phase'); if(el) el.textContent=s; };
   const head=label||(n>1?L('aiPart',i+1,n):'');
@@ -4752,9 +4819,8 @@ async function aiRun(){
     const x=aiErr(e); m.msg=x.text; m.errDetails=x.details; renderModalKeepScroll();
   }
 }
-/* the first time, the person picks which AI before anything else; the choice is remembered */
+/* File intake comes first; a connection is chosen when a job starts. */
 async function aiOpen(m){
-  if(S.ai&&typeof S.ai.configured==='function'&&!S.ai.configured()){ const c=await S.ai.setup(); if(!c) return; render(); }
   openModal(m);
 }
 /* "Is this a transfer? A) Yes B) No" -> the question and its options */
@@ -4783,7 +4849,7 @@ function aiApply(m,res,nFiles){
     const first=tx.rows.map(r=>r.date).sort()[0], y=+first.slice(0,4), mo=+first.slice(5,7)-1;
     obApply(m.lang==='es'?'es':'en',y,mo); S.ui.tab='transactions'; try{ history.replaceState(null,'','#transactions'); }catch(_){} render();
   }
-  S.modal={type:'import',step:'input',table:'auto',text:'',rows:[],bad:[],msg:'',ai:{out:tx.out,checks:tx.checks,notes:tx.notes,n:nFiles},aiBack:m.mode==='start'?null:back,pendingNw:nwd&&nwd.cols.length?nwd:null};
+  S.modal={type:'import',step:'input',table:'auto',text:'',rows:[],bad:[],msg:'',acct:m.acct,pick:true,ai:{out:tx.out,checks:tx.checks,notes:tx.notes,n:nFiles},aiBack:m.mode==='start'?null:back,pendingNw:nwd&&nwd.cols.length?nwd:null};
   finishImport(tx.rows,[],label);
 }
 function modalAi(){
@@ -4794,7 +4860,7 @@ function modalAi(){
   <div class="m-body ai-body">
     ${aiWho(busy)}
     <div class="field"><span class="lab">${esc(L('aiFiles'))}</span>
-      <div class="drop ai-drop" id="ai-drop"><span>${esc(L('aiDrop'))}</span>
+      <div class="drop ai-drop" id="ai-drop"><span>${esc(S.ai&&typeof S.ai.text==='function'?S.ai.text('aiFileHelp',LANG):L('aiDrop'))}</span>
         <label class="btn sm" for="ai-file">${esc(L('aiChoose'))}</label><input type="file" id="ai-file" multiple accept=".pdf,.csv,.txt,.tsv,.xlsx,.xlsm,.xls,.ods,.png,.jpg,.jpeg,.webp,.gif" class="sr"${busy?' disabled':''}></div>
       ${m.files.length?`<ul class="ai-files">${m.files.map((f,i)=>`<li><span class="ai-fn">${esc(f.file.name)}</span><span class="hint">${fmtCount(Math.max(1,Math.round(f.file.size/1024)))} KB</span>${busy?'':`<button type="button" class="icon-btn" data-action="ai-del" data-i="${i}" aria-label="${esc(L('aiRemove',f.file.name))}">${ICON.x}</button>`}</li>`).join('')}</ul>`:''}</div>
     <details class="ai-rules"${m.openRules?' open':''}><summary>${esc(L('aiRules'))}${custom?` <span class="tag">${esc(L('aiCustom'))}</span>`:''}</summary>
@@ -4826,7 +4892,7 @@ function aiReviewNote(m){
    fix is checked again before it is shown and when it is applied. */
 const AUDIT_CHARS=YM_.auditChars||60000;
 const auDay=d=>Math.round(Date.parse(d.slice(0,10)+'T00:00:00Z')/864e5);
-const auRow=(n,r)=>[n,r.date,r2(r.amount),r.concept,r.table,r.category||''];
+const auRow=(n,r)=>[n,r.date,r2(r.amount),r.concept,r.table,r.category||'',(nw().accounts.find(a=>a.id===r.account)||{}).name||'',r.source||''];
 /* rows -> how each description is sorted, one line each, most rows first (capped: biggest first) */
 function auditHistory(rows,cap){
   const g=new Map(); cap=cap||20000;
@@ -4902,7 +4968,7 @@ const AUDIT_KEY={
 };
 const AUDIT_KEYS={tx:['changes','duplicates','keywords','statement_words','questions','notes'],nw:['statement_words','changes','duplicates','keywords','questions','notes'],settings:['keyword_changes','keywords','category_types','statement_words','questions','notes']};
 function auditPrompt(focus,files,history,ctx){
-  const head=f=>f.name==='pairs'?'POSSIBLE DUPLICATES (same table and amount, up to 2 days apart; each line is two rows)':f.name==='summary'?'MY ROWS, SUMMARISED: [description, table, how many rows, {category: rows}]':'ROWS: [number, date, amount, description, table, category], sorted by description';
+  const head=f=>f.name==='pairs'?'POSSIBLE DUPLICATES (same table and amount, up to 2 days apart; each line is two rows)':f.name==='summary'?'MY ROWS, SUMMARISED: [description, table, how many rows, {category: rows}]':'ROWS: [number, date, amount, description, table, category, account, source file], sorted by description';
   return `You are auditing my personal budget tracker. What follows is already saved in it. Find what is wrong and reply with ONE JSON object, nothing else.
 
 ${aiRulesFor('tx')}
@@ -4995,8 +5061,9 @@ function auditApply(){
   const ans=m.items.filter(x=>x.k==='q'&&x.pick!=null&&x.opts[x.pick]);
   for(const x of ans){ const f=x.opts[x.pick].fix; if(f) on.push(f); }
   /* every answer is kept (the latest 100) and sent with the next check */
+  const oldAnswers=clone(auAnswers());
   if(ans.length) setSettings({auditAnswers:auAnswers().concat(ans.map(x=>({q:(x.r?fmtDate(x.r.date)+' '+x.r.concept+' '+r2(x.r.amount)+': ':'')+x.text,a:x.opts[x.pick].label}))).slice(-100)});
-  const before={months:{},kw:clone(kws()),cats:clone(cats()),nw:clone(nw())}; let n=0, kwCh=false, catCh=false, nwCh=false;
+  const before={answers:oldAnswers,months:{},kw:clone(kws()),cats:clone(cats()),nw:clone(nw())}; let n=0, kwCh=false, catCh=false, nwCh=false;
   for(const x of on){
     if(x.k==='dup'||x.k==='del'||x.k==='cat'){ const r=x.r, f=findRow(r.mk,r.table,r.id); if(!f.row) continue;
       if(x.k==='cat'&&x.cat&&!isKnown(x.t,x.cat)) continue;
@@ -5012,18 +5079,19 @@ function auditApply(){
     else if(x.k==='words'){ const a=ensureNw().accounts.find(c=>c.id===x.acc.id); if(a){ a.words=x.words; nwCh=true; n++; } }
   }
   if(kwCh) markDirty('config/keywords'); if(catCh) markDirty('config/categories'); if(nwCh) saveNw(); bump(); closeModal(); render();
-  if(!n){ if(ans.length) toast(L('auAnsSaved',ans.length)); return; }
+  if(!n){ if(ans.length) toast(L('auAnsSaved',ans.length),{label:L('undo'),fn:()=>{ setSettings({auditAnswers:oldAnswers}); render(); }}); return; }
   toast(L('auApplied',n),{label:L('undo'),fn:()=>{
+    if(ans.length) setSettings({auditAnswers:before.answers});
     for(const [mk,d] of Object.entries(before.months)){ S.months[mk]=d; markDirty('months/'+mk); }
     if(kwCh){ S.kw=before.kw; markDirty('config/keywords'); } if(catCh){ S.cats=before.cats; markDirty('config/categories'); } if(nwCh){ S.nw=before.nw; saveNw(); }
     bump(); render(); toast(L('auUndone')); }},15000);
 }
 function aiWho(busy){ const c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null;
-  return `<div class="ai-who"><span>${esc(c?L('aiUsing',c.name+(c.model?' · '+c.model:'')):L('aiNone'))}</span>${S.ai&&typeof S.ai.setup==='function'&&!busy?`<button type="button" class="btn sm" data-action="ai-setup">${esc(L('aiChangeBtn'))}</button>`:''}</div>`; }
+  return `<div class="ai-who"><span>${esc(c?L('aiUsing',c.name):L('aiNone'))}</span>${S.ai&&typeof S.ai.setup==='function'&&!busy?`<button type="button" class="btn sm" data-action="ai-setup">${esc(L('aiChangeBtn'))}</button>`:''}</div>`; }
 function aiStatus(m){ return `${m.busy?`<p class="ai-busy" role="status"><span class="loading-bar"></span><span id="ai-phase">${esc(m.phase||'')}</span></p>`:''}
     ${m.msg?`<div class="field ai-errbox" role="alert"><span class="err">${esc(m.msg)}</span>${m.errDetails?`<details open><summary>${esc(L('aiErrWhat'))}</summary><pre>${esc(m.errDetails)}</pre><button type="button" class="btn sm" data-action="ai-copy-err">${esc(L('aiCopyDetails'))}</button></details>`:''}</div>`:''}`; }
 function auditLine(x){
-  const row=r=>`${fmtDate(r.date)} · ${esc(r.concept)||esc(L('noConcept'))} · ${fmtEUR(r.amount)}`;
+  const row=r=>`${fmtDate(r.date)} · ${esc(r.concept)||esc(L('noConcept'))} · ${fmtEUR(r.amount)}${r.account||r.source?` · ${esc((nw().accounts.find(a=>a.id===r.account)||{}).name||r.source||'')}${r.account&&r.source?' · '+esc(r.source):''}`:''}`;
   const where=(t,c,show)=>(show?esc(TL(t))+': ':'')+esc(c||L('uncat'));
   if(x.k==='cat'){ const mv=x.t!==x.r.table; return `<span>${row(x.r)}</span><span>${where(x.r.table,x.r.category,mv)} → <b>${where(x.t,x.cat,mv)}</b></span>`; }
   if(x.k==='dup') return `<span><b>${esc(L('auDel'))}:</b> ${row(x.r)}</span><span class="hint">${esc(L('auDupOf'))} ${row(x.o)}</span>`;
@@ -5043,10 +5111,10 @@ function modalAudit(){
     const groups=['cat','dup','words','kw','kwfix','type','q'].map(g=>{ const xs=m.items.map((x,i)=>[x,i]).filter(([x])=>x.k===g); if(!xs.length) return '';
       return `<section class="au-g"><h4>${esc(L('auG_'+g))} · ${fmtCount(xs.length)}</h4><ul class="au-list">${xs.map(([x,i])=>g==='q'
         ?`<li><span class="au-t">${auditLine(x)}${x.opts.length?`<span class="ai-opts" role="group" aria-label="${esc(x.text)}">${x.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${x.pick===j?' on':''}" data-action="au-ans" data-i="${i}" data-j="${j}" aria-pressed="${x.pick===j}">${esc(o.label)}</button>`).join('')}</span>${x.pick!=null&&x.opts[x.pick].fix?`<span class="hint au-will">${esc(L('auWill'))} ${auditLine(Object.assign({why:''},x.opts[x.pick].fix))}</span>`:''}`:''}</span></li>`
-        :`<li><input type="checkbox" id="au-${i}" checked><label for="au-${i}">${auditLine(x)}${x.why?`<span class="hint">${esc(x.why)}</span>`:''}</label></li>`).join('')}</ul></section>`; }).join('');
+        :`<li><input type="checkbox" id="au-${i}"${x.k==='dup'?'':' checked'}><label for="au-${i}">${auditLine(x)}${x.why?`<span class="hint">${esc(x.why)}</span>`:''}</label></li>`).join('')}</ul></section>`; }).join('');
     const any=m.items.some(x=>x.k!=='q'), asks=m.items.some(x=>x.k==='q'&&x.opts.length);
     return `${mHead(esc(auTitle(m.focus)),esc(any||asks?L('auHelp'):L('auNone')))}
-    <div class="m-body ai-body">${m.notes?`<p class="hint"><b>${esc(L('aiNotes'))}:</b> ${esc(m.notes)}</p>`:''}${groups}</div>
+    <div class="m-body ai-body">${m.notes?`<p class="hint"><b>${esc(L('aiNotes'))}:</b> ${esc(m.notes)}</p>`:''}${m.items.some(x=>x.k==='dup')?`<p class="notice">${esc(L('deleteOptIn'))}</p>`:''}${groups}</div>
     <div class="m-foot"><span class="r"><button class="btn" type="button" data-action="close">${esc(L(any||asks?'cancel':'close'))}</button>${any||asks?`<button class="btn primary" type="button" data-action="au-apply">${esc(L(asks?'auAnsApply':'auApply'))}</button>`:''}</span></div>`;
   }
   const ms=auMonths(), c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null, set=m.focus==='settings';
@@ -5066,7 +5134,7 @@ function modalAudit(){
       <div class="au-ft"><label><span>${esc(L('auFrom'))}</span><select id="au-from">${opt(m.from)}</select></label><label><span>${esc(L('auTo'))}</span><select id="au-to">${opt(m.to)}</select></label></div>
     </fieldset>
     <p>${esc(set?L('auSendsSet',pl(chk.length,'transaction'),per,nKw,nAcc):L('auSends',pl(chk.length,'transaction'),per,nKw,nAcc))} ${!set&&oth.length?esc(L('auOther',pl(oth.length,'transaction')))+' ':''}${esc(L('auReqs',reqs))}</p>
-    <p class="hint">${esc(L('auPrivacy',c?c.name:'AI'))}</p>
+    <p class="hint">${esc(S.ai&&typeof S.ai.text==='function'?S.ai.text('aiAuditPrivacy',LANG):L('auPrivacy',c?c.name:'AI'))}</p>
     ${aiStatus(m)}
   </div>
   <div class="m-foot"><span class="r">${busy?`<button class="btn" type="button" data-action="ai-stop">${esc(L('aiStop'))}</button>`:`<button class="btn" type="button" data-action="close">${esc(L('cancel'))}</button><button class="btn primary" type="button" data-action="au-send">${ICON.ai}${esc(L('auStart'))}</button>`}</span></div>`;
@@ -5131,7 +5199,10 @@ function viewYearly(){
   body+=`<tr class="sec"><th colspan="${colsN}">${esc(L('savings'))}</th></tr>`;
   body+=`<tr class="savings"><th class="rh" scope="row">${esc(L('totalSavings'))}</th>${sv.map((v,i)=>`<td class="${pc(i).trim()}">${fmtCell(v)}</td>`).join('')}<td class="tot">${fmtCell(r2(sum(sv)))}</td>${multi?`<td class="tot">${fmtCell(r2(sum(ALL.savings)))}</td>`:''}</tr>`;
   body+=`<tr class="prop"><th class="rh" scope="row">${esc(L('pctIncome'))}</th>${sv.map((v,i)=>`<td class="${pc(i).trim()}">${inc[i]?fmtPct(v/inc[i]):DASH}</td>`).join('')}<td class="tot">${sum(inc)?fmtPct(sum(sv)/sum(inc)):DASH}</td>${multi?`<td class="tot">${sum(ALL.income.total)?fmtPct(sum(ALL.savings)/sum(ALL.income.total)):DASH}</td>`:''}</tr>`;
-  return pageHead('yearly',yearStepper())+`<div class="grid-head">
+  const single=S.ui.yearSingle==null?matchMedia('(max-width:600px)').matches:S.ui.yearSingle;
+  const choice=`<div class="seg year-view"><button data-action="year-view" data-v="month" aria-pressed="${single}">${esc(L('monthView'))}</button><button data-action="year-view" data-v="grid" aria-pressed="${!single}">${esc(L('gridView'))}</button></div>`;
+  if(single) return pageHead('yearly',yearStepper())+choice+yearMonthCard(y,A);
+  return pageHead('yearly',yearStepper())+choice+`<div class="grid-head">
       <div class="heat-legend">
         <button type="button" class="switch" role="switch" aria-checked="${S.ui.heat}" data-action="toggle-heat" id="heat-switch"><span class="knob" aria-hidden="true"></span>${esc(L('heatMap'))}</button>
         <span class="cell-flag">${ICON.flag}${esc(L('bigMonthCat'))}</span>
@@ -5141,13 +5212,44 @@ function viewYearly(){
 }
 
 /* ───────── transactions ───────── */
+function txSelection(){ const u=S.ui.tx; if(!(u.selection instanceof Set)) u.selection=new Set(); return u.selection; }
+const txKey=r=>JSON.stringify([r.mk,r.table,r.id]);
+function txMatches(r,u){
+  if(u.from&&r.date<u.from||u.to&&r.date>u.to||u.account&&r.account!==u.account||u.source&&r.source!==u.source||u.batch&&r.batch!==u.batch) return false;
+  const min=u.min===''||u.min==null?null:parseAmount(String(u.min),wantNum()), max=u.max===''||u.max==null?null:parseAmount(String(u.max),wantNum());
+  return !(min!=null&&Math.abs(r.amount)<min||max!=null&&Math.abs(r.amount)>max);
+}
+function txView(){ const out={year:S.ui.year}; for(const k of ['table','q','month','cat','sort','allYears','from','to','min','max','account','source','batch']) out[k]=S.ui.tx[k]; return out; }
+function savedTxViews(){ return Array.isArray(S.settings&&S.settings.txViews)?S.settings.txViews.filter(x=>x&&typeof x.id==='string'&&typeof x.name==='string'&&x.filters&&typeof x.filters==='object'):[]; }
+function applyTxView(v){
+  const f=v.filters||{}, u=S.ui.tx; Object.assign(u,{q:'',month:'all',cat:'all',from:'',to:'',min:'',max:'',account:'',source:'',batch:'',allYears:false});
+  for(const k of ['q','month','cat','sort','from','to','min','max','account','source','batch']) if(typeof f[k]==='string') u[k]=f[k].slice(0,500);
+  if(TKEYS.includes(f.table)) u.table=f.table; u.allYears=f.allYears===true; if(Number.isInteger(f.year)&&f.year>=1900&&f.year<=2100) S.ui.year=f.year;
+  txSelection().clear(); u.limit=150; render();
+}
+function modalBulkCategory(){
+  const rows=allRows().filter(r=>txSelection().has(txKey(r))&&r.table===S.ui.tx.table); S.modal.refs=rows.map(r=>({mk:r.mk,table:r.table,id:r.id}));
+  return `${mHead(esc(L('bulkCategory')),esc(L('bulkPreview',rows.length)))}<div class="m-body"><label for="bulk-cat">${esc(L('category'))}</label><select id="bulk-cat">${catOptions(S.ui.tx.table,'',true)}</select><ul>${rows.slice(0,50).map(r=>`<li>${esc(fmtDate(r.date))} · ${esc(r.concept)} · ${fmtEUR(r.amount)} · ${esc(r.category||L('uncat'))}</li>`).join('')}</ul>${rows.length>50?`<p>${esc(L('selectedCount',rows.length))}</p>`:''}</div><div class="m-foot"><button class="btn" data-action="close">${esc(L('cancel'))}</button><button class="btn primary" data-action="bulk-apply">${esc(L('bulkApply'))}</button></div>`;
+}
+function bulkApply(){
+  if(!S.canWrite||!S.modal||S.modal.type!=='bulkcat') return; const cat=$('#bulk-cat').value, t=S.ui.tx.table; if(cat&&!isKnown(t,cat)) return;
+  const before=[]; for(const ref of S.modal.refs){ const f=findRow(ref.mk,ref.table,ref.id); if(!f.row||f.row.category===cat) continue; before.push({ref,cat:f.row.category}); f.row.category=cat; markDirty('months/'+ref.mk); }
+  txSelection().clear(); bump(); closeModal(); render(); toast(L('batchChanged',before.length),{label:L('undo'),fn:()=>{ for(const x of before){ const f=findRow(x.ref.mk,x.ref.table,x.ref.id); if(f.row&&f.row.category===cat){ f.row.category=x.cat; markDirty('months/'+x.ref.mk); } } bump(); render(); }});
+}
+function modalSaveView(){ return `${mHead(esc(L('saveView')))}<form id="save-view-form"><div class="m-body"><label for="view-name">${esc(L('viewName'))}</label><input id="view-name" maxlength="80" required></div><div class="m-foot"><button class="btn" type="button" data-action="close">${esc(L('cancel'))}</button><button class="btn primary" type="submit">${esc(L('saveChanges'))}</button></div></form>`; }
+function modalImportHistory(){
+  const xs=Array.isArray(S.settings.imports)?S.settings.imports:[], counts=new Map(); for(const r of allRows()) if(r.batch){ if(!counts.has(r.batch)) counts.set(r.batch,{}); const c=counts.get(r.batch); c[r.table]=(c[r.table]||0)+1; }
+  return `${mHead(esc(L('importHistory')),esc(L('importHistoryHelp')))}<div class="m-body"><ul class="wz-list">${xs.slice().reverse().map(x=>`<li><span><b>${esc(x.source||L('unknownSource'))}</b><small>${esc(x.from||'')} – ${esc(x.to||'')} · ${esc(L('importCount',x.n))}${x.undone?' · '+esc(L('undo')):''}</small></span><span>${TKEYS.filter(t=>counts.get(x.id)&&counts.get(x.id)[t]).map(t=>`<button class="btn sm" data-action="import-view" data-id="${esc(x.id)}" data-t="${t}">${esc(TL(t))} · ${counts.get(x.id)[t]}</button>`).join('')}</span></li>`).join('')||`<li>${esc(L('noImports'))}</li>`}</ul></div><div class="m-foot"><button class="btn" data-action="close">${esc(L('close'))}</button></div>`;
+}
+function modalAnswers(){ return `${mHead(esc(L('rememberAnswers')))}<div class="m-body">${auAnswers().map((x,i)=>`<div class="card"><p>${esc(x.q)}</p><label class="sr" for="answer-${i}">${esc(L('editAnswer'))}</label><input id="answer-${i}" value="${esc(x.a)}"><button class="btn sm" data-action="answer-save" data-i="${i}">${esc(L('saveAnswer'))}</button><button class="btn sm" data-action="answer-forget" data-i="${i}">${esc(L('forgetAnswer'))}</button></div>`).join('')||`<p>${esc(L('rememberedNone'))}</p>`}</div><div class="m-foot"><button class="btn" data-action="close">${esc(L('close'))}</button></div>`; }
 function txFiltered(){
-  const u=S.ui.tx, y=S.ui.year, q=u.q.trim().toLowerCase(), every=!!(u.allYears&&q);
+  const u=S.ui.tx, y=S.ui.year, q=u.q.trim().toLowerCase(), every=!!(u.allYears||u.from||u.to||u.batch);
   let rows=allRows().filter(r=>r.table===u.table && (every||+r.date.slice(0,4)===y));
   if(u.month!=='all'&&!every) rows=rows.filter(r=>+r.date.slice(5,7)-1===+u.month);
   if(u.cat===UNCAT) rows=rows.filter(r=>!isKnown(u.table,r.category));
   else if(u.cat!=='all') rows=rows.filter(r=>r.category===u.cat);
   if(q){ const fq=fold(q); rows=rows.filter(r=>fold(r.concept).includes(fq)||fold(r.category).includes(fq)||fmtNum(r.amount).includes(q)||String(r.amount).includes(q)); }
+  rows=rows.filter(r=>txMatches(r,u));
   const [k,dir]=u.sort.split('-'); const d=dir==='asc'?1:-1;
   rows.sort((a,b)=> k==='amount'? (a.amount-b.amount)*d || (a.date<b.date?1:-1) : (a.date<b.date?-d:a.date>b.date?d:(a.ord-b.ord)));
   return rows;
@@ -5159,7 +5261,7 @@ function catOptions(t,selected,withBlank){
   return o;
 }
 function viewTransactions(){
-  const u=S.ui.tx, y=S.ui.year, A=agg(y), ms=activeMonths(y);
+  const u=S.ui.tx, y=S.ui.year, A=agg(y), ms=activeMonths(y), filterCount=['q','from','to','min','max','account','source','batch'].filter(k=>!!u[k]).length+(u.month!=='all'?1:0)+(u.cat!=='all'?1:0);
   const counts=Object.fromEntries(TKEYS.map(t=>[t,A[t].n]));
   const rows=txFiltered(); const shown=rows.slice(0,u.limit);
   const total=r2(sum(rows.map(r=>r.amount)));
@@ -5175,25 +5277,28 @@ function viewTransactions(){
     const mg=S.canWrite&&!known?mlGuess(r.table,r.concept):null;
     const cat=S.canWrite?`<label class="sr" for="cs-${esc(r.id)}">${esc(L('category'))}</label><select id="cs-${esc(r.id)}" class="${known?'':'missing'}" data-action="set-cat" ${ref}>${catOptions(r.table,r.category,false)}</select>${mlLevel(mg)?`<button type="button" class="linkish ml-maybe" data-action="use-ml-row" ${ref} data-c="${esc(mg.cat)}" title="${esc(mg.like?L('mlLike',mg.like):'')}">${esc(L('mlMaybe',mg.cat))}</button>`:''}`
       :`<span class="cat-text ${known?'':'missing'}">${known?esc(r.category):esc(L('uncat'))}</span>`;
-    return head+`<tr id="txr-${esc(r.id)}" data-action="edit-tx" ${ref} tabindex="0"><td class="d">${fmtDate(r.date)}</td><td class="c">${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}</td><td class="k">${cat}</td><td class="amt r">${r.amount>0&&u.table!=='income'?'+':''}${fmtEUR(r.amount)}</td></tr>`;
+    return head+`<tr id="txr-${esc(r.id)}" data-action="edit-tx" ${ref} tabindex="0"><td class="d">${fmtDate(r.date)}</td><td class="c">${S.canWrite?`<input type="checkbox" data-action="tx-pick" ${ref} ${txSelection().has(txKey(r))?'checked':''} aria-label="${esc(L('includeRow',r.ord+1))}">`:''}${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}${r.source?`<small class="hint tx-source">${esc(r.source)}</small>`:''}</td><td class="k">${cat}</td><td class="amt r">${r.amount>0&&u.table!=='income'?'+':''}${fmtEUR(r.amount)}</td></tr>`;
   }).join('');
   return pageHead('transactions',yearStepper(),S.canWrite?`
         ${unInTable?`<button class="btn" data-action="categorise" title="${esc(L('categoriseTitle'))}">${esc(L('categoriseBlanks'))}</button>`:''}
-        ${S.lastImport?`<button class="btn ghost" data-action="undo-import">${esc(L('undoImport',S.lastImport.n))}</button>`:''}
+        <button class="btn ghost" data-action="import-history">${esc(L('importHistory'))}</button>${S.lastImport?`<button class="btn ghost" data-action="undo-import">${esc(L('undoImport',S.lastImport.n))}</button>`:''}
         ${S.ai?`<button class="btn" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}
         <button class="btn" data-action="import">${esc(L('pasteImport'))}</button>
         <button class="btn primary" data-action="add-tx">${esc(L('addTx'))}</button>`:'')+`<div class="toolbar">
       <div class="left"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(t=>`<button data-action="tx-table" data-t="${t}" aria-pressed="${u.table===t}"><i class="sw ${t}"></i>${esc(TL(t))}<span class="ct">${fmtCount(counts[t])}</span></button>`).join('')}</div>${info('txKinds')}</div>
     </div>
-    <div class="filters">
+    <details class="tx-filter-panel"${(u.filtersOpen==null?matchMedia('(min-width:601px)').matches:u.filtersOpen)?' open':''}><summary>${esc(L('filters'))}${filterCount?' · '+esc(L('activeFilters',filterCount)):''}</summary><div class="filters">
       <label class="sr" for="tx-q">${esc(L('search'))}</label><input type="search" id="tx-q" placeholder="${esc(L('searchPh'))}" value="${esc(u.q)}" autocomplete="off">
       ${u.q.trim()?`<label class="check"><input type="checkbox" id="tx-ally"${u.allYears?' checked':''}>${esc(L('searchAllYears'))}</label>`:''}
       <label class="sr" for="tx-month">${esc(L('month'))}</label><select id="tx-month"${u.allYears&&u.q.trim()?' disabled':''}><option value="all">${esc(L('wholeOf',y))}</option>${ms.map(m=>`<option value="${m}"${String(u.month)===String(m)?' selected':''}>${M()[m]}</option>`).join('')}</select>
       <label class="sr" for="tx-cat">${esc(L('category'))}</label><select id="tx-cat"><option value="all">${esc(L('allCategories'))}</option><option value="${UNCAT}"${u.cat===UNCAT?' selected':''}>${esc(L('uncat'))}${unInTable?' ('+unInTable+')':''}</option>${catNames(u.table).map(n=>`<option value="${esc(n)}"${n===u.cat?' selected':''}>${esc(n)}</option>`).join('')}</select>
-      ${(u.q||u.month!=='all'||u.cat!=='all')?`<button class="btn ghost sm" data-action="tx-clear">${esc(L('clearFilters'))}</button>`:''}
+      <label>${esc(L('fromDate'))}<input id="tx-from" type="date" value="${esc(u.from)}"></label><label>${esc(L('toDate'))}<input id="tx-to" type="date" value="${esc(u.to)}"></label><label>${esc(L('minAmount'))}<input id="tx-min" inputmode="decimal" value="${esc(u.min)}"></label><label>${esc(L('maxAmount'))}<input id="tx-max" inputmode="decimal" value="${esc(u.max)}"></label>
+      <label>${esc(L('accountFilter'))}<select id="tx-account"><option value="">${esc(L('anyAccount'))}</option>${nw().accounts.map(a=>`<option value="${esc(a.id)}"${u.account===a.id?' selected':''}>${esc(a.name)}</option>`).join('')}</select></label><label>${esc(L('source'))}<select id="tx-source"><option value="">${esc(L('anySource'))}</option>${[...new Set(allRows().map(r=>r.source).filter(Boolean))].map(f=>`<option${u.source===f?' selected':''}>${esc(f)}</option>`).join('')}</select></label>
+      <label>${esc(L('savedViews'))}<select id="tx-saved-view"><option value="">${esc(L('defaultView'))}</option><option value="uncat">${esc(L('uncat'))}</option><option value="large">${esc(L('minAmount'))}: ${fmtNum(100)}</option>${savedTxViews().map(v=>`<option value="${esc(v.id)}">${esc(v.name)}</option>`).join('')}</select></label><button class="btn sm" data-action="tx-save-view">${esc(L('saveView'))}</button>${u.savedView?`<button class="btn sm" data-action="tx-delete-view">${esc(L('deleteView'))}</button>`:''}
+      ${(u.q||u.month!=='all'||u.cat!=='all'||u.from||u.to||u.min||u.max||u.account||u.source||u.batch)?`<button class="btn ghost sm" data-action="tx-clear">${esc(L('clearFilters'))}</button>`:''}
     </div>
-    <div class="tx-sum"><span>${esc(pl(rows.length,'transaction'))}${rows.length>shown.length?esc(L('showingFirst',fmtCount(shown.length))):''}${S.canWrite&&S.ai&&allRows().length?` <button type="button" class="linkish au-link" data-action="audit" data-f="tx" title="${esc(L('auLinkTip'))}">${ICON.ai}${esc(L('auBtn'))}</button>`:''}</span><span>${esc(L('total'))} <b>${fmtEUR(total)}</b></span></div>
-    ${S.canWrite&&rows.length?`<p class="hint" style="margin:0 0 var(--s8)">${esc(L('txRowHint'))}</p>`:''}
+    </details><div class="tx-sum"><span>${esc(pl(rows.length,'transaction'))}${rows.length>shown.length?esc(L('showingFirst',fmtCount(shown.length))):''}${S.canWrite&&S.ai&&allRows().length?` <button type="button" class="linkish au-link" data-action="audit" data-f="tx" title="${esc(L('auLinkTip'))}">${ICON.ai}${esc(L('auBtn'))}</button>`:''}</span><span>${esc(L('total'))} <b>${fmtEUR(total)}</b></span></div>
+    ${S.canWrite&&rows.length?`<div class="bulk-tools"><button class="btn sm" data-action="tx-select-filtered">${esc(L('selectFiltered'))}</button><span>${esc(L('selectedCount',txSelection().size))}</span>${txSelection().size?`<button class="btn sm" data-action="tx-bulk">${esc(L('bulkCategory'))}</button><button class="btn sm" data-action="tx-clear-selection">${esc(L('clearSelection'))}</button>`:''}</div><p class="hint" style="margin:0 0 var(--s8)">${esc(L('txRowHint'))}</p>`:''}
     <div class="frame" style="overflow:visible"><table class="tx">
       <thead><tr><th style="width:110px">${sortBtn('date',L('date'))}</th><th>${esc(L('concept'))}</th><th style="width:240px">${esc(L('category'))}</th><th class="r" style="width:140px">${sortBtn('amount',L('amount'))}</th></tr></thead>
       <tbody>${tr||`<tr class="empty-row"><td colspan="4">${esc(L('noMatchFilters',tl(u.table)))}</td></tr>`}</tbody>
@@ -5202,6 +5307,11 @@ function viewTransactions(){
 }
 
 /* ───────── categories ───────── */
+function rulePreview(){
+  const c=S.ui.ct, text=loose((c.newKw||'').replace(/^"|"$/g,'')); if(!text) return esc(L('rulePriority'));
+  const rows=allRows().filter(r=>r.table===c.table&&(c.ruleMode==='word'?hasWord(loose(r.concept),text):hasKw(loose(r.concept),text)));
+  return esc(L('affectedRows',rows.length))+(rows.length?' · '+rows.slice(0,3).map(r=>esc(r.concept)).join(' · '):'');
+}
 function viewCategories(){
   const c=S.ui.ct, t=c.table, list=cats()[t], kwl=kws()[t]||[];
   const useCount=new Map(); for(const r of allRows()) if(r.table===t) useCount.set(r.category,(useCount.get(r.category)||0)+1);
@@ -5222,7 +5332,7 @@ function viewCategories(){
   const fq=fold(q);
   const filtered=kwl.map((p,i)=>({k:p[0],cat:p[1],i})).filter(d=>!q||fold(d.k).includes(fq)||fold(d.cat).includes(fq));
   const shown=filtered.slice(0,c.kwLimit);
-  const kwRows=shown.map(d=>`<div class="kw-row"><span class="kw" title="${esc(d.k)}">${esc(d.k)}</span>
+  const kwRows=shown.map(d=>`<div class="kw-row"><span class="kw" title="${esc(d.k)}">${esc(L('ruleWhen'))} ${esc(L(/^".*"$/.test(d.k)?'wholeWord':'contains'))}: <b>${esc(d.k.replace(/^"|"$/g,''))}</b><small>${esc(L('ruleUse'))}: ${esc(d.cat)}</small></span>
       ${S.canWrite?`<label class="sr" for="kc-${d.i}">${esc(L('catFor',d.k))}</label><select id="kc-${d.i}" data-action="kw-cat" data-i="${d.i}" class="${isKnown(t,d.cat)?'':'missing'}">${catOptions(t,d.cat,false)}</select>
       <button class="icon-btn" data-action="kw-del" data-i="${d.i}" aria-label="${esc(L('delKw',d.k))}">${ICON.x}</button>`:`<span>${esc(d.cat)}</span>`}</div>`).join('');
   return pageHead('categories')+`<div class="toolbar"><div class="left"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(k=>`<button data-action="ct-table" data-t="${k}" aria-pressed="${t===k}"><i class="sw ${k}"></i>${esc(TL(k))}</button>`).join('')}</div></div></div>
@@ -5244,9 +5354,9 @@ function viewCategories(){
         <input type="text" id="kw-test" placeholder="${esc(L('testPh'))}" value="${esc(c.test)}" autocomplete="off">
         <div class="kw-out" id="kw-out">${kwTestOut()}</div>
       </div>
-      ${S.canWrite?`<form class="inline-form" id="add-kw-form" style="margin-top:0;padding-top:0;border-top:0">
+      ${S.canWrite?`<form class="inline-form" id="add-kw-form" style="margin-top:0;padding-top:0;border-top:0"><p class="hint" id="rule-preview">${rulePreview()}</p>
         <label class="sr" for="new-kw">${esc(L('kwHead'))}</label><input type="text" id="new-kw" placeholder="${esc(L('kwPh'))}" value="${esc(c.newKw)}" autocomplete="off">
-        <label class="sr" for="new-kw-cat">${esc(L('category'))}</label><select id="new-kw-cat">${catNames(t).map(n=>`<option value="${esc(n)}"${n===c.newKwCat?' selected':''}>${esc(n)}</option>`).join('')}</select>
+        <label for="rule-mode">${esc(L('ruleMode'))}</label><select id="rule-mode"><option value="contains"${c.ruleMode!=='word'?' selected':''}>${esc(L('contains'))}</option><option value="word"${c.ruleMode==='word'?' selected':''}>${esc(L('wholeWord'))}</option></select><label class="sr" for="new-kw-cat">${esc(L('category'))}</label><select id="new-kw-cat">${catNames(t).map(n=>`<option value="${esc(n)}"${n===c.newKwCat?' selected':''}>${esc(n)}</option>`).join('')}</select>
         <button class="btn" type="submit">${esc(L('addKeyword'))}</button>
       </form>
       <p class="hint" style="margin:var(--s8) 0 0">${esc(L('kwWholeHint'))}</p>`:''}
@@ -5297,7 +5407,7 @@ function closeModal(){ const prev=S.modal&&S.modal.type; if(S.modal&&S.modal.ctl
   /* a dialog the setup wizard opened has closed: bring the wizard back */
   if(was&&prev!=='wizard'&&S.wizard&&S.wizard.on) setTimeout(()=>{ if(!S.modal&&S.wizard&&S.wizard.on){ if(S.wizard.queue&&S.wizard.queue.length) ciNext(); else openModal({type:'wizard',mid:true}); } },0); }
 document.addEventListener('keydown',e=>{
-  if(e.key!=='Tab'||!S.modal) return;
+  if(e.key!=='Tab'||!S.modal||document.querySelector('.ai-panel')) return;
   const md=$('#overlay .modal'); if(!md) return;
   const f=[...md.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(el=>el.getClientRects().length);
   if(!f.length) return;
@@ -5308,7 +5418,7 @@ document.addEventListener('keydown',e=>{
 });
 function renderModal(keepId){
   const m=S.modal, o=$('#overlay'); if(!m){ closeModal(); return; }
-  const inner=({edit:modalEdit,drill:modalDrill,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwacc:modalNwAccounts,ai:modalAi,audit:modalAudit,nwgoal:modalNwGoal,nwret:modalNwReturns,nwlink:modalNwLink,nwimp:modalNwImport})[m.type]();
+  const inner=({edit:modalEdit,drill:modalDrill,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwacc:modalNwAccounts,ai:modalAi,audit:modalAudit,nwgoal:modalNwGoal,nwret:modalNwReturns,nwlink:modalNwLink,nwimp:modalNwImport,bulkcat:modalBulkCategory,saveview:modalSaveView,imports:modalImportHistory,answers:modalAnswers})[m.type]();
   o.innerHTML=`<div class="scrim" data-action="close"></div><div class="modal${m.wide?' wide':m.mid?' mid':''}" role="dialog" aria-modal="true" aria-labelledby="m-title">${inner}</div>`;
   o.classList.add('on'); o.setAttribute('aria-hidden','false');
   if(keepId){ const k=document.getElementById(keepId); if(k&&o.contains(k)){ k.focus({preventScroll:true}); return; } }
@@ -5489,18 +5599,20 @@ function modalImport(){
   if(m.step==='input'){
     const sk=skipList();
     const fa=m.acct&&nw().accounts.find(a=>a.id===m.acct);
-    return `${mHead(esc(L('impTitle')),esc(L('impSub')))}
+    return `${mHead(esc(L('addStatement')),esc(L('importFileHelp')))}
   <div class="m-body imp-src">
     ${fa?`<p class="notice">${esc(L('impForAcc',fa.name))}</p>`:''}
-    ${S.downloads?`<div class="imp-tpl"><button type="button" class="btn primary" data-action="import-template">${esc(L('dlTemplateBtn'))}</button><span class="hint">${esc(L('dlTemplateHint'))}</span></div>`:''}
-    <div class="drop" id="imp-drop"><span>${esc(L('impFileA'))}${S.downloads?`<button type="button" class="linkish" data-action="import-template">${esc(L('impFileLink'))}</button>`:esc(L('impFileLink'))}${esc(L('impFileB'))}</span>
-      <label class="btn sm" for="imp-file">${esc(L('chooseFile'))}</label><input type="file" id="imp-file" accept=".xlsx,.xlsm,.xls,.csv,.txt" class="sr"></div>
+    <p class="hint">${esc(L('localReadHelp'))}</p>
+    ${S.downloads?`<details class="imp-tpl"><summary>${esc(L('dlTemplateBtn'))}</summary><button type="button" class="btn primary" data-action="import-template">${esc(L('dlTemplateBtn'))}</button><span class="hint">${esc(L('dlTemplateHint'))}</span></details>`:''}
+    <div class="drop" id="imp-drop"><span>${esc(L('importFileHelp'))}</span>
+      <label class="btn sm" for="imp-file">${esc(L('chooseFile'))}</label><input type="file" id="imp-file" accept=".xlsx,.xlsm,.xls,.csv,.txt,.tsv,.ods,.pdf,.png,.jpg,.jpeg,.webp,.gif" class="sr"></div>
     <div class="field"><label for="imp-text">${esc(L('impOrPaste'))}</label>
       <textarea id="imp-text" rows="4" placeholder="31/08/2026&#9;-60,00&#9;Amazon.es&#10;30/08/2026&#9;-39,90&#9;RENFE VIRTUAL INTERNET">${esc(m.text)}</textarea>
       <span class="help">${esc(L('impPasteShort'))}</span></div>
-    <div class="field"><label for="imp-table">${esc(L('putRowsIn'))}</label><select id="imp-table" style="max-width:360px"><option value="auto"${m.table==='auto'?' selected':''}>${esc(L('sortAuto'))}</option>${TKEYS.map(t=>`<option value="${t}"${t===m.table?' selected':''}>${esc(L('allInto',TL(t)))}</option>`).join('')}</select>
-      <span class="help">${esc(L('sortAutoHelp'))}</span></div>
+    <details><summary>${esc(L('advanced'))}</summary><div class="field"><label for="imp-table">${esc(L('putRowsIn'))}</label><select id="imp-table" style="max-width:360px"><option value="auto"${m.table==='auto'?' selected':''}>${esc(L('sortAuto'))}</option>${TKEYS.map(t=>`<option value="${t}"${t===m.table?' selected':''}>${esc(L('allInto',TL(t)))}</option>`).join('')}</select>
+      <span class="help">${esc(L('sortAutoHelp'))}</span></div></details>
     <p class="template-note">${esc(L('skipNote',sk.length?sk.slice(0,4).map(quote).join(', ')+(sk.length>4?', …':''):L('emptyForNow')))} <button type="button" class="linkish" data-action="goto-skip">${esc(L('editSkip'))}</button></p>
+    ${S.ai?`<button class="btn" type="button" data-action="imp-ai">${ICON.ai}${esc(L('useAiFallback'))}</button>`:''}
     ${m.msg?`<p class="field"><span class="err">${esc(m.msg)}</span></p>`:''}
   </div>
   <div class="m-foot"><span class="r"><button class="btn" data-action="close">${esc(L('cancel'))}</button><button class="btn primary" data-action="imp-read">${esc(L('readRows'))}</button></span></div>`;
@@ -5521,7 +5633,8 @@ function modalImport(){
   const byT=TKEYS.map(t=>[t,on.filter(r=>r.table===t).length]).filter(x=>x[1]);
   /* every change redraws the review, so a long file shows 200 rows at a time; the rest are still added */
   const shown=m.shown||200;
-  const body=rows.slice(0,shown).map((r,i)=>`<tr class="${greyed(r)?'off':''}${r.aiQ&&!r.aiA?' ai-ask':''}" id="imp-r-${i}">
+  const reviewRows=rows.map((r,i)=>({r,i})).filter(x=>!m.attention||impNeedsAttention(x.r));
+  const body=reviewRows.slice(0,shown).map(({r,i})=>`<tr class="${greyed(r)?'off':''}${r.aiQ&&!r.aiA?' ai-ask':''}" id="imp-r-${i}">
     <td class="on"><input type="checkbox" id="imp-on-${i}" data-action="imp-on" data-i="${i}" ${r.on?'checked':''} aria-label="${esc(L('includeRow',i+1))}"></td>
     <td class="d">${fmtDate(r.date)}</td>
     <td class="c"><label class="sr" for="imp-d-${i}">${esc(L('descForRow',i+1))}</label><input type="text" class="ed" id="imp-d-${i}" data-action="imp-desc" data-i="${i}" maxlength="140" value="${esc(r.concept)}" placeholder="${esc(L('noConcept'))}" title="${esc(r.concept)}"></td>
@@ -5531,20 +5644,36 @@ function modalImport(){
     <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${greyed(r)?`<span class="note why">${esc(whyText(r))}</span> `:''}${r.like&&!r.dup&&!greyed(r)?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.table==='expenses'&&isBizum(r)?`<span class="note">${esc(L('noteBizum'))}</span> `:''}${greyed(r)?'':r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
-    ${m.pick?impAcctPick(m):''}${aiReviewNote(m)}${impChecksNote(m)}${(o=>o?`<label class="check"><input type="checkbox" id="imp-balfill"${m.balFill!==false?' checked':''}> ${esc(L('impBalFill',o.a.name,o.ks.length))}</label>`:'')(impBalOffer(m))}
+    ${m.pick?impAcctPick(m):''}${importCoverage(m)}
+    <p class="notice">${esc(L('reviewSummary',rows.filter(r=>r.on&&!impNeedsAttention(r)).length,rows.filter(impNeedsAttention).length,rows.filter(r=>!r.on).length))}</p><p class="hint">${esc(L('reviewSafety'))}</p>
+    <div class="seg"><button type="button" data-action="imp-review-mode" data-v="attention" aria-pressed="${!!m.attention}">${esc(L('needsAttention'))}</button><button type="button" data-action="imp-review-mode" data-v="all" aria-pressed="${!m.attention}">${esc(L('allRowsReview'))}</button></div>${aiReviewNote(m)}${impChecksNote(m)}${(o=>o?`<label class="check"><input type="checkbox" id="imp-balfill"${m.balFill!==false?' checked':''}> ${esc(L('impBalFill',o.a.name,o.ks.length))}</label>`:'')(impBalOffer(m))}
     ${m.sw&&m.sw.people.length>1?`<div class="field"><label class="lab" for="imp-sw-who">${esc(L('swWho'))}</label><select id="imp-sw-who" style="max-width:320px">${m.sw.people.map((p,i)=>`<option value="${i}"${i===m.sw.who?' selected':''}>${esc(p)}</option>`).join('')}</select><span class="help">${esc(L('swHelp'))}</span></div>`:''}
     ${guessed?`<p class="hint">${esc(L('sortedNote'))}</p>`:''}
     ${nMl?`<p class="hint ml-note">${esc(L('mlImpNote',nMl))}</p>`:''}
     <p class="hint imp-key">${esc(L('impKey'))}</p>
     <div class="imp-table-wrap"><table class="imp"><thead><tr><th><span class="sr">${esc(L('include'))}</span></th><th>${esc(L('date'))}</th><th>${esc(L('concept'))}</th><th class="r">${esc(L('amount'))}</th><th>${esc(L('table'))}</th><th>${esc(L('category'))}</th><th></th></tr></thead><tbody>${body}</tbody></table></div>
-    ${rows.length>shown?`<div class="more"><button class="btn" data-action="imp-more">${esc(L('showMore',fmtCount(Math.min(200,rows.length-shown))))}</button></div>`:''}
+    ${reviewRows.length>shown?`<div class="more"><button class="btn" data-action="imp-more">${esc(L('showMore',fmtCount(Math.min(200,reviewRows.length-shown))))}</button></div>`:''}
     ${m.bad.length?`<div class="field"><span class="lab">${esc(L('badLines',m.bad.length))}</span><div class="bad-lines">${esc(m.bad.slice(0,30).join('\n'))}${m.bad.length>30?'\n…':''}</div></div>`:''}
   </div>
   <div class="m-foot">${m.confirmClose?impConfirmBar(m):`<button class="btn" data-action="imp-back">${esc(L('back'))}</button><span class="r"><span class="hint" id="imp-summary" style="align-self:center">${esc(byT.map(([t,n])=>L('nToT',fmtCount(n),TL(t))).join(' · ')+(nMl?L('nGuessed',nMl):'')+(noCat?L('nUncat',noCat):''))}</span><button class="btn primary" data-action="imp-add" ${on.length?'':'disabled'}>${esc(L('addRows',on.length))}</button></span>`}</div>`;
 }
 /* the check-in's review: which of the Cash accounts the file is from (recognised from its last file when possible) */
-function impAcctPick(m){ const accs=nw().accounts.filter(a=>a.group==='cash');
-  return `<div class="field"><label class="lab" for="imp-acct">${esc(L('impAcct'))}${m.qpos?` <span class="hint">· ${esc(L('ciFileN',m.qpos[0],m.qpos[1]))}</span>`:''}</label><select id="imp-acct" style="max-width:360px"><option value="">${esc(L('impAcctNone'))}</option>${accs.map(a=>`<option value="${a.id}"${a.id===m.acct?' selected':''}>${esc(a.name)}</option>`).join('')}</select><span class="help">${esc(L(m.auto&&m.acct?'impAcctAuto':'impAcctHelp'))}</span></div>`; }
+function impNeedsAttention(r){ return !!((r.aiQ&&!r.aiA)||r.dup||r.like||r.future||r.balOff||r.odd!=null||r.fx||!r.category||!WORDCH.test(r.concept)); }
+function importSources(m){ return [...new Set(m.rows.map(r=>r.aiSrc||m.fileName||''))]; }
+function sourceAccount(m,r,multi){ const src=r.aiSrc||m.fileName||''; return (multi==null?importSources(m).length>1:multi)?m.sourceAccounts&&Object.prototype.hasOwnProperty.call(m.sourceAccounts,src)?m.sourceAccounts[src]:'':m.acct||''; }
+function importCoverage(m){
+  if(!m.acct||!m.rows.length||importSources(m).length>1) return '';
+  const ds=m.rows.map(r=>r.date).sort(), f=m.coverFrom||ds[0], t=m.coverTo||ds[ds.length-1];
+  return `<fieldset class="field"><legend>${esc(L('period'))}</legend><label>${esc(L('fromDate'))}<input type="date" id="imp-period-from" value="${esc(f)}"></label><label>${esc(L('toDate'))}<input type="date" id="imp-period-to" value="${esc(t)}"></label><label class="check"><input type="checkbox" id="imp-period-confirm"${m.coverConfirmed?' checked':''}>${esc(L('periodConfirm'))}</label></fieldset>`;
+}
+function impAcctPick(m){
+  const accs=nw().accounts.filter(a=>a.group==='cash'), sources=importSources(m);
+  const opts=id=>`<option value="">${esc(L('impAcctNone'))}</option>${accs.map(a=>`<option value="${esc(a.id)}"${a.id===id?' selected':''}>${esc(a.name)}</option>`).join('')}`;
+  if(sources.length>1) return sources.map((src,i)=>{ const ds=m.rows.filter(r=>(r.aiSrc||m.fileName||'')===src).map(r=>r.date).sort(), c=m.sourceCoverage&&m.sourceCoverage[src]||{};
+    return `<fieldset class="field"><legend>${esc(src||L('unknownSource'))}</legend><label for="imp-source-${i}">${esc(L('impAcct'))}</label><select id="imp-source-${i}" data-action="imp-source-account" data-source="${esc(src)}">${opts(m.sourceAccounts&&m.sourceAccounts[src])}</select><label>${esc(L('fromDate'))}<input type="date" data-action="imp-source-period" data-field="from" data-source="${esc(src)}" value="${esc(c.from||ds[0])}"></label><label>${esc(L('toDate'))}<input type="date" data-action="imp-source-period" data-field="to" data-source="${esc(src)}" value="${esc(c.to||ds[ds.length-1])}"></label><label class="check"><input type="checkbox" data-action="imp-source-period" data-field="confirmed" data-source="${esc(src)}"${c.confirmed?' checked':''}>${esc(L('periodConfirm'))}</label></fieldset>`;
+  }).join('');
+  return `<div class="field"><label class="lab" for="imp-acct">${esc(L('impAcct'))}${m.qpos?` <span class="hint">· ${esc(L('ciFileN',m.qpos[0],m.qpos[1]))}</span>`:''}</label><select id="imp-acct" style="max-width:360px">${opts(m.acct)}</select><span class="help">${esc(L(m.auto&&m.acct?'impAcctAuto':'impAcctHelp'))}</span></div>`;
+}
 /* closing a review with rows read asks first */
 function wantsDiscardCheck(){ const m=S.modal; return !!(m&&m.type==='import'&&m.step!=='input'&&m.rows&&m.rows.length); }
 function splitLine(line){
@@ -5884,8 +6013,7 @@ function readPasted(fileName){
 function loadScript(src){ return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=()=>rej(new Error('load')); document.head.appendChild(s); }); }
 async function getXLSX(){ if(window.XLSX) return window.XLSX; try{ await loadScript(XLSX_SRC); }catch(e){ await loadScript(XLSX_SRC2); } return window.XLSX; }
 async function readFile(file){
-  const m=S.modal; m.table=($('#imp-table')||{}).value||m.table; m.text=($('#imp-text')||{}).value||m.text;
-  if(tooBig(m,file)) return;
+  const m=S.modal; if(tooBig(m,file)) return; m.originalFile=file; if(/\.(pdf|png|jpe?g|webp|gif)$/i.test(file.name)){ ACTIONS['imp-ai'](); return; } m.table=($('#imp-table')||{}).value||m.table; m.text=($('#imp-text')||{}).value||m.text;
   delete m.sw;
   /* a file with no extension (Trade Republic's export) is read as CSV unless it starts like a workbook or a web page */
   const textLike=async()=>{ const b=new Uint8Array(await file.slice(0,4096).arrayBuffer()), h=new TextDecoder('latin1').decode(b);
@@ -5945,25 +6073,35 @@ function balMonthEnds(rows,chrono){
 }
 function addImported(){
   const m=S.modal, bo=m.balFill!==false?impBalOffer(m):null;
-  const rows=m.rows.filter(r=>r.on); const by={}, added=[], pendNw=m.pendingNw;
-  for(const r of rows){ const mk=r.date.slice(0,7), id=newId(); insertSorted(ensureMonth(mk)[r.table],{id,date:r.date,amount:r2(r.amount),concept:r.concept,category:r.category||''}); markDirty('months/'+mk); added.push({mk,table:r.table,id}); by[r.table]=(by[r.table]||0)+1; }
+  const rows=m.rows.filter(r=>r.on); const by={}, added=[], pendNw=m.pendingNw, batch=newId(), oldGuide=clone(S.settings.guide||{}), oldFp=clone(S.settings.stmtFp||{}), sources=importSources(m);
+  const coverageDates=m.rows.map(r=>r.date).sort(), cf=m.coverFrom||coverageDates[0], ct=m.coverTo||coverageDates[coverageDates.length-1];
+  if(m.coverConfirmed&&(parseDate(cf)!==cf||parseDate(ct)!==ct||cf>ct)){ toast(L('coverageDateError')); return; }
+  for(const src of sources) if(sources.length>1){ const cv=m.sourceCoverage&&m.sourceCoverage[src]; if(!cv||!cv.confirmed) continue; const ds=m.rows.filter(r=>(r.aiSrc||m.fileName||'')===src).map(r=>r.date).sort(), f=cv.from||ds[0], t=cv.to||ds[ds.length-1]; if(parseDate(f)!==f||parseDate(t)!==t||f>t){ toast(L('coverageDateError')); return; } if(!nw().accounts.some(a=>a.id===sourceAccount(m,m.rows.find(r=>(r.aiSrc||m.fileName||'')===src),true))){ toast(L('coverageAccountError')); return; } }
+  for(const r of rows){ const mk=r.date.slice(0,7), id=newId(); insertSorted(ensureMonth(mk)[r.table],{id,date:r.date,amount:r2(r.amount),concept:r.concept,category:r.category||'',batch,source:r.aiSrc||m.fileName||'',account:sourceAccount(m,r,sources.length>1)}); markDirty('months/'+mk); added.push({mk,table:r.table,id}); by[r.table]=(by[r.table]||0)+1; }
   if(S.settings&&S.settings.startAuto&&rows.length){ const first=rows.map(r=>r.date).sort()[0], st=startOf(), fk={y:+first.slice(0,4),m:+first.slice(5,7)-1};
     const nx=Object.assign({},S.settings); delete nx.startAuto; if(!st||fk.y*12+fk.m<st.y*12+st.m) nx.start=fk; S.settings=nx; markDirty('config/settings'); }
-  /* the wizard's statement list remembers which dates came in for the account */
-  if(m.acct&&m.rows.length){ const g=Object.assign({},S.settings&&S.settings.guide), sts=Object.assign({},g.stmts), ds=m.rows.map(r=>r.date).sort(), o=sts[m.acct];
-    sts[m.acct]={from:o&&o.from<ds[0]?o.from:ds[0],to:o&&o.to>ds[ds.length-1]?o.to:ds[ds.length-1],n:(o?o.n:0)+rows.length}; setSettings({guide:Object.assign(g,{stmts:sts})}); }
+  const g=Object.assign({},S.settings.guide), sts=Object.assign({},g.stmts);
+  for(const src of sources){
+    const rs=m.rows.filter(r=>(r.aiSrc||m.fileName||'')===src), id=sourceAccount(m,rs[0],sources.length>1); if(!id||!nw().accounts.some(a=>a.id===id&&a.group==='cash')) continue;
+    const ds=rs.map(r=>r.date).sort(), o=sts[id]||{}, cv=sources.length>1?(m.sourceCoverage&&m.sourceCoverage[src]||{}):{from:cf,to:ct,confirmed:m.coverConfirmed};
+    sts[id]=Object.assign({},o,{from:o.from&&o.from<ds[0]?o.from:ds[0],to:o.to&&o.to>ds[ds.length-1]?o.to:ds[ds.length-1],n:(o.n||0)+rs.filter(r=>r.on).length,coverageVersion:1,noActivity:rs.some(r=>r.on)?false:!!o.noActivity});
+    const f=cv.from||ds[0], t=cv.to||ds[ds.length-1]; if(cv.confirmed&&parseDate(f)===f&&parseDate(t)===t&&f<=t) Object.assign(sts[id],{periods:coveragePeriods(o,f,t),coverFrom:f,coverTo:t,noActivity:false});
+  }
+  setSettings({guide:Object.assign(g,{stmts:sts})});
   if(bo){ const N=ensureNw(); for(const k of bo.ks) (N.snaps[k]=N.snaps[k]||{})[bo.a.id]=bo.ends[k]; saveNw(); }
   if(m.acct&&m.fp) setSettings({stmtFp:Object.assign({},S.settings&&S.settings.stmtFp,{[m.acct]:m.fp})});
   bump(); closeModal();
-  S.lastImport=added.length?{added,n:added.length,bal:bo?{id:bo.a.id,ks:bo.ks}:null}:null;
+  if(added.length){ const dates=rows.map(r=>r.date).sort(); setSettings({imports:(Array.isArray(S.settings.imports)?S.settings.imports:[]).concat([{id:batch,date:todayYmd(),source:m.fileName||'',account:m.acct||'',from:dates[0],to:dates[dates.length-1],n:added.length}])}); }
+  S.lastImport=added.length?{added,n:added.length,batch,oldGuide,oldFp,bal:bo?{id:bo.a.id,ks:bo.ks}:null}:null;
   const yrs=[...new Set(rows.map(r=>+r.date.slice(0,4)))]; if(yrs.length===1) S.ui.year=yrs[0];
   render(); toast(L('addedParts',Object.entries(by).map(([t,n])=>L('nToT',fmtCount(n),TL(t))).concat(bo?[L('balFilled',bo.ks.length)]:[]).join(', ')),added.length?{label:L('undo'),fn:undoImport}:null,15000);
-  if(pendNw) setTimeout(()=>{ if(!S.modal){ setTab('networth'); openModal({type:'nwimp',data:pendNw,fileName:L('aiNwFrom'),wide:true}); } },400);
+  if(pendNw) setTimeout(()=>{ if(!S.modal||S.modal.type==='wizard'){ setTab('networth'); openModal({type:'nwimp',data:pendNw,fileName:L('aiNwFrom'),wide:true}); } },400);
 }
 function undoImport(){
   const li=S.lastImport; if(!li) return; let n=0;
   for(const a of li.added){ const f=findRow(a.mk,a.table,a.id); if(f.i>-1){ f.arr.splice(f.i,1); markDirty('months/'+a.mk); n++; } }
   if(li.bal){ const N=nw(); for(const k of li.bal.ks) if(N.snaps[k]){ delete N.snaps[k][li.bal.id]; if(!Object.keys(N.snaps[k]).length) delete N.snaps[k]; } saveNw(); }
+  setSettings({guide:li.oldGuide||S.settings.guide,stmtFp:li.oldFp||S.settings.stmtFp,imports:(S.settings.imports||[]).map(x=>x.id===li.batch?Object.assign({},x,{undone:true}):x)});
   S.lastImport=null; bump(); render(); toast(L('importUndone',n));
 }
 
@@ -6161,10 +6299,10 @@ async function exportXlsx(){
   const wb=X.utils.book_new();
   for(const t of TKEYS){
     const rows=allRows().filter(r=>r.table===t).sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:a.ord-b.ord);
-    const aoa=[[L('h_date'),L('h_amount'),L('h_concept'),L('h_category'),L('h_month'),L('h_year')],...rows.map(r=>[serial(r.date),r.amount,r.concept,r.category,M()[+r.date.slice(5,7)-1],+r.date.slice(0,4)])];
+    const aoa=[[L('h_date'),L('h_amount'),L('h_concept'),L('h_category'),L('h_month'),L('h_year'),L('source'),L('accountFilter')],...rows.map(r=>[serial(r.date),r.amount,r.concept,r.category,M()[+r.date.slice(5,7)-1],+r.date.slice(0,4),r.source||'',(nw().accounts.find(a=>a.id===r.account)||{}).name||''])];
     const ws=X.utils.aoa_to_sheet(aoa);
     for(let i=1;i<aoa.length;i++){ const a=X.utils.encode_cell({r:i,c:0}); ws[a].z='dd/mm/yyyy'; const b=X.utils.encode_cell({r:i,c:1}); ws[b].z='#,##0.00'; }
-    ws['!cols']=[{wch:12},{wch:12},{wch:50},{wch:26},{wch:11},{wch:7}];
+    ws['!cols']=[{wch:12},{wch:12},{wch:50},{wch:26},{wch:11},{wch:7},{wch:32},{wch:24}];
     X.utils.book_append_sheet(wb,ws,sheetName(t));
   }
   /* one summary sheet per year with transactions, newest first (not only the year on screen) */
@@ -6370,7 +6508,7 @@ async function startTour(opts){
   TOUR={i:0,fresh:!!(opts&&opts.fresh),demo:!!(opts&&opts.demo),free:false,hide:HIDE,ui:clone(S.ui),real:{months:S.months,cats:S.cats,kw:S.kw,settings:S.settings,nw:S.nw}};
   S.demo=true; HIDE=false;
   S.months=D.months; S.cats=D.cats; S.kw=D.kw; S.settings=D.settings; S.nw=normNw(D.nw);
-  Object.assign(S.ui,{year:D.year,editTarget:null,tx:Object.assign(S.ui.tx,{table:'expenses',q:'',month:'all',cat:'all',limit:150,sort:'date-desc',allYears:false}),
+  Object.assign(S.ui,{year:D.year,editTarget:null,tx:Object.assign(S.ui.tx,{table:'expenses',q:'',month:'all',cat:'all',limit:150,sort:'date-desc',allYears:false,from:'',to:'',min:'',max:'',account:'',source:'',batch:'',savedView:'',selection:new Set()}),
     ct:Object.assign(S.ui.ct,{table:'expenses',q:'',cq:'',test:''}),mm:{table:'expenses',cat:null},oc:Object.assign(S.ui.oc,{table:'expenses',month:'all'}),nw:{month:null}});
   bump();
   tourMount();
@@ -6407,6 +6545,7 @@ async function tourGo(i){
   if(!TOUR||TOUR.free) return;
   TOUR.i=Math.max(0,Math.min(TOUR_STEPS.length-1,i)); const st=TOUR_STEPS[TOUR.i];
   if(st.tab&&S.ui.tab!==st.tab) setTab(st.tab,'replace');
+  const target=st.el&&st.el(), folded=target&&target.closest('.more-analysis'); if(folded&&folded.hidden){ S.ui.analysis=Object.assign({},S.ui.analysis,{[st.tab]:true}); render(); }
   tourRender(); await sleep(70); if(!TOUR) return;
   tourPlace(true);
   const f=$('#tour-card [data-tour=next]')||$('#tour-card [data-tour=end]:last-of-type'); if(f) f.focus({preventScroll:true});
@@ -6498,9 +6637,25 @@ const ACTIONS={
   'drill-open':()=>{ const m=S.modal; Object.assign(S.ui.tx,{table:m.t,cat:m.c==='*'?'all':m.c,month:m.m==='year'?'all':m.m,q:'',limit:150}); closeModal(); setTab('transactions'); },
   'tx-table':el=>{ Object.assign(S.ui.tx,{table:el.dataset.t,cat:'all',limit:150}); render(); },
   'tx-sort':el=>{ const [k,d]=S.ui.tx.sort.split('-'); const nk=el.dataset.k; S.ui.tx.sort=nk+'-'+(k===nk?(d==='asc'?'desc':'asc'):(nk==='amount'?'asc':'desc')); render(); },
+  'page-actions':el=>{ const t=el.dataset.tab; S.ui.pageActions=Object.assign({},S.ui.pageActions,{[t]:!(S.ui.pageActions&&S.ui.pageActions[t])}); render(); },
+  'analysis-toggle':el=>{ const t=el.dataset.tab; if(!['overview','networth'].includes(t)) return; S.ui.analysis=Object.assign({},S.ui.analysis,{[t]:!analysisOpen(t)}); try{ localStorage.setItem('ybt.analysis.'+t,S.ui.analysis[t]?'1':'0'); }catch(_){} render(); },
+  'year-view':el=>{ S.ui.yearSingle=el.dataset.v==='month'; render(); },
+  'compare-rows':el=>{ const k=el.dataset.k; Object.assign(S.ui.tx,{table:el.dataset.t,from:k+'-01',to:ymdAdd(ymAdd(k,1)+'-01',-1),month:'all',cat:'all',q:'',min:'',max:'',source:'',account:'',batch:'',allYears:true}); setTab('transactions'); },
+  'import-history':()=>openModal({type:'imports',mid:true}),
+  'import-view':el=>{ closeModal(); const u=S.ui.tx; Object.assign(u,{table:TKEYS.includes(el.dataset.t)?el.dataset.t:u.table,batch:el.dataset.id,from:'',to:'',q:'',month:'all',cat:'all',source:'',account:'',min:'',max:'',allYears:true}); txSelection().clear(); setTab('transactions'); },
+  'tx-select-filtered':()=>{ for(const r of txFiltered()) txSelection().add(txKey(r)); render(); },
+  'tx-clear-selection':()=>{ txSelection().clear(); render(); },
+  'tx-bulk':()=>{ if(S.canWrite&&txSelection().size) openModal({type:'bulkcat',mid:true}); },
+  'bulk-apply':()=>bulkApply(),
+  'tx-save-view':()=>{ if(S.canWrite) openModal({type:'saveview'}); },
+  'tx-delete-view':()=>{ setSettings({txViews:savedTxViews().filter(v=>v.id!==S.ui.tx.savedView)}); S.ui.tx.savedView=''; render(); },
+  'audit-answers':()=>openModal({type:'answers',mid:true}),
+  'answer-forget':el=>{ const a=auAnswers().slice(); a.splice(+el.dataset.i,1); setSettings({auditAnswers:a}); renderModalKeepScroll(); },
+  'answer-save':el=>{ const a=clone(auAnswers()), i=+el.dataset.i, v=$('#answer-'+i).value.trim(); if(a[i]&&v){ a[i].a=v.slice(0,1000); setSettings({auditAnswers:a}); toast(L('savedToast')); } },
   'tx-more':()=>{ S.ui.tx.limit+=150; render(); },
+  'imp-review-mode':el=>{ S.modal.attention=el.dataset.v==='attention'; renderModalKeepScroll(); },
   'imp-more':()=>{ S.modal.shown=(S.modal.shown||200)+200; renderModalKeepScroll(); },
-  'tx-clear':()=>{ Object.assign(S.ui.tx,{q:'',month:'all',cat:'all',limit:150,allYears:false}); render(); },
+  'tx-clear':()=>{ Object.assign(S.ui.tx,{q:'',month:'all',cat:'all',limit:150,allYears:false,from:'',to:'',min:'',max:'',account:'',source:'',batch:'',savedView:''}); txSelection().clear(); render(); },
   'edit-tx':el=>{ if(!S.canWrite) return; const ref=refOf(el); const f=findRow(ref.mk,ref.table,ref.id); if(!f.row) return;
     const cat=isKnown(ref.table,f.row.category)?f.row.category:'';
     openModal({type:'edit',ref:Object.assign(ref,{date:f.row.date}),origCat:cat,draft:{table:ref.table,date:f.row.date,concept:f.row.concept,amount:f.row.amount,dir:f.row.amount<0?'out':f.row.amount>0?'in':defaultDir(ref.table),category:cat}}); },
@@ -6516,7 +6671,8 @@ const ACTIONS={
   'tx-del-yes':()=>{ const ref=S.modal.ref; const del=deleteTx(ref); closeModal(); render(); if(del) toast(L('txDeleted'),{label:L('undo'),fn:()=>{ restoreTx(ref,del); render(); }}); },
   'categorise':()=>{ const t=S.ui.tx.table; const r=categoriseBlanks(t); render();
     toast(r.filled?L('filled',r.filled,r.left):L('noKwMatchesUncat',fmtCount(r.left),tl(t))); },
-  'import':()=>{ let t='auto'; try{ const v=localStorage.getItem('ybt.impTable'); if(v==='auto'||TKEYS.includes(v)) t=v; }catch(_){} openModal({type:'import',step:'input',table:t,text:'',rows:[],bad:[],msg:''}); },
+  'import':()=>{ let t='auto'; try{ const v=localStorage.getItem('ybt.impTable'); if(v==='auto'||TKEYS.includes(v)) t=v; }catch(_){} openModal({type:'import',step:'input',table:t,text:'',rows:[],bad:[],msg:'',pick:true}); },
+  'imp-ai':()=>{ const m=S.modal; if(!S.ai||!m) return; const file=m.originalFile; if(file&&tooBig(m,file)) return; aiOpen({type:'ai',mode:'statement',files:file?[{file}]:[],acct:m.acct,pick:true,mid:true}); },
   'undo-import':()=>undoImport(),
   'imp-discard':()=>closeModal(),
   'imp-keep':()=>{ S.modal.confirmClose=false; renderModalKeepScroll(); },
@@ -6565,15 +6721,18 @@ const ACTIONS={
     const lang=S.ui.obLang==='es'?'es':'en', {y,m,auto}=obStartPick();
     obApply(lang,y,m,auto);
     S.ui.tab='networth'; try{ history.replaceState(null,'','#networth'); }catch(_){}
-    S.tourPending=true;   /* the tour comes first; the setup wizard follows when it ends */
+    const k=ymAdd(ymNow(),-1); setSettings({start:{y:+k.slice(0,4),m:+k.slice(5,7)-1},startAuto:true,guide:{on:true,quick:true}});
+    if(!demo){ S.wizardShown=true; bump(); render(); wizardOpen(0); return; }
+    S.tourPending=true;
     bump(); render(); window.scrollTo({top:0});
     setTimeout(()=>startTour({fresh:true,demo}),350);
   },
+  'ob-history':()=>{ if(!S.canWrite) return; const y=nowYM().y; obApply(S.ui.obLang==='es'?'es':'en',y,0,false); S.wizardShown=true; render(); wizardOpen(0); },
   'ob-ai':()=>{ if(!S.canWrite||!S.ai) return; const lang=S.ui.obLang==='es'?'es':'en'; aiOpen({type:'ai',mode:'start',files:[],lang,mid:true}); },
   'ob-import':()=>{ if(!S.canWrite) return; const lang=S.ui.obLang==='es'?'es':'en', {y,m,auto}=obStartPick();
     obApply(lang,y,m,auto); S.ui.tab='transactions'; try{ history.replaceState(null,'','#transactions'); }catch(_){}
     bump(); render(); window.scrollTo({top:0}); ACTIONS.import(); },
-  'ai-tx':()=>{ if(S.canWrite&&S.ai) aiOpen({type:'ai',mode:'tx',files:[],mid:true}); },
+  'ai-tx':()=>{ if(S.canWrite&&S.ai) aiOpen({type:'ai',mode:'statement',files:[],mid:true}); },
   'ai-nw':()=>{ if(S.canWrite&&S.ai) aiOpen({type:'ai',mode:'nw',files:[],mid:true}); },
   'ai-opt':el=>{ const m=S.modal, r=m&&m.rows&&m.rows[+el.dataset.i]; if(!r) return; const o=aiOptions(r.aiQ).opts[+el.dataset.j]; if(o){ aiAnswer(r,o.text); renderModalKeepScroll(); } },
   'ai-reply':el=>{ const m=S.modal, r=m&&m.rows&&m.rows[+el.dataset.i], inp=$('#ai-reply-'+el.dataset.i); if(r&&inp){ aiAnswer(r,inp.value); renderModalKeepScroll(); } },
@@ -6625,6 +6784,8 @@ const ACTIONS={
   'guide-add':()=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS['add-tx'](); },
   'wz-open':()=>{ wizardOpen(wzStep(guideState())); },
   'wz-place':async()=>{ await localAction('changeStorage'); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); },
+  'wz-scope':el=>{ const quick=el.dataset.v==='quick', k=quick?ymAdd(ymNow(),-1):ymOf(nowYM().y,0); setSettings({start:{y:+k.slice(0,4),m:+k.slice(5,7)-1},guide:Object.assign({},S.settings.guide,{quick})}); render(); renderModalKeepScroll(); },
+  'wz-noactivity':el=>{ const g=S.settings.guide||{}, st=Object.assign({},g.stmts), id=el.dataset.acc; if(!nw().accounts.some(a=>a.id===id)||el.dataset.from>el.dataset.to) return; const o=st[id]||{}; const f=el.dataset.from+'-01', t=ymdAdd(ymAdd(el.dataset.to,1)+'-01',-1); st[id]=Object.assign({},o,{periods:coveragePeriods(o,f,t),coverFrom:f,coverTo:t,noActivity:true,coverageVersion:1}); setSettings({guide:Object.assign({},g,{stmts:st})}); renderModalKeepScroll(); toast(L('noActivitySaved')); },
   'wz-next':()=>{ if(!S.wizard) return; S.wizard.step=Math.min((S.wizard.mode==='ci'?CI_STEPS:WZ_STEPS)-1,S.wizard.step+1); renderModalKeepScroll(); },
   'ci-open':()=>{ if(!S.canWrite) return; S.wizard={on:true,step:0,mode:'ci'}; openModal({type:'wizard',mid:true}); },
   'ci-later':()=>{ setSettings({lastCheckin:ciMonth()}); render(); },
@@ -6632,12 +6793,12 @@ const ACTIONS={
   'wz-back':()=>{ if(!S.wizard) return; S.wizard.step=Math.max(0,S.wizard.step-1); renderModalKeepScroll(); },
   'wz-later':()=>{ if(S.wizard) S.wizard.on=false; closeModal(); },
   'guide-skipnw':()=>{ setSettings({guide:Object.assign({},S.settings.guide,{skipNw:true})}); setTab('transactions'); },
-  'guide-continue':()=>{ const G=guideState(); if(G) setTab(G.cur==='tx'?'transactions':'networth'); },
+  'guide-continue':()=>{ const G=guideState(); if(G) wizardOpen(wzOf(G)); },
   'remind-ics':()=>remindIcs(),
   'bk-later':()=>{ if(!S.canWrite) return; setSettings({backupSnooze:ymdAdd(todayYmd(),30)}); render(); },
   'guide-hide':()=>{ const G=guideState(); setSettings(Object.assign({guide:Object.assign({},S.settings.guide,{on:false},G&&G.cur==='done'?{done:true}:{})},G&&G.cur==='done'?{lastCheckin:ciMonth()}:{})); render(); if(G&&G.cur!=='done') toast(L('gHidden')); },
   'guide-finish':()=>{ if(S.wizard) S.wizard.on=false; closeModal(); setSettings({guide:Object.assign({},S.settings.guide,{on:false,done:true}),lastCheckin:ciMonth()}); setTab('overview'); },
-  'guide-show':()=>{ setSettings({guide:{on:true,stmts:(S.settings.guide||{}).stmts}}); const G=guideState(); setTab(G&&G.cur==='tx'?'transactions':'networth'); wizardOpen(wzOf(G)); },
+  'guide-show':()=>{ setSettings({guide:Object.assign({},S.settings.guide,{on:true})}); const G=guideState(); setTab(G&&G.cur==='tx'?'transactions':'networth'); wizardOpen(wzOf(G)); },
   'toggle-hide':()=>{ HIDE=!HIDE; try{ localStorage.setItem('ybt.hideAmounts',HIDE?'1':'0'); }catch(_){} hideTip(); render(); if(S.modal) renderModalKeepScroll(); toast(L(HIDE?'amountsHidden':'amountsShown')); },
   'nw-from':el=>{ const N=ensureNw(), a=N.accounts.find(x=>x.id===el.dataset.id); if(!a) return; const before=a.from; a.from=el.dataset.k; saveNw(); render();
     toast(L('nwFromSaved',a.name,ymIn(a.from)),{label:L('undo'),fn:()=>{ const b=ensureNw().accounts.find(x=>x.id===a.id); if(b){ if(before) b.from=before; else delete b.from; saveNw(); render(); } }}); },
@@ -6669,7 +6830,7 @@ const ACTIONS={
 document.addEventListener('click',e=>{
   const el=e.target.closest('[data-action]'); if(!el) return;
   const a=el.dataset.action;
-  if(a==='set-cat'||a==='kw-cat'||a==='imp-cat'||a==='imp-on'||a==='imp-table') return;
+  if(a==='imp-source-account'||a==='imp-source-period'||a==='tx-pick'||a==='set-cat'||a==='kw-cat'||a==='imp-cat'||a==='imp-on'||a==='imp-table') return;
   if(a==='edit-tx' && e.target.closest('select,input,label,button,a')) return;
   if(a==='close' && el.classList.contains('scrim') && e.target!==el) return;
   /* the example is never saved, so nothing that saves, moves or opens files runs while it shows */
@@ -6700,11 +6861,12 @@ document.addEventListener('input',e=>{
   else if(id==='new-skip'){ const el=$('#skip-warn'); if(el) el.textContent=skipWarnText(e.target.value); }
   else if(id==='ac-name'){ const er=$('#ac-err'); if(er) er.textContent=''; }
   else if(id==='kw-test'){ S.ui.ct.test=e.target.value; $('#kw-out').innerHTML=kwTestOut(); }
-  else if(id==='new-kw'){ S.ui.ct.newKw=e.target.value; }
+  else if(id==='new-kw'){ S.ui.ct.newKw=e.target.value; const p=$('#rule-preview'); if(p) p.innerHTML=rulePreview(); }
   else if(id==='f-concept'&&S.modal){ S.modal.draft.concept=e.target.value; refreshEditSuggest(); }
   else if(e.target.dataset&&e.target.dataset.acc&&S.modal&&S.modal.type==='nwsnap'){ const m=S.modal; (m.touched=m.touched||{})[e.target.dataset.acc]=true; e.target.classList.remove('carried'); }
   else if(id==='f-amount'&&S.modal){ if(/^\s*[-−]/.test(e.target.value)){ const o=$('#f-dir-out'); if(o) o.checked=true; } }
 });
+document.addEventListener('click',e=>{ const h=e.target.closest('.tx-filter-panel>summary'); if(h) S.ui.tx.filtersOpen=!h.parentElement.open; });
 document.addEventListener('change',e=>{
   const el=e.target, id=el.id, a=el.dataset.action;
   if(el.name==='ob-lang'){ S.ui.obLang=el.value==='es'?'es':'en'; render(); return; }
@@ -6712,6 +6874,7 @@ document.addEventListener('change',e=>{
   if(el.name==='st-theme'){ setTheme(el.value); return; }
   if(el.name==='st-num'){ setNumFmt(el.value); return; }
   if(id==='st-cur'){ setCurrency(el.value); return; }
+  if(id==='wz-from'&&/^\d{4}-\d{2}$/.test(el.value)&&el.value<=ymNow()){ setSettings({start:{y:+el.value.slice(0,4),m:+el.value.slice(5,7)-1}}); renderModalKeepScroll(); return; }
   if(id==='wz-cur'){ setCurrency(el.value); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); return; }
   if(id==='st-ml'){ setSettings({mlGuess:el.checked}); render(); return; }
   if(id==='st-born'||id==='st-salary'){ const v=+el.value, ok=id==='st-born'?Number.isInteger(v)&&v>=1900&&v<=new Date().getFullYear():v>0&&v<1e9;
@@ -6719,8 +6882,12 @@ document.addEventListener('change',e=>{
   if(id==='ob-month'){ S.ui.obM=+el.value; return; }
   if(id==='ob-year'){ S.ui.obY=+el.value; return; }
   if(id==='st-month'||id==='st-year'){ setStart({y:+$('#st-year').value,m:+$('#st-month').value}); return; }
+  if((id==='imp-period-from'||id==='imp-period-to')&&S.modal){ S.modal[id==='imp-period-from'?'coverFrom':'coverTo']=el.value; return; }
+  if(id==='imp-period-confirm'&&S.modal){ S.modal.coverConfirmed=el.checked; return; }
   if(id==='imp-balfill'&&S.modal){ S.modal.balFill=el.checked; return; }
-  if(id==='imp-acct'&&S.modal&&S.modal.type==='import'){ S.modal.acct=el.value||null; S.modal.auto=false; renderModalKeepScroll(); return; }
+  if(a==='imp-source-account'&&S.modal){ S.modal.sourceAccounts=Object.assign({},S.modal.sourceAccounts,{[el.dataset.source]:el.value}); S.modal.sourceCoverage=Object.assign({},S.modal.sourceCoverage,{[el.dataset.source]:Object.assign({},S.modal.sourceCoverage&&S.modal.sourceCoverage[el.dataset.source],{confirmed:false})}); renderModalKeepScroll(); return; }
+  if(a==='imp-source-period'&&S.modal){ const src=el.dataset.source, c=Object.assign({},S.modal.sourceCoverage&&S.modal.sourceCoverage[src],{[el.dataset.field]:el.type==='checkbox'?el.checked:el.value}); S.modal.sourceCoverage=Object.assign({},S.modal.sourceCoverage,{[src]:c}); return; }
+  if(id==='imp-acct'&&S.modal&&S.modal.type==='import'){ S.modal.acct=el.value||null; S.modal.auto=false; S.modal.coverConfirmed=false; renderModalKeepScroll(); return; }
   if(id==='ci-file'&&el.files&&el.files.length){ ciFiles([...el.files]); return; }
   if(a==='ci-cat'&&el.value){ const ref=refOf(el), f=findRow(ref.mk,ref.table,ref.id); setTxCategory(ref,el.value); render(); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); if(f.row) offerKeyword(ref.table,f.row.concept,el.value); return; }
   if(id==='imp-sw-who'&&S.modal&&S.modal.sw){ S.modal.sw.who=+el.value; readSplitwise(); return; }
@@ -6728,9 +6895,17 @@ document.addEventListener('change',e=>{
   if(id==='oc-month'){ S.ui.oc.month=el.value; render(); return; }
   if(id==='oc-exrent'){ S.ui.oc.exRent=el.checked; render(); return; }
   if(id==='au-from'||id==='au-to'){ const m=S.modal; if(!m||m.type!=='audit') return; if(id==='au-from'){ m.from=el.value; if(m.to<m.from) m.to=m.from; } else { m.to=el.value; if(m.from>m.to) m.from=m.to; } renderModalKeepScroll(id); return; }
+  if(a==='tx-pick'){ const ref=refOf(el), k=txKey(ref); if(el.checked) txSelection().add(k); else txSelection().delete(k); render(); return; }
+  if(['tx-from','tx-to','tx-min','tx-max','tx-account','tx-source'].includes(id)){ S.ui.tx[id.slice(3)]=el.value; S.ui.tx.limit=150; render(); return; }
+  if(id==='tx-saved-view'){ const v=el.value==='uncat'?{filters:{table:S.ui.tx.table,cat:UNCAT,year:S.ui.year}}:el.value==='large'?{filters:{table:S.ui.tx.table,min:'100',year:S.ui.year}}:savedTxViews().find(v=>v.id===el.value); S.ui.tx.savedView=v&&v.id||''; if(v) applyTxView(v); return; }
+  if(id==='compare-month'){ S.ui.compareMonth=el.value; render(); return; }
+  if(id==='compare-base'){ S.ui.compareBase=el.value; render(); return; }
+  if(id==='year-month-pick'){ S.ui.yearMonth=+el.value; render(); return; }
+  if(id==='scenario-extra'||id==='scenario-months'){ if(id==='scenario-extra'){ S.ui.scenarioRaw=el.value; S.ui.scenarioExtra=parseAmount(el.value,wantNum()); } else S.ui.scenarioMonths=+el.value; const ms=nwMonths(), pace=savingPace(), v=scenarioTotal(nwTotals(ms[ms.length-1]).total,pace?pace.avg:0,S.ui.scenarioExtra,S.ui.scenarioMonths); $('#scenario-result').textContent=v==null?DASH:HIDE?'••••':fmtEUR(v); return; }
   if(id==='tx-month'){ S.ui.tx.month=el.value; S.ui.tx.limit=150; render(); return; }
   if(id==='tx-cat'){ S.ui.tx.cat=el.value; S.ui.tx.limit=150; render(); return; }
   if(id==='tx-ally'){ S.ui.tx.allYears=el.checked; S.ui.tx.limit=150; render(); return; }
+  if(id==='rule-mode'){ S.ui.ct.ruleMode=el.value; const p=$('#rule-preview'); if(p) p.innerHTML=rulePreview(); return; }
   if(id==='new-kw-cat'){ S.ui.ct.newKwCat=el.value; return; }
   if(a==='set-cat'){ const ref=refOf(el); setTxCategory(ref,el.value); render(); if(el.value){ const f=findRow(ref.mk,ref.table,ref.id); if(f.row) offerKeyword(ref.table,f.row.concept,el.value); } return; }
   if(a==='kw-cat'){ const K=ensureKw(); const p=K[S.ui.ct.table][+el.dataset.i]; if(p){ p[1]=el.value; markDirty('config/keywords'); bump(); render(); } return; }
@@ -6762,7 +6937,8 @@ function renderModalKeepScroll(focusId){ const a=document.activeElement; const k
   renderModal(keep); const m2=$('.modal'); if(m2) m2.scrollTop=st; const t2=$('.imp-table-wrap'); if(t2) t2.scrollLeft=sl; }
 document.addEventListener('submit',e=>{
   const f=e.target; e.preventDefault();
-  if(f.id==='tx-form') submitEdit();
+  if(f.id==='save-view-form'){ const name=$('#view-name').value.trim(); if(name&&S.canWrite){ const id=newId(); setSettings({txViews:savedTxViews().concat([{id,name:name.slice(0,80),filters:txView()}])}); S.ui.tx.savedView=id; closeModal(); render(); } }
+  else if(f.id==='tx-form') submitEdit();
   else if(f.id==='rename-form'){
     const m=S.modal, nn=$('#rn-name').value.replace(/\s+/g,' ').trim(), errEl=$('#rn-err');
     if(!nn){ errEl.textContent=L('enterName'); return; }
@@ -6835,7 +7011,7 @@ document.addEventListener('submit',e=>{
     toast(n?L('skipAddedHits',w,n):L('skipAdded',w));
   }
   else if(f.id==='add-kw-form'){
-    const t=S.ui.ct.table, k=$('#new-kw').value.trim(), cat=$('#new-kw-cat').value; if(!k||!cat) return;
+    const t=S.ui.ct.table, raw=$('#new-kw').value.trim().replace(/^"|"$/g,''), k=S.ui.ct.ruleMode==='word'?'"'+raw+'"':raw, cat=$('#new-kw-cat').value; if(!raw||!cat||!isKnown(t,cat)) return;
     const K=ensureKw(); const ex=K[t].find(p=>p[0].toLowerCase()===k.toLowerCase());
     if(ex){ ex[1]=cat; } else K[t].push([k,cat]);
     S.ui.ct.newKw=''; S.ui.ct.newKwCat=cat; markDirty('config/keywords'); bump();
@@ -6891,7 +7067,7 @@ async function boot(){
   let auto=false; try{ auto=sessionStorage.getItem('ybt.autotour')==='1'; sessionStorage.removeItem('ybt.autotour'); }catch(_){}
   if(auto){ let n=0; const iv=setInterval(()=>{ if(isOnboarding()){ clearInterval(iv); ACTIONS['ob-start']({demo:true}); } else if(++n>40) clearInterval(iv); },150); }
   C.use('downloads').then(d=>{ S.downloads=d||null; render(); }).catch(()=>{});
-  C.use('sample').then(f=>{ S.ai=typeof f==='function'&&typeof f.json==='function'?f:null; if(S.ai) render(); }).catch(()=>{});
+  C.use('sample').then(f=>{ S.ai=typeof f==='function'&&typeof f.json==='function'?f:null; if(S.ai){ render(); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); } }).catch(()=>{});
 }
 /* swaps in a whole dataset {months, config}. persist=true writes every document back (website restore and its undo);
    the desktop app's storage layer has already written its file, so it passes false */
@@ -6909,7 +7085,7 @@ function loadDataset(d,persist,soft){
     markDirty('config/categories'); markDirty('config/keywords'); markDirty('config/settings'); markDirty('config/networth');
   }
   /* soft: data that arrived from another device or file: the screen, filters and any open dialog stay as they are */
-  if(!soft){ S.ui.year=null; S.ui.mm={table:S.ui.mm.table,cat:null,days:S.ui.mm.days}; S.ui.oc.month='all'; S.ui.tx.cat='all'; S.ui.tx.month='all'; S.ui.editTarget=null; S.ui.obY=null; S.ui.yScroll=null; S.lastImport=null; closeModal(); }
+  if(!soft){ Object.assign(S.ui.tx,{from:'',to:'',min:'',max:'',source:'',account:'',batch:'',savedView:'',allYears:false}); txSelection().clear(); S.ui.year=null; S.ui.mm={table:S.ui.mm.table,cat:null,days:S.ui.mm.days}; S.ui.oc.month='all'; S.ui.tx.cat='all'; S.ui.tx.month='all'; S.ui.editTarget=null; S.ui.obY=null; S.ui.yScroll=null; S.lastImport=null; closeModal(); }
   fixedVarOnce();
   bump(); render();
 }
@@ -6932,7 +7108,7 @@ function onHistory(){ const h=(location.hash||'').replace('#',''); if(!TABS.incl
   setTab(h,'pop'); }
 window.addEventListener('popstate',onHistory);
 window.addEventListener('hashchange',onHistory);
-if(window.__ybtTest) window.__ybt={kwHealth,parseAmount,parseDate,parseCSV,parseRows,findHeader,parseCells,guessTable,matchKeyword,allMatches,hasKw,fold,loose,agg,upsertTx,finishImport,splitLine,kwSuggestion,skipMatch,fmtNum,fmtEUR,CURRENCIES,foreignCode,isoOf,allRows,rowFromCols,readPasted,importChecks,detectDateOrder,monthlyCard,catNames,cats,kws,deleteTx,normCats,normKw,startOf,ymNow,aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
+if(window.__ybtTest) window.__ybt={coveragePeriods,guideState,monthComparison,scenarioTotal,txMatches,txKey,impNeedsAttention,statementCovered,bulkApply,kwHealth,parseAmount,parseDate,parseCSV,parseRows,findHeader,parseCells,guessTable,matchKeyword,allMatches,hasKw,fold,loose,agg,upsertTx,finishImport,splitLine,kwSuggestion,skipMatch,fmtNum,fmtEUR,CURRENCIES,foreignCode,isoOf,allRows,rowFromCols,readPasted,importChecks,detectDateOrder,monthlyCard,catNames,cats,kws,deleteTx,normCats,normKw,startOf,ymNow,aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
 boot();
 })();
 </script>
