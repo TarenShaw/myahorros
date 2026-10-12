@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-sKVFzCMpe0dUCefHAufvChYJ4bDTIwDXYep4w91tM8c=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-KS0rxCDHEQMRtgjp7rjJ1kbrKReZCqQgHuEo4zt2X64=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1857,8 +1857,9 @@ const STR={
   wz0Title:['Where do you keep money?','¿Dónde tienes tu dinero?'],
   wz0Text:['Add every account you have: current account, savings, investments, pension. Next, you bring in each one’s statement.','Añade todas tus cuentas: cuenta corriente, ahorro, inversión, plan de pensiones. Después traes el extracto de cada una.'],
   wz1Title:['Bring in your statements','Trae tus extractos'],
-  wz1Text:[m=>`In each bank’s app or website, download the statement from 1 ${m} to today as Excel or CSV (look for “Export” or “Download”). A whole year makes every average and chart right.`,m=>`En la app o la web de cada banco, descarga el extracto desde el 1 de ${m} hasta hoy en Excel o CSV (busca «Exportar» o «Descargar»). Con el año entero, todas las medias y gráficos salen bien.`],
+  wz1Text:[m=>`For each bank account, download the statement from 1 ${m} to today as Excel or CSV (look for “Export” or “Download”). A whole year makes every average and chart right.`,m=>`De cada cuenta bancaria, descarga el extracto desde el 1 de ${m} hasta hoy en Excel o CSV (busca «Exportar» o «Descargar»). Con el año entero, todas las medias y gráficos salen bien.`],
   wzImport:['Import','Importar'], wzStmtNone:['Not yet','Todavía no'],
+  wzValueOnly:['Only its value is needed: no statement. Money you send to it comes in with your bank’s statement.','Solo hace falta su valor: sin extracto. El dinero que le envías llega con el extracto de tu banco.'],
   wzNoAccs:['No accounts yet: add them first, then bring in each one’s statement here.','Aún no hay cuentas: añádelas primero y después trae aquí el extracto de cada una.'],
   wzStmtGot:[(a,b,n)=>`${a} – ${b} · ${n} ${n===1?'row':'rows'}`,(a,b,n)=>`${a} – ${b} · ${n} ${n===1?'movimiento':'movimientos'}`],
   wzAi:['With AI','Con IA'],
@@ -3495,9 +3496,11 @@ function modalWizard(){
       <div class="wz-acts">${act('guide-acc',esc(L(nAcc?'nwEditAccounts':'nwAddAccounts')),'',nAcc?'':'primary')}</div>`;
   } else if(i===1){
     const stat=a=>{ const s=st[a.id]; return s?`<span class="wz-st ok">${esc(L('wzStmtGot',fmtDate(s.from),fmtDate(s.to),s.n))}</span>`:`<span class="wz-st">${esc(L('wzStmtNone'))}</span>`; };
-    const next=txOk?null:N.accounts.find(a=>!st[a.id]);
+    /* statements only from Cash accounts: an investment or pension account's buys, sells and fees happen inside it; what went in is the
+       Investments row on the bank side, and the rest is its value on the next step */
+    const next=txOk?null:N.accounts.find(a=>a.group==='cash'&&!st[a.id]);
     body=`<p>${esc(L('wz1Text',ymIn(C.from)))}</p>
-      ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>`<li>${accName(a)}${stat(a)}${act('guide-import',esc(L('wzImport')),` data-acc="${a.id}" aria-label="${esc(L('wzImport')+': '+a.name)}"`,a===next?'primary sm':'sm')}</li>`).join('')}</ul>`:`<p class="hint">${esc(L('wzNoAccs'))}</p><div class="wz-acts">${act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`}
+      ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>a.group==='cash'?`<li>${accName(a)}${stat(a)}${act('guide-import',esc(L('wzImport')),` data-acc="${a.id}" aria-label="${esc(L('wzImport')+': '+a.name)}"`,a===next?'primary sm':'sm')}</li>`:`<li>${accName(a)}<span class="wz-st">${esc(L('wzValueOnly'))}</span></li>`).join('')}</ul>`:`<p class="hint">${esc(L('wzNoAccs'))}</p><div class="wz-acts">${act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`}
       ${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('wzAi')))}</div>`:''}
       ${wzStrip(C.tx,C.txAt,C.now,C.txMiss.length?L('wzTxCover',fin-C.txMiss.length,fin):L('wzTxAll'))}`;
   } else if(i===2){
@@ -4410,6 +4413,7 @@ const AI_RULES={
 - Income: salary, interest, dividends, realised gains, gifts. Expenses: everything I spend. Investments: money I put into funds, brokers, pension plans or lending platforms.
 - Use only my categories. If none fits, leave the category empty.
 - Leave out transfers between my own accounts (both sides).
+- Investment, broker, pension and lending accounts (group invest, illiquid or pension in my accounts): leave out what happens inside them, such as fund buys and sells, rebalancing, fees, interest or dividends that stay there, and the deposit arriving from my bank. What I put in is one negative Investments line for the money leaving my bank or cash account. If that bank statement isn't among the files, book each deposit into the investment account once that way.
 - Money paid back to me for something (a friend's share of a dinner, a refund) is a positive line in Expenses, in the same category as the original cost. It is not income.
 - Shared bills: if a Splitwise export is included, book only my share of each shared bill, and leave out the full bill and the settle-up payments between flatmates.
 - Rent shared with flatmates: if I pay the whole rent and they send me their part, combine it into one line with my net share, dated the day the rent left.
@@ -4423,6 +4427,7 @@ const AI_RULES={
 - Ingresos: nómina, intereses, dividendos, plusvalías realizadas, regalos. Gastos: todo lo que gasto. Inversiones: lo que meto en fondos, brókers, planes de pensiones o plataformas de préstamos.
 - Usa solo mis categorías. Si ninguna encaja, deja la categoría vacía.
 - Deja fuera las transferencias entre mis propias cuentas (las dos partes).
+- Cuentas de inversión, bróker, pensiones y préstamos (grupo invest, illiquid o pension en mis cuentas): deja fuera lo que pasa dentro de ellas, como compras y ventas de fondos, rebalanceos, comisiones, intereses o dividendos que se quedan ahí, y el ingreso que llega desde mi banco. Lo que aporto es una línea negativa en Inversiones por el dinero que sale de mi banco o cuenta de efectivo. Si ese extracto del banco no está entre los archivos, anota así una sola vez cada ingreso en la cuenta de inversión.
 - El dinero que me devuelven por algo (la parte de un amigo de una cena, una devolución) es una línea positiva en Gastos, en la misma categoría que el gasto original. No es un ingreso.
 - Gastos compartidos: si hay una exportación de Splitwise, anota solo mi parte de cada gasto compartido y deja fuera la factura completa y los pagos para saldar cuentas entre compañeros de piso.
 - Alquiler compartido: si pago todo el alquiler y mis compañeros me envían su parte, júntalo en una línea con mi parte neta, con la fecha en que salió el alquiler.
@@ -4486,7 +4491,8 @@ function aiContext(mode){
   const ctx={today:new Date().toISOString().slice(0,10),
     categories:{income:(cats.income||[]).map(c=>c.name),expenses:(cats.expenses||[]).map(c=>c.type?`${c.name} (${c.type==='Need'?'fixed':'variable'})`:c.name),investments:(cats.investments||[]).map(c=>c.name)}};
   if(mode!=='start'){ const kw=kws(); let n=0; ctx.keywords={}; for(const t of TKEYS){ ctx.keywords[t]={}; for(const [k,c] of (kw[t]||[])){ if(n>=1500) break; (ctx.keywords[t][c]=ctx.keywords[t][c]||[]).push(k); n++; } } }
-  if(mode!=='tx') ctx.my_accounts=nw().accounts.map(a=>({id:a.id,name:a.name,group:a.group}));
+  /* for transactions too, so a statement from an investment or pension account is recognised (see AI_RULES) */
+  ctx.my_accounts=nw().accounts.map(a=>({id:a.id,name:a.name,group:a.group}));
   const st=startOf(); if(st&&mode==='tx') ctx.tracker_starts=ymOf(st.y,st.m);
   return ctx;
 }
