@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-njLXqKxTobWJWCNdFl0R0aT0oG3iGRFFxiTpbkG9tv8=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-FG63b3gBUfMiuWsRtlng4CzV9Fv9gJ/0fPOTOrHIPEo=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -2664,7 +2664,7 @@ function render(){
   else { html=({overview:viewOverview,yearly:viewYearly,transactions:viewTransactions,categories:viewCategories,networth:viewNetworth,settings:viewSettings})[S.ui.tab]();
     const G=S.ui.tab!=='networth'&&S.ui.tab!=='settings'?guideState():null;
     if(G){ const full=S.ui.tab==='overview'; html=afterHead(html,full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G)); }
-    else if((S.ui.tab==='overview'||S.ui.tab==='networth')&&ciDue()) html=afterHead(html,ciStrip()); }
+    else if((S.ui.tab==='overview'||S.ui.tab==='networth')&&ciDue()) html=afterHead(html,`<div class="guide-wrap">${ciStrip()}</div>`); }
   v.innerHTML=html;
   restoreFocus(st);
   afterRender();

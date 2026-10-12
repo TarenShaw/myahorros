@@ -28,6 +28,7 @@ const ym = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
   await p.goto(START, { waitUntil: 'load' });
   await p.click('.web-landing .wl-hero [data-x=open]');
   await p.waitForSelector('[data-action="ci-open"]', { timeout: 8000 });
+  await shot('checkin-strip');
   console.log('1. a check-in is offered');
 
   /* two files at once: the bank's (known) and the savings account's (new); the bank's overlaps the salary already saved */
