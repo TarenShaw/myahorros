@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-42LuN/iwsblAWha1/z5gLl4ya2qVaMlc8os8y80Uuj4=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-GDITR2VncCqgAJhHewS3M+J4sJgaH5x7T9WivBtYBl4=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -3199,6 +3199,11 @@ function showMonthByCategory(t,i){
   S.ui.oc.table=t; S.ui.oc.month=String(i); render();
   const c=$('#ch-cats'); if(c){ const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches; c.closest('.card').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}); }
 }
+/* a month picked on a chart is let go by a click anywhere else that isn't a control; By category, which shows that month, keeps it */
+document.addEventListener('click',e=>{ const t=e.target;
+  if(S.ui.tab!=='overview'||S.ui.oc.month==='all'||S.modal||!t.closest||t.closest('.chart,#overlay,button,a,input,select,label,textarea,summary,[data-action]')) return;
+  const cc=$('#ch-cats'); if(cc&&cc.closest('.card').contains(t)) return;
+  S.ui.oc.month='all'; render(); });
 function drawOverviewCharts(){
   const y=S.ui.year, A=agg(y,true), idx=chartIdx(y);
   const labels=idx.map(i=>M3()[i]);

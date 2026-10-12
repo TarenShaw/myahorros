@@ -118,6 +118,16 @@ const data = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, c
   assert.match(await p.innerText('#view'), /Shaded days are estimates/);
   if (SHOTS) await p.locator('#ch-monthly').screenshot({ path: SHOTS + '/days-income.png' });
   console.log('5. Days + Income: salary projected on the 1st');
+
+  /* 6. a month picked on the chart is let go by a click outside it */
+  await p.click(monthsBtn); await p.click('[data-action=mm-table][data-t=all]');
+  await p.locator('#ch-monthly').scrollIntoViewIfNeeded();
+  const box6 = await p.locator('#ch-monthly svg').boundingBox();
+  await p.mouse.click(box6.x + box6.width * 0.12, box6.y + box6.height * 0.7);
+  await p.waitForFunction(() => document.querySelector('#oc-month') && document.querySelector('#oc-month').value !== 'all');
+  await p.click('#view .page-head .ph-meta');
+  await p.waitForFunction(() => document.querySelector('#oc-month').value === 'all');
+  console.log('6. a click outside the chart lets the picked month go');
   assert.deepStrictEqual(errs, []);
   await browser.close();
 })().catch(e => { console.error(e); process.exit(1); });
