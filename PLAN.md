@@ -1,6 +1,6 @@
 # PLAN: MyAhorros update
 
-Source: the user's original brief (phases 0-7) plus approved follow-ups. Refreshed 2026-10-12 against `main` at `5699962` (previous published baseline 1.0.56; release 1.0.57 approved for publication). Details are in PROGRESS.md. Older commit references may predate the 2026-10-11 history rewrite.
+Source: the user's original brief (phases 0-7) plus approved follow-ups. Refreshed 2026-10-12 against `main` at `5699962` (published 1.0.57 at `ad0468a`; release 1.0.58 prepared for publication). Details are in PROGRESS.md. Older commit references may predate the 2026-10-11 history rewrite.
 Ground rules: keep all existing features working; match existing style and UI language (en + es for every new string); small commits per phase; no secrets in the repo; commit to `main`, but ask the user for a yes before each push.
 
 ## Done
@@ -54,6 +54,19 @@ Ground rules: keep all existing features working; match existing style and UI la
 | 16–17 | Clearer bilingual landing and fresh product shots; month/year comparisons with transaction links; hypothetical savings scenario |
 
 No dependencies or backend added. Saved data format remains 1; new metadata is optional. Existing trackers are supported; the Windows host has not been tested with optional provenance fields. User approved committing and pushing release 1.0.57 on 2026-10-12. Includes extra spacing below the month/year switch and above comparison buttons, plus green/red comparison changes with reversed expense colors and neutral zero changes.
+
+## Follow-up release (1.0.58)
+
+- Restore completed-month check-in detection for older/manual trackers without account statement metadata; preserve explicit coverage checks for new imports. Confirm September stays quiet through October 31 and October starts November 1.
+- Align transaction filters in responsive equal-width columns, with visible labels, equal control heights and a separate action row.
+- Compact What changed into total/gains/optional review boxes and one colored contribution bar; retain signed contributions, new accounts, review details and explanations.
+
+- Match the Goal card to the compact layout with aligned boxes and one saving/growth bar.
+- Improve the savings scenario with balanced controls/results, live baseline and extra-saving comparisons, duration presets, goal-date shortcut and accessible validation.
+
+- Preserve Net worth chart viewport position when clicking month bars; selected figures update without the chart jumping as earlier cards change height.
+
+- Validate AI dates and balance months; keep scanned PDF page text paired with its image when splitting requests.
 
 ## Pending verification
 

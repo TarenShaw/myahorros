@@ -96,3 +96,27 @@ for (const [change, expected] of [
   assert.deepStrictEqual([...markup.matchAll(/<small class="([^"]*)">Δ /g)].map(m=>m[1]), expected);
 }
 console.log('experience smoke: comparison colors passed');
+
+// Older manual trackers do not have per-account statement metadata.
+const reminder = new Function('settings','haveRows','balanceStatus','confirmed','month', `
+  const S={canWrite:true,mode:'live',settings}, N={accounts:[{id:'cash',group:'cash'}]};
+  const nw=()=>N, wzCover=()=>({have:new Set(haveRows?['2026-09']:[]),balAt:()=>balanceStatus});
+  const allRows=()=>[{date:'2026-08-01'}], guideState=()=>null;
+  const statementCovered=()=>confirmed, ciMonth=()=>month;
+  ${grab('ciState')}
+  ${grab('ciDue')}
+  return ciDue();
+`);
+assert.strictEqual(reminder({},true,'ok',false,'2026-09'),false,'legacy completed September must not trigger a reminder');
+assert.strictEqual(reminder({},false,'ok',false,'2026-09'),true,'missing transactions still trigger');
+assert.strictEqual(reminder({},true,'part',false,'2026-09'),true,'missing balances still trigger');
+assert.strictEqual(reminder({guide:{stmts:{cash:{coverageVersion:1}}}},true,'ok',false,'2026-09'),true,'new unconfirmed coverage must not be guessed');
+assert.strictEqual(reminder({guide:{stmts:{cash:{coverageVersion:1}}}},false,'ok',true,'2026-09'),false,'confirmed no activity counts');
+assert.strictEqual(reminder({guide:{stmts:{cash:{to:'2026-09-27'}}}},true,'ok',false,'2026-09'),false,'legacy statement coverage still counts');
+assert.strictEqual(reminder({lastCheckin:'2026-09'},true,'ok',false,'2026-09'),false);
+assert.strictEqual(reminder({lastCheckin:'2026-09'},true,'',false,'2026-10'),true,'September completion must not suppress October reminder');
+const checkinMonth = new Function('ymNow','ymAdd',line('const ciMonth=')+'return ciMonth();');
+const addMonth=(k,n)=>new Date(Date.UTC(+k.slice(0,4),+k.slice(5,7)-1+n,1)).toISOString().slice(0,7);
+assert.strictEqual(checkinMonth(()=> '2026-10',addMonth),'2026-09','October dates can only remind about September');
+assert.strictEqual(checkinMonth(()=> '2026-11',addMonth),'2026-10','November 1 starts the October reminder');
+console.log('experience smoke: legacy completion and reminder month passed');

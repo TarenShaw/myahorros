@@ -3,7 +3,7 @@ const fs = require('fs'), path = require('path'), assert = require('assert');
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const grab = name => { const a = html.indexOf('function ' + name + '('); assert.ok(a > -1, name + ' not found');
   const b = html.indexOf('\n}\n', a); return html.slice(a, b + 3); };
-const { aiJobs, aiMerge } = new Function(grab('aiJobs') + grab('aiMerge') + 'return {aiJobs,aiMerge};')();
+const { aiJobs, aiMerge, aiDate } = new Function(grab('aiJobs') + grab('aiMerge') + grab('aiDate') + 'return {aiJobs,aiMerge,aiDate};')();
 
 /* a 40,000-character CSV becomes several requests, each with the header row, nothing lost or repeated */
 const rows = Array.from({ length: 800 }, (_, i) => `2026-01-${String(i % 28 + 1).padStart(2, '0')},-${i}.50,Shop number ${i} with a fairly long description`);
@@ -19,6 +19,41 @@ assert.strictEqual(back.length, rows.length, 'rows lost or repeated');
 /* small inputs stay one request; small files are packed together */
 assert.strictEqual(aiJobs([{ name: 'a', text: 'x'.repeat(100), images: [] }, { name: 'b', text: 'y'.repeat(100), images: [] }], 15000, 8).length, 1);
 assert.strictEqual(aiJobs([{ name: 'a', text: 'x'.repeat(9000), images: [] }, { name: 'b', text: 'y'.repeat(9000), images: [] }], 15000, 8).length, 2);
+
+/* impossible ISO dates must not silently roll into another month */
+assert.strictEqual(aiDate('2026-02-30'), null);
+assert.strictEqual(aiDate('2025-02-29'), null);
+assert.strictEqual(aiDate('2024-02-29'), '2024-02-29');
+assert.strictEqual(aiDate('2026-01-01'), '2026-01-01');
+assert.strictEqual(aiDate('2026-13-01'), null);
+
+/* balances reject nonexistent months before they reach import review */
+const aiNwData = new Function('nw', 'nowYM', 'ymNow', 'ymAdd', 'aiNum', 'NW_GROUPS',
+  grab('aiNwData') + 'return aiNwData;')(
+    () => ({accounts: []}), () => ({day: 25}), () => '2026-12', () => '2026-11',
+    v => typeof v === 'number' && Number.isFinite(v) ? v : null, ['cash']);
+const balances = aiNwData({accounts: [{name: 'Bank', group: 'cash', balances:
+  [['2026-00', 10], ['2026-13', 20], ['2026-01', 30], ['2026-12', 40], ['2027-01', 50]]}]});
+assert.deepStrictEqual(balances.months.map(m => m.k), ['2026-01', '2026-12']);
+assert.deepStrictEqual(balances.future, ['2027-01']);
+assert.deepStrictEqual(balances.months.map(m => m.vals[0]), [30, 40]);
+
+/* scanned PDF pages stay with their images; picture numbers restart per request */
+const pictures = Array.from({length: 19}, (_, i) => ({page: i + 1}));
+const pdf = {name: 'scan.pdf', images: pictures,
+  text: pictures.map((_, i) => `[page ${i+1}: scanned, sent as picture ${i+1}]`).join('\n\n')};
+const scanned = aiJobs([pdf], 15000, 8);
+assert.deepStrictEqual(scanned.map(j => j.images.length), [8, 8, 3]);
+assert.deepStrictEqual(scanned.flatMap(j => j.images), pictures);
+scanned.forEach(j => j.files.forEach(f => {
+  const markers = [...f.text.matchAll(/\[page (\d+): scanned, sent as picture (\d+)\]/g)];
+  assert.strictEqual(markers.length, f.images.length);
+  markers.forEach(m => assert.strictEqual(f.images[+m[2]-1].page, +m[1]));
+}));
+const mixed = aiJobs([{name:'mixed.pdf', images:[{page:2}],
+  text:'[page 1]\n'+'x'.repeat(9000)+'\n\n[page 2: scanned, sent as picture 1]\n\n[page 3]\n'+'y'.repeat(9000)}],15000,8);
+assert.strictEqual(mixed.filter(j=>j.images.length).length,1);
+assert.ok(mixed.find(j=>j.images.length).files.some(f=>f.text.includes('[page 2:')));
 
 /* merging: rows add up, a statement's opening comes from its first part and closing from its last */
 const m = aiMerge([

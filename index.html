@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1DotI7CtTgv3CuR+TFB+OQDLimo8IsKVcGHHOmef2xM=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1XnTj4ZNufAQ1iU/XLn1CD0dkJsO5HC20T/5OJa94OQ=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -844,7 +844,16 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 .nw-card>.card-head{align-items:center;flex-wrap:nowrap}.nw-card>.card-head .btn{margin-block:-8px}
 .nw-lead>:first-child,.nw-body>:first-child,.nw-ft>.nw-foot{margin-top:0}
 .nw-body:not(:empty),.nw-ft:not(:empty){padding-top:var(--s24)}
-.nw-cmp .nw-bar{background:none}
+.nw-change,.nw-goal{display:block;grid-row:auto}
+.nw-change .nw-body:not(:empty),.nw-change .nw-ft:not(:empty),.nw-goal .nw-body:not(:empty),.nw-goal .nw-ft:not(:empty){padding-top:var(--s16)}
+.nw-change-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:var(--s12)}
+.nw-change-stat{display:grid;gap:var(--s8);padding:var(--s12) var(--s16);border:1px solid var(--line);border-top:3px solid var(--c-income);border-radius:var(--r-inner);min-width:0}
+.nw-change-stat.market{border-top-color:var(--g-invest)}.nw-change-stat.left{border-top-color:var(--warn-ink)}.nw-change-stat.total.down{border-top-color:var(--bad-ink)}
+.nw-change-stat .nw-sval{font-size:var(--fs-section)}.nw-change-stat.left .nw-sval{color:var(--warn-ink)}
+.nw-change .nw-bar{height:10px}.nw-change .nw-bar i{min-width:2px}
+.nw-change .nw-mix-leg{gap:var(--s8) var(--s24);margin-top:var(--s12)}.nw-change .nw-health{margin:0}
+.nw-change .sw.market{background:var(--g-invest)}.nw-change .sw.fresh{background:var(--g-cash)}.nw-change .sw.left{background:var(--warn-ink)}.nw-change .sw.neg{background:var(--bad)}
+.nw-change .nw-since{margin-bottom:0}
 @media (max-width:980px){.two.nw-two{grid-template-columns:1fr;row-gap:var(--s24)}.nw-card{grid-row:auto;grid-template-rows:none}.tiles[style*="--n"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .nw-split{display:grid;gap:var(--s16);margin-top:var(--s16)}
 .nw-srow{display:grid;gap:var(--s8)}
@@ -872,6 +881,12 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 .nw-stat-v{font:650 var(--fs-section)/1.2 var(--f-body);white-space:nowrap}
 .nw-stat-s{font-size:var(--fs-sm);color:var(--muted)}
 .nw-growth-txt{margin:var(--s16) 0 0;font-size:var(--fs-meta);line-height:1.55}
+.nw-goal .nw-stats{grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:var(--s12);border:0;margin-top:0}
+.nw-goal .nw-stat{border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:var(--r-inner);gap:var(--s8)}
+.nw-goal .nw-stat:nth-child(2){border-top-color:var(--g-invest)}.nw-goal .nw-stat:nth-child(3){border-top-color:var(--c-income)}
+.nw-goal .nw-mix{margin-top:var(--s16)}.nw-goal .nw-mix i{min-width:2px}
+.nw-goal .nw-mix-leg{gap:var(--s8) var(--s24);margin-top:var(--s12)}
+.nw-goal .nw-growth-txt{margin-top:var(--s12)}
 .nw-sbar{grid-column:1/-1;height:8px;border-radius:var(--r-inner);background:var(--surface-3);position:relative;overflow:hidden}
 .nw-sbar i{position:absolute;left:0;top:0;bottom:0;border-radius:var(--r-inner)}
 .nw-sbar i.saved{background:var(--c-income)}.nw-sbar i.market{background:var(--g-invest)}.nw-sbar i.neg{background:var(--bad)}
@@ -1036,7 +1051,14 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 
 .mobile-more{display:none}
 .tx-filter-panel>summary{cursor:pointer;font-weight:600;margin-bottom:var(--s8)}
-.tx-filter-panel .filters{padding:var(--s12);border:1px solid var(--line);border-radius:var(--r-card)}
+.tx-filter-panel .filters{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--s16) var(--s12);align-items:end;padding:var(--s16);border:1px solid var(--line);border-radius:var(--r-card)}
+.tx-filter-panel .filters>label{min-width:0}
+.tx-filter-panel .filters input:not([type=checkbox]),.tx-filter-panel .filters select{width:100%;max-width:none;min-width:0;height:44px;box-sizing:border-box}
+.tx-filter-actions{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:var(--s8)}
+.tx-filter-actions .check{display:flex;align-items:center;margin-right:auto}
+@media(max-width:1199px){.tx-filter-panel .filters{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:800px){.tx-filter-panel .filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.tx-filter-panel .filters{grid-template-columns:minmax(0,1fr)}}
 .filters label{display:grid;gap:var(--s4);font-size:var(--fs-meta)}
 .filters input{max-width:200px}.tx-source{display:block;overflow-wrap:anywhere}.tx input[type=checkbox]{margin-right:var(--s8)}
 .bulk-tools{display:flex;align-items:center;flex-wrap:wrap;gap:var(--s8);margin-bottom:var(--s12)}
@@ -1048,6 +1070,20 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 .year-view{margin-bottom:var(--s12)}
 .compare-controls,.scenario-fields{display:flex;flex-wrap:wrap;gap:var(--s12)}
 .compare-controls label,.scenario-fields label{display:grid;gap:var(--s4)}
+.scenario-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s24);align-items:start}
+.scenario-controls{display:grid;gap:var(--s16)}.scenario-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s16);margin:0}
+.scenario-meta dt,.scenario-comparison span{font-size:var(--fs-meta);color:var(--ink-2)}.scenario-meta dd{margin:var(--s4) 0;font-weight:650;font-size:var(--fs-lg)}
+.scenario-meta .hint{display:block;font-size:var(--fs-meta);font-weight:400;margin:0}
+#savings-scenario .scenario-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s12);align-items:end}
+.scenario-fields input{width:100%;min-width:0;height:44px;box-sizing:border-box}.scenario-fields input[aria-invalid=true]{border-color:var(--bad-ink)}
+.scenario-presets{display:flex;flex-wrap:wrap;gap:var(--s8)}.scenario-presets [aria-pressed=true]{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+#scenario-output{padding:var(--s16);border:1px solid var(--line-2);border-radius:var(--r-card);background:var(--accent-soft)}
+.scenario-total{display:grid;gap:var(--s8)}#scenario-result{font:700 var(--fs-kpi)/1.15 var(--f-body);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.scenario-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s16);margin-top:var(--s16);padding-top:var(--s12);border-top:1px solid var(--line-2)}
+.scenario-comparison>div{display:grid;gap:var(--s4);min-width:0}.scenario-comparison b{font-size:var(--fs-lg);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}#scenario-impact{color:var(--good-ink)}
+.scenario-goal{margin:var(--s12) 0 0;font-size:var(--fs-meta)}.scenario-error{color:var(--bad-ink);font-size:var(--fs-meta);margin-bottom:0}
+@media(max-width:800px){.scenario-layout{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:400px){#savings-scenario .scenario-fields,.scenario-comparison{grid-template-columns:minmax(0,1fr)}}
 .month-list li{display:flex;justify-content:space-between;gap:var(--s12);padding:var(--s8);border-bottom:1px solid var(--line)}
 @media(max-width:600px){.app{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}.mast{grid-column:1;grid-row:1;min-width:0}.tabbar{grid-column:2;grid-row:1;border-bottom:0;justify-content:flex-end}.app>main,.app>footer{grid-column:1/-1}.tabbar-end{max-width:max(84px,calc(100vw - 160px));flex-wrap:wrap;justify-content:flex-end}.tabbar-end #btn-local-top{max-width:100%;white-space:normal;overflow-wrap:anywhere}.mast{padding-top:var(--s8);padding-bottom:var(--s8)}.mast .kicker{display:none}.mast .brand{font-size:24px}.page-head{margin-bottom:var(--s12)}.ph-meta{font-size:var(--fs-meta)}.ph-acts{gap:var(--s4)}.ph-acts:not(.show-all)>.btn:not(.primary):not([data-action=import]):not(.mobile-more){display:none}.ph-acts>.btn[data-action=import],.ph-acts>.btn.mobile-more,.ph-acts.show-all>.btn{display:inline-flex}.tx-filter-panel:not([open])+.tx-sum{margin-top:var(--s8)}.compare-grid{grid-template-columns:1fr}.filters input{max-width:100%}.ov-top{gap:var(--s12)}.more-analysis{gap:var(--s16)}}
 @media(max-width:320px){.app{grid-template-columns:minmax(0,1fr)}.tabbar{grid-column:1;grid-row:2}.tabbar-end{max-width:100%}}
@@ -1981,7 +2017,7 @@ const STR={
   info_catSkip:['Rows whose description contains one of these words arrive unticked when you import: for example transfers between your own accounts, which are neither income nor spending.','Las filas cuya descripción contiene una de estas palabras llegan sin marcar al importar: por ejemplo, traspasos entre tus propias cuentas, que no son ni ingresos ni gastos.'],
   info_nwWhat:['Net worth is what everything you own is worth, minus what you owe. Once a month, type what each account is worth at the end of the month, or import several months from Excel, and the tracker shows how it grows and why.','El patrimonio neto es lo que vale todo lo que tienes, menos lo que debes. Una vez al mes, escribe lo que vale cada cuenta a final de mes, o importa varios meses desde Excel, y el control muestra cómo crece y por qué.'],
   info_nwGroups:['Accounts are grouped by how soon you could use the money: Cash now, Investments within days, Long-term on its own schedule (loans, property), Retirement when you retire. “Without retirement savings” is what you could reach before then.','Las cuentas se agrupan según lo pronto que podrías usar el dinero: Efectivo ya, Inversiones en días, A largo plazo según su propio calendario (préstamos, inmuebles) y Jubilación al jubilarte. «Sin el ahorro para la jubilación» es lo que podrías usar antes.'],
-  info_nwChange:['How your net worth moved since the previous month with figures. You saved: income minus expenses from your tracker. Markets, interest and gains: the Gains total of the Accounts table (price moves, interest, dividends). Moving money between your own accounts changes neither. Anything your transactions and account figures don’t explain shows on its own line, Not matched to an account, so the lines always add up to the total.','Cómo ha cambiado tu patrimonio desde el mes anterior con cifras. Has ahorrado: ingresos menos gastos según tu control. Mercados, intereses y plusvalías: el total de Ganancias de la tabla Cuentas (cambios de precio, intereses, dividendos). Mover dinero entre tus propias cuentas no cambia ninguna de las dos. Lo que tus movimientos y las cifras de tus cuentas no explican sale en su propia línea, Sin cuadrar con ninguna cuenta, así que las líneas siempre suman el total.'],
+  info_nwChange:['How your net worth moved since the previous month with figures. You saved: income minus expenses from your tracker. Markets, interest and gains: the Gains total of the Accounts table (price moves, interest, dividends). Moving money between your own accounts changes neither. Anything your transactions and account figures don’t explain is shown separately, Not matched to an account, so the lines always add up to the total.','Cómo ha cambiado tu patrimonio desde el mes anterior con cifras. Has ahorrado: ingresos menos gastos según tu control. Mercados, intereses y plusvalías: el total de Ganancias de la tabla Cuentas (cambios de precio, intereses, dividendos). Mover dinero entre tus propias cuentas no cambia ninguna de las dos. Lo que tus movimientos y las cifras de tus cuentas no explican se muestra por separado, Sin cuadrar con ninguna cuenta, así que las líneas siempre suman el total.'],
   info_fhTitle:['Rules of thumb, not advice.','Reglas orientativas, no asesoramiento.'],
   info_fh_emerg:['Cash you could use tomorrow divided by your average monthly spending. Rule of thumb: 3–6 months. Meal cards and money owed to you aren’t counted.','El efectivo que podrías usar mañana dividido entre tu gasto medio mensual. Regla orientativa: 3–6 meses. No cuentan las tarjetas de comida ni el dinero que te deben.'],
   info_fh_fi:['Invested money vs 25× your yearly spending, the amount that lets you live off 4% a year (the 4% rule).','Tu dinero invertido frente a 25 veces tu gasto anual, lo que te permitiría vivir retirando un 4% al año (la regla del 4%).'],
@@ -2026,7 +2062,7 @@ const STR={
   nwMissing:[n=>`${pl(n,'account')} without a figure this month, so the total leaves ${n===1?'it':'them'} out.`,n=>`${pl(n,'account')} sin cifra este mes, así que el total no ${n===1?'la':'las'} incluye.`],
   g_cash:['Cash','Efectivo'], g_invest:['Investments','Inversiones'], g_illiquid:['Long-term','A largo plazo'], g_pension:['Retirement','Jubilación'],
   gs_cash:['Available now','Disponible ya'], gs_invest:['Can be sold within days','Se puede vender en días'], gs_illiquid:['Comes back on its own schedule','Vuelve según su propio calendario'], gs_pension:['Locked until retirement','Bloqueado hasta la jubilación'],
-  nwChange:['What changed','Qué ha cambiado'], nwSinceEnd:[(m,y)=>`Since the end of ${m} ${y}.`,(m,y)=>`Desde el final de ${m} de ${y}.`],
+  nwTotalChange:['Total change','Cambio total'], nwChangeSizes:['Bar lengths show the size of each contribution; signs show increases or decreases.','La longitud de cada tramo muestra el tamaño de su aportación; los signos indican subidas o bajadas.'], nwChange:['What changed','Qué ha cambiado'], nwSinceEnd:[(m,y)=>`Since the end of ${m} ${y}.`,(m,y)=>`Desde el final de ${m} de ${y}.`],
   nwSaved:['You saved','Has ahorrado'], nwSavedSub:['Income minus expenses, without interest or gains','Ingresos menos gastos, sin intereses ni plusvalías'],
   nwMarket:['Markets, interest and gains','Mercados, intereses y plusvalías'], nwMarketSub:['Prices, interest, dividends and gains: the Gains total in Accounts','Precios, intereses, dividendos y plusvalías: el total de Ganancias en Cuentas'],
   nwNewAcc:[v=>`Plus ${v} in accounts tracked for the first time this month.`,v=>`Más ${v} de cuentas que se registran por primera vez este mes.`],
@@ -2295,6 +2331,17 @@ const STR={
 };
 Object.assign(STR,{coverageDateError:['Check the statement period: the start date must be on or before the end date.','Revisa el periodo del extracto: la fecha inicial debe ser anterior o igual a la final.'],coverageAccountError:['Choose an account before confirming statement coverage.','Elige una cuenta antes de confirmar la cobertura del extracto.'],seeSummary:['See my summary','Ver mi resumen'],optionalBalances:['Add balances (optional)','Añadir saldos (opcional)'],moreActions:['More actions','Más acciones'],fewerActions:['Fewer actions','Menos acciones'],activeFilters:[n=>`${n} active`,n=>`${n} activos`],comparisonHelp:['Based on recorded rows; incomplete statements can change these totals.','Basado en movimientos guardados; los extractos incompletos pueden cambiar estos totales.'],aiTitle_statement:['Read my statement','Leer mi extracto'],aiSub_statement:['Review transactions and month-end balances before saving.','Revisa los movimientos y saldos de fin de mes antes de guardar.'],advanced:['Advanced options','Opciones avanzadas'], inspectMonth:['See this month’s transactions','Ver los movimientos de este mes'], ruleWhen:['When the description','Cuando la descripción'], ruleUse:['Use category','Usar categoría'],
  quickStart:['Start with last month','Empezar con el mes pasado'], historyStart:['Bring in my history','Traer mi historial'], quickHelp:['One account and one statement give you your first summary. Add more later.','Una cuenta y un extracto bastan para ver tu primer resumen. Añade más después.'], historyHelp:['Choose how far back to go, then add statements and balances at your own pace.','Elige desde cuándo empezar y añade extractos y saldos a tu ritmo.'], addStatement:['Add a statement','Añadir un extracto'], quickBalances:['Add the previous and latest month-end balances if you want to see what changed. You can do this later.','Añade los saldos del mes anterior y del último mes si quieres ver el cambio. Puedes hacerlo después.'], incomeOptional:['Optional: mark your regular income, or skip if you do not have a salary or pension.','Opcional: marca tus ingresos habituales o sáltalo si no tienes nómina ni pensión.'], historyFrom:['Start from','Empezar desde'], noActivity:['No activity in this period','Sin movimientos en este periodo'], periodConfirm:['This statement covers the full period shown below','Este extracto cubre todo el periodo indicado abajo'], needsAttention:['Needs attention','Necesita revisión'], allRowsReview:['All rows','Todas las filas'], reviewSummary:[(n,q,d)=>`${n} ready · ${q} to review · ${d} left out`,(n,q,d)=>`${n} listas · ${q} por revisar · ${d} excluidas`], reviewSafety:['Matching totals check the amounts, not the categories. Check questions and possible duplicates before adding.','Que los totales coincidan comprueba los importes, no las categorías. Revisa las preguntas y posibles duplicados antes de añadir.'], useAiFallback:['Read this file with AI','Leer este archivo con IA'], localReadHelp:['CSV and Excel are read on this device first. PDFs and pictures use your chosen AI method.','CSV y Excel se leen primero en este dispositivo. PDF e imágenes usan el método de IA que elijas.'], rememberAnswers:['Answers AI remembers','Respuestas que recuerda la IA'], forgetAnswer:['Forget answer','Olvidar respuesta'], rememberedNone:['No answers remembered yet.','Aún no hay respuestas guardadas.'], editAnswer:['Edit answer','Editar respuesta'], saveAnswer:['Save answer','Guardar respuesta'], deleteOptIn:['Possible duplicates are not selected. Compare both rows before selecting a deletion.','Los posibles duplicados no están seleccionados. Compara ambas filas antes de marcar un borrado.'], filters:['Filters','Filtros'], fromDate:['From date','Desde la fecha'], toDate:['To date','Hasta la fecha'], minAmount:['Minimum amount (absolute)','Importe mínimo (absoluto)'], maxAmount:['Maximum amount (absolute)','Importe máximo (absoluto)'], source:['Source file','Archivo de origen'], accountFilter:['Account','Cuenta'], anyAccount:['All accounts / unknown','Todas las cuentas / sin cuenta'], anySource:['All sources','Todos los orígenes'], saveView:['Save these filters','Guardar estos filtros'], viewName:['View name','Nombre de la vista'], savedViews:['Saved views','Vistas guardadas'], defaultView:['Choose a view','Elegir una vista'], deleteView:['Delete this view','Borrar esta vista'], selectFiltered:['Select filtered rows','Seleccionar filas filtradas'], clearSelection:['Clear selection','Quitar selección'], selectedCount:[n=>`${n} selected`,n=>`${n} seleccionadas`], bulkCategory:['Change category for selected rows','Cambiar categoría de las filas seleccionadas'], bulkPreview:[n=>`Review ${n} selected rows. Only their category will change.`,n=>`Revisa ${n} filas seleccionadas. Solo cambiará su categoría.`], bulkApply:['Apply category','Aplicar categoría'], batchChanged:[n=>`${n} categories changed`,n=>`${n} categorías cambiadas`], importHistory:['Import history','Historial de importaciones'], importHistoryHelp:['Files and statements added here. Older rows may not have source details.','Archivos y extractos añadidos aquí. Las filas antiguas pueden no tener origen.'], noImports:['No recorded imports yet.','Aún no hay importaciones registradas.'], viewImport:['View these transactions','Ver estos movimientos'], unknownSource:['Manually entered or older import','Entrada manual o importación antigua'], period:['Period','Periodo'], importCount:[n=>`${n} ${n===1?'row':'rows'} imported`,n=>`${n} ${n===1?'fila importada':'filas importadas'}`], analysisMore:['More analysis','Más análisis'], analysisLess:['Show the summary','Ver el resumen'], latestSummary:['Latest recorded month','Último mes con datos'], compareTitle:['Compare months','Comparar meses'], compareAgainst:['Compare with','Comparar con'], previousMonth:['Previous month','Mes anterior'], previousYear:['Same month last year','Mismo mes del año anterior'], missingComparison:['No transactions recorded for one of these months. Add or confirm its statement before comparing.','No hay movimientos registrados en uno de estos meses. Añade o confirma su extracto antes de comparar.'], scenario:['Try a savings scenario','Probar un escenario de ahorro'], scenarioExtra:['Extra saved each month','Ahorro adicional cada mes'], scenarioMonths:['Number of months','Número de meses'], scenarioHelp:['Hypothetical only: current total + your recent average saving + the extra amount each month. No market growth, fees or inflation assumed. Recorded figures and forecasts stay unchanged.','Solo hipotético: total actual + ahorro medio reciente + importe adicional mensual. Sin crecimiento de mercado, comisiones ni inflación. Las cifras y previsiones guardadas no cambian.'], scenarioResult:['Hypothetical total','Total hipotético'], ruleMode:['Match','Coincidencia'], contains:['Contains this text','Contiene este texto'], wholeWord:['Whole word or phrase','Palabra o frase completa'], rulePriority:['Longer matching rules win. At equal length, the first rule in the list wins. Test a description below.','Gana la regla coincidente más larga. A igual longitud, gana la primera de la lista. Prueba una descripción abajo.'], affectedRows:[n=>`${n} existing descriptions match this rule`,n=>`${n} descripciones existentes coinciden con esta regla`], monthView:['One month','Un mes'], gridView:['Year grid','Tabla anual'], noActivitySaved:['Period marked as having no activity.','Periodo marcado sin movimientos.'], importFileHelp:['Choose a bank export, PDF or picture. AI is optional; no automatic bank connection.','Elige una exportación bancaria, PDF o imagen. La IA es opcional; no hay conexión bancaria automática.'], setupScope:['How would you like to start?','¿Cómo quieres empezar?'], quickAccounts:['Start with one everyday account. Add savings, investments and other accounts whenever you are ready.','Empieza con una cuenta de uso diario. Añade ahorro, inversiones y otras cuentas cuando quieras.'], confirmCoverage:['Confirm statement coverage per account','Confirmar cobertura por cuenta'], notConfirmed:['Coverage not confirmed','Cobertura sin confirmar']
+});
+Object.assign(STR,{
+  scenarioIntro:['See how extra monthly saving could change your total.','Mira cómo cambiaría tu total con un ahorro mensual extra.'],
+  scenarioStart:['Starting total','Total inicial'], scenarioBaseline:['Without extra saving','Sin ahorro extra'], scenarioImpact:['Added by your extra saving','Aportación del ahorro extra'],
+  scenarioNoAverage:['No saving average yet; only extra saving is counted.','Aún no hay media de ahorro; solo se cuenta el ahorro extra.'],
+  scenarioDuration:[n=>`${n} months`,n=>`${n} meses`], scenarioUseGoal:['Use goal date','Usar fecha del objetivo'],
+  scenarioEnd:[m=>`At the end of ${m}`,m=>`A final de ${m}`],
+  scenarioAmountError:[v=>`Enter a monthly amount between 0 and ${v}.`,v=>`Introduce un importe mensual entre 0 y ${v}.`],
+  scenarioMonthError:['Choose a whole number of months from 1 to 600.','Elige un número entero de meses entre 1 y 600.'],
+  scenarioGoalGap:[v=>`${v} short of your goal amount`,v=>`Faltan ${v} para el importe de tu objetivo`],
+  scenarioGoalAbove:[v=>`${v} above your goal amount`,v=>`${v} por encima del importe de tu objetivo`]
 });
 function L(k,...a){ const e=STR[k]; if(!e) return k; const v=e[LANG==='es'?1:0]; const out=typeof v==='function'?v(...a):v; return aiWord(k,out); }
 /* web version: the AI screens name the AI the visitor picked */
@@ -2932,10 +2979,39 @@ function scenarioTotal(current,monthly,extra,n){
   if(![current,monthly,extra,n].every(Number.isFinite)||extra<0||extra>=1e9||!Number.isInteger(n)||n<1||n>600) return null;
   return (cents(current)+(cents(monthly)+cents(extra))*n)/100;
 }
+function scenarioState(){
+  const ms=nwMonths(); if(!ms.length) return null;
+  const k=ms[ms.length-1], current=nwTotals(k).total, pace=savingPace(), monthly=pace?pace.avg:0;
+  const extra=S.ui.scenarioExtra===undefined?100:S.ui.scenarioExtra, n=S.ui.scenarioMonths===undefined?12:S.ui.scenarioMonths;
+  const total=scenarioTotal(current,monthly,extra,n), base=scenarioTotal(current,monthly,0,n);
+  return {k,current,pace,monthly,extra,n,total,base,added:total==null?null:(cents(total)-cents(base))/100,end:Number.isInteger(n)&&n>=1&&n<=600?ymAdd(k,n):null};
+}
+function scenarioOutput(){
+  const x=scenarioState(); if(!x) return '';
+  const amountOk=Number.isFinite(x.extra)&&x.extra>=0&&x.extra<1e9, monthsOk=Number.isInteger(x.n)&&x.n>=1&&x.n<=600, goal=nw().goal;
+  const error=!amountOk?L('scenarioAmountError',fmtEUR(999999999.99,2,true)):!monthsOk?L('scenarioMonthError'):'';
+  const gap=x.total==null||!goal?null:(cents(goal.amount)-cents(x.total))/100;
+  return `<div class="scenario-total"><span class="nw-stat-l">${esc(L('scenarioResult'))}</span><strong id="scenario-result">${x.total==null?DASH:fmtEUR(x.total)}</strong><span class="hint">${x.end?esc(L('scenarioEnd',ymIn(x.end))):''}</span></div>
+    <div class="scenario-comparison"><div><span>${esc(L('scenarioBaseline'))}</span><b id="scenario-baseline">${x.total==null?DASH:fmtEUR(x.base)}</b></div><div><span>${esc(L('scenarioImpact'))}</span><b id="scenario-impact">${x.added==null?DASH:signed(x.added)}</b></div></div>
+    ${gap==null?'':`<p class="scenario-goal">${esc(gap>0?L('scenarioGoalGap',fmtEUR(gap)):L('scenarioGoalAbove',fmtEUR(-gap)))}</p>`}
+    <p id="scenario-error" class="scenario-error"${error?'':' hidden'}>${esc(error)}</p>`;
+}
+function scenarioInput(el){
+  if(el.id==='scenario-extra'){ S.ui.scenarioRaw=el.value; S.ui.scenarioExtra=parseAmount(el.value,wantNum()); }
+  else S.ui.scenarioMonths=el.value===''?0:Number(el.value);
+  const out=$('#scenario-output'); if(!out) return; out.innerHTML=scenarioOutput();
+  const x=scenarioState(); $('#scenario-extra').setAttribute('aria-invalid',String(!Number.isFinite(x.extra)||x.extra<0||x.extra>=1e9));
+  $('#scenario-months').setAttribute('aria-invalid',String(!Number.isInteger(x.n)||x.n<1||x.n>600));
+  document.querySelectorAll('#savings-scenario [aria-pressed]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.n===x.n)));
+}
 function scenarioCard(){
-  const ms=nwMonths(); if(!ms.length) return ''; const current=nwTotals(ms[ms.length-1]).total, pace=savingPace();
-  const extra=S.ui.scenarioExtra==null?100:S.ui.scenarioExtra, n=S.ui.scenarioMonths==null?12:S.ui.scenarioMonths, v=scenarioTotal(current,pace?pace.avg:0,extra,n);
-  return `<section class="card" id="savings-scenario"><h2>${esc(L('scenario'))}</h2><p class="hint">${esc(L('scenarioHelp'))}</p><p>${esc(L('nwValue'))}: ${fmtEUR(current)} · ${esc(L('avgMonth',fmtEUR(pace?pace.avg:0)))}</p><div class="scenario-fields"><label>${esc(L('scenarioExtra'))}<input id="scenario-extra" type="text" inputmode="decimal" value="${esc(S.ui.scenarioRaw==null?fmtNum(extra):S.ui.scenarioRaw)}"></label><label>${esc(L('scenarioMonths'))}<input id="scenario-months" type="number" min="1" max="600" step="1" value="${n}"></label></div><p aria-live="polite">${esc(L('scenarioResult'))}: <b id="scenario-result">${v==null?DASH:fmtEUR(v)}</b></p></section>`;
+  const x=scenarioState(); if(!x) return ''; const goal=nw().goal, goalMonths=goal?ymDiff(x.k,goal.month):0;
+  return `<section class="card" id="savings-scenario"><div class="card-head"><div><h2>${esc(L('scenario'))}</h2><p class="sub">${esc(L('scenarioIntro'))}</p></div></div>
+    <div class="scenario-layout"><div class="scenario-controls"><dl class="scenario-meta"><div><dt>${esc(L('scenarioStart'))}</dt><dd>${fmtEUR(x.current)}</dd><dd class="hint">${esc(ymIn(x.k))}</dd></div><div><dt>${esc(L('nwStSave'))}</dt><dd>${fmtEUR(x.monthly)}</dd><dd class="hint">${esc(x.pace?L('nwStSaveSub',x.pace.n):L('scenarioNoAverage'))}</dd></div></dl>
+      <div class="scenario-fields"><label>${esc(L('scenarioExtra'))} (${esc(withCur('').trim())})<input id="scenario-extra" type="text" inputmode="decimal" value="${esc(S.ui.scenarioRaw==null?fmtNum(x.extra):S.ui.scenarioRaw)}" aria-invalid="${!Number.isFinite(x.extra)||x.extra<0||x.extra>=1e9}" aria-describedby="scenario-error"></label><label>${esc(L('scenarioMonths'))}<input id="scenario-months" type="number" min="1" max="600" step="1" value="${x.n}" aria-invalid="${!Number.isInteger(x.n)||x.n<1||x.n>600}" aria-describedby="scenario-error"></label></div>
+      <div class="scenario-presets">${[6,12,24].map(n=>`<button class="btn sm" type="button" data-action="scenario-period" data-n="${n}" aria-pressed="${x.n===n}">${esc(L('scenarioDuration',n))}</button>`).join('')}${goalMonths>=1&&goalMonths<=600?`<button class="btn sm" type="button" data-action="scenario-period" data-n="${goalMonths}">${esc(L('scenarioUseGoal'))}</button>`:''}</div></div>
+      <div id="scenario-output" aria-live="polite" aria-atomic="true">${scenarioOutput()}</div></div>
+    <details class="nw-foot nw-how"><summary>${esc(L('howCalc'))}</summary><p>${esc(L('scenarioHelp'))}</p></details></section>`;
 }
 function latestMonthCard(){
   if(allRows().some(r=>r.date.slice(0,7)===ymNow())) return '';
@@ -3647,9 +3723,9 @@ const CI_STEPS=4;
 const ciMonth=()=>ymAdd(ymNow(),-1);
 /* how far the month is done: transactions in (every Cash account whose statements came through the check-in or the wizard
    reaches the month's end; the others only need the month to have rows) and every account's month-end figure.
-   ponytail: a statement reaching the 25th counts as covering the month (the last days may have no movements) */
+   Only older statement records use the 25th-day shortcut; new records require confirmed coverage. */
 function ciState(k){ const N=nw(), C=wzCover(), st=(S.settings&&S.settings.guide&&S.settings.guide.stmts)||{}, cash=N.accounts.filter(a=>a.group==='cash');
-  const covered=a=>statementCovered(a,k,k)||!!st[a.id]&&st[a.id].coverageVersion!==1&&!st[a.id].coverFrom&&st[a.id].to>=k+'-25';
+  const covered=a=>!st[a.id]?C.have.has(k):statementCovered(a,k,k)||st[a.id].coverageVersion!==1&&!st[a.id].coverFrom&&st[a.id].to>=k+'-25';
   return {N,C,st,cash,covered,txOk:cash.length?cash.every(covered):C.have.has(k),balOk:!N.accounts.length||C.balAt(k)==='ok'}; }
 /* offered from the 1st for the month that just ended, until it's checked, skipped, or already complete */
 function ciDue(){ if(!S.canWrite||S.demo||S.mode!=='live'||!allRows().length) return false; const G=guideState(); if(G&&G.cur!=='done') return false;
@@ -3768,22 +3844,18 @@ function viewNetworth(){
   </section>`;
   /* what changed since the month before: own saving vs everything else */
   let cLead='', cBody='', cFt='';
-  /* both cards use the same pieces: a row (label and value on one line, an 8px bar, a short note),
-     footnotes in small muted text under a divider, and warnings in a notice */
-  const nwBarEl=(cls,frac,neg)=>`<span class="nw-bar"><i class="${cls}${neg?' neg':''}" style="width:${(Math.max(0,Math.min(1,frac))*100).toFixed(1)}%"></i></span>`;
-  const row=(lab,sub,v,frac,cls,plain)=>`<div class="nw-srow"><div class="nw-stop"><b>${esc(lab)}</b><span class="nw-sval${plain?'':v<-0.004?' down':' up'}">${plain?fmtEUR(v,0):signed(v)}</span></div>${nwBarEl(cls,frac,!plain&&v<-0.004)}${sub?`<small>${esc(sub)}</small>`:''}</div>`;
   const foot=items=>{ const x=items.filter(Boolean); return x.length?`<ul class="nw-foot">${x.map(t=>`<li>${t}</li>`).join('')}</ul>`:''; };
   /* explanations fold away under "How is this calculated?"; foot() stays for what the reader must see */
   const how=(items,extra)=>{ const x=items.filter(Boolean); return x.length||extra?`<details class="nw-foot nw-how"><summary>${esc(L('howCalc'))}</summary>${x.length?`<ul>${x.map(t=>`<li>${t}</li>`).join('')}</ul>`:''}${extra||''}</details>`:''; };
-  /* both cards share 4 rows (head, headline, body, footer) so their parts line up side by side */
-  const nwCard=(t,btn,lead,body,ft)=>`<section class="card nw-card"><div class="card-head"><div><h2>${esc(L(t))}${info(t)}</h2></div>${btn}</div><div class="nw-lead">${lead}</div><div class="nw-body">${body}</div><div class="nw-ft">${ft}</div></section>`;
+  /* Keep the heading, summary, body and explanations in the same order for both cards. */
+  const nwCard=(t,btn,lead,body,ft)=>`<section class="card nw-card${t==='nwChange'?' nw-change':' nw-goal'}"><div class="card-head"><div><h2>${esc(L(t))}${info(t)}</h2></div>${btn}</div><div class="nw-lead">${lead}</div><div class="nw-body">${body}</div><div class="nw-ft">${ft}</div></section>`;
   const warnBox=t=>`<p class="notice nw-repay">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(t)}</span></p>`;
   const retLink=cw?`<button class="linkish nw-retlink" type="button" data-action="nw-ret">${esc(L('nwRetWhich'))}</button>`:'';
   if(!prev){ const tr=trackerSaved(ymAdd(k,-1),k);
     if(!tr.missing.length){ cLead=`<p class="nw-delta ${tr.saved<-0.004?'down':'up'}">${signed(tr.saved)}</p><p class="hint nw-since">${esc(L('nwSavedIn',ymIn(k)))}</p>`; cFt=how([],retLink); }
     cBody=foot([esc(L('nwNoPrev'))]); }
   else {
-    const sp=nwSplit(prev,k), hasLeft=Math.abs(sp.left)>=0.005, mx=Math.max(Math.abs(sp.saved),Math.abs(sp.gains),Math.abs(sp.fresh),Math.abs(sp.left),1), w=sp.why;
+    const sp=nwSplit(prev,k), hasLeft=Math.abs(sp.left)>=0.005, w=sp.why;
     /* the leftover's causes, each with the rows behind it (the cash part has none: no row explains it) */
     const revRows=rs=>rs.length?`<ul class="nw-rev-rows">${rs.slice(0,8).map(r=>`<li><span>${esc(fmtDate(r.date))} · ${esc(r.concept)}</span><span>${signed(r.amount)}</span></li>`).join('')}${rs.length>8?'<li>…</li>':''}</ul>`:'';
     const revItem=(v,t,rs)=>Math.abs(v)>=0.005?`<li><div class="nw-stop"><span>${esc(t)}</span><b class="nw-sval">${signed(v)}</b></div>${revRows(rs||[])}</li>`:'';
@@ -3791,9 +3863,16 @@ function viewNetworth(){
     const health=`<p class="nw-health ${hasLeft?'bad':'ok'}">${(hasLeft?ICON.warn:ICON.ok).replace('<svg','<svg width="14" height="14"')}<span>${esc(hasLeft?L('nwHealthBad',fmtEUR(Math.abs(sp.left))):L('nwHealthOk'))}</span></p>`;
     cLead=`<p class="nw-delta ${sp.change<-0.004?'down':'up'}">${signed(sp.change)}</p><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>${sp.missing.length?'':health}`;
     if(sp.missing.length) cBody=foot([esc(noTrackerText(sp.missing)),sp.added>0.004?esc(L('nwNewAccIncl',fmtEUR(sp.added,0))):'']);
-    else { cBody=`<div class="nw-split nw-cmp">${row(L('nwSaved'),L('nwSavedSub'),sp.saved,Math.abs(sp.saved)/mx,'saved')}${row(L('nwMarket'),L('nwMarketSub'),sp.gains,Math.abs(sp.gains)/mx,'market')}${Math.abs(sp.fresh)>0.004?row(L('nwNewAccRow'),L('nwNewAccRowSub'),sp.fresh,Math.abs(sp.fresh)/mx,'fresh'):''}${hasLeft?row(L('nwLeftRow'),L('nwLeftRowSub'),sp.left,Math.abs(sp.left)/mx,'left'):''}</div>${review}
+    else {
+      const parts=[{cls:'saved',label:L('nwSaved'),sub:L('nwSavedSub'),v:sp.saved},{cls:'market',label:L('nwMarket'),sub:L('nwMarketSub'),v:sp.gains},
+        ...(Math.abs(sp.fresh)>0.004?[{cls:'fresh',label:L('nwNewAccRow'),sub:L('nwNewAccRowSub'),v:sp.fresh}]:[]),...(hasLeft?[{cls:'left',label:L('nwLeftRow'),sub:L('nwLeftRowSub'),v:sp.left}]:[])];
+      const stat=(label,v,cls)=>`<div class="nw-change-stat ${cls}${v<-0.004?' down':''}"><span class="nw-stat-l">${esc(label)}</span><span class="nw-sval ${cls==='left'?'':v<-0.004?'down':'up'}">${signed(v)}</span></div>`;
+      cLead=`<div class="nw-change-stats">${stat(L('nwTotalChange'),sp.change,'total')}${stat(L('nwMarket'),sp.gains,'market')}${hasLeft?stat(L('nwLeftRow'),sp.left,'left'):''}</div><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>`;
+      cBody=`<div class="nw-bar" aria-hidden="true">${parts.filter(p=>Math.abs(p.v)>=0.005).map(p=>`<i class="${p.cls}${p.v<-0.004&&p.cls!=='left'?' neg':''}" style="flex:${Math.abs(p.v)}"></i>`).join('')}</div>
+        <div class="nw-mix-leg">${parts.map(p=>`<span title="${esc(p.sub)}"><i class="sw ${p.cls}${p.v<-0.004&&p.cls!=='left'?' neg':''}" aria-hidden="true"></i>${esc(p.label)} <b>${signed(p.v)}</b></span>`).join('')}${hasLeft?'':health}</div>${parts.some(p=>p.v<-0.004)?`<p class="hint">${esc(L('nwChangeSizes'))}</p>`:''}${review}
         ${nwLateBox(nwLate(prev,k)||nwLate(k,ms[ms.indexOf(k)+1]))}${sp.blind.length&&Math.abs(sp.left)>=200?warnBox(L('nwBlindHint',listJoin(sp.blind),ymIn(k))):''}${sp.repay?warnBox(L('nwRepayHint',sp.repay)):''}`;
-      cFt=how([Math.abs(sp.returns)>0.004?esc(L('nwRetIncl',fmtEUR(sp.returns))):'',sp.moved>0.004?esc(L('nwMovedNote',fmtEUR(sp.moved,0))):''],retLink); }
+      cFt=how([ ...parts.map(p=>esc(p.label+': '+p.sub)),Math.abs(sp.returns)>0.004?esc(L('nwRetIncl',fmtEUR(sp.returns))):'',sp.moved>0.004?esc(L('nwMovedNote',fmtEUR(sp.moved,0))):''],retLink);
+    }
   }
   const changeCard=nwCard('nwChange','',cLead,cBody,cFt);
   /* goal: progress, three key figures, where the rest has to come from */
@@ -3811,11 +3890,12 @@ function viewNetworth(){
     else {
       const need=rest/left, ok=pace&&pace.avg>=need;
       status=`<span class="pill ${ok?'good':'bad'}">${ok?ICON.ok:ICON.warn}${esc(L(ok?'nwOnTrack':'nwBehind'))}</span>`;
-      const c=goalGrowthCalc(TG,rest,left,pace), sv=Math.max(0,Math.min(rest,c.fromSaving)), gp=Math.max(0,c.gap), tt=Math.max(sv+gp,1);
+      const c=goalGrowthCalc(TG,rest,left,pace), sv=Math.max(0,Math.min(rest,c.fromSaving)), gp=Math.max(0,c.gap);
       const stat=(lab,val,sub)=>`<div class="nw-stat"><span class="nw-stat-l">${esc(lab)}</span><span class="nw-stat-v">${val}</span><span class="nw-stat-s">${esc(sub)}</span></div>`;
       const txt=pace&&c.gap<=0?L('nwGoalSavingEnough'):c.tot!=null?L(!pace?'nwGrowNoPace':pace.avg<0?'nwGrowNeg':'nwGrow',fmtEUR(c.inv,0),fmtPct(c.tot,1),left>=12?fmtPct(c.yr,1):null):L('nwGoalNoInvest',fmtEUR(c.gap,0));
       body=`<div class="nw-stats">${stat(L('nwStToGo'),fmtEUR(rest,0),L('nwStToGoSub',left))}${stat(L('nwStNeed'),fmtEUR(need,0),L('nwStNeedSub',M3()[+G.month.slice(5,7)-1],gy))}${stat(L('nwStSave'),pace?fmtEUR(pace.avg,0):DASH,pace?L('nwStSaveSub',pace.n):L('nwStSaveNone'))}</div>
-        <div class="nw-split">${row(L('nwFromSavingRow'),'',sv,sv/tt,'saved',true)}${row(L('nwFromGrowthRow'),'',gp,gp/tt,'growth',true)}</div>
+        <div class="nw-mix" aria-hidden="true">${sv>0?`<i class="saved" style="flex:${sv}"></i>`:''}${gp>0?`<i class="growth" style="flex:${gp}"></i>`:''}</div>
+        <div class="nw-mix-leg"><span><i class="sw saved" aria-hidden="true"></i>${esc(L('nwFromSavingRow'))} <b>${fmtEUR(sv,0)}</b></span><span><i class="sw growth" aria-hidden="true"></i>${esc(L('nwFromGrowthRow'))} <b>${fmtEUR(gp,0)}</b></span></div>
         <p class="nw-growth-txt">${esc(txt)}</p>`;
       gFt=how([pace?esc(L('nwGoalFootProj',fmtEUR(TG.total+pace.avg*left,0),ymM(G.month),gy)):'',c.tot!=null&&c.gap>0?esc(L('nwGoalGrowthNote')):'',kG!==k?esc(L('nwGoalAsOf',ymIn(kG))):'']);
     }
@@ -4195,7 +4275,12 @@ function drawNwChart(){
   /* a click shows that month across the page, like the month picker above */
   svg.style.cursor='pointer';
   svg.addEventListener('click',e=>{ const r=svg.getBoundingClientRect(); const i=Math.max(0,Math.min(n-1,Math.floor(((e.clientX-r.left)*(W/r.width)-m.l)/band)));
-    if(!T[i]||ms[i]===nwSelMonth()) return; hideTip(); S.ui.nw.month=ms[i]; render(); });
+    if(!T[i]||ms[i]===nwSelMonth()) return;
+    const top=el.getBoundingClientRect().top;
+    hideTip(); S.ui.nw.month=ms[i]; render();
+    /* Month-specific cards above can change height; keep the clicked chart under the pointer. */
+    const chart=$('#ch-nw'); if(chart) window.scrollBy({top:chart.getBoundingClientRect().top-top,behavior:'instant'});
+  });
   svg.addEventListener('pointerdown',e=>{ if(e.pointerType==='touch') move(e); });
   svg.addEventListener('pointerleave',e=>{ if(e.pointerType==='touch') return; hl.style.opacity='0'; hideTip(); });
 }
@@ -4686,7 +4771,12 @@ ${JSON.stringify(ctx)}
 ${files.map(f=>`===== FILE: ${f.name} =====\n${f.text||'(see the attached picture'+(f.images.length>1?'s':'')+')'}`).join('\n\n')}`;
 }
 const aiNum=v=>{ if(typeof v==='number') return isFinite(v)?r2(v):null; if(typeof v==='string'){ const n=parseAmount(v); return n==null?null:r2(n); } return null; };
-const aiDate=v=>typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&!isNaN(new Date(v+'T00:00:00'))?v:(typeof v==='string'?parseDate(v):null);
+function aiDate(v){
+  if(typeof v!=='string') return null;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(v)) return parseDate(v);
+  const d=new Date(v+'T00:00:00Z');
+  return !isNaN(d)&&d.toISOString().slice(0,10)===v?v:null;
+}
 /* Claude's transactions -> import rows, plus the checks shown above the review */
 function aiTxResult(res,catsFor){
   const rows=[], out=[], checks=[];
@@ -4711,7 +4801,7 @@ function aiNwData(res){
     const j=cols.length, have=N.accounts.find(x=>x.id===acc);
     const col={j,name:have?have.name:String(a.name||'').trim()||'?',acc,as:null,group:have?have.group:NW_GROUPS.includes(a.group)?a.group:'cash',skip:false,sum:false};
     let any=false;
-    for(const b of a.balances){ const k=Array.isArray(b)?b[0]:b&&b.month, v=aiNum(Array.isArray(b)?b[1]:b&&b.value); if(typeof k!=='string'||!/^\d{4}-\d{2}$/.test(k)||v==null) continue;
+    for(const b of a.balances){ const k=Array.isArray(b)?b[0]:b&&b.month, v=aiNum(Array.isArray(b)?b[1]:b&&b.value); if(typeof k!=='string'||!/^\d{4}-(0[1-9]|1[0-2])$/.test(k)||v==null) continue;
       if(k>open){ future.add(k); continue; } const vals=months.get(k)||{}; vals[j]=v; months.set(k,vals); any=true; }
     if(any) cols.push(col); });
   return {cols,months:[...months.keys()].sort().map(k=>({k,vals:months.get(k),on:true})),bad:[],noMonth:[],future:[...future].sort(),dups:[],noName:[]};
@@ -4731,8 +4821,24 @@ function aiErr(e){
 }
 /* the files, cut into requests small enough for any model to answer in full (one request when it all fits) */
 function aiJobs(files,max,maxImg){
-  const parts=[];
+  const parts=[], batches=[];
   for(const f of files){
+    if(f.images.length&&/^\[page \d+/.test(f.text)){
+      let text=[], images=[], n=0;
+      const flush=()=>{ if(text.length) batches.push({name:f.name,text:text.join('\n\n'),images}); text=[]; images=[]; n=0; };
+      for(const page of f.text.split(/\n\n(?=\[page \d+)/)){
+        const scan=page.match(/^\[page \d+: scanned, sent as picture (\d+)\]/);
+        if(text.length&&(n+page.length+2>max||(scan&&images.length>=maxImg))) flush();
+        if(scan){ images.push(f.images[+scan[1]-1]); text.push(page.replace(/picture \d+/, 'picture '+images.length)); }
+        else text.push(page);
+        n+=page.length+2;
+      }
+      flush();
+    }else if(f.images.length>maxImg){
+      for(let i=0;i<f.images.length;i+=maxImg) batches.push({name:f.name,text:(i?'':f.text+'\n')+'[pictures '+(i+1)+'-'+Math.min(i+maxImg,f.images.length)+']',images:f.images.slice(i,i+maxImg)});
+    }else batches.push(f);
+  }
+  for(const f of batches){
     if(f.text.length<=max){ parts.push(f); continue; }
     const lines=f.text.split('\n'), head=/\.(csv|tsv)$/i.test(f.name)&&lines[0].length<400?lines[0]:'';
     let cur=[], n=0, k=0;
@@ -5288,14 +5394,13 @@ function viewTransactions(){
       <div class="left"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(t=>`<button data-action="tx-table" data-t="${t}" aria-pressed="${u.table===t}"><i class="sw ${t}"></i>${esc(TL(t))}<span class="ct">${fmtCount(counts[t])}</span></button>`).join('')}</div>${info('txKinds')}</div>
     </div>
     <details class="tx-filter-panel"${(u.filtersOpen==null?matchMedia('(min-width:601px)').matches:u.filtersOpen)?' open':''}><summary>${esc(L('filters'))}${filterCount?' · '+esc(L('activeFilters',filterCount)):''}</summary><div class="filters">
-      <label class="sr" for="tx-q">${esc(L('search'))}</label><input type="search" id="tx-q" placeholder="${esc(L('searchPh'))}" value="${esc(u.q)}" autocomplete="off">
-      ${u.q.trim()?`<label class="check"><input type="checkbox" id="tx-ally"${u.allYears?' checked':''}>${esc(L('searchAllYears'))}</label>`:''}
-      <label class="sr" for="tx-month">${esc(L('month'))}</label><select id="tx-month"${u.allYears&&u.q.trim()?' disabled':''}><option value="all">${esc(L('wholeOf',y))}</option>${ms.map(m=>`<option value="${m}"${String(u.month)===String(m)?' selected':''}>${M()[m]}</option>`).join('')}</select>
-      <label class="sr" for="tx-cat">${esc(L('category'))}</label><select id="tx-cat"><option value="all">${esc(L('allCategories'))}</option><option value="${UNCAT}"${u.cat===UNCAT?' selected':''}>${esc(L('uncat'))}${unInTable?' ('+unInTable+')':''}</option>${catNames(u.table).map(n=>`<option value="${esc(n)}"${n===u.cat?' selected':''}>${esc(n)}</option>`).join('')}</select>
-      <label>${esc(L('fromDate'))}<input id="tx-from" type="date" value="${esc(u.from)}"></label><label>${esc(L('toDate'))}<input id="tx-to" type="date" value="${esc(u.to)}"></label><label>${esc(L('minAmount'))}<input id="tx-min" inputmode="decimal" value="${esc(u.min)}"></label><label>${esc(L('maxAmount'))}<input id="tx-max" inputmode="decimal" value="${esc(u.max)}"></label>
+      <label>${esc(L('search'))}<input type="search" id="tx-q" placeholder="${esc(L('searchPh'))}" value="${esc(u.q)}" autocomplete="off"></label>
+      <label>${esc(L('month'))}<select id="tx-month"${u.allYears&&u.q.trim()?' disabled':''}><option value="all">${esc(L('wholeOf',y))}</option>${ms.map(m=>`<option value="${m}"${String(u.month)===String(m)?' selected':''}>${M()[m]}</option>`).join('')}</select></label>
+      <label>${esc(L('category'))}<select id="tx-cat"><option value="all">${esc(L('allCategories'))}</option><option value="${UNCAT}"${u.cat===UNCAT?' selected':''}>${esc(L('uncat'))}${unInTable?' ('+unInTable+')':''}</option>${catNames(u.table).map(n=>`<option value="${esc(n)}"${n===u.cat?' selected':''}>${esc(n)}</option>`).join('')}</select></label>
+      <label>${esc(L('fromDate'))}<input id="tx-from" type="date" value="${esc(u.from)}"></label><label>${esc(L('toDate'))}<input id="tx-to" type="date" value="${esc(u.to)}"></label><label>${esc(L('minAmount'))}<input id="tx-min" type="text" inputmode="decimal" value="${esc(u.min)}"></label><label>${esc(L('maxAmount'))}<input id="tx-max" type="text" inputmode="decimal" value="${esc(u.max)}"></label>
       <label>${esc(L('accountFilter'))}<select id="tx-account"><option value="">${esc(L('anyAccount'))}</option>${nw().accounts.map(a=>`<option value="${esc(a.id)}"${u.account===a.id?' selected':''}>${esc(a.name)}</option>`).join('')}</select></label><label>${esc(L('source'))}<select id="tx-source"><option value="">${esc(L('anySource'))}</option>${[...new Set(allRows().map(r=>r.source).filter(Boolean))].map(f=>`<option${u.source===f?' selected':''}>${esc(f)}</option>`).join('')}</select></label>
-      <label>${esc(L('savedViews'))}<select id="tx-saved-view"><option value="">${esc(L('defaultView'))}</option><option value="uncat">${esc(L('uncat'))}</option><option value="large">${esc(L('minAmount'))}: ${fmtNum(100)}</option>${savedTxViews().map(v=>`<option value="${esc(v.id)}">${esc(v.name)}</option>`).join('')}</select></label><button class="btn sm" data-action="tx-save-view">${esc(L('saveView'))}</button>${u.savedView?`<button class="btn sm" data-action="tx-delete-view">${esc(L('deleteView'))}</button>`:''}
-      ${(u.q||u.month!=='all'||u.cat!=='all'||u.from||u.to||u.min||u.max||u.account||u.source||u.batch)?`<button class="btn ghost sm" data-action="tx-clear">${esc(L('clearFilters'))}</button>`:''}
+      <label>${esc(L('savedViews'))}<select id="tx-saved-view"><option value="">${esc(L('defaultView'))}</option><option value="uncat">${esc(L('uncat'))}</option><option value="large">${esc(L('minAmount'))}: ${fmtNum(100)}</option>${savedTxViews().map(v=>`<option value="${esc(v.id)}">${esc(v.name)}</option>`).join('')}</select></label><div class="tx-filter-actions">${u.q.trim()?`<label class="check"><input type="checkbox" id="tx-ally"${u.allYears?' checked':''}>${esc(L('searchAllYears'))}</label>`:''}<button class="btn sm" data-action="tx-save-view">${esc(L('saveView'))}</button>${u.savedView?`<button class="btn sm" data-action="tx-delete-view">${esc(L('deleteView'))}</button>`:''}
+      ${(u.q||u.month!=='all'||u.cat!=='all'||u.from||u.to||u.min||u.max||u.account||u.source||u.batch)?`<button class="btn ghost sm" data-action="tx-clear">${esc(L('clearFilters'))}</button>`:''}</div>
     </div>
     </details><div class="tx-sum"><span>${esc(pl(rows.length,'transaction'))}${rows.length>shown.length?esc(L('showingFirst',fmtCount(shown.length))):''}${S.canWrite&&S.ai&&allRows().length?` <button type="button" class="linkish au-link" data-action="audit" data-f="tx" title="${esc(L('auLinkTip'))}">${ICON.ai}${esc(L('auBtn'))}</button>`:''}</span><span>${esc(L('total'))} <b>${fmtEUR(total)}</b></span></div>
     ${S.canWrite&&rows.length?`<div class="bulk-tools"><button class="btn sm" data-action="tx-select-filtered">${esc(L('selectFiltered'))}</button><span>${esc(L('selectedCount',txSelection().size))}</span>${txSelection().size?`<button class="btn sm" data-action="tx-bulk">${esc(L('bulkCategory'))}</button><button class="btn sm" data-action="tx-clear-selection">${esc(L('clearSelection'))}</button>`:''}</div><p class="hint" style="margin:0 0 var(--s8)">${esc(L('txRowHint'))}</p>`:''}
@@ -6640,6 +6745,7 @@ const ACTIONS={
   'page-actions':el=>{ const t=el.dataset.tab; S.ui.pageActions=Object.assign({},S.ui.pageActions,{[t]:!(S.ui.pageActions&&S.ui.pageActions[t])}); render(); },
   'analysis-toggle':el=>{ const t=el.dataset.tab; if(!['overview','networth'].includes(t)) return; S.ui.analysis=Object.assign({},S.ui.analysis,{[t]:!analysisOpen(t)}); try{ localStorage.setItem('ybt.analysis.'+t,S.ui.analysis[t]?'1':'0'); }catch(_){} render(); },
   'year-view':el=>{ S.ui.yearSingle=el.dataset.v==='month'; render(); },
+  'scenario-period':el=>{ const input=$('#scenario-months'); if(input){ input.value=el.dataset.n; scenarioInput(input); } },
   'compare-rows':el=>{ const k=el.dataset.k; Object.assign(S.ui.tx,{table:el.dataset.t,from:k+'-01',to:ymdAdd(ymAdd(k,1)+'-01',-1),month:'all',cat:'all',q:'',min:'',max:'',source:'',account:'',batch:'',allYears:true}); setTab('transactions'); },
   'import-history':()=>openModal({type:'imports',mid:true}),
   'import-view':el=>{ closeModal(); const u=S.ui.tx; Object.assign(u,{table:TKEYS.includes(el.dataset.t)?el.dataset.t:u.table,batch:el.dataset.id,from:'',to:'',q:'',month:'all',cat:'all',source:'',account:'',min:'',max:'',allYears:true}); txSelection().clear(); setTab('transactions'); },
@@ -6855,6 +6961,7 @@ let qTimer=null;
 document.addEventListener('input',e=>{
   const id=e.target.id;
   if(id&&AMT_FIELD.test(id)) amtRead(e.target);
+  if(id==='scenario-extra'||id==='scenario-months'){ scenarioInput(e.target); return; }
   if(id==='tx-q'){ S.ui.tx.q=e.target.value; S.ui.tx.limit=150; clearTimeout(qTimer); qTimer=setTimeout(render,140); }
   else if(id==='kw-q'){ S.ui.ct.q=e.target.value; S.ui.ct.kwLimit=25; clearTimeout(qTimer); qTimer=setTimeout(render,140); }
   else if(id==='cat-q'){ S.ui.ct.cq=e.target.value; clearTimeout(qTimer); qTimer=setTimeout(render,140); }
@@ -6901,7 +7008,7 @@ document.addEventListener('change',e=>{
   if(id==='compare-month'){ S.ui.compareMonth=el.value; render(); return; }
   if(id==='compare-base'){ S.ui.compareBase=el.value; render(); return; }
   if(id==='year-month-pick'){ S.ui.yearMonth=+el.value; render(); return; }
-  if(id==='scenario-extra'||id==='scenario-months'){ if(id==='scenario-extra'){ S.ui.scenarioRaw=el.value; S.ui.scenarioExtra=parseAmount(el.value,wantNum()); } else S.ui.scenarioMonths=+el.value; const ms=nwMonths(), pace=savingPace(), v=scenarioTotal(nwTotals(ms[ms.length-1]).total,pace?pace.avg:0,S.ui.scenarioExtra,S.ui.scenarioMonths); $('#scenario-result').textContent=v==null?DASH:HIDE?'••••':fmtEUR(v); return; }
+  if(id==='scenario-extra'||id==='scenario-months'){ scenarioInput(el); return; }
   if(id==='tx-month'){ S.ui.tx.month=el.value; S.ui.tx.limit=150; render(); return; }
   if(id==='tx-cat'){ S.ui.tx.cat=el.value; S.ui.tx.limit=150; render(); return; }
   if(id==='tx-ally'){ S.ui.tx.allYears=el.checked; S.ui.tx.limit=150; render(); return; }

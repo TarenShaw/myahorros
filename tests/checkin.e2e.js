@@ -17,7 +17,8 @@ const ym = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
   await p.route('https://accounts.google.com/gsi/client', r => r.fulfill({ contentType: 'text/javascript', body: 'window.google={accounts:{oauth2:{}}};' }));
 
   /* a tracker set up two months ago: three accounts, figures for the month before the one to check, the current account's file known */
-  const now = new Date(), ck = ym(now, -1), prev = ym(now, -2), cur = ym(now, 0);
+  const now = new Date('2026-10-31T12:00:00'), ck = ym(now, -1), prev = ym(now, -2), cur = ym(now, 0);
+  await p.clock.install({time:new Date('2026-10-31T12:00:00')});
   await p.goto(START, { waitUntil: 'load' });
   await p.evaluate(async ({ ck, prev }) => { localStorage.setItem('ybt.storage', 'browser');
     await window.__ybtWeb.idb.set('data', JSON.stringify({ app: 'Yearly Budget Tracker', format: 1,
@@ -93,18 +94,24 @@ const ym = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
 
   /* 6. a month already complete (rows, and every account's month-end figure) offers no check-in */
   const q = await (await browser.newContext({ viewport: { width: 1280, height: 860 } })).newPage();
-  await q.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
+  await q.addInitScript(() => { window.__ybtTest=true; try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
+  await q.clock.install({time:new Date('2026-10-31T12:00:00')});
   await q.goto(START, { waitUntil: 'load' });
   await q.evaluate(async ({ ck }) => { localStorage.setItem('ybt.storage', 'browser');
     await window.__ybtWeb.idb.set('data', JSON.stringify({ app: 'Yearly Budget Tracker', format: 1,
       months: { [ck]: { income: [{ id: 's1', date: ck + '-27', concept: 'ACME PAYROLL', amount: 2000, category: 'Salary' }], expenses: [], investments: [] } },
-      config: { settings: { lang: 'en',guide:{stmts:{cur:{coverFrom:ck+'-01',coverTo:ck+'-'+new Date(+ck.slice(0,4),+ck.slice(5,7),0).getDate()}}} }, networth: { accounts: [{ id: 'cur', name: 'Current account', group: 'cash' }], snaps: { [ck]: { cur: 3000 } } } } })); }, { ck });
+      config: { settings: { lang: 'en',guide:{on:false,done:true} }, networth: { accounts: [{ id: 'cur', name: 'Current account', group: 'cash' }], snaps: { [ck]: { cur: 3000 } } } } })); }, { ck });
   await q.goto(START, { waitUntil: 'load' });
   await q.waitForFunction(()=>document.querySelector('.web-landing [data-x=open]')||document.querySelector('#view .page-head'));
   if(await q.locator('.web-landing [data-x=open]').count()) await q.click('.web-landing .wl-hero [data-x=open]');
   await q.waitForSelector('#view .page-head'); await q.waitForTimeout(500);
   assert.ok(!(await q.$('[data-action="ci-open"]')), 'a complete month offers no check-in');
-  console.log('6. a month already complete offers no check-in');
+  console.log('6. legacy completed September offers no check-in through October 31');
+  await q.clock.setSystemTime(new Date('2026-11-01T12:00:00'));
+  await q.evaluate(()=>window.__ybt.render());
+  await q.waitForSelector('[data-action="ci-open"]');
+  assert.ok((await q.innerText('.ci-strip')).includes('October 2026'),'October check-in first appears November 1');
+  console.log('7. November 1 offers October, never September');
   await browser.close();
   console.log('check-in e2e: all passed');
 })().catch(e => { console.error(e); process.exit(1); });
