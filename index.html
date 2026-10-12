@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-XK8ZdPkPIVCCiU/0bruUSDIb3VaFRL62+HGnZhGhipI=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-t0Wcy2tXA7/OJSnohJ4Am6x4o/+DMLhPCyQzg39C3YM=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -116,9 +116,11 @@ html{scrollbar-gutter:stable}
 #view:has(>.state>.loading-bar){visibility:hidden}#view>.state{visibility:visible}
 
 /* masthead */
-.mast{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s16) var(--s24);flex-wrap:wrap;padding-block:var(--s32) var(--s16)}
+.mast{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s16) var(--s24);flex-wrap:wrap;padding-block:var(--s24) var(--s12)}
 .kicker{font:500 var(--fs-eyebrow)/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--s8)}
-.mast .brand{font:800 clamp(var(--fs-page),3.4vw,var(--fs-kpi))/1.05 var(--f-display);letter-spacing:-.01em}
+/* the wordmark: smaller than each page's own title, and a link back to the landing page */
+.mast .brand{display:inline-block;font:800 20px/1.1 var(--f-display);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+.mast .brand:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 .yearbox{display:inline-flex;align-items:center;gap:var(--s4)}
 .yearbox select{min-width:96px}
 .yearbox .icon-btn{border-color:var(--line-2);background:var(--surface)}
@@ -484,7 +486,9 @@ table.grid{border-collapse:separate;border-spacing:0;width:100%;table-layout:fix
 .filters{display:flex;flex-wrap:wrap;gap:var(--s8);align-items:center;margin-bottom:var(--s12)}
 .filters input[type=search]{width:min(320px,100%)}
 .tx-sum{display:flex;justify-content:space-between;gap:var(--s8);flex-wrap:wrap;font-size:var(--fs-sm);color:var(--ink-2);margin-bottom:var(--s8)}
-.tx-sum .au-link{display:inline-flex;align-items:center;gap:var(--s4);margin-left:var(--s8)}
+.au-link{display:inline-flex;align-items:center;gap:var(--s4)}
+.tx-sum .au-link{margin-left:var(--s8)}
+.au-acts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s8)}
 .tx-sum b{color:var(--ink);font-variant-numeric:tabular-nums}
 table.tx{width:100%;border-collapse:collapse;font-size:var(--fs-meta)}
 .tx th{text-align:left;font:600 var(--fs-eyebrow)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:var(--s12) var(--s12);border-bottom:1px solid var(--line-2);white-space:nowrap}
@@ -1019,7 +1023,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
   <header class="mast">
     <div>
       <p class="kicker">Income · Expenses · Investments</p>
-      <p class="brand">MyAhorros</p>
+      <a class="brand" href="./">MyAhorros</a>
     </div>
   </header>
   <div class="tabbar">
@@ -1771,6 +1775,13 @@ const STR={
   auLinkTip:['The AI looks through the transactions you already have for wrong categories, duplicates and missing keywords. It doesn’t add anything new.','La IA revisa los movimientos que ya tienes en busca de categorías equivocadas, duplicados y palabras clave que faltan. No añade nada nuevo.'],
   auSub_tx:['The AI reads the transactions you already have, in the months you pick, and suggests fixes: wrong categories or tables, duplicates, new keywords. Nothing changes until you tick a fix and press Apply.','La IA lee los movimientos que ya tienes, en los meses que elijas, y propone correcciones: categorías o tablas equivocadas, duplicados, palabras clave nuevas. No cambia nada hasta que marcas una corrección y pulsas Aplicar.'],
   auSends:[(n,ys,k,a)=>`It checks ${n} (${ys}) and sends them with your categories, ${k} keywords and ${a} accounts with their statement words.`,(n,ys,k,a)=>`Revisa ${n} (${ys}) y los envía con tus categorías, ${k} palabras clave y ${a} cuentas con sus palabras del extracto.`],
+  auBtn_nw:['Check accounts with AI','Revisar cuentas con IA'], auBtn_settings:['Check my setup with AI','Revisar mi configuración con IA'],
+  auTip_nw:['The AI looks at your balances and your income and investment rows: which account each investment row belongs to, interest in the wrong place, missing or odd balances. It doesn’t add anything new.','La IA mira tus saldos y tus filas de ingresos e inversiones: a qué cuenta pertenece cada inversión, intereses mal colocados, saldos que faltan o raros. No añade nada nuevo.'],
+  auSub_nw:['The AI reads your month-end balances and your income and investment rows in the months you pick, and suggests statement words for each account and fixes for those rows. Missing or odd balances come back as questions. Nothing changes until you tick a fix and press Apply.','La IA lee tus saldos de fin de mes y tus filas de ingresos e inversiones en los meses que elijas, y propone palabras del extracto para cada cuenta y correcciones para esas filas. Los saldos que faltan o son raros vuelven como preguntas. No cambia nada hasta que marcas una corrección y pulsas Aplicar.'],
+  auSub_settings:['The AI compares your categories, keywords and accounts with the transactions you already have, summarised by description, and suggests fixes. Nothing changes until you tick a fix and press Apply.','La IA compara tus categorías, palabras clave y cuentas con los movimientos que ya tienes, resumidos por concepto, y propone correcciones. No cambia nada hasta que marcas una corrección y pulsas Aplicar.'],
+  auHelp_settings:['Keywords that sort rows wrongly or are missing, categories marked fixed or variable the wrong way, statement words. It suggests; you choose what to apply.','Palabras clave que clasifican mal o que faltan, categorías marcadas como fijas o variables al revés, palabras del extracto. Propone; tú eliges qué aplicar.'],
+  auSendsSet:[(n,ys,k,a)=>`It checks your categories, ${k} keywords and ${a} accounts against ${n} (${ys}), summarised by description.`,(n,ys,k,a)=>`Revisa tus categorías, ${k} palabras clave y ${a} cuentas frente a ${n} (${ys}), resumidos por concepto.`],
+  auG_kwfix:['Keyword changes','Cambios en palabras clave'], auG_type:['Fixed or variable','Fijo o variable'], auRemove:['Remove','Quitar'],
   auPeriod:['Months to check','Meses a revisar'], auFrom:['From','Desde'], auTo:['To','Hasta'], auAll:['All','Todo'],
   auOther:[n=>`The other ${n} go only as a summary of how you usually sort each description, so the AI can compare.`,n=>`Los otros ${n} van solo como un resumen de cómo sueles clasificar cada concepto, para que la IA pueda comparar.`],
   auReqs:[n=>n===1?'One request.':`${n} requests, one after the other.`,n=>n===1?'Una petición.':`${n} peticiones, una tras otra.`],
@@ -2756,7 +2767,7 @@ function viewSettings(){
     ${themeCards(wantTheme(),false)}${cw?'':`<p class="hint" style="margin-top:var(--s12)">${esc(L('themeLocal'))}</p>`}</section>`;
   const aiX=S.ai&&typeof S.ai.extra==='function'?S.ai.extra(LANG)||[]:[];
   const aiCard=aiX.length?`<section class="card" id="ai-card"><div class="card-head"><div><h2>${esc(S.ai.title)}</h2><p class="sub">${esc(S.ai.sub)}</p></div></div>
-    <div class="set-acts">${aiX.map(x=>`<div class="set-act"><button class="btn" type="button" data-action="ai-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button><span class="hint">${esc(x.help)}</span></div>`).join('')}</div></section>`:'';
+    <div class="set-acts">${cw&&allRows().length?`<div class="set-act"><button class="btn" type="button" data-action="audit" data-f="settings">${ICON.ai}${esc(L('auBtn_settings'))}</button><span class="hint">${esc(L('auHelp_settings'))}</span></div>`:''}${aiX.map(x=>`<div class="set-act"><button class="btn" type="button" data-action="ai-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button><span class="hint">${esc(x.help)}</span></div>`).join('')}</div></section>`:'';
   const helpCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('helpTitle'))}</h2><p class="sub">${esc(L('helpSub'))}</p></div></div>
     <div class="ctrls"><button class="btn" type="button" data-action="tour">${esc(L('tourBtn'))}</button>${S.downloads||S.local?`<button class="btn" type="button" data-action="remind-ics">${esc(L('remindBtn'))}</button>`:''}${S.canWrite&&!guideState()&&(!nw().accounts.length||!nwMonths().length||!allRows().length)?`<button class="btn" type="button" data-action="guide-show">${esc(L('gShow'))}</button>`:''}</div><p class="hint" style="margin-top:var(--s12)">${esc(L('helpInfo'))}</p></section>`;
   return pageHead('settings')+`<div class="settings"><div class="stack">${langCard}${startCard}${aboutCard}${mlCard}</div><div class="stack">${themeCard}${dataCard}${aiCard}${helpCard}</div></div>`;
@@ -3750,7 +3761,7 @@ function accountsCard(k){
   const dT=k&&prev?r2(T.total-nwTotals(prev).total):null;
   const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?DASH:signed(dT)}</td>${gc(G.size?sum([...G.values()].map(cents))/100:null)}<td class="r"${lS}>${T.total>0?fmtPct(1,1):''}</td></tr></tfoot>`:'';
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
-      ${S.canWrite?`<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button>`:''}</div>
+      ${S.canWrite?`<div class="au-acts">${S.ai&&allRows().length&&nw().accounts.length?`<button type="button" class="linkish au-link" data-action="audit" data-f="nw" title="${esc(L('auTip_nw'))}">${ICON.ai}${esc(L('auBtn_nw'))}</button>`:''}<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button></div>`:''}</div>
     <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
     ${G.size&&G.unlinked.length?(()=>{ const u=G.unlinked, ds=nwUnlinked(u.map(r=>({r,k}))).map(g=>g.label);
       return `<p class="warn-text" style="margin-top:var(--s12)">${esc(L('nwUnlinked',u.length,fmtEUR(Math.abs(sum(u.map(r=>r.amount)))),listJoin(ds.slice(0,5).map(d=>`“${d}”`))+(ds.length>5?' …':'')))}${S.canWrite?` <button class="btn sm primary" type="button" data-action="nw-link">${esc(L('nwUnlinkedFix'))}</button>`:''}</p>`; })():''}
@@ -4636,25 +4647,31 @@ function aiReviewNote(m){
   </div>`;
 }
 /* ───────── AI audit ─────────
-   Everything already in the tracker (every row of every year, categories, keywords, accounts) goes to the AI, which
+   What is already in the tracker (rows in the months picked, plus categories, keywords, accounts) goes to the AI, which
    proposes fixes. Nothing changes until the person ticks fixes and presses Apply; one Undo puts it all back.
+   Three entry points look at the same data with a different focus: Transactions (rows), Net worth (accounts, balances,
+   income and investment rows), Settings (categories and keywords, against a summary of the rows).
    Rows are sent as numbers (1, 2, 3…), never their ids, so an answer can only point at rows that were sent, and every
    fix is checked again before it is shown and when it is applied. */
 const AUDIT_CHARS=YM_.auditChars||60000;
 const auDay=d=>Math.round(Date.parse(d.slice(0,10)+'T00:00:00Z')/864e5);
 const auRow=(n,r)=>[n,r.date,r2(r.amount),r.concept,r.table,r.category||''];
-/* rows outside the months being checked -> how each description is usually sorted, so the AI can compare (biggest first, capped) */
-function auditHistory(rows){
-  const g=new Map();
+/* rows -> how each description is sorted, one line each, most rows first (capped: biggest first) */
+function auditHistory(rows,cap){
+  const g=new Map(); cap=cap||20000;
   for(const r of rows){ const k=r.table+'|'+loose(r.concept); let x=g.get(k); if(!x){ x={d:r.concept,t:r.table,n:0,c:{}}; g.set(k,x); } x.n++; const c=r.category||''; x.c[c]=(x.c[c]||0)+1; }
   const out=[]; let n=0;
-  for(const x of [...g.values()].sort((a,b)=>b.n-a.n)){ const s=JSON.stringify([x.d,x.t,x.n,x.c]); if(n+s.length>20000) break; out.push(s); n+=s.length+1; }
+  for(const x of [...g.values()].sort((a,b)=>b.n-a.n)){ const s=JSON.stringify([x.d,x.t,x.n,x.c]); if(n+s.length>cap) break; out.push(s); n+=s.length+1; }
   return out.join('\n');
 }
 const auIn=(r,from,to)=>{ const k=r.date.slice(0,7); return k>=from&&k<=to; };
-function auditData(from,to){
+/* the rows to check, and the rest (sent only as a summary). Net worth checks income and investment rows. */
+function auditSplit(focus,from,to){ const chk=[], oth=[]; for(const r of allRows()) (auIn(r,from,to)&&(focus!=='nw'||r.table!=='expenses')?chk:oth).push(r); return {chk,oth}; }
+function auditData(focus,from,to){
+  const {chk,oth}=auditSplit(focus,from,to);
+  if(focus==='settings') return {ref:new Map(),files:[{name:'summary',text:auditHistory(chk,Infinity),images:[]}],history:''};
   /* ponytail: sorted by description so one shop's rows share a request; a shop spelt two ways can land in two requests */
-  const rows=allRows().filter(r=>auIn(r,from,to)).map(r=>[loose(r.concept),r]).sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:a[1].date<b[1].date?-1:1).map(x=>x[1]);
+  const rows=chk.map(r=>[loose(r.concept),r]).sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:a[1].date<b[1].date?-1:1).map(x=>x[1]);
   const ref=new Map(), lines=[];
   rows.forEach((r,i)=>{ ref.set(i+1,r); lines.push(JSON.stringify(auRow(i+1,r))); });
   /* possible duplicates: same table and amount, at most 2 days apart (the AI says which are really one movement).
@@ -4667,32 +4684,61 @@ function auditData(from,to){
   pairs.sort((a,b)=>a[0]-b[0]);
   const files=[{name:'rows',text:lines.join('\n'),images:[]}];
   if(pairs.length) files.push({name:'pairs',text:pairs.slice(0,200).map(([,a,b])=>JSON.stringify([auRow(a,ref.get(a)),auRow(b,ref.get(b))])).join('\n'),images:[]});
-  return {ref,files,history:auditHistory(allRows().filter(r=>!auIn(r,from,to)))};
+  return {ref,files,history:auditHistory(oth)};
 }
-const AUDIT_FOCUS={tx:'I opened this from Transactions: concentrate on categories, tables, duplicates and keywords.'};
-function auditPrompt(focus,files,history){
-  const ctx=Object.assign(aiContext('tx'),{my_accounts:nw().accounts.map(a=>({id:a.id,name:a.name,group:a.group,statement_words:a.words||''}))});
-  return `You are auditing my personal budget tracker. The rows below are what is already saved in it. Find what is wrong and reply with ONE JSON object, nothing else.
-
-${aiRulesFor('tx')}
-
-${AUDIT_FOCUS[focus]||''}
-Look for:
+function auditCtx(focus,from,to){
+  const N=nw(), ctx=Object.assign(aiContext('tx'),{my_accounts:N.accounts.map(a=>Object.assign({id:a.id,name:a.name,group:a.group,statement_words:a.words||''},a.from?{opened:a.from}:{}))});
+  if(focus==='nw'){
+    const name=new Map(N.accounts.map(a=>[a.id,a.name])); ctx.month_end_balances={};
+    for(const k of Object.keys(N.snaps).sort()) if(k>=from&&k<=to){ const o={}; for(const [id,v] of Object.entries(N.snaps[k]||{})) if(name.has(id)) o[name.get(id)]=v; ctx.month_end_balances[k]=o; }
+    ctx.investments_rows_matching_no_account=nwUnlinkedAll().groups.filter(g=>[...g.byK.keys()].some(k=>k>=from&&k<=to)).slice(0,100).map(g=>[g.label,g.rows.length,g.amt]);
+  }
+  if(focus==='settings'){ ctx.financial_health=Object.assign({},HEALTH,S.settings&&S.settings.health); ctx.targets=targets(); }
+  return ctx;
+}
+const AUDIT_LOOK={
+  tx:`I opened this from Transactions. Look for:
 - rows in the wrong category or the wrong table (income, expenses, investments)
 - rows with no category where one of my categories fits
 - the same shop or payer filed under different categories with no reason
 - refunds or paybacks booked as income, and transfers between my own accounts booked as income or spending
-- keywords that would sort rows like these correctly next time
-Only propose a change when you are fairly sure; ask a question instead when you are not. The request may be one part of a longer list: judge the rows you see. An empty list is a good answer.
+- keywords that would sort rows like these correctly next time`,
+  nw:`I opened this from Net worth. My accounts' month-end balances and the Investments rows that match none of my accounts are in my setup. Look for:
+- Investments rows that match no account: say which account each belongs to by giving that account statement words (a phrase from the description)
+- statement words that are wrong, or so broad they catch another account's rows
+- interest, dividends or gains in the wrong category or table
+- Investments rows that are really spending, income or transfers between my own accounts
+- months where an account has no balance, or its balance jumps by much more than the money put in or taken out: ask about these, don't change anything`,
+  settings:`I opened this from Settings: check my setup, not single rows. My rows are summarised by description. Look for:
+- keywords that point at the wrong category, or are so short or general they catch the wrong rows (for example "bar" inside "barcelona")
+- the same keyword under two categories
+- descriptions that appear often with no keyword, or with mixed categories: a new keyword
+- expense categories marked fixed or variable the wrong way (fixed: rent, bills, insurance, loans and other things I can't easily cut; variable: the rest)
+- categories that overlap, and Financial health assumptions that look wrong for me: ask about these`
+};
+const AUDIT_KEY={
+  changes:`"changes": [[row number, table the row belongs in, its category (exactly one of my categories for that table, or "" if none fits), why]], only for rows that need a change`,
+  duplicates:`"duplicates": [[row number to delete, row number it repeats, why]], only for pairs under POSSIBLE DUPLICATES that are clearly one movement recorded twice, not two real payments of the same price`,
+  keywords:`"keywords": [[table, keyword (a short piece of the description), category, why]], only new ones that would not mis-sort other rows`,
+  keyword_changes:`"keyword_changes": [[table, one of my keywords exactly as written, its new category, or "" to remove it, why]]`,
+  category_types:`"category_types": [[expense category, "fixed" or "variable", why]], only where my mark is wrong`,
+  statement_words:`"statement_words": [[account id, the account's full new statement words (comma-separated, keep the right ones), why]], when Investments rows for one of my accounts don't contain its statement words or name`,
+  questions:`"questions": [[row number or null, one short question]]`,
+  notes:`"notes": anything I should know, in one or two short sentences, or ""`
+};
+const AUDIT_KEYS={tx:['changes','duplicates','keywords','statement_words','questions','notes'],nw:['statement_words','changes','duplicates','keywords','questions','notes'],settings:['keyword_changes','keywords','category_types','statement_words','questions','notes']};
+function auditPrompt(focus,files,history,ctx){
+  const head=f=>f.name==='pairs'?'POSSIBLE DUPLICATES (same table and amount, up to 2 days apart; each line is two rows)':f.name==='summary'?'MY ROWS, SUMMARISED: [description, table, how many rows, {category: rows}]':'ROWS: [number, date, amount, description, table, category], sorted by description';
+  return `You are auditing my personal budget tracker. What follows is already saved in it. Find what is wrong and reply with ONE JSON object, nothing else.
+
+${aiRulesFor('tx')}
+
+${AUDIT_LOOK[focus]||AUDIT_LOOK.tx}
+Only propose a change when you are fairly sure; ask a question instead when you are not. The request may be one part of a longer list: judge what you see. An empty list is a good answer.
 Write every "why", question and note in ${LANG==='es'?'Spanish':'English'}, in a few words.
 
 The JSON object has these keys:
-- "changes": [[row number, table the row belongs in, its category (exactly one of my categories for that table, or "" if none fits), why]], only for rows that need a change
-- "duplicates": [[row number to delete, row number it repeats, why]], only for pairs under POSSIBLE DUPLICATES that are clearly one movement recorded twice, not two real payments of the same price
-- "keywords": [[table, keyword (a short piece of the description), category, why]], only new ones that would not mis-sort other rows
-- "statement_words": [[account id, the account's full new statement words (comma-separated, keep the right ones), why]], when Investments rows for one of my accounts don't contain its statement words or name
-- "questions": [[row number or null, one short question]]
-- "notes": anything I should know, in one or two short sentences, or ""
+${(AUDIT_KEYS[focus]||AUDIT_KEYS.tx).map(k=>'- '+AUDIT_KEY[k]).join('\n')}
 
 My setup (JSON):
 ${JSON.stringify(ctx)}
@@ -4700,10 +4746,10 @@ ${history?`
 ===== OTHER MONTHS, for comparison only (no fixes for these): [description, table, how many rows, {category: rows}] =====
 ${history}
 `:''}
-${files.map(f=>f.name==='pairs'?`===== POSSIBLE DUPLICATES (same table and amount, up to 2 days apart; each line is two rows) =====\n${f.text}`:`===== ROWS: [number, date, amount, description, table, category], sorted by description =====\n${f.text}`).join('\n\n')}`;
+${files.map(f=>`===== ${head(f)} =====\n${f.text}`).join('\n\n')}`;
 }
 function auditMerge(rs){
-  const out={changes:[],duplicates:[],keywords:[],statement_words:[],questions:[],notes:''}, notes=[];
+  const out={changes:[],duplicates:[],keywords:[],keyword_changes:[],category_types:[],statement_words:[],questions:[],notes:''}, notes=[];
   for(const r of rs){ if(!r||typeof r!=='object') continue; for(const k of Object.keys(out)) if(Array.isArray(r[k])) out[k].push(...r[k]);
     if(typeof r.notes==='string'&&r.notes.trim()&&!notes.includes(r.notes.trim())) notes.push(r.notes.trim()); }
   out.notes=notes.join(' '); return out;
@@ -4722,9 +4768,18 @@ function auditItems(res,ref){
     if(t===r.table&&cat===r.category) continue;
     done.add(r.id); items.push({k:'cat',r,t,cat,why:str(a[3])}); }
   const K=kws(), kwSeen=new Set();
+  /* changes to keywords that exist: a new category, or "" to remove it */
+  for(const x of arr(res.keyword_changes)){ const a=Array.isArray(x)?x:[o(x).table,o(x).keyword,o(x).category,o(x).why], t=a[0], f=loose(str(a[1])), cat=str(a[2]);
+    const p=TKEYS.includes(t)&&f?(K[t]||[]).find(([k])=>loose(k)===f):null;
+    if(!p||kwSeen.has(t+'|'+f)||(cat&&(!isKnown(t,cat)||cat===p[1]))) continue;
+    kwSeen.add(t+'|'+f); items.push({k:'kwfix',t,kw:p[0],from:p[1],cat,why:str(a[3])}); }
   for(const x of arr(res.keywords)){ const a=Array.isArray(x)?x:[o(x).table,o(x).keyword,o(x).category,o(x).why], t=a[0], kw=str(a[1]), cat=str(a[2]), f=loose(kw);
     if(!TKEYS.includes(t)||f.length<3||!isKnown(t,cat)||kwSeen.has(t+'|'+f)||(K[t]||[]).some(([k])=>loose(k)===f)) continue;
     kwSeen.add(t+'|'+f); items.push({k:'kw',t,kw,cat,why:str(a[3])}); }
+  const tSeen=new Set();
+  for(const x of arr(res.category_types)){ const a=Array.isArray(x)?x:[o(x).category,o(x).type,o(x).why], name=str(a[0]).replace(/\s+\((fixed|variable)\)$/i,''), ty=/^fixed$/i.test(str(a[1]))?'Need':/^variable$/i.test(str(a[1]))?'Want':null;
+    if(!ty||!isKnown('expenses',name)||tSeen.has(name)||catType(name)===ty) continue;
+    tSeen.add(name); items.push({k:'type',cat:name,ty,why:str(a[2])}); }
   const accs=nw().accounts, wSeen=new Set();
   for(const x of arr(res.statement_words)){ const a=Array.isArray(x)?x:[o(x).account,o(x).words,o(x).why], acc=accs.find(c=>c.id===a[0]), w=str(a[1]);
     if(!acc||!w||wSeen.has(acc.id)||loose(w)===loose(acc.words||'')) continue;
@@ -4736,10 +4791,10 @@ async function auditRun(){
   const m=S.modal; if(!m||m.type!=='audit'||m.busy) return;
   m.busy=true; m.msg=''; m.errDetails=''; m.ctl=new AbortController(); m.phase=L('auAsking'); renderModalKeepScroll();
   try{
-    const a=auditData(m.from,m.to);
+    const a=auditData(m.focus,m.from,m.to), ctx=auditCtx(m.focus,m.from,m.to);
     if(sum(a.files.map(f=>f.text.length))>AI_TEXT_MAX) throw {local:L('aiTooBig')};
     const jobs=aiJobs(a.files,AUDIT_CHARS,AI_CHUNK_IMAGES), rs=[];
-    m.build=job=>auditPrompt(m.focus,job.files,a.history); m.merge=auditMerge; m.cache=m.cache||new Map();
+    m.build=job=>auditPrompt(m.focus,job.files,a.history,ctx); m.merge=auditMerge; m.cache=m.cache||new Map();
     for(let i=0;i<jobs.length;i++){ if(S.modal!==m) return; rs.push(await aiRunJob(m,jobs[i],i,jobs.length,0,jobs.length>1?'':L('auAsking'))); }
     if(S.modal!==m) return;
     const res=auditMerge(rs);
@@ -4751,11 +4806,11 @@ async function auditRun(){
     const x=aiErr(e); m.msg=x.text; m.errDetails=x.details; renderModalKeepScroll();
   }
 }
-/* the ticked fixes, checked again against what is saved now; one Undo puts back every month, keyword and account touched */
+/* the ticked fixes, checked again against what is saved now; one Undo puts back every month, keyword, category and account touched */
 function auditApply(){
   const m=S.modal; if(!m||m.type!=='audit'||!m.items) return;
   const on=m.items.filter((x,i)=>x.k!=='q'&&($('#au-'+i)||{}).checked);
-  const before={months:{},kw:clone(kws()),nw:clone(nw())}; let n=0, kwCh=false, nwCh=false;
+  const before={months:{},kw:clone(kws()),cats:clone(cats()),nw:clone(nw())}; let n=0, kwCh=false, catCh=false, nwCh=false;
   for(const x of on){
     if(x.k==='dup'||x.k==='cat'){ const r=x.r, f=findRow(r.mk,r.table,r.id); if(!f.row) continue;
       if(x.k==='cat'&&x.cat&&!isKnown(x.t,x.cat)) continue;
@@ -4765,13 +4820,16 @@ function auditApply(){
       else { f.arr.splice(f.i,1); f.row.category=x.cat; S.months[r.mk][x.t].push(f.row); }
       markDirty('months/'+r.mk); n++; }
     else if(x.k==='kw'){ if(!isKnown(x.t,x.cat)) continue; ensureKw()[x.t].push([x.kw,x.cat]); kwCh=true; n++; }
+    else if(x.k==='kwfix'){ const K=ensureKw()[x.t], i=K.findIndex(([k])=>k===x.kw); if(i<0||(x.cat&&!isKnown(x.t,x.cat))) continue;
+      if(x.cat) K[i][1]=x.cat; else K.splice(i,1); kwCh=true; n++; }
+    else if(x.k==='type'){ const c=ensureCats().expenses.find(c=>c.name===x.cat); if(!c) continue; c.type=x.ty; catCh=true; n++; }
     else if(x.k==='words'){ const a=ensureNw().accounts.find(c=>c.id===x.acc.id); if(a){ a.words=x.words; nwCh=true; n++; } }
   }
-  if(kwCh) markDirty('config/keywords'); if(nwCh) saveNw(); bump(); closeModal(); render();
+  if(kwCh) markDirty('config/keywords'); if(catCh) markDirty('config/categories'); if(nwCh) saveNw(); bump(); closeModal(); render();
   if(!n) return;
   toast(L('auApplied',n),{label:L('undo'),fn:()=>{
     for(const [mk,d] of Object.entries(before.months)){ S.months[mk]=d; markDirty('months/'+mk); }
-    if(kwCh){ S.kw=before.kw; markDirty('config/keywords'); } if(nwCh){ S.nw=before.nw; saveNw(); }
+    if(kwCh){ S.kw=before.kw; markDirty('config/keywords'); } if(catCh){ S.cats=before.cats; markDirty('config/categories'); } if(nwCh){ S.nw=before.nw; saveNw(); }
     bump(); render(); toast(L('auUndone')); }},15000);
 }
 function aiWho(busy){ const c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null;
@@ -4784,38 +4842,43 @@ function auditLine(x){
   if(x.k==='cat'){ const mv=x.t!==x.r.table; return `<span>${row(x.r)}</span><span>${where(x.r.table,x.r.category,mv)} → <b>${where(x.t,x.cat,mv)}</b></span>`; }
   if(x.k==='dup') return `<span><b>${esc(L('auDel'))}:</b> ${row(x.r)}</span><span class="hint">${esc(L('auDupOf'))} ${row(x.o)}</span>`;
   if(x.k==='kw') return `<span>${esc(TL(x.t))}: “${esc(x.kw)}” → <b>${esc(x.cat)}</b></span>`;
+  if(x.k==='kwfix') return `<span>${esc(TL(x.t))}: “${esc(x.kw)}” ${esc(x.from)} → <b>${esc(x.cat||L('auRemove'))}</b></span>`;
+  if(x.k==='type') return `<span>${esc(x.cat)}: ${esc(nwLabel(catType(x.cat)))} → <b>${esc(nwLabel(x.ty))}</b></span>`;
   if(x.k==='words') return `<span>${esc(x.acc.name)}: ${esc(x.acc.words||DASH)} → <b>${esc(x.words)}</b></span>`;
   return `<span>${x.r?row(x.r)+': ':''}${esc(x.text)}</span>`;
 }
 /* months that have rows, oldest first */
 function auMonths(){ return [...new Set(allRows().map(r=>r.date.slice(0,7)))].sort(); }
+const auTitle=f=>L(f==='tx'?'auBtn':'auBtn_'+f);
 function modalAudit(){
   const m=S.modal, busy=!!m.busy;
   if(m.items){
-    const groups=['cat','dup','kw','words','q'].map(g=>{ const xs=m.items.map((x,i)=>[x,i]).filter(([x])=>x.k===g); if(!xs.length) return '';
+    const groups=['cat','dup','words','kw','kwfix','type','q'].map(g=>{ const xs=m.items.map((x,i)=>[x,i]).filter(([x])=>x.k===g); if(!xs.length) return '';
       return `<section class="au-g"><h4>${esc(L('auG_'+g))} · ${fmtCount(xs.length)}</h4><ul class="au-list">${xs.map(([x,i])=>g==='q'
         ?`<li><span class="au-t">${auditLine(x)}</span></li>`
         :`<li><input type="checkbox" id="au-${i}" checked><label for="au-${i}">${auditLine(x)}${x.why?`<span class="hint">${esc(x.why)}</span>`:''}</label></li>`).join('')}</ul></section>`; }).join('');
     const any=m.items.some(x=>x.k!=='q');
-    return `${mHead(esc(L('auBtn')),esc(any?L('auHelp'):L('auNone')))}
+    return `${mHead(esc(auTitle(m.focus)),esc(any?L('auHelp'):L('auNone')))}
     <div class="m-body ai-body">${m.notes?`<p class="hint"><b>${esc(L('aiNotes'))}:</b> ${esc(m.notes)}</p>`:''}${groups}</div>
     <div class="m-foot"><span class="r"><button class="btn" type="button" data-action="close">${esc(L(any?'cancel':'close'))}</button>${any?`<button class="btn primary" type="button" data-action="au-apply">${esc(L('auApply'))}</button>`:''}</span></div>`;
   }
-  const ms=auMonths(), c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null;
+  const ms=auMonths(), c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null, set=m.focus==='settings';
   if(!m.from||!ms.includes(m.from)) m.from=ms[0]; if(!m.to||!ms.includes(m.to)) m.to=ms[ms.length-1];
-  const rows=allRows().filter(r=>auIn(r,m.from,m.to)), other=allRows().length-rows.length, ys=[...new Set(ms.map(k=>k.slice(0,4)))];
-  const reqs=Math.max(1,Math.ceil(rows.length*80/AUDIT_CHARS));
+  const {chk,oth}=auditSplit(m.focus,m.from,m.to), ys=[...new Set(ms.map(k=>k.slice(0,4)))];
+  const reqs=Math.max(1,Math.ceil((set?new Set(chk.map(r=>r.table+loose(r.concept))).size*70:chk.length*80)/AUDIT_CHARS));
+  const per=m.from===m.to?ymLabel(m.from,true):ymLabel(m.from,true)+' – '+ymLabel(m.to,true);
+  const nKw=fmtCount(TKEYS.reduce((s,t)=>s+(kws()[t]||[]).length,0)), nAcc=fmtCount(nw().accounts.length);
   const opt=v=>ms.map(k=>`<option value="${k}"${k===v?' selected':''}>${esc(ymLabel(k,true))}</option>`).join('');
   const on=(f,t)=>f===m.from&&t===m.to?' aria-pressed="true"':' aria-pressed="false"';
   const yr=y=>{ const k=ms.filter(x=>x.startsWith(y)); return [k[0],k[k.length-1]]; };
-  return `${mHead(esc(L('auBtn')),esc(L('auSub_'+m.focus)))}
+  return `${mHead(esc(auTitle(m.focus)),esc(L('auSub_'+m.focus)))}
   <div class="m-body ai-body">
     ${aiWho(busy)}
     <fieldset class="au-period"${busy?' disabled':''}><legend class="lab">${esc(L('auPeriod'))}</legend>
       <div class="au-yrs">${ys.length>1?`<button type="button" class="btn sm" data-action="au-range" data-f="${ms[0]}" data-t="${ms[ms.length-1]}"${on(ms[0],ms[ms.length-1])}>${esc(L('auAll'))}</button>`:''}${ys.map(y=>{ const [f,t]=yr(y); return `<button type="button" class="btn sm" data-action="au-range" data-f="${f}" data-t="${t}"${on(f,t)}>${y}</button>`; }).join('')}</div>
       <div class="au-ft"><label><span>${esc(L('auFrom'))}</span><select id="au-from">${opt(m.from)}</select></label><label><span>${esc(L('auTo'))}</span><select id="au-to">${opt(m.to)}</select></label></div>
     </fieldset>
-    <p>${esc(L('auSends',pl(rows.length,'transaction'),m.from===m.to?ymLabel(m.from,true):ymLabel(m.from,true)+' – '+ymLabel(m.to,true),fmtCount(TKEYS.reduce((s,t)=>s+(kws()[t]||[]).length,0)),fmtCount(nw().accounts.length)))} ${other?esc(L('auOther',pl(other,'transaction')))+' ':''}${esc(L('auReqs',reqs))}</p>
+    <p>${esc(set?L('auSendsSet',pl(chk.length,'transaction'),per,nKw,nAcc):L('auSends',pl(chk.length,'transaction'),per,nKw,nAcc))} ${!set&&oth.length?esc(L('auOther',pl(oth.length,'transaction')))+' ':''}${esc(L('auReqs',reqs))}</p>
     <p class="hint">${esc(L('auPrivacy',c?c.name:'AI'))}</p>
     ${aiStatus(m)}
   </div>

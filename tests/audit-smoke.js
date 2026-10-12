@@ -11,7 +11,8 @@ const env = {
   isKnown: (t, n) => !!n && CATS[t].includes(n),
   kws: () => ({ income: [], expenses: [['mercadona', 'Groceries']], investments: [] }),
   nw: () => ({ accounts: [{ id: 'a1', name: 'Broker', words: 'old' }] }),
-  loose: s => String(s).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
+  loose: s => String(s).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim(),
+  catType: n => ({ Groceries: 'Need', Restaurants: 'Want' })[n] || null
 };
 const { auditItems, auditMerge, auditHistory, auIn } = new Function(...Object.keys(env),
   line('auDay') + line('auIn') + grab('auditHistory') + grab('auditMerge') + grab('auditItems') + 'return {auditItems,auditMerge,auditHistory,auIn};')(...Object.values(env));
@@ -52,4 +53,15 @@ assert.ok(!auIn({ date: '2025-12-31' }, '2026-01', '2026-02') && !auIn({ date: '
 const hist = auditHistory([row('MERCADONA', '2025-01-01', -5, 'expenses', 'Groceries'), row('Mercadona', '2025-02-01', -6, 'expenses', 'Groceries'),
   row('MERCADONA', '2025-03-01', -7, 'expenses', 'Restaurants'), row('Cafe', '2025-03-02', -2, 'expenses', '')]).split('\n').map(l => JSON.parse(l));
 assert.deepStrictEqual(hist, [['MERCADONA', 'expenses', 3, { Groceries: 2, Restaurants: 1 }], ['Cafe', 'expenses', 1, { '': 1 }]]);
+
+/* Settings: keyword changes only for keywords that exist (new category or removal), Fixed/Variable only where it changes */
+const set = auditItems(auditMerge([{
+  keyword_changes: [['expenses', 'Mercadona', 'Restaurants', 'eating out'], ['expenses', 'mercadona', '', 'second change'], ['expenses', 'nope', '', 'no such keyword'],
+    ['expenses', 'mercadona', 'Made up', 'unknown category']],
+  keywords: [['expenses', 'mercadona', 'Groceries', 'clashes with a change']],
+  category_types: [['Restaurants (variable)', 'fixed', 'ok'], ['Groceries', 'fixed', 'already fixed'], ['Made up', 'fixed', 'unknown'], ['Restaurants', 'sometimes', 'bad value']]
+}]), new Map());
+assert.deepStrictEqual(set.filter(x => x.k === 'kwfix').map(x => [x.kw, x.from, x.cat]), [['mercadona', 'Groceries', 'Restaurants']]);
+assert.strictEqual(set.filter(x => x.k === 'kw').length, 0, 'no new keyword for one that is being changed or exists');
+assert.deepStrictEqual(set.filter(x => x.k === 'type').map(x => [x.cat, x.ty]), [['Restaurants', 'Need']]);
 console.log('audit smoke: all passed');
