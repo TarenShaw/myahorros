@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-6kPZZeCc5Abbn6GnKDW3WKSqHKtJKdx2Ql1cyPindOw=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-njLXqKxTobWJWCNdFl0R0aT0oG3iGRFFxiTpbkG9tv8=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -200,6 +200,8 @@ html{scrollbar-gutter:stable}
 .wz-year li.now{border-style:dotted}
 .wz-cap{font-size:var(--fs-meta);color:var(--ink-2)}
 .wz-gaps{margin:0;padding-left:1.2em;display:grid;gap:var(--s8)}
+.wz-list li>select{grid-column:2;grid-row:1/span 2;width:auto;max-width:200px}
+.ci-big{font:700 2rem/1.1 var(--f-display,inherit);margin:0}.ci-big.up{color:var(--good-ink)}.ci-big.down{color:var(--bad-ink,inherit)}
 .wz-ok{display:flex;gap:var(--s8);align-items:center;color:var(--good-ink);font-weight:600;font-size:var(--fs-meta)}
 .wz-ok svg{width:16px;height:16px;flex:none}
 .wz-sum{font-weight:600}
@@ -1886,6 +1888,28 @@ const STR={
   wzGapTx:[l=>`Transactions still missing: ${l}.`,l=>`Faltan movimientos: ${l}.`], wzGapBal:[l=>`Balances not complete: ${l}.`,l=>`Saldos sin completar: ${l}.`],
   wzGapStmt:[l=>`No statement yet from ${l}.`,l=>`Aún no hay extracto de ${l}.`], wzGoFix:['Fill in','Completar'],
   wzMonthsN:[(n,a,b)=>`${n} months, ${a} to ${b}`,(n,a,b)=>`${n} meses, de ${a} a ${b}`],
+  ciEyebrow:['Monthly check-in','Revisión mensual'], ciStrip:[m=>`${m} · about 2 minutes`,m=>`${m} · unos 2 minutos`], ciStart:['Start','Empezar'], ciSkipMonth:['Skip this month','Saltar este mes'],
+  ciEyebrowStep:[(i,n,m)=>`${m} check-in · step ${i} of ${n}`,(i,n,m)=>`Revisión de ${m} · paso ${i} de ${n}`],
+  ciNames:[['Statements','Balances','Sort','Your month'],['Extractos','Saldos','Ordenar','Tu mes']],
+  ci0Title:['Drop in your statements','Suelta aquí tus extractos'],
+  ci0Text:['From each bank account, download the last two months as Excel or CSV and drop them all here. Overlap is fine: rows you already have are skipped. A file goes to its account by itself once that account has had one.','De cada cuenta bancaria, descarga los dos últimos meses en Excel o CSV y suéltalos todos aquí. Que se solapen no importa: los movimientos que ya tienes se omiten. Un archivo va solo a su cuenta en cuanto esa cuenta ha tenido uno.'],
+  ciDrop:['Drop the files here, or','Suelta aquí los archivos, o'], ciChoose:['choose files','elige archivos'], ciUpTo:[d=>`Up to ${d}`,d=>`Hasta el ${d}`],
+  ciFileN:[(i,n)=>`file ${i} of ${n}`,(i,n)=>`archivo ${i} de ${n}`],
+  ci1Title:['Balances at the end of the month','Saldos a final de mes'],
+  ci1Text:[m=>`Fill in what’s missing for the end of ${m}. Statements with a balance column have filled theirs in.`,m=>`Completa lo que falta de final de ${m}. Los extractos con columna de saldo ya han rellenado el suyo.`],
+  ciAllBal:[m=>`Every account has its figure for the end of ${m}.`,m=>`Todas las cuentas tienen su cifra de final de ${m}.`],
+  ci2Title:['Sort what’s left','Ordena lo que falta'],
+  ci2Text:[n=>`${n} ${n===1?'row has':'rows have'} no category. Pick one, and the app offers to remember it for next time.`,n=>`${n} ${n===1?'movimiento no tiene':'movimientos no tienen'} categoría. Elige una y la app se ofrece a recordarla para la próxima vez.`],
+  ciNoneLeft:['Every row has a category.','Todos los movimientos tienen categoría.'], ciMore:[n=>`And ${n} more in Transactions.`,n=>`Y ${n} más en Movimientos.`],
+  ci3Title:[m=>`Your ${m}`,m=>`Tu ${m}`],
+  ciKept:[(m,p)=>`What you kept in ${m}${p?`: ${p} of your income`:''}.`,(m,p)=>`Lo que ahorraste en ${m}${p?`: el ${p} de tus ingresos`:''}.`],
+  ciNw:[v=>`Net worth ${v} since the month before.`,v=>`Patrimonio ${v} respecto al mes anterior.`],
+  ciTop:[(c,v)=>`Most went on ${c}: ${v}.`,(c,v)=>`Donde más gastaste: ${c}, ${v}.`],
+  ciAvg:[v=>`You keep ${v} a month on average.`,v=>`De media ahorras ${v} al mes.`],
+  ciDone:['Done','Hecho'],
+  impAcct:['Account','Cuenta'], impAcctNone:['Not one of my accounts (credit card, PayPal…)','Ninguna de mis cuentas (tarjeta de crédito, PayPal…)'],
+  impAcctAuto:['Recognised from this account’s last file.','Reconocido por el último archivo de esta cuenta.'],
+  impAcctHelp:['Which account is this file from? Next time it’s recognised by itself.','¿De qué cuenta es este archivo? La próxima vez se reconoce solo.'],
   impForAcc:[a=>`Statement for: ${a}`,a=>`Extracto de: ${a}`],
   impBalFill:[(a,n)=>`Also fill in ${a}’s month-end balances from the Balance column (${n} ${n===1?'month':'months'}; figures you typed are kept)`,(a,n)=>`Rellenar también los saldos de final de mes de ${a} con la columna Saldo (${n} ${n===1?'mes':'meses'}; se mantienen las cifras que escribiste)`],
   balFilled:[n=>`balances for ${n} ${n===1?'month':'months'}`,n=>`saldos de ${n} ${n===1?'mes':'meses'}`],
@@ -2639,7 +2663,8 @@ function render(){
     html=pageHead(S.ui.tab)+(!G?viewEmpty():S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='tx')?`<div class="guide-wrap">${guideCard(G)}</div>`+viewEmpty():guideBar(G)+viewEmpty()); }
   else { html=({overview:viewOverview,yearly:viewYearly,transactions:viewTransactions,categories:viewCategories,networth:viewNetworth,settings:viewSettings})[S.ui.tab]();
     const G=S.ui.tab!=='networth'&&S.ui.tab!=='settings'?guideState():null;
-    if(G){ const full=S.ui.tab==='overview'; html=afterHead(html,full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G)); } }
+    if(G){ const full=S.ui.tab==='overview'; html=afterHead(html,full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G)); }
+    else if((S.ui.tab==='overview'||S.ui.tab==='networth')&&ciDue()) html=afterHead(html,ciStrip()); }
   v.innerHTML=html;
   restoreFocus(st);
   afterRender();
@@ -3456,7 +3481,7 @@ const SALARY_RE=/^(salary|n[oó]mina|pension|pensi[oó]n|wages?|sueldo)$/i;
 function salaryRow(rows){ let best=null; for(const r of rows) if(r.table==='income'&&r.amount>0&&SALARY_RE.test((r.category||'').trim())&&(!best||r.date>best.date)) best=r; return best; }
 /* the wizard's step for a guide state, and the step it is on (or would open on), so the strip on the pages and the wizard never disagree */
 const wzOf=G=>G&&G.cur==='tx'?1:G&&G.cur==='val'?2:0;
-const wzStep=G=>S.wizard&&S.wizard.on!==false?S.wizard.step:wzOf(G);
+const wzStep=G=>S.wizard&&S.wizard.on!==false&&S.wizard.mode!=='ci'?S.wizard.step:wzOf(G);
 function wizardOpen(step){ S.wizard={on:true,step:step==null?0:step}; openModal({type:'wizard',mid:true}); }
 function maybeWizard(){
   const G=guideState();
@@ -3482,6 +3507,7 @@ function salaryCands(rows){ const seen=new Set(), out=[];
   for(const r of rows.filter(r=>r.table==='income'&&r.amount>0&&!r.category).sort((a,b)=>b.amount-a.amount)){ const d=loose(r.concept); if(seen.has(d)) continue; seen.add(d); out.push(r); if(out.length>=4) break; }
   return out; }
 function modalWizard(){
+  if(S.wizard.mode==='ci') return modalCheckin();
   const w=S.wizard, i=w.step, N=nw(), C=wzCover(), st=(S.settings&&S.settings.guide&&S.settings.guide.stmts)||{};
   const nAcc=N.accounts.length, nMon=nwMonths().length, rows=allRows(), nTx=rows.length, nInc=rows.filter(r=>r.table==='income').length, sal=salaryRow(rows);
   const salCat=catNames('income').find(n=>SALARY_RE.test(n));
@@ -3531,6 +3557,62 @@ function modalWizard(){
   /* one way forward: "Next" once the step is done, "Skip this step" while it isn't */
   const fwd=last?act('guide-finish',esc(L('wzFinish')),'','primary'):done[i]?act('wz-next',esc(L('wzNext')),'','primary'):act('wz-next',esc(L('wzSkip')),'','ghost');
   return `<div class="m-head"><div><p class="eyebrow">${esc(L('wzEyebrow',i+1,WZ_STEPS))}</p><h3 id="m-title">${esc(L(last&&w.gaps?'wz4TitleGaps':'wz'+i+'Title'))}</h3></div><button class="icon-btn" data-action="wz-later" aria-label="${esc(L('wzLater'))}" title="${esc(L('wzLater'))}">${ICON.x}</button></div>
+  <div class="m-body wz-body"><ol class="wz-dots">${dots}</ol>${body}</div>
+  <div class="m-foot"><span>${i>0?act('wz-back',esc(L('wzBack'))):act('wz-later',esc(L('wzLater')),'','ghost')}</span><span class="r">${fwd}</span></div>`;
+}
+/* ───────── monthly check-in ─────────
+   Once a month, for the month that just ended: drop every bank statement at once (each goes to its account by the file's
+   fingerprint, overlap is skipped as duplicates), the balances still missing, the rows with no category, then what the month
+   came to. It is the wizard dialog in another mode (S.wizard.mode 'ci'), so a dialog it opens brings it back when it closes. */
+const CI_STEPS=4;
+const ciMonth=()=>ymAdd(ymNow(),-1);
+function ciDue(){ if(!S.canWrite||S.demo||S.mode!=='live'||!allRows().length) return false; const G=guideState(); if(G&&G.cur!=='done') return false;
+  const l=S.settings&&S.settings.lastCheckin; return !(typeof l==='string'&&l>=ciMonth()); }
+function ciStrip(){ return `<section class="card guide guide-strip"><span class="eyebrow">${esc(L('ciEyebrow'))}</span><span class="grow">${esc(L('ciStrip',ymIn(ciMonth())))}</span><button class="btn primary" type="button" data-action="ci-open">${esc(L('ciStart'))}</button><button class="icon-btn" type="button" data-action="ci-later" aria-label="${esc(L('ciSkipMonth'))}" title="${esc(L('ciSkipMonth'))}">${ICON.x}</button></section>`; }
+/* dropped files are read one after another, each in the usual import review */
+function ciFiles(files){ if(!S.wizard||!files.length) return; S.wizard.queue=files.slice(); S.wizard.total=files.length; ciNext(); }
+function ciNext(){ const w=S.wizard, f=w&&w.queue&&w.queue.shift(); if(!f) return;
+  ACTIONS.import(); Object.assign(S.modal,{pick:true,qpos:[w.total-w.queue.length,w.total]}); readFile(f); }
+function modalCheckin(){
+  const w=S.wizard, i=w.step, k=ciMonth(), N=nw(), C=wzCover(), st=(S.settings&&S.settings.guide&&S.settings.guide.stmts)||{}, rows=allRows();
+  const cash=N.accounts.filter(a=>a.group==='cash');
+  /* ponytail: a statement reaching the 25th counts as covering the month (the last days may have no movements) */
+  const covered=a=>st[a.id]&&st[a.id].to>=k+'-25';
+  const txOk=cash.length?cash.every(covered):C.have.has(k), balOk=!N.accounts.length||C.balAt(k)==='ok';
+  const unc=rows.filter(r=>!r.category&&r.mk<=ymNow()).sort((a,b)=>a.date<b.date?1:-1);
+  const done=[txOk,balOk,!unc.length];
+  const act=(a,label,extra,cls)=>`<button type="button" class="btn ${cls||''}" data-action="${a}"${extra||''}>${label}</button>`;
+  const accName=a=>`<span class="wz-n">${gSw(a.group)}<b>${esc(a.name)}</b></span>`;
+  let title=L('ci'+i+'Title'), body='';
+  if(i===0){
+    body=`<p>${esc(L('ci0Text'))}</p>
+      <div class="drop" id="ci-drop"><span>${esc(L('ciDrop'))}</span><label class="btn sm primary" for="ci-file">${esc(L('ciChoose'))}</label><input type="file" id="ci-file" accept=".xlsx,.xlsm,.xls,.csv,.txt" multiple class="sr"></div>
+      ${cash.length?`<ul class="wz-list">${cash.map(a=>`<li>${accName(a)}<span class="wz-st${covered(a)?' ok':''}">${esc(st[a.id]?L('ciUpTo',fmtDate(st[a.id].to)):L('wzStmtNone'))}</span></li>`).join('')}</ul>`:''}
+      ${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('wzAi')))}</div>`:''}`;
+  } else if(i===1){
+    const s=N.snaps[k]||{}, cl=nwState(k).closed, miss=N.accounts.filter(a=>s[a.id]==null&&!cl.has(a.id));
+    body=`<p>${esc(miss.length?L('ci1Text',ymIn(k)):L('ciAllBal',ymIn(k)))}</p>
+      ${N.accounts.length?`<ul class="wz-list">${N.accounts.filter(a=>!cl.has(a.id)).map(a=>`<li>${accName(a)}<span class="wz-st${s[a.id]!=null?' ok':''}">${s[a.id]!=null?fmtEUR(s[a.id]):esc(L('wzMissing'))}</span></li>`).join('')}</ul>
+      <div class="wz-acts">${act('guide-val',esc(L(N.snaps[k]?'nwEdit':'nwEnter',ymIn(k))),` data-k="${k}"`,balOk?'':'primary')}</div>`:''}`;
+  } else if(i===2){
+    const show=unc.slice(0,8);
+    body=`<p>${esc(unc.length?L('ci2Text',unc.length):L('ciNoneLeft'))}</p>
+      ${show.length?`<ul class="wz-list">${show.map(r=>`<li><span class="wz-n">${esc(shortDesc(r.concept,48)||L('noConcept'))}</span><span class="wz-st">${fmtEUR(r.amount)} · ${esc(fmtDate(r.date))} · ${esc(TL(r.table))}</span><select data-action="ci-cat" data-mk="${r.mk}" data-t="${r.table}" data-id="${r.id}" aria-label="${esc(L('category')+': '+shortDesc(r.concept,48))}">${catOptions(r.table,'',true)}</select></li>`).join('')}</ul>`:''}
+      ${unc.length>show.length?`<p class="hint">${esc(L('ciMore',unc.length-show.length))}</p>`:''}`;
+  } else {
+    const tr=trackerSaved(ymAdd(k,-1),k), inc=sum(tr.income), prev=ymAdd(k,-1), pace=savingPace();
+    const byCat=new Map(); for(const r of rows) if(r.mk===k&&r.table==='expenses'&&r.category) byCat.set(r.category,(byCat.get(r.category)||0)-r.amount);
+    const top=[...byCat].sort((a,b)=>b[1]-a[1])[0];
+    const lines=[N.snaps[k]&&N.snaps[prev]?L('ciNw',signed(r2(nwTotals(k).total-nwTotals(prev).total))):'',top&&top[1]>0.5?L('ciTop',top[0],fmtEUR(top[1],0)):'',pace?L('ciAvg',fmtEUR(pace.avg,0)):''].filter(Boolean);
+    title=L('ci3Title',ymM(k));
+    body=`<p class="ci-big ${tr.saved<-0.004?'down':'up'}">${signed(tr.saved)}</p><p>${esc(L('ciKept',ymM(k),inc>0.5?fmtPct(tr.saved/inc,0):null))}</p>
+      ${lines.length?`<ul class="wz-gaps">${lines.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`:''}
+      ${S.downloads||S.local?`<div class="wz-acts">${act('remind-ics',esc(L('remindBtn')))}</div>`:''}`;
+  }
+  const dots=L('ciNames').map((n,j)=>{ const tick=j<CI_STEPS-1&&done[j]; return `<li class="${j===i?'cur':tick?'done':''}"${j===i?' aria-current="step"':''}><span>${tick?'✓':j+1}</span><small>${esc(n)}</small></li>`; }).join('');
+  const last=i===CI_STEPS-1;
+  const fwd=last?act('ci-done',esc(L('ciDone')),'','primary'):done[i]?act('wz-next',esc(L('wzNext')),'','primary'):act('wz-next',esc(L('wzSkip')),'','ghost');
+  return `<div class="m-head"><div><p class="eyebrow">${esc(L('ciEyebrowStep',i+1,CI_STEPS,ymM(k)))}</p><h3 id="m-title">${esc(title)}</h3></div><button class="icon-btn" data-action="wz-later" aria-label="${esc(L('wzLater'))}" title="${esc(L('wzLater'))}">${ICON.x}</button></div>
   <div class="m-body wz-body"><ol class="wz-dots">${dots}</ol>${body}</div>
   <div class="m-foot"><span>${i>0?act('wz-back',esc(L('wzBack'))):act('wz-later',esc(L('wzLater')),'','ghost')}</span><span class="r">${fwd}</span></div>`;
 }
@@ -3585,7 +3667,7 @@ function viewNetworth(){
   const ctrls=`${cw?`${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button>`:''}
     ${cw&&k?`<button class="btn${enter?'':' primary'}" type="button" data-action="nw-snap" data-k="${k}">${esc(L('nwEdit',ymIn(k)))}</button>`:''}
     ${enter?`<button class="btn primary" type="button" data-action="nw-snap" data-k="${newK}">${esc(L('nwEnter',ymIn(newK)))}</button>`:''}`;
-  const dueBar=due&&cw?`<div class="notice">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(L('nwDue',ymIn(due)))}</span><button class="linkish" type="button" data-action="nw-snap" data-k="${due}">${esc(L('nwEnter',ymIn(due)))}</button></div>`:'';
+  const dueBar=due&&cw&&!ciDue()?`<div class="notice">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(L('nwDue',ymIn(due)))}</span><button class="linkish" type="button" data-action="nw-snap" data-k="${due}">${esc(L('nwEnter',ymIn(due)))}</button></div>`:'';
   if(!k) return head(per,ctrls)+`<div class="stack">${G?guideCard(G):`${dueBar}<section class="card"><p class="hint">${esc(L('nwNoPrev'))}</p></section>`}${accountsCard(null)}</div>`;
   const T=nwTotals(k), prev=ms[ms.indexOf(k)-1]||null, mk=+k.slice(5,7)-1, yk=k.slice(0,4);
   const share=v=>T.total>0?v/T.total:0;
@@ -5196,7 +5278,7 @@ function closeModal(){ const prev=S.modal&&S.modal.type; if(S.modal&&S.modal.ctl
   /* the wizard itself closed (Esc, outside click, ×): same as "Finish later", so it doesn't come back after the next dialog */
   if(prev==='wizard'&&S.wizard) S.wizard.on=false;
   /* a dialog the setup wizard opened has closed: bring the wizard back */
-  if(was&&prev!=='wizard'&&S.wizard&&S.wizard.on) setTimeout(()=>{ if(!S.modal&&S.wizard&&S.wizard.on) openModal({type:'wizard',mid:true}); },0); }
+  if(was&&prev!=='wizard'&&S.wizard&&S.wizard.on) setTimeout(()=>{ if(!S.modal&&S.wizard&&S.wizard.on){ if(S.wizard.queue&&S.wizard.queue.length) ciNext(); else openModal({type:'wizard',mid:true}); } },0); }
 document.addEventListener('keydown',e=>{
   if(e.key!=='Tab'||!S.modal) return;
   const md=$('#overlay .modal'); if(!md) return;
@@ -5432,7 +5514,7 @@ function modalImport(){
     <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${greyed(r)?`<span class="note why">${esc(whyText(r))}</span> `:''}${r.like&&!r.dup&&!greyed(r)?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.table==='expenses'&&isBizum(r)?`<span class="note">${esc(L('noteBizum'))}</span> `:''}${greyed(r)?'':r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
-    ${aiReviewNote(m)}${impChecksNote(m)}${(o=>o?`<label class="check"><input type="checkbox" id="imp-balfill"${m.balFill!==false?' checked':''}> ${esc(L('impBalFill',o.a.name,o.ks.length))}</label>`:'')(impBalOffer(m))}
+    ${m.pick?impAcctPick(m):''}${aiReviewNote(m)}${impChecksNote(m)}${(o=>o?`<label class="check"><input type="checkbox" id="imp-balfill"${m.balFill!==false?' checked':''}> ${esc(L('impBalFill',o.a.name,o.ks.length))}</label>`:'')(impBalOffer(m))}
     ${m.sw&&m.sw.people.length>1?`<div class="field"><label class="lab" for="imp-sw-who">${esc(L('swWho'))}</label><select id="imp-sw-who" style="max-width:320px">${m.sw.people.map((p,i)=>`<option value="${i}"${i===m.sw.who?' selected':''}>${esc(p)}</option>`).join('')}</select><span class="help">${esc(L('swHelp'))}</span></div>`:''}
     ${guessed?`<p class="hint">${esc(L('sortedNote'))}</p>`:''}
     ${nMl?`<p class="hint ml-note">${esc(L('mlImpNote',nMl))}</p>`:''}
@@ -5443,6 +5525,9 @@ function modalImport(){
   </div>
   <div class="m-foot">${m.confirmClose?impConfirmBar(m):`<button class="btn" data-action="imp-back">${esc(L('back'))}</button><span class="r"><span class="hint" id="imp-summary" style="align-self:center">${esc(byT.map(([t,n])=>L('nToT',fmtCount(n),TL(t))).join(' · ')+(nMl?L('nGuessed',nMl):'')+(noCat?L('nUncat',noCat):''))}</span><button class="btn primary" data-action="imp-add" ${on.length?'':'disabled'}>${esc(L('addRows',on.length))}</button></span>`}</div>`;
 }
+/* the check-in's review: which of the Cash accounts the file is from (recognised from its last file when possible) */
+function impAcctPick(m){ const accs=nw().accounts.filter(a=>a.group==='cash');
+  return `<div class="field"><label class="lab" for="imp-acct">${esc(L('impAcct'))}${m.qpos?` <span class="hint">· ${esc(L('ciFileN',m.qpos[0],m.qpos[1]))}</span>`:''}</label><select id="imp-acct" style="max-width:360px"><option value="">${esc(L('impAcctNone'))}</option>${accs.map(a=>`<option value="${a.id}"${a.id===m.acct?' selected':''}>${esc(a.name)}</option>`).join('')}</select><span class="help">${esc(L(m.auto&&m.acct?'impAcctAuto':'impAcctHelp'))}</span></div>`; }
 /* closing a review with rows read asks first */
 function wantsDiscardCheck(){ const m=S.modal; return !!(m&&m.type==='import'&&m.step!=='input'&&m.rows&&m.rows.length); }
 function splitLine(line){
@@ -5788,7 +5873,7 @@ async function readFile(file){
   /* a file with no extension (Trade Republic's export) is read as CSV unless it starts like a workbook or a web page */
   const textLike=async()=>{ const b=new Uint8Array(await file.slice(0,4096).arrayBuffer()), h=new TextDecoder('latin1').decode(b);
     return !/^(PK|\xD0\xCF\x11\xE0)/.test(h)&&!/<(html|table)\b/i.test(h)&&!b.includes(0); };
-  if(/\.(csv|txt)$/i.test(file.name)||(!/\.(xlsx|xlsm|xls|ods)$/i.test(file.name)&&await textLike())){ const rows=parseCSV(await fileText(file)); if(trySplitwise(rows,file.name)) return;
+  if(/\.(csv|txt)$/i.test(file.name)||(!/\.(xlsx|xlsm|xls|ods)$/i.test(file.name)&&await textLike())){ const rows=parseCSV(await fileText(file)); if(trySplitwise(rows,file.name)) return; impFp(m,file.name,rows);
     const r=parseAny(rows,m.table,cells=>cells.join(' | ')); finishImport(r.parsed,r.bad,file.name,{invest:r.invest}); return; }
   let X; try{ X=await getXLSX(); }catch(e){ m.msg=L('readerFail'); renderModal(); return; }
   try{
@@ -5799,6 +5884,7 @@ async function readFile(file){
     const parsed=[],bad=[]; const named=wb.SheetNames.filter(n=>sheetTable(n));
     const sheets=named.length?named.map(n=>[n,sheetTable(n)]):[[wb.SheetNames[0],m.table]];
     if(sheets.length===1&&trySplitwise(sheetRows(X,wb.Sheets[sheets[0][0]]),file.name)) return;
+    impFp(m,file.name,sheetRows(X,wb.Sheets[sheets[0][0]]));
     for(const [name,table] of sheets){
       const r=parseAny(sheetRows(X,wb.Sheets[name]),table,cells=>`${name}: ${cells.join(' | ')}`);
       if(r.invest) for(const p of r.parsed) p.inv=true;
@@ -5807,6 +5893,24 @@ async function readFile(file){
     finishImport(parsed,bad,file.name);
   }catch(e){ m.msg=L('notSpreadsheet'); renderModal(); }
 }
+/* what recognises a bank's file next month: its column headings, its file name with the numbers taken out, and the last 4
+   digits of an IBAN or card number near the top. hdr: the heading row's index, or null */
+function fileFp(name,rows,hdr){
+  const txt=rows.slice(0,40).map(r=>r.join(' ')).join(' '), iban=txt.match(/\b[A-Z]{2}\d{2}(?:[ -]?\d){12,30}\b/), card=txt.match(/[*xX•]{4,}[ -]?(\d{4})\b/);
+  return {h:hdr!=null&&rows[hdr]?rows[hdr].map(c=>loose(String(c==null?'':c))).filter(Boolean).join('|'):'',n:String(name).toLowerCase().replace(/\.[a-z0-9]+$/,'').replace(/\d+/g,'#'),
+    id:iban?iban[0].replace(/\D/g,'').slice(-4):card?card[1]:''};
+}
+/* the account whose last file looks like this one: the same IBAN/card ending counts most, then the headings, then the name.
+   Two accounts alike (same bank, no number in the file) or a different number: no guess */
+function fpMatch(fp,all,accs){ let best=null,bs=0,tie=false;
+  for(const a of accs){ const f=all&&all[a.id]; if(!f||(fp.id&&f.id&&fp.id!==f.id)) continue;
+    const sc=(fp.id&&f.id===fp.id?3:0)+(fp.h&&f.h===fp.h?2:0)+(fp.n&&f.n===fp.n?1:0);
+    if(sc>bs){ best=a; bs=sc; tie=false; } else if(sc&&sc===bs) tie=true; }
+  return bs>=2&&!tie?best:null;
+}
+/* a file read for the check-in: its fingerprint, and its account when one matches */
+function impFp(m,name,rows){ const h=findHeader(rows); m.fp=fileFp(name,rows,h?h.row:null);
+  if(m.pick&&!m.acct){ const a=fpMatch(m.fp,S.settings&&S.settings.stmtFp,nw().accounts.filter(x=>x.group==='cash')); if(a){ m.acct=a.id; m.auto=true; } } }
 /* a statement imported for one account (from the wizard) whose Balance column adds up: its month-ends, for that account's figures not typed yet */
 function impBalOffer(m){ const c=m.checks, a=m.acct&&nw().accounts.find(x=>x.id===m.acct);
   if(!a||!c||!c.bal||c.bal.bad>Math.max(1,c.bal.steps*0.1)) return null;
@@ -5832,6 +5936,7 @@ function addImported(){
   if(m.acct&&m.rows.length){ const g=Object.assign({},S.settings&&S.settings.guide), sts=Object.assign({},g.stmts), ds=m.rows.map(r=>r.date).sort(), o=sts[m.acct];
     sts[m.acct]={from:o&&o.from<ds[0]?o.from:ds[0],to:o&&o.to>ds[ds.length-1]?o.to:ds[ds.length-1],n:(o?o.n:0)+rows.length}; setSettings({guide:Object.assign(g,{stmts:sts})}); }
   if(bo){ const N=ensureNw(); for(const k of bo.ks) (N.snaps[k]=N.snaps[k]||{})[bo.a.id]=bo.ends[k]; saveNw(); }
+  if(m.acct&&m.fp) setSettings({stmtFp:Object.assign({},S.settings&&S.settings.stmtFp,{[m.acct]:m.fp})});
   bump(); closeModal();
   S.lastImport=added.length?{added,n:added.length,bal:bo?{id:bo.a.id,ks:bo.ks}:null}:null;
   const yrs=[...new Set(rows.map(r=>+r.date.slice(0,4)))]; if(yrs.length===1) S.ui.year=yrs[0];
@@ -6503,15 +6608,18 @@ const ACTIONS={
   'guide-add':()=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS['add-tx'](); },
   'wz-open':()=>{ wizardOpen(wzStep(guideState())); },
   'wz-place':async()=>{ await localAction('changeStorage'); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); },
-  'wz-next':()=>{ if(!S.wizard) return; S.wizard.step=Math.min(WZ_STEPS-1,S.wizard.step+1); renderModalKeepScroll(); },
+  'wz-next':()=>{ if(!S.wizard) return; S.wizard.step=Math.min((S.wizard.mode==='ci'?CI_STEPS:WZ_STEPS)-1,S.wizard.step+1); renderModalKeepScroll(); },
+  'ci-open':()=>{ if(!S.canWrite) return; S.wizard={on:true,step:0,mode:'ci'}; openModal({type:'wizard',mid:true}); },
+  'ci-later':()=>{ setSettings({lastCheckin:ciMonth()}); render(); },
+  'ci-done':()=>{ if(S.wizard) S.wizard.on=false; closeModal(); setSettings({lastCheckin:ciMonth()}); setTab('overview'); },
   'wz-back':()=>{ if(!S.wizard) return; S.wizard.step=Math.max(0,S.wizard.step-1); renderModalKeepScroll(); },
   'wz-later':()=>{ if(S.wizard) S.wizard.on=false; closeModal(); },
   'guide-skipnw':()=>{ setSettings({guide:Object.assign({},S.settings.guide,{skipNw:true})}); setTab('transactions'); },
   'guide-continue':()=>{ const G=guideState(); if(G) setTab(G.cur==='tx'?'transactions':'networth'); },
   'remind-ics':()=>remindIcs(),
   'bk-later':()=>{ if(!S.canWrite) return; setSettings({backupSnooze:ymdAdd(todayYmd(),30)}); render(); },
-  'guide-hide':()=>{ const G=guideState(); setSettings({guide:Object.assign({},S.settings.guide,{on:false},G&&G.cur==='done'?{done:true}:{})}); render(); if(G&&G.cur!=='done') toast(L('gHidden')); },
-  'guide-finish':()=>{ if(S.wizard) S.wizard.on=false; closeModal(); setSettings({guide:Object.assign({},S.settings.guide,{on:false,done:true})}); setTab('overview'); },
+  'guide-hide':()=>{ const G=guideState(); setSettings(Object.assign({guide:Object.assign({},S.settings.guide,{on:false},G&&G.cur==='done'?{done:true}:{})},G&&G.cur==='done'?{lastCheckin:ciMonth()}:{})); render(); if(G&&G.cur!=='done') toast(L('gHidden')); },
+  'guide-finish':()=>{ if(S.wizard) S.wizard.on=false; closeModal(); setSettings({guide:Object.assign({},S.settings.guide,{on:false,done:true}),lastCheckin:ciMonth()}); setTab('overview'); },
   'guide-show':()=>{ setSettings({guide:{on:true,stmts:(S.settings.guide||{}).stmts}}); const G=guideState(); setTab(G&&G.cur==='tx'?'transactions':'networth'); wizardOpen(wzOf(G)); },
   'toggle-hide':()=>{ HIDE=!HIDE; try{ localStorage.setItem('ybt.hideAmounts',HIDE?'1':'0'); }catch(_){} hideTip(); render(); if(S.modal) renderModalKeepScroll(); toast(L(HIDE?'amountsHidden':'amountsShown')); },
   'nw-from':el=>{ const N=ensureNw(), a=N.accounts.find(x=>x.id===el.dataset.id); if(!a) return; const before=a.from; a.from=el.dataset.k; saveNw(); render();
@@ -6595,6 +6703,9 @@ document.addEventListener('change',e=>{
   if(id==='ob-year'){ S.ui.obY=+el.value; return; }
   if(id==='st-month'||id==='st-year'){ setStart({y:+$('#st-year').value,m:+$('#st-month').value}); return; }
   if(id==='imp-balfill'&&S.modal){ S.modal.balFill=el.checked; return; }
+  if(id==='imp-acct'&&S.modal&&S.modal.type==='import'){ S.modal.acct=el.value||null; S.modal.auto=false; renderModalKeepScroll(); return; }
+  if(id==='ci-file'&&el.files&&el.files.length){ ciFiles([...el.files]); return; }
+  if(a==='ci-cat'&&el.value){ const ref=refOf(el), f=findRow(ref.mk,ref.table,ref.id); setTxCategory(ref,el.value); render(); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); if(f.row) offerKeyword(ref.table,f.row.concept,el.value); return; }
   if(id==='imp-sw-who'&&S.modal&&S.modal.sw){ S.modal.sw.who=+el.value; readSplitwise(); return; }
   if(id==='year-select'){ S.ui.year=+el.value; S.ui.tx.month='all'; S.ui.oc.month='all'; render(); return; }
   if(id==='oc-month'){ S.ui.oc.month=el.value; render(); return; }
@@ -6716,9 +6827,10 @@ document.addEventListener('submit',e=>{
     toast(ex?L('kwNowPoints',k,cat):L('kwAdded',k,cat), would?{label:L('fillN',would),fn:()=>{ const r=categoriseBlanks(t); render(); toast(L('filled',r.filled,0)); }}:null);
   }
 });
-document.addEventListener('dragover',e=>{ const d=e.target.closest&&e.target.closest('#imp-drop,#kwimp-drop,#rs-drop,#nwimp-drop,#ai-drop'); if(d){ e.preventDefault(); d.classList.add('over'); } });
-document.addEventListener('dragleave',e=>{ const d=e.target.closest&&e.target.closest('#imp-drop,#kwimp-drop,#rs-drop,#nwimp-drop'); if(d) d.classList.remove('over'); });
-document.addEventListener('drop',e=>{ const d=e.target.closest&&e.target.closest('#imp-drop,#kwimp-drop,#rs-drop,#nwimp-drop,#ai-drop'); if(d){ e.preventDefault(); d.classList.remove('over');
+document.addEventListener('dragover',e=>{ const d=e.target.closest&&e.target.closest('#imp-drop,#kwimp-drop,#rs-drop,#nwimp-drop,#ai-drop,#ci-drop'); if(d){ e.preventDefault(); d.classList.add('over'); } });
+document.addEventListener('dragleave',e=>{ const d=e.target.closest&&e.target.closest('#imp-drop,#kwimp-drop,#rs-drop,#nwimp-drop,#ci-drop'); if(d) d.classList.remove('over'); });
+document.addEventListener('drop',e=>{ const d=e.target.closest&&e.target.closest('#imp-drop,#kwimp-drop,#rs-drop,#nwimp-drop,#ai-drop,#ci-drop'); if(d){ e.preventDefault(); d.classList.remove('over');
+    if(d.id==='ci-drop'){ ciFiles([...(e.dataTransfer.files||[])]); return; }
     if(d.id==='ai-drop'){ const ta=$('#ai-rules'); if(ta&&S.modal) S.modal.rules=ta.value; aiAddFiles([...(e.dataTransfer.files||[])]); return; } const f=e.dataTransfer.files&&e.dataTransfer.files[0]; if(f){ if(d.id==='kwimp-drop') readKeywordFile(f); else if(d.id==='rs-drop') readBackupFile(f); else if(d.id==='nwimp-drop') readNwFile(f); else readFile(f); } } });
 document.addEventListener('mouseover',e=>{
   const ga=e.target.closest&&e.target.closest('.nw-alloc i[data-nwg]');

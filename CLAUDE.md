@@ -20,7 +20,7 @@ Must be served over `localhost` or https: the service worker only registers ther
 node tests/ai-smoke.js          # AI layer: retries, limits, truncation, key scrubbing (no browser)
 node tests/chunk-smoke.js       # request splitting and merging pulled out of index.html
 node tests/merge-smoke.js       # "Merge both" (mergeData in web-shim.js)
-node tests/import-smoke.js      # import: amounts, keyword matching, IBKR sections, Splitwise, refunds, month-end balances
+node tests/import-smoke.js      # import: amounts, keyword matching, IBKR sections, Splitwise, refunds, month-end balances, statement fingerprints
 node tests/forecast-smoke.js    # Net worth and Month by month forecasts
 node tests/reconcile-smoke.js   # Net worth: What changed = saved + Gains total + new accounts + not matched, to the cent
 node tests/format-smoke.js      # display formatting: compact chart figures (63,3 k €), <0,1%, the — dash, hidden amounts
@@ -28,7 +28,7 @@ node tests/audit-smoke.js       # AI audit: only fixes for rows, categories and 
 node tools/update-csp-hash.js   # after ANY edit to index.html's inline <script>
 ```
 
-Browser tests need Playwright (Edge channel) and the server above: `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` (fake Drive: deferral, conflict, merge) and `tests/landing-wizard.e2e.js` (landing, wizard, tour hand-off, statements per account filling month-end balances, salary pick) and `tests/tabs-restore.e2e.js` (one tab at a time, browser backup restore, Start fresh) and `tests/import-review.e2e.js` (review dialog fits, inline description/amount edits) and `tests/qa-fixes.e2e.js` (typed amounts follow the number format, Back between tabs, add-dialog warnings, export per year, storage choice kept) and `tests/audit-fixes.e2e.js` (demo look-around and its bar, where-to-save after the demo, amount preview, Bizum payback, Yearly empty rows).
+Browser tests need Playwright (Edge channel) and the server above: `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` (fake Drive: deferral, conflict, merge) and `tests/landing-wizard.e2e.js` (landing, wizard, tour hand-off, statements per account filling month-end balances, salary pick) and `tests/tabs-restore.e2e.js` (one tab at a time, browser backup restore, Start fresh) and `tests/import-review.e2e.js` (review dialog fits, inline description/amount edits) and `tests/qa-fixes.e2e.js` (typed amounts follow the number format, Back between tabs, add-dialog warnings, export per year, storage choice kept) and `tests/checkin.e2e.js` (monthly check-in: files recognised by account, balances, sort, summary) and `tests/audit-fixes.e2e.js` (demo look-around and its bar, where-to-save after the demo, amount preview, Bizum payback, Yearly empty rows).
 
 ## Line endings
 

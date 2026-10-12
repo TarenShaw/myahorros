@@ -166,3 +166,21 @@ console.log('import smoke: all passed');
   assert.deepStrictEqual(balMonthEnds([{ date: '2026-01-15', amount: 5, bal: null }], true), {});
   console.log('statement month-end balances: all passed');
 }
+
+/* the check-in recognises a bank's file by its fingerprint */
+{
+  const { fileFp, fpMatch } = new Function(line('const fold=') + line('const loose=') + grab('fileFp') + grab('fpMatch') + 'return {fileFp,fpMatch};')();
+  const rows = [['Cuenta ES91 2100 0418 4502 0005 1332'], [], ['Fecha', 'Concepto', 'Importe', 'Saldo'], ['01/10/2026', 'MERCADONA', '-10', '90']];
+  const fp = fileFp('movimientos_2026-10-12.xlsx', rows, 2);
+  assert.deepStrictEqual(fp, { h: 'fecha|concepto|importe|saldo', n: 'movimientos_#-#-#', id: '1332' });
+  assert.strictEqual(fileFp('x.csv', [['Card ****4321']], null).id, '4321');
+  const accs = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
+  /* same bank, two accounts: the number decides; without one, a tie is no guess */
+  const all = { a: { h: fp.h, n: fp.n, id: '1332' }, b: { h: fp.h, n: fp.n, id: '9999' } };
+  assert.strictEqual(fpMatch(fp, all, accs).id, 'a');
+  assert.strictEqual(fpMatch(Object.assign({}, fp, { id: '' }), all, accs), null, 'two accounts alike: no guess');
+  assert.strictEqual(fpMatch(Object.assign({}, fp, { id: '5555' }), { a: all.a }, accs), null, 'a different number is another account');
+  assert.strictEqual(fpMatch({ h: 'other', n: fp.n, id: '' }, { a: all.a }, accs), null, 'the file name alone is not enough');
+  assert.strictEqual(fpMatch({ h: fp.h, n: 'other', id: '' }, { a: all.a }, accs).id, 'a', 'the headings are');
+  console.log('statement fingerprints: all passed');
+}
