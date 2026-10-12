@@ -35,7 +35,7 @@
 .ai-key{display:grid;gap:8px}
 .ai-key[hidden]{display:none}
 .ai-key label,.ai-steps label{font-weight:600;font-size:13px}
-.ai-key input[type=password],.ai-key select,.ai-panel textarea{width:100%;box-sizing:border-box;font:13px/1.45 var(--f-mono,ui-monospace,monospace);padding:9px 11px;border:1px solid var(--line-2,#bcc8c3);border-radius:8px;background:var(--surface,#fff);color:var(--ink,#13201c)}
+.ai-key input[type=password],.ai-key select,.ai-panel textarea{width:100%;box-sizing:border-box;font:13px/1.45 var(--f-mono,ui-monospace,monospace);padding:9px 11px;border:1px solid var(--control-line,#7b8c84);border-radius:8px;background:var(--surface,#fff);color:var(--ink,#13201c)}
 .ai-key select{font-family:inherit}
 .ai-key input:focus,.ai-panel textarea:focus,.ai-key select:focus{outline:2px solid var(--accent,#0d5c63);outline-offset:1px;border-color:transparent}
 .ai-check{display:flex;gap:8px;align-items:center;font-weight:500!important}

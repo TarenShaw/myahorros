@@ -88,8 +88,8 @@ const comparisonRender = new Function('change', `
   return comparisonCard();
 `);
 for (const [change, expected] of [
-  [{income:1,expenses:1,saved:1,investments:1}, ['good','bad','good','good']],
-  [{income:-1,expenses:-1,saved:-1,investments:-1}, ['bad','good','bad','bad']],
+  [{income:1,expenses:1,saved:1,investments:1}, ['good','bad','good','']],
+  [{income:-1,expenses:-1,saved:-1,investments:-1}, ['bad','good','bad','']],
   [{income:0,expenses:0,saved:0,investments:0}, ['','','','']]
 ]) {
   const markup=comparisonRender(change);

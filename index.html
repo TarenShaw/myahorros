@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-M47jRUYWFoip1AtLApgJYmcjnjBYHh5I24f2zwVr7IY=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-K82URBwo5oWZ0wgeY7SoPg1xCWhBb29V9QqqRTYiO9c=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -31,16 +31,16 @@
   --ink-2:#44554f;
   --muted:#5c6a65;
   --line:#d8dfdc;
-  --line-2:#bcc8c3;
+  --line-2:#bcc8c3;--control-line:#7b8c84;
   --accent:#0d5c63;
   --accent-hover:#0a4a50;
   --accent-ink:#ffffff;
   --accent-soft:#d9ebea;
-  --c-income:#1baf7a;
-  --c-expenses:#eb6834;
-  --c-investments:#2a78d6;
-  --good:#0ca30c;
-  --good-ink:#006300;
+  --c-income:#087a56;
+  --c-expenses:#b94e25;
+  --c-investments:#2868c7;
+  --good:#087a56;
+  --good-ink:#076e4e;
   --good-soft:#e1f2de;
   --bad:#d03b3b;
   --bad-ink:#a82727;
@@ -64,11 +64,11 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0b0b0c;--surface:#141415;--surface-2:#1b1b1d;--surface-3:#252528;
-    --ink:#ececee;--ink-2:#b6b6bb;--muted:#8b8b91;--line:#29292c;--line-2:#3b3b40;
+    --bg:#0b0b0c;--surface:#191d1e;--surface-2:#202729;--surface-3:#2a3133;
+    --ink:#ececee;--ink-2:#b6b6bb;--muted:#96969c;--line:#383f41;--line-2:#3b3b40;--control-line:#77777f;
     --accent:#5ebdc3;--accent-hover:#82d1d5;--accent-ink:#06201f;--accent-soft:#1b2829;
     --c-income:#199e70;--c-expenses:#d95926;--c-investments:#3987e5;
-    --good:#0ca30c;--good-ink:#52c552;--good-soft:#15301a;
+    --good:#52cfa1;--good-ink:#52cfa1;--good-soft:#15301a;
     --bad:#e66767;--bad-ink:#ff928d;--bad-soft:#3a1c1b;--warn-soft:#382d12;--warn-ink:#f0c45c;--warn:#e2b53a;
     --heat-lo:#5e2b2b;--heat-mid:#54491d;--heat-hi:#21432a;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.45);--scrim:rgba(0,0,0,.55);
@@ -76,11 +76,11 @@
   }
 }
 :root[data-theme="dark"],:root[data-ybt-theme="dark"]{
-  --bg:#0b0b0c;--surface:#141415;--surface-2:#1b1b1d;--surface-3:#252528;
-  --ink:#ececee;--ink-2:#b6b6bb;--muted:#8b8b91;--line:#29292c;--line-2:#3b3b40;
+  --bg:#0b0b0c;--surface:#191d1e;--surface-2:#202729;--surface-3:#2a3133;
+  --ink:#ececee;--ink-2:#b6b6bb;--muted:#96969c;--line:#383f41;--line-2:#3b3b40;--control-line:#77777f;
   --accent:#5ebdc3;--accent-hover:#82d1d5;--accent-ink:#06201f;--accent-soft:#1b2829;
   --c-income:#199e70;--c-expenses:#d95926;--c-investments:#3987e5;
-  --good:#0ca30c;--good-ink:#52c552;--good-soft:#15301a;
+  --good:#52cfa1;--good-ink:#52cfa1;--good-soft:#15301a;
   --bad:#e66767;--bad-ink:#ff928d;--bad-soft:#3a1c1b;--warn-soft:#382d12;--warn-ink:#f0c45c;--warn:#e2b53a;
   --heat-lo:#5e2b2b;--heat-mid:#54491d;--heat-hi:#21432a;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.45);--scrim:rgba(0,0,0,.55);
@@ -90,10 +90,10 @@
 /* Appearance setting: Light / Dark chosen in Settings beats the device setting (Automatic removes the attribute) */
 :root[data-ybt-theme="light"]{
   --bg:#f1f4f2;--surface:#fcfdfc;--surface-2:#edf1ef;--surface-3:#e2e8e5;
-  --ink:#13211f;--ink-2:#44554f;--muted:#5c6a65;--line:#d8dfdc;--line-2:#bcc8c3;
+  --ink:#13211f;--ink-2:#44554f;--muted:#5c6a65;--line:#d8dfdc;--line-2:#bcc8c3;--control-line:#7b8c84;
   --accent:#0d5c63;--accent-hover:#0a4a50;--accent-ink:#ffffff;--accent-soft:#d9ebea;
-  --c-income:#1baf7a;--c-expenses:#eb6834;--c-investments:#2a78d6;
-  --good:#0ca30c;--good-ink:#006300;--good-soft:#e1f2de;
+  --c-income:#087a56;--c-expenses:#b94e25;--c-investments:#2868c7;
+  --good:#087a56;--good-ink:#076e4e;--good-soft:#e1f2de;
   --bad:#d03b3b;--bad-ink:#a82727;--bad-soft:#fbe5e3;--warn-soft:#fbf0d2;--warn-ink:#6e4b00;--warn:#c99a06;
   --heat-lo:#ffcccc;--heat-mid:#fff2b3;--heat-hi:#daf2d0;
   --shadow:0 1px 2px rgba(19,33,31,.06),0 12px 32px rgba(19,33,31,.12);--scrim:rgba(19,33,31,.38);
@@ -220,7 +220,7 @@ html{scrollbar-gutter:stable}
 .ai-opt{white-space:normal;text-align:left;height:auto}
 .ai-opt.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .ai-reply{display:flex;gap:var(--s8)}
-.ai-reply input{flex:1;min-width:0;font:var(--fs-meta) var(--f-body);padding:var(--s4) var(--s8);border:1px solid var(--line-2);border-radius:var(--r-inner);background:var(--surface);color:var(--ink)}
+.ai-reply input{flex:1;min-width:0;font:var(--fs-meta) var(--f-body);padding:var(--s4) var(--s8);border:1px solid var(--control-line);border-radius:var(--r-inner);background:var(--surface);color:var(--ink)}
 .ai-errbox{display:grid;gap:var(--s8)}
 .ai-errbox pre{margin:var(--s8) 0;padding:var(--s8) var(--s12);border:1px solid var(--line);border-radius:var(--r-inner);background:var(--surface-2);font:var(--fs-sm)/1.5 var(--f-mono);white-space:pre-wrap;overflow-wrap:anywhere;max-height:200px;overflow:auto}
 .ai-errbox summary{cursor:pointer;font-size:var(--fs-meta);color:var(--ink-2)}
@@ -327,7 +327,7 @@ main{padding-top:var(--s24)}
 .btn:disabled{opacity:.45;cursor:default}
 .linkish{background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-inner);padding:3px var(--s8);color:var(--ink);font-weight:600;font-size:var(--fs-meta);cursor:pointer;text-decoration:none;vertical-align:baseline}
 .linkish:hover{background:var(--surface-2);border-color:var(--accent);color:var(--accent)}
-input[type=text],input[type=search],input[type=date],input[type=number],select,textarea{height:34px;border:1px solid var(--line-2);background:var(--surface);border-radius:var(--r-inner);padding:0 var(--s12);min-width:0}
+input[type=text],input[type=search],input[type=date],input[type=number],select,textarea{height:34px;border:1px solid var(--control-line);background:var(--surface);border-radius:var(--r-inner);padding:0 var(--s12);min-width:0}
 textarea{height:auto;padding:var(--s12);line-height:1.45;resize:vertical;font:var(--fs-meta)/1.45 var(--f-mono)}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent)}
 select{padding-right:var(--s32)}
@@ -2970,7 +2970,7 @@ function comparisonCard(){
   const ms=[...new Set(allRows().map(r=>r.date.slice(0,7)))].filter(k=>+k.slice(0,4)===S.ui.year).sort(); if(!ms.length) return '';
   const done=ms.filter(k=>k<ymNow()), k=ms.includes(S.ui.compareMonth)?S.ui.compareMonth:done[done.length-1]||ms[ms.length-1], base=S.ui.compareBase||'month', C=monthComparison(allRows(),k,base);
   return `<section class="card" id="month-comparison"><div class="card-head"><h2>${esc(L('compareTitle'))}</h2></div><div class="compare-controls"><label>${esc(L('month'))}<select id="compare-month">${ms.map(m=>`<option value="${m}"${m===k?' selected':''}>${esc(ymLabel(m,true))}</option>`).join('')}</select></label><label>${esc(L('compareAgainst'))}<select id="compare-base"><option value="month"${base==='month'?' selected':''}>${esc(L('previousMonth'))}</option><option value="year"${base==='year'?' selected':''}>${esc(L('previousYear'))}</option></select></label></div>
-  ${C.complete?`<p class="hint">${esc(ymLabel(k,true))} – ${esc(ymLabel(C.previousMonth,true))}. ${esc(L('comparisonHelp'))}</p><div class="compare-grid">${['income','expenses','saved','investments'].map(t=>`<button type="button" class="nw-change-stat" data-action="compare-rows" data-k="${k}" data-t="${t==='saved'?'expenses':t}" title="${esc(L('compareClick'))}" style="border-top-color:var(--c-${t==='saved'?'income':t})"><span class="nw-stat-l">${esc(t==='saved'?L('savings'):TL(t))}</span><b>${fmtEUR(C.current[t])}</b><small>${esc(ymLabel(C.previousMonth,true))}: ${fmtEUR(C.previous[t])}</small><small class="${C.change[t]===0?'':(t==='expenses'?C.change[t]<0:C.change[t]>0)?'good':'bad'}">Δ ${signed(C.change[t])}</small></button>`).join('')}</div>`:`<p class="hint">${esc(L('missingComparison'))}</p>`}</section>`;
+  ${C.complete?`<p class="hint">${esc(ymLabel(k,true))} – ${esc(ymLabel(C.previousMonth,true))}. ${esc(L('comparisonHelp'))}</p><div class="compare-grid">${['income','expenses','saved','investments'].map(t=>`<button type="button" class="nw-change-stat" data-action="compare-rows" data-k="${k}" data-t="${t==='saved'?'expenses':t}" title="${esc(L('compareClick'))}" style="border-top-color:var(--c-${t==='saved'?'income':t})"><span class="nw-stat-l">${esc(t==='saved'?L('savings'):TL(t))}</span><b>${fmtEUR(C.current[t])}</b><small>${esc(ymLabel(C.previousMonth,true))}: ${fmtEUR(C.previous[t])}</small><small class="${C.change[t]===0||t==='investments'?'':(t==='expenses'?C.change[t]<0:C.change[t]>0)?'good':'bad'}">Δ ${signed(C.change[t])}</small></button>`).join('')}</div>`:`<p class="hint">${esc(L('missingComparison'))}</p>`}</section>`;
 }
 function scenarioTotal(current,monthly,extra,n){
   if(![current,monthly,extra,n].every(Number.isFinite)||extra<0||extra>=1e9||!Number.isInteger(n)||n<1||n>600) return null;
