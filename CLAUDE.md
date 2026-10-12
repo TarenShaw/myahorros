@@ -24,6 +24,7 @@ node tests/import-smoke.js      # import: amounts, keyword matching, IBKR sectio
 node tests/forecast-smoke.js    # Net worth and Month by month forecasts
 node tests/reconcile-smoke.js   # Net worth: What changed = saved + Gains total + new accounts + not matched, to the cent
 node tests/format-smoke.js      # display formatting: compact chart figures (63,3 k €), <0,1%, the — dash, hidden amounts
+node tests/audit-smoke.js       # AI audit: only fixes for rows, categories and accounts that exist reach the review
 node tools/update-csp-hash.js   # after ANY edit to index.html's inline <script>
 ```
 

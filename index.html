@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-wujuEVo2IvPNEsueJgKi6Jg5LW59ZEB6Q+5ue6shULY=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-vEyxVytncCzFMrN5OseVUt5EjliFm+iVYRz4jU8yr1A=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -163,6 +163,11 @@ html{scrollbar-gutter:stable}
 .ai-rules .tag{font:600 var(--fs-sm)/1 var(--f-body);padding:2px var(--s8);border-radius:var(--r-inner);background:var(--accent-soft);color:var(--ink)}
 .ai-rules textarea{width:100%;margin-top:var(--s8);font:var(--fs-meta)/1.5 var(--f-mono);resize:vertical}
 .ai-rules .hint{margin:var(--s8) 0 0}
+.au-g h4{margin:0 0 var(--s8);font-size:var(--fs-body)}
+.au-list{list-style:none;margin:0;padding:0;display:grid}
+.au-list li{display:flex;gap:var(--s12);align-items:flex-start;padding:var(--s8) 0;border-bottom:1px solid var(--line);font-size:var(--fs-meta)}
+.au-list li>input{margin-top:3px;flex:none}
+.au-list label,.au-list .au-t{display:grid;gap:2px;min-width:0;overflow-wrap:anywhere}
 .ai-busy{display:grid;gap:var(--s8);margin:0;font-size:var(--fs-body)}
 .wz-body{display:grid;gap:var(--s16)}
 .wz-dots{list-style:none;margin:0;padding:0;display:flex;gap:var(--s8);flex-wrap:wrap}
@@ -1756,6 +1761,18 @@ const STR={
 
   nwClickMonth:['Click to show this month','Pulsa para ver este mes'], nwShowing:['Showing','Mostrando'],
   aiBtn:['Fill in with AI','Rellenar con IA'],
+  auBtn:['AI audit','Auditoría con IA'],
+  auSub_tx:['The AI reads every transaction in your tracker and suggests fixes: wrong categories or tables, duplicates, new keywords. Nothing changes until you tick a fix and press Apply.','La IA lee todos los movimientos de tu control y propone correcciones: categorías o tablas equivocadas, duplicados, palabras clave nuevas. No cambia nada hasta que marcas una corrección y pulsas Aplicar.'],
+  auSends:[(n,ys,k,a)=>`It sends ${n} (${ys}), your categories, ${k} keywords and ${a} accounts with their statement words.`,(n,ys,k,a)=>`Envía ${n} (${ys}), tus categorías, ${k} palabras clave y ${a} cuentas con sus palabras del extracto.`],
+  auReqs:[n=>n===1?'One request.':`${n} requests, one after the other.`,n=>n===1?'Una petición.':`${n} peticiones, una tras otra.`],
+  auPrivacy:[w=>`Your data goes to ${w} only when you press Start, with your own key. Nothing is changed until you apply.`,w=>`Tus datos van a ${w} solo cuando pulsas Empezar, con tu propia clave. No se cambia nada hasta que aplicas.`],
+  auStart:['Start audit','Empezar auditoría'], auAsking:['Checking your tracker…','Revisando tu control…'],
+  auG_cat:['Category or table','Categoría o tabla'], auG_dup:['Duplicates to delete','Duplicados para borrar'], auG_kw:['New keywords','Palabras clave nuevas'],
+  auG_words:['Statement words','Palabras del extracto'], auG_q:['Questions for you (nothing to apply)','Preguntas para ti (nada que aplicar)'],
+  auNone:['The AI found nothing to fix.','La IA no ha encontrado nada que corregir.'],
+  auHelp:['Untick anything you don’t agree with. One Undo puts it all back.','Desmarca lo que no te convenza. Un solo Deshacer lo devuelve todo.'],
+  auApply:['Apply ticked','Aplicar marcadas'], auDel:['Delete','Borrar'], auDupOf:['same as','igual que'],
+  auApplied:[n=>`${n===1?'1 fix':n+' fixes'} applied`,n=>`${n===1?'1 corrección aplicada':n+' correcciones aplicadas'}`], auUndone:['Audit fixes undone','Correcciones deshechas'],
   aiTitle_tx:['Sort my statements with AI','Ordenar mis extractos con IA'], aiTitle_nw:['Balances from statements, with AI','Saldos desde extractos, con IA'], aiTitle_start:['Build my tracker with AI','Crear mi control con IA'],
   aiSub_tx:['Claude reads your statements, sorts every movement and picks its category. You check everything before anything is added.','Claude lee tus extractos, clasifica cada movimiento y le pone categoría. Lo revisas todo antes de añadir nada.'],
   aiSub_nw:['Claude reads your bank and broker statements and finds each account’s balance at the end of every month. You check it before it’s saved.','Claude lee los extractos de tus bancos y brókers y encuentra el saldo de cada cuenta al final de cada mes. Lo revisas antes de guardarlo.'],
@@ -4493,7 +4510,7 @@ function aiMerge(rs){
 }
 /* one request; if the answer comes back cut off, the same text is sent again in two halves */
 async function aiRunJob(m,job,i,n,depth,label){
-  const prompt=aiPrompt(m.mode,m.rules,job.files,aiContext(m.mode));
+  const prompt=m.build?m.build(job):aiPrompt(m.mode,m.rules,job.files,aiContext(m.mode));
   const hit=m.cache&&m.cache.get(prompt); if(hit) return hit;
   const lim=await S.ai.limits().catch(()=>null);
   if(job.images.length){ if(!lim||!lim.images) throw {local:L('aiNoImages')}; if(job.images.length>lim.images.maxCount) throw {local:L('aiTooManyImages',lim.images.maxCount)}; }
@@ -4510,7 +4527,7 @@ async function aiRunJob(m,job,i,n,depth,label){
       const halves=aiJobs(job.files,Math.ceil(job.chars/2),AI_CHUNK_IMAGES), rs=[];
       if(halves.length>1){ for(let h=0;h<halves.length;h++){ const sub=L('aiSplitting',h+1,halves.length);
           rs.push(await aiRunJob(m,halves[h],i,n,depth+1,(n>1?L('aiPart',i+1,n)+' ':'')+sub)); }
-        return aiMerge(rs); }
+        return (m.merge||aiMerge)(rs); }
     }
     if(e&&typeof e==='object'&&n>1&&!e.local) e.part=L('aiPart',i+1,n);
     throw e;
@@ -4584,7 +4601,7 @@ function modalAi(){
   const custom=mode!=='start'&&m.rules.trim()!==aiDefault(aiRulesKey(mode)).trim();
   return `${mHead(esc(L('aiTitle_'+mode)),esc(L('aiSub_'+mode)))}
   <div class="m-body ai-body">
-    ${(()=>{ const c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null; return `<div class="ai-who"><span>${esc(c?L('aiUsing',c.name+(c.model?' · '+c.model:'')):L('aiNone'))}</span>${S.ai&&typeof S.ai.setup==='function'&&!busy?`<button type="button" class="btn sm" data-action="ai-setup">${esc(L('aiChangeBtn'))}</button>`:''}</div>`; })()}
+    ${aiWho(busy)}
     <div class="field"><span class="lab">${esc(L('aiFiles'))}</span>
       <div class="drop ai-drop" id="ai-drop"><span>${esc(L('aiDrop'))}</span>
         <label class="btn sm" for="ai-file">${esc(L('aiChoose'))}</label><input type="file" id="ai-file" multiple accept=".pdf,.csv,.txt,.tsv,.xlsx,.xlsm,.xls,.ods,.png,.jpg,.jpeg,.webp,.gif" class="sr"${busy?' disabled':''}></div>
@@ -4594,8 +4611,7 @@ function modalAi(){
       <label class="sr" for="ai-rules">${esc(L('aiRules'))}</label><textarea id="ai-rules" rows="12"${busy?' disabled':''}>${esc(m.rules)}</textarea>
       ${mode!=='start'&&custom&&!busy?`<button type="button" class="linkish" data-action="ai-reset">${esc(L('aiReset'))}</button>`:''}</details>
     <p class="hint">${esc(L('aiPrivacy'))}</p>
-    ${busy?`<p class="ai-busy" role="status"><span class="loading-bar"></span><span id="ai-phase">${esc(m.phase||'')}</span></p>`:''}
-    ${m.msg?`<div class="field ai-errbox" role="alert"><span class="err">${esc(m.msg)}</span>${m.errDetails?`<details open><summary>${esc(L('aiErrWhat'))}</summary><pre>${esc(m.errDetails)}</pre><button type="button" class="btn sm" data-action="ai-copy-err">${esc(L('aiCopyDetails'))}</button></details>`:''}</div>`:''}
+    ${aiStatus(m)}
   </div>
   <div class="m-foot"><span class="r">${busy?`<button class="btn" type="button" data-action="ai-stop">${esc(L('aiStop'))}</button>`:`<button class="btn" type="button" data-action="close">${esc(L('cancel'))}</button><button class="btn primary" type="button" data-action="ai-send">${ICON.ai}${esc(L('aiSend'))}</button>`}</span></div>`;
 }
@@ -4609,6 +4625,169 @@ function aiReviewNote(m){
     ${a.notes?`<p class="hint"><b>${esc(L('aiNotes'))}:</b> ${esc(a.notes)}</p>`:''}
     ${a.out.length?`<details class="ai-out"><summary>${esc(L('aiLeftOut',a.out.length))}</summary><ul>${a.out.map(o=>`<li><span class="num">${o.date?fmtDate(o.date):''}</span><span>${esc(o.concept)}</span><span class="num">${fmtEUR(o.amount)}</span><span class="hint">${esc(o.why)}</span></li>`).join('')}</ul></details>`:''}
   </div>`;
+}
+/* ───────── AI audit ─────────
+   Everything already in the tracker (every row of every year, categories, keywords, accounts) goes to the AI, which
+   proposes fixes. Nothing changes until the person ticks fixes and presses Apply; one Undo puts it all back.
+   Rows are sent as numbers (1, 2, 3…), never their ids, so an answer can only point at rows that were sent, and every
+   fix is checked again before it is shown and when it is applied. */
+const AUDIT_CHARS=YM_.auditChars||60000;
+const auDay=d=>Math.round(Date.parse(d.slice(0,10)+'T00:00:00Z')/864e5);
+const auRow=(n,r)=>[n,r.date,r2(r.amount),r.concept,r.table,r.category||''];
+function auditData(){
+  /* ponytail: sorted by description so one shop's rows share a request; a shop spelt two ways can land in two requests */
+  const rows=allRows().map(r=>[loose(r.concept),r]).sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:a[1].date<b[1].date?-1:1).map(x=>x[1]);
+  const ref=new Map(), lines=[];
+  rows.forEach((r,i)=>{ ref.set(i+1,r); lines.push(JSON.stringify(auRow(i+1,r))); });
+  /* possible duplicates: same table and amount, at most 2 days apart (the AI says which are really one movement).
+     ponytail: a daily purchase at one price makes many pairs; capped at 200, same description and closest first */
+  const by=new Map(), pairs=[];
+  for(const [n,r] of ref){ const k=r.table+'|'+Math.round(r.amount*100); if(!by.has(k)) by.set(k,[]); by.get(k).push(n); }
+  for(const ns of by.values()) for(let i=0;i<ns.length;i++) for(let j=i+1;j<ns.length;j++){
+    const a=ref.get(ns[i]), b=ref.get(ns[j]), d=Math.abs(auDay(a.date)-auDay(b.date));
+    if(d<=2) pairs.push([d+(loose(a.concept)===loose(b.concept)?0:0.5),ns[i],ns[j]]); }
+  pairs.sort((a,b)=>a[0]-b[0]);
+  const files=[{name:'rows',text:lines.join('\n'),images:[]}];
+  if(pairs.length) files.push({name:'pairs',text:pairs.slice(0,200).map(([,a,b])=>JSON.stringify([auRow(a,ref.get(a)),auRow(b,ref.get(b))])).join('\n'),images:[]});
+  return {ref,files};
+}
+const AUDIT_FOCUS={tx:'I opened this from Transactions: concentrate on categories, tables, duplicates and keywords.'};
+function auditPrompt(focus,files){
+  const ctx=Object.assign(aiContext('tx'),{my_accounts:nw().accounts.map(a=>({id:a.id,name:a.name,group:a.group,statement_words:a.words||''}))});
+  return `You are auditing my personal budget tracker. The rows below are what is already saved in it. Find what is wrong and reply with ONE JSON object, nothing else.
+
+${aiRulesFor('tx')}
+
+${AUDIT_FOCUS[focus]||''}
+Look for:
+- rows in the wrong category or the wrong table (income, expenses, investments)
+- rows with no category where one of my categories fits
+- the same shop or payer filed under different categories with no reason
+- refunds or paybacks booked as income, and transfers between my own accounts booked as income or spending
+- keywords that would sort rows like these correctly next time
+Only propose a change when you are fairly sure; ask a question instead when you are not. The request may be one part of a longer list: judge the rows you see. An empty list is a good answer.
+Write every "why", question and note in ${LANG==='es'?'Spanish':'English'}, in a few words.
+
+The JSON object has these keys:
+- "changes": [[row number, table the row belongs in, its category (exactly one of my categories for that table, or "" if none fits), why]], only for rows that need a change
+- "duplicates": [[row number to delete, row number it repeats, why]], only for pairs under POSSIBLE DUPLICATES that are clearly one movement recorded twice, not two real payments of the same price
+- "keywords": [[table, keyword (a short piece of the description), category, why]], only new ones that would not mis-sort other rows
+- "statement_words": [[account id, the account's full new statement words (comma-separated, keep the right ones), why]], when Investments rows for one of my accounts don't contain its statement words or name
+- "questions": [[row number or null, one short question]]
+- "notes": anything I should know, in one or two short sentences, or ""
+
+My setup (JSON):
+${JSON.stringify(ctx)}
+
+${files.map(f=>f.name==='pairs'?`===== POSSIBLE DUPLICATES (same table and amount, up to 2 days apart; each line is two rows) =====\n${f.text}`:`===== ROWS: [number, date, amount, description, table, category], sorted by description =====\n${f.text}`).join('\n\n')}`;
+}
+function auditMerge(rs){
+  const out={changes:[],duplicates:[],keywords:[],statement_words:[],questions:[],notes:''}, notes=[];
+  for(const r of rs){ if(!r||typeof r!=='object') continue; for(const k of Object.keys(out)) if(Array.isArray(r[k])) out[k].push(...r[k]);
+    if(typeof r.notes==='string'&&r.notes.trim()&&!notes.includes(r.notes.trim())) notes.push(r.notes.trim()); }
+  out.notes=notes.join(' '); return out;
+}
+/* the AI's answer -> fixes the review can show; anything that doesn't fit the tracker is dropped */
+function auditItems(res,ref){
+  const items=[], gone=new Set(), done=new Set(), arr=v=>Array.isArray(v)?v:[], str=v=>String(v==null?'':v).trim(), o=x=>x&&typeof x==='object'?x:{};
+  for(const x of arr(res.duplicates)){ const a=Array.isArray(x)?x:[o(x).row,o(x).of,o(x).why], r=ref.get(+a[0]), d=ref.get(+a[1]);
+    if(!r||!d||r===d||gone.has(r.id)||gone.has(d.id)||r.table!==d.table||Math.abs(r.amount-d.amount)>0.005||Math.abs(auDay(r.date)-auDay(d.date))>7) continue;
+    gone.add(r.id); items.push({k:'dup',r,o:d,why:str(a[2])}); }
+  for(const x of arr(res.changes)){ const a=Array.isArray(x)?x:[o(x).row,o(x).table,o(x).category,o(x).why], r=ref.get(+a[0]);
+    if(!r||gone.has(r.id)||done.has(r.id)) continue;
+    const t=TKEYS.includes(a[1])?a[1]:r.table, cat=str(a[2]).replace(/\s+\((Need|Want|fixed|variable)\)$/i,'');
+    /* a category must be one of that table's; no category only for a row that moves table */
+    if(cat?!isKnown(t,cat):t===r.table) continue;
+    if(t===r.table&&cat===r.category) continue;
+    done.add(r.id); items.push({k:'cat',r,t,cat,why:str(a[3])}); }
+  const K=kws(), kwSeen=new Set();
+  for(const x of arr(res.keywords)){ const a=Array.isArray(x)?x:[o(x).table,o(x).keyword,o(x).category,o(x).why], t=a[0], kw=str(a[1]), cat=str(a[2]), f=loose(kw);
+    if(!TKEYS.includes(t)||f.length<3||!isKnown(t,cat)||kwSeen.has(t+'|'+f)||(K[t]||[]).some(([k])=>loose(k)===f)) continue;
+    kwSeen.add(t+'|'+f); items.push({k:'kw',t,kw,cat,why:str(a[3])}); }
+  const accs=nw().accounts, wSeen=new Set();
+  for(const x of arr(res.statement_words)){ const a=Array.isArray(x)?x:[o(x).account,o(x).words,o(x).why], acc=accs.find(c=>c.id===a[0]), w=str(a[1]);
+    if(!acc||!w||wSeen.has(acc.id)||loose(w)===loose(acc.words||'')) continue;
+    wSeen.add(acc.id); items.push({k:'words',acc,words:w,why:str(a[2])}); }
+  for(const x of arr(res.questions)){ const a=Array.isArray(x)?x:[o(x).row,o(x).question], q=str(a[1]); if(q) items.push({k:'q',r:ref.get(+a[0])||null,text:q}); }
+  return items;
+}
+async function auditRun(){
+  const m=S.modal; if(!m||m.type!=='audit'||m.busy) return;
+  m.busy=true; m.msg=''; m.errDetails=''; m.ctl=new AbortController(); m.phase=L('auAsking'); renderModalKeepScroll();
+  try{
+    const a=auditData();
+    if(sum(a.files.map(f=>f.text.length))>AI_TEXT_MAX) throw {local:L('aiTooBig')};
+    const jobs=aiJobs(a.files,AUDIT_CHARS,AI_CHUNK_IMAGES), rs=[];
+    m.build=job=>auditPrompt(m.focus,job.files); m.merge=auditMerge; m.cache=m.cache||new Map();
+    for(let i=0;i<jobs.length;i++){ if(S.modal!==m) return; rs.push(await aiRunJob(m,jobs[i],i,jobs.length,0,jobs.length>1?'':L('auAsking'))); }
+    if(S.modal!==m) return;
+    const res=auditMerge(rs);
+    Object.assign(m,{items:auditItems(res,a.ref),notes:res.notes,busy:false,ctl:null,phase:'',wide:true,mid:false}); renderModal();
+  }catch(e){
+    if(S.modal!==m) return;
+    m.busy=false; m.ctl=null; m.phase='';
+    if(e&&e.code==='cancelled'){ renderModalKeepScroll(); return; }
+    const x=aiErr(e); m.msg=x.text; m.errDetails=x.details; renderModalKeepScroll();
+  }
+}
+/* the ticked fixes, checked again against what is saved now; one Undo puts back every month, keyword and account touched */
+function auditApply(){
+  const m=S.modal; if(!m||m.type!=='audit'||!m.items) return;
+  const on=m.items.filter((x,i)=>x.k!=='q'&&($('#au-'+i)||{}).checked);
+  const before={months:{},kw:clone(kws()),nw:clone(nw())}; let n=0, kwCh=false, nwCh=false;
+  for(const x of on){
+    if(x.k==='dup'||x.k==='cat'){ const r=x.r, f=findRow(r.mk,r.table,r.id); if(!f.row) continue;
+      if(x.k==='cat'&&x.cat&&!isKnown(x.t,x.cat)) continue;
+      if(!(r.mk in before.months)) before.months[r.mk]=clone(S.months[r.mk]);
+      if(x.k==='dup') f.arr.splice(f.i,1);
+      else if(x.t===r.table) f.row.category=x.cat;
+      else { f.arr.splice(f.i,1); f.row.category=x.cat; S.months[r.mk][x.t].push(f.row); }
+      markDirty('months/'+r.mk); n++; }
+    else if(x.k==='kw'){ if(!isKnown(x.t,x.cat)) continue; ensureKw()[x.t].push([x.kw,x.cat]); kwCh=true; n++; }
+    else if(x.k==='words'){ const a=ensureNw().accounts.find(c=>c.id===x.acc.id); if(a){ a.words=x.words; nwCh=true; n++; } }
+  }
+  if(kwCh) markDirty('config/keywords'); if(nwCh) saveNw(); bump(); closeModal(); render();
+  if(!n) return;
+  toast(L('auApplied',n),{label:L('undo'),fn:()=>{
+    for(const [mk,d] of Object.entries(before.months)){ S.months[mk]=d; markDirty('months/'+mk); }
+    if(kwCh){ S.kw=before.kw; markDirty('config/keywords'); } if(nwCh){ S.nw=before.nw; saveNw(); }
+    bump(); render(); toast(L('auUndone')); }},15000);
+}
+function aiWho(busy){ const c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null;
+  return `<div class="ai-who"><span>${esc(c?L('aiUsing',c.name+(c.model?' · '+c.model:'')):L('aiNone'))}</span>${S.ai&&typeof S.ai.setup==='function'&&!busy?`<button type="button" class="btn sm" data-action="ai-setup">${esc(L('aiChangeBtn'))}</button>`:''}</div>`; }
+function aiStatus(m){ return `${m.busy?`<p class="ai-busy" role="status"><span class="loading-bar"></span><span id="ai-phase">${esc(m.phase||'')}</span></p>`:''}
+    ${m.msg?`<div class="field ai-errbox" role="alert"><span class="err">${esc(m.msg)}</span>${m.errDetails?`<details open><summary>${esc(L('aiErrWhat'))}</summary><pre>${esc(m.errDetails)}</pre><button type="button" class="btn sm" data-action="ai-copy-err">${esc(L('aiCopyDetails'))}</button></details>`:''}</div>`:''}`; }
+function auditLine(x){
+  const row=r=>`${fmtDate(r.date)} · ${esc(r.concept)||esc(L('noConcept'))} · ${fmtEUR(r.amount)}`;
+  const where=(t,c,show)=>(show?esc(TL(t))+': ':'')+esc(c||L('uncat'));
+  if(x.k==='cat'){ const mv=x.t!==x.r.table; return `<span>${row(x.r)}</span><span>${where(x.r.table,x.r.category,mv)} → <b>${where(x.t,x.cat,mv)}</b></span>`; }
+  if(x.k==='dup') return `<span><b>${esc(L('auDel'))}:</b> ${row(x.r)}</span><span class="hint">${esc(L('auDupOf'))} ${row(x.o)}</span>`;
+  if(x.k==='kw') return `<span>${esc(TL(x.t))}: “${esc(x.kw)}” → <b>${esc(x.cat)}</b></span>`;
+  if(x.k==='words') return `<span>${esc(x.acc.name)}: ${esc(x.acc.words||DASH)} → <b>${esc(x.words)}</b></span>`;
+  return `<span>${x.r?row(x.r)+': ':''}${esc(x.text)}</span>`;
+}
+function modalAudit(){
+  const m=S.modal, busy=!!m.busy;
+  if(m.items){
+    const groups=['cat','dup','kw','words','q'].map(g=>{ const xs=m.items.map((x,i)=>[x,i]).filter(([x])=>x.k===g); if(!xs.length) return '';
+      return `<section class="au-g"><h4>${esc(L('auG_'+g))} · ${fmtCount(xs.length)}</h4><ul class="au-list">${xs.map(([x,i])=>g==='q'
+        ?`<li><span class="au-t">${auditLine(x)}</span></li>`
+        :`<li><input type="checkbox" id="au-${i}" checked><label for="au-${i}">${auditLine(x)}${x.why?`<span class="hint">${esc(x.why)}</span>`:''}</label></li>`).join('')}</ul></section>`; }).join('');
+    const any=m.items.some(x=>x.k!=='q');
+    return `${mHead(esc(L('auBtn')),esc(any?L('auHelp'):L('auNone')))}
+    <div class="m-body ai-body">${m.notes?`<p class="hint"><b>${esc(L('aiNotes'))}:</b> ${esc(m.notes)}</p>`:''}${groups}</div>
+    <div class="m-foot"><span class="r"><button class="btn" type="button" data-action="close">${esc(L(any?'cancel':'close'))}</button>${any?`<button class="btn primary" type="button" data-action="au-apply">${esc(L('auApply'))}</button>`:''}</span></div>`;
+  }
+  const rows=allRows(), ys=yearsWithData(), c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null;
+  const reqs=Math.max(1,Math.ceil(rows.length*80/AUDIT_CHARS));
+  return `${mHead(esc(L('auBtn')),esc(L('auSub_'+m.focus)))}
+  <div class="m-body ai-body">
+    ${aiWho(busy)}
+    <p>${esc(L('auSends',pl(rows.length,'transaction'),ys.length?(ys[0]===ys[ys.length-1]?String(ys[0]):ys[0]+'–'+ys[ys.length-1]):'',fmtCount(TKEYS.reduce((s,t)=>s+(kws()[t]||[]).length,0)),fmtCount(nw().accounts.length)))} ${esc(L('auReqs',reqs))}</p>
+    <p class="hint">${esc(L('auPrivacy',c?c.name:'AI'))}</p>
+    ${aiStatus(m)}
+  </div>
+  <div class="m-foot"><span class="r">${busy?`<button class="btn" type="button" data-action="ai-stop">${esc(L('aiStop'))}</button>`:`<button class="btn" type="button" data-action="close">${esc(L('cancel'))}</button><button class="btn primary" type="button" data-action="au-send">${ICON.ai}${esc(L('auStart'))}</button>`}</span></div>`;
 }
 /* ───────── yearly tracking ───────── */
 function heatStyle(v,st){
@@ -4719,6 +4898,7 @@ function viewTransactions(){
   return pageHead('transactions',yearStepper(),S.canWrite?`
         ${unInTable?`<button class="btn" data-action="categorise" title="${esc(L('categoriseTitle'))}">${esc(L('categoriseBlanks'))}</button>`:''}
         ${S.lastImport?`<button class="btn ghost" data-action="undo-import">${esc(L('undoImport',S.lastImport.n))}</button>`:''}
+        ${S.ai&&allRows().length?`<button class="btn" data-action="audit" data-f="tx">${ICON.ai}${esc(L('auBtn'))}</button>`:''}
         ${S.ai?`<button class="btn" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}
         <button class="btn" data-action="import">${esc(L('pasteImport'))}</button>
         <button class="btn primary" data-action="add-tx">${esc(L('addTx'))}</button>`:'')+`<div class="toolbar">
@@ -4829,7 +5009,7 @@ function kwTestOut(){
 /* ───────── modals ───────── */
 let opener=null;
 function openModal(m){ const a=document.activeElement; if(!S.modal) opener=a&&a!==document.body&&!$('#overlay').contains(a)?a:null; S.modal=m; renderModal(); }
-function closeModal(){ const prev=S.modal&&S.modal.type; if(S.modal&&S.modal.type==='ai'&&S.modal.ctl) S.modal.ctl.abort(); const was=!!S.modal; S.modal=null; const o=$('#overlay'); o.classList.remove('on'); o.innerHTML=''; o.setAttribute('aria-hidden','true');
+function closeModal(){ const prev=S.modal&&S.modal.type; if(S.modal&&S.modal.ctl) S.modal.ctl.abort(); const was=!!S.modal; S.modal=null; const o=$('#overlay'); o.classList.remove('on'); o.innerHTML=''; o.setAttribute('aria-hidden','true');
   if(was&&opener&&opener.isConnected) opener.focus({preventScroll:true}); opener=null;
   /* the wizard itself closed (Esc, outside click, ×): same as "Finish later", so it doesn't come back after the next dialog */
   if(prev==='wizard'&&S.wizard) S.wizard.on=false;
@@ -4847,7 +5027,7 @@ document.addEventListener('keydown',e=>{
 });
 function renderModal(keepId){
   const m=S.modal, o=$('#overlay'); if(!m){ closeModal(); return; }
-  const inner=({edit:modalEdit,drill:modalDrill,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwacc:modalNwAccounts,ai:modalAi,nwgoal:modalNwGoal,nwret:modalNwReturns,nwlink:modalNwLink,nwimp:modalNwImport})[m.type]();
+  const inner=({edit:modalEdit,drill:modalDrill,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwacc:modalNwAccounts,ai:modalAi,audit:modalAudit,nwgoal:modalNwGoal,nwret:modalNwReturns,nwlink:modalNwLink,nwimp:modalNwImport})[m.type]();
   o.innerHTML=`<div class="scrim" data-action="close"></div><div class="modal${m.wide?' wide':m.mid?' mid':''}" role="dialog" aria-modal="true" aria-labelledby="m-title">${inner}</div>`;
   o.classList.add('on'); o.setAttribute('aria-hidden','false');
   if(keepId){ const k=document.getElementById(keepId); if(k&&o.contains(k)){ k.focus({preventScroll:true}); return; } }
@@ -6071,6 +6251,9 @@ const ACTIONS={
   'ai-opt':el=>{ const m=S.modal, r=m&&m.rows&&m.rows[+el.dataset.i]; if(!r) return; const o=aiOptions(r.aiQ).opts[+el.dataset.j]; if(o){ aiAnswer(r,o.text); renderModalKeepScroll(); } },
   'ai-reply':el=>{ const m=S.modal, r=m&&m.rows&&m.rows[+el.dataset.i], inp=$('#ai-reply-'+el.dataset.i); if(r&&inp){ aiAnswer(r,inp.value); renderModalKeepScroll(); } },
   'ai-send':()=>aiRun(),
+  'audit':el=>{ if(S.canWrite&&S.ai) aiOpen({type:'audit',focus:el.dataset.f||'tx',mid:true}); },
+  'au-send':()=>auditRun(),
+  'au-apply':()=>auditApply(),
   'ai-stop':()=>{ const m=S.modal; if(m&&m.ctl) m.ctl.abort(); },
   'ai-copy-err':async()=>{ const m=S.modal; if(!m||!m.errDetails) return; let ok=false; try{ await navigator.clipboard.writeText(m.errDetails); ok=true; }catch(_){}
     if(!ok){ const ta=document.createElement('textarea'); ta.value=m.errDetails; ta.style.cssText='position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); try{ ok=document.execCommand('copy'); }catch(_){} ta.remove(); }

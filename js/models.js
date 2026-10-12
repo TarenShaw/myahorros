@@ -5,6 +5,8 @@ window.YBT_MODELS={
   chunkChars:15000,
   /* most pictures (scanned pages) in one request */
   chunkImages:8,
+  /* characters of tracker rows per AI audit request: answers list only fixes, so requests can be bigger */
+  auditChars:60000,
   /* most text, in characters, for one whole run (all files, all requests) */
   totalChars:1500000,
   /* longest answer asked for, in tokens. If a provider says its limit is lower, the lower one is used. */
