@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-vEyxVytncCzFMrN5OseVUt5EjliFm+iVYRz4jU8yr1A=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-XK8ZdPkPIVCCiU/0bruUSDIb3VaFRL62+HGnZhGhipI=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -163,6 +163,11 @@ html{scrollbar-gutter:stable}
 .ai-rules .tag{font:600 var(--fs-sm)/1 var(--f-body);padding:2px var(--s8);border-radius:var(--r-inner);background:var(--accent-soft);color:var(--ink)}
 .ai-rules textarea{width:100%;margin-top:var(--s8);font:var(--fs-meta)/1.5 var(--f-mono);resize:vertical}
 .ai-rules .hint{margin:var(--s8) 0 0}
+.au-period{border:0;margin:0;padding:0;display:grid;gap:var(--s8);min-width:0}
+.au-yrs{display:flex;flex-wrap:wrap;gap:var(--s8)}
+.au-yrs .btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.au-ft{display:flex;flex-wrap:wrap;gap:var(--s12)}
+.au-ft label{display:grid;gap:var(--s4);font-size:var(--fs-meta);color:var(--ink-2)}
 .au-g h4{margin:0 0 var(--s8);font-size:var(--fs-body)}
 .au-list{list-style:none;margin:0;padding:0;display:grid}
 .au-list li{display:flex;gap:var(--s12);align-items:flex-start;padding:var(--s8) 0;border-bottom:1px solid var(--line);font-size:var(--fs-meta)}
@@ -479,6 +484,7 @@ table.grid{border-collapse:separate;border-spacing:0;width:100%;table-layout:fix
 .filters{display:flex;flex-wrap:wrap;gap:var(--s8);align-items:center;margin-bottom:var(--s12)}
 .filters input[type=search]{width:min(320px,100%)}
 .tx-sum{display:flex;justify-content:space-between;gap:var(--s8);flex-wrap:wrap;font-size:var(--fs-sm);color:var(--ink-2);margin-bottom:var(--s8)}
+.tx-sum .au-link{display:inline-flex;align-items:center;gap:var(--s4);margin-left:var(--s8)}
 .tx-sum b{color:var(--ink);font-variant-numeric:tabular-nums}
 table.tx{width:100%;border-collapse:collapse;font-size:var(--fs-meta)}
 .tx th{text-align:left;font:600 var(--fs-eyebrow)/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:var(--s12) var(--s12);border-bottom:1px solid var(--line-2);white-space:nowrap}
@@ -1761,9 +1767,12 @@ const STR={
 
   nwClickMonth:['Click to show this month','Pulsa para ver este mes'], nwShowing:['Showing','Mostrando'],
   aiBtn:['Fill in with AI','Rellenar con IA'],
-  auBtn:['AI audit','Auditoría con IA'],
-  auSub_tx:['The AI reads every transaction in your tracker and suggests fixes: wrong categories or tables, duplicates, new keywords. Nothing changes until you tick a fix and press Apply.','La IA lee todos los movimientos de tu control y propone correcciones: categorías o tablas equivocadas, duplicados, palabras clave nuevas. No cambia nada hasta que marcas una corrección y pulsas Aplicar.'],
-  auSends:[(n,ys,k,a)=>`It sends ${n} (${ys}), your categories, ${k} keywords and ${a} accounts with their statement words.`,(n,ys,k,a)=>`Envía ${n} (${ys}), tus categorías, ${k} palabras clave y ${a} cuentas con sus palabras del extracto.`],
+  auBtn:['Check for mistakes with AI','Buscar errores con IA'],
+  auLinkTip:['The AI looks through the transactions you already have for wrong categories, duplicates and missing keywords. It doesn’t add anything new.','La IA revisa los movimientos que ya tienes en busca de categorías equivocadas, duplicados y palabras clave que faltan. No añade nada nuevo.'],
+  auSub_tx:['The AI reads the transactions you already have, in the months you pick, and suggests fixes: wrong categories or tables, duplicates, new keywords. Nothing changes until you tick a fix and press Apply.','La IA lee los movimientos que ya tienes, en los meses que elijas, y propone correcciones: categorías o tablas equivocadas, duplicados, palabras clave nuevas. No cambia nada hasta que marcas una corrección y pulsas Aplicar.'],
+  auSends:[(n,ys,k,a)=>`It checks ${n} (${ys}) and sends them with your categories, ${k} keywords and ${a} accounts with their statement words.`,(n,ys,k,a)=>`Revisa ${n} (${ys}) y los envía con tus categorías, ${k} palabras clave y ${a} cuentas con sus palabras del extracto.`],
+  auPeriod:['Months to check','Meses a revisar'], auFrom:['From','Desde'], auTo:['To','Hasta'], auAll:['All','Todo'],
+  auOther:[n=>`The other ${n} go only as a summary of how you usually sort each description, so the AI can compare.`,n=>`Los otros ${n} van solo como un resumen de cómo sueles clasificar cada concepto, para que la IA pueda comparar.`],
   auReqs:[n=>n===1?'One request.':`${n} requests, one after the other.`,n=>n===1?'Una petición.':`${n} peticiones, una tras otra.`],
   auPrivacy:[w=>`Your data goes to ${w} only when you press Start, with your own key. Nothing is changed until you apply.`,w=>`Tus datos van a ${w} solo cuando pulsas Empezar, con tu propia clave. No se cambia nada hasta que aplicas.`],
   auStart:['Start audit','Empezar auditoría'], auAsking:['Checking your tracker…','Revisando tu control…'],
@@ -4634,9 +4643,18 @@ function aiReviewNote(m){
 const AUDIT_CHARS=YM_.auditChars||60000;
 const auDay=d=>Math.round(Date.parse(d.slice(0,10)+'T00:00:00Z')/864e5);
 const auRow=(n,r)=>[n,r.date,r2(r.amount),r.concept,r.table,r.category||''];
-function auditData(){
+/* rows outside the months being checked -> how each description is usually sorted, so the AI can compare (biggest first, capped) */
+function auditHistory(rows){
+  const g=new Map();
+  for(const r of rows){ const k=r.table+'|'+loose(r.concept); let x=g.get(k); if(!x){ x={d:r.concept,t:r.table,n:0,c:{}}; g.set(k,x); } x.n++; const c=r.category||''; x.c[c]=(x.c[c]||0)+1; }
+  const out=[]; let n=0;
+  for(const x of [...g.values()].sort((a,b)=>b.n-a.n)){ const s=JSON.stringify([x.d,x.t,x.n,x.c]); if(n+s.length>20000) break; out.push(s); n+=s.length+1; }
+  return out.join('\n');
+}
+const auIn=(r,from,to)=>{ const k=r.date.slice(0,7); return k>=from&&k<=to; };
+function auditData(from,to){
   /* ponytail: sorted by description so one shop's rows share a request; a shop spelt two ways can land in two requests */
-  const rows=allRows().map(r=>[loose(r.concept),r]).sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:a[1].date<b[1].date?-1:1).map(x=>x[1]);
+  const rows=allRows().filter(r=>auIn(r,from,to)).map(r=>[loose(r.concept),r]).sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:a[1].date<b[1].date?-1:1).map(x=>x[1]);
   const ref=new Map(), lines=[];
   rows.forEach((r,i)=>{ ref.set(i+1,r); lines.push(JSON.stringify(auRow(i+1,r))); });
   /* possible duplicates: same table and amount, at most 2 days apart (the AI says which are really one movement).
@@ -4649,10 +4667,10 @@ function auditData(){
   pairs.sort((a,b)=>a[0]-b[0]);
   const files=[{name:'rows',text:lines.join('\n'),images:[]}];
   if(pairs.length) files.push({name:'pairs',text:pairs.slice(0,200).map(([,a,b])=>JSON.stringify([auRow(a,ref.get(a)),auRow(b,ref.get(b))])).join('\n'),images:[]});
-  return {ref,files};
+  return {ref,files,history:auditHistory(allRows().filter(r=>!auIn(r,from,to)))};
 }
 const AUDIT_FOCUS={tx:'I opened this from Transactions: concentrate on categories, tables, duplicates and keywords.'};
-function auditPrompt(focus,files){
+function auditPrompt(focus,files,history){
   const ctx=Object.assign(aiContext('tx'),{my_accounts:nw().accounts.map(a=>({id:a.id,name:a.name,group:a.group,statement_words:a.words||''}))});
   return `You are auditing my personal budget tracker. The rows below are what is already saved in it. Find what is wrong and reply with ONE JSON object, nothing else.
 
@@ -4678,7 +4696,10 @@ The JSON object has these keys:
 
 My setup (JSON):
 ${JSON.stringify(ctx)}
-
+${history?`
+===== OTHER MONTHS, for comparison only (no fixes for these): [description, table, how many rows, {category: rows}] =====
+${history}
+`:''}
 ${files.map(f=>f.name==='pairs'?`===== POSSIBLE DUPLICATES (same table and amount, up to 2 days apart; each line is two rows) =====\n${f.text}`:`===== ROWS: [number, date, amount, description, table, category], sorted by description =====\n${f.text}`).join('\n\n')}`;
 }
 function auditMerge(rs){
@@ -4715,10 +4736,10 @@ async function auditRun(){
   const m=S.modal; if(!m||m.type!=='audit'||m.busy) return;
   m.busy=true; m.msg=''; m.errDetails=''; m.ctl=new AbortController(); m.phase=L('auAsking'); renderModalKeepScroll();
   try{
-    const a=auditData();
+    const a=auditData(m.from,m.to);
     if(sum(a.files.map(f=>f.text.length))>AI_TEXT_MAX) throw {local:L('aiTooBig')};
     const jobs=aiJobs(a.files,AUDIT_CHARS,AI_CHUNK_IMAGES), rs=[];
-    m.build=job=>auditPrompt(m.focus,job.files); m.merge=auditMerge; m.cache=m.cache||new Map();
+    m.build=job=>auditPrompt(m.focus,job.files,a.history); m.merge=auditMerge; m.cache=m.cache||new Map();
     for(let i=0;i<jobs.length;i++){ if(S.modal!==m) return; rs.push(await aiRunJob(m,jobs[i],i,jobs.length,0,jobs.length>1?'':L('auAsking'))); }
     if(S.modal!==m) return;
     const res=auditMerge(rs);
@@ -4766,6 +4787,8 @@ function auditLine(x){
   if(x.k==='words') return `<span>${esc(x.acc.name)}: ${esc(x.acc.words||DASH)} → <b>${esc(x.words)}</b></span>`;
   return `<span>${x.r?row(x.r)+': ':''}${esc(x.text)}</span>`;
 }
+/* months that have rows, oldest first */
+function auMonths(){ return [...new Set(allRows().map(r=>r.date.slice(0,7)))].sort(); }
 function modalAudit(){
   const m=S.modal, busy=!!m.busy;
   if(m.items){
@@ -4778,12 +4801,21 @@ function modalAudit(){
     <div class="m-body ai-body">${m.notes?`<p class="hint"><b>${esc(L('aiNotes'))}:</b> ${esc(m.notes)}</p>`:''}${groups}</div>
     <div class="m-foot"><span class="r"><button class="btn" type="button" data-action="close">${esc(L(any?'cancel':'close'))}</button>${any?`<button class="btn primary" type="button" data-action="au-apply">${esc(L('auApply'))}</button>`:''}</span></div>`;
   }
-  const rows=allRows(), ys=yearsWithData(), c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null;
+  const ms=auMonths(), c=S.ai&&typeof S.ai.current==='function'?S.ai.current():null;
+  if(!m.from||!ms.includes(m.from)) m.from=ms[0]; if(!m.to||!ms.includes(m.to)) m.to=ms[ms.length-1];
+  const rows=allRows().filter(r=>auIn(r,m.from,m.to)), other=allRows().length-rows.length, ys=[...new Set(ms.map(k=>k.slice(0,4)))];
   const reqs=Math.max(1,Math.ceil(rows.length*80/AUDIT_CHARS));
+  const opt=v=>ms.map(k=>`<option value="${k}"${k===v?' selected':''}>${esc(ymLabel(k,true))}</option>`).join('');
+  const on=(f,t)=>f===m.from&&t===m.to?' aria-pressed="true"':' aria-pressed="false"';
+  const yr=y=>{ const k=ms.filter(x=>x.startsWith(y)); return [k[0],k[k.length-1]]; };
   return `${mHead(esc(L('auBtn')),esc(L('auSub_'+m.focus)))}
   <div class="m-body ai-body">
     ${aiWho(busy)}
-    <p>${esc(L('auSends',pl(rows.length,'transaction'),ys.length?(ys[0]===ys[ys.length-1]?String(ys[0]):ys[0]+'–'+ys[ys.length-1]):'',fmtCount(TKEYS.reduce((s,t)=>s+(kws()[t]||[]).length,0)),fmtCount(nw().accounts.length)))} ${esc(L('auReqs',reqs))}</p>
+    <fieldset class="au-period"${busy?' disabled':''}><legend class="lab">${esc(L('auPeriod'))}</legend>
+      <div class="au-yrs">${ys.length>1?`<button type="button" class="btn sm" data-action="au-range" data-f="${ms[0]}" data-t="${ms[ms.length-1]}"${on(ms[0],ms[ms.length-1])}>${esc(L('auAll'))}</button>`:''}${ys.map(y=>{ const [f,t]=yr(y); return `<button type="button" class="btn sm" data-action="au-range" data-f="${f}" data-t="${t}"${on(f,t)}>${y}</button>`; }).join('')}</div>
+      <div class="au-ft"><label><span>${esc(L('auFrom'))}</span><select id="au-from">${opt(m.from)}</select></label><label><span>${esc(L('auTo'))}</span><select id="au-to">${opt(m.to)}</select></label></div>
+    </fieldset>
+    <p>${esc(L('auSends',pl(rows.length,'transaction'),m.from===m.to?ymLabel(m.from,true):ymLabel(m.from,true)+' – '+ymLabel(m.to,true),fmtCount(TKEYS.reduce((s,t)=>s+(kws()[t]||[]).length,0)),fmtCount(nw().accounts.length)))} ${other?esc(L('auOther',pl(other,'transaction')))+' ':''}${esc(L('auReqs',reqs))}</p>
     <p class="hint">${esc(L('auPrivacy',c?c.name:'AI'))}</p>
     ${aiStatus(m)}
   </div>
@@ -4898,7 +4930,6 @@ function viewTransactions(){
   return pageHead('transactions',yearStepper(),S.canWrite?`
         ${unInTable?`<button class="btn" data-action="categorise" title="${esc(L('categoriseTitle'))}">${esc(L('categoriseBlanks'))}</button>`:''}
         ${S.lastImport?`<button class="btn ghost" data-action="undo-import">${esc(L('undoImport',S.lastImport.n))}</button>`:''}
-        ${S.ai&&allRows().length?`<button class="btn" data-action="audit" data-f="tx">${ICON.ai}${esc(L('auBtn'))}</button>`:''}
         ${S.ai?`<button class="btn" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}
         <button class="btn" data-action="import">${esc(L('pasteImport'))}</button>
         <button class="btn primary" data-action="add-tx">${esc(L('addTx'))}</button>`:'')+`<div class="toolbar">
@@ -4911,7 +4942,7 @@ function viewTransactions(){
       <label class="sr" for="tx-cat">${esc(L('category'))}</label><select id="tx-cat"><option value="all">${esc(L('allCategories'))}</option><option value="${UNCAT}"${u.cat===UNCAT?' selected':''}>${esc(L('uncat'))}${unInTable?' ('+unInTable+')':''}</option>${catNames(u.table).map(n=>`<option value="${esc(n)}"${n===u.cat?' selected':''}>${esc(n)}</option>`).join('')}</select>
       ${(u.q||u.month!=='all'||u.cat!=='all')?`<button class="btn ghost sm" data-action="tx-clear">${esc(L('clearFilters'))}</button>`:''}
     </div>
-    <div class="tx-sum"><span>${esc(pl(rows.length,'transaction'))}${rows.length>shown.length?esc(L('showingFirst',fmtCount(shown.length))):''}</span><span>${esc(L('total'))} <b>${fmtEUR(total)}</b></span></div>
+    <div class="tx-sum"><span>${esc(pl(rows.length,'transaction'))}${rows.length>shown.length?esc(L('showingFirst',fmtCount(shown.length))):''}${S.canWrite&&S.ai&&allRows().length?` <button type="button" class="linkish au-link" data-action="audit" data-f="tx" title="${esc(L('auLinkTip'))}">${ICON.ai}${esc(L('auBtn'))}</button>`:''}</span><span>${esc(L('total'))} <b>${fmtEUR(total)}</b></span></div>
     ${S.canWrite&&rows.length?`<p class="hint" style="margin:0 0 var(--s8)">${esc(L('txRowHint'))}</p>`:''}
     <div class="frame" style="overflow:visible"><table class="tx">
       <thead><tr><th style="width:110px">${sortBtn('date',L('date'))}</th><th>${esc(L('concept'))}</th><th style="width:240px">${esc(L('category'))}</th><th class="r" style="width:140px">${sortBtn('amount',L('amount'))}</th></tr></thead>
@@ -6254,6 +6285,7 @@ const ACTIONS={
   'audit':el=>{ if(S.canWrite&&S.ai) aiOpen({type:'audit',focus:el.dataset.f||'tx',mid:true}); },
   'au-send':()=>auditRun(),
   'au-apply':()=>auditApply(),
+  'au-range':el=>{ const m=S.modal; if(!m||m.busy) return; m.from=el.dataset.f; m.to=el.dataset.t; renderModalKeepScroll(); },
   'ai-stop':()=>{ const m=S.modal; if(m&&m.ctl) m.ctl.abort(); },
   'ai-copy-err':async()=>{ const m=S.modal; if(!m||!m.errDetails) return; let ok=false; try{ await navigator.clipboard.writeText(m.errDetails); ok=true; }catch(_){}
     if(!ok){ const ta=document.createElement('textarea'); ta.value=m.errDetails; ta.style.cssText='position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); try{ ok=document.execCommand('copy'); }catch(_){} ta.remove(); }
@@ -6385,6 +6417,7 @@ document.addEventListener('change',e=>{
   if(id==='year-select'){ S.ui.year=+el.value; S.ui.tx.month='all'; S.ui.oc.month='all'; render(); return; }
   if(id==='oc-month'){ S.ui.oc.month=el.value; render(); return; }
   if(id==='oc-exrent'){ S.ui.oc.exRent=el.checked; render(); return; }
+  if(id==='au-from'||id==='au-to'){ const m=S.modal; if(!m||m.type!=='audit') return; if(id==='au-from'){ m.from=el.value; if(m.to<m.from) m.to=m.from; } else { m.to=el.value; if(m.from>m.to) m.from=m.to; } renderModalKeepScroll(id); return; }
   if(id==='tx-month'){ S.ui.tx.month=el.value; S.ui.tx.limit=150; render(); return; }
   if(id==='tx-cat'){ S.ui.tx.cat=el.value; S.ui.tx.limit=150; render(); return; }
   if(id==='tx-ally'){ S.ui.tx.allYears=el.checked; S.ui.tx.limit=150; render(); return; }
