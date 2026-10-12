@@ -88,11 +88,15 @@ const comparisonRender = new Function('change', `
   return comparisonCard();
 `);
 for (const [change, expected] of [
-  [{income:1,expenses:1,saved:1}, ['good','bad','good']],
-  [{income:-1,expenses:-1,saved:-1}, ['bad','good','bad']],
-  [{income:0,expenses:0,saved:0}, ['','','']]
+  [{income:1,expenses:1,saved:1,investments:1}, ['good','bad','good','good']],
+  [{income:-1,expenses:-1,saved:-1,investments:-1}, ['bad','good','bad','bad']],
+  [{income:0,expenses:0,saved:0,investments:0}, ['','','','']]
 ]) {
   const markup=comparisonRender(change);
+  assert.strictEqual((markup.match(/<button type="button" class="nw-change-stat" data-action="compare-rows"/g)||[]).length,4, 'whole comparison cards are keyboard-accessible buttons');
+  assert(!markup.includes('class="linkish"'), 'no repeated transaction buttons');
+  assert(markup.includes('border-top-color:var(--c-investments)'), 'investment card uses blue');
+  assert(markup.includes('data-t="investments"'), 'investment card opens investment rows');
   assert.deepStrictEqual([...markup.matchAll(/<small class="([^"]*)">Δ /g)].map(m=>m[1]), expected);
 }
 console.log('experience smoke: comparison colors passed');

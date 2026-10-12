@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-1XnTj4ZNufAQ1iU/XLn1CD0dkJsO5HC20T/5OJa94OQ=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-/dvAcBILlldz2Aowgow7CJuXiLCVrnKgJb4ESMPO1yU=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -550,9 +550,7 @@ button.lim-btn:hover{border-style:solid;color:var(--ink)}
 .lim-legend i{display:inline-block;width:16px;height:3px;border-radius:var(--r-mark)}
 .lim-legend i.u{background:color-mix(in srgb,var(--good) 60%,transparent)}
 .lim-legend i.o{background:var(--bad);margin-left:var(--s8)}
-.tm-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--r-inner)}
-.tm-kpi{padding:var(--s16) var(--s16);display:flex;flex-direction:column;gap:var(--s4);min-width:0}
-.tm-kpi+.tm-kpi{border-left:1px solid var(--line)}
+.tm-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s12)}
 .tm-pace{position:relative;height:6px;border-radius:var(--r-mark);background:var(--surface-3);margin:var(--s8) 0 3px}
 .tm-pace-fill{position:absolute;left:0;top:0;bottom:0;border-radius:var(--r-mark)}
 .tm-num{font:700 var(--fs-kpi)/1.15 var(--f-body);letter-spacing:-.01em;white-space:nowrap}
@@ -794,8 +792,6 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
   .cat-list li.has-lim{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n n" "u u" "l a";row-gap:var(--s8)}
   .cat-list li.has-lim .lim-btn{justify-self:start}
   .tm-stats{grid-template-columns:1fr}
-  .tm-kpi{padding:var(--s16)}
-  .tm-kpi+.tm-kpi{border-left:0;border-top:1px solid var(--line)}
   .lim-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n v" "t t" "l l";gap:var(--s4) var(--s12)}
   .lim-name{grid-area:n}.lim-val{grid-area:v}.lim-track{grid-area:t}.lim-left{grid-area:l;text-align:left}
   .grid .rh{min-width:150px;max-width:170px;white-space:normal}
@@ -1042,7 +1038,6 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 @media (min-width:1200px){
   .ov-top{grid-template-columns:minmax(0,.9fr) minmax(0,2fr)}
   .tile{padding:var(--s24) var(--s24) var(--s16);gap:var(--s8)}
-  .tm-kpi{padding:var(--s24) var(--s24) var(--s16);gap:var(--s8)}
   #ch-monthly,#ch-prop{height:340px}
 }
 .foot-note,.legend,.heat-legend,.ind-target-wrap,.pill,.ind-label small,.ind-val small,.nw-stat-l,.nw-stat-s,.nw-srow small,.nw-foot,.lim-val small,.field .help{font-size:var(--fs-meta)}
@@ -1063,10 +1058,12 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 .filters input{max-width:200px}.tx-source{display:block;overflow-wrap:anywhere}.tx input[type=checkbox]{margin-right:var(--s8)}
 .bulk-tools{display:flex;align-items:center;flex-wrap:wrap;gap:var(--s8);margin-bottom:var(--s12)}
 .more-analysis{display:grid;gap:var(--s24)}.more-analysis[hidden]{display:none}
-.compare-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s12);margin-top:var(--s12)}
+.compare-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s12);margin-top:var(--s12)}
+@media(max-width:1100px){.compare-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .compare-grid b{display:block;font-size:var(--fs-kpi)}.compare-grid small{display:block}
 .compare-grid .good{color:var(--good-ink)}.compare-grid .bad{color:var(--bad-ink)}
-.compare-grid [data-action="compare-rows"]{margin-top:var(--s8)}
+.compare-grid button.nw-change-stat{background:var(--surface);text-align:left;cursor:pointer}
+.compare-grid button.nw-change-stat:hover,.compare-grid button.nw-change-stat:focus-visible{background:var(--surface-2);border-color:var(--accent)}
 .year-view{margin-bottom:var(--s12)}
 .compare-controls,.scenario-fields{display:flex;flex-wrap:wrap;gap:var(--s12)}
 .compare-controls label,.scenario-fields label{display:grid;gap:var(--s4)}
@@ -2973,7 +2970,7 @@ function comparisonCard(){
   const ms=[...new Set(allRows().map(r=>r.date.slice(0,7)))].filter(k=>+k.slice(0,4)===S.ui.year).sort(); if(!ms.length) return '';
   const done=ms.filter(k=>k<ymNow()), k=ms.includes(S.ui.compareMonth)?S.ui.compareMonth:done[done.length-1]||ms[ms.length-1], base=S.ui.compareBase||'month', C=monthComparison(allRows(),k,base);
   return `<section class="card" id="month-comparison"><div class="card-head"><h2>${esc(L('compareTitle'))}</h2></div><div class="compare-controls"><label>${esc(L('month'))}<select id="compare-month">${ms.map(m=>`<option value="${m}"${m===k?' selected':''}>${esc(ymLabel(m,true))}</option>`).join('')}</select></label><label>${esc(L('compareAgainst'))}<select id="compare-base"><option value="month"${base==='month'?' selected':''}>${esc(L('previousMonth'))}</option><option value="year"${base==='year'?' selected':''}>${esc(L('previousYear'))}</option></select></label></div>
-  ${C.complete?`<p class="hint">${esc(ymLabel(k,true))} – ${esc(ymLabel(C.previousMonth,true))}. ${esc(L('comparisonHelp'))}</p><div class="compare-grid">${['income','expenses','saved'].map(t=>`<div><span>${esc(t==='saved'?L('savings'):TL(t))}</span><b>${fmtEUR(C.current[t])}</b><small>${esc(ymLabel(C.previousMonth,true))}: ${fmtEUR(C.previous[t])}</small><small class="${C.change[t]===0?'':(t==='expenses'?C.change[t]<0:C.change[t]>0)?'good':'bad'}">Δ ${signed(C.change[t])}</small><button class="linkish" data-action="compare-rows" data-k="${k}" data-t="${t==='saved'?'expenses':t}">${esc(L('inspectMonth'))}</button></div>`).join('')}</div>`:`<p class="hint">${esc(L('missingComparison'))}</p>`}</section>`;
+  ${C.complete?`<p class="hint">${esc(ymLabel(k,true))} – ${esc(ymLabel(C.previousMonth,true))}. ${esc(L('comparisonHelp'))}</p><div class="compare-grid">${['income','expenses','saved','investments'].map(t=>`<button type="button" class="nw-change-stat" data-action="compare-rows" data-k="${k}" data-t="${t==='saved'?'expenses':t}" title="${esc(L('inspectMonth'))}" style="border-top-color:var(--c-${t==='saved'?'income':t})"><span class="nw-stat-l">${esc(t==='saved'?L('savings'):TL(t))}</span><b>${fmtEUR(C.current[t])}</b><small>${esc(ymLabel(C.previousMonth,true))}: ${fmtEUR(C.previous[t])}</small><small class="${C.change[t]===0?'':(t==='expenses'?C.change[t]<0:C.change[t]>0)?'good':'bad'}">Δ ${signed(C.change[t])}</small></button>`).join('')}</div>`:`<p class="hint">${esc(L('missingComparison'))}</p>`}</section>`;
 }
 function scenarioTotal(current,monthly,extra,n){
   if(![current,monthly,extra,n].every(Number.isFinite)||extra<0||extra>=1e9||!Number.isInteger(n)||n<1||n>600) return null;
@@ -3136,7 +3133,7 @@ function thisMonthCard(){
   /* one column per type, all alike: so far, the average month, a bar of so far against that average with a mark for
      where an average month would be by today, and where the month is heading (mmForecast) */
   const kpi=(t,lab)=>{ const sg=t==='expenses'?-1:1, now=sg*A[t].total[m], avg=prev.length?sg*sum(prev.map(i=>A[t].total[i]))/prev.length:null, F=mmForecast(t,null), end=F&&F.months.get(m);
-    return `<div class="tm-kpi"><span class="tile-label"><i class="sw ${t}"></i>${esc(L(lab))}</span><span class="tm-num">${fmtEUR(now)}</span>
+    return `<div class="tm-kpi nw-change-stat" style="border-top-color:${TCOLOR[t]}"><span class="tile-label"><i class="sw ${t}"></i>${esc(L(lab))}</span><span class="tm-num">${fmtEUR(now)}</span>
       ${avg!=null?`<span class="tile-sub">${esc(L('avgMonthIs',fmtEUR(avg,0)))}</span>${avg>0?`<span class="tm-pace" role="img" aria-label="${esc(L('paceAria',fmtPct(Math.max(0,now)/avg),n.day,n.days))}"><span class="tm-pace-fill" style="width:${(Math.min(1,Math.max(0,now/avg))*100).toFixed(1)}%;background:${TCOLOR[t]}"></span><span class="lim-pace" style="left:${(pace*100).toFixed(1)}%" title="${esc(L('avgPace',n.day))}"></span></span>`:''}`:''}
       ${end?`<span class="tile-sub">${esc(L('onTrack',fmtEUR(end.total,0)))}</span>`:''}</div>`; };
   return `<section class="card tm" aria-labelledby="tm-title">
