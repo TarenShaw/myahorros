@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YCoBKKVo/OvkCX854fzG7Z/aXox9c8ocTIUrC9DG+lg=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-rYWi3otKM6vqDcyD7Olvk15Mrw//NAyvMBaIBmWRiew=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -206,6 +206,11 @@ html{scrollbar-gutter:stable}
 .wz-ok svg{width:16px;height:16px;flex:none}
 .wz-sum{font-weight:600}
 .guide-strip{display:flex;align-items:center;gap:var(--s12);flex-wrap:wrap;padding:var(--s12) var(--s16)}
+/* the monthly check-in: warm so it's noticed among the cards, softer than a warning */
+.card.guide.ci-strip{background:var(--warn-soft);border-color:var(--warn);border-left:4px solid var(--warn)}
+.ci-strip .eyebrow{color:var(--warn-ink)}
+.ci-strip [data-action=ci-open]{background:var(--warn);border-color:var(--warn);color:#1f1600}
+.ci-strip [data-action=ci-open]:hover{filter:brightness(1.08)}
 .guide-strip .grow{flex:1;min-width:160px;font-weight:600}
 .ai-who{display:flex;align-items:center;justify-content:space-between;gap:var(--s12);padding:var(--s8) var(--s12);border:1px solid var(--line);border-radius:var(--r-inner);background:var(--surface-2);font-size:var(--fs-meta)}
 .ai-who span{min-width:0;overflow-wrap:anywhere}
@@ -3571,7 +3576,7 @@ const CI_STEPS=4;
 const ciMonth=()=>ymAdd(ymNow(),-1);
 function ciDue(){ if(!S.canWrite||S.demo||S.mode!=='live'||!allRows().length) return false; const G=guideState(); if(G&&G.cur!=='done') return false;
   const l=S.settings&&S.settings.lastCheckin; return !(typeof l==='string'&&l>=ciMonth()); }
-function ciStrip(){ return `<section class="card guide guide-strip"><span class="eyebrow">${esc(L('ciEyebrow'))}</span><span class="grow">${esc(L('ciStrip',ymIn(ciMonth())))}</span><button class="btn primary" type="button" data-action="ci-open">${esc(L('ciStart'))}</button><button class="icon-btn" type="button" data-action="ci-later" aria-label="${esc(L('ciSkipMonth'))}" title="${esc(L('ciSkipMonth'))}">${ICON.x}</button></section>`; }
+function ciStrip(){ return `<section class="card guide guide-strip ci-strip"><span class="eyebrow">${esc(L('ciEyebrow'))}</span><span class="grow">${esc(L('ciStrip',ymIn(ciMonth())))}</span><button class="btn" type="button" data-action="ci-open">${esc(L('ciStart'))}</button><button class="icon-btn" type="button" data-action="ci-later" aria-label="${esc(L('ciSkipMonth'))}" title="${esc(L('ciSkipMonth'))}">${ICON.x}</button></section>`; }
 /* dropped files are read one after another, each in the usual import review */
 function ciFiles(files){ if(!S.wizard||!files.length) return; S.wizard.queue=files.slice(); S.wizard.total=files.length; ciNext(); }
 function ciNext(){ const w=S.wizard, f=w&&w.queue&&w.queue.shift(); if(!f) return;
