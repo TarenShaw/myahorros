@@ -15,7 +15,7 @@ const FOLDER='Yearly Budget Tracker', FILE='tracker-data.json', BACKUPS='Backups
 const DAILY=/^tracker-data \d{4}-\d{2}-\d{2}\.json$/;
 const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.file';
 const API='https://www.googleapis.com/drive/v3', UPLOAD='https://www.googleapis.com/upload/drive/v3';
-const MODE_KEY='ybt.storage', DRIVE_KEY='ybt.drive', PICKED_KEY='ybt.picked'; /* PICKED_KEY: the person chose where to save (the demo picks browser storage for them) */
+const MODE_KEY='ybt.storage', DRIVE_KEY='ybt.drive', PICKED_KEY='ybt.picked', TOKEN_KEY='ybt.driveToken'; /* PICKED_KEY: the person chose where to save (the demo picks browser storage for them) */
 
 const clone=o=>JSON.parse(JSON.stringify(o));
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -357,6 +357,14 @@ const drive={
     await new Promise((res,rej)=>{ const s=document.createElement('script'); s.src='https://accounts.google.com/gsi/client'; s.async=true; s.onload=res; s.onerror=()=>rej(new Error('gis')); document.head.appendChild(s); });
   },
   valid(){ return this.token&&Date.now()<this.exp-60000; },
+  /* Google's pass lasts an hour. It is kept on this device until then, so a reload, another tab or a trip to the
+     landing page doesn't ask again. It only opens files MyAhorros made (drive.file). */
+  keep(){ lsSet(TOKEN_KEY,this.token?JSON.stringify({t:this.token,e:this.exp}):null); },
+  restore(){ try{ const x=JSON.parse(lsGet(TOKEN_KEY)||'null'); if(x&&x.t&&+x.e>Date.now()+60000){ this.token=x.t; this.exp=+x.e; } }catch(_){} },
+  /* the Google account, so the next pass is asked for that account without a chooser */
+  async learnHint(){ try{ const m=Object.assign({},JSON.parse(lsGet(DRIVE_KEY)||'{}')); if(m.hint) return;
+    const r=await this.json('GET',`${API}/about?fields=user(emailAddress)`), e=r&&r.user&&r.user.emailAddress; if(!e) return;
+    m.hint=e; if(this.meta) this.meta.hint=e; lsSet(DRIVE_KEY,JSON.stringify(m)); }catch(_){} },
   /* must run from a click: Google's window is a pop-up */
   async signIn(){
     await this.loadGis();
@@ -364,7 +372,7 @@ const drive={
     return new Promise((res,rej)=>{
       const hint=(JSON.parse(lsGet(DRIVE_KEY)||'{}')||{}).hint;
       const c=o.initTokenClient({client_id:CFG.googleClientId,scope:DRIVE_SCOPE,prompt:'',login_hint:hint||undefined,
-        callback:r=>{ if(r&&r.access_token&&(!o.hasGrantedAllScopes||o.hasGrantedAllScopes(r,DRIVE_SCOPE))){ this.token=r.access_token; this.exp=Date.now()+(+r.expires_in||3600)*1000; res(true); setTimeout(()=>window.dispatchEvent(new CustomEvent('ybt-local-render')),0); } else rej(new Error('denied')); },
+        callback:r=>{ if(r&&r.access_token&&(!o.hasGrantedAllScopes||o.hasGrantedAllScopes(r,DRIVE_SCOPE))){ this.token=r.access_token; this.exp=Date.now()+(+r.expires_in||3600)*1000; this.keep(); this.learnHint(); res(true); setTimeout(()=>window.dispatchEvent(new CustomEvent('ybt-local-render')),0); } else rej(new Error('denied')); },
         error_callback:e=>rej(new Error(e&&e.type==='popup_closed'?'denied':'gis'))});
       c.requestAccessToken();
     });
@@ -380,7 +388,7 @@ const drive={
       if((r.status===429||r.status>=500)&&i<tries){ await sleep(Math.min(8000,Math.max((+r.headers.get('Retry-After')||0)*1000,600*Math.pow(2,i)))); continue; }
       break;
     }
-    if(r.status===401||r.status===403&&/auth/i.test(await r.clone().text())){ this.token=null; throw new Error('signin'); }
+    if(r.status===401||r.status===403&&/auth/i.test(await r.clone().text())){ this.token=null; this.keep(); throw new Error('signin'); }
     if(!r.ok) throw new Error('drive '+r.status);
     return r;
   },
@@ -405,7 +413,7 @@ const drive={
     const f=await this.findFile(m.folderId);
     m.fileId=f?f.id:null; m.remote=f||null; this.meta=m; this.remember(); return m;
   },
-  remember(){ const m=this.meta||{}; lsSet(DRIVE_KEY,JSON.stringify({fileId:m.fileId||null,folderId:m.folderId||null,backupsId:m.backupsId||null,hint:m.hint||null})); },
+  remember(){ const m=this.meta||{}, was=JSON.parse(lsGet(DRIVE_KEY)||'{}')||{}; lsSet(DRIVE_KEY,JSON.stringify({fileId:m.fileId||null,folderId:m.folderId||null,backupsId:m.backupsId||null,hint:m.hint||was.hint||null})); },
   async remote(){ const m=this.meta; if(!m||!m.fileId) return null;
     const f=await this.json('GET',`${API}/files/${m.fileId}?fields=id,version,modifiedTime`);
     return f; },
@@ -751,6 +759,18 @@ function driveSync(pull){
 }
 window.addEventListener('online',()=>{ if(mode==='drive'){ if(barKind==='offline') bar(null); driveSync(true); } if(mode==='folder') flushFolder(); });
 window.addEventListener('offline',()=>{ if(mode==='drive'){ drive.state='offline'; bar('offline'); } });
+/* Google only lets its pop-up open right after a click. So when the pass is gone or has under 10 minutes left, the
+   next click anywhere asks for a new one; for someone who already allowed MyAhorros the pop-up closes by itself and
+   the "sign in" strip never shows. Not on the strip's own button (it signs in itself); after a failure, wait 10 minutes. */
+let renewAt=0;
+document.addEventListener('pointerdown',e=>{
+  if(mode!=='drive'||navigator.onLine===false||!(window.google&&window.google.accounts&&window.google.accounts.oauth2)) return;
+  if(drive.token&&Date.now()<drive.exp-600000||Date.now()<renewAt) return;
+  if(e.target&&e.target.closest&&e.target.closest('#web-bar')) return;
+  if(!(JSON.parse(lsGet(DRIVE_KEY)||'{}')||{}).folderId) return;   /* never connected on this device: the strip asks */
+  renewAt=Date.now()+120000;
+  drive.signIn().then(()=>{ if(barKind==='signin'||barKind==='start') bar(null); return driveSync('note'); }).catch(()=>{ renewAt=Date.now()+600000; });
+},true);
 /* coming back to the tab: catch up with changes made on another device */
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible'&&mode==='drive'&&drive.valid()) driveSync('note'); });
 
@@ -778,7 +798,7 @@ async function moveTo(choice){
   await queue;
   const prevMode=mode;
   if(choice.mode==='folder'){ folder.dir=choice.dir; await idb.set('folder',choice.dir); }
-  if(prevMode==='drive'&&choice.mode!=='drive'){ try{ if(drive.token&&window.google) window.google.accounts.oauth2.revoke(drive.token,()=>{}); }catch(_){} drive.token=null; lsSet(DRIVE_KEY,null); await idb.del('drive').catch(()=>{}); }
+  if(prevMode==='drive'&&choice.mode!=='drive'){ try{ if(drive.token&&window.google) window.google.accounts.oauth2.revoke(drive.token,()=>{}); }catch(_){} drive.token=null; drive.keep(); lsSet(DRIVE_KEY,null); await idb.del('drive').catch(()=>{}); }
   setMode(choice.mode); bar(null);
   if(use==='there'){
     store=there;
@@ -1022,8 +1042,12 @@ async function startDrive(){
   const c=await drive.cache().catch(()=>null);
   if(c&&typeof c.text==='string'&&parseData(c.text)){
     store=parseData(c.text); drive.dirty=!!c.dirty;
-    /* opens straight away from the copy on this device; Drive catches up once signed in */
-    setTimeout(()=>{ if(!store||mode!=='drive') return; drive.state=navigator.onLine===false?'offline':'signin'; bar(drive.state==='offline'?'offline':'start'); },0);
+    /* opens straight away from the copy on this device; Drive catches up at once with a pass still kept here, else once signed in */
+    drive.restore(); drive.loadGis().catch(()=>{});
+    setTimeout(()=>{ if(!store||mode!=='drive') return;
+      if(navigator.onLine===false){ drive.state='offline'; bar('offline'); return; }
+      if(drive.valid()){ driveSync('note').catch(()=>{}); return; }
+      drive.state='signin'; bar('start'); },0);
     return true;
   }
   /* a new device: connect before opening */

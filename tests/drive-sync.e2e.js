@@ -19,9 +19,10 @@ const json = (route, body, status = 200) => route.fulfill({ status, contentType:
 
 async function routeDrive(page) {
   await page.route('https://accounts.google.com/gsi/client', r => r.fulfill({ contentType: 'text/javascript', body:
-    `window.google={accounts:{oauth2:{initTokenClient:o=>({requestAccessToken(){setTimeout(()=>o.callback({access_token:'TEST',expires_in:3600}),0)}}),hasGrantedAllScopes:()=>true,revoke(){}}}};` }));
+    `window.google={accounts:{oauth2:{initTokenClient:o=>({requestAccessToken(){window.__tok=(window.__tok||0)+1;setTimeout(()=>o.callback({access_token:'TEST',expires_in:3600}),0)}}),hasGrantedAllScopes:()=>true,revoke(){}}}};` }));
   await page.route('https://www.googleapis.com/**', async route => {
     const req = route.request(), u = new URL(req.url()), p = u.pathname, m = req.method();
+    if (p === '/drive/v3/about') return json(route, { user: { emailAddress: 'someone@example.com' } });
     if (p === '/drive/v3/files' && m === 'GET') return json(route, { files: matches(u.searchParams.get('q') || '').map(pub) });
     if (p === '/drive/v3/files' && m === 'POST') { const b = JSON.parse(req.postData()); const f = add({ name: b.name, mime: b.mimeType, parents: b.parents || [] }); return json(route, { id: f.id }); }
     let mm = p.match(/^\/drive\/v3\/files\/([^/]+)\/copy$/);
@@ -95,6 +96,20 @@ async function until(fn, ms, what) { const t = Date.now(); for (;;) { const v = 
   assert.ok(merged.months['2026-03'], 'month from the first save lost');
   assert.ok(files.some(x => /changed elsewhere|before merging/.test(x.name)), 'no backup of the other version was kept');
   console.log('5. merged file has 2026-03, 2026-04 (mine) and 2026-07 (theirs); the other version was kept as a backup');
+
+  /* 6. the pass is kept: a reload doesn't ask to connect again; one about to run out is renewed by the next click */
+  assert.strictEqual(JSON.parse(await page.evaluate(() => localStorage.getItem('ybt.drive'))).hint, 'someone@example.com', 'Google account not remembered');
+  await page.reload({ waitUntil: 'load' });
+  await sleep(2500);
+  assert.strictEqual(await page.$('#web-bar'), null, 'the connect strip came back after a reload');
+  assert.ok(!await page.evaluate(() => window.__tok), 'asked Google again after a reload');
+  await page.evaluate(() => { const x = JSON.parse(localStorage.getItem('ybt.driveToken')); x.e = Date.now() + 5 * 60000; localStorage.setItem('ybt.driveToken', JSON.stringify(x)); });
+  await page.reload({ waitUntil: 'load' });
+  await sleep(1500);
+  await page.mouse.click(640, 20);
+  await until(() => page.evaluate(() => window.__tok === 1 && JSON.parse(localStorage.getItem('ybt.driveToken')).e > Date.now() + 50 * 60000), 5000, 'pass renewed on a click');
+  assert.strictEqual(await page.$('#web-bar'), null, 'a strip showed while renewing');
+  console.log('6. reload keeps the Drive pass; a pass about to run out is renewed by the next click, no strip');
   await browser.close();
   console.log('drive sync e2e: all passed');
 })().catch(e => { console.error(e); process.exit(1); });
