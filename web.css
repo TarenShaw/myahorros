@@ -88,14 +88,15 @@
 .wl-top{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px clamp(16px,4vw,48px);background:color-mix(in srgb,var(--bg,#f1f4f2) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line,#d8dfdc)}
 .wl-brand{font:800 18px/1 var(--f-display,system-ui,sans-serif);letter-spacing:-.01em}
 .wl-top-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-/* hero: a tall section (250vh) whose sticky stage plays one progress value --wl-p, 0 to 1, as it scrolls by.
-   0-.4: the preview rises and flattens while the headline fades; .4-1: the pages inside the frame scroll by.
+/* hero: a tall section (420vh) whose sticky stage plays one progress value --wl-p, 0 to 1, as it scrolls by.
+   0-.2: the preview rises and flattens while the headline fades; .2-1: the pages inside the frame scroll by and the
+   callouts take turns (each stays for most of a screen of scrolling).
    Scroll-driven animations set --wl-p here; other browsers get it from landing() in web-shim.js. */
 @property --wl-p{syntax:'<number>';inherits:true;initial-value:0}
 @keyframes wl-p{from{--wl-p:0}to{--wl-p:1}}
 .wl-hero{--head:69px;--peek:clamp(90px,16svh,170px);--fw:min(1280px,92vw);--ft:calc(var(--head) + 20px);--fh:calc(100svh - var(--ft) - 24px);
-  --a:clamp(0,var(--wl-p)/.4,1);--b:clamp(0,(var(--wl-p) - .4)/.6,1);
-  position:relative;height:250vh;margin-top:calc(-1*var(--head));text-align:center}
+  --a:clamp(0,var(--wl-p)/.2,1);--b:clamp(0,(var(--wl-p) - .2)/.8,1);
+  position:relative;height:420vh;margin-top:calc(-1*var(--head));text-align:center}
 @supports (animation-timeline:view()){.wl-hero{animation:wl-p linear both;animation-timeline:view();animation-range:contain 0% contain 100%}}
 .wl-stage{position:sticky;top:0;height:100svh;overflow-x:clip}
 .wl-hero-text{position:relative;z-index:1;box-sizing:border-box;height:calc(100svh - var(--peek));padding:calc(var(--head) + 16px) clamp(16px,4vw,48px) 24px;
@@ -123,15 +124,15 @@
 .wl-pages img{display:block;width:100%;height:auto}
 /* callouts beside the frame, each in for its own stretch of the scroll and drifting a little faster than the frame */
 .wl-calls{list-style:none;margin:0;padding:0}
-.wl-call{--in:clamp(0,(var(--wl-p) - var(--s))/.08,1);--out:clamp(0,(var(--e) - var(--wl-p))/.08,1);
+.wl-call{--in:clamp(0,(var(--wl-p) - var(--s))/.04,1);--out:clamp(0,(var(--e) - var(--wl-p))/.04,1);
   position:absolute;z-index:3;display:flex;align-items:center;gap:12px;max-width:260px;padding:12px 18px 12px 12px;border-radius:14px;text-align:left;
   background:var(--surface,#fcfdfc);border:1px solid color-mix(in srgb,var(--accent,#0d5c63) 35%,var(--line,#d8dfdc));box-shadow:0 18px 40px -16px rgb(0 0 0/.55);
   font:600 15px/1.3 var(--f-body,system-ui,sans-serif);
-  opacity:calc(var(--in)*var(--out));transform:translate(calc((1 - var(--in))*var(--dx)),calc((var(--wl-p) - var(--s))*-220px));will-change:opacity,transform}
+  opacity:calc(var(--in)*var(--out));transform:translate(calc((1 - var(--in))*var(--dx)),calc((var(--wl-p) - var(--s))*-160px));will-change:opacity,transform}
 .wl-call .wl-ico{flex:none}
-.wl-call.c1{--s:.16;--e:.44;--dx:-40px;top:40%;left:max(12px,calc(50% - var(--fw)/2 - 24px))}
-.wl-call.c2{--s:.42;--e:.7;--dx:40px;top:44%;right:max(12px,calc(50% - var(--fw)/2 - 24px))}
-.wl-call.c3{--s:.7;--e:1.2;--dx:-40px;top:58%;left:max(12px,calc(50% - var(--fw)/2 - 24px))}
+.wl-call.c1{--s:.14;--e:.42;--dx:-40px;top:40%;left:max(12px,calc(50% - var(--fw)/2 - 24px))}
+.wl-call.c2{--s:.43;--e:.71;--dx:40px;top:44%;right:max(12px,calc(50% - var(--fw)/2 - 24px))}
+.wl-call.c3{--s:.72;--e:1.2;--dx:-40px;top:58%;left:max(12px,calc(50% - var(--fw)/2 - 24px))}
 /* phones and reduced motion: no tilt, no sticky stage; headline, then the flat preview, then the callouts as a list */
 @media (max-width:767px),(prefers-reduced-motion:reduce){
   .wl-hero{--fw:calc(100% - 2*clamp(16px,4vw,48px));height:auto;margin-top:0;animation:none}
@@ -148,7 +149,7 @@
 }
 .web-landing main{padding:0}
 .wl-body{position:relative;isolation:isolate;max-width:calc(1280px + 2*clamp(16px,4vw,48px));margin:0 auto;padding:0 clamp(16px,4vw,48px)}
-.wl-feats{padding:clamp(48px,7vw,112px) 0 clamp(40px,6vw,64px);text-align:center}
+.wl-feats{padding:clamp(64px,8vw,128px) 0 clamp(56px,7vw,96px);text-align:center}
 .wl-feats h2,.wl-safe h2,.wl-how h2,.wl-end h2{margin:0 0 8px;font:700 clamp(24px,3.4vw,34px)/1.15 var(--f-display,system-ui,sans-serif);letter-spacing:-.015em}
 .wl-sub{margin:0 auto;max-width:52ch;color:var(--ink-2,#44554f)}
 .wl-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:28px;text-align:left}
@@ -160,13 +161,13 @@
 .wl-ico.big{width:64px;height:64px;border-radius:18px}
 .wl-safe{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center;padding:clamp(22px,4vw,36px);border-radius:18px;background:linear-gradient(135deg,var(--accent-soft,#d9ebea),var(--surface,#fcfdfc));border:1px solid color-mix(in srgb,var(--accent,#0d5c63) 30%,transparent)}
 .wl-safe p{margin:0;max-width:70ch;color:var(--ink-2,#44554f)}
-.wl-how{padding:40px 0}
+.wl-how{padding:clamp(64px,8vw,112px) 0}
 .wl-how h2{text-align:center}
 .wl-how ol{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:s}
 .wl-how li{counter-increment:s;display:grid;align-content:start;gap:4px;padding:18px;border:1px solid var(--line,#d8dfdc);border-radius:12px;background:var(--surface,#fcfdfc)}
 .wl-how li::before{content:counter(s);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent,#0d5c63);color:var(--accent-ink,#fff);font-weight:700;font-size:14px}
 .wl-how li span{color:var(--ink-2,#44554f);font-size:14.5px}
-.wl-end{text-align:center;padding:48px 0 64px}
+.wl-end{text-align:center;padding:clamp(56px,7vw,96px) 0 clamp(72px,9vw,128px)}
 .wl-end p{margin:0 auto;max-width:48ch;color:var(--ink-2,#44554f)}
 .wl-foot{display:flex;justify-content:center;align-items:center;gap:8px 20px;flex-wrap:wrap;padding:24px;border-top:1px solid var(--line,#d8dfdc);font-size:13px;color:var(--muted,#5c6a65)}
 .wl-foot .wl-brand{font-size:15px;color:var(--ink,#13211f)}

@@ -66,8 +66,11 @@ const HIDE = { en: ['Monthly check', 'This month'], es: ['Revisión del mes', 'E
     await p.addStyleTag({ content: '#view .notice,.toast,.guide,.guide-bar,.web-bar,.web-foot{display:none!important}' });
     for (const s of SHOTS) {
       await p.click('#tab-' + s.tab);
-      /* the year buttons: show the latest year only (its figures, then the forecast) */
-      const ys = await p.$$('[data-action=nw-year][data-y]'), yl = ys[ys.length - 1]; if (yl && (await yl.getAttribute('aria-pressed')) !== 'true') await yl.click();
+      /* the year buttons: show the latest year only (its figures, then the forecast), not "All years" */
+      const yb = () => p.$$('[data-action=nw-year][data-y]:not([data-y=all])');
+      let ys = await yb(); const yl = ys[ys.length - 1];
+      if (yl && (await yl.getAttribute('aria-pressed')) !== 'true') await yl.click();
+      for (let hit = true; hit;) { hit = false; for (const b of (await yb()).slice(0, -1)) if ((await b.getAttribute('aria-pressed')) === 'true') { await b.click(); hit = true; break; } }
       await p.mouse.move(0, 0); await p.waitForTimeout(600);
       const clip = await p.evaluate(([s, lang, hide]) => {
         /* the demo stops in August, so the reminders about this month only add noise */
