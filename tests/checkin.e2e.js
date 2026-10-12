@@ -88,6 +88,20 @@ const ym = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
   await p.waitForFunction(m => window.__ybtWeb.store.config.settings.lastCheckin === m, ck);
   assert.ok(!(await p.$('[data-action="ci-open"]')), 'the strip goes once the month is checked');
   console.log('5. the summary closes the check-in');
+
+  /* 6. a month already complete (rows, and every account's month-end figure) offers no check-in */
+  const q = await (await browser.newContext({ viewport: { width: 1280, height: 860 } })).newPage();
+  await q.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
+  await q.goto(START, { waitUntil: 'load' });
+  await q.evaluate(async ({ ck }) => { localStorage.setItem('ybt.storage', 'browser');
+    await window.__ybtWeb.idb.set('data', JSON.stringify({ app: 'Yearly Budget Tracker', format: 1,
+      months: { [ck]: { income: [{ id: 's1', date: ck + '-27', concept: 'ACME PAYROLL', amount: 2000, category: 'Salary' }], expenses: [], investments: [] } },
+      config: { settings: { lang: 'en' }, networth: { accounts: [{ id: 'cur', name: 'Current account', group: 'cash' }], snaps: { [ck]: { cur: 3000 } } } } })); }, { ck });
+  await q.goto(START, { waitUntil: 'load' });
+  await q.click('.web-landing .wl-hero [data-x=open]');
+  await q.waitForSelector('#view .page-head'); await q.waitForTimeout(500);
+  assert.ok(!(await q.$('[data-action="ci-open"]')), 'a complete month offers no check-in');
+  console.log('6. a month already complete offers no check-in');
   await browser.close();
   console.log('check-in e2e: all passed');
 })().catch(e => { console.error(e); process.exit(1); });

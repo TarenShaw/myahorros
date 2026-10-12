@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-rYWi3otKM6vqDcyD7Olvk15Mrw//NAyvMBaIBmWRiew=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-42LuN/iwsblAWha1/z5gLl4ya2qVaMlc8os8y80Uuj4=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -3504,7 +3504,7 @@ const ymRange=(a,b)=>{ const o=[]; for(let k=a;k<=b;k=ymAdd(k,1)) o.push(k); ret
 function wzCover(){ const now=ymNow(), from=wzFrom(), have=new Set(allRows().map(r=>r.mk)), N=nw();
   const tx=ymRange(from,now), bal=ymRange(ymAdd(from,-1),ymAdd(now,-1));
   const balAt=k=>{ const s=N.snaps[k]; if(!s) return ''; const cl=nwState(k).closed; return N.accounts.every(a=>s[a.id]!=null||cl.has(a.id))?'ok':'part'; };
-  return {now,from,tx,bal,balAt,txMiss:tx.filter(k=>k<now&&!have.has(k)),balMiss:bal.filter(k=>balAt(k)!=='ok'),txAt:k=>have.has(k)?'ok':''}; }
+  return {now,from,tx,bal,balAt,txMiss:tx.filter(k=>k<now&&!have.has(k)),balMiss:bal.filter(k=>balAt(k)!=='ok'),txAt:k=>have.has(k)?'ok':'',have}; }
 /* a few months by name, many as a range */
 const wzMonths=ks=>ks.length>3?L('wzMonthsN',ks.length,ymIn(ks[0]),ymIn(ks[ks.length-1])):listJoin(ks.map(ymIn));
 function wzStrip(ks,at,now,cap){
@@ -3574,19 +3574,23 @@ function modalWizard(){
    came to. It is the wizard dialog in another mode (S.wizard.mode 'ci'), so a dialog it opens brings it back when it closes. */
 const CI_STEPS=4;
 const ciMonth=()=>ymAdd(ymNow(),-1);
+/* how far the month is done: transactions in (every Cash account whose statements came through the check-in or the wizard
+   reaches the month's end; the others only need the month to have rows) and every account's month-end figure.
+   ponytail: a statement reaching the 25th counts as covering the month (the last days may have no movements) */
+function ciState(k){ const N=nw(), C=wzCover(), st=(S.settings&&S.settings.guide&&S.settings.guide.stmts)||{}, cash=N.accounts.filter(a=>a.group==='cash');
+  const covered=a=>!!st[a.id]&&st[a.id].to>=k+'-25';
+  return {N,C,st,cash,covered,txOk:C.have.has(k)&&cash.every(a=>!st[a.id]||covered(a)),balOk:!N.accounts.length||C.balAt(k)==='ok'}; }
+/* offered from the 1st for the month that just ended, until it's checked, skipped, or already complete */
 function ciDue(){ if(!S.canWrite||S.demo||S.mode!=='live'||!allRows().length) return false; const G=guideState(); if(G&&G.cur!=='done') return false;
-  const l=S.settings&&S.settings.lastCheckin; return !(typeof l==='string'&&l>=ciMonth()); }
+  const k=ciMonth(), l=S.settings&&S.settings.lastCheckin; if(typeof l==='string'&&l>=k) return false;
+  const x=ciState(k); return !(x.txOk&&x.balOk); }
 function ciStrip(){ return `<section class="card guide guide-strip ci-strip"><span class="eyebrow">${esc(L('ciEyebrow'))}</span><span class="grow">${esc(L('ciStrip',ymIn(ciMonth())))}</span><button class="btn" type="button" data-action="ci-open">${esc(L('ciStart'))}</button><button class="icon-btn" type="button" data-action="ci-later" aria-label="${esc(L('ciSkipMonth'))}" title="${esc(L('ciSkipMonth'))}">${ICON.x}</button></section>`; }
 /* dropped files are read one after another, each in the usual import review */
 function ciFiles(files){ if(!S.wizard||!files.length) return; S.wizard.queue=files.slice(); S.wizard.total=files.length; ciNext(); }
 function ciNext(){ const w=S.wizard, f=w&&w.queue&&w.queue.shift(); if(!f) return;
   ACTIONS.import(); Object.assign(S.modal,{pick:true,qpos:[w.total-w.queue.length,w.total]}); readFile(f); }
 function modalCheckin(){
-  const w=S.wizard, i=w.step, k=ciMonth(), N=nw(), C=wzCover(), st=(S.settings&&S.settings.guide&&S.settings.guide.stmts)||{}, rows=allRows();
-  const cash=N.accounts.filter(a=>a.group==='cash');
-  /* ponytail: a statement reaching the 25th counts as covering the month (the last days may have no movements) */
-  const covered=a=>st[a.id]&&st[a.id].to>=k+'-25';
-  const txOk=cash.length?cash.every(covered):C.have.has(k), balOk=!N.accounts.length||C.balAt(k)==='ok';
+  const w=S.wizard, i=w.step, k=ciMonth(), rows=allRows(), {N,C,st,cash,covered,txOk,balOk}=ciState(k);
   const unc=rows.filter(r=>!r.category&&r.mk<=ymNow()).sort((a,b)=>a.date<b.date?1:-1);
   const done=[txOk,balOk,!unc.length];
   const act=(a,label,extra,cls)=>`<button type="button" class="btn ${cls||''}" data-action="${a}"${extra||''}>${label}</button>`;
