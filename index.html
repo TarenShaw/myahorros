@@ -116,10 +116,10 @@ html{scrollbar-gutter:stable}
 #view:has(>.state>.loading-bar){visibility:hidden}#view>.state{visibility:visible}
 
 /* masthead */
-.mast{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s16) var(--s24);flex-wrap:wrap;padding-block:var(--s24) var(--s12)}
+.mast{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--s16) var(--s24);flex-wrap:wrap;padding-block:var(--s32) var(--s16)}
 .kicker{font:500 var(--fs-eyebrow)/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--s8)}
-/* the wordmark: smaller than each page's own title, and a link back to the landing page */
-.mast .brand{display:inline-block;font:800 20px/1.1 var(--f-display);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
+/* the wordmark: the biggest text on the page, and a link back to the landing page */
+.mast .brand{display:inline-block;font:800 clamp(var(--fs-kpi),3.6vw,40px)/1.05 var(--f-display);letter-spacing:-.01em;color:var(--ink);text-decoration:none}
 .mast .brand:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 .yearbox{display:inline-flex;align-items:center;gap:var(--s4)}
 .yearbox select{min-width:96px}
