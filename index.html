@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-lU886OA5VCh7PZKRKY6MB9RekTgBW3yP0OtZvSSog+o=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-sKVFzCMpe0dUCefHAufvChYJ4bDTIwDXYep4w91tM8c=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1859,9 +1859,9 @@ const STR={
   wz1Title:['Bring in your statements','Trae tus extractos'],
   wz1Text:[m=>`In each bank’s app or website, download the statement from 1 ${m} to today as Excel or CSV (look for “Export” or “Download”). A whole year makes every average and chart right.`,m=>`En la app o la web de cada banco, descarga el extracto desde el 1 de ${m} hasta hoy en Excel o CSV (busca «Exportar» o «Descargar»). Con el año entero, todas las medias y gráficos salen bien.`],
   wzImport:['Import','Importar'], wzStmtNone:['Not yet','Todavía no'],
-  wzNoAccs:['No accounts yet: import any statement here, or go back and add your accounts first.','Aún no hay cuentas: importa aquí cualquier extracto o vuelve atrás y añade antes tus cuentas.'],
+  wzNoAccs:['No accounts yet: add them first, then bring in each one’s statement here.','Aún no hay cuentas: añádelas primero y después trae aquí el extracto de cada una.'],
   wzStmtGot:[(a,b,n)=>`${a} – ${b} · ${n} ${n===1?'row':'rows'}`,(a,b,n)=>`${a} – ${b} · ${n} ${n===1?'movimiento':'movimientos'}`],
-  wzOtherStmt:['Another statement (credit card, PayPal…)','Otro extracto (tarjeta de crédito, PayPal…)'], wzByHand:['Add one by hand','Añadir uno a mano'], wzAi:['With AI','Con IA'],
+  wzAi:['With AI','Con IA'],
   wzTxCover:[(n,t)=>`${n} of ${t} months have transactions`,(n,t)=>`${n} de ${t} meses tienen movimientos`], wzTxAll:['Every month has transactions','Todos los meses tienen movimientos'],
   wzHave:['done','hecho'], wzPart:['some accounts','algunas cuentas'], wzMissing:['missing','falta'],
   wz2Title:['What your accounts were worth','Lo que valían tus cuentas'],
@@ -3497,8 +3497,8 @@ function modalWizard(){
     const stat=a=>{ const s=st[a.id]; return s?`<span class="wz-st ok">${esc(L('wzStmtGot',fmtDate(s.from),fmtDate(s.to),s.n))}</span>`:`<span class="wz-st">${esc(L('wzStmtNone'))}</span>`; };
     const next=txOk?null:N.accounts.find(a=>!st[a.id]);
     body=`<p>${esc(L('wz1Text',ymIn(C.from)))}</p>
-      ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>`<li>${accName(a)}${stat(a)}${act('guide-import',esc(L('wzImport')),` data-acc="${a.id}" aria-label="${esc(L('wzImport')+': '+a.name)}"`,a===next?'primary sm':'sm')}</li>`).join('')}</ul>`:`<p class="hint">${esc(L('wzNoAccs'))}</p>`}
-      <div class="wz-acts">${act('guide-import',esc(L('wzOtherStmt')),'',nAcc?'':'primary')}${S.ai?act('ai-tx',ICON.ai+esc(L('wzAi'))):''}${act('guide-add',esc(L('wzByHand')),'','ghost')}</div>
+      ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>`<li>${accName(a)}${stat(a)}${act('guide-import',esc(L('wzImport')),` data-acc="${a.id}" aria-label="${esc(L('wzImport')+': '+a.name)}"`,a===next?'primary sm':'sm')}</li>`).join('')}</ul>`:`<p class="hint">${esc(L('wzNoAccs'))}</p><div class="wz-acts">${act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`}
+      ${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('wzAi')))}</div>`:''}
       ${wzStrip(C.tx,C.txAt,C.now,C.txMiss.length?L('wzTxCover',fin-C.txMiss.length,fin):L('wzTxAll'))}`;
   } else if(i===2){
     const k=C.balMiss[0]||C.bal[C.bal.length-1];
