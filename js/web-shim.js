@@ -77,7 +77,7 @@ const TX={
     landNoSignup:'No sign-up. You add statements; banks are not connected automatically. AI is optional; automatic AI connections are billed separately.',
     landChip:'Free · No sign-up · Private',
     landCalls:['Your data stays on your device','Import from Excel','Read statements with AI'],
-    landShotAlt:'The Net worth page with example figures: a total of 39.066 € and a chart of month-end totals that grows each month, with the last four months of the year in grey as a forecast.',
+    landShotAlt:'The current Net worth page with fictional figures: total savings, cash, investments and retirement balances, plus a breakdown of savings and market gains since the previous month.',
     landFeatT:'Everything in one place', landFeatSub:'Made for people who just want to know how they’re doing. No finance words needed.',
     landF:[['Income and expenses','Add what comes in and what goes out, by hand or with your bank’s file. It sorts everything into categories and puts each month side by side.'],
            ['Net worth over time','Once a month, type what each account holds. One chart shows your total growing through the year.'],
@@ -170,7 +170,7 @@ const TX={
     landNoSignup:'Sin registro. Tú añades los extractos; no hay conexión automática con tu banco. La IA es opcional; las conexiones automáticas de IA se pagan aparte.',
     landChip:'Gratis · Sin registro · Privado',
     landCalls:['Tus datos se quedan en tu dispositivo','Importa desde Excel','Lee extractos con IA'],
-    landShotAlt:'La página de Patrimonio con cifras de ejemplo: un total de 39.066 € y un gráfico de totales a fin de mes que crece cada mes, con los cuatro últimos meses del año en gris como previsión.',
+    landShotAlt:'La página actual de Patrimonio con cifras ficticias: ahorro total, saldos de efectivo, inversiones y jubilación, y un desglose del ahorro y las ganancias de mercado desde el mes anterior.',
     landFeatT:'Todo en un mismo sitio', landFeatSub:'Pensado para quien solo quiere saber cómo va. Sin palabras de finanzas.',
     landF:[['Ingresos y gastos','Apunta lo que entra y lo que sale, a mano o con el archivo de tu banco. Lo ordena todo en categorías y pone cada mes al lado del anterior.'],
            ['Tu patrimonio mes a mes','Una vez al mes, escribe cuánto hay en cada cuenta. Un gráfico te enseña cómo crece tu total a lo largo del año.'],
@@ -500,7 +500,7 @@ function landing(known){
             <div class="wl-cta">${cta}</div>
             <p class="wl-fine">${esc(t('landNoSignup'))}</p></div>
             <figure class="wl-frame"><div class="wl-glow" aria-hidden="true"></div><div class="wl-view"><div class="wl-pages">
-              <img src="${shot('networth')}" alt="${esc(t('landShotAlt'))}" width="1280" height="899" fetchpriority="high" decoding="async">
+              <img src="${shot('networth')}" alt="${esc(t('landShotAlt'))}" width="1280" height="900" fetchpriority="high" decoding="async">
 </div></div></figure>
             <ul class="wl-calls">${t('landCalls').map((c,i)=>`<li class="wl-call c${i+1}"><span class="wl-ico">${svg(callIco[i],20)}</span>${esc(c)}</li>`).join('')}</ul></div></section>
           <div class="wl-body">
