@@ -64,4 +64,10 @@ const set = auditItems(auditMerge([{
 assert.deepStrictEqual(set.filter(x => x.k === 'kwfix').map(x => [x.kw, x.from, x.cat]), [['mercadona', 'Groceries', 'Restaurants']]);
 assert.strictEqual(set.filter(x => x.k === 'kw').length, 0, 'no new keyword for one that is being changed or exists');
 assert.deepStrictEqual(set.filter(x => x.k === 'type').map(x => [x.cat, x.ty]), [['Restaurants', 'Need']]);
+/* answers to a question: each fix checked like the others; one that doesn't fit stays as a plain answer */
+const qs = auditItems(auditMerge([{ questions: [[5, 'Transfer or spending?', [['Own transfer', ['delete']], ['Spending', ['change', 'expenses', 'Restaurants']],
+  ['Bad category', ['change', 'expenses', 'Made up']], ['Leave it', null], ['Fifth', null]]],
+  [null, 'Which account?', [{ answer: 'Broker', fix: ['words', 'a1', 'Broker, HT'] }, { answer: 'Nope', fix: ['words', 'zz', 'x'] }, { answer: 'Delete without a row', fix: ['delete'] }]]] }]), ref).filter(x => x.k === 'q');
+assert.deepStrictEqual(qs[0].opts.map(o => [o.label, o.fix && o.fix.k, o.fix && o.fix.cat]), [['Own transfer', 'del', undefined], ['Spending', 'cat', 'Restaurants'], ['Bad category', null, null], ['Leave it', null, null]], 'at most 4 answers, only valid fixes');
+assert.deepStrictEqual(qs[1].opts.map(o => o.fix && o.fix.k), ['words', null, null], 'account fixes only for known accounts; delete needs a row');
 console.log('audit smoke: all passed');
