@@ -23,7 +23,8 @@ const file = (months, cfg) => JSON.stringify({ app: 'Yearly Budget Tracker', for
     await o.p.click('.web-landing .wl-hero [data-x=open]');
     await o.p.waitForFunction(() => window.__ybtWeb.store && window.__ybtWeb.store.months['2026-09']);
     return o; };
-  const tab = async (p, t) => { await p.click('#tab-' + t); await p.waitForTimeout(250); return p.innerText('#view'); };
+  /* Categories opens from Settings */
+  const tab = async (p, t) => { if (t === 'categories') { await p.click('#tab-settings'); await p.click('.st-sub [data-tab=categories]'); } else await p.click('#tab-' + t); await p.waitForTimeout(250); return p.innerText('#view'); };
 
   /* 1. a null category used to leave "Loading your tracker…" forever */
   let { p, errs } = await openTracker(file(month([], []), { categories: { expenses: [null, { name: 'Rent', type: 'Need' }, { type: 'Want' }] } }));

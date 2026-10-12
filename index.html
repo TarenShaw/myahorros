@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-FG63b3gBUfMiuWsRtlng4CzV9Fv9gJ/0fPOTOrHIPEo=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YCoBKKVo/OvkCX854fzG7Z/aXox9c8ocTIUrC9DG+lg=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -332,6 +332,7 @@ select{padding-right:var(--s32)}
 .seg button:hover{color:var(--ink);background:var(--surface-2)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
 .seg button[aria-disabled="true"]{opacity:.4;cursor:not-allowed;background:transparent}
+.st-sub{margin:0 0 var(--s24)}
 .seg .ct{font:500 var(--fs-eyebrow)/1 var(--f-mono);opacity:.75}
 .sw{display:inline-block;width:9px;height:9px;border-radius:var(--r-mark);flex:none}
 .sw.income{background:var(--c-income)}.sw.expenses{background:var(--c-expenses)}.sw.investments{background:var(--c-investments)}
@@ -800,7 +801,7 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 /* phones: the sections become a bar along the bottom of the screen, so all five are always in reach */
 @media (max-width:640px){
   .tabbar{justify-content:flex-end;min-height:0}
-  .tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(6,minmax(0,auto));justify-content:space-around;gap:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);overflow:visible;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
+  .tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(5,minmax(0,auto));justify-content:space-around;gap:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);overflow:visible;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
   .tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:var(--s8) 2px var(--s8);font-size:var(--fs-eyebrow);line-height:1.15;min-width:0}
   .tab .ti{display:block;width:21px;height:21px;margin:0}
   .tab .tl{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -1043,11 +1044,10 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
   </header>
   <div class="tabbar">
     <nav class="tabs" role="tablist" aria-label="Sections">
-      <button class="tab" role="tab" data-action="tab" data-tab="networth" id="tab-networth"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/></svg><span class="tl">Net worth</span></button>
       <button class="tab" role="tab" data-action="tab" data-tab="overview" id="tab-overview"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16.5V10M10 16.5V4M16 16.5V8"/></svg><span class="tl">Overview</span></button>
-      <button class="tab" role="tab" data-action="tab" data-tab="yearly" id="tab-yearly"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8.5h14M8 8.5V17M12.5 8.5V17"/></svg><span class="tl">Yearly<span class="tab-long"> tracking</span></span></button>
+      <button class="tab" role="tab" data-action="tab" data-tab="networth" id="tab-networth"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/></svg><span class="tl">Net worth</span></button>
       <button class="tab" role="tab" data-action="tab" data-tab="transactions" id="tab-transactions"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 6h9M7.5 10h9M7.5 14h9"/><path d="M3.6 6h.01M3.6 10h.01M3.6 14h.01" stroke-width="2.6"/></svg><span class="tl">Transactions</span></button>
-      <button class="tab" role="tab" data-action="tab" data-tab="categories" id="tab-categories"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 10.2V4.5a1 1 0 0 1 1-1h5.7l6.3 6.3a1 1 0 0 1 0 1.4l-5.3 5.3a1 1 0 0 1-1.4 0z"/><circle cx="7.3" cy="7.3" r="1.2"/></svg><span class="tl">Categories</span></button>
+      <button class="tab" role="tab" data-action="tab" data-tab="yearly" id="tab-yearly"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8.5h14M8 8.5V17M12.5 8.5V17"/></svg><span class="tl">Yearly<span class="tab-long"> tracking</span></span></button>
       <button class="tab" role="tab" data-action="tab" data-tab="settings" id="tab-settings"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 6h7M14.5 6h2M3.5 14h2M9.5 14h7"/><circle cx="12.5" cy="6" r="2"/><circle cx="7.5" cy="14" r="2"/></svg><span class="tl">Settings</span></button>
     </nav>
     <div class="tabbar-end">
@@ -1073,7 +1073,8 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 const TKEYS=['income','expenses','investments'];
 const TCOLOR={income:'var(--c-income)',expenses:'var(--c-expenses)',investments:'var(--c-investments)'};
 const UNCAT='Uncategorised'; /* internal key only; shown through dispCat() */
-const TABS=['networth','overview','yearly','transactions','categories','settings'];
+/* the pages, in tab order; Categories has no tab of its own: it opens from Settings, which stays selected */
+const TABS=['overview','networth','transactions','yearly','categories','settings'];
 const NW_GROUPS=['cash','invest','illiquid','pension'];
 function mkCats(inc,exp,inv,roles){
   const c={income:inc.map(n=>({name:n})),expenses:exp.map(([n,ty])=>({name:n,type:ty})),investments:inv.map(n=>({name:n}))};
@@ -1157,7 +1158,7 @@ const S={
   gotMonths:false, gotConfig:false,
   db:null, downloads:null, local:null, mode:'connecting', canWrite:false,
   ui:{
-    tab:'networth', year:null, editTarget:null,
+    tab:'overview', year:null, editTarget:null,
     obLang:BOOT_LANG, obY:null, obM:null, langLocal:null, themeLocal:null, numLocal:null, yScroll:null,
     heat:(()=>{ try{ return localStorage.getItem('ybt.heat')!=='off'; }catch(_){ return true; } })(),
     tx:{table:'expenses', q:'', month:'all', cat:'all', limit:150, sort:'date-desc', allYears:false},
@@ -1363,9 +1364,9 @@ const STR={
   kicker:['Income · Expenses · Investments','Ingresos · Gastos · Inversiones'],
   prevYear:['Previous year','Año anterior'], nextYear:['Next year','Año siguiente'], year:['Year','Año'],
   sections:['Sections','Secciones'],
-  tab_overview:['Overview','Resumen'], tab_yearly:['Yearly','Seguimiento'], tab_yearly_long:[' tracking',' anual'],
+  tab_overview:['Overview','Resumen'], tab_yearly:['By month','Por meses'], stGeneral:['General','General'],
   tab_transactions:['Transactions','Movimientos'], tab_categories:['Categories','Categorías'], tab_settings:['Settings','Ajustes'],
-  pt_yearly:['Yearly tracking','Seguimiento anual'], howCalc:['How is this calculated?','¿Cómo se calcula?'],
+  pt_yearly:['By month','Por meses'], howCalc:['How is this calculated?','¿Cómo se calcula?'],
   ovSub:['Your year at a glance: what came in, what went out and what you kept.','Tu año de un vistazo: lo que entró, lo que salió y lo que te quedó.'],
   txSub:['Every income, expense and investment row. Click a row to change it.','Cada fila de ingresos, gastos e inversiones. Pulsa una fila para cambiarla.'],
   ctSub:['How your transactions are grouped, and the words that sort new ones by themselves.','Cómo se agrupan tus movimientos y las palabras que ordenan solos los nuevos.'],
@@ -1391,7 +1392,7 @@ const STR={
   language:['Language','Idioma'],
   startQ:['When do you start tracking?','¿Desde cuándo empiezas a registrar?'],
   startHelp:['The first month your tracker covers. Earlier months are left out of the charts and averages. You can change it later in Settings.','El primer mes que cubre tu control. Los meses anteriores quedan fuera de los gráficos y las medias. Puedes cambiarlo luego en Ajustes.'],
-  welcomeCats:['You’ll start with a standard set of categories in this language, plus keywords for common shops and services so many rows sort themselves. Change any of it in Categories.','Empezarás con un juego de categorías estándar en este idioma y con palabras clave para tiendas y servicios habituales, así que muchas filas se clasificarán solas. Puedes cambiarlo todo en Categorías.'],
+  welcomeCats:['You’ll start with a standard set of categories in this language, plus keywords for common shops and services so many rows sort themselves. Change any of it in Settings › Categories.','Empezarás con un juego de categorías estándar en este idioma y con palabras clave para tiendas y servicios habituales, así que muchas filas se clasificarán solas. Puedes cambiarlo todo en Ajustes › Categorías.'],
   startTracking:['Start tracking','Empezar'],
   /* overview */
   noMonths:['no months recorded yet','aún no hay meses registrados'],
@@ -1419,7 +1420,7 @@ const STR={
   shareFoot:['Above the 100% line, that month drew on savings.','Por encima de la línea del 100%, ese mes se tiró de ahorros.'],
   pct100:['100% of income','100% de los ingresos'], kept:['Kept','Conservado'],
   shareAria:[y=>`Expenses and investments as a share of income per month in ${y}`,y=>`Gastos e inversiones como porcentaje de los ingresos por mes en ${y}`],
-  monthByMonth:['Month by month','Mes a mes'], mmView:['Months or days','Meses o días'], mmMonths:['Months','Meses'], mmDays:['Days','Días'],
+  monthByMonth:['Monthly','Mes a mes'], mmView:['Months or days','Meses o días'], mmMonths:['Months','Meses'], mmDays:['Days','Días'],
   mmDaysOff:['Daily view is available for Income, Expenses or Investments individually.','La vista por días está disponible para Ingresos, Gastos o Inversiones por separado.'],
   dayAria:[(n,y)=>`${n} per day in ${y}`,(n,y)=>`${n} por día en ${y}`], clickBar:['Click a bar to see that month by category.','Pulsa una barra para ver ese mes por categoría.'],
   all:['All','Todo'], show:['Show','Mostrar'],
@@ -1467,7 +1468,7 @@ const STR={
   showMore:[n=>`Show ${n} more`,n=>`Mostrar ${n} más`],
   /* categories */
   catsOf:[t=>`${t} categories`,t=>`Categorías de ${t}`],
-  catsSub:['Each one is a row on Yearly tracking, in this order.','Cada una es una fila del Seguimiento anual, en este orden.'],
+  catsSub:['Each one is a row on the By month page, in this order.','Cada una es una fila de la página Por meses, en este orden.'],
   catsSubNW:[' Fixed is for costs that are about the same every month, like rent, bills and subscriptions, Variable for everything else: they feed the Indicators.',' Fijo es para gastos casi iguales cada mes, como alquiler, facturas y suscripciones, y Variable para todo lo demás: alimentan los Indicadores.'],
   addCategory:['Add category','Añadir categoría'],
   filterCats:['Filter categories','Filtrar categorías'], filterCatsNW:[' (or type fixed / variable)',' (o escribe fijo / variable)'],
@@ -1618,7 +1619,7 @@ const STR={
   renameHelp:['Its transactions and keywords move to the new name too.','Sus movimientos y palabras clave pasan también al nombre nuevo.'],
   enterName:['Enter a name.','Escribe un nombre.'], catExists:['That category already exists.','Esa categoría ya existe.'],
   renamedTo:[n=>`Renamed to ${n}`,n=>`Renombrada como ${n}`],
-  addCatSub:[(t,o)=>o?`${t} · it appears as a new row on Yearly tracking, just above ${o}`:`${t} · it appears as a new row at the end of Yearly tracking`,(t,o)=>o?`${t} · aparecerá como una fila nueva en el Seguimiento anual, justo encima de ${o}`:`${t} · aparecerá como una fila nueva al final del Seguimiento anual`],
+  addCatSub:[(t,o)=>o?`${t} · it appears as a new row on the By month page, just above ${o}`:`${t} · it appears as a new row at the end of the By month page`,(t,o)=>o?`${t} · aparecerá como una fila nueva en la página Por meses, justo encima de ${o}`:`${t} · aparecerá como una fila nueva al final de la página Por meses`],
   ph_expenses:['e.g. Pets','p. ej. Mascotas'], ph_income:['e.g. Freelance','p. ej. Trabajos extra'], ph_investments:['e.g. Crypto','p. ej. Cripto'],
   needDesc:['About the same every month: rent, bills, subscriptions.','Casi igual cada mes: alquiler, facturas, suscripciones.'],
   wantDesc:['Changes from month to month: groceries, eating out, trips.','Cambia de un mes a otro: supermercado, comer fuera, viajes.'],
@@ -1666,7 +1667,7 @@ const STR={
   saveRetry:['Couldn’t save just now. Trying again in a few seconds.','No se ha podido guardar. Se volverá a intentar en unos segundos.'],
   lostConn:['The tracker lost its connection to storage. Reload the page to reconnect.','El control ha perdido la conexión con el almacenamiento. Recarga la página para volver a conectar.'],
   filled:[(f,l)=>`Filled ${pl(f,'category')}${l?`. ${fmtCount(l)} still ${l===1?'has':'have'} no matching keyword`:''}`,(f,l)=>`${f===1?'Rellenada':'Rellenadas'} ${pl(f,'category')}${l?`. ${fmtCount(l)} ${l===1?'sigue':'siguen'} sin palabra clave que coincida`:''}`],
-  noKwMatchesUncat:[(n,t)=>n==='1'?`No keyword matches the uncategorised transaction in ${t}. Add a keyword in Categories.`:`No keyword matches the ${n} uncategorised ${t}. Add a keyword in Categories.`,(n,t)=>n==='1'?`Ninguna palabra clave coincide con el movimiento sin categoría de ${t}. Añade una palabra en Categorías.`:`Ninguna palabra clave coincide con los ${n} movimientos sin categoría de ${t}. Añade una palabra en Categorías.`],
+  noKwMatchesUncat:[(n,t)=>n==='1'?`No keyword matches the uncategorised transaction in ${t}. Add a keyword in Settings › Categories.`:`No keyword matches the ${n} uncategorised ${t}. Add a keyword in Settings › Categories.`,(n,t)=>n==='1'?`Ninguna palabra clave coincide con el movimiento sin categoría de ${t}. Añade una palabra en Ajustes › Categorías.`:`Ninguna palabra clave coincide con los ${n} movimientos sin categoría de ${t}. Añade una palabra en Ajustes › Categorías.`],
   removedSkip:[w=>`Removed “${w}” from the skip list`,w=>`Quitada «${w}» de las palabras a omitir`],
   skipExists:[w=>`“${w}” is already on the skip list`,w=>`«${w}» ya está entre las palabras a omitir`],
   skipAddedHits:[(w,n)=>`Added “${w}”. It also matches ${pl(n,'keptTx')}, which ${n===1?'stays':'stay'} in the tracker.`,(w,n)=>`Añadida «${w}». También coincide con ${pl(n,'keptTx')}, que ${n===1?'sigue':'siguen'} en el control.`],
@@ -1678,7 +1679,7 @@ const STR={
   /* settings */
   langSub:['The language of every screen, message and download.','El idioma de todas las pantallas, mensajes y descargas.'],
   startTitle:['Tracking start','Inicio del registro'],
-  startSub:['The first month your figures cover. Months before it are greyed out on Yearly tracking and left out of the charts and averages.','El primer mes que cubren tus cifras. Los meses anteriores aparecen atenuados en el Seguimiento anual y quedan fuera de los gráficos y las medias.'],
+  startSub:['The first month your figures cover. Months before it are greyed out on the By month page and left out of the charts and averages.','El primer mes que cubren tus cifras. Los meses anteriores aparecen atenuados en la página Por meses y quedan fuera de los gráficos y las medias.'],
   notSet:['Not set','Sin definir'], notSetHint:['Not set: the tracker covers every month that has data.','Sin definir: el control cubre todos los meses con datos.'],
   startSaved:[(m,y)=>`Tracking now starts in ${m} ${y}`,(m,y)=>`El registro empieza ahora en ${m.toLowerCase()} de ${y}`], startCleared:['Tracking start cleared','Inicio del registro borrado'],
   langSaved:['Language changed to English','Idioma cambiado a español'],
@@ -1703,7 +1704,7 @@ const STR={
   welcomeTitle:['Set up your tracker','Configura tu control'],
   haveFile:['Already have a tracker data file, or a backup of one?','¿Ya tienes un archivo de datos del control o una copia de seguridad?'], openIt:['Open it…','Ábrelo…'],
   haveFileHint:[b=>`A backup works too: the app keeps one a day in ${b}, and a backup downloaded from the website opens here as well.`,b=>`También sirve una copia de seguridad: la aplicación guarda una al día en ${b}, y una copia descargada desde la web también se abre aquí.`],
-  langCatNote:['Category names are translated too. Names you made up yourself stay as you wrote them; rename them in Categories if you like. Keywords don’t change.','Los nombres de las categorías también se traducen. Los que creaste tú se quedan como los escribiste; puedes renombrarlos en Categorías. Las palabras clave no cambian.'],
+  langCatNote:['Category names are translated too. Names you made up yourself stay as you wrote them; rename them in Settings › Categories if you like. Keywords don’t change.','Los nombres de las categorías también se traducen. Los que creaste tú se quedan como los escribiste; puedes renombrarlos en Ajustes › Categorías. Las palabras clave no cambian.'],
   langLocal:['This copy is read-only, so the language changes only on this screen.','Esta copia es de solo lectura, así que el idioma solo cambia en esta pantalla.'],
   setStart:['Set a start month','Fijar un mes de inicio'], clearStart:['Clear','Quitar'],
   preData:[n=>`${pl(n,'transaction')} ${n===1?'is':'are'} dated before this month, so the Overview and the charts leave ${n===1?'it':'them'} out.`,n=>`${pl(n,'transaction')} ${n===1?'tiene':'tienen'} fecha anterior a este mes, así que el Resumen y los gráficos ${n===1?'lo':'los'} dejan fuera.`],
@@ -1944,8 +1945,8 @@ const STR={
   infoAbout:['What does this mean?','¿Qué significa esto?'],
   info_ovSaved:['Income minus expenses for the months shown. Money you put into investments still counts as saved: it’s still yours, just not in your current account.','Ingresos menos gastos de los meses mostrados. El dinero que pasas a inversiones cuenta como ahorrado: sigue siendo tuyo, solo que no está en tu cuenta corriente.'],
   info_ovLeft:['Income minus expenses minus what you invested: roughly how much more money there is in your everyday accounts than at the start of the year.','Ingresos menos gastos menos lo invertido: más o menos cuánto dinero más hay en tus cuentas del día a día que a principios de año.'],
-  info_ovThisMonth:['The month in progress: what you’ve spent so far against a normal month, and against any monthly limits you set in Categories. It fills in as you add transactions.','El mes en curso: lo que llevas gastado frente a un mes normal y frente a los límites mensuales que pongas en Categorías. Se completa según añades movimientos.'],
-  info_ovInd:['Each bar is a share of your income for the year, and the tick is its target: green means you’re within it. Fixed expenses are the ones about the same every month (marked Fixed in Categories), Variable expenses the rest. The targets are only suggestions: tap one to change it.','Cada barra es una parte de tus ingresos del año y la marca es su objetivo: en verde, estás dentro. Los gastos fijos son los que se repiten casi iguales cada mes (marcados como Fijo en Categorías) y los variables, el resto. Los objetivos son orientativos: toca uno para cambiarlo.'],
+  info_ovThisMonth:['The month in progress: what you’ve spent so far against a normal month, and against any monthly limits you set in Settings › Categories. It fills in as you add transactions.','El mes en curso: lo que llevas gastado frente a un mes normal y frente a los límites mensuales que pongas en Ajustes › Categorías. Se completa según añades movimientos.'],
+  info_ovInd:['Each bar is a share of your income for the year, and the tick is its target: green means you’re within it. Fixed expenses are the ones about the same every month (marked Fixed in Settings › Categories), Variable expenses the rest. The targets are only suggestions: tap one to change it.','Cada barra es una parte de tus ingresos del año y la marca es su objetivo: en verde, estás dentro. Los gastos fijos son los que se repiten casi iguales cada mes (marcados como Fijo en Ajustes › Categorías) y los variables, el resto. Los objetivos son orientativos: toca uno para cambiarlo.'],
   info_ovShare:['For each month, expenses and investments as a percentage of that month’s income. Above the 100% line more went out than came in, so that month drew on savings.','Para cada mes, los gastos y las inversiones como porcentaje de los ingresos de ese mes. Por encima de la línea del 100% salió más de lo que entró, así que ese mes se tiró de ahorros.'],
   info_ovMonthly:['Totals for each month. Pick Income, Expenses or Investments to see one on its own with a dashed trend line: the general direction, without the month-to-month ups and downs. Click a bar to see its transactions.','Totales de cada mes. Elige Ingresos, Gastos o Inversiones para ver solo eso con una línea de tendencia discontinua: la dirección general, sin los altibajos de cada mes. Pulsa una barra para ver sus movimientos.'],
   info_ovCats:['Where the money went in the period you pick, biggest first. Click a category to follow it month by month.','A dónde fue el dinero en el periodo que elijas, de más a menos. Pulsa una categoría para seguirla mes a mes.'],
@@ -1967,7 +1968,7 @@ const STR={
   info_nwGoal:['Needed a month is what’s left to the goal divided by the months left. You save a month is your average saving over the last six finished months. From growth is what your investment, long-term and retirement accounts would have to earn on top of that.','Hace falta al mes es lo que falta para el objetivo dividido entre los meses que quedan. Ahorras al mes es tu ahorro medio de los últimos seis meses completos. Con crecimiento es lo que tendrían que ganar tus cuentas de inversión, a largo plazo y de jubilación además de eso.'],
   info_nwOverTime:['Month-end totals stacked by group. The dashed trend line shows the general direction. A faded month is missing a figure for one of your accounts, so it looks lower than it was. Grey months after your last figure are a forecast.','Totales a fin de mes apilados por grupo. La línea de tendencia discontinua muestra la dirección general. Un mes atenuado no tiene la cifra de alguna cuenta, así que parece más bajo de lo que fue. Los meses en gris después de tu última cifra son una previsión.'],
   info_nwAccounts:['Change is the difference from the previous month with figures; Share is the account’s part of the total. An account you set to 0 is hidden from the next month on, and comes back if you give it a figure.','Cambio es la diferencia con el mes anterior con cifras; Peso es la parte del total que supone la cuenta. Una cuenta que pones a 0 se oculta a partir del mes siguiente y vuelve si le pones una cifra.'],
-  info_setStart:['The first month your figures cover. Months before it are greyed out on Yearly tracking and left out of averages: useful if you started tracking mid-year.','El primer mes que cubren tus cifras. Los meses anteriores salen en gris en Seguimiento y no cuentan en las medias: útil si empezaste a registrar a mitad de año.'],
+  info_setStart:['The first month your figures cover. Months before it are greyed out on the By month page and left out of averages: useful if you started tracking mid-year.','El primer mes que cubren tus cifras. Los meses anteriores salen en gris en la página Por meses y no cuentan en las medias: útil si empezaste a registrar a mitad de año.'],
   /* guided tour */
   tourBadge:['Example data · nothing is saved','Datos de ejemplo · no se guarda nada'], tourStep:[(i,n)=>`${i} of ${n}`,(i,n)=>`${i} de ${n}`],
   tourStart:['Start the tour','Empezar el recorrido'], tourSkip:['Skip','Saltar'], tourNext:['Next','Siguiente'], tourBack:['Back','Atrás'], tourEnd:['End tour','Terminar'], tourDone:['Back to my tracker','Volver a mi control'],
@@ -1976,10 +1977,10 @@ const STR={
   helpInfo:['The i buttons next to titles and figures explain what they mean.','Los botones i junto a títulos y cifras explican qué significan.'],
   tourBtn:['Take the tour','Hacer el recorrido'], emptyTour:['New here? See how it works with example data:','¿Eres nuevo? Mira cómo funciona con datos de ejemplo:'],
   tour_intro:[['Welcome to your tracker','Here’s a two-minute tour with a made-up example, so you can see every page full of data. Nothing in the example is saved, and your own tracker comes back at the end.'],['Bienvenido a tu control','Esto es un recorrido de dos minutos con un ejemplo inventado, para que veas cada página llena de datos. Nada del ejemplo se guarda y tu control vuelve al terminar.']],
-  tour_tabs:[['Six pages','Net worth for what you own, Overview for the big picture, Yearly for every figure, Transactions for the rows themselves, Categories for how they’re sorted, and Settings.'],['Seis páginas','Patrimonio para lo que tienes, Resumen para la visión general, Seguimiento para cada cifra, Movimientos para las filas en sí, Categorías para cómo se ordenan, y Ajustes.']],
+  tour_tabs:[['Five pages','Overview for the big picture, Net worth for what you own, Transactions for the rows themselves, By month for every figure, and Settings, where your categories and keywords are too.'],['Cinco páginas','Resumen para la visión general, Patrimonio para lo que tienes, Movimientos para las filas en sí, Por meses para cada cifra, y Ajustes, donde también están tus categorías y palabras clave.']],
   tour_ovTop:[['Your year at a glance','How much you kept after expenses this year, and your totals for income, expenses and investments. Any i button explains what a figure means.'],['Tu año de un vistazo','Cuánto has conservado este año tras los gastos y tus totales de ingresos, gastos e inversiones. Cualquier botón i explica qué significa una cifra.']],
   tour_ovMonth:[['This month','How the month in progress is going: what you’ve spent so far against a normal month, and against any monthly limits.'],['Este mes','Cómo va el mes en curso: lo que llevas gastado frente a un mes normal y frente a los límites mensuales.']],
-  tour_ovMonthly:[['Month by month','Each month’s income, expenses or investments, then your categories biggest first and how your income splits against targets. Click a bar or a category to see what’s behind it.'],['Mes a mes','Los ingresos, gastos o inversiones de cada mes; después tus categorías de más a menos y cómo se reparten tus ingresos frente a unos objetivos. Pulsa una barra o una categoría para ver lo que hay detrás.']],
+  tour_ovMonthly:[['Monthly','Each month’s income, expenses or investments, then your categories biggest first and how your income splits against targets. Click a bar or a category to see what’s behind it.'],['Mes a mes','Los ingresos, gastos o inversiones de cada mes; después tus categorías de más a menos y cómo se reparten tus ingresos frente a unos objetivos. Pulsa una barra o una categoría para ver lo que hay detrás.']],
   tour_yearly:[['Every figure, every month','Laid out like a spreadsheet: categories down the side, months across. Click any figure to see its transactions. The heat map shows where most of the money went each month.'],['Cada cifra, cada mes','Como una hoja de cálculo: categorías a un lado y meses en columnas. Pulsa cualquier cifra para ver sus movimientos. El mapa de calor muestra a dónde fue más dinero cada mes.']],
   tour_txImport:[['Bring in your bank’s export','Paste rows or choose your bank’s file (.csv or .xlsx), or let an AI read statements and PDFs for you. Each row is sorted into Income, Expenses or Investments and gets its category from your keywords, or a guess learned from your past rows. You check every row before it’s saved.'],['Trae el extracto de tu banco','Pega filas o elige el archivo de tu banco (.csv o .xlsx), o deja que una IA lea tus extractos y PDF. Cada fila va a Ingresos, Gastos o Inversiones y recibe su categoría según tus palabras clave, o una sugerencia aprendida de tus filas anteriores. Revisas cada fila antes de guardarla.']],
   tour_catList:[['Your categories and keywords','Rename, add or remove categories, mark each expense as Fixed or Variable, and set monthly limits. A keyword like “netflix” puts every matching row in its category by itself.'],['Tus categorías y palabras clave','Cambia el nombre, añade o quita categorías, marca cada gasto como Fijo o Variable y pon límites mensuales. Una palabra clave como «netflix» pone sola cada fila que la contenga en su categoría.']],
@@ -2249,7 +2250,7 @@ const STR={
   /* monthly limits */
   monthlyLimits:['Monthly limits','Límites mensuales'],
   limitsHint:['Want a heads-up before a category runs over? Give it a monthly limit.','¿Quieres ver cuándo una categoría se acerca a su tope? Ponle un límite mensual.'],
-  setLimits:['Set limits in Categories','Pon límites en Categorías'],
+  setLimits:['Set limits in Settings › Categories','Pon límites en Ajustes › Categorías'],
   evenPace:['Where spending evenly through the month would put you today','Dónde estarías hoy gastando de forma uniforme durante el mes'],
   overBy:[v=>`${v} over`,v=>`${v} por encima`], leftOf:[v=>`${v} left`,v=>`quedan ${v}`],
   limAria:[(n,s,l)=>`${n}: ${s} spent of a ${l} limit`,(n,s,l)=>`${n}: ${s} gastados de un límite de ${l}`],
@@ -2257,7 +2258,7 @@ const STR={
   limitTitle:['Monthly limit','Límite mensual'], limitPerMonth:[()=>`Limit per month (${cs()})`,()=>`Límite al mes (${cs()})`],
   limitAvg:[(v,y)=>`In ${y} you spent ${v} a month here on average.`,(v,y)=>`En ${y} gastaste de media ${v} al mes aquí.`],
   limitHelp:['A round figure you’d like to stay under.','Una cifra redonda por debajo de la que quieres quedarte.'],
-  limitWhere:['Overview shows what’s left this month, and Yearly tracking marks the months that went over.','El Resumen muestra lo que queda este mes y el Seguimiento anual marca los meses que se pasaron.'],
+  limitWhere:['Overview shows what’s left this month, and the By month page marks the months that went over.','El Resumen muestra lo que queda este mes y la página Por meses marca los meses que se pasaron.'],
   removeLimit:['Remove limit','Quitar límite'], saveLimit:['Save limit','Guardar límite'],
   limitErr:['Enter an amount above zero, or leave it empty for no limit.','Introduce un importe mayor que cero, o déjalo vacío para no tener límite.'],
   limitSaved:[(n,v)=>`${n}: limit of ${v} a month`,(n,v)=>`${n}: límite de ${v} al mes`], limitRemoved:[n=>`${n}: limit removed`,n=>`${n}: límite quitado`],
@@ -2521,10 +2522,10 @@ function fixedVarOnce(){
 function isStockCats(c){ const sig=x=>TKEYS.map(t=>(x[t]||[]).map(c=>c.name).join('|')).join('#'); const s=sig(c); return s===sig(DEFAULT_CATS)||s===sig(DEFAULT_CATS_ES); }
 
 function subscribe(){ subMonths(); subConfig(); }
-/* opening the tracker: Net worth is the default tab, but someone who only tracks spending (no accounts) opens on the Overview */
+/* opening the tracker: the Overview is the default tab, but someone who only has accounts so far (no transactions) opens on Net worth */
 let tabPicked=false;
 function pickStartTab(){ if(tabPicked||!S.gotMonths||!S.gotConfig) return; tabPicked=true;
-  if(!location.hash&&S.ui.tab==='networth'&&!(nw().accounts||[]).length&&allRows().length) S.ui.tab='overview';
+  if(!location.hash&&S.ui.tab==='overview'&&(nw().accounts||[]).length&&!allRows().length) S.ui.tab='networth';
   /* the first history entry names its tab too, so Back from the second tab returns to it */
   if(!location.hash) try{ history.replaceState(null,'','#'+S.ui.tab); }catch(_){} }
 function subErr(again){ return e=>{ if(e&&e.code==='unavailable'){ setTimeout(again,3000); return; } if(e&&e.code==='revoked'){ S.canWrite=false; syncStatus(); return; } toast(L('lostConn')); }; }
@@ -2608,8 +2609,7 @@ function applyLang(){
   $('.kicker').textContent=L('kicker'); $('.mast .brand').textContent=L('appTitle');
   $('.tabs').setAttribute('aria-label',L('sections'));
   $('#tab-overview .tl').textContent=L('tab_overview');
-  $('#tab-yearly .tl').innerHTML=esc(L('tab_yearly'))+`<span class="tab-long">${esc(L('tab_yearly_long'))}</span>`;
-  $('#tab-categories .tl').textContent=L('tab_categories');
+  $('#tab-yearly .tl').textContent=L('tab_yearly');
   $('#tab-settings .tl').textContent=L('tab_settings');
   $('#tab-networth .tl').textContent=L('tab_networth');
   $('#btn-backup').textContent=L('dlBackup');
@@ -2665,6 +2665,7 @@ function render(){
     const G=S.ui.tab!=='networth'&&S.ui.tab!=='settings'?guideState():null;
     if(G){ const full=S.ui.tab==='overview'; html=afterHead(html,full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G)); }
     else if((S.ui.tab==='overview'||S.ui.tab==='networth')&&ciDue()) html=afterHead(html,`<div class="guide-wrap">${ciStrip()}</div>`); }
+  if(!ob&&(S.ui.tab==='settings'||S.ui.tab==='categories')) html=afterHead(html,setSub());
   v.innerHTML=html;
   restoreFocus(st);
   afterRender();
@@ -2673,7 +2674,7 @@ function render(){
 }
 function renderHeader(){
   const ys=yearList();
-  for(const t of TABS) $('#tab-'+t).setAttribute('aria-selected',String(S.ui.tab===t));
+  for(const t of TABS){ const b=$('#tab-'+t); if(b) b.setAttribute('aria-selected',String(S.ui.tab===t||(t==='settings'&&S.ui.tab==='categories'))); }
   if(!S.gotMonths){ setTxTab(0); return; }
   if(S.ui.year==null||!ys.includes(S.ui.year)){ const wd=yearsWithData(), st=startOf(), cy=new Date().getFullYear(); S.ui.year=wd.length?wd[wd.length-1]:(st?Math.max(cy,st.y):cy); }
   const un=agg(S.ui.year);
@@ -2687,6 +2688,8 @@ function renderHeader(){
     hb.innerHTML=(HIDE?ICON.eyeOff:ICON.eye)+`<span class="sr">${esc(L(HIDE?'showAmounts':'hideAmounts'))}</span>`; hb.title=L(HIDE?'showAmounts':'hideAmounts'); }
 }
 
+/* Settings holds Categories too: General | Categories under the page title */
+const setSub=()=>`<div class="st-sub"><div class="seg" role="group" aria-label="${esc(L('tab_settings'))}">${[['settings','stGeneral'],['categories','tab_categories']].map(([t,k])=>`<button type="button" data-action="tab" data-tab="${t}" aria-pressed="${S.ui.tab===t}">${esc(L(k))}</button>`).join('')}</div></div>`;
 /* the one page header: title (+ info) and a one-line description on the left; the period control and the page's actions on the right */
 const PH={networth:['tab_networth','nwSub','nwWhat'],overview:['tab_overview','ovSub'],yearly:['pt_yearly','yHint','yTable'],transactions:['tab_transactions','txSub'],categories:['tab_categories','ctSub'],settings:['tab_settings','stSub']};
 function pageHead(t,period,actions){ const [tk,sk,ik]=PH[t];
@@ -6278,15 +6281,15 @@ let TOUR=null;
 const tourSec=sel=>()=>{ const e=$(sel); return e?e.closest('section')||e:null; };
 const TOUR_STEPS=[
   {k:'intro'},
-  {k:'tabs',tab:'networth',el:()=>$('.tabs'),pos:'right'},   /* right: the card would otherwise cover the net worth figure under the tabs */
-  {k:'nwTop',tab:'networth',el:()=>$('#view .ov-top')},
-  {k:'nwCards',tab:'networth',el:()=>$('#view .nw-two')},
-  {k:'nwAccounts',tab:'networth',el:()=>$('#view table.nwt')},
+  {k:'tabs',tab:'overview',el:()=>$('.tabs'),pos:'right'},   /* right: the card would otherwise cover the saved figure under the tabs */
   {k:'ovTop',tab:'overview',el:()=>$('#view .ov-top')},
   {k:'ovMonth',tab:'overview',el:tourSec('#tm-title')},
   {k:'ovMonthly',tab:'overview',el:tourSec('#ch-monthly')},
-  {k:'yearly',tab:'yearly',el:()=>$('#view .yframe')},
+  {k:'nwTop',tab:'networth',el:()=>$('#view .ov-top')},
+  {k:'nwCards',tab:'networth',el:()=>$('#view .nw-two')},
+  {k:'nwAccounts',tab:'networth',el:()=>$('#view table.nwt')},
   {k:'txImport',tab:'transactions',el:()=>$('#view .page-head [data-action=import]')},
+  {k:'yearly',tab:'yearly',el:()=>$('#view .yframe')},
   {k:'catList',tab:'categories',el:tourSec('.cat-list')},
   {k:'end'}
 ];

@@ -55,7 +55,7 @@ const TRACKER = lang => JSON.stringify({ app: 'Yearly Budget Tracker', format: 1
   console.log('2. 0 refused; future, old date and no description warn once');
 
   /* 3. Back and Forward move between tabs and stay on the site */
-  await p.click('#tab-overview'); await p.click('#tab-yearly'); await p.click('#tab-categories');
+  await p.click('#tab-overview'); await p.click('#tab-yearly'); await p.click('#tab-settings');
   const tab = () => p.evaluate(() => ({ url: location.href, tab: (document.querySelector('.tabs [aria-selected=true]') || {}).id }));
   await p.goBack(); await p.waitForTimeout(250); assert.deepStrictEqual((await tab()).tab, 'tab-yearly');
   await p.goBack(); await p.waitForTimeout(250); assert.deepStrictEqual((await tab()).tab, 'tab-overview');

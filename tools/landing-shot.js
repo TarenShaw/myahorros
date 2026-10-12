@@ -38,7 +38,8 @@ function demo(lang) {
   const categories = { income: [tr('Salary')], investments: [tr('Funds/ETFs')],
     expenses: [fx('Rent', 'Need'), fx('Utilities', 'Need'), fx('Phone', 'Need'), fx('Groceries', 'Want'), fx('Restaurants', 'Want'), fx('Vacation + Hotel + Travel', 'Want'), fx('Gifts', 'Want')] };
   return JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, config: { categories,
-    settings: { lang, start: { y: Math.floor(first / 12), m: first % 12 }, fixedVar: 1, numFmt: lang === 'es' ? 'eu' : 'en', currency: 'EUR', birthYear: 1994 },
+    settings: { lang, start: { y: Math.floor(first / 12), m: first % 12 }, fixedVar: 1, numFmt: lang === 'es' ? 'eu' : 'en', currency: 'EUR', birthYear: 1994,
+      lastCheckin: '9999-12' },   /* no check-in strip in the shots */
     networth: { accounts: [{ id: 'c', name: tr('Current account'), group: 'cash' }, { id: 's', name: tr('Savings account'), group: 'cash' },
       { id: 'f', name: tr('Index fund'), group: 'invest' }, { id: 'p', name: tr('Pension plan'), group: 'pension' }], snaps, goal: { amount: 30000, month: (Math.floor(end / 12) + 1) + '-12' } } } });
 }
