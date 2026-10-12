@@ -145,3 +145,24 @@ console.log('import smoke: all passed');
   assert.strictEqual(t(''), null);
   console.log('time-zone region: all passed');
 }
+
+/* month-end balances from a statement's Balance column (wizard import for one account) */
+{
+  const balMonthEnds = new Function(line('const r2=') + line('const ymOf=') + line('function ymAdd(') + grab('balMonthEnds') + 'return balMonthEnds;')();
+  /* newest first, as most banks export; opens on 2 January, so the balance before it closes December */
+  const rows = [
+    { date: '2026-03-02', amount: -10, bal: 1190 },
+    { date: '2026-02-27', amount: 200, bal: 1200 },
+    { date: '2026-02-03', amount: -50, bal: 1000 },
+    { date: '2026-01-31', amount: 1000, bal: 1050 },
+    { date: '2026-01-02', amount: -20, bal: 50 },
+    { date: '2026-01-02', amount: 5, bal: 70 },   /* same day, earlier in time: listed below */
+  ];
+  const e = balMonthEnds(rows, false);
+  assert.deepStrictEqual(e, { '2025-12': 65, '2026-01': 1050, '2026-02': 1200 });   /* March is the file's last month: left out */
+  /* oldest first, starting mid-month: no December figure */
+  const up = [{ date: '2026-01-15', amount: 5, bal: 105 }, { date: '2026-02-01', amount: 10, bal: 115 }];
+  assert.deepStrictEqual(balMonthEnds(up, true), { '2026-01': 105 });
+  assert.deepStrictEqual(balMonthEnds([{ date: '2026-01-15', amount: 5, bal: null }], true), {});
+  console.log('statement month-end balances: all passed');
+}

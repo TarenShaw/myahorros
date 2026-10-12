@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-t0Wcy2tXA7/OJSnohJ4Am6x4o/+DMLhPCyQzg39C3YM=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-lU886OA5VCh7PZKRKY6MB9RekTgBW3yP0OtZvSSog+o=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -186,7 +186,19 @@ html{scrollbar-gutter:stable}
 .wz-dots li+li::before{content:"";width:14px;height:1px;background:var(--line-2)}
 .wz-body p{margin:0}
 .wz-acts{display:flex;gap:var(--s8);flex-wrap:wrap}
-.wz-ways{display:grid;gap:var(--s12)}
+@media (max-width:520px){.wz-dots li:not(.cur) small{display:none}}
+.wz-list{list-style:none;margin:0;padding:0;display:grid;gap:var(--s8)}
+.wz-list li{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px var(--s12);padding:var(--s8) var(--s12);border:1px solid var(--line-2);border-radius:var(--r-inner)}
+.wz-list li>.btn{grid-column:2;grid-row:1/span 2}
+.wz-list .wz-n{min-width:0;display:flex;align-items:center;gap:var(--s8);overflow-wrap:anywhere}
+.wz-list .wz-st{font-size:var(--fs-meta);color:var(--muted)}.wz-list .wz-st.ok{color:var(--good-ink);font-weight:600}
+.wz-year{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:4px}
+.wz-year li{text-align:center;padding:6px 0;border-radius:var(--r-inner);border:1px dashed var(--line-2);font-size:var(--fs-sm);color:var(--muted)}
+.wz-year li.ok{background:var(--accent-soft);border:1px solid var(--accent);color:var(--ink)}
+.wz-year li.part{border:1px solid var(--accent);color:var(--ink)}
+.wz-year li.now{border-style:dotted}
+.wz-cap{font-size:var(--fs-meta);color:var(--ink-2)}
+.wz-gaps{margin:0;padding-left:1.2em;display:grid;gap:var(--s8)}
 .wz-ok{display:flex;gap:var(--s8);align-items:center;color:var(--good-ink);font-weight:600;font-size:var(--fs-meta)}
 .wz-ok svg{width:16px;height:16px;flex:none}
 .wz-sum{font-weight:600}
@@ -1745,7 +1757,7 @@ const STR={
   obLead:['Pick a language and how you’d like to start.','Elige un idioma y cómo quieres empezar.'],
   obHowQ:['How do you want to start?','¿Cómo quieres empezar?'],
   obWayAi:['Build it from my bank statements','Crearlo con mis extractos'], obWayAiSub:['Claude reads them, sorts every movement and finds your balances. You check it all before it’s saved. Needs your own AI key (pay per use) or a copy-and-paste step.','Claude los lee, clasifica cada movimiento y encuentra tus saldos. Lo revisas todo antes de guardarlo. Necesita tu propia clave de IA (pago por uso) o un paso de copiar y pegar.'], obQuickest:['Quickest','Lo más rápido'],
-  obWayImp:['Import a bank file','Importar un archivo del banco'], obWayImpSub:['Download your bank’s export (.csv or .xlsx) and bring it in.','Descarga la exportación de tu banco (.csv o .xlsx) y tráela aquí.'],
+  obWayImp:['Import a bank file','Importar un archivo del banco'], obWayImpSub:['Download your bank’s statement from 1 January to today (.csv or .xlsx) and bring it in.','Descarga el extracto de tu banco desde el 1 de enero hasta hoy (.csv o .xlsx) y tráelo aquí.'],
   obWayEmpty:['Start empty','Empezar desde cero'], obWayEmptySub:['A two-minute tour first, then a short guide to add your accounts and transactions.','Primero un recorrido de dos minutos y luego una guía corta para añadir tus cuentas y movimientos.'],
   obEarlier:['Start from an earlier month?','¿Empezar desde un mes anterior?'],
   obEarlierHelp:['By default the tracker starts this month, or with the first month you import. Pick an earlier month if you’ll add older transactions by hand.','Por defecto el control empieza este mes, o con el primer mes que importes. Elige un mes anterior si vas a añadir movimientos antiguos a mano.'],
@@ -1841,24 +1853,38 @@ const STR={
   gStep_acc:['Your accounts','Tus cuentas'], gStep_val:['What they’re worth','Lo que valen'], gStep_tx:['Your transactions','Tus movimientos'],
   gSkipped:['skipped','saltado'], gDoneSr:['(done)','(hecho)'],
   wzEyebrow:[(i,n)=>`Setup · step ${i} of ${n}`,(i,n)=>`Configuración · paso ${i} de ${n}`],   /* short: one line on a phone */
-  wzNames:[['Net worth','Earlier months','Transactions','Salary','Summary'],['Patrimonio','Meses anteriores','Movimientos','Nómina','Resumen']],
-  wz0Title:['Start with what you own','Empieza por lo que tienes'],
-  wz0Text:[m=>`Add each place you keep money: your current account, savings, investments, pension. Then enter what each one was worth at the end of last month (${m}). That’s your starting point.`,m=>`Añade cada sitio donde guardas dinero: tu cuenta corriente, ahorros, inversiones, plan de pensiones. Después introduce lo que valía cada uno a final del mes pasado (${m}). Ese es tu punto de partida.`],
-  wz1Title:['Earlier months (optional)','Meses anteriores (opcional)'],
-  wz1Text:['Want your history too? Fill in the month-end balances for earlier months and your net worth chart starts further back. The quickest way is the AI: give it past statements and it reads the balances for you.','¿Quieres también tu historial? Rellena los saldos de fin de mes de meses anteriores y tu gráfico de patrimonio empezará antes. Lo más rápido es la IA: dale extractos pasados y lee los saldos por ti.'],
-  wzRecommended:['Recommended','Recomendado'], wzEarlierHand:['Enter an earlier month by hand','Introducir un mes anterior a mano'],
-  wz2Title:['Add your transactions','Añade tus movimientos'], wz2Text:['Choose the way that suits you. You can mix them.','Elige la forma que prefieras. Puedes combinarlas.'],
-  wzWayHand:['By hand','A mano'], wzWayHandSub:['Add one transaction at a time.','Añade un movimiento cada vez.'],
-  wzWayPaste:['Paste or import a bank statement','Pega o importa un extracto'], wzWayPasteSub:['Paste rows or choose your bank’s .csv or .xlsx file.','Pega filas o elige el .csv o .xlsx de tu banco.'],
-  wzWayAi:['With AI','Con IA'], wzWayAiSub:['Give it your statements. It sorts everything and you check it before it’s saved.','Dale tus extractos. Lo ordena todo y tú lo revisas antes de guardarlo.'],
+  wzNames:[['Accounts','Statements','Balances','Salary','Summary'],['Cuentas','Extractos','Saldos','Nómina','Resumen']],
+  wz0Title:['Where do you keep money?','¿Dónde tienes tu dinero?'],
+  wz0Text:['Add every account you have: current account, savings, investments, pension. Next, you bring in each one’s statement.','Añade todas tus cuentas: cuenta corriente, ahorro, inversión, plan de pensiones. Después traes el extracto de cada una.'],
+  wz1Title:['Bring in your statements','Trae tus extractos'],
+  wz1Text:[m=>`In each bank’s app or website, download the statement from 1 ${m} to today as Excel or CSV (look for “Export” or “Download”). A whole year makes every average and chart right.`,m=>`En la app o la web de cada banco, descarga el extracto desde el 1 de ${m} hasta hoy en Excel o CSV (busca «Exportar» o «Descargar»). Con el año entero, todas las medias y gráficos salen bien.`],
+  wzImport:['Import','Importar'], wzStmtNone:['Not yet','Todavía no'],
+  wzNoAccs:['No accounts yet: import any statement here, or go back and add your accounts first.','Aún no hay cuentas: importa aquí cualquier extracto o vuelve atrás y añade antes tus cuentas.'],
+  wzStmtGot:[(a,b,n)=>`${a} – ${b} · ${n} ${n===1?'row':'rows'}`,(a,b,n)=>`${a} – ${b} · ${n} ${n===1?'movimiento':'movimientos'}`],
+  wzOtherStmt:['Another statement (credit card, PayPal…)','Otro extracto (tarjeta de crédito, PayPal…)'], wzByHand:['Add one by hand','Añadir uno a mano'], wzAi:['With AI','Con IA'],
+  wzTxCover:[(n,t)=>`${n} of ${t} months have transactions`,(n,t)=>`${n} de ${t} meses tienen movimientos`], wzTxAll:['Every month has transactions','Todos los meses tienen movimientos'],
+  wzHave:['done','hecho'], wzPart:['some accounts','algunas cuentas'], wzMissing:['missing','falta'],
+  wz2Title:['What your accounts were worth','Lo que valían tus cuentas'],
+  wz2Text:[m=>`Enter each account’s balance at the end of every month, starting with the end of ${m}, so Net worth can explain your whole year. A rough figure is fine; type 0 for an account you didn’t have yet. A statement with a balance column fills these in for you.`,m=>`Introduce el saldo de cada cuenta a final de cada mes, empezando por final de ${m}, para que Patrimonio explique todo tu año. Vale una cifra aproximada; escribe 0 en una cuenta que aún no tenías. Un extracto con columna de saldo los rellena por ti.`],
+  wzBalCover:[(n,t)=>`${n} of ${t} month-ends have every account’s balance`,(n,t)=>`${n} de ${t} finales de mes tienen el saldo de todas las cuentas`], wzBalAll:['Every month-end has balances','Todos los finales de mes tienen saldos'],
+  wzAccFirst:['Add your accounts first','Añade antes tus cuentas'],
   wz3Title:['Last, your salary or pension','Por último, tu nómina o pensión'],
-  wz3Text:['Add your salary (or pension) so the tracker can show what you kept. From now on, at the start of each month you fill in the previous month: its balances, its transactions and its salary.','Añade tu nómina (o pensión) para que el control muestre lo que has ahorrado. A partir de ahora, al empezar cada mes rellenas el mes anterior: sus saldos, sus movimientos y su nómina.'],
+  wz3Text:['Mark your salary (or pension) so the tracker can show how much of it you kept.','Marca tu nómina (o pensión) para que el control muestre cuánto has ahorrado de ella.'],
+  wzSalaryQ:['Is one of these your salary or pension?','¿Es alguno de estos tu nómina o pensión?'], wzSalaryIs:['This is it','Es esta'],
+  wzSalaryIsFor:[c=>`${c} is my salary or pension`,c=>`${c} es mi nómina o pensión`],
+  wzSalaryMarked:[n=>`Marked as salary: ${n} ${n===1?'row':'rows'}`,n=>`Marcado como nómina: ${n} ${n===1?'movimiento':'movimientos'}`],
   wzAddSalary:['Add my salary or pension','Añadir mi nómina o pensión'],
   wzCurrency:['Amounts in','Importes en'],
   wzSalaryFound:[(a,d)=>`Salary found: ${a} on ${d}`,(a,d)=>`Nómina encontrada: ${a} el ${d}`], wzSkipped:['skipped','saltado'],
   wzPlace:['Change where it’s saved','Cambiar dónde se guarda'],
-  wz4Title:['You’re all set','Ya está todo listo'],
-  wz4Text:['Here’s what is in your tracker. Next month, add the month that just ended: balances first, then transactions.','Esto es lo que hay en tu control. El mes que viene, añade el mes que acaba de terminar: primero los saldos y luego los movimientos.'],
+  wz4Title:['You’re all set','Ya está todo listo'], wz4TitleGaps:['Almost there','Ya casi está'],
+  wz4Text:['Here’s what is in your tracker. From now on, at the start of each month, add the month that just ended: its statements and balances.','Esto es lo que hay en tu control. A partir de ahora, al empezar cada mes, añade el que acaba de terminar: sus extractos y sus saldos.'],
+  wzGapTx:[l=>`Transactions still missing: ${l}.`,l=>`Faltan movimientos: ${l}.`], wzGapBal:[l=>`Balances not complete: ${l}.`,l=>`Saldos sin completar: ${l}.`],
+  wzGapStmt:[l=>`No statement yet from ${l}.`,l=>`Aún no hay extracto de ${l}.`], wzGoFix:['Fill in','Completar'],
+  wzMonthsN:[(n,a,b)=>`${n} months, ${a} to ${b}`,(n,a,b)=>`${n} meses, de ${a} a ${b}`],
+  impForAcc:[a=>`Statement for: ${a}`,a=>`Extracto de: ${a}`],
+  impBalFill:[(a,n)=>`Also fill in ${a}’s month-end balances from the Balance column (${n} ${n===1?'month':'months'}; figures you typed are kept)`,(a,n)=>`Rellenar también los saldos de final de mes de ${a} con la columna Saldo (${n} ${n===1?'mes':'meses'}; se mantienen las cifras que escribiste)`],
+  balFilled:[n=>`balances for ${n} ${n===1?'month':'months'}`,n=>`saldos de ${n} ${n===1?'mes':'meses'}`],
   wzCounts:[(a,m,t,i)=>`${a} ${a===1?'account':'accounts'} · ${m} ${m===1?'month':'months'} of balances · ${t} ${t===1?'transaction':'transactions'} · ${i} ${i===1?'income row':'income rows'}`,(a,m,t,i)=>`${a} ${a===1?'cuenta':'cuentas'} · ${m} ${m===1?'mes':'meses'} de saldos · ${t} ${t===1?'movimiento':'movimientos'} · ${i} ${i===1?'ingreso':'ingresos'}`],
   wzDone:['Done','Hecho'], wzNext:['Next','Siguiente'], wzBack:['Back','Atrás'], wzSkip:['Skip this step','Saltar este paso'], wzLater:['Finish later','Terminar después'],
   wzFinish:['Go to the overview','Ir al resumen'], wzContinue:['Continue setup','Continuar la configuración'],
@@ -3388,8 +3414,8 @@ function guideState(){
   const g=S.settings&&S.settings.guide;
   if(!g||!g.on||S.demo||!S.canWrite||S.mode!=='live') return null;
   const acc=nw().accounts.length>0, val=nwMonths().length>0, tx=allRows().length>0, skip=!!g.skipNw;
-  const cur=!skip&&!acc?'acc':!skip&&!val?'val':!tx?'tx':'done';
-  return {acc,val,tx,skip,cur,n:{acc:1,val:1,tx:3,done:3}[cur]};
+  const cur=!skip&&!acc?'acc':!tx?'tx':!skip&&!val?'val':'done';
+  return {acc,val,tx,skip,cur,n:{acc:1,tx:2,val:3,done:3}[cur]};
 }
 const guideFigMonth=()=>nwDue()||ymAdd(ymNow(),-1);
 /* a calendar file with a reminder on the 1st of every month */
@@ -3417,55 +3443,90 @@ function backupNudge(){
   return `<div class="notice bk-nudge">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(days==null?L('bkNever'):L('bkOld',days))}</span><span class="bk-acts"><button class="linkish" type="button" data-action="backup">${esc(L('dlBackup'))}</button><button class="linkish" type="button" data-action="bk-later">${esc(L('bkLater'))}</button></span></div>`;
 }
 /* ───────── setup wizard ─────────
-   The default path for a new tracker: one focused dialog, one thing per step. Each button opens the existing
+   The default path for a new tracker: one focused dialog, one thing per step. The aim is the year so far from every account:
+   accounts, then each one's statement from January, then month-end balances, then the salary. Each button opens the existing
    dialog for that job; when that one closes, the wizard comes back (see closeModal). Progress comes from the data. */
 const WZ_STEPS=5;
 /* the latest income row that is a salary or pension (by its category's name), for the wizard's salary step */
-function salaryRow(rows){ let best=null; for(const r of rows) if(r.table==='income'&&r.amount>0&&/^(salary|n[oó]mina|pension|pensi[oó]n|wages?|sueldo)$/i.test((r.category||'').trim())&&(!best||r.date>best.date)) best=r; return best; }
-/* the step the wizard is on (or would open on), so the strip on the pages and the wizard never disagree */
-const wzStep=G=>S.wizard&&S.wizard.on!==false?S.wizard.step:(G&&G.cur==='tx'?2:0);
+const SALARY_RE=/^(salary|n[oó]mina|pension|pensi[oó]n|wages?|sueldo)$/i;
+function salaryRow(rows){ let best=null; for(const r of rows) if(r.table==='income'&&r.amount>0&&SALARY_RE.test((r.category||'').trim())&&(!best||r.date>best.date)) best=r; return best; }
+/* the wizard's step for a guide state, and the step it is on (or would open on), so the strip on the pages and the wizard never disagree */
+const wzOf=G=>G&&G.cur==='tx'?1:G&&G.cur==='val'?2:0;
+const wzStep=G=>S.wizard&&S.wizard.on!==false?S.wizard.step:wzOf(G);
 function wizardOpen(step){ S.wizard={on:true,step:step==null?0:step}; openModal({type:'wizard',mid:true}); }
 function maybeWizard(){
   const G=guideState();
   if(!G||G.cur==='done'||S.modal||S.wizardShown||!S.canWrite||S.mode!=='live'||S.tourPending||S.placePending||TOUR) return;
-  S.wizardShown=true; wizardOpen(G.cur==='tx'?2:0);
+  S.wizardShown=true; wizardOpen(wzOf(G));
 }
+/* the year the wizard asks for: from January (last year's while this one has under two finished months), or an earlier start */
+function wzFrom(){ const n=nowYM(), f=ymOf(n.m<2?n.y-1:n.y,0), st=startOf(), s=st?ymOf(st.y,st.m):null; return s&&s<f?s:f; }
+const ymRange=(a,b)=>{ const o=[]; for(let k=a;k<=b;k=ymAdd(k,1)) o.push(k); return o; };
+/* what is still missing: months without transactions (the month in progress doesn't count) and month-ends without a figure
+   for every account (one at 0 since before counts), from the end of the year before. balAt: 'ok' (all accounts), 'part' (some) or '' */
+function wzCover(){ const now=ymNow(), from=wzFrom(), have=new Set(allRows().map(r=>r.mk)), N=nw();
+  const tx=ymRange(from,now), bal=ymRange(ymAdd(from,-1),ymAdd(now,-1));
+  const balAt=k=>{ const s=N.snaps[k]; if(!s) return ''; const cl=nwState(k).closed; return N.accounts.every(a=>s[a.id]!=null||cl.has(a.id))?'ok':'part'; };
+  return {now,from,tx,bal,balAt,txMiss:tx.filter(k=>k<now&&!have.has(k)),balMiss:bal.filter(k=>balAt(k)!=='ok'),txAt:k=>have.has(k)?'ok':''}; }
+/* a few months by name, many as a range */
+const wzMonths=ks=>ks.length>3?L('wzMonthsN',ks.length,ymIn(ks[0]),ymIn(ks[ks.length-1])):listJoin(ks.map(ymIn));
+function wzStrip(ks,at,now,cap){
+  return `<p class="wz-cap" id="wz-cap">${esc(cap)}</p><ol class="wz-year" aria-labelledby="wz-cap">${ks.map(k=>{ const y=at(k);
+    return `<li class="${y||(k>=now?'now':'')}" title="${esc(ymLabel(k,true))}">${esc(M3()[+k.slice(5,7)-1])}<span class="sr"> ${k.slice(0,4)}: ${esc(L(y==='ok'?'wzHave':y?'wzPart':'wzMissing'))}</span></li>`; }).join('')}</ol>`; }
+/* income rows without a category that could be the salary: the largest first, one per description */
+function salaryCands(rows){ const seen=new Set(), out=[];
+  for(const r of rows.filter(r=>r.table==='income'&&r.amount>0&&!r.category).sort((a,b)=>b.amount-a.amount)){ const d=loose(r.concept); if(seen.has(d)) continue; seen.add(d); out.push(r); if(out.length>=4) break; }
+  return out; }
 function modalWizard(){
-  const w=S.wizard, i=w.step, N=nw(), k=guideFigMonth();
+  const w=S.wizard, i=w.step, N=nw(), C=wzCover(), st=(S.settings&&S.settings.guide&&S.settings.guide.stmts)||{};
   const nAcc=N.accounts.length, nMon=nwMonths().length, rows=allRows(), nTx=rows.length, nInc=rows.filter(r=>r.table==='income').length, sal=salaryRow(rows);
-  const done=[nAcc>0&&nMon>0,nMon>1,nTx>0,!!sal];   /* from the data: a step skipped without doing it gets no tick */
+  const salCat=catNames('income').find(n=>SALARY_RE.test(n));
+  const fin=C.tx.filter(k=>k<C.now).length, txOk=nTx>0&&!C.txMiss.length, balOk=nAcc>0&&!C.balMiss.length;
+  const done=[nAcc>0,txOk,balOk,!!sal];   /* from the data: a step skipped without doing it gets no tick */
   const act=(a,label,extra,cls)=>`<button type="button" class="btn ${cls||''}" data-action="${a}"${extra||''}>${label}</button>`;
   const ok=(on,text)=>on?`<p class="wz-ok">${ICON.ok}<span>${esc(text)}</span></p>`:'';
+  const accName=a=>`<span class="wz-n">${gSw(a.group)}<b>${esc(a.name)}</b></span>`;
   let body='';
   if(i===0){
     /* the currency was guessed from where the device is: shown here so a wrong guess is fixed before any figure is typed */
-    body=`<p>${esc(L('wz0Text',ymIn(k)))}</p>
+    body=`<p>${esc(L('wz0Text'))}</p>
       <p class="wz-cur"><label for="wz-cur">${esc(L('wzCurrency'))}</label> <select id="wz-cur">${Object.entries(CURRENCIES).map(([c,x])=>`<option value="${c}"${c===CUR?' selected':''}>${esc(x.n)}</option>`).join('')}</select></p>
-      <div class="wz-acts">${act('guide-acc',esc(L('nwAddAccounts')),'',nAcc?'':'primary')}${act('guide-val',esc(L('nwEnter',ymIn(k))),` data-k="${k}"`,nAcc&&!nMon?'primary':'')}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):''}</div>
-      ${ok(nAcc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[0])}${ok(nMon,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[1])}`;
+      ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>`<li>${accName(a)}<span class="wz-st">${esc(L('g_'+a.group))}</span></li>`).join('')}</ul>`:''}
+      <div class="wz-acts">${act('guide-acc',esc(L(nAcc?'nwEditAccounts':'nwAddAccounts')),'',nAcc?'':'primary')}</div>`;
   } else if(i===1){
-    body=`<p>${esc(L('wz1Text'))}</p>
-      <div class="wz-acts">${act('guide-val',esc(L('wzEarlierHand')),` data-k="${ymAdd(k,-1)}"`,'primary')}${act('guide-nwimport',ICON.xl+esc(L('nwImport')))}${S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):''}</div>`;
+    const stat=a=>{ const s=st[a.id]; return s?`<span class="wz-st ok">${esc(L('wzStmtGot',fmtDate(s.from),fmtDate(s.to),s.n))}</span>`:`<span class="wz-st">${esc(L('wzStmtNone'))}</span>`; };
+    const next=txOk?null:N.accounts.find(a=>!st[a.id]);
+    body=`<p>${esc(L('wz1Text',ymIn(C.from)))}</p>
+      ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>`<li>${accName(a)}${stat(a)}${act('guide-import',esc(L('wzImport')),` data-acc="${a.id}" aria-label="${esc(L('wzImport')+': '+a.name)}"`,a===next?'primary sm':'sm')}</li>`).join('')}</ul>`:`<p class="hint">${esc(L('wzNoAccs'))}</p>`}
+      <div class="wz-acts">${act('guide-import',esc(L('wzOtherStmt')),'',nAcc?'':'primary')}${S.ai?act('ai-tx',ICON.ai+esc(L('wzAi'))):''}${act('guide-add',esc(L('wzByHand')),'','ghost')}</div>
+      ${wzStrip(C.tx,C.txAt,C.now,C.txMiss.length?L('wzTxCover',fin-C.txMiss.length,fin):L('wzTxAll'))}`;
   } else if(i===2){
-    body=`<p>${esc(L('wz2Text'))}</p>
-      <div class="wz-ways">
-        <button type="button" class="ob-way" data-action="guide-add"><span class="ob-t">${esc(L('wzWayHand'))}</span><span class="ob-s">${esc(L('wzWayHandSub'))}</span></button>
-        <button type="button" class="ob-way" data-action="guide-import"><span class="ob-t">${esc(L('wzWayPaste'))} <span class="tag">${esc(L('wzRecommended'))}</span></span><span class="ob-s">${esc(L('wzWayPasteSub'))}</span></button>
-        ${S.ai?`<button type="button" class="ob-way" data-action="ai-tx"><span class="ob-t">${ICON.ai}${esc(L('wzWayAi'))}</span><span class="ob-s">${esc(L('wzWayAiSub'))}</span></button>`:''}
-      </div>${ok(nTx,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[2])}`;
+    const k=C.balMiss[0]||C.bal[C.bal.length-1];
+    body=`<p>${esc(L('wz2Text',ymIn(C.bal[0])))}</p>
+      ${nAcc?wzStrip(C.bal,C.balAt,C.now,C.balMiss.length?L('wzBalCover',C.bal.length-C.balMiss.length,C.bal.length):L('wzBalAll')):''}
+      <div class="wz-acts">${nAcc?act('guide-val',esc(L(N.snaps[k]?'nwEdit':'nwEnter',ymIn(k))),` data-k="${k}"`,balOk?'':'primary')+act('guide-nwimport',ICON.xl+esc(L('nwImport')))+(S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):''):act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`;
   } else if(i===3){
-    body=`<p>${esc(L('wz3Text'))}</p><div class="wz-acts">${act('guide-income',esc(L('wzAddSalary')),'',sal?'':'primary')}</div>${sal?ok(true,L('wzSalaryFound',fmtEUR(sal.amount),fmtDate(sal.date))):ok(nInc,L('wzCounts',nAcc,nMon,nTx,nInc).split(' · ')[3])}`;
+    const cands=sal||!salCat?[]:salaryCands(rows);
+    body=`<p>${esc(L('wz3Text'))}</p>
+      ${cands.length?`<p>${esc(L('wzSalaryQ'))}</p><ul class="wz-list">${cands.map(r=>`<li><span class="wz-n">${esc(shortDesc(r.concept,48))}</span><span class="wz-st">${fmtEUR(r.amount)} · ${esc(fmtDate(r.date))}</span>${act('wz-salary',esc(L('wzSalaryIs')),` data-mk="${r.mk}" data-id="${r.id}" aria-label="${esc(L('wzSalaryIsFor',shortDesc(r.concept,48)))}"`,'sm')}</li>`).join('')}</ul>`:''}
+      ${sal?ok(true,L('wzSalaryFound',fmtEUR(sal.amount),fmtDate(sal.date))):`<div class="wz-acts">${act('guide-income',esc(L('wzAddSalary')),'',cands.length?'':'primary')}</div>`}`;
   } else {
     const place=S.local&&Array.isArray(S.local.actions)&&S.local.actions.includes('changeStorage');
-    body=`<p>${esc(L('wz4Text'))}</p><p class="wz-sum">${esc(L('wzCounts',nAcc,nMon,nTx,nInc))}</p><p class="hint">${esc(S.local?LT('gSafeApp'):L('gSafeWeb'))}</p>
+    const noStmt=nTx?N.accounts.filter(a=>a.group==='cash'&&!st[a.id]).map(a=>a.name):[];
+    const gap=(t,s)=>`<li>${esc(t)} <button type="button" class="linkish" data-action="wz-go" data-s="${s}">${esc(L(s===1?'wzImport':'wzGoFix'))}</button></li>`;
+    const gaps=[C.txMiss.length?gap(L('wzGapTx',wzMonths(C.txMiss)),1):'',noStmt.length?gap(L('wzGapStmt',listJoin(noStmt)),1):'',nAcc&&C.balMiss.length?gap(L('wzGapBal',wzMonths(C.balMiss)),2):''].join('');
+    body=`<p>${esc(L('wz4Text'))}</p><p class="wz-sum">${esc(L('wzCounts',nAcc,nMon,nTx,nInc))}</p>${gaps?`<ul class="wz-gaps">${gaps}</ul>`:''}<p class="hint">${esc(S.local?LT('gSafeApp'):L('gSafeWeb'))}</p>
       <div class="wz-acts">${place?act('wz-place',esc(L('wzPlace'))):''}${S.downloads||S.local?act('remind-ics',esc(L('remindBtn'))):''}</div>`;
+    w.gaps=!!gaps;
   }
   const names=L('wzNames');
   const dots=names.map((n,j)=>{ const tick=j<WZ_STEPS-1&&done[j], skipped=j<i&&!tick; return `<li class="${j===i?'cur':tick?'done':skipped?'skipped':''}"${j===i?' aria-current="step"':''}><span>${tick?'✓':skipped?'–':j+1}</span><small>${esc(n)}</small>${skipped?`<i class="sr"> (${esc(L('wzSkipped'))})</i>`:''}</li>`; }).join('');
-  const last=i===WZ_STEPS-1, optional=(i===1||i===2||i===3)&&!done[i];
-  return `<div class="m-head"><div><p class="eyebrow">${esc(L('wzEyebrow',i+1,WZ_STEPS))}</p><h3 id="m-title">${esc(L('wz'+i+'Title'))}</h3></div><button class="icon-btn" data-action="wz-later" aria-label="${esc(L('wzLater'))}" title="${esc(L('wzLater'))}">${ICON.x}</button></div>
+  const last=i===WZ_STEPS-1;
+  /* one way forward: "Next" once the step is done, "Skip this step" while it isn't */
+  const fwd=last?act('guide-finish',esc(L('wzFinish')),'','primary'):done[i]?act('wz-next',esc(L('wzNext')),'','primary'):act('wz-next',esc(L('wzSkip')),'','ghost');
+  return `<div class="m-head"><div><p class="eyebrow">${esc(L('wzEyebrow',i+1,WZ_STEPS))}</p><h3 id="m-title">${esc(L(last&&w.gaps?'wz4TitleGaps':'wz'+i+'Title'))}</h3></div><button class="icon-btn" data-action="wz-later" aria-label="${esc(L('wzLater'))}" title="${esc(L('wzLater'))}">${ICON.x}</button></div>
   <div class="m-body wz-body"><ol class="wz-dots">${dots}</ol>${body}</div>
-  <div class="m-foot"><span>${i>0?act('wz-back',esc(L('wzBack'))):act('wz-later',esc(L('wzLater')),'','ghost')}</span><span class="r">${optional?act('wz-next',esc(L('wzSkip')),'','ghost'):''}${last?act('guide-finish',esc(L('wzFinish')),'','primary'):act('wz-next',esc(L('wzNext')),'',optional?'':'primary')}</span></div>`;
+  <div class="m-foot"><span>${i>0?act('wz-back',esc(L('wzBack'))):act('wz-later',esc(L('wzLater')),'','ghost')}</span><span class="r">${fwd}</span></div>`;
 }
 /* the strip that stays on the pages until setup is finished */
 function guideStrip(G){
@@ -3969,16 +4030,18 @@ function drawNwChart(){
 }
 /* modals */
 function modalNwSnap(){
-  const m=S.modal, N=nw(), k=m.k, ms=nwMonths(), has=!!N.snaps[k], prev=ms.filter(x=>x<k).pop()||null, src=has?N.snaps[k]:(prev?N.snaps[prev]:{}), carried=!has&&!!prev;
+  const m=S.modal, N=nw(), k=m.k, ms=nwMonths(), has=!!N.snaps[k], prev=ms.filter(x=>x<k).pop()||null, own=N.snaps[k]||{}, ps=prev?N.snaps[prev]:{};
   /* accounts that were already at 0 before this month aren't carried over and sit behind a toggle */
   const closed=nwState(k).closed;
-  const vals=m.vals||Object.fromEntries(N.accounts.map(a=>[a.id,(has||!closed.has(a.id))&&src[a.id]!=null?fmtNum(src[a.id]):'']));
+  /* an account with no figure this month starts from the month before's, marked until it's typed over (a month half filled from a statement too) */
+  const cf=new Set(N.accounts.filter(a=>own[a.id]==null&&!closed.has(a.id)&&ps[a.id]!=null).map(a=>a.id)), carried=cf.size>0;
+  const vals=m.vals||Object.fromEntries(N.accounts.map(a=>[a.id,own[a.id]!=null?fmtNum(own[a.id]):cf.has(a.id)?fmtNum(ps[a.id]):'']));
   m.vals=vals;
   const opts=[]; for(let x=ymNow(),i=0;i<36;i++,x=ymAdd(x,-1)) opts.push(x); if(!opts.includes(k)) opts.push(k);
   const field=a=>{ const pv=prev&&N.snaps[prev][a.id]!=null?N.snaps[prev][a.id]:null, zc=closed.get(a.id);
       return `<div class="nw-row"><label for="nwv-${a.id}">${esc(a.name)}${a.risk?` <span class="chip-risk">${esc(L('nwRisk'))}</span>`:''}</label>
-        <input type="text" id="nwv-${a.id}" data-acc="${a.id}" inputmode="decimal" autocomplete="off" value="${esc(vals[a.id]||'')}" class="${carried&&!m.touched?.[a.id]&&vals[a.id]?'carried':''}" placeholder="—">
-        ${zc?`<span class="last">${esc(L('nwClosedSince',ymLabel(zc,true)))}</span>`:pv!=null&&(has||!carried)?`<span class="last">${esc(L('nwBefore',fmtEUR(pv)))}</span>`:''}</div>`; };
+        <input type="text" id="nwv-${a.id}" data-acc="${a.id}" inputmode="decimal" autocomplete="off" value="${esc(vals[a.id]||'')}" class="${cf.has(a.id)&&!m.touched?.[a.id]&&vals[a.id]?'carried':''}" placeholder="—">
+        ${zc?`<span class="last">${esc(L('nwClosedSince',ymLabel(zc,true)))}</span>`:pv!=null&&!cf.has(a.id)?`<span class="last">${esc(L('nwBefore',fmtEUR(pv)))}</span>`:''}</div>`; };
   const body=NW_GROUPS.map(g=>{ const accs=N.accounts.filter(a=>a.group===g&&!closed.has(a.id)); if(!accs.length) return '';
     return `<div class="nw-fgrp">${gSw(g)} ${esc(L('g_'+g))}</div>`+accs.map(field).join(''); }).join('')+
     (closed.size?`<div class="nw-closed"><button type="button" class="linkish" data-action="nw-show-closed">${esc(m.showClosed?L('nwHideClosed'):L('nwShowClosed',closed.size))}</button>
@@ -5301,8 +5364,10 @@ function modalImport(){
   const m=S.modal;
   if(m.step==='input'){
     const sk=skipList();
+    const fa=m.acct&&nw().accounts.find(a=>a.id===m.acct);
     return `${mHead(esc(L('impTitle')),esc(L('impSub')))}
   <div class="m-body imp-src">
+    ${fa?`<p class="notice">${esc(L('impForAcc',fa.name))}</p>`:''}
     ${S.downloads?`<div class="imp-tpl"><button type="button" class="btn primary" data-action="import-template">${esc(L('dlTemplateBtn'))}</button><span class="hint">${esc(L('dlTemplateHint'))}</span></div>`:''}
     <div class="drop" id="imp-drop"><span>${esc(L('impFileA'))}${S.downloads?`<button type="button" class="linkish" data-action="import-template">${esc(L('impFileLink'))}</button>`:esc(L('impFileLink'))}${esc(L('impFileB'))}</span>
       <label class="btn sm" for="imp-file">${esc(L('chooseFile'))}</label><input type="file" id="imp-file" accept=".xlsx,.xlsm,.xls,.csv,.txt" class="sr"></div>
@@ -5342,7 +5407,7 @@ function modalImport(){
     <td class="n">${r.aiQ?(()=>{ const ao=aiOptions(r.aiQ); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}<span class="ai-reply"><input type="text" id="ai-reply-${i}" placeholder="${esc(L('aiReplyPh'))}" aria-label="${esc(L('aiReplyPh'))}"><button type="button" class="btn sm" data-action="ai-reply" data-i="${i}">${esc(L('aiReplyBtn'))}</button></span>${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${greyed(r)?`<span class="note why">${esc(whyText(r))}</span> `:''}${r.like&&!r.dup&&!greyed(r)?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span> `:''}${r.table==='expenses'&&isBizum(r)?`<span class="note">${esc(L('noteBizum'))}</span> `:''}${greyed(r)?'':r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
-    ${aiReviewNote(m)}${impChecksNote(m)}
+    ${aiReviewNote(m)}${impChecksNote(m)}${(o=>o?`<label class="check"><input type="checkbox" id="imp-balfill"${m.balFill!==false?' checked':''}> ${esc(L('impBalFill',o.a.name,o.ks.length))}</label>`:'')(impBalOffer(m))}
     ${m.sw&&m.sw.people.length>1?`<div class="field"><label class="lab" for="imp-sw-who">${esc(L('swWho'))}</label><select id="imp-sw-who" style="max-width:320px">${m.sw.people.map((p,i)=>`<option value="${i}"${i===m.sw.who?' selected':''}>${esc(p)}</option>`).join('')}</select><span class="help">${esc(L('swHelp'))}</span></div>`:''}
     ${guessed?`<p class="hint">${esc(L('sortedNote'))}</p>`:''}
     ${nMl?`<p class="hint ml-note">${esc(L('mlImpNote',nMl))}</p>`:''}
@@ -5620,7 +5685,7 @@ function importChecks(rows){
   if(withBal.length>=4&&withBal.length>=0.7*rows.length){
     const run=list=>{ let ok=0; const bad=[]; for(let i=1;i<list.length;i++){ if(Math.abs(r2(list[i].bal-list[i-1].bal)-list[i].amount)<=0.011) ok++; else bad.push(list[i]); } return {ok,bad}; };
     const up=run(withBal), down=run(withBal.slice().reverse()), best=up.ok>=down.ok?up:down, steps=withBal.length-1;
-    if(best.ok>=0.6*steps){ for(const r of best.bad) r.balOff=true; out.bal={steps,ok:best.ok,bad:best.bad.length}; }
+    if(best.ok>=0.6*steps){ for(const r of best.bad) r.balOff=true; out.bal={steps,ok:best.ok,bad:best.bad.length,chrono:best===up}; }
   }
   return out;
 }
@@ -5717,20 +5782,41 @@ async function readFile(file){
     finishImport(parsed,bad,file.name);
   }catch(e){ m.msg=L('notSpreadsheet'); renderModal(); }
 }
+/* a statement imported for one account (from the wizard) whose Balance column adds up: its month-ends, for that account's figures not typed yet */
+function impBalOffer(m){ const c=m.checks, a=m.acct&&nw().accounts.find(x=>x.id===m.acct);
+  if(!a||!c||!c.bal||c.bal.bad>Math.max(1,c.bal.steps*0.1)) return null;
+  const ends=balMonthEnds(m.rows,c.bal.chrono), ks=Object.keys(ends).filter(k=>!(nw().snaps[k]&&nw().snaps[k][a.id]!=null));
+  return ks.length?{a,ends,ks}:null; }
+/* each month's closing balance: the last row of every month but the file's last one (which may stop before the month ends).
+   ponytail: a file whose first row falls in a month's first week is taken to start on the 1st, so the balance before that row closes the month before */
+function balMonthEnds(rows,chrono){
+  const c=(chrono?rows.filter(r=>r.bal!=null):rows.filter(r=>r.bal!=null).reverse()).sort((x,y)=>x.date<y.date?-1:x.date>y.date?1:0), out={};
+  if(!c.length) return out;
+  const lastK=c[c.length-1].date.slice(0,7);
+  for(const r of c){ const k=r.date.slice(0,7); if(k<lastK) out[k]=r.bal; }
+  const f=c[0]; if(+f.date.slice(8,10)<=7) out[ymAdd(f.date.slice(0,7),-1)]=r2(f.bal-f.amount);
+  return out;
+}
 function addImported(){
-  const rows=S.modal.rows.filter(r=>r.on); const by={}, added=[], pendNw=S.modal.pendingNw;
+  const m=S.modal, bo=m.balFill!==false?impBalOffer(m):null;
+  const rows=m.rows.filter(r=>r.on); const by={}, added=[], pendNw=m.pendingNw;
   for(const r of rows){ const mk=r.date.slice(0,7), id=newId(); insertSorted(ensureMonth(mk)[r.table],{id,date:r.date,amount:r2(r.amount),concept:r.concept,category:r.category||''}); markDirty('months/'+mk); added.push({mk,table:r.table,id}); by[r.table]=(by[r.table]||0)+1; }
   if(S.settings&&S.settings.startAuto&&rows.length){ const first=rows.map(r=>r.date).sort()[0], st=startOf(), fk={y:+first.slice(0,4),m:+first.slice(5,7)-1};
     const nx=Object.assign({},S.settings); delete nx.startAuto; if(!st||fk.y*12+fk.m<st.y*12+st.m) nx.start=fk; S.settings=nx; markDirty('config/settings'); }
+  /* the wizard's statement list remembers which dates came in for the account */
+  if(m.acct&&m.rows.length){ const g=Object.assign({},S.settings&&S.settings.guide), sts=Object.assign({},g.stmts), ds=m.rows.map(r=>r.date).sort(), o=sts[m.acct];
+    sts[m.acct]={from:o&&o.from<ds[0]?o.from:ds[0],to:o&&o.to>ds[ds.length-1]?o.to:ds[ds.length-1],n:(o?o.n:0)+rows.length}; setSettings({guide:Object.assign(g,{stmts:sts})}); }
+  if(bo){ const N=ensureNw(); for(const k of bo.ks) (N.snaps[k]=N.snaps[k]||{})[bo.a.id]=bo.ends[k]; saveNw(); }
   bump(); closeModal();
-  S.lastImport=added.length?{added,n:added.length}:null;
+  S.lastImport=added.length?{added,n:added.length,bal:bo?{id:bo.a.id,ks:bo.ks}:null}:null;
   const yrs=[...new Set(rows.map(r=>+r.date.slice(0,4)))]; if(yrs.length===1) S.ui.year=yrs[0];
-  render(); toast(L('addedParts',Object.entries(by).map(([t,n])=>L('nToT',fmtCount(n),TL(t))).join(', ')),added.length?{label:L('undo'),fn:undoImport}:null,15000);
+  render(); toast(L('addedParts',Object.entries(by).map(([t,n])=>L('nToT',fmtCount(n),TL(t))).concat(bo?[L('balFilled',bo.ks.length)]:[]).join(', ')),added.length?{label:L('undo'),fn:undoImport}:null,15000);
   if(pendNw) setTimeout(()=>{ if(!S.modal){ setTab('networth'); openModal({type:'nwimp',data:pendNw,fileName:L('aiNwFrom'),wide:true}); } },400);
 }
 function undoImport(){
   const li=S.lastImport; if(!li) return; let n=0;
   for(const a of li.added){ const f=findRow(a.mk,a.table,a.id); if(f.i>-1){ f.arr.splice(f.i,1); markDirty('months/'+a.mk); n++; } }
+  if(li.bal){ const N=nw(); for(const k of li.bal.ks) if(N.snaps[k]){ delete N.snaps[k][li.bal.id]; if(!Object.keys(N.snaps[k]).length) delete N.snaps[k]; } saveNw(); }
   S.lastImport=null; bump(); render(); toast(L('importUndone',n));
 }
 
@@ -6380,7 +6466,13 @@ const ACTIONS={
   'guide-acc':()=>{ if(!S.canWrite) return; if(S.ui.tab!=='networth') setTab('networth'); openModal({type:'nwacc',mid:true}); },
   'guide-nwimport':()=>{ if(S.ui.tab!=='networth') setTab('networth'); ACTIONS['nw-import'](); },
   'guide-val':el=>{ if(!S.canWrite) return; if(S.ui.tab!=='networth') setTab('networth'); openModal({type:'nwsnap',k:el.dataset.k,wide:false}); },
-  'guide-import':()=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS.import(); },
+  /* from the wizard's statement list: the import knows which account the file is from (its dates are remembered, its Balance column can fill that account's month-ends) */
+  'guide-import':el=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS.import(); const id=el&&el.dataset.acc; if(id&&S.modal&&S.modal.type==='import'){ S.modal.acct=id; renderModal(); } },
+  'wz-go':el=>{ if(!S.wizard) return; S.wizard.step=+el.dataset.s||0; renderModalKeepScroll(); },
+  'wz-salary':el=>{ const f=findRow(el.dataset.mk,'income',el.dataset.id), cat=catNames('income').find(n=>SALARY_RE.test(n)); if(!f.row||!cat) return;
+    /* every uncategorised income row with the same description is the same salary in other months */
+    const d=loose(f.row.concept); let n=0; for(const r of allRows()) if(r.table==='income'&&!r.category&&loose(r.concept)===d){ setTxCategory(r,cat); n++; }
+    render(); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); toast(L('wzSalaryMarked',n)); },
   'guide-income':()=>{ if(!S.canWrite) return; S.ui.tx.table='income'; if(S.ui.tab!=='transactions') setTab('transactions'); else render(); ACTIONS['add-tx'](); },
   'guide-add':()=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS['add-tx'](); },
   'wz-open':()=>{ wizardOpen(wzStep(guideState())); },
@@ -6394,7 +6486,7 @@ const ACTIONS={
   'bk-later':()=>{ if(!S.canWrite) return; setSettings({backupSnooze:ymdAdd(todayYmd(),30)}); render(); },
   'guide-hide':()=>{ const G=guideState(); setSettings({guide:Object.assign({},S.settings.guide,{on:false},G&&G.cur==='done'?{done:true}:{})}); render(); if(G&&G.cur!=='done') toast(L('gHidden')); },
   'guide-finish':()=>{ if(S.wizard) S.wizard.on=false; closeModal(); setSettings({guide:Object.assign({},S.settings.guide,{on:false,done:true})}); setTab('overview'); },
-  'guide-show':()=>{ setSettings({guide:{on:true}}); const G=guideState(); setTab(G&&G.cur==='tx'?'transactions':'networth'); wizardOpen(G&&G.cur==='tx'?2:0); },
+  'guide-show':()=>{ setSettings({guide:{on:true,stmts:(S.settings.guide||{}).stmts}}); const G=guideState(); setTab(G&&G.cur==='tx'?'transactions':'networth'); wizardOpen(wzOf(G)); },
   'toggle-hide':()=>{ HIDE=!HIDE; try{ localStorage.setItem('ybt.hideAmounts',HIDE?'1':'0'); }catch(_){} hideTip(); render(); if(S.modal) renderModalKeepScroll(); toast(L(HIDE?'amountsHidden':'amountsShown')); },
   'nw-from':el=>{ const N=ensureNw(), a=N.accounts.find(x=>x.id===el.dataset.id); if(!a) return; const before=a.from; a.from=el.dataset.k; saveNw(); render();
     toast(L('nwFromSaved',a.name,ymIn(a.from)),{label:L('undo'),fn:()=>{ const b=ensureNw().accounts.find(x=>x.id===a.id); if(b){ if(before) b.from=before; else delete b.from; saveNw(); render(); } }}); },
@@ -6476,6 +6568,7 @@ document.addEventListener('change',e=>{
   if(id==='ob-month'){ S.ui.obM=+el.value; return; }
   if(id==='ob-year'){ S.ui.obY=+el.value; return; }
   if(id==='st-month'||id==='st-year'){ setStart({y:+$('#st-year').value,m:+$('#st-month').value}); return; }
+  if(id==='imp-balfill'&&S.modal){ S.modal.balFill=el.checked; return; }
   if(id==='imp-sw-who'&&S.modal&&S.modal.sw){ S.modal.sw.who=+el.value; readSplitwise(); return; }
   if(id==='year-select'){ S.ui.year=+el.value; S.ui.tx.month='all'; S.ui.oc.month='all'; render(); return; }
   if(id==='oc-month'){ S.ui.oc.month=el.value; render(); return; }

@@ -37,17 +37,19 @@ const SHOTS = process.env.SHOTS;
   await p.keyboard.press('Escape');
   await p.waitForSelector('.wz-body', { timeout: 8000 });
   await shot(p, 'wizard-0');
-  assert.ok(/last month/i.test(await p.innerText('.wz-body')), 'step 1 should explain last month’s balances');
-  await p.click('[data-action="wz-next"]'); await p.click('[data-action="wz-next"]');   /* skip optional earlier months */
-  assert.ok(/three|By hand/i.test(await p.innerText('.wz-body')));
-  await shot(p, 'wizard-2');
+  assert.ok(/every account/i.test(await p.innerText('.wz-body')), 'step 1 should ask for every account');
+  /* one way forward: "Skip this step" while a step isn't done, "Next" once it is */
+  assert.strictEqual((await p.innerText('.m-foot [data-action="wz-next"]')).trim(), 'Skip this step');
   await p.click('[data-action="wz-next"]');
-  assert.ok(/behind|lag|previous month/i.test(await p.innerText('.wz-body')), 'salary step should explain the lag');
-  await shot(p, 'wizard-3');
+  assert.ok(/1 January/i.test(await p.innerText('.wz-body')), 'statements step should ask for 1 January');
+  await p.click('[data-action="wz-next"]');
+  await p.click('[data-action="wz-next"]');
+  assert.ok(/salary/i.test(await p.innerText('.wz-body')));
   await p.click('[data-action="wz-next"]');
   await p.waitForSelector('[data-action="guide-finish"]');
   await shot(p, 'wizard-4');
   console.log('2. wizard steps work');
+
 
   /* 3. a dialog the wizard opens brings the wizard back when it closes */
   await p.click('[data-action="wz-back"]'); await p.click('[data-action="wz-back"]'); await p.click('[data-action="wz-back"]'); await p.click('[data-action="wz-back"]');
@@ -99,6 +101,60 @@ const SHOTS = process.env.SHOTS;
   assert.deepStrictEqual(marks, { Groceries: 'Want', Gym: 'Need' }, 'Fixed/Variable migration: ' + JSON.stringify(marks));
   assert.strictEqual(await p.getAttribute('#tab-overview', 'aria-selected'), 'true', 'a tracker with rows and no accounts should open on the Overview');
   console.log('4c. Fixed/Variable migration keeps marks the user changed');
+
+  /* 4d. the year from every account: accounts, a statement for one of them (its Balance column fills the month-ends),
+     the month-ends still missing one by one, the salary picked from the imported income */
+  p = await newPage();
+  await p.goto(START, { waitUntil: 'load' });
+  await p.click('.web-landing .wl-hero [data-x=start]');
+  await p.click('button.web-way[data-m=browser]'); await p.click('[data-action="ob-start"]');
+  await p.waitForSelector('#tour-card', { timeout: 8000 }); await p.keyboard.press('Escape');
+  await p.waitForSelector('.wz-body', { timeout: 8000 });
+  await p.click('[data-action="guide-acc"]'); await p.waitForSelector('#nw-acc-form');
+  for (const n of ['Current account', 'Savings account']) await p.click(`#nw-acc-form [data-action="na-add"][data-n="${n}"]`);
+  await p.click('#nw-acc-form button[type=submit]'); await p.waitForSelector('.wz-body');
+  assert.strictEqual((await p.innerText('.m-foot [data-action="wz-next"]')).trim(), 'Next');
+  await p.click('[data-action="wz-next"]');
+  assert.strictEqual((await p.$$('.wz-list [data-action="guide-import"][data-acc]')).length, 2, 'one Import per account');
+  await p.click('.wz-list [data-action="guide-import"][data-acc]');
+  await p.waitForSelector('#imp-text');
+  assert.ok(/Statement for: Current account/.test(await p.innerText('.modal')));
+  /* newest first, from 2 January of the wizard's year to today, with a running balance */
+  const stmt = await p.evaluate(() => {
+    const now = new Date(), y = now.getMonth() < 2 ? now.getFullYear() - 1 : now.getFullYear(), out = []; let bal = 1000;
+    const add = (d, a, c) => { bal = Math.round((bal + a) * 100) / 100; out.push([d, c, a, bal]); };
+    for (let d = new Date(y, 0, 2); d <= now; d.setDate(d.getDate() + 1)) {
+      const iso = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      if (d.getDate() === 2) add(iso, -40, 'MERCADONA'); if (d.getDate() === 27) add(iso, 2100, 'TRANSFERENCIA ACME SL'); }
+    return { text: 'Date\tDescription\tAmount\tBalance\n' + out.reverse().map(r => r.join('\t')).join('\n'), y };
+  });
+  await p.fill('#imp-text', stmt.text); await p.click('[data-action="imp-read"]');
+  await p.waitForSelector('#imp-balfill');
+  assert.ok(await p.isChecked('#imp-balfill'), 'balance fill offered and ticked');
+  await p.click('[data-action="imp-add"]');
+  if (await p.$('[data-action="imp-add-confirm"]')) await p.click('[data-action="imp-add-confirm"]');
+  await p.waitForSelector('.wz-body');
+  assert.ok(/rows/.test(await p.innerText('.wz-list li')), 'the account shows its imported dates');
+  assert.strictEqual((await p.$$('.wz-year li:not(.ok):not(.now)')).length, 0, 'every month has transactions');
+  /* December closes on the balance before the first row */
+  await p.waitForFunction(k => { const n = window.__ybtWeb.store.config.networth; return n && n.snaps && n.snaps[k] && Object.values(n.snaps[k])[0] === 1000; }, (stmt.y - 1) + '-12', { timeout: 5000 });
+  await p.click('[data-action="wz-next"]');
+  assert.ok((await p.$$('.wz-year li.part')).length > 0, 'month-ends without the savings account are partial');
+  assert.ok(/December/.test(await p.innerText('.wz-acts [data-action="guide-val"]')));
+  await p.click('[data-action="guide-val"]'); await p.waitForSelector('#nw-snap-form');
+  const ins = await p.$$('#nw-snap-form input[data-acc]'); await ins[1].fill('4000');
+  await p.click('#nw-snap-form button[type=submit]'); await p.waitForSelector('.wz-body');
+  assert.ok(/January/.test(await p.innerText('.wz-acts [data-action="guide-val"]')), 'the next missing month-end comes next');
+  await p.click('[data-action="guide-val"]'); await p.waitForSelector('#nw-snap-form');
+  assert.ok(await p.$('#nw-snap-form input.carried'), 'the savings figure is carried from December');
+  await p.keyboard.press('Escape'); await p.waitForSelector('.wz-body');
+  await p.click('[data-action="wz-next"]');
+  await p.click('[data-action="wz-salary"]');
+  await p.waitForFunction(() => /Salary found/.test(document.querySelector('.wz-body').innerText));
+  await p.click('[data-action="wz-next"]');
+  assert.ok(/Almost there/.test(await p.innerText('#m-title')) && /Balances not complete/.test(await p.innerText('.wz-body')), 'summary lists what is missing');
+  await shot(p, 'wizard-summary');
+  console.log('4d. statements, balances from the statement, salary, summary gaps');
 
   /* 5. See a demo starts the tour */
   p = await newPage();
