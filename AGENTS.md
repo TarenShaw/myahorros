@@ -66,3 +66,37 @@ Co-authored-by: Codex <codex@openai.com>
 
 Before grepping or reading many files, query the knowledge graph in graphify-out/
 (use /graphify query "...", /graphify path "A" "B", or /graphify explain "X").
+
+## Claude and Codex Collaboration
+
+- This repository uses separate Git worktrees for Claude and Codex.
+- Main application: ../MyAhorros
+- Claude workspace: ../MyAhorros-Claude
+- Codex workspace: ../MyAhorros-Codex
+- Existing audit and quick-wins worktrees must be preserved.
+
+### Git Rules
+- Never commit directly to main.
+- Claude uses branches prefixed with claude/.
+- Codex uses branches prefixed with codex/.
+- Create a fresh feature branch from the latest main for each task.
+- Never modify another AI's worktree.
+- Never force-push or delete branches without user approval.
+- Never merge a pull request without user approval.
+- Do not automatically deploy changes to production.
+
+### Development Workflow
+1. Check Git status before making changes.
+2. Explain the proposed changes.
+3. Implement the assigned feature.
+4. Run relevant tests.
+5. Commit changes on the feature branch.
+6. Open a pull request targeting main.
+7. Wait for review and user approval.
+
+### Cross-AI Reviews
+- Claude can review Codex pull requests.
+- Codex can review Claude pull requests.
+- Reviews should be read-only.
+- Report bugs, risks, and suggested improvements.
+
