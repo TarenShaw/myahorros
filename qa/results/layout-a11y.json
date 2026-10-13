@@ -1,0 +1,983 @@
+{
+  "layout": {
+    "w375": {
+      "networth": {
+        "vw": 375,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "button.info-btn 17x17 \"i\"",
+          "#nw-month 182x40 \"Septiembre 2026\nAgosto 20\"",
+          "button.btn 255x40 \"Editar cifras de septiemb\"",
+          "button.btn 184x40 \"Importar desde Excel\"",
+          "button.btn 184x40 \"Leer extractos con IA\"",
+          "button 58x36 \"2025\"",
+          "button 58x36 \"2026\"",
+          "button 58x36 \"Todos\"",
+          "button.btn 129x40 \"Fijar un objetivo\"",
+          "button.btn.sm 105x36 \"Editar cuentas\""
+        ],
+        "smallCount": 24
+      },
+      "overview": {
+        "vw": 375,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-select 89x40 \"2025\n2026\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "button.linkish 87x38 \"Revisarlos\"",
+          "button.linkish 123x38 \"Descargar copia\"",
+          "button.linkish 86x38 \"Más tarde\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn.sm 130x36 \"Añadir movimiento\"",
+          "button.btn.sm 118x36 \"Pegar o importar\"",
+          "button.btn.sm 128x36 \"Hacerlo con IA\""
+        ],
+        "smallCount": 38
+      },
+      "yearly": {
+        "vw": 375,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-select 89x40 \"2025\n2026\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "button.info-btn 17x17 \"i\"",
+          "#heat-switch 125x27 \"Mapa de calor\"",
+          "#ft-priv 58x14 \"Privacidad\""
+        ],
+        "smallCount": 8
+      },
+      "transactions": {
+        "vw": 375,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-select 89x40 \"2025\n2026\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "button 105x36 \"Ingresos\n9\"",
+          "button 101x36 \"Gastos\n48\"",
+          "button 121x36 \"Inversiones\n9\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn 145x40 \"Categorizar vacíos\"",
+          "button.btn 143x40 \"Hacerlo con IA\"",
+          "button.btn 134x40 \"Pegar o importar\""
+        ],
+        "smallCount": 67
+      },
+      "categories": {
+        "vw": 375,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-select 89x40 \"2025\n2026\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "button 91x36 \"Ingresos\"",
+          "button 81x36 \"Gastos\"",
+          "button 108x36 \"Inversiones\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn.primary.sm 117x36 \"Añadir categoría\"",
+          "#cat-q 309x40 \"\"",
+          "button.nw.need 44x36 \"FIJO\""
+        ],
+        "smallCount": 121
+      },
+      "settings": {
+        "vw": 375,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#st-lang-en 15x15 \"en\"",
+          "#st-lang-es 15x15 \"es\"",
+          "#st-num-eu 15x15 \"eu\"",
+          "#st-num-en 15x15 \"en\"",
+          "#st-cur 309x40 \"Euro (€)\nPound sterling (\"",
+          "button.info-btn 17x17 \"i\"",
+          "#st-month 150x40 \"Enero\nFebrero\nMarzo\nAbril\"",
+          "#st-year 150x40 \"2021\n2022\n2023\n2024\n2025\n\"",
+          "button.btn.ghost.sm 57x36 \"Quitar\"",
+          "#st-born 109x40 \"\""
+        ],
+        "smallCount": 28
+      },
+      "errors": []
+    },
+    "w375land": {
+      "networth": {
+        "vw": 667,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "button.info-btn 17x17 \"i\"",
+          "#nw-month 182x40 \"Septiembre 2026\nAgosto 20\"",
+          "button.btn 255x40 \"Editar cifras de septiemb\"",
+          "button.btn 184x40 \"Importar desde Excel\"",
+          "button.btn 184x40 \"Leer extractos con IA\"",
+          "button 58x36 \"2025\"",
+          "button 58x36 \"2026\"",
+          "button 58x36 \"Todos\"",
+          "button.linkish.nw-retlink 409x37 \"¿Qué categorías cuentan c\""
+        ],
+        "smallCount": 26
+      },
+      "overview": {
+        "vw": 667,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-select 91x40 \"2025\n2026\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "button.linkish 87x38 \"Revisarlos\"",
+          "button.linkish 123x38 \"Descargar copia\"",
+          "button.linkish 86x38 \"Más tarde\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn.sm 130x36 \"Añadir movimiento\"",
+          "button.btn.sm 118x36 \"Pegar o importar\""
+        ],
+        "smallCount": 43
+      },
+      "yearly": {
+        "vw": 667,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-select 91x40 \"2025\n2026\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "button.info-btn 17x17 \"i\"",
+          "#heat-switch 125x27 \"Mapa de calor\"",
+          "#ft-priv 58x14 \"Privacidad\""
+        ],
+        "smallCount": 9
+      },
+      "transactions": {
+        "vw": 667,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-select 91x40 \"2025\n2026\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "button 121x36 \"Ingresos\n9\"",
+          "button 121x36 \"Gastos\n48\"",
+          "button 121x36 \"Inversiones\n9\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn 145x40 \"Categorizar vacíos\"",
+          "button.btn 143x40 \"Hacerlo con IA\""
+        ],
+        "smallCount": 70
+      },
+      "categories": {
+        "vw": 667,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-select 91x40 \"2025\n2026\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "button 108x36 \"Ingresos\"",
+          "button 108x36 \"Gastos\"",
+          "button 108x36 \"Inversiones\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn.primary.sm 117x36 \"Añadir categoría\"",
+          "#cat-q 585x40 \"\""
+        ],
+        "smallCount": 123
+      },
+      "settings": {
+        "vw": 667,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "#st-lang-en 15x15 \"en\"",
+          "#st-lang-es 15x15 \"es\"",
+          "#st-num-eu 15x15 \"eu\"",
+          "#st-num-en 15x15 \"en\"",
+          "#st-cur 320x40 \"Euro (€)\nPound sterling (\"",
+          "button.info-btn 17x17 \"i\"",
+          "#st-month 150x40 \"Enero\nFebrero\nMarzo\nAbril\"",
+          "#st-year 150x40 \"2021\n2022\n2023\n2024\n2025\n\"",
+          "button.btn.ghost.sm 57x36 \"Quitar\""
+        ],
+        "smallCount": 28
+      },
+      "errors": []
+    },
+    "w768": {
+      "networth": {
+        "vw": 768,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "button.info-btn 17x17 \"i\"",
+          "#nw-month 182x40 \"Septiembre 2026\nAgosto 20\"",
+          "button.btn 255x40 \"Editar cifras de septiemb\"",
+          "button.btn 184x40 \"Importar desde Excel\"",
+          "button.btn 184x40 \"Leer extractos con IA\"",
+          "button 58x36 \"2025\"",
+          "button 58x36 \"2026\"",
+          "button 58x36 \"Todos\"",
+          "button.linkish.nw-retlink 409x37 \"¿Qué categorías cuentan c\""
+        ],
+        "smallCount": 26
+      },
+      "overview": {
+        "vw": 768,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "button.linkish 87x38 \"Revisarlos\"",
+          "button.linkish 123x38 \"Descargar copia\"",
+          "button.linkish 86x38 \"Más tarde\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn.sm 130x36 \"Añadir movimiento\"",
+          "button.btn.sm 118x36 \"Pegar o importar\"",
+          "button.btn.sm 128x36 \"Hacerlo con IA\""
+        ],
+        "smallCount": 42
+      },
+      "yearly": {
+        "vw": 768,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "button.info-btn 17x17 \"i\"",
+          "#heat-switch 125x27 \"Mapa de calor\"",
+          "#ft-priv 58x14 \"Privacidad\""
+        ],
+        "smallCount": 8
+      },
+      "transactions": {
+        "vw": 768,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "button 121x36 \"Ingresos\n9\"",
+          "button 121x36 \"Gastos\n48\"",
+          "button 121x36 \"Inversiones\n9\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn 145x40 \"Categorizar vacíos\"",
+          "button.btn 143x40 \"Hacerlo con IA\"",
+          "button.btn 134x40 \"Pegar o importar\""
+        ],
+        "smallCount": 69
+      },
+      "categories": {
+        "vw": 768,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 40x40 \"‹\"",
+          "#year-next 40x40 \"›\"",
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "button 108x36 \"Ingresos\"",
+          "button 108x36 \"Gastos\"",
+          "button 108x36 \"Inversiones\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn.primary.sm 117x36 \"Añadir categoría\"",
+          "#cat-q 680x40 \"\"",
+          "button.nw.need 44x36 \"FIJO\""
+        ],
+        "smallCount": 122
+      },
+      "settings": {
+        "vw": 768,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#btn-local-top 174x36 \"Conectar Google Drive\"",
+          "#btn-hide 32x36 \"Ocultar importes\"",
+          "#btn-backup 115x36 \"Descargar copia\"",
+          "#st-lang-en 15x15 \"en\"",
+          "#st-lang-es 15x15 \"es\"",
+          "#st-num-eu 15x15 \"eu\"",
+          "#st-num-en 15x15 \"en\"",
+          "#st-cur 320x40 \"Euro (€)\nPound sterling (\"",
+          "button.info-btn 17x17 \"i\"",
+          "#st-month 150x40 \"Enero\nFebrero\nMarzo\nAbril\"",
+          "#st-year 150x40 \"2021\n2022\n2023\n2024\n2025\n\"",
+          "button.btn.ghost.sm 57x36 \"Quitar\""
+        ],
+        "smallCount": 28
+      },
+      "errors": []
+    },
+    "w1024": {
+      "networth": {
+        "vw": 1024,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "button.info-btn 17x17 \"i\"",
+          "#nw-month 182x34 \"Septiembre 2026\nAgosto 20\"",
+          "button.btn 255x34 \"Editar cifras de septiemb\"",
+          "button.btn 184x34 \"Importar desde Excel\"",
+          "button.btn 184x34 \"Leer extractos con IA\"",
+          "button 58x30 \"2025\"",
+          "button 58x30 \"2026\"",
+          "button 58x30 \"Todos\"",
+          "button.linkish.fh-link 311x28 \"Añade tu año de nacimient\""
+        ],
+        "smallCount": 26
+      },
+      "overview": {
+        "vw": 1024,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 34x34 \"‹\"",
+          "#year-next 34x34 \"›\"",
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "button.linkish 83x28 \"Revisarlos\"",
+          "button.linkish 119x28 \"Descargar copia\"",
+          "button.linkish 82x28 \"Más tarde\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn.sm 130x28 \"Añadir movimiento\"",
+          "button.btn.sm 118x28 \"Pegar o importar\"",
+          "button.btn.sm 128x28 \"Hacerlo con IA\""
+        ],
+        "smallCount": 42
+      },
+      "yearly": {
+        "vw": 1024,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 34x34 \"‹\"",
+          "#year-next 34x34 \"›\"",
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "button.info-btn 17x17 \"i\"",
+          "#heat-switch 125x27 \"Mapa de calor\"",
+          "#ft-priv 58x14 \"Privacidad\""
+        ],
+        "smallCount": 8
+      },
+      "transactions": {
+        "vw": 1024,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 34x34 \"‹\"",
+          "#year-next 34x34 \"›\"",
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "button 121x30 \"Ingresos\n9\"",
+          "button 121x30 \"Gastos\n48\"",
+          "button 121x30 \"Inversiones\n9\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn 145x34 \"Categorizar vacíos\"",
+          "button.btn 143x34 \"Hacerlo con IA\"",
+          "button.btn 134x34 \"Pegar o importar\""
+        ],
+        "smallCount": 69
+      },
+      "categories": {
+        "vw": 1024,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 34x34 \"‹\"",
+          "#year-next 34x34 \"›\"",
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "button 108x30 \"Ingresos\"",
+          "button 108x30 \"Gastos\"",
+          "button 108x30 \"Inversiones\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn.primary.sm 117x28 \"Añadir categoría\"",
+          "#cat-q 370x34 \"\"",
+          "button.nw.need 38x18 \"FIJO\""
+        ],
+        "smallCount": 122
+      },
+      "settings": {
+        "vw": 1024,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "#st-lang-en 15x15 \"en\"",
+          "#st-lang-es 15x15 \"es\"",
+          "#st-num-eu 15x15 \"eu\"",
+          "#st-num-en 15x15 \"en\"",
+          "#st-cur 320x34 \"Euro (€)\nPound sterling (\"",
+          "button.info-btn 17x17 \"i\"",
+          "#st-month 150x34 \"Enero\nFebrero\nMarzo\nAbril\"",
+          "#st-year 150x34 \"2021\n2022\n2023\n2024\n2025\n\"",
+          "button.btn.ghost.sm 57x28 \"Quitar\""
+        ],
+        "smallCount": 28
+      },
+      "errors": []
+    },
+    "w1440": {
+      "networth": {
+        "vw": 1440,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "button.info-btn 17x17 \"i\"",
+          "#nw-month 182x34 \"Septiembre 2026\nAgosto 20\"",
+          "button.btn 255x34 \"Editar cifras de septiemb\"",
+          "button.btn 184x34 \"Importar desde Excel\"",
+          "button.btn 184x34 \"Leer extractos con IA\"",
+          "button 58x30 \"2025\"",
+          "button 58x30 \"2026\"",
+          "button 58x30 \"Todos\"",
+          "button.linkish.nw-retlink 405x27 \"¿Qué categorías cuentan c\""
+        ],
+        "smallCount": 26
+      },
+      "overview": {
+        "vw": 1440,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 34x34 \"‹\"",
+          "#year-next 34x34 \"›\"",
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "button.linkish 83x28 \"Revisarlos\"",
+          "button.linkish 119x28 \"Descargar copia\"",
+          "button.linkish 82x28 \"Más tarde\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn.sm 130x28 \"Añadir movimiento\"",
+          "button.btn.sm 118x28 \"Pegar o importar\"",
+          "button.btn.sm 128x28 \"Hacerlo con IA\""
+        ],
+        "smallCount": 42
+      },
+      "yearly": {
+        "vw": 1440,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 34x34 \"‹\"",
+          "#year-next 34x34 \"›\"",
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "button.info-btn 17x17 \"i\"",
+          "#heat-switch 125x27 \"Mapa de calor\"",
+          "#ft-priv 58x14 \"Privacidad\""
+        ],
+        "smallCount": 8
+      },
+      "transactions": {
+        "vw": 1440,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 34x34 \"‹\"",
+          "#year-next 34x34 \"›\"",
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "button 121x30 \"Ingresos\n9\"",
+          "button 121x30 \"Gastos\n48\"",
+          "button 121x30 \"Inversiones\n9\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn 145x34 \"Categorizar vacíos\"",
+          "button.btn 143x34 \"Hacerlo con IA\"",
+          "button.btn 134x34 \"Pegar o importar\""
+        ],
+        "smallCount": 69
+      },
+      "categories": {
+        "vw": 1440,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#year-prev 34x34 \"‹\"",
+          "#year-next 34x34 \"›\"",
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "button 108x30 \"Ingresos\"",
+          "button 108x30 \"Gastos\"",
+          "button 108x30 \"Inversiones\"",
+          "button.info-btn 17x17 \"i\"",
+          "button.btn.primary.sm 117x28 \"Añadir categoría\"",
+          "#cat-q 554x34 \"\"",
+          "button.nw.need 38x18 \"FIJO\""
+        ],
+        "smallCount": 122
+      },
+      "settings": {
+        "vw": 1440,
+        "pageScrollX": false,
+        "overflow": [],
+        "small": [
+          "#btn-local-top 174x28 \"Conectar Google Drive\"",
+          "#btn-hide 32x28 \"Ocultar importes\"",
+          "#btn-backup 115x28 \"Descargar copia\"",
+          "#st-lang-en 15x15 \"en\"",
+          "#st-lang-es 15x15 \"es\"",
+          "#st-num-eu 15x15 \"eu\"",
+          "#st-num-en 15x15 \"en\"",
+          "#st-cur 320x34 \"Euro (€)\nPound sterling (\"",
+          "button.info-btn 17x17 \"i\"",
+          "#st-month 150x34 \"Enero\nFebrero\nMarzo\nAbril\"",
+          "#st-year 150x34 \"2021\n2022\n2023\n2024\n2025\n\"",
+          "button.btn.ghost.sm 57x28 \"Quitar\""
+        ],
+        "smallCount": 28
+      },
+      "errors": []
+    }
+  },
+  "axe": [
+    {
+      "screen": "landing",
+      "violations": []
+    },
+    {
+      "screen": "where-to-save",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "welcome",
+      "violations": []
+    },
+    {
+      "screen": "en networth",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "en overview",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "en yearly",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "en transactions",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "en categories",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "en settings",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "dialog add transaction",
+      "violations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "nodes": 1,
+          "help": "Heading levels should only increase by one",
+          "sample": [
+            "#m-title"
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "dialog import",
+      "violations": [
+        {
+          "id": "heading-order",
+          "impact": "moderate",
+          "nodes": 1,
+          "help": "Heading levels should only increase by one",
+          "sample": [
+            "#m-title"
+          ]
+        },
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "dialog add account",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "es networth",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "es overview",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "es yearly",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "es transactions",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "es categories",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    },
+    {
+      "screen": "es settings",
+      "violations": [
+        {
+          "id": "region",
+          "impact": "moderate",
+          "nodes": 2,
+          "help": "All page content should be contained by landmarks",
+          "sample": [
+            "nav",
+            "#sync"
+          ]
+        }
+      ]
+    }
+  ],
+  "keyboard": {
+    "overviewTabOrder": [
+      "button#tab-yearly \"Yearly tracking\" ring",
+      "button#tab-transactions \"Transactions2\" ring",
+      "button#tab-categories \"Categories\" ring",
+      "button#tab-settings \"Settings\" ring",
+      "button#btn-local-top \"Connect Google Drive\" ring",
+      "button#btn-hide \"Hide amounts\" ring",
+      "button#btn-backup \"Download backup\" ring",
+      "button \"Review them\" ring",
+      "button \"Download backup\" ring",
+      "button \"Later\" ring",
+      "button \"i\" ring",
+      "button \"i\" ring",
+      "button \"i\" ring",
+      "button \"Add transaction\" ring",
+      "button \"Paste or import\" ring",
+      "button \"Do it with AI\" ring",
+      "button \"Set limits in Categori\" ring",
+      "button \"i\" ring",
+      "button \"All\" ring",
+      "button \"Income\" ring",
+      "button \"Expenses\" ring",
+      "button \"Investments\" ring",
+      "button \"Months\" ring",
+      "button \"Days\" ring",
+      "button \"i\" ring",
+      "button \"Income\" ring",
+      "button \"Expenses\" ring",
+      "button \"Investments\" ring",
+      "button \"Top 10\" ring",
+      "button \"All\" ring",
+      "select#oc-month \"Whole year\nJanuary\nFeb\" ring",
+      "input#oc-exrent \"\" ring",
+      "div \"1Groceries\n1.095,45 €6\" ring",
+      "div \"2Utilities\n629,95 €35,\" ring",
+      "div \"3Uncategorised\n39,98 €\" ring",
+      "div \"4Restaurants\n29,70 €1,\" ring",
+      "button \"i\" ring",
+      "button \"i\" ring",
+      "button \"≤ 30%\" ring",
+      "button \"≤ 50%\" ring",
+      "button \"≤ 30%\" ring",
+      "button \"≥ 20%\" ring",
+      "button \"i\" ring",
+      "a#ft-priv \"Privacy\" ring",
+      "body"
+    ],
+    "noRing": [],
+    "dialogFocus": "input#f-concept",
+    "focusLeftDialog": 0,
+    "escapeClosesDialog": true,
+    "focusAfterClose": "button[add-tx]",
+    "errors": []
+  },
+  "dark": {
+    "w375": {
+      "theme": null,
+      "bg": "rgb(11, 11, 12)"
+    },
+    "w1440": {
+      "theme": null,
+      "bg": "rgb(11, 11, 12)"
+    }
+  },
+  "semantics": {
+    "lang": "es",
+    "title": "MyAhorros: controla tus ahorros, gastos y patrimonio",
+    "h1": [
+      "MyAhorros"
+    ],
+    "svgCharts": [
+      {
+        "role": null,
+        "label": "",
+        "hidden": "true"
+      },
+      {
+        "role": null,
+        "label": "",
+        "hidden": "true"
+      },
+      {
+        "role": null,
+        "label": "",
+        "hidden": "true"
+      },
+      {
+        "role": "img",
+        "label": "Ingresos, gastos e inversiones por mes en 2026",
+        "hidden": null
+      },
+      {
+        "role": "img",
+        "label": "Gastos e inversiones como porcentaje de los ingresos por mes",
+        "hidden": null
+      },
+      {
+        "role": null,
+        "label": "",
+        "hidden": "true"
+      },
+      {
+        "role": null,
+        "label": "",
+        "hidden": "true"
+      },
+      {
+        "role": null,
+        "label": "",
+        "hidden": "true"
+      }
+    ],
+    "imgsNoAlt": 0
+  }
+}

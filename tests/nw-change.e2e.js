@@ -24,7 +24,7 @@ const START=process.env.START_URL||'http://localhost:8000/';
       assert(sums[0].includes('260'),'total stays 260');assert(sums[1].includes('50'),'gains stay 50');assert(sums[2].includes('10'),'review stays 10');
       assert.strictEqual(await card.locator('.nw-body>.nw-bar').count(),1,'one combined bar');
       assert.strictEqual(await card.locator('.nw-bar>i').count(),3);assert.strictEqual(await card.locator('.nw-review').count(),1);
-      await card.locator('.nw-review>summary').click();assert((await card.locator('.nw-review').innerText()).includes('10'));await card.locator('.nw-review>summary').click();
+      await card.locator('button.nw-review').click();assert((await p.locator('.nw-review-status').innerText()).includes('10'));await p.locator('#overlay button[data-action=close]').first().click();
       assert(!(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)),'no horizontal overflow');
       if(process.env.SHOTS)await card.screenshot({path:process.env.SHOTS+'/change-'+lang+'-'+width+'.png'});
       await load();assert.strictEqual(await card.locator('.nw-change-stat').count(),2);assert.strictEqual(await card.locator('.nw-review').count(),0);assert.strictEqual(await card.locator('.nw-bar>i.left').count(),0);

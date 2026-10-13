@@ -1,0 +1,182 @@
+- generic [ref=f2e103]:
+  - generic [ref=f2e104]:
+    - banner [ref=f2e105]:
+      - generic [ref=f2e106]:
+        - paragraph [ref=f2e107]: Income · Expenses · Investments
+        - link "MyAhorros" [ref=f2e108] [cursor=pointer]:
+          - /url: ./
+    - generic [ref=f2e109]:
+      - tablist "Sections" [ref=f2e110]:
+        - tab "Overview" [active] [selected] [ref=f2e111] [cursor=pointer]
+        - tab "Net worth" [ref=f2e114] [cursor=pointer]
+        - tab "Transactions 1 without a category" [ref=f2e119] [cursor=pointer]:
+          - text: Transactions
+          - generic "1 without a category" [ref=f2e123]: 1 to sort
+        - tab "By month" [ref=f2e124] [cursor=pointer]
+        - tab "Settings" [ref=f2e128] [cursor=pointer]
+      - generic [ref=f2e133]:
+        - generic [ref=f2e134]: Saved
+        - button "Hide amounts" [ref=f2e135] [cursor=pointer]
+    - main [ref=f2e140]:
+      - generic [ref=f2e513]:
+        - generic [ref=f2e514]:
+          - heading "Overview" [level=1] [ref=f2e515]
+          - paragraph [ref=f2e516]: "Your year at a glance: what came in, what went out and what you kept."
+        - generic [ref=f2e518]:
+          - button "Previous year" [disabled] [ref=f2e519]: ‹
+          - generic [ref=f2e520]: Year
+          - combobox "Year" [ref=f2e521]:
+            - option "2026" [selected]
+          - button "Next year" [disabled] [ref=f2e522]: ›
+      - generic [ref=f2e523]:
+        - region "Year summary" [ref=f2e524]:
+          - generic [ref=f2e525]:
+            - paragraph [ref=f2e526]:
+              - text: Saved in 2026 · Jan–Oct so far
+              - button "What does this mean?" [ref=f2e527]: i
+            - paragraph [ref=f2e528]: 16.251,59 €
+            - paragraph [ref=f2e529]: 50,1% of income kept after expenses
+            - paragraph [ref=f2e530]: Income minus expenses. Money you invested still counts as kept.
+          - generic [ref=f2e531]:
+            - generic [ref=f2e532]:
+              - generic [ref=f2e533]: Income
+              - generic [ref=f2e535]: 32.440,33 €
+              - generic [ref=f2e536]: avg 3.604 € a month
+            - generic [ref=f2e537]:
+              - generic [ref=f2e538]: Expenses
+              - generic [ref=f2e540]: 16.188,74 €
+              - generic [ref=f2e541]: 49,9% of income
+            - generic [ref=f2e542]:
+              - generic [ref=f2e543]: Investments
+              - generic [ref=f2e545]: 6.500,00 €
+              - generic [ref=f2e546]: 20,0% of income
+            - generic [ref=f2e547]:
+              - generic [ref=f2e548]:
+                - text: Not spent or invested
+                - button "What does this mean?" [ref=f2e549]: i
+              - generic [ref=f2e550]: 9.751,59 €
+              - generic [ref=f2e551]: Income left after expenses and investments
+        - generic [ref=f2e552]:
+          - heading "Compare months" [level=2] [ref=f2e554]
+          - generic [ref=f2e555]:
+            - generic [ref=f2e556]:
+              - text: Month
+              - combobox "Month" [ref=f2e557]:
+                - option "January 2026"
+                - option "February 2026"
+                - option "March 2026"
+                - option "April 2026"
+                - option "May 2026"
+                - option "June 2026"
+                - option "July 2026"
+                - option "August 2026"
+                - option "September 2026" [selected]
+                - option "October 2026"
+            - generic [ref=f2e558]:
+              - text: Compare with
+              - combobox "Compare with" [ref=f2e559]:
+                - option "Previous month" [selected]
+                - option "Same month last year"
+          - paragraph [ref=f2e560]: September 2026 – August 2026. Based on recorded rows; incomplete statements can change these totals.
+          - generic [ref=f2e561]:
+            - 'button "Income 3.206,95 € August 2026: 3.200,00 € Δ +6,95 €" [ref=f2e562] [cursor=pointer]':
+              - generic [ref=f2e563]: Income
+              - generic [ref=f2e564]: 3.206,95 €
+              - generic [ref=f2e565]: "August 2026: 3.200,00 €"
+              - generic [ref=f2e566]: Δ +6,95 €
+            - 'button "Expenses 1.485,02 € August 2026: 2.424,54 € Δ −939,52 €" [ref=f2e567] [cursor=pointer]':
+              - generic [ref=f2e568]: Expenses
+              - generic [ref=f2e569]: 1.485,02 €
+              - generic [ref=f2e570]: "August 2026: 2.424,54 €"
+              - generic [ref=f2e571]: Δ −939,52 €
+            - 'button "Savings 1.721,93 € August 2026: 775,46 € Δ +946,47 €" [ref=f2e572] [cursor=pointer]':
+              - generic [ref=f2e573]: Savings
+              - generic [ref=f2e574]: 1.721,93 €
+              - generic [ref=f2e575]: "August 2026: 775,46 €"
+              - generic [ref=f2e576]: Δ +946,47 €
+            - 'button "Investments 650,00 € August 2026: 650,00 € Δ 0,00 €" [ref=f2e577] [cursor=pointer]':
+              - generic [ref=f2e578]: Investments
+              - generic [ref=f2e579]: 650,00 €
+              - generic [ref=f2e580]: "August 2026: 650,00 €"
+              - generic [ref=f2e581]: Δ 0,00 €
+        - region [ref=f2e582]:
+          - generic [ref=f2e583]:
+            - generic [ref=f2e584]:
+              - heading [level=2] [ref=f2e585]:
+                - text: This month · October
+                - button "What does this mean?" [ref=f2e586]: i
+              - paragraph [ref=f2e587]: Day 12 of 31
+            - generic [ref=f2e588]:
+              - button "Fill in with AI" [ref=f2e589] [cursor=pointer]
+              - button "Add a statement" [ref=f2e593] [cursor=pointer]
+              - button "Add transaction" [ref=f2e594] [cursor=pointer]
+          - generic [ref=f2e595]:
+            - generic [ref=f2e596]:
+              - generic [ref=f2e597]: Spent so far
+              - generic [ref=f2e599]: 1.262,95 €
+              - generic [ref=f2e600]: "Your average month: 1.658 €"
+              - img "So far 76,2% of an average month, on day 12 of 31" [ref=f2e601]:
+                - generic "Where an average month would be by day 12" [ref=f2e603]
+              - generic [ref=f2e604]: On track for about 1.583 €
+            - generic [ref=f2e605]:
+              - generic [ref=f2e606]: Income so far
+              - generic [ref=f2e608]: 0,00 €
+              - generic [ref=f2e609]: "Your average month: 3.604 €"
+              - img "So far 0,0% of an average month, on day 12 of 31" [ref=f2e610]:
+                - generic "Where an average month would be by day 12" [ref=f2e611]
+              - generic [ref=f2e612]: On track for about 3.200 €
+            - generic [ref=f2e613]:
+              - generic [ref=f2e614]: Invested so far
+              - generic [ref=f2e616]: 650,00 €
+              - generic [ref=f2e617]: "Your average month: 650 €"
+              - img "So far 100,0% of an average month, on day 12 of 31" [ref=f2e618]:
+                - generic "Where an average month would be by day 12" [ref=f2e620]
+              - generic [ref=f2e621]: On track for about 650 €
+          - heading "Monthly limits" [level=3] [ref=f2e622]
+          - generic [ref=f2e623]:
+            - 'button "Restaurants: 36 € spent of a 180 € limit" [ref=f2e624] [cursor=pointer]':
+              - generic [ref=f2e625]: Restaurants
+              - generic "Where spending evenly through the month would put you today" [ref=f2e628]
+              - generic [ref=f2e629]: 36 € / 180 €
+              - generic [ref=f2e630]: 144 € left
+            - 'button "Alcohol + Bars: 0 € spent of a 70 € limit" [ref=f2e631] [cursor=pointer]':
+              - generic [ref=f2e632]: Alcohol + Bars
+              - generic "Where spending evenly through the month would put you today" [ref=f2e634]
+              - generic [ref=f2e635]: 0 € / 70 €
+              - generic [ref=f2e636]: 70 € left
+            - 'button "Non Essential Shopping: 0 € spent of a 60 € limit" [ref=f2e637] [cursor=pointer]':
+              - generic [ref=f2e638]: Non Essential Shopping
+              - generic "Where spending evenly through the month would put you today" [ref=f2e640]
+              - generic [ref=f2e641]: 0 € / 60 €
+              - generic [ref=f2e642]: 60 € left
+          - heading "Other spending this month" [level=3] [ref=f2e643]
+          - generic [ref=f2e644]:
+            - button "Rent 850 €" [ref=f2e645] [cursor=pointer]:
+              - generic [ref=f2e646]: Rent
+              - generic [ref=f2e649]: 850 €
+            - button "Groceries 118 €" [ref=f2e650] [cursor=pointer]:
+              - generic [ref=f2e651]: Groceries
+              - generic [ref=f2e654]: 118 €
+            - button "Utilities 112 €" [ref=f2e655] [cursor=pointer]:
+              - generic [ref=f2e656]: Utilities
+              - generic [ref=f2e659]: 112 €
+            - button "Insurance 38 €" [ref=f2e660] [cursor=pointer]:
+              - generic [ref=f2e661]: Insurance
+              - generic [ref=f2e664]: 38 €
+            - button "Uncategorised 37 €" [ref=f2e665] [cursor=pointer]:
+              - generic [ref=f2e666]: Uncategorised
+              - generic [ref=f2e669]: 37 €
+            - button "Phone 25 €" [ref=f2e670] [cursor=pointer]:
+              - generic [ref=f2e671]: Phone
+              - generic [ref=f2e674]: 25 €
+        - button "More analysis" [ref=f2e675] [cursor=pointer]
+  - status
+  - contentinfo [ref=f2e315]:
+    - text: © 2026 MyAhorros · Developed by Taren Shaw with Claude Opus 5.5 ·
+    - link "Privacy" [ref=f2e316] [cursor=pointer]:
+      - /url: privacy.html
+  - region "Example data · nothing is saved" [ref=f2e504]:
+    - generic [ref=f2e505]: Example data · nothing you change is saved
+    - generic [ref=f2e506]:
+      - button "Take the tour" [ref=f2e507] [cursor=pointer]
+      - button "Set up my tracker" [ref=f2e508] [cursor=pointer]

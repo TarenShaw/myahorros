@@ -1,0 +1,2235 @@
+{
+  "desk-en": {
+    "steps": [
+      {
+        "title": "Welcome to your tracker",
+        "text": "Before you set it up, here’s a two-minute tour with a made-up example, so you can see every page full of data. Nothing in it is saved. Afterwards a short setup wizard helps you add your accounts, then your transactions and your salary.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED",
+        "buttons": [
+          "Skip the tour",
+          "Start the tour"
+        ],
+        "spotHidden": true,
+        "offscreen": false,
+        "cardH": 242
+      },
+      {
+        "title": "Six pages",
+        "text": "Net worth for what you own, Overview for the big picture, Yearly for every figure, Transactions for the rows themselves, Categories for how they’re sorted, and Settings.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 1 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "What you own",
+        "text": "Once a month, type what each account is worth, or import several months from Excel. Accounts are grouped by how soon you could use the money.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 2 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "How it grows",
+        "text": "Your month-end totals with a trend line. Pick one year or several.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 3 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 171
+      },
+      {
+        "title": "Why it changed, and your goal",
+        "text": "What changed splits each month into what you saved and what markets added. Goal shows what you need a month and how much would have to come from growth.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 4 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Accounts and gains",
+        "text": "Each account’s value, its change since last month and its Gains: how much it grew on its own (prices, interest, dividends), apart from money you put in. Hover Gains for how it’s worked out.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 5 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Your year at a glance",
+        "text": "How much you kept after expenses this year, and your totals for income, expenses and investments. Any i button explains what a figure means.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 6 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "This month",
+        "text": "How the month in progress is going: what you’ve spent so far against a normal month, and against any monthly limits.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 7 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "Month by month",
+        "text": "Each month’s income, expenses or investments. Click a bar to see the transactions behind it.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 8 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 171
+      },
+      {
+        "title": "Where it went",
+        "text": "Your categories, biggest first. Click one to follow it month by month.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 9 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 171
+      },
+      {
+        "title": "Indicators",
+        "text": "How your income splits between rent, fixed and variable spending and investing, against targets you can change.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 10 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "Every figure, every month",
+        "text": "Laid out like a spreadsheet: categories down the side, months across. Click any figure to see its transactions. The heat map shows where most of the money went each month.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 11 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Bring in your bank’s export",
+        "text": "Paste rows or choose your bank’s file (.csv or .xlsx), or download the empty template and fill it in. Each row is sorted into Income, Expenses or Investments and gets its category from your keywords. Rows already in the tracker are spotted.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 12 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 236
+      },
+      {
+        "title": "Let an AI read your statements",
+        "text": "Do it with AI reads statements and PDFs for you. The first time you pick which AI: Copy and paste is free, Gemini has a free tier, Claude and GPT are paid with your own key. A recommendation next to the model picker says which model suits one file or many months. Change AI switches it any time, and you check every row before it’s saved.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 13 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 279
+      },
+      {
+        "title": "Categories, guessed",
+        "text": "When no keyword matches a row, the tracker suggests a category learned from your past transactions. One click accepts it, and it offers to remember a keyword for next time.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 14 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Keywords do the sorting",
+        "text": "A keyword like “netflix” puts every matching row in its category by itself. Type any description in the test box to see which keyword picks it.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 15 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "Your categories",
+        "text": "Rename, add or remove categories, mark each expense as Fixed or Variable, and set monthly limits.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 16 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 171
+      },
+      {
+        "title": "Saved as you go",
+        "text": "Every change is saved straight away. The eye hides all amounts on screen, and Download backup keeps a copy of everything.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 17 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "That’s the tour",
+        "text": "Now it’s your turn. The button below puts the example away and starts the setup guide: first your accounts on Net worth, then your transactions. You can take the tour again from Settings, and the i buttons next to titles explain each figure.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED",
+        "buttons": [
+          "Set up my tracker"
+        ],
+        "spotHidden": true,
+        "offscreen": false,
+        "cardH": 242
+      }
+    ],
+    "landingMs": 672,
+    "landing": {
+      "title": "MyAhorros: track your savings, spending and net worth",
+      "h1": "Know where your money goes, and what you’re worth.",
+      "lead": "A free, simple way to follow what you earn, spend and own. Your figures stay on your device or in your own Google Drive.",
+      "chip": "Free · No sign-up · Private",
+      "fine": "No account. No sign-up. Nothing leaves your device unless you choose.",
+      "buttons": [
+        "See a demo",
+        "Get started"
+      ],
+      "docLang": "en"
+    },
+    "landingLayout": {
+      "vw": 1440,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "button 70x33 \"English\"",
+        "button 72x33 \"Español\"",
+        "a 44x21 \"Privacy\""
+      ],
+      "smallCount": 3
+    },
+    "choose": [
+      {
+        "m": "folder",
+        "text": "A folder on this computer Recommended One data file in a folder you choose, such as Documents, with a backup every day. Works offline. The same file the Windows app uses.",
+        "disabled": false
+      },
+      {
+        "m": "drive",
+        "text": "Your Google Drive Saved in your own Google Drive, so it’s the same on your phone and computer. Works offline and catches up when you’re back online. The site can only see the files it creates. Already using it on another device? Choose this and your tracker opens from your Drive.",
+        "disabled": false
+      },
+      {
+        "m": "browser",
+        "text": "Only in this browser Nothing to set up. Clearing your browsing data deletes it, so download a backup now and then.",
+        "disabled": false
+      }
+    ],
+    "chooseLayout": {
+      "vw": 1440,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "#ft-priv 41x14 \"Privacy\"",
+        "button 70x32 \"English\"",
+        "button 72x32 \"Español\"",
+        "button.btn.ghost 266x34 \"Just looking? Try it with\"",
+        "a 45x15 \"Privacy\""
+      ],
+      "smallCount": 5
+    },
+    "welcome": "WELCOME Set up your tracker Pick a language and how you’d like to start. Language English Use the tracker in English Español Usa el control en español How do you want to start? Import a bank file Download your bank’s export (.csv or .xlsx) and bring it in. Build it from my bank statements AI reads them, sorts every movement and finds your balances. You check it all before it’s saved. Needs your own AI key (pay per use) or a copy-and-paste step. Start empty A two-minute tour first, then a short guide to add your accounts and transactions. Start from an earlier month? You’ll start with a standard set of categories in this language, plus keywords for common shops and services so many rows sort themselves. Change any of it in Categories. Every change is saved in this browser, on this device only. Clearing your browsing data deletes it, so download a backup now and then. This browser (on this",
+    "welcomeLayout": {
+      "vw": 1440,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "#ob-lang-en 15x15 \"en\"",
+        "#ob-lang-es 15x15 \"es\"",
+        "summary 562x20 \"Start from an earlier mon\"",
+        "#ob-month 150x34 \"9\"",
+        "#ob-year 150x34 \"2026\"",
+        "button.linkish 75x28 \"Open it…\"",
+        "#ft-priv 41x14 \"Privacy\""
+      ],
+      "smallCount": 7
+    },
+    "wizard": [
+      {
+        "text": "SET UP YOUR TRACKER · STEP 1 OF 5 Start with what you own 1 Net worth 2 Earlier months 3 Transactions 4 Salary 5 Summary Add each place you keep money: your current account, savings, investments, pension. Then enter what each one was worth at the end of last month (September 2026). When you start recording this month, these balances should be last month’s end amounts. Add your accounts Enter September 2026 figures Import from Excel Read statements with AI Finish later Next",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x34 \"Continue setup\"",
+            "button.icon-btn 34x34 \"Hide the setup guide\"",
+            "button.icon-btn 34x34 \"Finish later\"",
+            "button.btn.primary 146x34 \"Add your accounts\"",
+            "button.btn 222x34 \"Enter September 2026 figu\"",
+            "button.btn 163x34 \"Import from Excel\"",
+            "button.btn 205x34 \"Read statements with AI\"",
+            "button.btn.ghost 99x34 \"Finish later\"",
+            "button.btn.primary 58x34 \"Next\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 12
+        }
+      },
+      {
+        "text": "SET UP YOUR TRACKER · STEP 2 OF 5 Earlier months (optional) ✓ Net worth 2 Earlier months 3 Transactions 4 Salary 5 Summary Want your history too? Fill in the month-end balances for earlier months and your net worth chart starts further back. The quickest way is the AI: give it past statements and it reads the balances for you. Enter an earlier month by hand Import from Excel Read statements with AI Back Skip this step Next",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x34 \"Continue setup\"",
+            "button.icon-btn 34x34 \"Hide the setup guide\"",
+            "button.icon-btn 34x34 \"Finish later\"",
+            "button.btn.primary 222x34 \"Enter an earlier month by\"",
+            "button.btn 163x34 \"Import from Excel\"",
+            "button.btn 205x34 \"Read statements with AI\"",
+            "button.btn 60x34 \"Back\"",
+            "button.btn.ghost 115x34 \"Skip this step\"",
+            "button.btn 58x34 \"Next\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 12
+        }
+      },
+      {
+        "text": "SET UP YOUR TRACKER · STEP 3 OF 5 Add your transactions ✓ Net worth ✓ Earlier months 3 Transactions 4 Salary 5 Summary Choose the way that suits you. You can mix them. By hand Add one transaction at a time. Paste or import a bank statement Recommended Paste rows or choose your bank’s .csv or .xlsx file. With AI Give it your statements. It sorts everything and you check it before it’s saved. Back Skip this step Next",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x34 \"Continue setup\"",
+            "button.icon-btn 34x34 \"Hide the setup guide\"",
+            "button.icon-btn 34x34 \"Finish later\"",
+            "button.btn 60x34 \"Back\"",
+            "button.btn.ghost 115x34 \"Skip this step\"",
+            "button.btn 58x34 \"Next\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 9
+        }
+      },
+      {
+        "text": "SET UP YOUR TRACKER · STEP 4 OF 5 Last, your salary or pension ✓ Net worth ✓ Earlier months ✓ Transactions 4 Salary 5 Summary Add your salary (or pension) after your transactions, so the tracker can show what you kept. This tracker is built for you to fill in the previous month at the end of that month, so your figures always run one month behind. That is by design. Add my salary or pension Back Skip this step Next",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x34 \"Continue setup\"",
+            "button.icon-btn 34x34 \"Hide the setup guide\"",
+            "button.icon-btn 34x34 \"Finish later\"",
+            "button.btn.primary 188x34 \"Add my salary or pension\"",
+            "button.btn 60x34 \"Back\"",
+            "button.btn.ghost 115x34 \"Skip this step\"",
+            "button.btn 58x34 \"Next\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 10
+        }
+      },
+      {
+        "text": "SET UP YOUR TRACKER · STEP 5 OF 5 You’re all set ✓ Net worth ✓ Earlier months ✓ Transactions ✓ Salary 5 Summary Here’s what is in your tracker. Next month, add the month that just ended: balances first, then transactions. 0 accounts · 0 months of balances · 0 transactions · 0 income rows Your figures are saved only in this browser. Download a backup now and then from Settings. Back Go to the overview",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x34 \"Continue setup\"",
+            "button.icon-btn 34x34 \"Hide the setup guide\"",
+            "button.icon-btn 34x34 \"Finish later\"",
+            "button.btn 60x34 \"Back\"",
+            "button.btn.primary 145x34 \"Go to the overview\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 8
+        }
+      }
+    ],
+    "afterReload": {
+      "wizard": true,
+      "panel": null
+    },
+    "empty": {
+      "networth": {
+        "text": "Net worthi What everything you own is worth at the end of each month. Type the figures in once a month. SET UP YOUR TRACKER · STEP 1 OF 5 Start with what you own Continue setup",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x34 \"Continue setup\"",
+            "button.icon-btn 34x34 \"Hide the setup guide\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 5
+        }
+      },
+      "overview": {
+        "text": "SET UP YOUR TRACKER · STEP 1 OF 5 Start with what you own Continue setup Nothing recorded in the tracker yet Add transactions one at a time, or paste rows from a bank statement. Categories fill in from your keyword list as they arrive. Add a transaction Paste or import rows Do it with AI New here? See how it works with example data: Take the tour",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 34x34 \"‹\"",
+            "#year-next 34x34 \"›\"",
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "button.btn.primary 125x34 \"Continue setup\"",
+            "button.icon-btn 34x34 \"Hide the setup guide\"",
+            "button.btn.primary 140x34 \"Add a transaction\"",
+            "button.btn 159x34 \"Paste or import rows\"",
+            "button.btn 127x34 \"Do it with AI\"",
+            "button.linkish 101x28 \"Take the tour\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 10
+        }
+      },
+      "yearly": {
+        "text": "Set up your tracker · step 1 of 5 · Start with what you own Continue Nothing recorded in the tracker yet Add transactions one at a time, or paste rows from a bank statement. Categories fill in from your keyword list as they arrive. Add a transaction Paste or import rows Do it with AI New here? See how it works with example data: Take the tour",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 34x34 \"‹\"",
+            "#year-next 34x34 \"›\"",
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "button.linkish 75x28 \"Continue\"",
+            "button.btn.primary 140x34 \"Add a transaction\"",
+            "button.btn 159x34 \"Paste or import rows\"",
+            "button.btn 127x34 \"Do it with AI\"",
+            "button.linkish 101x28 \"Take the tour\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 9
+        }
+      },
+      "transactions": {
+        "text": "Set up your tracker · step 1 of 5 · Start with what you own Continue Nothing recorded in the tracker yet Add transactions one at a time, or paste rows from a bank statement. Categories fill in from your keyword list as they arrive. Add a transaction Paste or import rows Do it with AI New here? See how it works with example data: Take the tour",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 34x34 \"‹\"",
+            "#year-next 34x34 \"›\"",
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "button.linkish 75x28 \"Continue\"",
+            "button.btn.primary 140x34 \"Add a transaction\"",
+            "button.btn 159x34 \"Paste or import rows\"",
+            "button.btn 127x34 \"Do it with AI\"",
+            "button.linkish 101x28 \"Take the tour\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 9
+        }
+      },
+      "categories": {
+        "text": "Set up your tracker · step 1 of 5 · Start with what you own Continue Income Expenses Investments Expenses categoriesi Each one is a row on Yearly tracking, in this order. Fixed is for costs that are about the same every month, like rent, bills and subscriptions, Variable for everything else: they feed the Indicators. Add category Filter categories Rent FIXED 2 keywords Set limit Rename Delete Utilities FIXED 10 keywords Set limit Rename Delete Subscriptions FIXED 8 keywords Set limit Rename Dele",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 34x34 \"‹\"",
+            "#year-next 34x34 \"›\"",
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "button.linkish 75x28 \"Continue\"",
+            "button 113x30 \"Income\"",
+            "button 113x30 \"Expenses\"",
+            "button 113x30 \"Investments\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary.sm 99x28 \"Add category\"",
+            "#cat-q 554x34 \"\"",
+            "button.nw.need 45x18 \"FIXED\"",
+            "button.lim-btn 68x24 \"Set limit\""
+          ],
+          "smallCount": 176
+        }
+      },
+      "settings": {
+        "text": "Settings Language The language of every screen, message and download. English Use the tracker in English Español Usa el control en español Category names are translated too. Names you made up yourself stay as you wrote them; rename them in Categories if you like. Keywords don’t change. Number format 1.234,56 Comma for decimals 1,234.56 Point for decimals Currency Euro (€) Pound sterling (£) US dollar ($) Canadian dollar (CA$) Australian dollar (A$) Swiss franc (CHF) Mexican peso (MX$) Swedish kr",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x28 \"Connect Google Drive\"",
+            "#st-lang-en 15x15 \"en\"",
+            "#st-lang-es 15x15 \"es\"",
+            "#st-num-eu 15x15 \"eu\"",
+            "#st-num-en 15x15 \"en\"",
+            "#st-cur 320x34 \"Euro (€)\nPound sterling (\"",
+            "button.info-btn 17x17 \"i\"",
+            "#st-month 150x34 \"January\nFebruary\nMarch\nAp\"",
+            "#st-year 150x34 \"2021\n2022\n2023\n2024\n2025\n\"",
+            "#st-born 83x34 \"\"",
+            "#st-salary 180x34 \"\"",
+            "#st-ml 15x15 \"on\""
+          ],
+          "smallCount": 25
+        }
+      }
+    },
+    "tourReplay": true,
+    "errors": []
+  },
+  "desk-es": {
+    "steps": [
+      {
+        "title": "Bienvenido a tu control",
+        "text": "Antes de configurarlo, aquí tienes un recorrido de dos minutos con un ejemplo inventado, para que veas cada página llena de datos. Nada de él se guarda. Después, un asistente corto te ayuda a añadir tus cuentas, luego tus movimientos y tu nómina.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA",
+        "buttons": [
+          "Saltar el recorrido",
+          "Empezar el recorrido"
+        ],
+        "spotHidden": true,
+        "offscreen": false,
+        "cardH": 242
+      },
+      {
+        "title": "Seis páginas",
+        "text": "Patrimonio para lo que tienes, Resumen para la visión general, Seguimiento para cada cifra, Movimientos para las filas en sí, Categorías para cómo se ordenan, y Ajustes.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 1 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Lo que tienes",
+        "text": "Una vez al mes, escribe lo que vale cada cuenta o importa varios meses desde Excel. Las cuentas se agrupan según lo pronto que podrías usar el dinero.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 2 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "Cómo crece",
+        "text": "Tus totales a fin de mes con una línea de tendencia. Elige un año o varios.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 3 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 171
+      },
+      {
+        "title": "Por qué cambió y tu objetivo",
+        "text": "Qué ha cambiado reparte cada mes entre lo que ahorraste y lo que aportaron los mercados. Objetivo muestra cuánto hace falta al mes y cuánto tendría que venir del crecimiento.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 4 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Cuentas y ganancias",
+        "text": "El valor de cada cuenta, su cambio desde el mes pasado y sus Ganancias: cuánto creció por sí sola (precios, intereses, dividendos), sin contar lo que aportaste. Pasa el ratón por Ganancias para ver cómo se calcula.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 5 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 236
+      },
+      {
+        "title": "Tu año de un vistazo",
+        "text": "Cuánto has conservado este año tras los gastos y tus totales de ingresos, gastos e inversiones. Cualquier botón i explica qué significa una cifra.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 6 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "Este mes",
+        "text": "Cómo va el mes en curso: lo que llevas gastado frente a un mes normal y frente a los límites mensuales.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 7 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 171
+      },
+      {
+        "title": "Mes a mes",
+        "text": "Los ingresos, gastos o inversiones de cada mes. Pulsa una barra para ver los movimientos que hay detrás.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 8 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 171
+      },
+      {
+        "title": "A dónde fue",
+        "text": "Tus categorías, de más a menos. Pulsa una para seguirla mes a mes.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 9 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 171
+      },
+      {
+        "title": "Indicadores",
+        "text": "Cómo se reparten tus ingresos entre alquiler, gastos fijos y variables e inversión, frente a objetivos que puedes cambiar.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 10 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "Cada cifra, cada mes",
+        "text": "Como una hoja de cálculo: categorías a un lado y meses en columnas. Pulsa cualquier cifra para ver sus movimientos. El mapa de calor muestra a dónde fue más dinero cada mes.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 11 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Trae el extracto de tu banco",
+        "text": "Pega filas o elige el archivo de tu banco (.csv o .xlsx), o descarga la plantilla vacía y rellénala. Cada fila va a Ingresos, Gastos o Inversiones y recibe su categoría según tus palabras clave. Las filas que ya están en el control se detectan.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 12 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 236
+      },
+      {
+        "title": "Deja que una IA lea tus extractos",
+        "text": "Hacerlo con IA lee extractos y PDF por ti. La primera vez eliges qué IA: Copiar y pegar es gratis, Gemini tiene un nivel gratuito, Claude y GPT son de pago con tu propia clave. Una recomendación junto al selector de modelo indica cuál sirve para un archivo o para muchos meses. Cambiar la IA lo cambia cuando quieras, y revisas cada fila antes de guardarla.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 13 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 279
+      },
+      {
+        "title": "Categorías sugeridas",
+        "text": "Si ninguna palabra clave coincide, el control sugiere una categoría aprendida de tus movimientos anteriores. Un clic la acepta, y te ofrece guardar una palabra clave para la próxima vez.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 14 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Las palabras clave ordenan",
+        "text": "Una palabra clave como «netflix» pone sola cada fila que la contenga en su categoría. Escribe cualquier descripción en la casilla de prueba para ver qué palabra la elige.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 15 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Tus categorías",
+        "text": "Cambia el nombre, añade o quita categorías, marca cada gasto como Fijo o Variable y pon límites mensuales.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 16 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "Se guarda solo",
+        "text": "Cada cambio se guarda al momento. El ojo oculta todos los importes de la pantalla y Descargar copia guarda una copia de todo.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 17 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "Fin del recorrido",
+        "text": "Ahora te toca a ti. El botón de abajo quita el ejemplo y empieza la guía de configuración: primero tus cuentas en Patrimonio y luego tus movimientos. Puedes repetir el recorrido desde Ajustes, y los botones i junto a los títulos explican cada cifra.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA",
+        "buttons": [
+          "Configurar mi control"
+        ],
+        "spotHidden": true,
+        "offscreen": false,
+        "cardH": 242
+      }
+    ],
+    "landingMs": 1167,
+    "landing": {
+      "title": "MyAhorros: controla tus ahorros, gastos y patrimonio",
+      "h1": "Sabe a dónde va tu dinero y cuánto vales.",
+      "lead": "Una forma gratuita y sencilla de seguir lo que ganas, gastas y tienes. Tus cifras se quedan en tu dispositivo o en tu propio Google Drive.",
+      "chip": "Gratis · Sin registro · Privado",
+      "fine": "Sin cuenta. Sin registro. Nada sale de tu dispositivo si tú no quieres.",
+      "buttons": [
+        "Ver una demo",
+        "Empezar"
+      ],
+      "docLang": "es"
+    },
+    "landingLayout": {
+      "vw": 1440,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "button 69x33 \"English\"",
+        "button 73x33 \"Español\"",
+        "a 63x21 \"Privacidad\""
+      ],
+      "smallCount": 3
+    },
+    "choose": [
+      {
+        "m": "folder",
+        "text": "Una carpeta de este ordenador Recomendado Un archivo de datos en la carpeta que elijas, como Documentos, con una copia cada día. Funciona sin conexión. Es el mismo archivo que usa la aplicación de Windows.",
+        "disabled": false
+      },
+      {
+        "m": "drive",
+        "text": "Tu Google Drive Se guarda en tu propio Google Drive, así que es el mismo en el móvil y en el ordenador. Funciona sin conexión y se pone al día al volver a conectarte. La web solo puede ver los archivos que crea. ¿Ya lo usas en otro dispositivo? Elige esta opción y tu control se abre desde tu Drive.",
+        "disabled": false
+      },
+      {
+        "m": "browser",
+        "text": "Solo en este navegador No hay nada que configurar. Si borras los datos de navegación se borra, así que descarga una copia de vez en cuando.",
+        "disabled": false
+      }
+    ],
+    "chooseLayout": {
+      "vw": 1440,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "#ft-priv 41x14 \"Privacy\"",
+        "button 69x32 \"English\"",
+        "button 73x32 \"Español\"",
+        "button.btn.ghost 424x34 \"¿Solo quieres echar un vi\"",
+        "a 64x15 \"Privacidad\""
+      ],
+      "smallCount": 5
+    },
+    "welcome": "TE DAMOS LA BIENVENIDA Configura tu control Elige un idioma y cómo quieres empezar. Idioma English Use the tracker in English Español Usa el control en español ¿Cómo quieres empezar? Importar un archivo del banco Descarga la exportación de tu banco (.csv o .xlsx) y tráela aquí. Crearlo con mis extractos La IA los lee, clasifica cada movimiento y encuentra tus saldos. Lo revisas todo antes de guardarlo. Necesita tu propia clave de IA (pago por uso) o un paso de copiar y pegar. Empezar desde cero Primero un recorrido de dos minutos y luego una guía corta para añadir tus cuentas y movimientos. ¿Empezar desde un mes anterior? Empezarás con un juego de categorías estándar en este idioma y con palabras clave para tiendas y servicios habituales, así que muchas filas se clasificarán solas. Puedes cambiarlo todo en Categorías. Cada cambio se guarda en este navegador, solo en este dispositivo. Si ",
+    "welcomeLayout": {
+      "vw": 1440,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "#ob-lang-en 15x15 \"en\"",
+        "#ob-lang-es 15x15 \"es\"",
+        "summary 562x20 \"¿Empezar desde un mes ant\"",
+        "#ob-month 150x34 \"9\"",
+        "#ob-year 150x34 \"2026\"",
+        "button.linkish 72x28 \"Ábrelo…\"",
+        "#ft-priv 58x14 \"Privacidad\""
+      ],
+      "smallCount": 7
+    },
+    "wizard": [
+      {
+        "text": "CONFIGURA TU CONTROL · PASO 1 DE 5 Empieza por lo que tienes 1 Patrimonio 2 Meses anteriores 3 Movimientos 4 Nómina 5 Resumen Añade cada sitio donde guardas dinero: tu cuenta corriente, ahorros, inversiones, plan de pensiones. Después introduce lo que valía cada uno a final del mes pasado (septiembre de 2026). Cuando empieces a registrar este mes, estos saldos deben ser los de final del mes pasado. Añade tus cuentas Introducir cifras de septiembre de 2026 Importar desde Excel Leer extractos con IA Terminar después Siguiente",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x34 \"Continuar la configuració\"",
+            "button.icon-btn 34x34 \"Ocultar la guía\"",
+            "button.icon-btn 34x34 \"Terminar después\"",
+            "button.btn.primary 146x34 \"Añade tus cuentas\"",
+            "button.btn 279x34 \"Introducir cifras de sept\"",
+            "button.btn 184x34 \"Importar desde Excel\"",
+            "button.btn 184x34 \"Leer extractos con IA\"",
+            "button.btn.ghost 141x34 \"Terminar después\"",
+            "button.btn.primary 89x34 \"Siguiente\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 12
+        }
+      },
+      {
+        "text": "CONFIGURA TU CONTROL · PASO 2 DE 5 Meses anteriores (opcional) ✓ Patrimonio 2 Meses anteriores 3 Movimientos 4 Nómina 5 Resumen ¿Quieres también tu historial? Rellena los saldos de fin de mes de meses anteriores y tu gráfico de patrimonio empezará antes. Lo más rápido es la IA: dale extractos pasados y lee los saldos por ti. Introducir un mes anterior a mano Importar desde Excel Leer extractos con IA Atrás Saltar este paso Siguiente",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x34 \"Continuar la configuració\"",
+            "button.icon-btn 34x34 \"Ocultar la guía\"",
+            "button.icon-btn 34x34 \"Terminar después\"",
+            "button.btn.primary 242x34 \"Introducir un mes anterio\"",
+            "button.btn 184x34 \"Importar desde Excel\"",
+            "button.btn 184x34 \"Leer extractos con IA\"",
+            "button.btn 62x34 \"Atrás\"",
+            "button.btn.ghost 131x34 \"Saltar este paso\"",
+            "button.btn 89x34 \"Siguiente\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 12
+        }
+      },
+      {
+        "text": "CONFIGURA TU CONTROL · PASO 3 DE 5 Añade tus movimientos ✓ Patrimonio ✓ Meses anteriores 3 Movimientos 4 Nómina 5 Resumen Elige la forma que prefieras. Puedes combinarlas. A mano Añade un movimiento cada vez. Pega o importa un extracto Recomendado Pega filas o elige el .csv o .xlsx de tu banco. Con IA Dale tus extractos. Lo ordena todo y tú lo revisas antes de guardarlo. Atrás Saltar este paso Siguiente",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x34 \"Continuar la configuració\"",
+            "button.icon-btn 34x34 \"Ocultar la guía\"",
+            "button.icon-btn 34x34 \"Terminar después\"",
+            "button.btn 62x34 \"Atrás\"",
+            "button.btn.ghost 131x34 \"Saltar este paso\"",
+            "button.btn 89x34 \"Siguiente\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 9
+        }
+      },
+      {
+        "text": "CONFIGURA TU CONTROL · PASO 4 DE 5 Por último, tu nómina o pensión ✓ Patrimonio ✓ Meses anteriores ✓ Movimientos 4 Nómina 5 Resumen Añade tu nómina (o pensión) después de tus movimientos, para que el control muestre lo que has ahorrado. Este control está pensado para rellenar el mes anterior al terminar ese mes, así que tus cifras siempre van un mes por detrás. Es a propósito. Añadir mi nómina o pensión Atrás Saltar este paso Siguiente",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x34 \"Continuar la configuració\"",
+            "button.icon-btn 34x34 \"Ocultar la guía\"",
+            "button.icon-btn 34x34 \"Terminar después\"",
+            "button.btn.primary 202x34 \"Añadir mi nómina o pensió\"",
+            "button.btn 62x34 \"Atrás\"",
+            "button.btn.ghost 131x34 \"Saltar este paso\"",
+            "button.btn 89x34 \"Siguiente\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 10
+        }
+      },
+      {
+        "text": "CONFIGURA TU CONTROL · PASO 5 DE 5 Ya está todo listo ✓ Patrimonio ✓ Meses anteriores ✓ Movimientos ✓ Nómina 5 Resumen Esto es lo que hay en tu control. El mes que viene, añade el mes que acaba de terminar: primero los saldos y luego los movimientos. 0 cuentas · 0 meses de saldos · 0 movimientos · 0 ingresos Tus cifras se guardan solo en este navegador. Descarga una copia de vez en cuando desde Ajustes. Atrás Ir al resumen",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x34 \"Continuar la configuració\"",
+            "button.icon-btn 34x34 \"Ocultar la guía\"",
+            "button.icon-btn 34x34 \"Terminar después\"",
+            "button.btn 62x34 \"Atrás\"",
+            "button.btn.primary 111x34 \"Ir al resumen\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 8
+        }
+      }
+    ],
+    "afterReload": {
+      "wizard": true,
+      "panel": null
+    },
+    "empty": {
+      "networth": {
+        "text": "Patrimonio netoi Lo que vale todo lo que tienes al final de cada mes. Introduce las cifras una vez al mes. CONFIGURA TU CONTROL · PASO 1 DE 5 Empieza por lo que tienes Continuar la configuración",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x34 \"Continuar la configuració\"",
+            "button.icon-btn 34x34 \"Ocultar la guía\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 5
+        }
+      },
+      "overview": {
+        "text": "CONFIGURA TU CONTROL · PASO 1 DE 5 Empieza por lo que tienes Continuar la configuración Todavía no hay nada registrado Añade movimientos uno a uno o pega filas de un extracto bancario. Las categorías se rellenan con tus palabras clave según llegan. Añadir un movimiento Pegar o importar filas Hacerlo con IA ¿Eres nuevo? Mira cómo funciona con datos de ejemplo: Hacer el recorrido",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 34x34 \"‹\"",
+            "#year-next 34x34 \"›\"",
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "button.btn.primary 196x34 \"Continuar la configuració\"",
+            "button.icon-btn 34x34 \"Ocultar la guía\"",
+            "button.btn.primary 166x34 \"Añadir un movimiento\"",
+            "button.btn 165x34 \"Pegar o importar filas\"",
+            "button.btn 143x34 \"Hacerlo con IA\"",
+            "button.linkish 131x28 \"Hacer el recorrido\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 10
+        }
+      },
+      "yearly": {
+        "text": "Configura tu control · paso 1 de 5 · Empieza por lo que tienes Continuar Todavía no hay nada registrado Añade movimientos uno a uno o pega filas de un extracto bancario. Las categorías se rellenan con tus palabras clave según llegan. Añadir un movimiento Pegar o importar filas Hacerlo con IA ¿Eres nuevo? Mira cómo funciona con datos de ejemplo: Hacer el recorrido",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 34x34 \"‹\"",
+            "#year-next 34x34 \"›\"",
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "button.linkish 80x28 \"Continuar\"",
+            "button.btn.primary 166x34 \"Añadir un movimiento\"",
+            "button.btn 165x34 \"Pegar o importar filas\"",
+            "button.btn 143x34 \"Hacerlo con IA\"",
+            "button.linkish 131x28 \"Hacer el recorrido\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 9
+        }
+      },
+      "transactions": {
+        "text": "Configura tu control · paso 1 de 5 · Empieza por lo que tienes Continuar Todavía no hay nada registrado Añade movimientos uno a uno o pega filas de un extracto bancario. Las categorías se rellenan con tus palabras clave según llegan. Añadir un movimiento Pegar o importar filas Hacerlo con IA ¿Eres nuevo? Mira cómo funciona con datos de ejemplo: Hacer el recorrido",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 34x34 \"‹\"",
+            "#year-next 34x34 \"›\"",
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "button.linkish 80x28 \"Continuar\"",
+            "button.btn.primary 166x34 \"Añadir un movimiento\"",
+            "button.btn 165x34 \"Pegar o importar filas\"",
+            "button.btn 143x34 \"Hacerlo con IA\"",
+            "button.linkish 131x28 \"Hacer el recorrido\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 9
+        }
+      },
+      "categories": {
+        "text": "Configura tu control · paso 1 de 5 · Empieza por lo que tienes Continuar Ingresos Gastos Inversiones Categorías de Gastosi Cada una es una fila del Seguimiento anual, en este orden. Fijo es para gastos casi iguales cada mes, como alquiler, facturas y suscripciones, y Variable para todo lo demás: alimentan los Indicadores. Añadir categoría Filtrar categorías Alquiler FIJO 2 palabras clave Poner límite Renombrar Eliminar Suministros FIJO 6 palabras clave Poner límite Renombrar Eliminar Suscripcion",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 34x34 \"‹\"",
+            "#year-next 34x34 \"›\"",
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "button.linkish 80x28 \"Continuar\"",
+            "button 108x30 \"Ingresos\"",
+            "button 108x30 \"Gastos\"",
+            "button 108x30 \"Inversiones\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary.sm 117x28 \"Añadir categoría\"",
+            "#cat-q 554x34 \"\"",
+            "button.nw.need 38x18 \"FIJO\"",
+            "button.lim-btn 89x24 \"Poner límite\""
+          ],
+          "smallCount": 176
+        }
+      },
+      "settings": {
+        "text": "Ajustes Idioma El idioma de todas las pantallas, mensajes y descargas. English Use the tracker in English Español Usa el control en español Los nombres de las categorías también se traducen. Los que creaste tú se quedan como los escribiste; puedes renombrarlos en Categorías. Las palabras clave no cambian. Formato de números 1.234,56 Coma para los decimales 1,234.56 Punto para los decimales Moneda Euro (€) Pound sterling (£) US dollar ($) Canadian dollar (CA$) Australian dollar (A$) Swiss franc (",
+        "layout": {
+          "vw": 1440,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x28 \"Conectar Google Drive\"",
+            "#st-lang-en 15x15 \"en\"",
+            "#st-lang-es 15x15 \"es\"",
+            "#st-num-eu 15x15 \"eu\"",
+            "#st-num-en 15x15 \"en\"",
+            "#st-cur 320x34 \"Euro (€)\nPound sterling (\"",
+            "button.info-btn 17x17 \"i\"",
+            "#st-month 150x34 \"Enero\nFebrero\nMarzo\nAbril\"",
+            "#st-year 150x34 \"2021\n2022\n2023\n2024\n2025\n\"",
+            "#st-born 109x34 \"\"",
+            "#st-salary 180x34 \"\"",
+            "#st-ml 15x15 \"on\""
+          ],
+          "smallCount": 24
+        }
+      }
+    },
+    "tourReplay": true,
+    "errors": []
+  },
+  "m375-es": {
+    "steps": [
+      {
+        "title": "Bienvenido a tu control",
+        "text": "Antes de configurarlo, aquí tienes un recorrido de dos minutos con un ejemplo inventado, para que veas cada página llena de datos. Nada de él se guarda. Después, un asistente corto te ayuda a añadir tus cuentas, luego tus movimientos y tu nómina.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA",
+        "buttons": [
+          "Saltar el recorrido",
+          "Empezar el recorrido"
+        ],
+        "spotHidden": true,
+        "offscreen": false,
+        "cardH": 269
+      },
+      {
+        "title": "Seis páginas",
+        "text": "Patrimonio para lo que tienes, Resumen para la visión general, Seguimiento para cada cifra, Movimientos para las filas en sí, Categorías para cómo se ordenan, y Ajustes.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 1 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 235
+      },
+      {
+        "title": "Lo que tienes",
+        "text": "Una vez al mes, escribe lo que vale cada cuenta o importa varios meses desde Excel. Las cuentas se agrupan según lo pronto que podrías usar el dinero.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 2 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 235
+      },
+      {
+        "title": "Cómo crece",
+        "text": "Tus totales a fin de mes con una línea de tendencia. Elige un año o varios.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 3 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "Por qué cambió y tu objetivo",
+        "text": "Qué ha cambiado reparte cada mes entre lo que ahorraste y lo que aportaron los mercados. Objetivo muestra cuánto hace falta al mes y cuánto tendría que venir del crecimiento.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 4 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 235
+      },
+      {
+        "title": "Cuentas y ganancias",
+        "text": "El valor de cada cuenta, su cambio desde el mes pasado y sus Ganancias: cuánto creció por sí sola (precios, intereses, dividendos), sin contar lo que aportaste. Pasa el ratón por Ganancias para ver cómo se calcula.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 5 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 257
+      },
+      {
+        "title": "Tu año de un vistazo",
+        "text": "Cuánto has conservado este año tras los gastos y tus totales de ingresos, gastos e inversiones. Cualquier botón i explica qué significa una cifra.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 6 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Este mes",
+        "text": "Cómo va el mes en curso: lo que llevas gastado frente a un mes normal y frente a los límites mensuales.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 7 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Mes a mes",
+        "text": "Los ingresos, gastos o inversiones de cada mes. Pulsa una barra para ver los movimientos que hay detrás.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 8 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "A dónde fue",
+        "text": "Tus categorías, de más a menos. Pulsa una para seguirla mes a mes.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 9 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 192
+      },
+      {
+        "title": "Indicadores",
+        "text": "Cómo se reparten tus ingresos entre alquiler, gastos fijos y variables e inversión, frente a objetivos que puedes cambiar.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 10 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Cada cifra, cada mes",
+        "text": "Como una hoja de cálculo: categorías a un lado y meses en columnas. Pulsa cualquier cifra para ver sus movimientos. El mapa de calor muestra a dónde fue más dinero cada mes.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 11 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 235
+      },
+      {
+        "title": "Trae el extracto de tu banco",
+        "text": "Pega filas o elige el archivo de tu banco (.csv o .xlsx), o descarga la plantilla vacía y rellénala. Cada fila va a Ingresos, Gastos o Inversiones y recibe su categoría según tus palabras clave. Las filas que ya están en el control se detectan.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 12 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 257
+      },
+      {
+        "title": "Deja que una IA lea tus extractos",
+        "text": "Hacerlo con IA lee extractos y PDF por ti. La primera vez eliges qué IA: Copiar y pegar es gratis, Gemini tiene un nivel gratuito, Claude y GPT son de pago con tu propia clave. Una recomendación junto al selector de modelo indica cuál sirve para un archivo o para muchos meses. Cambiar la IA lo cambia cuando quieras, y revisas cada fila antes de guardarla.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 13 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 322
+      },
+      {
+        "title": "Categorías sugeridas",
+        "text": "Si ninguna palabra clave coincide, el control sugiere una categoría aprendida de tus movimientos anteriores. Un clic la acepta, y te ofrece guardar una palabra clave para la próxima vez.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 14 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 257
+      },
+      {
+        "title": "Las palabras clave ordenan",
+        "text": "Una palabra clave como «netflix» pone sola cada fila que la contenga en su categoría. Escribe cualquier descripción en la casilla de prueba para ver qué palabra la elige.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 15 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 235
+      },
+      {
+        "title": "Tus categorías",
+        "text": "Cambia el nombre, añade o quita categorías, marca cada gasto como Fijo o Variable y pon límites mensuales.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 16 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Se guarda solo",
+        "text": "Cada cambio se guarda al momento. El ojo oculta todos los importes de la pantalla y Descargar copia guarda una copia de todo.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA 17 DE 17",
+        "buttons": [
+          "Terminar",
+          "Atrás",
+          "Siguiente"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 214
+      },
+      {
+        "title": "Fin del recorrido",
+        "text": "Ahora te toca a ti. El botón de abajo quita el ejemplo y empieza la guía de configuración: primero tus cuentas en Patrimonio y luego tus movimientos. Puedes repetir el recorrido desde Ajustes, y los botones i junto a los títulos explican cada cifra.",
+        "eyebrow": "DATOS DE EJEMPLO · NO SE GUARDA NADA",
+        "buttons": [
+          "Configurar mi control"
+        ],
+        "spotHidden": true,
+        "offscreen": false,
+        "cardH": 269
+      }
+    ],
+    "landingMs": 438,
+    "landing": {
+      "title": "MyAhorros: controla tus ahorros, gastos y patrimonio",
+      "h1": "Sabe a dónde va tu dinero y cuánto vales.",
+      "lead": "Una forma gratuita y sencilla de seguir lo que ganas, gastas y tienes. Tus cifras se quedan en tu dispositivo o en tu propio Google Drive.",
+      "chip": "Gratis · Sin registro · Privado",
+      "fine": "Sin cuenta. Sin registro. Nada sale de tu dispositivo si tú no quieres.",
+      "buttons": [
+        "Ver una demo",
+        "Empezar"
+      ],
+      "docLang": "es"
+    },
+    "landingLayout": {
+      "vw": 375,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "button 69x33 \"English\"",
+        "button 73x33 \"Español\"",
+        "a 63x21 \"Privacidad\""
+      ],
+      "smallCount": 3
+    },
+    "choose": [
+      {
+        "m": "folder",
+        "text": "Una carpeta de este ordenador Recomendado Un archivo de datos en la carpeta que elijas, como Documentos, con una copia cada día. Funciona sin conexión. Es el mismo archivo que usa la aplicación de Windows.",
+        "disabled": false
+      },
+      {
+        "m": "drive",
+        "text": "Tu Google Drive Se guarda en tu propio Google Drive, así que es el mismo en el móvil y en el ordenador. Funciona sin conexión y se pone al día al volver a conectarte. La web solo puede ver los archivos que crea. ¿Ya lo usas en otro dispositivo? Elige esta opción y tu control se abre desde tu Drive.",
+        "disabled": false
+      },
+      {
+        "m": "browser",
+        "text": "Solo en este navegador No hay nada que configurar. Si borras los datos de navegación se borra, así que descarga una copia de vez en cuando.",
+        "disabled": false
+      }
+    ],
+    "chooseLayout": {
+      "vw": 375,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "#ft-priv 41x14 \"Privacy\"",
+        "button 69x32 \"English\"",
+        "button 73x32 \"Español\"",
+        "a 64x15 \"Privacidad\""
+      ],
+      "smallCount": 4
+    },
+    "welcome": "TE DAMOS LA BIENVENIDA Configura tu control Elige un idioma y cómo quieres empezar. Idioma English Use the tracker in English Español Usa el control en español ¿Cómo quieres empezar? Importar un archivo del banco Descarga la exportación de tu banco (.csv o .xlsx) y tráela aquí. Crearlo con mis extractos La IA los lee, clasifica cada movimiento y encuentra tus saldos. Lo revisas todo antes de guardarlo. Necesita tu propia clave de IA (pago por uso) o un paso de copiar y pegar. Empezar desde cero Primero un recorrido de dos minutos y luego una guía corta para añadir tus cuentas y movimientos. ¿Empezar desde un mes anterior? Empezarás con un juego de categorías estándar en este idioma y con palabras clave para tiendas y servicios habituales, así que muchas filas se clasificarán solas. Puedes cambiarlo todo en Categorías. Cada cambio se guarda en este navegador, solo en este dispositivo. Si ",
+    "welcomeLayout": {
+      "vw": 375,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "#ob-lang-en 15x15 \"en\"",
+        "#ob-lang-es 15x15 \"es\"",
+        "summary 301x36 \"¿Empezar desde un mes ant\"",
+        "#ob-month 150x40 \"9\"",
+        "#ob-year 150x40 \"2026\"",
+        "button.linkish 76x38 \"Ábrelo…\"",
+        "#ft-priv 58x14 \"Privacidad\""
+      ],
+      "smallCount": 7
+    },
+    "wizard": [
+      {
+        "text": "CONFIGURA TU CONTROL · PASO 1 DE 5 Empieza por lo que tienes 1 Patrimonio 2 Meses anteriores 3 Movimientos 4 Nómina 5 Resumen Añade cada sitio donde guardas dinero: tu cuenta corriente, ahorros, inversiones, plan de pensiones. Después introduce lo que valía cada uno a final del mes pasado (septiembre de 2026). Cuando empieces a registrar este mes, estos saldos deben ser los de final del mes pasado. Añade tus cuentas Introducir cifras de septiembre de 2026 Importar desde Excel Leer extractos con IA Terminar después Siguiente",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x40 \"Continuar la configuració\"",
+            "button.icon-btn 40x40 \"Ocultar la guía\"",
+            "button.icon-btn 40x40 \"Terminar después\"",
+            "button.btn.primary 146x40 \"Añade tus cuentas\"",
+            "button.btn 279x40 \"Introducir cifras de sept\"",
+            "button.btn 184x40 \"Importar desde Excel\"",
+            "button.btn 184x40 \"Leer extractos con IA\"",
+            "button.btn.ghost 141x40 \"Terminar después\"",
+            "button.btn.primary 89x40 \"Siguiente\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 12
+        }
+      },
+      {
+        "text": "CONFIGURA TU CONTROL · PASO 2 DE 5 Meses anteriores (opcional) ✓ Patrimonio 2 Meses anteriores 3 Movimientos 4 Nómina 5 Resumen ¿Quieres también tu historial? Rellena los saldos de fin de mes de meses anteriores y tu gráfico de patrimonio empezará antes. Lo más rápido es la IA: dale extractos pasados y lee los saldos por ti. Introducir un mes anterior a mano Importar desde Excel Leer extractos con IA Atrás Saltar este paso Siguiente",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x40 \"Continuar la configuració\"",
+            "button.icon-btn 40x40 \"Ocultar la guía\"",
+            "button.icon-btn 40x40 \"Terminar después\"",
+            "button.btn.primary 242x40 \"Introducir un mes anterio\"",
+            "button.btn 184x40 \"Importar desde Excel\"",
+            "button.btn 184x40 \"Leer extractos con IA\"",
+            "button.btn 62x40 \"Atrás\"",
+            "button.btn.ghost 131x40 \"Saltar este paso\"",
+            "button.btn 89x40 \"Siguiente\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 12
+        }
+      },
+      {
+        "text": "CONFIGURA TU CONTROL · PASO 3 DE 5 Añade tus movimientos ✓ Patrimonio ✓ Meses anteriores 3 Movimientos 4 Nómina 5 Resumen Elige la forma que prefieras. Puedes combinarlas. A mano Añade un movimiento cada vez. Pega o importa un extracto Recomendado Pega filas o elige el .csv o .xlsx de tu banco. Con IA Dale tus extractos. Lo ordena todo y tú lo revisas antes de guardarlo. Atrás Saltar este paso Siguiente",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x40 \"Continuar la configuració\"",
+            "button.icon-btn 40x40 \"Ocultar la guía\"",
+            "button.icon-btn 40x40 \"Terminar después\"",
+            "button.btn 62x40 \"Atrás\"",
+            "button.btn.ghost 131x40 \"Saltar este paso\"",
+            "button.btn 89x40 \"Siguiente\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 9
+        }
+      },
+      {
+        "text": "CONFIGURA TU CONTROL · PASO 4 DE 5 Por último, tu nómina o pensión ✓ Patrimonio ✓ Meses anteriores ✓ Movimientos 4 Nómina 5 Resumen Añade tu nómina (o pensión) después de tus movimientos, para que el control muestre lo que has ahorrado. Este control está pensado para rellenar el mes anterior al terminar ese mes, así que tus cifras siempre van un mes por detrás. Es a propósito. Añadir mi nómina o pensión Atrás Saltar este paso Siguiente",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x40 \"Continuar la configuració\"",
+            "button.icon-btn 40x40 \"Ocultar la guía\"",
+            "button.icon-btn 40x40 \"Terminar después\"",
+            "button.btn.primary 202x40 \"Añadir mi nómina o pensió\"",
+            "button.btn 62x40 \"Atrás\"",
+            "button.btn.ghost 131x40 \"Saltar este paso\"",
+            "button.btn 89x40 \"Siguiente\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 10
+        }
+      },
+      {
+        "text": "CONFIGURA TU CONTROL · PASO 5 DE 5 Ya está todo listo ✓ Patrimonio ✓ Meses anteriores ✓ Movimientos ✓ Nómina 5 Resumen Esto es lo que hay en tu control. El mes que viene, añade el mes que acaba de terminar: primero los saldos y luego los movimientos. 0 cuentas · 0 meses de saldos · 0 movimientos · 0 ingresos Tus cifras se guardan solo en este navegador. Descarga una copia de vez en cuando desde Ajustes. Atrás Ir al resumen",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x40 \"Continuar la configuració\"",
+            "button.icon-btn 40x40 \"Ocultar la guía\"",
+            "button.icon-btn 40x40 \"Terminar después\"",
+            "button.btn 62x40 \"Atrás\"",
+            "button.btn.primary 111x40 \"Ir al resumen\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 8
+        }
+      }
+    ],
+    "afterReload": {
+      "wizard": true,
+      "panel": null
+    },
+    "empty": {
+      "networth": {
+        "text": "Patrimonio netoi Lo que vale todo lo que tienes al final de cada mes. Introduce las cifras una vez al mes. CONFIGURA TU CONTROL · PASO 1 DE 5 Empieza por lo que tienes Continuar la configuración",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 196x40 \"Continuar la configuració\"",
+            "button.icon-btn 40x40 \"Ocultar la guía\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 5
+        }
+      },
+      "overview": {
+        "text": "CONFIGURA TU CONTROL · PASO 1 DE 5 Empieza por lo que tienes Continuar la configuración Todavía no hay nada registrado Añade movimientos uno a uno o pega filas de un extracto bancario. Las categorías se rellenan con tus palabras clave según llegan. Añadir un movimiento Pegar o importar filas Hacerlo con IA ¿Eres nuevo? Mira cómo funciona con datos de ejemplo: Hacer el recorrido",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 40x40 \"‹\"",
+            "#year-select 89x40 \"2026\"",
+            "#year-next 40x40 \"›\"",
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "button.btn.primary 196x40 \"Continuar la configuració\"",
+            "button.icon-btn 40x40 \"Ocultar la guía\"",
+            "button.btn.primary 166x40 \"Añadir un movimiento\"",
+            "button.btn 165x40 \"Pegar o importar filas\"",
+            "button.btn 143x40 \"Hacerlo con IA\"",
+            "button.linkish 135x38 \"Hacer el recorrido\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 11
+        }
+      },
+      "yearly": {
+        "text": "Configura tu control · paso 1 de 5 · Empieza por lo que tienes Continuar Todavía no hay nada registrado Añade movimientos uno a uno o pega filas de un extracto bancario. Las categorías se rellenan con tus palabras clave según llegan. Añadir un movimiento Pegar o importar filas Hacerlo con IA ¿Eres nuevo? Mira cómo funciona con datos de ejemplo: Hacer el recorrido",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 40x40 \"‹\"",
+            "#year-select 89x40 \"2026\"",
+            "#year-next 40x40 \"›\"",
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "button.linkish 84x38 \"Continuar\"",
+            "button.btn.primary 166x40 \"Añadir un movimiento\"",
+            "button.btn 165x40 \"Pegar o importar filas\"",
+            "button.btn 143x40 \"Hacerlo con IA\"",
+            "button.linkish 135x38 \"Hacer el recorrido\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 10
+        }
+      },
+      "transactions": {
+        "text": "Configura tu control · paso 1 de 5 · Empieza por lo que tienes Continuar Todavía no hay nada registrado Añade movimientos uno a uno o pega filas de un extracto bancario. Las categorías se rellenan con tus palabras clave según llegan. Añadir un movimiento Pegar o importar filas Hacerlo con IA ¿Eres nuevo? Mira cómo funciona con datos de ejemplo: Hacer el recorrido",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 40x40 \"‹\"",
+            "#year-select 89x40 \"2026\"",
+            "#year-next 40x40 \"›\"",
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "button.linkish 84x38 \"Continuar\"",
+            "button.btn.primary 166x40 \"Añadir un movimiento\"",
+            "button.btn 165x40 \"Pegar o importar filas\"",
+            "button.btn 143x40 \"Hacerlo con IA\"",
+            "button.linkish 135x38 \"Hacer el recorrido\"",
+            "#ft-priv 58x14 \"Privacidad\""
+          ],
+          "smallCount": 10
+        }
+      },
+      "categories": {
+        "text": "Configura tu control · paso 1 de 5 · Empieza por lo que tienes Continuar Ingresos Gastos Inversiones Categorías de Gastosi Cada una es una fila del Seguimiento anual, en este orden. Fijo es para gastos casi iguales cada mes, como alquiler, facturas y suscripciones, y Variable para todo lo demás: alimentan los Indicadores. Añadir categoría Filtrar categorías Alquiler FIJO 2 palabras clave Poner límite Renombrar Eliminar Suministros FIJO 6 palabras clave Poner límite Renombrar Eliminar Suscripcion",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 40x40 \"‹\"",
+            "#year-select 89x40 \"2026\"",
+            "#year-next 40x40 \"›\"",
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "button.linkish 84x38 \"Continuar\"",
+            "button 91x36 \"Ingresos\"",
+            "button 81x36 \"Gastos\"",
+            "button 108x36 \"Inversiones\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary.sm 117x36 \"Añadir categoría\"",
+            "#cat-q 309x40 \"\"",
+            "button.nw.need 44x36 \"FIJO\""
+          ],
+          "smallCount": 176
+        }
+      },
+      "settings": {
+        "text": "Ajustes Idioma El idioma de todas las pantallas, mensajes y descargas. English Use the tracker in English Español Usa el control en español Los nombres de las categorías también se traducen. Los que creaste tú se quedan como los escribiste; puedes renombrarlos en Categorías. Las palabras clave no cambian. Formato de números 1.234,56 Coma para los decimales 1,234.56 Punto para los decimales Moneda Euro (€) Pound sterling (£) US dollar ($) Canadian dollar (CA$) Australian dollar (A$) Swiss franc (",
+        "layout": {
+          "vw": 375,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 174x36 \"Conectar Google Drive\"",
+            "#st-lang-en 15x15 \"en\"",
+            "#st-lang-es 15x15 \"es\"",
+            "#st-num-eu 15x15 \"eu\"",
+            "#st-num-en 15x15 \"en\"",
+            "#st-cur 309x40 \"Euro (€)\nPound sterling (\"",
+            "button.info-btn 17x17 \"i\"",
+            "#st-month 150x40 \"Enero\nFebrero\nMarzo\nAbril\"",
+            "#st-year 150x40 \"2021\n2022\n2023\n2024\n2025\n\"",
+            "#st-born 109x40 \"\"",
+            "#st-salary 180x40 \"\"",
+            "#st-ml 15x15 \"on\""
+          ],
+          "smallCount": 25
+        }
+      }
+    },
+    "tourReplay": true,
+    "errors": []
+  },
+  "m390-en": {
+    "steps": [
+      {
+        "title": "Welcome to your tracker",
+        "text": "Before you set it up, here’s a two-minute tour with a made-up example, so you can see every page full of data. Nothing in it is saved. Afterwards a short setup wizard helps you add your accounts, then your transactions and your salary.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED",
+        "buttons": [
+          "Skip the tour",
+          "Start the tour"
+        ],
+        "spotHidden": true,
+        "offscreen": false,
+        "cardH": 248
+      },
+      {
+        "title": "Six pages",
+        "text": "Net worth for what you own, Overview for the big picture, Yearly for every figure, Transactions for the rows themselves, Categories for how they’re sorted, and Settings.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 1 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 222
+      },
+      {
+        "title": "What you own",
+        "text": "Once a month, type what each account is worth, or import several months from Excel. Accounts are grouped by how soon you could use the money.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 2 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 200
+      },
+      {
+        "title": "How it grows",
+        "text": "Your month-end totals with a trend line. Pick one year or several.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 3 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 179
+      },
+      {
+        "title": "Why it changed, and your goal",
+        "text": "What changed splits each month into what you saved and what markets added. Goal shows what you need a month and how much would have to come from growth.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 4 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 222
+      },
+      {
+        "title": "Accounts and gains",
+        "text": "Each account’s value, its change since last month and its Gains: how much it grew on its own (prices, interest, dividends), apart from money you put in. Hover Gains for how it’s worked out.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 5 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 222
+      },
+      {
+        "title": "Your year at a glance",
+        "text": "How much you kept after expenses this year, and your totals for income, expenses and investments. Any i button explains what a figure means.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 6 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 200
+      },
+      {
+        "title": "This month",
+        "text": "How the month in progress is going: what you’ve spent so far against a normal month, and against any monthly limits.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 7 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 200
+      },
+      {
+        "title": "Month by month",
+        "text": "Each month’s income, expenses or investments. Click a bar to see the transactions behind it.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 8 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 179
+      },
+      {
+        "title": "Where it went",
+        "text": "Your categories, biggest first. Click one to follow it month by month.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 9 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 179
+      },
+      {
+        "title": "Indicators",
+        "text": "How your income splits between rent, fixed and variable spending and investing, against targets you can change.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 10 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 200
+      },
+      {
+        "title": "Every figure, every month",
+        "text": "Laid out like a spreadsheet: categories down the side, months across. Click any figure to see its transactions. The heat map shows where most of the money went each month.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 11 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 222
+      },
+      {
+        "title": "Bring in your bank’s export",
+        "text": "Paste rows or choose your bank’s file (.csv or .xlsx), or download the empty template and fill it in. Each row is sorted into Income, Expenses or Investments and gets its category from your keywords. Rows already in the tracker are spotted.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 12 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 244
+      },
+      {
+        "title": "Let an AI read your statements",
+        "text": "Do it with AI reads statements and PDFs for you. The first time you pick which AI: Copy and paste is free, Gemini has a free tier, Claude and GPT are paid with your own key. A recommendation next to the model picker says which model suits one file or many months. Change AI switches it any time, and you check every row before it’s saved.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 13 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 287
+      },
+      {
+        "title": "Categories, guessed",
+        "text": "When no keyword matches a row, the tracker suggests a category learned from your past transactions. One click accepts it, and it offers to remember a keyword for next time.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 14 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 222
+      },
+      {
+        "title": "Keywords do the sorting",
+        "text": "A keyword like “netflix” puts every matching row in its category by itself. Type any description in the test box to see which keyword picks it.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 15 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 200
+      },
+      {
+        "title": "Your categories",
+        "text": "Rename, add or remove categories, mark each expense as Fixed or Variable, and set monthly limits.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 16 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 200
+      },
+      {
+        "title": "Saved as you go",
+        "text": "Every change is saved straight away. The eye hides all amounts on screen, and Download backup keeps a copy of everything.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED 17 OF 17",
+        "buttons": [
+          "End tour",
+          "Back",
+          "Next"
+        ],
+        "spotHidden": false,
+        "offscreen": false,
+        "cardH": 200
+      },
+      {
+        "title": "That’s the tour",
+        "text": "Now it’s your turn. The button below puts the example away and starts the setup guide: first your accounts on Net worth, then your transactions. You can take the tour again from Settings, and the i buttons next to titles explain each figure.",
+        "eyebrow": "EXAMPLE DATA · NOTHING IS SAVED",
+        "buttons": [
+          "Set up my tracker"
+        ],
+        "spotHidden": true,
+        "offscreen": false,
+        "cardH": 269
+      }
+    ],
+    "landingMs": 567,
+    "landing": {
+      "title": "MyAhorros: track your savings, spending and net worth",
+      "h1": "Know where your money goes, and what you’re worth.",
+      "lead": "A free, simple way to follow what you earn, spend and own. Your figures stay on your device or in your own Google Drive.",
+      "chip": "Free · No sign-up · Private",
+      "fine": "No account. No sign-up. Nothing leaves your device unless you choose.",
+      "buttons": [
+        "See a demo",
+        "Get started"
+      ],
+      "docLang": "en"
+    },
+    "landingLayout": {
+      "vw": 390,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "button 70x33 \"English\"",
+        "button 72x33 \"Español\"",
+        "a 44x21 \"Privacy\""
+      ],
+      "smallCount": 3
+    },
+    "choose": [
+      {
+        "m": "folder",
+        "text": "A folder on this computer Recommended One data file in a folder you choose, such as Documents, with a backup every day. Works offline. The same file the Windows app uses.",
+        "disabled": false
+      },
+      {
+        "m": "drive",
+        "text": "Your Google Drive Saved in your own Google Drive, so it’s the same on your phone and computer. Works offline and catches up when you’re back online. The site can only see the files it creates. Already using it on another device? Choose this and your tracker opens from your Drive.",
+        "disabled": false
+      },
+      {
+        "m": "browser",
+        "text": "Only in this browser Nothing to set up. Clearing your browsing data deletes it, so download a backup now and then.",
+        "disabled": false
+      }
+    ],
+    "chooseLayout": {
+      "vw": 390,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "#ft-priv 41x14 \"Privacy\"",
+        "button 70x32 \"English\"",
+        "button 72x32 \"Español\"",
+        "button.btn.ghost 266x34 \"Just looking? Try it with\"",
+        "a 45x15 \"Privacy\""
+      ],
+      "smallCount": 5
+    },
+    "welcome": "WELCOME Set up your tracker Pick a language and how you’d like to start. Language English Use the tracker in English Español Usa el control en español How do you want to start? Import a bank file Download your bank’s export (.csv or .xlsx) and bring it in. Build it from my bank statements AI reads them, sorts every movement and finds your balances. You check it all before it’s saved. Needs your own AI key (pay per use) or a copy-and-paste step. Start empty A two-minute tour first, then a short guide to add your accounts and transactions. Start from an earlier month? You’ll start with a standard set of categories in this language, plus keywords for common shops and services so many rows sort themselves. Change any of it in Categories. Every change is saved in this browser, on this device only. Clearing your browsing data deletes it, so download a backup now and then. This browser (on this",
+    "welcomeLayout": {
+      "vw": 390,
+      "pageScrollX": false,
+      "overflow": [],
+      "small": [
+        "#ob-lang-en 15x15 \"en\"",
+        "#ob-lang-es 15x15 \"es\"",
+        "summary 316x36 \"Start from an earlier mon\"",
+        "#ob-month 150x40 \"9\"",
+        "#ob-year 150x40 \"2026\"",
+        "button.linkish 79x38 \"Open it…\"",
+        "#ft-priv 41x14 \"Privacy\""
+      ],
+      "smallCount": 7
+    },
+    "wizard": [
+      {
+        "text": "SET UP YOUR TRACKER · STEP 1 OF 5 Start with what you own 1 Net worth 2 Earlier months 3 Transactions 4 Salary 5 Summary Add each place you keep money: your current account, savings, investments, pension. Then enter what each one was worth at the end of last month (September 2026). When you start recording this month, these balances should be last month’s end amounts. Add your accounts Enter September 2026 figures Import from Excel Read statements with AI Finish later Next",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x40 \"Continue setup\"",
+            "button.icon-btn 40x40 \"Hide the setup guide\"",
+            "button.icon-btn 40x40 \"Finish later\"",
+            "button.btn.primary 146x40 \"Add your accounts\"",
+            "button.btn 222x40 \"Enter September 2026 figu\"",
+            "button.btn 163x40 \"Import from Excel\"",
+            "button.btn 205x40 \"Read statements with AI\"",
+            "button.btn.ghost 99x40 \"Finish later\"",
+            "button.btn.primary 58x40 \"Next\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 12
+        }
+      },
+      {
+        "text": "SET UP YOUR TRACKER · STEP 2 OF 5 Earlier months (optional) ✓ Net worth 2 Earlier months 3 Transactions 4 Salary 5 Summary Want your history too? Fill in the month-end balances for earlier months and your net worth chart starts further back. The quickest way is the AI: give it past statements and it reads the balances for you. Enter an earlier month by hand Import from Excel Read statements with AI Back Skip this step Next",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x40 \"Continue setup\"",
+            "button.icon-btn 40x40 \"Hide the setup guide\"",
+            "button.icon-btn 40x40 \"Finish later\"",
+            "button.btn.primary 222x40 \"Enter an earlier month by\"",
+            "button.btn 163x40 \"Import from Excel\"",
+            "button.btn 205x40 \"Read statements with AI\"",
+            "button.btn 60x40 \"Back\"",
+            "button.btn.ghost 115x40 \"Skip this step\"",
+            "button.btn 58x40 \"Next\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 12
+        }
+      },
+      {
+        "text": "SET UP YOUR TRACKER · STEP 3 OF 5 Add your transactions ✓ Net worth ✓ Earlier months 3 Transactions 4 Salary 5 Summary Choose the way that suits you. You can mix them. By hand Add one transaction at a time. Paste or import a bank statement Recommended Paste rows or choose your bank’s .csv or .xlsx file. With AI Give it your statements. It sorts everything and you check it before it’s saved. Back Skip this step Next",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x40 \"Continue setup\"",
+            "button.icon-btn 40x40 \"Hide the setup guide\"",
+            "button.icon-btn 40x40 \"Finish later\"",
+            "button.btn 60x40 \"Back\"",
+            "button.btn.ghost 115x40 \"Skip this step\"",
+            "button.btn 58x40 \"Next\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 9
+        }
+      },
+      {
+        "text": "SET UP YOUR TRACKER · STEP 4 OF 5 Last, your salary or pension ✓ Net worth ✓ Earlier months ✓ Transactions 4 Salary 5 Summary Add your salary (or pension) after your transactions, so the tracker can show what you kept. This tracker is built for you to fill in the previous month at the end of that month, so your figures always run one month behind. That is by design. Add my salary or pension Back Skip this step Next",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x40 \"Continue setup\"",
+            "button.icon-btn 40x40 \"Hide the setup guide\"",
+            "button.icon-btn 40x40 \"Finish later\"",
+            "button.btn.primary 188x40 \"Add my salary or pension\"",
+            "button.btn 60x40 \"Back\"",
+            "button.btn.ghost 115x40 \"Skip this step\"",
+            "button.btn 58x40 \"Next\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 10
+        }
+      },
+      {
+        "text": "SET UP YOUR TRACKER · STEP 5 OF 5 You’re all set ✓ Net worth ✓ Earlier months ✓ Transactions ✓ Salary 5 Summary Here’s what is in your tracker. Next month, add the month that just ended: balances first, then transactions. 0 accounts · 0 months of balances · 0 transactions · 0 income rows Your figures are saved only in this browser. Download a backup now and then from Settings. Back Go to the overview",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x40 \"Continue setup\"",
+            "button.icon-btn 40x40 \"Hide the setup guide\"",
+            "button.icon-btn 40x40 \"Finish later\"",
+            "button.btn 60x40 \"Back\"",
+            "button.btn.primary 145x40 \"Go to the overview\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 8
+        }
+      }
+    ],
+    "afterReload": {
+      "wizard": true,
+      "panel": null
+    },
+    "empty": {
+      "networth": {
+        "text": "Net worthi What everything you own is worth at the end of each month. Type the figures in once a month. SET UP YOUR TRACKER · STEP 1 OF 5 Start with what you own Continue setup",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary 125x40 \"Continue setup\"",
+            "button.icon-btn 40x40 \"Hide the setup guide\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 5
+        }
+      },
+      "overview": {
+        "text": "SET UP YOUR TRACKER · STEP 1 OF 5 Start with what you own Continue setup Nothing recorded in the tracker yet Add transactions one at a time, or paste rows from a bank statement. Categories fill in from your keyword list as they arrive. Add a transaction Paste or import rows Do it with AI New here? See how it works with example data: Take the tour",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 40x40 \"‹\"",
+            "#year-select 89x40 \"2026\"",
+            "#year-next 40x40 \"›\"",
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "button.btn.primary 125x40 \"Continue setup\"",
+            "button.icon-btn 40x40 \"Hide the setup guide\"",
+            "button.btn.primary 140x40 \"Add a transaction\"",
+            "button.btn 159x40 \"Paste or import rows\"",
+            "button.btn 127x40 \"Do it with AI\"",
+            "button.linkish 105x38 \"Take the tour\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 11
+        }
+      },
+      "yearly": {
+        "text": "Set up your tracker · step 1 of 5 · Start with what you own Continue Nothing recorded in the tracker yet Add transactions one at a time, or paste rows from a bank statement. Categories fill in from your keyword list as they arrive. Add a transaction Paste or import rows Do it with AI New here? See how it works with example data: Take the tour",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 40x40 \"‹\"",
+            "#year-select 89x40 \"2026\"",
+            "#year-next 40x40 \"›\"",
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "button.linkish 79x38 \"Continue\"",
+            "button.btn.primary 140x40 \"Add a transaction\"",
+            "button.btn 159x40 \"Paste or import rows\"",
+            "button.btn 127x40 \"Do it with AI\"",
+            "button.linkish 105x38 \"Take the tour\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 10
+        }
+      },
+      "transactions": {
+        "text": "Set up your tracker · step 1 of 5 · Start with what you own Continue Nothing recorded in the tracker yet Add transactions one at a time, or paste rows from a bank statement. Categories fill in from your keyword list as they arrive. Add a transaction Paste or import rows Do it with AI New here? See how it works with example data: Take the tour",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 40x40 \"‹\"",
+            "#year-select 89x40 \"2026\"",
+            "#year-next 40x40 \"›\"",
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "button.linkish 79x38 \"Continue\"",
+            "button.btn.primary 140x40 \"Add a transaction\"",
+            "button.btn 159x40 \"Paste or import rows\"",
+            "button.btn 127x40 \"Do it with AI\"",
+            "button.linkish 105x38 \"Take the tour\"",
+            "#ft-priv 41x14 \"Privacy\""
+          ],
+          "smallCount": 10
+        }
+      },
+      "categories": {
+        "text": "Set up your tracker · step 1 of 5 · Start with what you own Continue Income Expenses Investments Expenses categoriesi Each one is a row on Yearly tracking, in this order. Fixed is for costs that are about the same every month, like rent, bills and subscriptions, Variable for everything else: they feed the Indicators. Add category Filter categories Rent FIXED 2 keywords Set limit Rename Delete Utilities FIXED 10 keywords Set limit Rename Delete Subscriptions FIXED 8 keywords Set limit Rename Dele",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#year-prev 40x40 \"‹\"",
+            "#year-select 89x40 \"2026\"",
+            "#year-next 40x40 \"›\"",
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "button.linkish 79x38 \"Continue\"",
+            "button 83x36 \"Income\"",
+            "button 97x36 \"Expenses\"",
+            "button 113x36 \"Investments\"",
+            "button.info-btn 17x17 \"i\"",
+            "button.btn.primary.sm 99x36 \"Add category\"",
+            "#cat-q 324x40 \"\"",
+            "button.nw.need 45x36 \"FIXED\""
+          ],
+          "smallCount": 177
+        }
+      },
+      "settings": {
+        "text": "Settings Language The language of every screen, message and download. English Use the tracker in English Español Usa el control en español Category names are translated too. Names you made up yourself stay as you wrote them; rename them in Categories if you like. Keywords don’t change. Number format 1.234,56 Comma for decimals 1,234.56 Point for decimals Currency Euro (€) Pound sterling (£) US dollar ($) Canadian dollar (CA$) Australian dollar (A$) Swiss franc (CHF) Mexican peso (MX$) Swedish kr",
+        "layout": {
+          "vw": 390,
+          "pageScrollX": false,
+          "overflow": [],
+          "small": [
+            "#btn-local-top 170x36 \"Connect Google Drive\"",
+            "#st-lang-en 15x15 \"en\"",
+            "#st-lang-es 15x15 \"es\"",
+            "#st-num-eu 15x15 \"eu\"",
+            "#st-num-en 15x15 \"en\"",
+            "#st-cur 320x40 \"Euro (€)\nPound sterling (\"",
+            "button.info-btn 17x17 \"i\"",
+            "#st-month 150x40 \"January\nFebruary\nMarch\nAp\"",
+            "#st-year 150x40 \"2021\n2022\n2023\n2024\n2025\n\"",
+            "#st-born 72x40 \"\"",
+            "#st-salary 180x40 \"\"",
+            "#st-ml 15x15 \"on\""
+          ],
+          "smallCount": 25
+        }
+      }
+    },
+    "tourReplay": true,
+    "errors": []
+  }
+}

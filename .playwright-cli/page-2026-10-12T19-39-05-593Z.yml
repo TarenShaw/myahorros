@@ -1,0 +1,68 @@
+- generic [ref=e204]:
+  - generic [ref=e205]:
+    - banner [ref=e206]:
+      - link "MyAhorros" [ref=e208] [cursor=pointer]:
+        - /url: ./
+    - generic [ref=e209]:
+      - tablist "Sections" [ref=e210]:
+        - tab "Overview" [ref=e211] [cursor=pointer]
+        - tab "Net worth" [selected] [ref=e215] [cursor=pointer]
+        - tab "Transactions" [ref=e748] [cursor=pointer]
+        - tab "By month" [ref=e227] [cursor=pointer]
+        - tab "Settings" [ref=e232] [cursor=pointer]
+      - generic [ref=e238]: Saved
+    - main [ref=e245]:
+      - generic [ref=e750]:
+        - heading [level=1] [ref=e751]:
+          - text: Net worth
+          - button "What does this mean?" [ref=e752]: i
+        - paragraph [ref=e753]: What everything you own is worth at the end of each month. Type the figures in once a month.
+      - generic [ref=e754]:
+        - generic [ref=e755]: Set up your tracker · step 1 of 5
+        - generic [ref=e756]: Where do you keep money?
+        - button "Continue setup" [ref=e757] [cursor=pointer]
+        - button "Hide the setup guide" [ref=e758] [cursor=pointer]
+  - dialog [ref=e798]:
+    - generic [ref=e799]:
+      - generic [ref=e800]:
+        - paragraph [ref=e801]: Setup · step 1 of 5
+        - heading "Where do you keep money?" [level=3] [ref=e802]
+      - button "Finish later" [active] [ref=e803] [cursor=pointer]
+    - generic [ref=e806]:
+      - list [ref=e807]:
+        - listitem [ref=e808]:
+          - generic [ref=e809]: "1"
+          - generic [ref=e810]: Accounts
+        - listitem [ref=e811]:
+          - generic [ref=e812]: "2"
+        - listitem [ref=e813]:
+          - generic [ref=e814]: "3"
+        - listitem [ref=e815]:
+          - generic [ref=e816]: "4"
+        - listitem [ref=e817]:
+          - generic [ref=e818]: "5"
+      - paragraph [ref=e819]: Start with one everyday account. Add savings, investments and other accounts whenever you are ready.
+      - generic [ref=e820]:
+        - button "Start with last month" [pressed] [ref=e821] [cursor=pointer]
+        - button "Bring in my history" [ref=e822] [cursor=pointer]
+      - paragraph [ref=e823]:
+        - generic [ref=e824]: Amounts in
+        - combobox "Amounts in" [ref=e825]:
+          - option "Euro (€)" [selected]
+          - option "Pound sterling (£)"
+          - option "US dollar ($)"
+          - option "Canadian dollar (CA$)"
+          - option "Australian dollar (A$)"
+          - option "Swiss franc (CHF)"
+          - option "Mexican peso (MX$)"
+          - option "Swedish krona (kr)"
+          - option "Polish złoty (zł)"
+      - button "Add your accounts" [ref=e827] [cursor=pointer]
+    - generic [ref=e828]:
+      - button "Finish later" [ref=e830] [cursor=pointer]
+      - button "Skip this step" [ref=e832] [cursor=pointer]
+  - status
+  - contentinfo [ref=e409]:
+    - text: © 2026 MyAhorros · Developed by Taren Shaw with Claude Opus 5.5 ·
+    - link "Privacy" [ref=e410] [cursor=pointer]:
+      - /url: privacy.html

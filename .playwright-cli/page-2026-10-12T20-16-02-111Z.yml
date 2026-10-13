@@ -1,0 +1,70 @@
+- generic [active]:
+  - status
+  - dialog "MyAhorros" [ref=f1e1]:
+    - banner [ref=f1e2]:
+      - generic [ref=f1e3]: MyAhorros
+      - generic [ref=f1e4]:
+        - group "Language / Idioma" [ref=f1e5]:
+          - button "English" [ref=f1e6] [cursor=pointer]
+          - button "Español" [pressed] [ref=f1e7] [cursor=pointer]
+        - button "Ver una demo" [ref=f1e8] [cursor=pointer]
+        - button "Empezar" [ref=f1e9] [cursor=pointer]
+    - main [ref=f1e10]:
+      - generic [ref=f1e12]:
+        - generic [ref=f1e13]:
+          - paragraph [ref=f1e14]: Gratis · Sin registro · Privado
+          - heading "Ve a dónde va tu dinero y cómo cambian tus ahorros." [level=1] [ref=f1e15]
+          - paragraph [ref=f1e16]: Importa un extracto, revisa tus gastos y sigue tus ahorros. Tus cifras se quedan en tu dispositivo o en tu propio Google Drive.
+          - generic [ref=f1e17]:
+            - button "Ver una demo" [ref=f1e18] [cursor=pointer]
+            - button "Empezar" [ref=f1e19] [cursor=pointer]
+          - paragraph [ref=f1e20]: Sin registro. Tú añades los extractos; no hay conexión automática con tu banco. La IA es opcional; las conexiones automáticas de IA se pagan aparte.
+        - figure [ref=f1e21]:
+          - 'img "La página actual de Patrimonio con cifras ficticias: ahorro total, saldos de efectivo, inversiones y jubilación, y un desglose del ahorro y las ganancias de mercado desde el mes anterior." [ref=f1e24]'
+        - list [ref=f1e25]:
+          - listitem [ref=f1e26]: Tus datos se quedan en tu dispositivo
+          - listitem [ref=f1e31]: Importa desde Excel
+          - listitem [ref=f1e36]: Lee extractos con IA
+      - generic [ref=f1e40]:
+        - generic [ref=f1e41]:
+          - heading "Todo en un mismo sitio" [level=2] [ref=f1e42]
+          - paragraph [ref=f1e43]: Pensado para quien solo quiere saber cómo va. Sin palabras de finanzas.
+          - generic [ref=f1e44]:
+            - article [ref=f1e45]:
+              - heading "Ingresos y gastos" [level=3] [ref=f1e49]
+              - paragraph [ref=f1e50]: Apunta lo que entra y lo que sale, a mano o con el archivo de tu banco. Lo ordena todo en categorías y pone cada mes al lado del anterior.
+            - article [ref=f1e51]:
+              - heading "Tu patrimonio mes a mes" [level=3] [ref=f1e57]
+              - paragraph [ref=f1e58]: Una vez al mes, escribe cuánto hay en cada cuenta. Un gráfico te enseña cómo crece tu total a lo largo del año.
+            - article [ref=f1e59]:
+              - heading "Inversiones" [level=3] [ref=f1e64]
+              - paragraph [ref=f1e65]: Ve cuánto has aportado y cuánto han ganado solos tus fondos, acciones o plan de pensiones.
+            - article [ref=f1e66]:
+              - heading "Mirada al futuro" [level=3] [ref=f1e71]
+              - paragraph [ref=f1e72]: Los meses en gris te enseñan dónde estarás seguramente en diciembre si sigues como este último año.
+        - generic [ref=f1e78]:
+          - heading "Tus datos son tuyos" [level=2] [ref=f1e79]
+          - paragraph [ref=f1e80]: No hay cuenta ni servidor con tus cifras. Guárdalas en una carpeta, en tu propio Google Drive o solo en este navegador, con copia diaria. Funciona sin conexión y se instala como una app.
+        - generic [ref=f1e81]:
+          - heading "Cómo funciona" [level=2] [ref=f1e82]
+          - list [ref=f1e83]:
+            - listitem [ref=f1e84]:
+              - generic [ref=f1e85]: Elige dónde vive
+              - generic [ref=f1e86]: Este dispositivo, tu Google Drive o una carpeta que gestionas. Puedes cambiarlo cuando quieras.
+            - listitem [ref=f1e87]:
+              - generic [ref=f1e88]: Añade un extracto
+              - generic [ref=f1e89]: Empieza con una cuenta y un mes, o trae tu historial. Revisa las filas antes de guardar.
+            - listitem [ref=f1e90]:
+              - generic [ref=f1e91]: Ve tu dinero con claridad
+              - generic [ref=f1e92]: Consulta el resumen de gastos del mes y añade saldos para seguir tus ahorros.
+        - generic [ref=f1e93]:
+          - heading "Cuando quieras" [level=2] [ref=f1e94]
+          - paragraph [ref=f1e95]: Haz el recorrido de dos minutos con datos de ejemplo, o configura tu propio control.
+          - generic [ref=f1e96]:
+            - button "Ver una demo" [ref=f1e97] [cursor=pointer]
+            - button "Empezar" [ref=f1e98] [cursor=pointer]
+    - contentinfo [ref=f1e99]:
+      - generic [ref=f1e100]: MyAhorros
+      - link "Privacidad" [ref=f1e101] [cursor=pointer]:
+        - /url: privacy.html
+      - generic [ref=f1e102]: © 2026

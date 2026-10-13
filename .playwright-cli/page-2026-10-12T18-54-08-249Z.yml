@@ -1,0 +1,4376 @@
+- generic [ref=e204]:
+  - generic [ref=e205]:
+    - banner [ref=e206]:
+      - generic [ref=e207]:
+        - paragraph [ref=e208]: Income · Expenses · Investments
+        - link "MyAhorros" [ref=e209] [cursor=pointer]:
+          - /url: ./
+    - generic [ref=e210]:
+      - tablist "Sections" [ref=e211]:
+        - tab "Overview" [ref=e212] [cursor=pointer]
+        - tab "Net worth" [ref=e215] [cursor=pointer]
+        - tab "Transactions 1 without a category" [active] [selected] [ref=e220] [cursor=pointer]:
+          - text: Transactions
+          - generic "1 without a category" [ref=e224]: 1 to sort
+        - tab "By month" [ref=e225] [cursor=pointer]
+        - tab "Settings" [ref=e229] [cursor=pointer]
+      - generic [ref=e234]:
+        - generic [ref=e235]: Saved
+        - button "Hide amounts" [ref=e236] [cursor=pointer]
+    - main [ref=e241]:
+      - generic [ref=e612]:
+        - generic [ref=e613]:
+          - heading "Transactions" [level=1] [ref=e614]
+          - paragraph [ref=e615]: Every income, expense and investment row. Click a row to change it.
+        - generic [ref=e616]:
+          - generic [ref=e617]:
+            - button "Previous year" [disabled] [ref=e618]: ‹
+            - generic [ref=e619]: Year
+            - combobox "Year" [ref=e620]:
+              - option "2026" [selected]
+            - button "Next year" [disabled] [ref=e621]: ›
+          - generic [ref=e622]:
+            - button "Categorise blanks" [ref=e623] [cursor=pointer]
+            - button "Import history" [ref=e624] [cursor=pointer]
+            - button "Fill in with AI" [ref=e625] [cursor=pointer]
+            - button "Add a statement" [ref=e629] [cursor=pointer]
+            - button "Add transaction" [ref=e630] [cursor=pointer]
+      - generic [ref=e632]:
+        - group "Type" [ref=e633]:
+          - button "Income 14" [ref=e634] [cursor=pointer]:
+            - text: Income
+            - generic [ref=e636]: "14"
+          - button "Expenses 235" [pressed] [ref=e637] [cursor=pointer]:
+            - text: Expenses
+            - generic [ref=e639]: "235"
+          - button "Investments 20" [ref=e640] [cursor=pointer]:
+            - text: Investments
+            - generic [ref=e642]: "20"
+        - button "What does this mean?" [ref=e643]: i
+      - group [ref=e644]:
+        - generic "Filters" [ref=e645] [cursor=pointer]
+        - generic [ref=e646]:
+          - generic [ref=e647]: Search
+          - searchbox "Search" [ref=e648]
+          - generic [ref=e649]: Month
+          - combobox "Month" [ref=e650]:
+            - option "Whole of 2026" [selected]
+            - option "January"
+            - option "February"
+            - option "March"
+            - option "April"
+            - option "May"
+            - option "June"
+            - option "July"
+            - option "August"
+            - option "September"
+            - option "October"
+          - generic [ref=e651]: Category
+          - combobox "Category" [ref=e652]:
+            - option "All categories" [selected]
+            - option "Uncategorised (1)"
+            - option "Rent"
+            - option "Utilities"
+            - option "Subscriptions"
+            - option "Phone"
+            - option "Insurance"
+            - option "Transport"
+            - option "Groceries"
+            - option "Restaurants"
+            - option "Alcohol + Bars"
+            - option "Entertainment"
+            - option "Clothes"
+            - option "Non Essential Shopping"
+            - option "Vacation + Hotel + Travel"
+            - option "Health"
+            - option "Gifts"
+            - option "Taxes"
+            - option "Cash"
+            - option "Gym"
+            - option "Other"
+          - generic [ref=e653]:
+            - text: From date
+            - textbox "From date" [ref=e654]
+          - generic [ref=e655]:
+            - text: To date
+            - textbox "To date" [ref=e656]
+          - generic [ref=e657]:
+            - text: Minimum amount (absolute)
+            - textbox "Minimum amount (absolute)" [ref=e658]
+          - generic [ref=e659]:
+            - text: Maximum amount (absolute)
+            - textbox "Maximum amount (absolute)" [ref=e660]
+          - generic [ref=e661]:
+            - text: Account
+            - combobox "Account" [ref=e662]:
+              - option "All accounts / unknown" [selected]
+              - option "Current account"
+              - option "Savings account"
+              - option "Index funds"
+              - option "Crowdlending"
+              - option "Pension plan"
+          - generic [ref=e663]:
+            - text: Source file
+            - combobox "Source file" [ref=e664]:
+              - option "All sources" [selected]
+          - generic [ref=e665]:
+            - text: Saved views
+            - combobox "Saved views" [ref=e666]:
+              - option "Choose a view" [selected]
+              - option "Uncategorised"
+              - 'option "Minimum amount (absolute): 100,00"'
+          - button "Save these filters" [ref=e667] [cursor=pointer]
+      - generic [ref=e668]:
+        - generic [ref=e669]:
+          - text: 235 transactions · showing the first 150
+          - button "Check for mistakes with AI" [ref=e670] [cursor=pointer]
+        - generic [ref=e674]: Total −16.188,74 €
+      - generic [ref=e675]:
+        - button "Select filtered rows" [ref=e676] [cursor=pointer]
+        - generic [ref=e677]: 0 selected
+      - paragraph [ref=e678]: Click a row to edit or delete it. You can also change a category straight from its list.
+      - generic [ref=e679]:
+        - table [ref=e680]:
+          - rowgroup [ref=e681]:
+            - row [ref=e682]:
+              - columnheader [ref=e683]:
+                - button "Sort by Date" [ref=e684] [cursor=pointer]: Date ↓
+              - columnheader "Description" [ref=e685]
+              - columnheader "Category" [ref=e686]
+              - columnheader [ref=e687]:
+                - button "Sort by Amount" [ref=e688] [cursor=pointer]: Amount
+          - rowgroup [ref=e689]:
+            - row [ref=e690]:
+              - rowheader "October 2026" [ref=e691]
+              - cell "−1.262,95 €" [ref=e692]
+            - row [ref=e693] [cursor=pointer]:
+              - cell "12/10/2026" [ref=e694]
+              - cell [ref=e695]:
+                - checkbox "Include row 257" [ref=e696]
+                - text: CANAL DE ISABEL II
+              - cell [ref=e697]:
+                - generic [ref=e698]: Category
+                - combobox "Category" [ref=e699]:
+                  - option "Rent"
+                  - option "Utilities" [selected]
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−19,11 €" [ref=e700]
+            - row [ref=e701] [cursor=pointer]:
+              - cell "09/10/2026" [ref=e702]
+              - cell [ref=e703]:
+                - checkbox "Include row 259" [ref=e704]
+                - text: SPOTIFY
+              - cell [ref=e705]:
+                - generic [ref=e706]: Category
+                - combobox "Category" [ref=e707]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−10,99 €" [ref=e708]
+            - row [ref=e709] [cursor=pointer]:
+              - cell "08/10/2026" [ref=e710]
+              - cell [ref=e711]:
+                - checkbox "Include row 264" [ref=e712]
+                - text: MERCADONA
+              - cell [ref=e713]:
+                - generic [ref=e714]: Category
+                - combobox "Category" [ref=e715]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−28,41 €" [ref=e716]
+            - row [ref=e717] [cursor=pointer]:
+              - cell "08/10/2026" [ref=e718]
+              - cell [ref=e719]:
+                - checkbox "Include row 265" [ref=e720]
+                - text: BAKERY
+              - cell [ref=e721]:
+                - generic [ref=e722]: Category
+                - combobox "Category" [ref=e723]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−5,97 €" [ref=e724]
+            - row [ref=e725] [cursor=pointer]:
+              - cell "07/10/2026" [ref=e726]
+              - cell [ref=e727]:
+                - checkbox "Include row 266" [ref=e728]
+                - text: TELEPIZZA
+              - cell [ref=e729]:
+                - generic [ref=e730]: Category
+                - combobox "Category" [ref=e731]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−35,79 €" [ref=e732]
+            - row [ref=e733] [cursor=pointer]:
+              - cell "06/10/2026" [ref=e734]
+              - cell [ref=e735]:
+                - checkbox "Include row 256" [ref=e736]
+                - text: IBERDROLA
+              - cell [ref=e737]:
+                - generic [ref=e738]: Category
+                - combobox "Category" [ref=e739]:
+                  - option "Rent"
+                  - option "Utilities" [selected]
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−93,08 €" [ref=e740]
+            - row [ref=e741] [cursor=pointer]:
+              - cell "05/10/2026" [ref=e742]
+              - cell [ref=e743]:
+                - checkbox "Include row 260" [ref=e744]
+                - text: VODAFONE
+              - cell [ref=e745]:
+                - generic [ref=e746]: Category
+                - combobox "Category" [ref=e747]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone" [selected]
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−25,00 €" [ref=e748]
+            - row [ref=e749] [cursor=pointer]:
+              - cell "03/10/2026" [ref=e750]
+              - cell [ref=e751]:
+                - checkbox "Include row 258" [ref=e752]
+                - text: NETFLIX.COM
+              - cell [ref=e753]:
+                - generic [ref=e754]: Category
+                - combobox "Category" [ref=e755]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−12,99 €" [ref=e756]
+            - row [ref=e757] [cursor=pointer]:
+              - cell "02/10/2026" [ref=e758]
+              - cell [ref=e759]:
+                - checkbox "Include row 261" [ref=e760]
+                - text: MAPFRE SEGUROS
+              - cell [ref=e761]:
+                - generic [ref=e762]: Category
+                - combobox "Category" [ref=e763]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance" [selected]
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−38,40 €" [ref=e764]
+            - row [ref=e765] [cursor=pointer]:
+              - cell "02/10/2026" [ref=e766]
+              - cell [ref=e767]:
+                - checkbox "Include row 263" [ref=e768]
+                - text: MERCADONA
+              - cell [ref=e769]:
+                - generic [ref=e770]: Category
+                - combobox "Category" [ref=e771]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−83,96 €" [ref=e772]
+            - row [ref=e773] [cursor=pointer]:
+              - cell "01/10/2026" [ref=e774]
+              - cell [ref=e775]:
+                - checkbox "Include row 255" [ref=e776]
+                - text: RENT FLAT
+              - cell [ref=e777]:
+                - generic [ref=e778]: Category
+                - combobox "Category" [ref=e779]:
+                  - option "Rent" [selected]
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−850,00 €" [ref=e780]
+            - row [ref=e781] [cursor=pointer]:
+              - cell "01/10/2026" [ref=e782]
+              - cell [ref=e783]:
+                - checkbox "Include row 262" [ref=e784]
+                - text: TRAVEL PASS
+              - cell [ref=e785]:
+                - generic [ref=e786]: Category
+                - combobox "Category" [ref=e787]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−21,80 €" [ref=e788]
+            - row [ref=e789] [cursor=pointer]:
+              - cell "01/10/2026" [ref=e790]
+              - cell [ref=e791]:
+                - checkbox "Include row 267" [ref=e792]
+                - text: MERCADONA CHAMBERI
+              - cell [ref=e793]:
+                - generic [ref=e794]: Category
+                - combobox "Category" [ref=e795]:
+                  - option "Uncategorised" [selected]
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+                - button "Maybe Groceries?" [ref=e796]
+              - cell "−37,45 €" [ref=e797]
+            - row [ref=e798]:
+              - rowheader "September 2026" [ref=e799]
+              - cell "−1.485,02 €" [ref=e800]
+            - row [ref=e801] [cursor=pointer]:
+              - cell "26/09/2026" [ref=e802]
+              - cell [ref=e803]:
+                - checkbox "Include row 241" [ref=e804]
+                - text: MERCADONA
+              - cell [ref=e805]:
+                - generic [ref=e806]: Category
+                - combobox "Category" [ref=e807]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−25,09 €" [ref=e808]
+            - row [ref=e809] [cursor=pointer]:
+              - cell "23/09/2026" [ref=e810]
+              - cell [ref=e811]:
+                - checkbox "Include row 247" [ref=e812]
+                - text: VIPS
+              - cell [ref=e813]:
+                - generic [ref=e814]: Category
+                - combobox "Category" [ref=e815]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−20,43 €" [ref=e816]
+            - row [ref=e817] [cursor=pointer]:
+              - cell "22/09/2026" [ref=e818]
+              - cell [ref=e819]:
+                - checkbox "Include row 245" [ref=e820]
+                - text: RESTAURANTE LA TASCA
+              - cell [ref=e821]:
+                - generic [ref=e822]: Category
+                - combobox "Category" [ref=e823]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−39,60 €" [ref=e824]
+            - row [ref=e825] [cursor=pointer]:
+              - cell "22/09/2026" [ref=e826]
+              - cell [ref=e827]:
+                - checkbox "Include row 250" [ref=e828]
+                - text: CINESA
+              - cell [ref=e829]:
+                - generic [ref=e830]: Category
+                - combobox "Category" [ref=e831]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment" [selected]
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−12,68 €" [ref=e832]
+            - row [ref=e833] [cursor=pointer]:
+              - cell "21/09/2026" [ref=e834]
+              - cell [ref=e835]:
+                - checkbox "Include row 246" [ref=e836]
+                - text: TELEPIZZA
+              - cell [ref=e837]:
+                - generic [ref=e838]: Category
+                - combobox "Category" [ref=e839]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−34,12 €" [ref=e840]
+            - row [ref=e841] [cursor=pointer]:
+              - cell "20/09/2026" [ref=e842]
+              - cell [ref=e843]:
+                - checkbox "Include row 240" [ref=e844]
+                - text: MERCADONA
+              - cell [ref=e845]:
+                - generic [ref=e846]: Category
+                - combobox "Category" [ref=e847]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−51,78 €" [ref=e848]
+            - row [ref=e849] [cursor=pointer]:
+              - cell "17/09/2026" [ref=e850]
+              - cell [ref=e851]:
+                - checkbox "Include row 248" [ref=e852]
+                - text: BAR EL RINCON
+              - cell [ref=e853]:
+                - generic [ref=e854]: Category
+                - combobox "Category" [ref=e855]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−23,15 €" [ref=e856]
+            - row [ref=e857] [cursor=pointer]:
+              - cell "17/09/2026" [ref=e858]
+              - cell [ref=e859]:
+                - checkbox "Include row 249" [ref=e860]
+                - text: BAR EL RINCON
+              - cell [ref=e861]:
+                - generic [ref=e862]: Category
+                - combobox "Category" [ref=e863]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−18,61 €" [ref=e864]
+            - row [ref=e865] [cursor=pointer]:
+              - cell "16/09/2026" [ref=e866]
+              - cell [ref=e867]:
+                - checkbox "Include row 251" [ref=e868]
+                - text: ZARA
+              - cell [ref=e869]:
+                - generic [ref=e870]: Category
+                - combobox "Category" [ref=e871]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes" [selected]
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−35,16 €" [ref=e872]
+            - row [ref=e873] [cursor=pointer]:
+              - cell "14/09/2026" [ref=e874]
+              - cell [ref=e875]:
+                - checkbox "Include row 236" [ref=e876]
+                - text: CABIFY
+              - cell [ref=e877]:
+                - generic [ref=e878]: Category
+                - combobox "Category" [ref=e879]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−15,91 €" [ref=e880]
+            - row [ref=e881] [cursor=pointer]:
+              - cell "14/09/2026" [ref=e882]
+              - cell [ref=e883]:
+                - checkbox "Include row 239" [ref=e884]
+                - text: LIDL
+              - cell [ref=e885]:
+                - generic [ref=e886]: Category
+                - combobox "Category" [ref=e887]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−67,94 €" [ref=e888]
+            - row [ref=e889] [cursor=pointer]:
+              - cell "11/09/2026" [ref=e890]
+              - cell [ref=e891]:
+                - checkbox "Include row 242" [ref=e892]
+                - text: BAKERY
+              - cell [ref=e893]:
+                - generic [ref=e894]: Category
+                - combobox "Category" [ref=e895]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−5,48 €" [ref=e896]
+            - row [ref=e897] [cursor=pointer]:
+              - cell "11/09/2026" [ref=e898]
+              - cell [ref=e899]:
+                - checkbox "Include row 243" [ref=e900]
+                - text: BAKERY
+              - cell [ref=e901]:
+                - generic [ref=e902]: Category
+                - combobox "Category" [ref=e903]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−4,64 €" [ref=e904]
+            - row [ref=e905] [cursor=pointer]:
+              - cell "11/09/2026" [ref=e906]
+              - cell [ref=e907]:
+                - checkbox "Include row 252" [ref=e908]
+                - text: PHARMACY
+              - cell [ref=e909]:
+                - generic [ref=e910]: Category
+                - combobox "Category" [ref=e911]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health" [selected]
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−16,36 €" [ref=e912]
+            - row [ref=e913] [cursor=pointer]:
+              - cell "09/09/2026" [ref=e914]
+              - cell [ref=e915]:
+                - checkbox "Include row 232" [ref=e916]
+                - text: SPOTIFY
+              - cell [ref=e917]:
+                - generic [ref=e918]: Category
+                - combobox "Category" [ref=e919]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−10,99 €" [ref=e920]
+            - row [ref=e921] [cursor=pointer]:
+              - cell "08/09/2026" [ref=e922]
+              - cell [ref=e923]:
+                - checkbox "Include row 238" [ref=e924]
+                - text: MERCADONA
+              - cell [ref=e925]:
+                - generic [ref=e926]: Category
+                - combobox "Category" [ref=e927]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−63,59 €" [ref=e928]
+            - row [ref=e929] [cursor=pointer]:
+              - cell "06/09/2026" [ref=e930]
+              - cell [ref=e931]:
+                - checkbox "Include row 230" [ref=e932]
+                - text: IBERDROLA
+              - cell [ref=e933]:
+                - generic [ref=e934]: Category
+                - combobox "Category" [ref=e935]:
+                  - option "Rent"
+                  - option "Utilities" [selected]
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−54,79 €" [ref=e936]
+            - row [ref=e937] [cursor=pointer]:
+              - cell "05/09/2026" [ref=e938]
+              - cell [ref=e939]:
+                - checkbox "Include row 233" [ref=e940]
+                - text: VODAFONE
+              - cell [ref=e941]:
+                - generic [ref=e942]: Category
+                - combobox "Category" [ref=e943]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone" [selected]
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−25,00 €" [ref=e944]
+            - row [ref=e945] [cursor=pointer]:
+              - cell "03/09/2026" [ref=e946]
+              - cell [ref=e947]:
+                - checkbox "Include row 231" [ref=e948]
+                - text: NETFLIX.COM
+              - cell [ref=e949]:
+                - generic [ref=e950]: Category
+                - combobox "Category" [ref=e951]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−12,99 €" [ref=e952]
+            - row [ref=e953] [cursor=pointer]:
+              - cell "03/09/2026" [ref=e954]
+              - cell [ref=e955]:
+                - checkbox "Include row 244" [ref=e956]
+                - text: BAKERY
+              - cell [ref=e957]:
+                - generic [ref=e958]: Category
+                - combobox "Category" [ref=e959]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−3,17 €" [ref=e960]
+            - row [ref=e961] [cursor=pointer]:
+              - cell "02/09/2026" [ref=e962]
+              - cell [ref=e963]:
+                - checkbox "Include row 234" [ref=e964]
+                - text: MAPFRE SEGUROS
+              - cell [ref=e965]:
+                - generic [ref=e966]: Category
+                - combobox "Category" [ref=e967]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance" [selected]
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−38,40 €" [ref=e968]
+            - row [ref=e969] [cursor=pointer]:
+              - cell "02/09/2026" [ref=e970]
+              - cell [ref=e971]:
+                - checkbox "Include row 237" [ref=e972]
+                - text: MERCADONA
+              - cell [ref=e973]:
+                - generic [ref=e974]: Category
+                - combobox "Category" [ref=e975]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−33,34 €" [ref=e976]
+            - row [ref=e977] [cursor=pointer]:
+              - cell "01/09/2026" [ref=e978]
+              - cell [ref=e979]:
+                - checkbox "Include row 229" [ref=e980]
+                - text: RENT FLAT
+              - cell [ref=e981]:
+                - generic [ref=e982]: Category
+                - combobox "Category" [ref=e983]:
+                  - option "Rent" [selected]
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−850,00 €" [ref=e984]
+            - row [ref=e985] [cursor=pointer]:
+              - cell "01/09/2026" [ref=e986]
+              - cell [ref=e987]:
+                - checkbox "Include row 235" [ref=e988]
+                - text: TRAVEL PASS
+              - cell [ref=e989]:
+                - generic [ref=e990]: Category
+                - combobox "Category" [ref=e991]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−21,80 €" [ref=e992]
+            - row [ref=e993]:
+              - rowheader "August 2026" [ref=e994]
+              - cell "−2.424,54 €" [ref=e995]
+            - row [ref=e996] [cursor=pointer]:
+              - cell "26/08/2026" [ref=e997]
+              - cell [ref=e998]:
+                - checkbox "Include row 211" [ref=e999]
+                - text: MERCADONA
+              - cell [ref=e1000]:
+                - generic [ref=e1001]: Category
+                - combobox "Category" [ref=e1002]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−59,40 €" [ref=e1003]
+            - row [ref=e1004] [cursor=pointer]:
+              - cell "23/08/2026" [ref=e1005]
+              - cell [ref=e1006]:
+                - checkbox "Include row 213" [ref=e1007]
+                - text: BAKERY
+              - cell [ref=e1008]:
+                - generic [ref=e1009]: Category
+                - combobox "Category" [ref=e1010]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−1,96 €" [ref=e1011]
+            - row [ref=e1012] [cursor=pointer]:
+              - cell "23/08/2026" [ref=e1013]
+              - cell [ref=e1014]:
+                - checkbox "Include row 218" [ref=e1015]
+                - text: BAR EL RINCON
+              - cell [ref=e1016]:
+                - generic [ref=e1017]: Category
+                - combobox "Category" [ref=e1018]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−21,02 €" [ref=e1019]
+            - row [ref=e1020] [cursor=pointer]:
+              - cell "20/08/2026" [ref=e1021]
+              - cell [ref=e1022]:
+                - checkbox "Include row 210" [ref=e1023]
+                - text: MERCADONA
+              - cell [ref=e1024]:
+                - generic [ref=e1025]: Category
+                - combobox "Category" [ref=e1026]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−75,71 €" [ref=e1027]
+            - row [ref=e1028] [cursor=pointer]:
+              - cell "20/08/2026" [ref=e1029]
+              - cell [ref=e1030]:
+                - checkbox "Include row 221" [ref=e1031]
+                - text: AMAZON.ES
+              - cell [ref=e1032]:
+                - generic [ref=e1033]: Category
+                - combobox "Category" [ref=e1034]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping" [selected]
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−30,04 €" [ref=e1035]
+            - row [ref=e1036] [cursor=pointer]:
+              - cell "19/08/2026" [ref=e1037]
+              - cell [ref=e1038]:
+                - checkbox "Include row 205" [ref=e1039]
+                - text: CABIFY
+              - cell [ref=e1040]:
+                - generic [ref=e1041]: Category
+                - combobox "Category" [ref=e1042]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−9,61 €" [ref=e1043]
+            - row [ref=e1044] [cursor=pointer]:
+              - cell "19/08/2026" [ref=e1045]
+              - cell [ref=e1046]:
+                - checkbox "Include row 217" [ref=e1047]
+                - text: VIPS
+              - cell [ref=e1048]:
+                - generic [ref=e1049]: Category
+                - combobox "Category" [ref=e1050]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−27,35 €" [ref=e1051]
+            - row [ref=e1052] [cursor=pointer]:
+              - cell "18/08/2026" [ref=e1053]
+              - cell [ref=e1054]:
+                - checkbox "Include row 214" [ref=e1055]
+                - text: BAKERY
+              - cell [ref=e1056]:
+                - generic [ref=e1057]: Category
+                - combobox "Category" [ref=e1058]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−2,43 €" [ref=e1059]
+            - row [ref=e1060] [cursor=pointer]:
+              - cell "16/08/2026" [ref=e1061]
+              - cell [ref=e1062]:
+                - checkbox "Include row 220" [ref=e1063]
+                - text: CINESA
+              - cell [ref=e1064]:
+                - generic [ref=e1065]: Category
+                - combobox "Category" [ref=e1066]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment" [selected]
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−12,16 €" [ref=e1067]
+            - row [ref=e1068] [cursor=pointer]:
+              - cell "15/08/2026" [ref=e1069]
+              - cell [ref=e1070]:
+                - checkbox "Include row 219" [ref=e1071]
+                - text: BAR EL RINCON
+              - cell [ref=e1072]:
+                - generic [ref=e1073]: Category
+                - combobox "Category" [ref=e1074]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−10,26 €" [ref=e1075]
+            - row [ref=e1076] [cursor=pointer]:
+              - cell "14/08/2026" [ref=e1077]
+              - cell [ref=e1078]:
+                - checkbox "Include row 209" [ref=e1079]
+                - text: LIDL
+              - cell [ref=e1080]:
+                - generic [ref=e1081]: Category
+                - combobox "Category" [ref=e1082]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−57,27 €" [ref=e1083]
+            - row [ref=e1084] [cursor=pointer]:
+              - cell "13/08/2026" [ref=e1085]
+              - cell [ref=e1086]:
+                - checkbox "Include row 206" [ref=e1087]
+                - text: CABIFY
+              - cell [ref=e1088]:
+                - generic [ref=e1089]: Category
+                - combobox "Category" [ref=e1090]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−19,93 €" [ref=e1091]
+            - row [ref=e1092] [cursor=pointer]:
+              - cell "12/08/2026" [ref=e1093]
+              - cell [ref=e1094]:
+                - checkbox "Include row 199" [ref=e1095]
+                - text: CANAL DE ISABEL II
+              - cell [ref=e1096]:
+                - generic [ref=e1097]: Category
+                - combobox "Category" [ref=e1098]:
+                  - option "Rent"
+                  - option "Utilities" [selected]
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−24,34 €" [ref=e1099]
+            - row [ref=e1100] [cursor=pointer]:
+              - cell "11/08/2026" [ref=e1101]
+              - cell [ref=e1102]:
+                - checkbox "Include row 212" [ref=e1103]
+                - text: BAKERY
+              - cell [ref=e1104]:
+                - generic [ref=e1105]: Category
+                - combobox "Category" [ref=e1106]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−3,93 €" [ref=e1107]
+            - row [ref=e1108] [cursor=pointer]:
+              - cell "11/08/2026" [ref=e1109]
+              - cell [ref=e1110]:
+                - checkbox "Include row 224" [ref=e1111]
+                - text: PHARMACY
+              - cell [ref=e1112]:
+                - generic [ref=e1113]: Category
+                - combobox "Category" [ref=e1114]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health" [selected]
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−12,40 €" [ref=e1115]
+            - row [ref=e1116] [cursor=pointer]:
+              - cell "09/08/2026" [ref=e1117]
+              - cell [ref=e1118]:
+                - checkbox "Include row 201" [ref=e1119]
+                - text: SPOTIFY
+              - cell [ref=e1120]:
+                - generic [ref=e1121]: Category
+                - combobox "Category" [ref=e1122]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−10,99 €" [ref=e1123]
+            - row [ref=e1124] [cursor=pointer]:
+              - cell "08/08/2026" [ref=e1125]
+              - cell [ref=e1126]:
+                - checkbox "Include row 208" [ref=e1127]
+                - text: MERCADONA
+              - cell [ref=e1128]:
+                - generic [ref=e1129]: Category
+                - combobox "Category" [ref=e1130]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−55,73 €" [ref=e1131]
+            - row [ref=e1132] [cursor=pointer]:
+              - cell "08/08/2026" [ref=e1133]
+              - cell [ref=e1134]:
+                - checkbox "Include row 216" [ref=e1135]
+                - text: TELEPIZZA
+              - cell [ref=e1136]:
+                - generic [ref=e1137]: Category
+                - combobox "Category" [ref=e1138]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−40,33 €" [ref=e1139]
+            - row [ref=e1140] [cursor=pointer]:
+              - cell "06/08/2026" [ref=e1141]
+              - cell [ref=e1142]:
+                - checkbox "Include row 198" [ref=e1143]
+                - text: IBERDROLA
+              - cell [ref=e1144]:
+                - generic [ref=e1145]: Category
+                - combobox "Category" [ref=e1146]:
+                  - option "Rent"
+                  - option "Utilities" [selected]
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−59,13 €" [ref=e1147]
+            - row [ref=e1148] [cursor=pointer]:
+              - cell "05/08/2026" [ref=e1149]
+              - cell [ref=e1150]:
+                - checkbox "Include row 202" [ref=e1151]
+                - text: VODAFONE
+              - cell [ref=e1152]:
+                - generic [ref=e1153]: Category
+                - combobox "Category" [ref=e1154]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone" [selected]
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−25,00 €" [ref=e1155]
+            - row [ref=e1156] [cursor=pointer]:
+              - cell "05/08/2026" [ref=e1157]
+              - cell [ref=e1158]:
+                - checkbox "Include row 215" [ref=e1159]
+                - text: RESTAURANTE LA TASCA
+              - cell [ref=e1160]:
+                - generic [ref=e1161]: Category
+                - combobox "Category" [ref=e1162]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−44,33 €" [ref=e1163]
+            - row [ref=e1164] [cursor=pointer]:
+              - cell "04/08/2026" [ref=e1165]
+              - cell [ref=e1166]:
+                - checkbox "Include row 222" [ref=e1167]
+                - text: BOOKING.COM
+              - cell [ref=e1168]:
+                - generic [ref=e1169]: Category
+                - combobox "Category" [ref=e1170]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel" [selected]
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−642,00 €" [ref=e1171]
+            - row [ref=e1172] [cursor=pointer]:
+              - cell "03/08/2026" [ref=e1173]
+              - cell [ref=e1174]:
+                - checkbox "Include row 200" [ref=e1175]
+                - text: NETFLIX.COM
+              - cell [ref=e1176]:
+                - generic [ref=e1177]: Category
+                - combobox "Category" [ref=e1178]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−12,99 €" [ref=e1179]
+            - row [ref=e1180] [cursor=pointer]:
+              - cell "03/08/2026" [ref=e1181]
+              - cell [ref=e1182]:
+                - checkbox "Include row 223" [ref=e1183]
+                - text: RENFE
+              - cell [ref=e1184]:
+                - generic [ref=e1185]: Category
+                - combobox "Category" [ref=e1186]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel" [selected]
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−176,40 €" [ref=e1187]
+            - row [ref=e1188] [cursor=pointer]:
+              - cell "02/08/2026" [ref=e1189]
+              - cell [ref=e1190]:
+                - checkbox "Include row 203" [ref=e1191]
+                - text: MAPFRE SEGUROS
+              - cell [ref=e1192]:
+                - generic [ref=e1193]: Category
+                - combobox "Category" [ref=e1194]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance" [selected]
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−38,40 €" [ref=e1195]
+            - row [ref=e1196] [cursor=pointer]:
+              - cell "02/08/2026" [ref=e1197]
+              - cell [ref=e1198]:
+                - checkbox "Include row 207" [ref=e1199]
+                - text: MERCADONA
+              - cell [ref=e1200]:
+                - generic [ref=e1201]: Category
+                - combobox "Category" [ref=e1202]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−79,63 €" [ref=e1203]
+            - row [ref=e1204] [cursor=pointer]:
+              - cell "01/08/2026" [ref=e1205]
+              - cell [ref=e1206]:
+                - checkbox "Include row 197" [ref=e1207]
+                - text: RENT FLAT
+              - cell [ref=e1208]:
+                - generic [ref=e1209]: Category
+                - combobox "Category" [ref=e1210]:
+                  - option "Rent" [selected]
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−850,00 €" [ref=e1211]
+            - row [ref=e1212] [cursor=pointer]:
+              - cell "01/08/2026" [ref=e1213]
+              - cell [ref=e1214]:
+                - checkbox "Include row 204" [ref=e1215]
+                - text: TRAVEL PASS
+              - cell [ref=e1216]:
+                - generic [ref=e1217]: Category
+                - combobox "Category" [ref=e1218]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−21,80 €" [ref=e1219]
+            - row [ref=e1220]:
+              - rowheader "July 2026" [ref=e1221]
+              - cell "−1.634,61 €" [ref=e1222]
+            - row [ref=e1223] [cursor=pointer]:
+              - cell "26/07/2026" [ref=e1224]
+              - cell [ref=e1225]:
+                - checkbox "Include row 182" [ref=e1226]
+                - text: MERCADONA
+              - cell [ref=e1227]:
+                - generic [ref=e1228]: Category
+                - combobox "Category" [ref=e1229]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−71,46 €" [ref=e1230]
+            - row [ref=e1231] [cursor=pointer]:
+              - cell "26/07/2026" [ref=e1232]
+              - cell [ref=e1233]:
+                - checkbox "Include row 188" [ref=e1234]
+                - text: VIPS
+              - cell [ref=e1235]:
+                - generic [ref=e1236]: Category
+                - combobox "Category" [ref=e1237]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−25,48 €" [ref=e1238]
+            - row [ref=e1239] [cursor=pointer]:
+              - cell "22/07/2026" [ref=e1240]
+              - cell [ref=e1241]:
+                - checkbox "Include row 183" [ref=e1242]
+                - text: BAKERY
+              - cell [ref=e1243]:
+                - generic [ref=e1244]: Category
+                - combobox "Category" [ref=e1245]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−4,26 €" [ref=e1246]
+            - row [ref=e1247] [cursor=pointer]:
+              - cell "22/07/2026" [ref=e1248]
+              - cell [ref=e1249]:
+                - checkbox "Include row 191" [ref=e1250]
+                - text: CINESA
+              - cell [ref=e1251]:
+                - generic [ref=e1252]: Category
+                - combobox "Category" [ref=e1253]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment" [selected]
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−21,63 €" [ref=e1254]
+            - row [ref=e1255] [cursor=pointer]:
+              - cell "21/07/2026" [ref=e1256]
+              - cell [ref=e1257]:
+                - checkbox "Include row 177" [ref=e1258]
+                - text: CABIFY
+              - cell [ref=e1259]:
+                - generic [ref=e1260]: Category
+                - combobox "Category" [ref=e1261]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−9,65 €" [ref=e1262]
+            - row [ref=e1263] [cursor=pointer]:
+              - cell "20/07/2026" [ref=e1264]
+              - cell [ref=e1265]:
+                - checkbox "Include row 181" [ref=e1266]
+                - text: MERCADONA
+              - cell [ref=e1267]:
+                - generic [ref=e1268]: Category
+                - combobox "Category" [ref=e1269]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−45,08 €" [ref=e1270]
+            - row [ref=e1271] [cursor=pointer]:
+              - cell "17/07/2026" [ref=e1272]
+              - cell [ref=e1273]:
+                - checkbox "Include row 190" [ref=e1274]
+                - text: BAR EL RINCON
+              - cell [ref=e1275]:
+                - generic [ref=e1276]: Category
+                - combobox "Category" [ref=e1277]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−25,01 €" [ref=e1278]
+            - row [ref=e1279] [cursor=pointer]:
+              - cell "16/07/2026" [ref=e1280]
+              - cell [ref=e1281]:
+                - checkbox "Include row 185" [ref=e1282]
+                - text: BAKERY
+              - cell [ref=e1283]:
+                - generic [ref=e1284]: Category
+                - combobox "Category" [ref=e1285]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−3,21 €" [ref=e1286]
+            - row [ref=e1287] [cursor=pointer]:
+              - cell "16/07/2026" [ref=e1288]
+              - cell [ref=e1289]:
+                - checkbox "Include row 189" [ref=e1290]
+                - text: BAR EL RINCON
+              - cell [ref=e1291]:
+                - generic [ref=e1292]: Category
+                - combobox "Category" [ref=e1293]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−19,69 €" [ref=e1294]
+            - row [ref=e1295] [cursor=pointer]:
+              - cell "16/07/2026" [ref=e1296]
+              - cell [ref=e1297]:
+                - checkbox "Include row 192" [ref=e1298]
+                - text: ZARA
+              - cell [ref=e1299]:
+                - generic [ref=e1300]: Category
+                - combobox "Category" [ref=e1301]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes" [selected]
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−45,40 €" [ref=e1302]
+            - row [ref=e1303] [cursor=pointer]:
+              - cell "15/07/2026" [ref=e1304]
+              - cell [ref=e1305]:
+                - checkbox "Include row 186" [ref=e1306]
+                - text: RESTAURANTE LA TASCA
+              - cell [ref=e1307]:
+                - generic [ref=e1308]: Category
+                - combobox "Category" [ref=e1309]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−48,10 €" [ref=e1310]
+            - row [ref=e1311] [cursor=pointer]:
+              - cell "14/07/2026" [ref=e1312]
+              - cell [ref=e1313]:
+                - checkbox "Include row 180" [ref=e1314]
+                - text: LIDL
+              - cell [ref=e1315]:
+                - generic [ref=e1316]: Category
+                - combobox "Category" [ref=e1317]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−44,69 €" [ref=e1318]
+            - row [ref=e1319] [cursor=pointer]:
+              - cell "14/07/2026" [ref=e1320]
+              - cell [ref=e1321]:
+                - checkbox "Include row 187" [ref=e1322]
+                - text: TELEPIZZA
+              - cell [ref=e1323]:
+                - generic [ref=e1324]: Category
+                - combobox "Category" [ref=e1325]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−38,67 €" [ref=e1326]
+            - row [ref=e1327] [cursor=pointer]:
+              - cell "11/07/2026" [ref=e1328]
+              - cell [ref=e1329]:
+                - checkbox "Include row 193" [ref=e1330]
+                - text: PHARMACY
+              - cell [ref=e1331]:
+                - generic [ref=e1332]: Category
+                - combobox "Category" [ref=e1333]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health" [selected]
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−19,26 €" [ref=e1334]
+            - row [ref=e1335] [cursor=pointer]:
+              - cell "09/07/2026" [ref=e1336]
+              - cell [ref=e1337]:
+                - checkbox "Include row 172" [ref=e1338]
+                - text: SPOTIFY
+              - cell [ref=e1339]:
+                - generic [ref=e1340]: Category
+                - combobox "Category" [ref=e1341]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−10,99 €" [ref=e1342]
+            - row [ref=e1343] [cursor=pointer]:
+              - cell "09/07/2026" [ref=e1344]
+              - cell [ref=e1345]:
+                - checkbox "Include row 176" [ref=e1346]
+                - text: CABIFY
+              - cell [ref=e1347]:
+                - generic [ref=e1348]: Category
+                - combobox "Category" [ref=e1349]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−14,07 €" [ref=e1350]
+            - row [ref=e1351] [cursor=pointer]:
+              - cell "08/07/2026" [ref=e1352]
+              - cell [ref=e1353]:
+                - checkbox "Include row 179" [ref=e1354]
+                - text: MERCADONA
+              - cell [ref=e1355]:
+                - generic [ref=e1356]: Category
+                - combobox "Category" [ref=e1357]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−73,95 €" [ref=e1358]
+            - row [ref=e1359] [cursor=pointer]:
+              - cell "07/07/2026" [ref=e1360]
+              - cell [ref=e1361]:
+                - checkbox "Include row 184" [ref=e1362]
+                - text: BAKERY
+              - cell [ref=e1363]:
+                - generic [ref=e1364]: Category
+                - combobox "Category" [ref=e1365]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−3,73 €" [ref=e1366]
+            - row [ref=e1367] [cursor=pointer]:
+              - cell "06/07/2026" [ref=e1368]
+              - cell [ref=e1369]:
+                - checkbox "Include row 170" [ref=e1370]
+                - text: IBERDROLA
+              - cell [ref=e1371]:
+                - generic [ref=e1372]: Category
+                - combobox "Category" [ref=e1373]:
+                  - option "Rent"
+                  - option "Utilities" [selected]
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−86,34 €" [ref=e1374]
+            - row [ref=e1375] [cursor=pointer]:
+              - cell "05/07/2026" [ref=e1376]
+              - cell [ref=e1377]:
+                - checkbox "Include row 173" [ref=e1378]
+                - text: VODAFONE
+              - cell [ref=e1379]:
+                - generic [ref=e1380]: Category
+                - combobox "Category" [ref=e1381]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone" [selected]
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−25,00 €" [ref=e1382]
+            - row [ref=e1383] [cursor=pointer]:
+              - cell "03/07/2026" [ref=e1384]
+              - cell [ref=e1385]:
+                - checkbox "Include row 171" [ref=e1386]
+                - text: NETFLIX.COM
+              - cell [ref=e1387]:
+                - generic [ref=e1388]: Category
+                - combobox "Category" [ref=e1389]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−12,99 €" [ref=e1390]
+            - row [ref=e1391] [cursor=pointer]:
+              - cell "02/07/2026" [ref=e1392]
+              - cell [ref=e1393]:
+                - checkbox "Include row 174" [ref=e1394]
+                - text: MAPFRE SEGUROS
+              - cell [ref=e1395]:
+                - generic [ref=e1396]: Category
+                - combobox "Category" [ref=e1397]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance" [selected]
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−38,40 €" [ref=e1398]
+            - row [ref=e1399] [cursor=pointer]:
+              - cell "02/07/2026" [ref=e1400]
+              - cell [ref=e1401]:
+                - checkbox "Include row 178" [ref=e1402]
+                - text: MERCADONA
+              - cell [ref=e1403]:
+                - generic [ref=e1404]: Category
+                - combobox "Category" [ref=e1405]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−75,75 €" [ref=e1406]
+            - row [ref=e1407] [cursor=pointer]:
+              - cell "01/07/2026" [ref=e1408]
+              - cell [ref=e1409]:
+                - checkbox "Include row 169" [ref=e1410]
+                - text: RENT FLAT
+              - cell [ref=e1411]:
+                - generic [ref=e1412]: Category
+                - combobox "Category" [ref=e1413]:
+                  - option "Rent" [selected]
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−850,00 €" [ref=e1414]
+            - row [ref=e1415] [cursor=pointer]:
+              - cell "01/07/2026" [ref=e1416]
+              - cell [ref=e1417]:
+                - checkbox "Include row 175" [ref=e1418]
+                - text: TRAVEL PASS
+              - cell [ref=e1419]:
+                - generic [ref=e1420]: Category
+                - combobox "Category" [ref=e1421]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−21,80 €" [ref=e1422]
+            - row [ref=e1423]:
+              - rowheader "June 2026" [ref=e1424]
+              - cell "−1.480,17 €" [ref=e1425]
+            - row [ref=e1426] [cursor=pointer]:
+              - cell "26/06/2026" [ref=e1427]
+              - cell [ref=e1428]:
+                - checkbox "Include row 155" [ref=e1429]
+                - text: MERCADONA
+              - cell [ref=e1430]:
+                - generic [ref=e1431]: Category
+                - combobox "Category" [ref=e1432]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−49,23 €" [ref=e1433]
+            - row [ref=e1434] [cursor=pointer]:
+              - cell "26/06/2026" [ref=e1435]
+              - cell [ref=e1436]:
+                - checkbox "Include row 161" [ref=e1437]
+                - text: VIPS
+              - cell [ref=e1438]:
+                - generic [ref=e1439]: Category
+                - combobox "Category" [ref=e1440]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−27,19 €" [ref=e1441]
+            - row [ref=e1442] [cursor=pointer]:
+              - cell "20/06/2026" [ref=e1443]
+              - cell [ref=e1444]:
+                - checkbox "Include row 154" [ref=e1445]
+                - text: MERCADONA
+              - cell [ref=e1446]:
+                - generic [ref=e1447]: Category
+                - combobox "Category" [ref=e1448]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−59,59 €" [ref=e1449]
+            - row [ref=e1450] [cursor=pointer]:
+              - cell "19/06/2026" [ref=e1451]
+              - cell [ref=e1452]:
+                - checkbox "Include row 160" [ref=e1453]
+                - text: TELEPIZZA
+              - cell [ref=e1454]:
+                - generic [ref=e1455]: Category
+                - combobox "Category" [ref=e1456]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−49,95 €" [ref=e1457]
+            - row [ref=e1458] [cursor=pointer]:
+              - cell "16/06/2026" [ref=e1459]
+              - cell [ref=e1460]:
+                - checkbox "Include row 164" [ref=e1461]
+                - text: CINESA
+              - cell [ref=e1462]:
+                - generic [ref=e1463]: Category
+                - combobox "Category" [ref=e1464]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment" [selected]
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−13,75 €" [ref=e1465]
+            - row [ref=e1466] [cursor=pointer]:
+              - cell "14/06/2026" [ref=e1467]
+              - cell [ref=e1468]:
+                - checkbox "Include row 153" [ref=e1469]
+                - text: LIDL
+              - cell [ref=e1470]:
+                - generic [ref=e1471]: Category
+                - combobox "Category" [ref=e1472]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−76,28 €" [ref=e1473]
+            - row [ref=e1474] [cursor=pointer]:
+              - cell "14/06/2026" [ref=e1475]
+              - cell [ref=e1476]:
+                - checkbox "Include row 163" [ref=e1477]
+                - text: BAR EL RINCON
+              - cell [ref=e1478]:
+                - generic [ref=e1479]: Category
+                - combobox "Category" [ref=e1480]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−18,62 €" [ref=e1481]
+            - row [ref=e1482] [cursor=pointer]:
+              - cell "12/06/2026" [ref=e1483]
+              - cell [ref=e1484]:
+                - checkbox "Include row 145" [ref=e1485]
+                - text: CANAL DE ISABEL II
+              - cell [ref=e1486]:
+                - generic [ref=e1487]: Category
+                - combobox "Category" [ref=e1488]:
+                  - option "Rent"
+                  - option "Utilities" [selected]
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−24,63 €" [ref=e1489]
+            - row [ref=e1490] [cursor=pointer]:
+              - cell "11/06/2026" [ref=e1491]
+              - cell [ref=e1492]:
+                - checkbox "Include row 165" [ref=e1493]
+                - text: PHARMACY
+              - cell [ref=e1494]:
+                - generic [ref=e1495]: Category
+                - combobox "Category" [ref=e1496]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health" [selected]
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−14,01 €" [ref=e1497]
+            - row [ref=e1498] [cursor=pointer]:
+              - cell "10/06/2026" [ref=e1499]
+              - cell [ref=e1500]:
+                - checkbox "Include row 157" [ref=e1501]
+                - text: BAKERY
+              - cell [ref=e1502]:
+                - generic [ref=e1503]: Category
+                - combobox "Category" [ref=e1504]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−5,83 €" [ref=e1505]
+            - row [ref=e1506] [cursor=pointer]:
+              - cell "09/06/2026" [ref=e1507]
+              - cell [ref=e1508]:
+                - checkbox "Include row 147" [ref=e1509]
+                - text: SPOTIFY
+              - cell [ref=e1510]:
+                - generic [ref=e1511]: Category
+                - combobox "Category" [ref=e1512]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−10,99 €" [ref=e1513]
+            - row [ref=e1514] [cursor=pointer]:
+              - cell "08/06/2026" [ref=e1515]
+              - cell [ref=e1516]:
+                - checkbox "Include row 152" [ref=e1517]
+                - text: MERCADONA
+              - cell [ref=e1518]:
+                - generic [ref=e1519]: Category
+                - combobox "Category" [ref=e1520]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−24,84 €" [ref=e1521]
+            - row [ref=e1522] [cursor=pointer]:
+              - cell "07/06/2026" [ref=e1523]
+              - cell [ref=e1524]:
+                - checkbox "Include row 162" [ref=e1525]
+                - text: BAR EL RINCON
+              - cell [ref=e1526]:
+                - generic [ref=e1527]: Category
+                - combobox "Category" [ref=e1528]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−12,82 €" [ref=e1529]
+            - row [ref=e1530] [cursor=pointer]:
+              - cell "06/06/2026" [ref=e1531]
+              - cell [ref=e1532]:
+                - checkbox "Include row 144" [ref=e1533]
+                - text: IBERDROLA
+              - cell [ref=e1534]:
+                - generic [ref=e1535]: Category
+                - combobox "Category" [ref=e1536]:
+                  - option "Rent"
+                  - option "Utilities" [selected]
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−60,98 €" [ref=e1537]
+            - row [ref=e1538] [cursor=pointer]:
+              - cell "06/06/2026" [ref=e1539]
+              - cell [ref=e1540]:
+                - checkbox "Include row 159" [ref=e1541]
+                - text: RESTAURANTE LA TASCA
+              - cell [ref=e1542]:
+                - generic [ref=e1543]: Category
+                - combobox "Category" [ref=e1544]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−34,99 €" [ref=e1545]
+            - row [ref=e1546] [cursor=pointer]:
+              - cell "05/06/2026" [ref=e1547]
+              - cell [ref=e1548]:
+                - checkbox "Include row 148" [ref=e1549]
+                - text: VODAFONE
+              - cell [ref=e1550]:
+                - generic [ref=e1551]: Category
+                - combobox "Category" [ref=e1552]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone" [selected]
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−25,00 €" [ref=e1553]
+            - row [ref=e1554] [cursor=pointer]:
+              - cell "05/06/2026" [ref=e1555]
+              - cell [ref=e1556]:
+                - checkbox "Include row 156" [ref=e1557]
+                - text: BAKERY
+              - cell [ref=e1558]:
+                - generic [ref=e1559]: Category
+                - combobox "Category" [ref=e1560]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−6,05 €" [ref=e1561]
+            - row [ref=e1562] [cursor=pointer]:
+              - cell "04/06/2026" [ref=e1563]
+              - cell [ref=e1564]:
+                - checkbox "Include row 158" [ref=e1565]
+                - text: BAKERY
+              - cell [ref=e1566]:
+                - generic [ref=e1567]: Category
+                - combobox "Category" [ref=e1568]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−5,96 €" [ref=e1569]
+            - row [ref=e1570] [cursor=pointer]:
+              - cell "03/06/2026" [ref=e1571]
+              - cell [ref=e1572]:
+                - checkbox "Include row 146" [ref=e1573]
+                - text: NETFLIX.COM
+              - cell [ref=e1574]:
+                - generic [ref=e1575]: Category
+                - combobox "Category" [ref=e1576]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−12,99 €" [ref=e1577]
+            - row [ref=e1578] [cursor=pointer]:
+              - cell "02/06/2026" [ref=e1579]
+              - cell [ref=e1580]:
+                - checkbox "Include row 149" [ref=e1581]
+                - text: MAPFRE SEGUROS
+              - cell [ref=e1582]:
+                - generic [ref=e1583]: Category
+                - combobox "Category" [ref=e1584]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance" [selected]
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−38,40 €" [ref=e1585]
+            - row [ref=e1586] [cursor=pointer]:
+              - cell "02/06/2026" [ref=e1587]
+              - cell [ref=e1588]:
+                - checkbox "Include row 151" [ref=e1589]
+                - text: MERCADONA
+              - cell [ref=e1590]:
+                - generic [ref=e1591]: Category
+                - combobox "Category" [ref=e1592]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−36,27 €" [ref=e1593]
+            - row [ref=e1594] [cursor=pointer]:
+              - cell "01/06/2026" [ref=e1595]
+              - cell [ref=e1596]:
+                - checkbox "Include row 143" [ref=e1597]
+                - text: RENT FLAT
+              - cell [ref=e1598]:
+                - generic [ref=e1599]: Category
+                - combobox "Category" [ref=e1600]:
+                  - option "Rent" [selected]
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−850,00 €" [ref=e1601]
+            - row [ref=e1602] [cursor=pointer]:
+              - cell "01/06/2026" [ref=e1603]
+              - cell [ref=e1604]:
+                - checkbox "Include row 150" [ref=e1605]
+                - text: TRAVEL PASS
+              - cell [ref=e1606]:
+                - generic [ref=e1607]: Category
+                - combobox "Category" [ref=e1608]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−21,80 €" [ref=e1609]
+            - row [ref=e1610]:
+              - rowheader "May 2026" [ref=e1611]
+              - cell "−1.577,82 €" [ref=e1612]
+            - row [ref=e1613] [cursor=pointer]:
+              - cell "26/05/2026" [ref=e1614]
+              - cell [ref=e1615]:
+                - checkbox "Include row 124" [ref=e1616]
+                - text: MERCADONA
+              - cell [ref=e1617]:
+                - generic [ref=e1618]: Category
+                - combobox "Category" [ref=e1619]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−36,54 €" [ref=e1620]
+            - row [ref=e1621] [cursor=pointer]:
+              - cell "26/05/2026" [ref=e1622]
+              - cell [ref=e1623]:
+                - checkbox "Include row 126" [ref=e1624]
+                - text: BAKERY
+              - cell [ref=e1625]:
+                - generic [ref=e1626]: Category
+                - combobox "Category" [ref=e1627]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−3,92 €" [ref=e1628]
+            - row [ref=e1629] [cursor=pointer]:
+              - cell "26/05/2026" [ref=e1630]
+              - cell [ref=e1631]:
+                - checkbox "Include row 132" [ref=e1632]
+                - text: BAR EL RINCON
+              - cell [ref=e1633]:
+                - generic [ref=e1634]: Category
+                - combobox "Category" [ref=e1635]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−6,19 €" [ref=e1636]
+            - row [ref=e1637] [cursor=pointer]:
+              - cell "22/05/2026" [ref=e1638]
+              - cell [ref=e1639]:
+                - checkbox "Include row 130" [ref=e1640]
+                - text: VIPS
+              - cell [ref=e1641]:
+                - generic [ref=e1642]: Category
+                - combobox "Category" [ref=e1643]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−14,15 €" [ref=e1644]
+            - row [ref=e1645] [cursor=pointer]:
+              - cell "21/05/2026" [ref=e1646]
+              - cell [ref=e1647]:
+                - checkbox "Include row 133" [ref=e1648]
+                - text: CINESA
+              - cell [ref=e1649]:
+                - generic [ref=e1650]: Category
+                - combobox "Category" [ref=e1651]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment" [selected]
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−21,56 €" [ref=e1652]
+            - row [ref=e1653] [cursor=pointer]:
+              - cell "20/05/2026" [ref=e1654]
+              - cell [ref=e1655]:
+                - checkbox "Include row 123" [ref=e1656]
+                - text: MERCADONA
+              - cell [ref=e1657]:
+                - generic [ref=e1658]: Category
+                - combobox "Category" [ref=e1659]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−83,89 €" [ref=e1660]
+            - row [ref=e1661] [cursor=pointer]:
+              - cell "20/05/2026" [ref=e1662]
+              - cell [ref=e1663]:
+                - checkbox "Include row 135" [ref=e1664]
+                - text: AMAZON.ES
+              - cell [ref=e1665]:
+                - generic [ref=e1666]: Category
+                - combobox "Category" [ref=e1667]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping" [selected]
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−34,54 €" [ref=e1668]
+            - row [ref=e1669] [cursor=pointer]:
+              - cell "18/05/2026" [ref=e1670]
+              - cell [ref=e1671]:
+                - checkbox "Include row 128" [ref=e1672]
+                - text: RESTAURANTE LA TASCA
+              - cell [ref=e1673]:
+                - generic [ref=e1674]: Category
+                - combobox "Category" [ref=e1675]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−48,50 €" [ref=e1676]
+            - row [ref=e1677] [cursor=pointer]:
+              - cell "18/05/2026" [ref=e1678]
+              - cell [ref=e1679]:
+                - checkbox "Include row 129" [ref=e1680]
+                - text: TELEPIZZA
+              - cell [ref=e1681]:
+                - generic [ref=e1682]: Category
+                - combobox "Category" [ref=e1683]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−23,54 €" [ref=e1684]
+            - row [ref=e1685] [cursor=pointer]:
+              - cell "16/05/2026" [ref=e1686]
+              - cell [ref=e1687]:
+                - checkbox "Include row 119" [ref=e1688]
+                - text: CABIFY
+              - cell [ref=e1689]:
+                - generic [ref=e1690]: Category
+                - combobox "Category" [ref=e1691]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−13,36 €" [ref=e1692]
+            - row [ref=e1693] [cursor=pointer]:
+              - cell "16/05/2026" [ref=e1694]
+              - cell [ref=e1695]:
+                - checkbox "Include row 131" [ref=e1696]
+                - text: BAR EL RINCON
+              - cell [ref=e1697]:
+                - generic [ref=e1698]: Category
+                - combobox "Category" [ref=e1699]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−23,63 €" [ref=e1700]
+            - row [ref=e1701] [cursor=pointer]:
+              - cell "16/05/2026" [ref=e1702]
+              - cell [ref=e1703]:
+                - checkbox "Include row 134" [ref=e1704]
+                - text: ZARA
+              - cell [ref=e1705]:
+                - generic [ref=e1706]: Category
+                - combobox "Category" [ref=e1707]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes" [selected]
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−44,86 €" [ref=e1708]
+            - row [ref=e1709] [cursor=pointer]:
+              - cell "15/05/2026" [ref=e1710]
+              - cell [ref=e1711]:
+                - checkbox "Include row 118" [ref=e1712]
+                - text: CABIFY
+              - cell [ref=e1713]:
+                - generic [ref=e1714]: Category
+                - combobox "Category" [ref=e1715]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−11,45 €" [ref=e1716]
+            - row [ref=e1717] [cursor=pointer]:
+              - cell "14/05/2026" [ref=e1718]
+              - cell [ref=e1719]:
+                - checkbox "Include row 122" [ref=e1720]
+                - text: LIDL
+              - cell [ref=e1721]:
+                - generic [ref=e1722]: Category
+                - combobox "Category" [ref=e1723]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−85,47 €" [ref=e1724]
+            - row [ref=e1725] [cursor=pointer]:
+              - cell "14/05/2026" [ref=e1726]
+              - cell [ref=e1727]:
+                - checkbox "Include row 125" [ref=e1728]
+                - text: BAKERY
+              - cell [ref=e1729]:
+                - generic [ref=e1730]: Category
+                - combobox "Category" [ref=e1731]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−3,13 €" [ref=e1732]
+            - row [ref=e1733] [cursor=pointer]:
+              - cell "11/05/2026" [ref=e1734]
+              - cell [ref=e1735]:
+                - checkbox "Include row 136" [ref=e1736]
+                - text: PHARMACY
+              - cell [ref=e1737]:
+                - generic [ref=e1738]: Category
+                - combobox "Category" [ref=e1739]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health" [selected]
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−21,82 €" [ref=e1740]
+            - row [ref=e1741] [cursor=pointer]:
+              - cell "10/05/2026" [ref=e1742]
+              - cell [ref=e1743]:
+                - checkbox "Include row 127" [ref=e1744]
+                - text: BAKERY
+              - cell [ref=e1745]:
+                - generic [ref=e1746]: Category
+                - combobox "Category" [ref=e1747]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−6,10 €" [ref=e1748]
+            - row [ref=e1749] [cursor=pointer]:
+              - cell "09/05/2026" [ref=e1750]
+              - cell [ref=e1751]:
+                - checkbox "Include row 114" [ref=e1752]
+                - text: SPOTIFY
+              - cell [ref=e1753]:
+                - generic [ref=e1754]: Category
+                - combobox "Category" [ref=e1755]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−10,99 €" [ref=e1756]
+            - row [ref=e1757] [cursor=pointer]:
+              - cell "08/05/2026" [ref=e1758]
+              - cell [ref=e1759]:
+                - checkbox "Include row 121" [ref=e1760]
+                - text: MERCADONA
+              - cell [ref=e1761]:
+                - generic [ref=e1762]: Category
+                - combobox "Category" [ref=e1763]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−35,93 €" [ref=e1764]
+            - row [ref=e1765] [cursor=pointer]:
+              - cell "06/05/2026" [ref=e1766]
+              - cell [ref=e1767]:
+                - checkbox "Include row 112" [ref=e1768]
+                - text: IBERDROLA
+              - cell [ref=e1769]:
+                - generic [ref=e1770]: Category
+                - combobox "Category" [ref=e1771]:
+                  - option "Rent"
+                  - option "Utilities" [selected]
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−60,86 €" [ref=e1772]
+            - row [ref=e1773] [cursor=pointer]:
+              - cell "05/05/2026" [ref=e1774]
+              - cell [ref=e1775]:
+                - checkbox "Include row 115" [ref=e1776]
+                - text: VODAFONE
+              - cell [ref=e1777]:
+                - generic [ref=e1778]: Category
+                - combobox "Category" [ref=e1779]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone" [selected]
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−25,00 €" [ref=e1780]
+            - row [ref=e1781] [cursor=pointer]:
+              - cell "03/05/2026" [ref=e1782]
+              - cell [ref=e1783]:
+                - checkbox "Include row 113" [ref=e1784]
+                - text: NETFLIX.COM
+              - cell [ref=e1785]:
+                - generic [ref=e1786]: Category
+                - combobox "Category" [ref=e1787]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions" [selected]
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−12,99 €" [ref=e1788]
+            - row [ref=e1789] [cursor=pointer]:
+              - cell "02/05/2026" [ref=e1790]
+              - cell [ref=e1791]:
+                - checkbox "Include row 116" [ref=e1792]
+                - text: MAPFRE SEGUROS
+              - cell [ref=e1793]:
+                - generic [ref=e1794]: Category
+                - combobox "Category" [ref=e1795]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance" [selected]
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−38,40 €" [ref=e1796]
+            - row [ref=e1797] [cursor=pointer]:
+              - cell "02/05/2026" [ref=e1798]
+              - cell [ref=e1799]:
+                - checkbox "Include row 120" [ref=e1800]
+                - text: MERCADONA
+              - cell [ref=e1801]:
+                - generic [ref=e1802]: Category
+                - combobox "Category" [ref=e1803]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−39,20 €" [ref=e1804]
+            - row [ref=e1805] [cursor=pointer]:
+              - cell "01/05/2026" [ref=e1806]
+              - cell [ref=e1807]:
+                - checkbox "Include row 111" [ref=e1808]
+                - text: RENT FLAT
+              - cell [ref=e1809]:
+                - generic [ref=e1810]: Category
+                - combobox "Category" [ref=e1811]:
+                  - option "Rent" [selected]
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−850,00 €" [ref=e1812]
+            - row [ref=e1813] [cursor=pointer]:
+              - cell "01/05/2026" [ref=e1814]
+              - cell [ref=e1815]:
+                - checkbox "Include row 117" [ref=e1816]
+                - text: TRAVEL PASS
+              - cell [ref=e1817]:
+                - generic [ref=e1818]: Category
+                - combobox "Category" [ref=e1819]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−21,80 €" [ref=e1820]
+            - row [ref=e1821]:
+              - rowheader "April 2026" [ref=e1822]
+              - cell "−1.720,33 €" [ref=e1823]
+            - row [ref=e1824] [cursor=pointer]:
+              - cell "26/04/2026" [ref=e1825]
+              - cell [ref=e1826]:
+                - checkbox "Include row 96" [ref=e1827]
+                - text: MERCADONA
+              - cell [ref=e1828]:
+                - generic [ref=e1829]: Category
+                - combobox "Category" [ref=e1830]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−79,55 €" [ref=e1831]
+            - row [ref=e1832] [cursor=pointer]:
+              - cell "26/04/2026" [ref=e1833]
+              - cell [ref=e1834]:
+                - checkbox "Include row 103" [ref=e1835]
+                - text: BAR EL RINCON
+              - cell [ref=e1836]:
+                - generic [ref=e1837]: Category
+                - combobox "Category" [ref=e1838]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars" [selected]
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−19,99 €" [ref=e1839]
+            - row [ref=e1840] [cursor=pointer]:
+              - cell "24/04/2026" [ref=e1841]
+              - cell [ref=e1842]:
+                - checkbox "Include row 99" [ref=e1843]
+                - text: BAKERY
+              - cell [ref=e1844]:
+                - generic [ref=e1845]: Category
+                - combobox "Category" [ref=e1846]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−3,70 €" [ref=e1847]
+            - row [ref=e1848] [cursor=pointer]:
+              - cell "22/04/2026" [ref=e1849]
+              - cell [ref=e1850]:
+                - checkbox "Include row 91" [ref=e1851]
+                - text: CABIFY
+              - cell [ref=e1852]:
+                - generic [ref=e1853]: Category
+                - combobox "Category" [ref=e1854]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport" [selected]
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−13,58 €" [ref=e1855]
+            - row [ref=e1856] [cursor=pointer]:
+              - cell "20/04/2026" [ref=e1857]
+              - cell [ref=e1858]:
+                - checkbox "Include row 95" [ref=e1859]
+                - text: MERCADONA
+              - cell [ref=e1860]:
+                - generic [ref=e1861]: Category
+                - combobox "Category" [ref=e1862]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−46,20 €" [ref=e1863]
+            - row [ref=e1864] [cursor=pointer]:
+              - cell "19/04/2026" [ref=e1865]
+              - cell [ref=e1866]:
+                - checkbox "Include row 98" [ref=e1867]
+                - text: BAKERY
+              - cell [ref=e1868]:
+                - generic [ref=e1869]: Category
+                - combobox "Category" [ref=e1870]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−3,66 €" [ref=e1871]
+            - row [ref=e1872] [cursor=pointer]:
+              - cell "19/04/2026" [ref=e1873]
+              - cell [ref=e1874]:
+                - checkbox "Include row 101" [ref=e1875]
+                - text: TELEPIZZA
+              - cell [ref=e1876]:
+                - generic [ref=e1877]: Category
+                - combobox "Category" [ref=e1878]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−26,92 €" [ref=e1879]
+            - row [ref=e1880] [cursor=pointer]:
+              - cell "17/04/2026" [ref=e1881]
+              - cell [ref=e1882]:
+                - checkbox "Include row 105" [ref=e1883]
+                - text: CINESA
+              - cell [ref=e1884]:
+                - generic [ref=e1885]: Category
+                - combobox "Category" [ref=e1886]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment" [selected]
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−8,53 €" [ref=e1887]
+            - row [ref=e1888] [cursor=pointer]:
+              - cell "14/04/2026" [ref=e1889]
+              - cell [ref=e1890]:
+                - checkbox "Include row 94" [ref=e1891]
+                - text: LIDL
+              - cell [ref=e1892]:
+                - generic [ref=e1893]: Category
+                - combobox "Category" [ref=e1894]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−46,05 €" [ref=e1895]
+            - row [ref=e1896] [cursor=pointer]:
+              - cell "13/04/2026" [ref=e1897]
+              - cell [ref=e1898]:
+                - checkbox "Include row 97" [ref=e1899]
+                - text: BAKERY
+              - cell [ref=e1900]:
+                - generic [ref=e1901]: Category
+                - combobox "Category" [ref=e1902]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries" [selected]
+                  - option "Restaurants"
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−4,97 €" [ref=e1903]
+            - row [ref=e1904] [cursor=pointer]:
+              - cell "13/04/2026" [ref=e1905]
+              - cell [ref=e1906]:
+                - checkbox "Include row 100" [ref=e1907]
+                - text: RESTAURANTE LA TASCA
+              - cell [ref=e1908]:
+                - generic [ref=e1909]: Category
+                - combobox "Category" [ref=e1910]:
+                  - option "Rent"
+                  - option "Utilities"
+                  - option "Subscriptions"
+                  - option "Phone"
+                  - option "Insurance"
+                  - option "Transport"
+                  - option "Groceries"
+                  - option "Restaurants" [selected]
+                  - option "Alcohol + Bars"
+                  - option "Entertainment"
+                  - option "Clothes"
+                  - option "Non Essential Shopping"
+                  - option "Vacation + Hotel + Travel"
+                  - option "Health"
+                  - option "Gifts"
+                  - option "Taxes"
+                  - option "Cash"
+                  - option "Gym"
+                  - option "Other"
+              - cell "−35,04 €" [ref=e1911]
+        - button "Show 85 more" [ref=e1913] [cursor=pointer]
+  - status
+  - contentinfo [ref=e415]:
+    - text: © 2026 MyAhorros · Developed by Taren Shaw with Claude Opus 5.5 ·
+    - link "Privacy" [ref=e416] [cursor=pointer]:
+      - /url: privacy.html
+  - region "Example data · nothing is saved" [ref=e603]:
+    - generic [ref=e604]: Example data · nothing you change is saved
+    - generic [ref=e605]:
+      - button "Take the tour" [ref=e606] [cursor=pointer]
+      - button "Set up my tracker" [ref=e607] [cursor=pointer]

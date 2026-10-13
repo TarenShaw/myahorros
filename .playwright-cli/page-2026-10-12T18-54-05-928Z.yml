@@ -1,0 +1,183 @@
+- generic [active] [ref=e204]:
+  - generic [ref=e205]:
+    - banner [ref=e206]:
+      - generic [ref=e207]:
+        - paragraph [ref=e208]: Income · Expenses · Investments
+        - link "MyAhorros" [ref=e209] [cursor=pointer]:
+          - /url: ./
+    - generic [ref=e210]:
+      - tablist "Sections" [ref=e211]:
+        - tab "Overview" [ref=e212] [cursor=pointer]
+        - tab "Net worth" [selected] [ref=e215] [cursor=pointer]
+        - tab "Transactions 1 without a category" [ref=e220] [cursor=pointer]:
+          - text: Transactions
+          - generic "1 without a category" [ref=e224]: 1 to sort
+        - tab "By month" [ref=e225] [cursor=pointer]
+        - tab "Settings" [ref=e229] [cursor=pointer]
+      - generic [ref=e234]:
+        - generic [ref=e235]: Saved
+        - button "Hide amounts" [ref=e236] [cursor=pointer]
+    - main [ref=e241]:
+      - generic [ref=e430]:
+        - generic [ref=e431]:
+          - heading [level=1] [ref=e432]:
+            - text: Net worth
+            - button "What does this mean?" [ref=e433]: i
+          - paragraph [ref=e434]: What everything you own is worth at the end of each month. Type the figures in once a month.
+        - generic [ref=e435]:
+          - generic [ref=e436]: Month
+          - combobox "Month" [ref=e437]:
+            - option "September 2026" [selected]
+            - option "August 2026"
+            - option "July 2026"
+            - option "June 2026"
+            - option "May 2026"
+            - option "April 2026"
+            - option "March 2026"
+            - option "February 2026"
+            - option "January 2026"
+          - generic [ref=e438]:
+            - button "Fill in with AI" [ref=e439] [cursor=pointer]
+            - button "Import from Excel" [ref=e443] [cursor=pointer]
+            - button "Edit September 2026 figures" [ref=e447] [cursor=pointer]
+      - generic [ref=e448]:
+        - region "Net worth" [ref=e449]:
+          - generic [ref=e450]:
+            - paragraph [ref=e451]:
+              - text: Net worth · end of September 2026
+              - button "What does this mean?" [ref=e452]: i
+            - paragraph [ref=e453]: 47.577 €
+            - paragraph [ref=e454]: 43.108 € without retirement savings
+            - img "Cash 47%, Investments 35%, Long-term 9%, Retirement 9%" [ref=e455]
+          - generic [ref=e460]:
+            - generic [ref=e461]:
+              - generic [ref=e462]: Cash
+              - generic [ref=e464]: 22.265 €
+              - generic [ref=e465]: 47% · Available now
+            - generic [ref=e466]:
+              - generic [ref=e467]: Investments
+              - generic [ref=e469]: 16.622 €
+              - generic [ref=e470]: 35% · Can be sold within days
+            - generic [ref=e471]:
+              - generic [ref=e472]: Long-term
+              - generic [ref=e474]: 4.221 €
+              - generic [ref=e475]: 9% · Comes back on its own schedule
+            - generic [ref=e476]:
+              - generic [ref=e477]: Retirement
+              - generic [ref=e479]: 4.469 €
+              - generic [ref=e480]: 9% · Locked until retirement
+        - generic [ref=e481]:
+          - heading [level=2] [ref=e484]:
+            - text: What changed
+            - button "What does this mean?" [ref=e485]: i
+          - generic [ref=e486]:
+            - paragraph [ref=e487]: +2.027,88 €
+            - paragraph [ref=e488]: Since the end of August 2026.
+            - paragraph [ref=e489]:
+              - generic [ref=e493]: Everything adds up
+          - generic [ref=e495]:
+            - generic [ref=e496]:
+              - generic [ref=e497]:
+                - generic [ref=e498]: You saved
+                - generic [ref=e499]: +1.714,98 €
+              - generic [ref=e502]: Income minus expenses, without interest or gains
+            - generic [ref=e503]:
+              - generic [ref=e504]:
+                - generic [ref=e505]: Markets, interest and gains
+                - generic [ref=e506]: +312,90 €
+              - generic [ref=e509]: "Prices, interest, dividends and gains: the Gains total in Accounts"
+          - group [ref=e511]:
+            - generic "How is this calculated?" [ref=e512] [cursor=pointer]
+        - generic [ref=e513]:
+          - generic [ref=e514]:
+            - generic [ref=e515]:
+              - heading [level=2] [ref=e516]:
+                - text: Accounts
+                - button "What does this mean?" [ref=e517]: i
+              - paragraph [ref=e518]: Value at the end of the month, change since the month before, and share of the total.
+            - generic [ref=e519]:
+              - button "Check accounts with AI" [ref=e520] [cursor=pointer]
+              - button "Edit accounts" [ref=e524] [cursor=pointer]
+          - table [ref=e526]:
+            - rowgroup [ref=e527]:
+              - row [ref=e528]:
+                - columnheader "Account" [ref=e529]
+                - columnheader "Value" [ref=e530]
+                - columnheader "Change" [ref=e531]
+                - columnheader "Gains" [ref=e532]
+                - columnheader "Share" [ref=e533]
+            - rowgroup [ref=e534]:
+              - row [ref=e535]:
+                - cell "Cash · Available now" [ref=e536]
+                - cell "22.264,54 €" [ref=e538]
+                - cell "+1.071,93 €" [ref=e539]
+                - cell "+6,95 €" [ref=e540]
+                - cell "46,8%" [ref=e541]
+              - row [ref=e542]:
+                - cell "Current account" [ref=e543]
+                - cell "10.636,81 €" [ref=e544]
+                - cell "+664,98 €" [ref=e545]
+                - cell "—" [ref=e546]
+                - cell "22,4%" [ref=e547]
+              - row [ref=e548]:
+                - cell "Savings account" [ref=e549]
+                - cell "11.627,73 €" [ref=e550]
+                - cell "+406,95 €" [ref=e551]
+                - cell "+6,95 €" [ref=e552]
+                - cell "24,4%" [ref=e553]
+              - row [ref=e554]:
+                - cell "Investments · Can be sold within days" [ref=e555]
+                - cell "16.622,28 €" [ref=e557]
+                - cell "+825,92 €" [ref=e558]
+                - cell "+325,92 €" [ref=e559]
+                - cell "34,9%" [ref=e560]
+              - row [ref=e561]:
+                - cell "Index funds" [ref=e562]
+                - cell "16.622,28 €" [ref=e563]
+                - cell "+825,92 €" [ref=e564]
+                - cell "+325,92 €" [ref=e565]
+                - cell "34,9%" [ref=e566]
+              - row [ref=e567]:
+                - cell "Long-term · Comes back on its own schedule" [ref=e568]
+                - cell "4.221,26 €" [ref=e570]
+                - cell "+25,18 €" [ref=e571]
+                - cell "+25,18 €" [ref=e572]
+                - cell "8,9%" [ref=e573]
+              - row [ref=e574]:
+                - cell "Crowdlending" [ref=e575]
+                - cell "4.221,26 €" [ref=e576]
+                - cell "+25,18 €" [ref=e577]
+                - cell "+25,18 €" [ref=e578]
+                - cell "8,9%" [ref=e579]
+              - row [ref=e580]:
+                - cell "Retirement · Locked until retirement" [ref=e581]
+                - cell "4.469,10 €" [ref=e583]
+                - cell "+104,85 €" [ref=e584]
+                - cell "−45,15 €" [ref=e585]
+                - cell "9,4%" [ref=e586]
+              - row [ref=e587]:
+                - cell "Pension plan" [ref=e588]
+                - cell "4.469,10 €" [ref=e589]
+                - cell "+104,85 €" [ref=e590]
+                - cell "−45,15 €" [ref=e591]
+                - cell "9,4%" [ref=e592]
+            - rowgroup [ref=e593]:
+              - row [ref=e594]:
+                - cell "Total, all accounts" [ref=e595]
+                - cell "47.577,18 €" [ref=e596]
+                - cell "+2.027,88 €" [ref=e597]
+                - cell "+312,90 €" [ref=e598]
+                - cell "100,0%" [ref=e599]
+          - group [ref=e600]:
+            - generic "How is this calculated?" [ref=e601] [cursor=pointer]
+        - button "More analysis" [ref=e602] [cursor=pointer]
+  - status
+  - contentinfo [ref=e415]:
+    - text: © 2026 MyAhorros · Developed by Taren Shaw with Claude Opus 5.5 ·
+    - link "Privacy" [ref=e416] [cursor=pointer]:
+      - /url: privacy.html
+  - region "Example data · nothing is saved" [ref=e603]:
+    - generic [ref=e604]: Example data · nothing you change is saved
+    - generic [ref=e605]:
+      - button "Take the tour" [ref=e606] [cursor=pointer]
+      - button "Set up my tracker" [ref=e607] [cursor=pointer]

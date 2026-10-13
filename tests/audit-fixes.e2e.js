@@ -64,7 +64,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await p.fill('#imp-text', '03/10/2026\t15,00\tBIZUM DE ANA CENA\n04/10/2026\t-30,00\tMERCADONA');
   await p.click('[data-action="imp-read"]').catch(async () => { await p.click('text=Read rows'); });
   await p.waitForSelector('table.imp');
-  const biz = await p.evaluate(() => { const tr = [...document.querySelectorAll('table.imp tbody tr')].find(t => /BIZUM/.test(t.querySelector('input.ed') ? t.querySelector('input.ed').value : t.innerText));
+  const biz = await p.evaluate(() => { const tr = [...document.querySelectorAll('table.imp tbody tr')].find(t => /BIZUM/.test(t.querySelector('[data-action=imp-desc]') ? t.querySelector('[data-action=imp-desc]').value : t.innerText));
     return tr ? { type: tr.querySelector('select[id^=imp-t]') ? tr.querySelector('select[id^=imp-t]').value : '', note: tr.innerText } : null; });
   assert.ok(biz && /paying you back/.test(biz.note), 'no Bizum note: ' + JSON.stringify(biz));
   await p.keyboard.press('Escape'); await p.click('[data-action="imp-discard"]'); await p.waitForSelector('#overlay.on', { state: 'detached' }).catch(() => {});

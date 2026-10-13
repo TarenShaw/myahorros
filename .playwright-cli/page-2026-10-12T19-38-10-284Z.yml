@@ -1,0 +1,56 @@
+- generic [ref=e204]:
+  - generic [ref=e205]:
+    - banner [ref=e206]:
+      - generic [ref=e207]:
+        - paragraph [ref=e592]: Income · Expenses · Investments
+        - link "MyAhorros" [ref=e208] [cursor=pointer]:
+          - /url: ./
+    - generic [ref=e209]:
+      - tablist "Sections" [ref=e210]:
+        - tab "Overview" [ref=e211] [cursor=pointer]
+        - tab "Net worth" [selected] [ref=e215] [cursor=pointer]
+        - tab "Transactions 1 without a category" [ref=e221] [cursor=pointer]:
+          - text: Transactions
+          - generic "1 without a category" [ref=e226]: 1 to sort
+        - tab "By month" [ref=e227] [cursor=pointer]
+        - tab "Settings" [ref=e232] [cursor=pointer]
+      - generic [ref=e238]:
+        - generic [ref=e239]: Saved
+        - button "Hide amounts" [ref=e240] [cursor=pointer]
+        - button "Download backup" [ref=e706] [cursor=pointer]
+    - main [ref=e245]:
+      - generic [ref=e708]:
+        - heading [level=1] [ref=e709]:
+          - text: Net worth
+          - button "What does this mean?" [ref=e710]: i
+        - paragraph [ref=e711]: What everything you own is worth at the end of each month. Type the figures in once a month.
+      - generic [ref=e712]:
+        - generic [ref=e713]: Set up your tracker · step 1 of 5
+        - generic [ref=e714]: Where do you keep money?
+        - button "Continue setup" [ref=e715] [cursor=pointer]
+        - button "Hide the setup guide" [ref=e716] [cursor=pointer]
+  - status
+  - contentinfo [ref=e409]:
+    - text: © 2026 MyAhorros · Developed by Taren Shaw with Claude Opus 5.5 ·
+    - link "Privacy" [ref=e410] [cursor=pointer]:
+      - /url: privacy.html
+  - dialog [ref=e719]:
+    - generic [ref=e720]:
+      - paragraph [ref=e722]: MyAhorros
+      - heading "Where would you like to use your tracker?" [level=2] [ref=e723]
+      - paragraph [ref=e724]: Choose what suits you. Your figures stay in the place you choose, and you can change it later in Settings.
+      - generic [ref=e725]:
+        - button "This device Start straight away in this browser. Clearing browser data also deletes its backups. Download a backup from Settings to keep a separate copy." [active] [ref=e726] [cursor=pointer]:
+          - generic [ref=e729]:
+            - generic [ref=e730]: This device
+            - generic [ref=e731]: Start straight away in this browser. Clearing browser data also deletes its backups. Download a backup from Settings to keep a separate copy.
+        - button "Across my devices Connect your Google Drive to use the same tracker on your phone and computer, with daily backups in Drive. Works offline and syncs when you reconnect. The site only sees files it creates." [ref=e732] [cursor=pointer]:
+          - generic [ref=e736]:
+            - generic [ref=e737]: Across my devices
+            - generic [ref=e738]: Connect your Google Drive to use the same tracker on your phone and computer, with daily backups in Drive. Works offline and syncs when you reconnect. The site only sees files it creates.
+        - button "A folder I manage Saved as a file on this computer, with daily backups in the same folder. Works offline. Keep a separate copy if you want protection from losing this computer." [ref=e739] [cursor=pointer]:
+          - generic [ref=e742]:
+            - generic [ref=e743]: A folder I manage
+            - generic [ref=e744]: Saved as a file on this computer, with daily backups in the same folder. Works offline. Keep a separate copy if you want protection from losing this computer.
+      - paragraph [ref=e745]: Pick a folder such as Documents. A “Yearly Budget Tracker” folder is made inside it, unless you pick one that already has your tracker.
+      - button "Keep it in this browser" [ref=e747] [cursor=pointer]

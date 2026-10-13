@@ -36,6 +36,11 @@ const SHOTS = process.env.SHOTS;
   await p.waitForSelector('.wz-body', { timeout: 8000 });
   await shot(p, 'wizard-0');
   assert.ok(/one everyday account/i.test(await p.innerText('.wz-body')), 'quick setup starts with one everyday account');
+  await p.fill('#wz-born', '1994'); await p.fill('#wz-salary', '62000');
+  await p.click('.wz-body [data-action="about-set"]');
+  await p.waitForFunction(() => document.querySelector('#wz-about-status').textContent.includes('saved'));
+  assert.strictEqual(await p.evaluate(() => window.__ybtWeb.store.config.settings.birthYear), 1994);
+  assert.strictEqual(await p.evaluate(() => window.__ybtWeb.store.config.settings.salary), 62000);
   /* one way forward: "Skip this step" while a step isn't done, "Next" once it is */
   assert.strictEqual((await p.innerText('.m-foot [data-action="wz-next"]')).trim(), 'Skip this step');
   await p.click('[data-action="wz-next"]');
@@ -63,6 +68,22 @@ const SHOTS = process.env.SHOTS;
   await p.click('#tab-transactions'); await p.click('#view [data-action="add-tx"]');
   await p.waitForSelector('#overlay .modal'); await p.keyboard.press('Escape'); await p.waitForTimeout(300);
   assert.ok(!(await p.$('.wz-body')), 'wizard came back after Esc');
+  await p.click('#tab-settings');
+  assert.strictEqual(await p.inputValue('#st-born'), '1994');
+  assert.strictEqual(await p.inputValue('#st-salary'), '62000');
+  await p.fill('#st-born', '2027'); await p.click('[data-action="about-set"]');
+  assert.strictEqual(await p.evaluate(() => window.__ybtWeb.store.config.settings.birthYear), 1994, 'invalid birth year saved');
+  await p.fill('#st-born', '1993'); await p.fill('#st-salary', '65000');
+  assert.ok(await p.evaluate(()=>window.YBT_BUSY()), 'background sync must wait while details are being edited');
+  await p.click('[data-action="about-set"]');
+  await p.waitForFunction(() => document.querySelector('#st-about-status').textContent.includes('saved'));
+  assert.ok(!await p.evaluate(()=>window.YBT_BUSY()), 'Set must release the sync deferral');
+  await p.reload({ waitUntil: 'load' });
+  await p.waitForTimeout(800); if(await p.$('.wz-body')) await p.keyboard.press('Escape');
+  await p.click('#tab-settings');
+  assert.strictEqual(await p.inputValue('#st-born'), '1993', 'birth year lost on reload');
+  assert.strictEqual(await p.inputValue('#st-salary'), '65000', 'salary lost on reload');
+  await p.click('#tab-transactions');
   console.log('3b. Esc closes the wizard for good');
 
   /* 3c. a row typed by hand for a month before the new tracker's automatic start moves the start back,
@@ -74,6 +95,22 @@ const SHOTS = process.env.SHOTS;
   await p.$eval('#tx-form', f => f.requestSubmit());
   await p.waitForFunction(() => { const s = window.__ybtWeb.store.config.settings; return s && s.start && s.start.y === 2025 && s.start.m === 0; }, null, { timeout: 5000 });
   console.log('3c. hand-typed earlier row moves an automatic start back');
+
+  /* Missing age details jump to the exact Settings card and focus its first field. */
+  await p.evaluate(async()=>{ const db=await window.claude.use('db');
+    await db.doc('config/networth').set({accounts:[{id:'bank',name:'Bank',group:'cash'}],snaps:{'2026-09':{bank:1000}}});
+    window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:JSON.parse(JSON.stringify(window.__ybtWeb.store))}));
+  });
+  await p.click('#tab-settings'); await p.fill('#st-born',''); await p.fill('#st-salary','');
+  await p.click('[data-action="about-set"]'); await p.waitForFunction(()=>document.querySelector('#st-about-status').textContent.includes('saved'));
+  await p.click('#tab-networth');
+  if(!await p.locator('[data-action="goto-about"]').isVisible()) await p.click('[data-action="analysis-toggle"][data-tab="networth"]');
+  await p.click('[data-action="goto-about"]');
+  assert.strictEqual(await p.evaluate(()=>document.activeElement.id),'st-born', 'Add details did not focus About you');
+  assert.ok(await p.locator('#about-card').isVisible());
+  await p.fill('#st-born','1993'); await p.fill('#st-salary','65000'); await p.click('[data-action="about-set"]');
+  await p.waitForFunction(()=>document.querySelector('#st-about-status').textContent.includes('saved'));
+  console.log('3d. Add details opens and focuses About you');
 
   /* 4. returning visitors don't see the landing again */
   await p.reload({ waitUntil: 'load' });

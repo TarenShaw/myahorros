@@ -35,3 +35,13 @@ assert.deepStrictEqual(out.config.networth.snaps, { '2026-09': { acc1: 100, acc2
 /* the inputs are left alone */
 assert.strictEqual(theirs.months['2026-10'].expenses[0].concept, 'their edit');
 console.log('merge smoke: all passed');
+
+const {sameData}=new Function(grab('normalise')+grab('parseData')+grab('sameData')+'return {sameData};')();
+const text=JSON.stringify(mine);
+assert.ok(sameData(text,JSON.stringify({savedAt:'later',config:mine.config,months:mine.months})), 'timestamp/key order causes a false conflict');
+assert.ok(!sameData(text,JSON.stringify(theirs)), 'real edits must be detected');
+assert.ok(!sameData(text,'broken JSON'), 'unreadable data cannot count as synced');
+assert.ok(!sameData(text,null), 'unknown baseline cannot suppress a conflict');
+const reversed=JSON.parse(text); reversed.months['2026-10'].expenses.reverse();
+assert.ok(!sameData(text,JSON.stringify(reversed)), 'ordered rows must remain meaningful');
+console.log('sync content smoke: timestamps, key order, real edits, invalid data and ordered rows passed');

@@ -1,0 +1,180 @@
+[
+  {
+    "name": "retained-dividend",
+    "expected": {
+      "alphaGain": 100,
+      "totalGain": 100,
+      "totalChange": 100
+    },
+    "actual": {
+      "gains": {
+        "alpha": 200,
+        "beta": 0
+      },
+      "split": {
+        "change": 100,
+        "lfl": 100,
+        "added": 0,
+        "moved": 0,
+        "fresh": 0,
+        "saved": 0,
+        "gains": 200,
+        "left": -100,
+        "why": {
+          "cash": -100,
+          "ret": 0,
+          "put": 0,
+          "retRows": [],
+          "putRows": []
+        },
+        "returns": 100,
+        "missing": [],
+        "repay": null,
+        "blind": [],
+        "ok": true
+      }
+    },
+    "ui": {
+      "reviewButtons": 1,
+      "unlinkedWarning": [],
+      "accounts": "ACCOUNT\tVALUE\tCHANGE\tNET CONTRIBUTIONS\tGAINS\tSHARE\n Cash Available now\t1,000.00 €\t—\t—\t—\t47.6%\nMain Bank\t1,000.00 €\t—\t—\t—\t47.6%\n Investments Can be sold within days\t1,100.00 €\t+100.00 €\t—\t+200.00 €\t52.4%\nAlpha Broker\t1,100.00 €\t+100.00 €\t—\t+200.00 €\t52.4%\nTotal, all accounts\t2,100.00 €\t+100.00 €\t—\t+200.00 €\t100.0%"
+    }
+  },
+  {
+    "name": "broker-transfer",
+    "expected": {
+      "alphaGain": 0,
+      "betaGain": 0,
+      "totalGain": 0,
+      "totalChange": 0
+    },
+    "actual": {
+      "gains": {
+        "alpha": -500,
+        "beta": 500
+      },
+      "split": {
+        "change": 0,
+        "lfl": 0,
+        "added": 0,
+        "moved": 0,
+        "fresh": 0,
+        "saved": 0,
+        "gains": 0,
+        "left": 0,
+        "why": {
+          "cash": 500,
+          "ret": 0,
+          "put": -500,
+          "retRows": [],
+          "putRows": [
+            {
+              "id": "transfer",
+              "date": "2026-09-15",
+              "amount": -500,
+              "concept": "Transfer from Alpha Broker to Beta Broker",
+              "category": "Funds",
+              "table": "investments",
+              "mk": "2026-09",
+              "ord": 0
+            }
+          ]
+        },
+        "returns": 0,
+        "missing": [],
+        "repay": null,
+        "blind": [],
+        "ok": true
+      }
+    },
+    "ui": {
+      "reviewButtons": 1,
+      "unlinkedWarning": [
+        "1 row in Investments (500.00 €) isn’t linked to an account yet, so Gains counts it as profit: “Transfer from Alpha Broker to Beta Broker”. Link them to accounts"
+      ],
+      "accounts": "ACCOUNT\tVALUE\tCHANGE\tNET CONTRIBUTIONS\tGAINS\tSHARE\n Cash Available now\t1,000.00 €\t—\t—\t—\t33.3%\nMain Bank\t1,000.00 €\t—\t—\t—\t33.3%\n Investments Can be sold within days\t2,000.00 €\t—\t—\t—\t66.7%\nAlpha Broker\t500.00 €\t−500.00 €\t—\t−500.00 €\t16.7%\nBeta Broker\t1,500.00 €\t+500.00 €\t—\t+500.00 €\t50.0%\nTotal, all accounts\t3,000.00 €\t—\t—\t—\t100.0%"
+    }
+  },
+  {
+    "name": "broker-transfer-linked-through-UI",
+    "expected": {
+      "alphaGain": 0,
+      "betaGain": 0,
+      "totalGain": 0
+    },
+    "actual": {
+      "gains": {
+        "alpha": -500,
+        "beta": 0
+      },
+      "split": {
+        "change": 0,
+        "lfl": 0,
+        "added": 0,
+        "moved": 0,
+        "fresh": 0,
+        "saved": 0,
+        "gains": -500,
+        "left": 500,
+        "why": {
+          "cash": 500,
+          "ret": 0,
+          "put": 0,
+          "retRows": [],
+          "putRows": []
+        },
+        "returns": 0,
+        "missing": [],
+        "repay": null,
+        "blind": [],
+        "ok": true
+      }
+    },
+    "ui": {
+      "reviewButtons": 1,
+      "accounts": "ACCOUNT\tVALUE\tCHANGE\tNET CONTRIBUTIONS\tGAINS\tSHARE\n Cash Available now\t1,000.00 €\t—\t—\t—\t33.3%\nMain Bank\t1,000.00 €\t—\t—\t—\t33.3%\n Investments Can be sold within days\t2,000.00 €\t—\t+500.00 €\t−500.00 €\t66.7%\nAlpha Broker\t500.00 €\t−500.00 €\t—\t−500.00 €\t16.7%\nBeta Broker\t1,500.00 €\t+500.00 €\t+500.00 €\t—\t50.0%\nTotal, all accounts\t3,000.00 €\t—\t+500.00 €\t−500.00 €\t100.0%"
+    }
+  },
+  {
+    "name": "partial-contributions",
+    "expected": {
+      "alphaGain": 0,
+      "explanation": "Use reviewed August contribution 300 plus September linked deposit 200."
+    },
+    "actual": {
+      "gains": {
+        "alpha": 300,
+        "beta": 0
+      },
+      "split": {
+        "change": 0,
+        "lfl": 0,
+        "added": 0,
+        "moved": 0,
+        "fresh": 0,
+        "saved": 0,
+        "gains": 300,
+        "left": -300,
+        "why": {
+          "cash": -300,
+          "ret": 0,
+          "put": 0,
+          "retRows": [],
+          "putRows": []
+        },
+        "returns": 0,
+        "missing": [
+          "2026-08"
+        ],
+        "repay": null,
+        "blind": [],
+        "ok": true
+      }
+    },
+    "ui": {
+      "reviewButtons": 0,
+      "unlinkedWarning": [],
+      "accounts": "ACCOUNT\tVALUE\tCHANGE\tNET CONTRIBUTIONS\tGAINS\tSHARE\n Cash Available now\t500.00 €\t−500.00 €\t—\t—\t25.0%\nMain Bank\t500.00 €\t−500.00 €\t—\t—\t25.0%\n Investments Can be sold within days\t1,500.00 €\t+500.00 €\t+200.00 €\t+300.00 €\t75.0%\nAlpha Broker\t1,500.00 €\t+500.00 €\t+200.00 €\t+300.00 €\t75.0%\nTotal, all accounts\t2,000.00 €\t—\t+200.00 €\t+300.00 €\t100.0%"
+    }
+  }
+]

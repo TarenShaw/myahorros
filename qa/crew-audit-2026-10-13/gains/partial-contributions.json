@@ -1,0 +1,98 @@
+{
+  "app": "Yearly Budget Tracker",
+  "format": 1,
+  "months": {
+    "2026-08": {
+      "income": [],
+      "expenses": [],
+      "investments": []
+    },
+    "2026-09": {
+      "income": [],
+      "expenses": [],
+      "investments": [
+        {
+          "id": "dep",
+          "date": "2026-09-15",
+          "amount": -200,
+          "concept": "Alpha Broker deposit",
+          "category": "Funds"
+        }
+      ]
+    }
+  },
+  "config": {
+    "settings": {
+      "lang": "en",
+      "numFmt": "en",
+      "currency": "EUR",
+      "start": {
+        "y": 2026,
+        "m": 7
+      },
+      "guide": {
+        "on": false,
+        "done": true
+      }
+    },
+    "categories": {
+      "income": [
+        {
+          "name": "Salary"
+        },
+        {
+          "name": "Dividends"
+        },
+        {
+          "name": "Interest"
+        }
+      ],
+      "expenses": [
+        {
+          "name": "Rent"
+        }
+      ],
+      "investments": [
+        {
+          "name": "Funds"
+        }
+      ]
+    },
+    "networth": {
+      "accounts": [
+        {
+          "id": "cash",
+          "name": "Main Bank",
+          "group": "cash"
+        },
+        {
+          "id": "alpha",
+          "name": "Alpha Broker",
+          "group": "invest"
+        },
+        {
+          "id": "beta",
+          "name": "Beta Broker",
+          "group": "invest"
+        }
+      ],
+      "snaps": {
+        "2026-07": {
+          "cash": 1000,
+          "alpha": 1000,
+          "beta": 0
+        },
+        "2026-09": {
+          "cash": 500,
+          "alpha": 1500,
+          "beta": 0
+        }
+      },
+      "contributions": {
+        "2026-08": {
+          "alpha": 300
+        }
+      }
+    }
+  }
+}

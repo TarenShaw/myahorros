@@ -1,0 +1,207 @@
+{
+  "checks": [
+    "API key session-only",
+    "Six rows; correct dates, salary, decimal, refund, interest; own transfer excluded; no save before review",
+    "Review save commits six rows",
+    "Six rows persist after reload",
+    "Reimport duplicates deselected"
+  ],
+  "statuses": [
+    {
+      "endpoint": "/v1/models",
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/messages",
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/messages",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "connection": "accepted",
+  "model": "claude-haiku-5-5",
+  "raw": {
+    "rows": [
+      [
+        "2026-09-01",
+        2500,
+        "QA SALARY ACME",
+        "income",
+        "Salary",
+        "synthetic-statement.txt",
+        "",
+        0
+      ],
+      [
+        "2026-09-02",
+        -800,
+        "QA RENT SEPTEMBER",
+        "expenses",
+        "Rent (fixed)",
+        "synthetic-statement.txt",
+        "",
+        0
+      ],
+      [
+        "2026-09-03",
+        -54.32,
+        "QA MERCADONA GROCERIES",
+        "expenses",
+        "Groceries (variable)",
+        "synthetic-statement.txt",
+        "",
+        0
+      ],
+      [
+        "2026-09-04",
+        -60,
+        "QA CLOTHES STORE",
+        "expenses",
+        "Clothes (variable)",
+        "synthetic-statement.txt",
+        "",
+        0
+      ],
+      [
+        "2026-09-05",
+        20,
+        "QA CLOTHES REFUND (refund of clothing purchase)",
+        "expenses",
+        "Clothes (variable)",
+        "synthetic-statement.txt",
+        "",
+        0
+      ],
+      [
+        "2026-09-30",
+        2.15,
+        "QA SAVINGS INTEREST",
+        "income",
+        "Interest",
+        "synthetic-statement.txt",
+        "",
+        0
+      ]
+    ],
+    "left_out": [
+      [
+        "2026-09-06",
+        -300,
+        "QA TRANSFER TO OWN SAVINGS",
+        "synthetic-statement.txt",
+        "Transfer to my own savings account; the savings account is not in the files, so only this side is seen and it is left out"
+      ]
+    ],
+    "statements": [
+      {
+        "source": "synthetic-statement.txt",
+        "name": "QA Current Account",
+        "opening": 1000,
+        "closing": 2307.83
+      }
+    ],
+    "accounts": [
+      {
+        "name": "QA Current Account",
+        "group": "cash",
+        "match": null,
+        "balances": [
+          [
+            "2026-09",
+            2307.83
+          ]
+        ]
+      }
+    ],
+    "notes": "The clothing refund is booked as a positive Clothes line, not as income. The savings account is not among the files, so the 300.00 transfer to it is left out."
+  },
+  "review": {
+    "type": "import",
+    "rows": [
+      {
+        "date": "2026-09-01",
+        "concept": "QA SALARY ACME",
+        "amount": 2500,
+        "table": "income",
+        "category": "Salary",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-02",
+        "concept": "QA RENT SEPTEMBER",
+        "amount": -800,
+        "table": "expenses",
+        "category": "Rent",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-03",
+        "concept": "QA MERCADONA GROCERIES",
+        "amount": -54.32,
+        "table": "expenses",
+        "category": "Groceries",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-04",
+        "concept": "QA CLOTHES STORE",
+        "amount": -60,
+        "table": "expenses",
+        "category": "Clothes",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-05",
+        "concept": "QA CLOTHES REFUND (refund of clothing purchase)",
+        "amount": 20,
+        "table": "expenses",
+        "category": "Clothes",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-30",
+        "concept": "QA SAVINGS INTEREST",
+        "amount": 2.15,
+        "table": "income",
+        "category": "Interest",
+        "on": true,
+        "aiQ": ""
+      }
+    ],
+    "ai": {
+      "out": [
+        {
+          "date": "2026-09-06",
+          "amount": -300,
+          "concept": "QA TRANSFER TO OWN SAVINGS",
+          "src": "synthetic-statement.txt",
+          "why": "Transfer to my own savings account; the savings account is not in the files, so only this side is seen and it is left out"
+        }
+      ],
+      "checks": [
+        {
+          "name": "QA Current Account",
+          "move": 1307.83,
+          "found": 1307.83,
+          "ok": true
+        }
+      ],
+      "notes": "The clothing refund is booked as a positive Clothes line, not as income. The savings account is not among the files, so the 300.00 transfer to it is left out.",
+      "n": 1
+    }
+  },
+  "repeat": {
+    "type": "import",
+    "selected": 0,
+    "saved": 6
+  },
+  "passed": true
+}

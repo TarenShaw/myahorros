@@ -1,0 +1,118 @@
+{
+  "rows": [
+    [
+      "2026-09-01",
+      2000,
+      "Salary",
+      "income",
+      "Salary",
+      "bank-a.txt",
+      "",
+      0,
+      []
+    ],
+    [
+      "2026-09-02",
+      -500,
+      "Indexa Capital contribution",
+      "investments",
+      "",
+      "bank-a.txt",
+      "Is this a contribution?",
+      0,
+      [
+        [
+          "Yes contribution",
+          "change",
+          "investments",
+          ""
+        ],
+        [
+          "Exclude",
+          "exclude",
+          "",
+          ""
+        ],
+        [
+          "Keep",
+          "keep",
+          "",
+          ""
+        ]
+      ]
+    ],
+    [
+      "2026-09-03",
+      -100,
+      "Groceries",
+      "expenses",
+      "",
+      "bank-a.txt",
+      "",
+      0,
+      []
+    ],
+    [
+      "2026-09-04",
+      -20,
+      "Unknown merchant",
+      "expenses",
+      "",
+      "bank-b.txt",
+      "Is this mine?",
+      0,
+      [
+        [
+          "Include",
+          "include",
+          "",
+          ""
+        ],
+        [
+          "Exclude",
+          "exclude",
+          "",
+          ""
+        ],
+        [
+          "Keep",
+          "keep",
+          "",
+          ""
+        ]
+      ]
+    ]
+  ],
+  "accounts": [
+    {
+      "match": "fund",
+      "name": "Indexa Capital",
+      "group": "invest",
+      "balances": [
+        [
+          "2026-08",
+          10000,
+          0
+        ],
+        [
+          "2026-09",
+          10600,
+          500
+        ]
+      ]
+    }
+  ],
+  "statements": [
+    {
+      "source": "bank-a.txt",
+      "opening": 1000,
+      "closing": 2400
+    },
+    {
+      "source": "bank-b.txt",
+      "opening": 1000,
+      "closing": 980
+    }
+  ],
+  "notes": "Synthetic extraction mock; verify contribution and ownership."
+}

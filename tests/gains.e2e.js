@@ -52,7 +52,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
     await p.selectOption('#nw-month', k);
     if(await p.locator('[data-action=analysis-toggle][aria-expanded=false]').count()) await p.click('[data-action=analysis-toggle]');
     return p.evaluate(() => Object.fromEntries([...document.querySelectorAll('table.nwt tbody tr:not(.grp), table.nwt tfoot tr')]
-      .map(tr => [tr.children[0].innerText.trim().replace(/,.*/, ''), tr.children[3].innerText.trim().replace(/[^\d.,—−+-]/g, '')])));
+      .map(tr => [tr.children[0].innerText.trim().replace(/,.*/, ''), tr.children[4].innerText.trim().replace(/[^\d.,—−+-]/g, '')])));
   };
   /* no transactions yet: gain = change */
   assert.strictEqual((await gains('2026-09')).ING, '+310.00');
@@ -94,7 +94,9 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   const imp = async (text, table) => {
     await p.click('[data-action="import"] >> nth=0');
     await p.fill('#imp-text', text); await p.locator('details:has(#imp-table) summary').click(); await p.selectOption('#imp-table', table);
-    await p.click('[data-action="imp-read"]'); await p.click('[data-action="imp-add"]');
+    await p.click('[data-action="imp-read"]');
+    for(const choice of await p.locator('[data-action="imp-date-order"]').all()) await choice.selectOption('dmy');
+    await p.click('[data-action="imp-add"]');
     if (await p.$('[data-action="imp-add-confirm"]')) await p.click('[data-action="imp-add-confirm"]');
     await p.waitForTimeout(300); await closeExtra();
   };
@@ -156,7 +158,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   await expect('2026-09', { 'MyInvestor Pension': '+135.00', 'Trade Republic': '+150.00', 'Total': '+1,390.00' });
   assert.ok((await unlinked()).includes('“ZETA GLOBAL”'), 'no warning for the ZETA row');
   await p.click('[data-action="nw-link"]');
-  const pickFor = t => p.locator('#nw-link-form .link-row', { hasText: t }).locator('select');
+  const pickFor = t => p.locator('#nw-link-form .link-row', { hasText: t }).locator('select[data-i]');
   const shown = async t => pickFor(t).evaluate(s => s.selectedOptions[0].text);
   assert.strictEqual(await shown('ZETA GLOBAL'), 'Trade Republic', 'ZETA not guessed by amount');
   assert.strictEqual(await shown('ACME PAYMENT'), 'Not sure yet', 'ACME guessed without a close fit');
@@ -200,7 +202,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
   /* 7. phones show Gains too */
   await p.setViewportSize({ width: 390, height: 844 });
   await p.click('[data-action=tab][data-tab=networth]');
-  const td = p.locator('table.nwt tbody tr:not(.grp)', { hasText: 'Indexa Capital' }).locator('td').nth(3);
+  const td = p.locator('table.nwt tbody tr:not(.grp)', { hasText: 'Indexa Capital' }).locator('td').nth(4);
   assert.ok(await td.isVisible(), 'Gains hidden at 390 px');
   assert.ok(await p.evaluate(() => document.documentElement.scrollWidth <= 390), 'page scrolls sideways at 390 px');
   console.log('5. Gains visible at 390 px');

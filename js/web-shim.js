@@ -243,6 +243,12 @@ function normalise(d){
 }
 function parseData(text){ try{ return normalise(JSON.parse(String(text).replace(/^﻿/,''))); }catch(_){ return null; } }
 function serialise(d){ d=d||store; return JSON.stringify({app:'Yearly Budget Tracker',format:1,savedAt:new Date().toISOString(),months:d.months,config:d.config}); }
+/* Compare tracker content, ignoring envelope timestamps and object key order. Array order is meaningful. */
+function sameData(a,b){
+  const stable=v=>Array.isArray(v)?v.map(stable):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,stable(v[k])])):v;
+  const x=parseData(a), y=parseData(b);
+  return !!x&&!!y&&JSON.stringify(stable(x))===JSON.stringify(stable(y));
+}
 function countTx(d){ let n=0; if(!d) return 0; for(const m of Object.values(d.months||{})) for(const k of ['income','expenses','investments']) n+=Array.isArray(m[k])?m[k].length:0; return n; }
 const empty=()=>({months:{},config:{}});
 /* stored text that can't be read starts an empty tracker, but is kept first as a browser backup, so the next save
@@ -445,10 +451,10 @@ const drive={
     const body=`--${bd}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify({name:'tracker-data '+label+' '+stamp()+'.json',parents:[m.backupsId],mimeType:'application/json'})}\r\n--${bd}\r\nContent-Type: application/json\r\n\r\n${text}\r\n--${bd}--`;
     await this.api('POST',`${UPLOAD}/files?uploadType=multipart&fields=id`,body,{'Content-Type':'multipart/related; boundary='+bd});
   },
-  /* the copy on this device: {text, version (of the Drive file it came from), dirty} */
+  /* Local text plus the last synced baseText and Drive version; dirty means content changed. */
   async cache(){ return await idb.get('drive'); },
-  async keepLocal(text,dirty){ const c=(await this.cache())||{}; await idb.set('drive',{text,version:c.version==null?null:c.version,dirty:!!dirty}); askPersist(); },
-  async markSynced(text,version){ await idb.set('drive',{text,version,dirty:false}); },
+  async keepLocal(text,dirty){ const c=(await this.cache())||{}; const baseText=c.baseText||(!c.dirty?c.text:null); await idb.set('drive',{text,baseText,version:c.version==null?null:c.version,dirty:!!dirty&&!sameData(text,baseText)}); askPersist(); },
+  async markSynced(text,version){ await idb.set('drive',{text,baseText:text,version,dirty:false}); },
   file(){ return 'Google Drive / '+FOLDER+' / '+FILE; },
   backups(){ return 'Google Drive / '+FOLDER+' / '+BACKUPS; }
 };
@@ -644,7 +650,7 @@ function save(){
     const text=serialise();
     if(mode==='browser'){ try{ await browser.write(text); }catch(_){ throw {code:'unavailable',message:'not saved'}; } return; }
     if(mode==='folder'){ await idb.set('folder-pending',text).catch(()=>{}); await idb.set('folder-pending-mod',folder.mod==null?null:folder.mod).catch(()=>{}); await flushFolder(); return; }
-    if(mode==='drive'){ try{ await drive.keepLocal(text,true); }catch(_){ throw {code:'unavailable',message:'not saved'}; } drive.dirty=true; scheduleUpload(); notify(); }
+    if(mode==='drive'){ try{ await drive.keepLocal(text,true); }catch(_){ throw {code:'unavailable',message:'not saved'}; } drive.dirty=!!(await drive.cache()).dirty; scheduleUpload(); notify(); }
   });
   saving=p; return p;
 }
@@ -699,15 +705,23 @@ function driveSync(pull){
         /* edits made while it downloaded count as ours: look again, right before deciding */
         const cl=(await drive.cache())||c, unsaved=!!saving||drive.dirty;
         const mineText=unsaved?serialise():cl.text, mine=mineText?parseData(mineText):null;
-        if(theirs&&(cl.dirty||unsaved)&&mine&&!isEmpty(mine)){
+        const baseText=cl.baseText||(!cl.dirty?cl.text:null);
+        if(theirs&&sameData(mineText,text)){
+          await drive.markSynced(mineText,r.version); drive.dirty=false;
+          drive.lastSync=new Date(); drive.state='idle'; bar(null); return;
+        } else if(theirs&&sameData(text,baseText)){
+          /* Only metadata changed remotely: preserve local edits and advance their base version. */
+          await idb.set('drive',{text:mineText,baseText:text,version:r.version,dirty:true}); drive.dirty=true;
+        } else if(theirs&&(cl.dirty||unsaved)&&mine&&!isEmpty(mine)&&!sameData(mineText,baseText)){
           const pick=await askConflict('drive',theirs,r.modifiedTime?new Date(r.modifiedTime):null);
           if(pick==='theirs'){ try{ await drive.keepCopy(mineText,'from this screen'); }catch(_){} store=theirs; await drive.markSynced(text,r.version); drive.dirty=false; window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(theirs)})); note(t('keptTheirs')); drive.lastSync=new Date(); drive.state='idle'; bar(null); return; }
           try{ await drive.keepCopy(text,'changed elsewhere'); }catch(_){}
-          if(pick==='merge'){ store=mergeData(mine,theirs); const mt=serialise(); await idb.set('drive',{text:mt,version:r.version,dirty:true}); drive.dirty=true;
+          if(pick==='merge'){ store=mergeData(mine,theirs); const mt=serialise(); await idb.set('drive',{text:mt,baseText:text,version:r.version,dirty:true}); drive.dirty=true;
             window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(store)})); note(t('mergedBoth')); }   /* the merge goes up below */
-          else { note(t('keptMine')); await idb.set('drive',{text:mineText,version:r.version,dirty:true}); }   /* ours goes up below */
+          else { note(t('keptMine')); await idb.set('drive',{text:mineText,baseText:text,version:r.version,dirty:true}); }   /* ours goes up below */
         } else if(theirs){
           store=theirs; await drive.markSynced(text,r.version);
+          drive.dirty=false;
           window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:clone(theirs)}));
           if(pull==='note') note(t('pulled'));
           drive.lastSync=new Date(); drive.state='idle'; bar(null); return;
@@ -722,8 +736,8 @@ function driveSync(pull){
         const text=c2.text||serialise();
         const f=await drive.upload(text);
         const c3=(await drive.cache())||{};
-        await idb.set('drive',{text:c3.text||text,version:f.version,dirty:c3.text!==text});
-        drive.dirty=c3.text!==text;
+        drive.dirty=!sameData(c3.text||text,text);
+        await idb.set('drive',{text:c3.text||text,baseText:text,version:f.version,dirty:drive.dirty});
         if(drive.dirty) scheduleUpload(300);
       }
       drive.lastSync=new Date(); drive.state='idle'; drive.fails=0; bar(null);
@@ -1043,7 +1057,7 @@ async function startDrive(){
         const m=drive.meta; let text=null, v=null;
         if(m.fileId){ text=await drive.download(m.fileId); v=(m.remote||{}).version; }
         store=await readStored(text);
-        await idb.set('drive',{text:serialise(),version:v,dirty:false}); drive.lastSync=new Date(); drive.state='idle';
+        await drive.markSynced(serialise(),v); drive.lastSync=new Date(); drive.state='idle';
         el.remove(); resolve(true);
       }catch(err){ el.busy(false); el.msg(err&&err.message==='denied'?t('driveDenied'):t('driveFail')); } });
   });
@@ -1075,7 +1089,7 @@ async function start(){
     else { c=await chooseMode(false); lsSet(PICKED_KEY,'1'); }
     if(c.mode==='folder'){ folder.dir=c.dir; await idb.set('folder',c.dir); setMode('folder'); const text=await folder.read(); store=await readStored(text); }
     else if(c.mode==='drive'){ setMode('drive'); const mm=drive.meta; let text=null, v=null; if(mm.fileId){ text=await drive.download(mm.fileId); v=(mm.remote||{}).version; }
-      store=await readStored(text); await idb.set('drive',{text:serialise(),version:v,dirty:false}); drive.lastSync=new Date(); drive.state='idle'; }
+      store=await readStored(text); await drive.markSynced(serialise(),v); drive.lastSync=new Date(); drive.state='idle'; }
     else { setMode('browser'); const text=await browser.read().catch(()=>null); store=await readStored(text); }
   }
   resolveReady();

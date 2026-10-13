@@ -1,0 +1,75 @@
+{
+  "checks": [
+    "API key session-only",
+    "Live audit detects groceries filed as Rent; no data changes before Apply",
+    "Selected audit correction applies; Undo restores rows exactly",
+    "Live picture OCR produces September balance 2307.83 in review; saved transactions unchanged"
+  ],
+  "statuses": [
+    {
+      "endpoint": "/v1/models",
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/messages",
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/messages",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "connection": "accepted",
+  "model": "claude-haiku-5-5",
+  "audit": {
+    "items": [
+      {
+        "kind": "cat",
+        "concept": "QA MERCADONA GROCERIES",
+        "table": "expenses",
+        "category": "Groceries",
+        "why": "Mercadona is a grocery shop; 'Rent' is not one of my categories"
+      },
+      {
+        "kind": "kw",
+        "table": "income",
+        "category": "Salary",
+        "why": "Salary payments"
+      }
+    ],
+    "notes": "",
+    "message": ""
+  },
+  "balance": {
+    "type": "nwimp",
+    "data": {
+      "cols": [
+        {
+          "j": 0,
+          "name": "QA Current Account",
+          "acc": null,
+          "as": null,
+          "group": "cash",
+          "skip": false,
+          "sum": false
+        }
+      ],
+      "months": [
+        {
+          "k": "2026-09",
+          "vals": {
+            "0": 2307.83
+          },
+          "on": true
+        }
+      ],
+      "bad": [],
+      "noMonth": [],
+      "future": [],
+      "dups": [],
+      "noName": []
+    }
+  },
+  "passed": true
+}

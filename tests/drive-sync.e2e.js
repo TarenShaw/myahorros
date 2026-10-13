@@ -65,6 +65,28 @@ async function until(fn, ms, what) { const t = Date.now(); for (;;) { const v = 
   const v1 = trackerFile().version;
   console.log('2. first save reached Drive (version ' + v1 + ')');
 
+  /* No-op saves and timestamp-only remote revisions must not cause uploads or merge prompts. */
+  await page.evaluate(async () => { const db=await window.claude.use('db'); const m=window.__ybtWeb.store.months['2026-03']; await db.doc('months/2026-03').set(m); });
+  await sleep(2300);
+  assert.strictEqual(trackerFile().version, v1, 'unchanged data was uploaded again');
+  const metadataOnly=JSON.parse(trackerFile().content); metadataOnly.savedAt='2026-10-01T00:00:00.000Z';
+  trackerFile().content=JSON.stringify(metadataOnly); trackerFile().version++;
+  await page.evaluate(async m => { const db=await window.claude.use('db'); await db.doc('months/2026-03').set(m); }, month(120));
+  await until(() => JSON.parse(trackerFile().content).months['2026-03'].income[0].amount===120, 10000, 'local change uploaded over metadata-only revision');
+  assert.strictEqual(await page.$('button[data-x=merge]'), null, 'metadata-only revision prompted a merge');
+  console.log('2b. no-op save skipped; metadata-only revision preserves local edits without a merge prompt');
+
+  /* Both devices independently reached the same content: acknowledge the remote version, no extra upload. */
+  await until(async()=> !(await page.evaluate(()=>window.__ybtWeb.drive.dirty)),5000,'previous upload settled');
+  const equal=JSON.parse(trackerFile().content); equal.months['2026-03']=month(130);
+  trackerFile().content=JSON.stringify(equal); trackerFile().version++;
+  const equalVersion=trackerFile().version;
+  await page.evaluate(async m=>{const db=await window.claude.use('db');await db.doc('months/2026-03').set(m);},month(130));
+  await until(()=>page.evaluate(async()=>{const c=await window.__ybtWeb.drive.cache();return !c.dirty&&c.version;}),10000,'identical edits acknowledged');
+  assert.strictEqual(trackerFile().version,equalVersion,'identical content was uploaded again');
+  assert.strictEqual(await page.$('button[data-x=merge]'),null,'identical content prompted a merge');
+  console.log('2c. identical concurrent edits acknowledged without a merge or redundant upload');
+
   /* 3. a dialog is open when a newer copy appears elsewhere: nothing may change until it's closed */
   const other = JSON.parse(trackerFile().content); other.months['2026-06'] = month(250);
   const opened = await page.evaluate(() => { const b = document.querySelector('[data-action="restore"],[data-action="ai-tx"]'); if (b) { b.click(); return true; } return false; });

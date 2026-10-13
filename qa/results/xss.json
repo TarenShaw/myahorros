@@ -1,0 +1,94 @@
+{
+  "from-data-file": [
+    {
+      "where": "networth",
+      "ran": 0,
+      "liveImg": 0,
+      "liveSvgOnload": 0,
+      "liveScript": 0
+    },
+    {
+      "where": "overview",
+      "ran": 0,
+      "liveImg": 0,
+      "liveSvgOnload": 0,
+      "liveScript": 0
+    },
+    {
+      "where": "yearly",
+      "ran": 0,
+      "liveImg": 0,
+      "liveSvgOnload": 0,
+      "liveScript": 0
+    },
+    {
+      "where": "transactions",
+      "ran": 0,
+      "liveImg": 0,
+      "liveSvgOnload": 0,
+      "liveScript": 0
+    },
+    {
+      "where": "categories",
+      "ran": 0,
+      "liveImg": 0,
+      "liveSvgOnload": 0,
+      "liveScript": 0
+    },
+    {
+      "where": "settings",
+      "ran": 0,
+      "liveImg": 0,
+      "liveSvgOnload": 0,
+      "liveScript": 0
+    }
+  ],
+  "tooltips": {
+    "where": "chart hovers",
+    "ran": 0,
+    "liveImg": 0,
+    "liveSvgOnload": 0,
+    "liveScript": 0
+  },
+  "typed-description": {
+    "where": "after typing + search",
+    "ran": 0,
+    "liveImg": 0,
+    "liveSvgOnload": 0,
+    "liveScript": 0
+  },
+  "typed-category": {
+    "where": "category named with markup",
+    "ran": 0,
+    "liveImg": 0,
+    "liveSvgOnload": 0,
+    "liveScript": 0
+  },
+  "paste-import": [
+    {
+      "where": "import review",
+      "ran": 0,
+      "liveImg": 0,
+      "liveSvgOnload": 0,
+      "liveScript": 0
+    },
+    {
+      "where": "after import",
+      "ran": 0,
+      "liveImg": 0,
+      "liveSvgOnload": 0,
+      "liveScript": 0
+    }
+  ],
+  "export": {
+    "formulaCells": 0
+  },
+  "final": {
+    "where": "end",
+    "ran": 0,
+    "liveImg": 0,
+    "liveSvgOnload": 0,
+    "liveScript": 0
+  },
+  "consoleErrors": []
+}

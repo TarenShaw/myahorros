@@ -1,0 +1,2569 @@
+[
+  {
+    "theme": "light",
+    "view": "landing",
+    "tokens": {
+      "bg": "#f1f4f2",
+      "surface": "#fcfdfc",
+      "surface-2": "#edf1ef",
+      "surface-3": "#e2e8e5",
+      "ink": "#13211f",
+      "ink-2": "#44554f",
+      "muted": "#5c6a65",
+      "line": "#d8dfdc",
+      "line-2": "#bcc8c3",
+      "accent": "#0d5c63",
+      "accent-ink": "#ffffff",
+      "accent-soft": "#d9ebea",
+      "good": "#0ca30c",
+      "good-ink": "#006300",
+      "bad": "#d03b3b",
+      "bad-ink": "#a82727",
+      "warn": "#c99a06",
+      "warn-ink": "#6e4b00",
+      "c-income": "#1baf7a",
+      "c-expenses": "#eb6834",
+      "c-investments": "#2a78d6",
+      "g-cash": "#6f8794",
+      "g-invest": "#2a78d6",
+      "g-illiquid": "#c99a06",
+      "g-pension": "#7b5cd6"
+    },
+    "textCount": 24,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "Get started",
+        "tag": "BUTTON",
+        "cls": "btn primary",
+        "fg": "#ffffff",
+        "bg": "#0d5c63",
+        "size": 15,
+        "ratio": 7.7,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": true
+      },
+      {
+        "text": "Made for people who just want to know how they’re doing. No finance words needed.",
+        "tag": "P",
+        "cls": "wl-sub",
+        "fg": "#44554f",
+        "bg": "#f1f4f2",
+        "size": 16,
+        "ratio": 7.13,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "See a demo",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Get started",
+        "border": "rgb(13, 92, 99)",
+        "bg": "#0d5c63",
+        "borderContrast": 1,
+        "fg": "rgb(255, 255, 255)"
+      },
+      {
+        "text": "See a demo",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Get started",
+        "border": "rgb(13, 92, 99)",
+        "bg": "#0d5c63",
+        "borderContrast": 1,
+        "fg": "rgb(255, 255, 255)"
+      },
+      {
+        "text": "See a demo",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Get started",
+        "border": "rgb(13, 92, 99)",
+        "bg": "#0d5c63",
+        "borderContrast": 1,
+        "fg": "rgb(255, 255, 255)"
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "view": "overview",
+    "tokens": {
+      "bg": "#f1f4f2",
+      "surface": "#fcfdfc",
+      "surface-2": "#edf1ef",
+      "surface-3": "#e2e8e5",
+      "ink": "#13211f",
+      "ink-2": "#44554f",
+      "muted": "#5c6a65",
+      "line": "#d8dfdc",
+      "line-2": "#bcc8c3",
+      "accent": "#0d5c63",
+      "accent-ink": "#ffffff",
+      "accent-soft": "#d9ebea",
+      "good": "#0ca30c",
+      "good-ink": "#006300",
+      "bad": "#d03b3b",
+      "bad-ink": "#a82727",
+      "warn": "#c99a06",
+      "warn-ink": "#6e4b00",
+      "c-income": "#1baf7a",
+      "c-expenses": "#eb6834",
+      "c-investments": "#2a78d6",
+      "g-cash": "#6f8794",
+      "g-invest": "#2a78d6",
+      "g-illiquid": "#c99a06",
+      "g-pension": "#7b5cd6"
+    },
+    "textCount": 200,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "Income minus expenses. Money you invested still counts as kept.",
+        "tag": "P",
+        "cls": "hint",
+        "fg": "#5c6a65",
+        "bg": "#f1f4f2",
+        "size": 13,
+        "ratio": 5.12,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "1",
+        "tag": "SPAN",
+        "cls": "badge",
+        "fg": "#6e4b00",
+        "bg": "#fbf0d2",
+        "size": 11,
+        "ratio": 6.93,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "of income kept after expenses",
+        "tag": "P",
+        "cls": "hero-sub",
+        "fg": "#44554f",
+        "bg": "#f1f4f2",
+        "size": 14,
+        "ratio": 7.13,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Share of 2026 income, against suggested targets. Tap a target to change it. Leaves out 1 r",
+        "tag": "P",
+        "cls": "sub",
+        "fg": "#5c6a65",
+        "bg": "#fcfdfc",
+        "size": 13,
+        "ratio": 5.56,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Investments",
+        "tag": "SPAN",
+        "cls": "nw-stat-l",
+        "fg": "#44554f",
+        "bg": "#fcfdfc",
+        "size": 13,
+        "ratio": 7.75,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Δ +946,47 €",
+        "tag": "SMALL",
+        "cls": "good",
+        "fg": "#006300",
+        "bg": "#fcfdfc",
+        "size": 11.6667,
+        "ratio": 7.4,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Show all",
+        "tag": "BUTTON",
+        "cls": "linkish",
+        "fg": "#13211f",
+        "bg": "#fcfdfc",
+        "size": 13,
+        "ratio": 16.28,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "On target",
+        "tag": "SPAN",
+        "cls": "pill good",
+        "fg": "#006300",
+        "bg": "#e1f2de",
+        "size": 13,
+        "ratio": 6.45,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Set up my tracker",
+        "tag": "BUTTON",
+        "cls": "btn primary sm",
+        "fg": "#ffffff",
+        "bg": "#0d5c63",
+        "size": 12,
+        "ratio": 7.7,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "Hide amounts",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "2026",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "January 2026February 2026March",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Previous monthSame month last ",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "Fill in with AI",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Add a statement",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Add transaction",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Show the summary",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#edf1ef",
+        "borderContrast": 1.51,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "Whole yearJanuaryFebruaryMarch",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "Take the tour",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Set up my tracker",
+        "border": "rgb(13, 92, 99)",
+        "bg": "#0d5c63",
+        "borderContrast": 1,
+        "fg": "rgb(255, 255, 255)"
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "view": "networth",
+    "tokens": {
+      "bg": "#f1f4f2",
+      "surface": "#fcfdfc",
+      "surface-2": "#edf1ef",
+      "surface-3": "#e2e8e5",
+      "ink": "#13211f",
+      "ink-2": "#44554f",
+      "muted": "#5c6a65",
+      "line": "#d8dfdc",
+      "line-2": "#bcc8c3",
+      "accent": "#0d5c63",
+      "accent-ink": "#ffffff",
+      "accent-soft": "#d9ebea",
+      "good": "#0ca30c",
+      "good-ink": "#006300",
+      "bad": "#d03b3b",
+      "bad-ink": "#a82727",
+      "warn": "#c99a06",
+      "warn-ink": "#6e4b00",
+      "c-income": "#1baf7a",
+      "c-expenses": "#eb6834",
+      "c-investments": "#2a78d6",
+      "g-cash": "#6f8794",
+      "g-invest": "#2a78d6",
+      "g-illiquid": "#c99a06",
+      "g-pension": "#7b5cd6"
+    },
+    "textCount": 192,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "What everything you own is worth at the end of each month. Type the figures in once a mont",
+        "tag": "P",
+        "cls": "ph-meta",
+        "fg": "#5c6a65",
+        "bg": "#f1f4f2",
+        "size": 13,
+        "ratio": 5.12,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "1",
+        "tag": "SPAN",
+        "cls": "badge",
+        "fg": "#6e4b00",
+        "bg": "#fbf0d2",
+        "size": 11,
+        "ratio": 6.93,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Set up my tracker",
+        "tag": "BUTTON",
+        "cls": "btn primary sm",
+        "fg": "#ffffff",
+        "bg": "#0d5c63",
+        "size": 12,
+        "ratio": 7.7,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "43.108 € without retirement savings",
+        "tag": "P",
+        "cls": "hero-sub",
+        "fg": "#44554f",
+        "bg": "#f1f4f2",
+        "size": 14,
+        "ratio": 7.13,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "See how extra monthly saving could change your total.",
+        "tag": "P",
+        "cls": "sub",
+        "fg": "#5c6a65",
+        "bg": "#fcfdfc",
+        "size": 13,
+        "ratio": 5.56,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "You save a month",
+        "tag": "SPAN",
+        "cls": "nw-stat-l",
+        "fg": "#44554f",
+        "bg": "#fcfdfc",
+        "size": 13,
+        "ratio": 7.75,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "+312,90 €",
+        "tag": "SPAN",
+        "cls": "nw-sval up",
+        "fg": "#006300",
+        "bg": "#fcfdfc",
+        "size": 18,
+        "ratio": 7.4,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "2.082 €",
+        "tag": "SPAN",
+        "cls": "nw-stat-v",
+        "fg": "#13211f",
+        "bg": "#fcfdfc",
+        "size": 18,
+        "ratio": 16.28,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Locked until retirement",
+        "tag": "SPAN",
+        "cls": "hint grp-sub",
+        "fg": "#5c6a65",
+        "bg": "#edf1ef",
+        "size": 13,
+        "ratio": 4.97,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Excellent",
+        "tag": "SPAN",
+        "cls": "pill good",
+        "fg": "#006300",
+        "bg": "#e1f2de",
+        "size": 13,
+        "ratio": 6.45,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Needs more than saving alone",
+        "tag": "SPAN",
+        "cls": "pill bad",
+        "fg": "#a82727",
+        "bg": "#fbe5e3",
+        "size": 13,
+        "ratio": 5.84,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Hypothetical total",
+        "tag": "SPAN",
+        "cls": "nw-stat-l",
+        "fg": "#44554f",
+        "bg": "#d9ebea",
+        "size": 13,
+        "ratio": 6.4,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "At the end of September 2027",
+        "tag": "SPAN",
+        "cls": "hint",
+        "fg": "#5c6a65",
+        "bg": "#d9ebea",
+        "size": 13,
+        "ratio": 4.59,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "Hide amounts",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "September 2026August 2026July ",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Fill in with AI",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Import from Excel",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Edit September 2026 figures",
+        "border": "rgb(13, 92, 99)",
+        "bg": "#0d5c63",
+        "borderContrast": 1,
+        "fg": "rgb(255, 255, 255)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "Edit accounts",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Show the summary",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#edf1ef",
+        "borderContrast": 1.51,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "Add details in Settings",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "view": "transactions",
+    "tokens": {
+      "bg": "#f1f4f2",
+      "surface": "#fcfdfc",
+      "surface-2": "#edf1ef",
+      "surface-3": "#e2e8e5",
+      "ink": "#13211f",
+      "ink-2": "#44554f",
+      "muted": "#5c6a65",
+      "line": "#d8dfdc",
+      "line-2": "#bcc8c3",
+      "accent": "#0d5c63",
+      "accent-ink": "#ffffff",
+      "accent-soft": "#d9ebea",
+      "good": "#0ca30c",
+      "good-ink": "#006300",
+      "bad": "#d03b3b",
+      "bad-ink": "#a82727",
+      "warn": "#c99a06",
+      "warn-ink": "#6e4b00",
+      "c-income": "#1baf7a",
+      "c-expenses": "#eb6834",
+      "c-investments": "#2a78d6",
+      "g-cash": "#6f8794",
+      "g-invest": "#2a78d6",
+      "g-illiquid": "#c99a06",
+      "g-pension": "#7b5cd6"
+    },
+    "textCount": 672,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "Click a row to edit or delete it. You can also change a category straight from its list.",
+        "tag": "P",
+        "cls": "hint",
+        "fg": "#5c6a65",
+        "bg": "#f1f4f2",
+        "size": 13,
+        "ratio": 5.12,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "1",
+        "tag": "SPAN",
+        "cls": "badge",
+        "fg": "#6e4b00",
+        "bg": "#fbf0d2",
+        "size": 11,
+        "ratio": 6.93,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Set up my tracker",
+        "tag": "BUTTON",
+        "cls": "btn primary sm",
+        "fg": "#ffffff",
+        "bg": "#0d5c63",
+        "size": 12,
+        "ratio": 7.7,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Maybe Groceries?",
+        "tag": "BUTTON",
+        "cls": "linkish ml-maybe",
+        "fg": "#13211f",
+        "bg": "#fcfdfc",
+        "size": 12,
+        "ratio": 16.28,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "Hide amounts",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "2026",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Categorise blanks",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Import history",
+        "border": "rgba(0, 0, 0, 0)",
+        "bg": "#f1f4f2",
+        "borderContrast": 18.96,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Fill in with AI",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Add a statement",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Add transaction",
+        "border": "rgb(13, 92, 99)",
+        "bg": "#0d5c63",
+        "borderContrast": 1,
+        "fg": "rgb(255, 255, 255)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Whole of 2026JanuaryFebruaryMa",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "All categoriesUncategorised (1",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "All accounts / unknownCurrent ",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "All sources",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Choose a viewUncategorisedMini",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Save these filters",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Select filtered rows",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "view": "yearly",
+    "tokens": {
+      "bg": "#f1f4f2",
+      "surface": "#fcfdfc",
+      "surface-2": "#edf1ef",
+      "surface-3": "#e2e8e5",
+      "ink": "#13211f",
+      "ink-2": "#44554f",
+      "muted": "#5c6a65",
+      "line": "#d8dfdc",
+      "line-2": "#bcc8c3",
+      "accent": "#0d5c63",
+      "accent-ink": "#ffffff",
+      "accent-soft": "#d9ebea",
+      "good": "#0ca30c",
+      "good-ink": "#006300",
+      "bad": "#d03b3b",
+      "bad-ink": "#a82727",
+      "warn": "#c99a06",
+      "warn-ink": "#6e4b00",
+      "c-income": "#1baf7a",
+      "c-expenses": "#eb6834",
+      "c-investments": "#2a78d6",
+      "g-cash": "#6f8794",
+      "g-invest": "#2a78d6",
+      "g-illiquid": "#c99a06",
+      "g-pension": "#7b5cd6"
+    },
+    "textCount": 443,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "Every figure adds up the transactions behind it. Click a figure to see them.",
+        "tag": "P",
+        "cls": "ph-meta",
+        "fg": "#5c6a65",
+        "bg": "#f1f4f2",
+        "size": 13,
+        "ratio": 5.12,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "1",
+        "tag": "SPAN",
+        "cls": "badge",
+        "fg": "#6e4b00",
+        "bg": "#fbf0d2",
+        "size": 11,
+        "ratio": 6.93,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Show 14 empty categories",
+        "tag": "BUTTON",
+        "cls": "linkish",
+        "fg": "#13211f",
+        "bg": "#fcfdfc",
+        "size": 13,
+        "ratio": 16.28,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Set up my tracker",
+        "tag": "BUTTON",
+        "cls": "btn primary sm",
+        "fg": "#ffffff",
+        "bg": "#0d5c63",
+        "size": 12,
+        "ratio": 7.7,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "Hide amounts",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "2026",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Take the tour",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Set up my tracker",
+        "border": "rgb(13, 92, 99)",
+        "bg": "#0d5c63",
+        "borderContrast": 1,
+        "fg": "rgb(255, 255, 255)"
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "view": "settings",
+    "tokens": {
+      "bg": "#f1f4f2",
+      "surface": "#fcfdfc",
+      "surface-2": "#edf1ef",
+      "surface-3": "#e2e8e5",
+      "ink": "#13211f",
+      "ink-2": "#44554f",
+      "muted": "#5c6a65",
+      "line": "#d8dfdc",
+      "line-2": "#bcc8c3",
+      "accent": "#0d5c63",
+      "accent-ink": "#ffffff",
+      "accent-soft": "#d9ebea",
+      "good": "#0ca30c",
+      "good-ink": "#006300",
+      "bad": "#d03b3b",
+      "bad-ink": "#a82727",
+      "warn": "#c99a06",
+      "warn-ink": "#6e4b00",
+      "c-income": "#1baf7a",
+      "c-expenses": "#eb6834",
+      "c-investments": "#2a78d6",
+      "g-cash": "#6f8794",
+      "g-invest": "#2a78d6",
+      "g-illiquid": "#c99a06",
+      "g-pension": "#7b5cd6"
+    },
+    "textCount": 81,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "Language, number format, start month, backups and the AI that reads statements.",
+        "tag": "P",
+        "cls": "ph-meta",
+        "fg": "#5c6a65",
+        "bg": "#f1f4f2",
+        "size": 13,
+        "ratio": 5.12,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "1",
+        "tag": "SPAN",
+        "cls": "badge",
+        "fg": "#6e4b00",
+        "bg": "#fbf0d2",
+        "size": 11,
+        "ratio": 6.93,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "The i buttons next to titles and figures explain what they mean.",
+        "tag": "P",
+        "cls": "hint",
+        "fg": "#5c6a65",
+        "bg": "#fcfdfc",
+        "size": 13,
+        "ratio": 5.56,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Set up my tracker",
+        "tag": "BUTTON",
+        "cls": "btn primary sm",
+        "fg": "#ffffff",
+        "bg": "#0d5c63",
+        "size": 12,
+        "ratio": 7.7,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "Hide amounts",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(19, 33, 31)",
+        "bg": "#d9ebea",
+        "borderContrast": 13.46,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(19, 33, 31)",
+        "bg": "#fcfdfc",
+        "borderContrast": 16.28,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(68, 85, 79)",
+        "bg": "#d9ebea",
+        "borderContrast": 6.4,
+        "fg": "rgb(68, 85, 79)"
+      },
+      {
+        "text": "",
+        "border": "rgb(68, 85, 79)",
+        "bg": "#fcfdfc",
+        "borderContrast": 7.75,
+        "fg": "rgb(68, 85, 79)"
+      },
+      {
+        "text": "Euro (€)Pound sterling (£)US d",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(92, 106, 101)"
+      },
+      {
+        "text": "Set a start month",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(19, 33, 31)",
+        "bg": "#d9ebea",
+        "borderContrast": 13.46,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(19, 33, 31)",
+        "bg": "#fcfdfc",
+        "borderContrast": 16.28,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "",
+        "border": "rgb(19, 33, 31)",
+        "bg": "#fcfdfc",
+        "borderContrast": 16.28,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Change where it’s saved…",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Restore a backup…",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Restore from Google Drive…",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Save a backup…",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Open another data file…",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      },
+      {
+        "text": "Start fresh…",
+        "border": "color(srgb 0.772549 0.53549 0.524706)",
+        "bg": "#fcfdfc",
+        "borderContrast": 2.82,
+        "fg": "rgb(168, 39, 39)"
+      },
+      {
+        "text": "Download everything as Excel",
+        "border": "rgb(188, 200, 195)",
+        "bg": "#fcfdfc",
+        "borderContrast": 1.69,
+        "fg": "rgb(19, 33, 31)"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "view": "landing",
+    "tokens": {
+      "bg": "#0b0b0c",
+      "surface": "#141415",
+      "surface-2": "#1b1b1d",
+      "surface-3": "#252528",
+      "ink": "#ececee",
+      "ink-2": "#b6b6bb",
+      "muted": "#8b8b91",
+      "line": "#29292c",
+      "line-2": "#3b3b40",
+      "accent": "#5ebdc3",
+      "accent-ink": "#06201f",
+      "accent-soft": "#1b2829",
+      "good": "#0ca30c",
+      "good-ink": "#52c552",
+      "bad": "#e66767",
+      "bad-ink": "#ff928d",
+      "warn": "#e2b53a",
+      "warn-ink": "#f0c45c",
+      "c-income": "#199e70",
+      "c-expenses": "#d95926",
+      "c-investments": "#3987e5",
+      "g-cash": "#8fa3ae",
+      "g-invest": "#3987e5",
+      "g-illiquid": "#e2b53a",
+      "g-pension": "#9478e6"
+    },
+    "textCount": 24,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "Get started",
+        "tag": "BUTTON",
+        "cls": "btn primary",
+        "fg": "#06201f",
+        "bg": "#5ebdc3",
+        "size": 15,
+        "ratio": 7.73,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": true
+      },
+      {
+        "text": "Made for people who just want to know how they’re doing. No finance words needed.",
+        "tag": "P",
+        "cls": "wl-sub",
+        "fg": "#b6b6bb",
+        "bg": "#0b0b0c",
+        "size": 16,
+        "ratio": 9.74,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "See a demo",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Get started",
+        "border": "rgb(94, 189, 195)",
+        "bg": "#5ebdc3",
+        "borderContrast": 1,
+        "fg": "rgb(6, 32, 31)"
+      },
+      {
+        "text": "See a demo",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Get started",
+        "border": "rgb(94, 189, 195)",
+        "bg": "#5ebdc3",
+        "borderContrast": 1,
+        "fg": "rgb(6, 32, 31)"
+      },
+      {
+        "text": "See a demo",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Get started",
+        "border": "rgb(94, 189, 195)",
+        "bg": "#5ebdc3",
+        "borderContrast": 1,
+        "fg": "rgb(6, 32, 31)"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "view": "overview",
+    "tokens": {
+      "bg": "#0b0b0c",
+      "surface": "#141415",
+      "surface-2": "#1b1b1d",
+      "surface-3": "#252528",
+      "ink": "#ececee",
+      "ink-2": "#b6b6bb",
+      "muted": "#8b8b91",
+      "line": "#29292c",
+      "line-2": "#3b3b40",
+      "accent": "#5ebdc3",
+      "accent-ink": "#06201f",
+      "accent-soft": "#1b2829",
+      "good": "#0ca30c",
+      "good-ink": "#52c552",
+      "bad": "#e66767",
+      "bad-ink": "#ff928d",
+      "warn": "#e2b53a",
+      "warn-ink": "#f0c45c",
+      "c-income": "#199e70",
+      "c-expenses": "#d95926",
+      "c-investments": "#3987e5",
+      "g-cash": "#8fa3ae",
+      "g-invest": "#3987e5",
+      "g-illiquid": "#e2b53a",
+      "g-pension": "#9478e6"
+    },
+    "textCount": 200,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "Income minus expenses. Money you invested still counts as kept.",
+        "tag": "P",
+        "cls": "hint",
+        "fg": "#8b8b91",
+        "bg": "#0b0b0c",
+        "size": 13,
+        "ratio": 5.81,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "1",
+        "tag": "SPAN",
+        "cls": "badge",
+        "fg": "#f0c45c",
+        "bg": "#382d12",
+        "size": 11,
+        "ratio": 8.22,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "of income kept after expenses",
+        "tag": "P",
+        "cls": "hero-sub",
+        "fg": "#b6b6bb",
+        "bg": "#0b0b0c",
+        "size": 14,
+        "ratio": 9.74,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Share of 2026 income, against suggested targets. Tap a target to change it. Leaves out 1 r",
+        "tag": "P",
+        "cls": "sub",
+        "fg": "#8b8b91",
+        "bg": "#141415",
+        "size": 13,
+        "ratio": 5.44,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Investments",
+        "tag": "SPAN",
+        "cls": "nw-stat-l",
+        "fg": "#b6b6bb",
+        "bg": "#141415",
+        "size": 13,
+        "ratio": 9.12,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Δ +946,47 €",
+        "tag": "SMALL",
+        "cls": "good",
+        "fg": "#52c552",
+        "bg": "#141415",
+        "size": 11.6667,
+        "ratio": 8.3,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Show all",
+        "tag": "BUTTON",
+        "cls": "linkish",
+        "fg": "#ececee",
+        "bg": "#141415",
+        "size": 13,
+        "ratio": 15.6,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "On target",
+        "tag": "SPAN",
+        "cls": "pill good",
+        "fg": "#52c552",
+        "bg": "#15301a",
+        "size": 13,
+        "ratio": 6.44,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Set up my tracker",
+        "tag": "BUTTON",
+        "cls": "btn primary sm",
+        "fg": "#06201f",
+        "bg": "#5ebdc3",
+        "size": 12,
+        "ratio": 7.73,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "Hide amounts",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "2026",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "January 2026February 2026March",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Previous monthSame month last ",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "Fill in with AI",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Add a statement",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Add transaction",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Show the summary",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#1b1b1d",
+        "borderContrast": 1.54,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "Whole yearJanuaryFebruaryMarch",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "Take the tour",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Set up my tracker",
+        "border": "rgb(94, 189, 195)",
+        "bg": "#5ebdc3",
+        "borderContrast": 1,
+        "fg": "rgb(6, 32, 31)"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "view": "networth",
+    "tokens": {
+      "bg": "#0b0b0c",
+      "surface": "#141415",
+      "surface-2": "#1b1b1d",
+      "surface-3": "#252528",
+      "ink": "#ececee",
+      "ink-2": "#b6b6bb",
+      "muted": "#8b8b91",
+      "line": "#29292c",
+      "line-2": "#3b3b40",
+      "accent": "#5ebdc3",
+      "accent-ink": "#06201f",
+      "accent-soft": "#1b2829",
+      "good": "#0ca30c",
+      "good-ink": "#52c552",
+      "bad": "#e66767",
+      "bad-ink": "#ff928d",
+      "warn": "#e2b53a",
+      "warn-ink": "#f0c45c",
+      "c-income": "#199e70",
+      "c-expenses": "#d95926",
+      "c-investments": "#3987e5",
+      "g-cash": "#8fa3ae",
+      "g-invest": "#3987e5",
+      "g-illiquid": "#e2b53a",
+      "g-pension": "#9478e6"
+    },
+    "textCount": 192,
+    "failures": [
+      {
+        "text": "At the end of September 2027",
+        "tag": "SPAN",
+        "cls": "hint",
+        "fg": "#8b8b91",
+        "bg": "#1b2829",
+        "size": 13,
+        "ratio": 4.49,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "pairs": [
+      {
+        "text": "What everything you own is worth at the end of each month. Type the figures in once a mont",
+        "tag": "P",
+        "cls": "ph-meta",
+        "fg": "#8b8b91",
+        "bg": "#0b0b0c",
+        "size": 13,
+        "ratio": 5.81,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "1",
+        "tag": "SPAN",
+        "cls": "badge",
+        "fg": "#f0c45c",
+        "bg": "#382d12",
+        "size": 11,
+        "ratio": 8.22,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Set up my tracker",
+        "tag": "BUTTON",
+        "cls": "btn primary sm",
+        "fg": "#06201f",
+        "bg": "#5ebdc3",
+        "size": 12,
+        "ratio": 7.73,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "43.108 € without retirement savings",
+        "tag": "P",
+        "cls": "hero-sub",
+        "fg": "#b6b6bb",
+        "bg": "#0b0b0c",
+        "size": 14,
+        "ratio": 9.74,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "See how extra monthly saving could change your total.",
+        "tag": "P",
+        "cls": "sub",
+        "fg": "#8b8b91",
+        "bg": "#141415",
+        "size": 13,
+        "ratio": 5.44,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "You save a month",
+        "tag": "SPAN",
+        "cls": "nw-stat-l",
+        "fg": "#b6b6bb",
+        "bg": "#141415",
+        "size": 13,
+        "ratio": 9.12,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "+312,90 €",
+        "tag": "SPAN",
+        "cls": "nw-sval up",
+        "fg": "#52c552",
+        "bg": "#141415",
+        "size": 18,
+        "ratio": 8.3,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "2.082 €",
+        "tag": "SPAN",
+        "cls": "nw-stat-v",
+        "fg": "#ececee",
+        "bg": "#141415",
+        "size": 18,
+        "ratio": 15.6,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Locked until retirement",
+        "tag": "SPAN",
+        "cls": "hint grp-sub",
+        "fg": "#8b8b91",
+        "bg": "#1b1b1d",
+        "size": 13,
+        "ratio": 5.08,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Excellent",
+        "tag": "SPAN",
+        "cls": "pill good",
+        "fg": "#52c552",
+        "bg": "#15301a",
+        "size": 13,
+        "ratio": 6.44,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Needs more than saving alone",
+        "tag": "SPAN",
+        "cls": "pill bad",
+        "fg": "#ff928d",
+        "bg": "#3a1c1b",
+        "size": 13,
+        "ratio": 7.16,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Hypothetical total",
+        "tag": "SPAN",
+        "cls": "nw-stat-l",
+        "fg": "#b6b6bb",
+        "bg": "#1b2829",
+        "size": 13,
+        "ratio": 7.52,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "At the end of September 2027",
+        "tag": "SPAN",
+        "cls": "hint",
+        "fg": "#8b8b91",
+        "bg": "#1b2829",
+        "size": 13,
+        "ratio": 4.49,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "Hide amounts",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "September 2026August 2026July ",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Fill in with AI",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Import from Excel",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Edit September 2026 figures",
+        "border": "rgb(94, 189, 195)",
+        "bg": "#5ebdc3",
+        "borderContrast": 1,
+        "fg": "rgb(6, 32, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "Edit accounts",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Show the summary",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#1b1b1d",
+        "borderContrast": 1.54,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "Add details in Settings",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "view": "transactions",
+    "tokens": {
+      "bg": "#0b0b0c",
+      "surface": "#141415",
+      "surface-2": "#1b1b1d",
+      "surface-3": "#252528",
+      "ink": "#ececee",
+      "ink-2": "#b6b6bb",
+      "muted": "#8b8b91",
+      "line": "#29292c",
+      "line-2": "#3b3b40",
+      "accent": "#5ebdc3",
+      "accent-ink": "#06201f",
+      "accent-soft": "#1b2829",
+      "good": "#0ca30c",
+      "good-ink": "#52c552",
+      "bad": "#e66767",
+      "bad-ink": "#ff928d",
+      "warn": "#e2b53a",
+      "warn-ink": "#f0c45c",
+      "c-income": "#199e70",
+      "c-expenses": "#d95926",
+      "c-investments": "#3987e5",
+      "g-cash": "#8fa3ae",
+      "g-invest": "#3987e5",
+      "g-illiquid": "#e2b53a",
+      "g-pension": "#9478e6"
+    },
+    "textCount": 672,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "Click a row to edit or delete it. You can also change a category straight from its list.",
+        "tag": "P",
+        "cls": "hint",
+        "fg": "#8b8b91",
+        "bg": "#0b0b0c",
+        "size": 13,
+        "ratio": 5.81,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "1",
+        "tag": "SPAN",
+        "cls": "badge",
+        "fg": "#f0c45c",
+        "bg": "#382d12",
+        "size": 11,
+        "ratio": 8.22,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Set up my tracker",
+        "tag": "BUTTON",
+        "cls": "btn primary sm",
+        "fg": "#06201f",
+        "bg": "#5ebdc3",
+        "size": 12,
+        "ratio": 7.73,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Maybe Groceries?",
+        "tag": "BUTTON",
+        "cls": "linkish ml-maybe",
+        "fg": "#ececee",
+        "bg": "#141415",
+        "size": 12,
+        "ratio": 15.6,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "Hide amounts",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "2026",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Categorise blanks",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Import history",
+        "border": "rgba(0, 0, 0, 0)",
+        "bg": "#0b0b0c",
+        "borderContrast": 1.07,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Fill in with AI",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Add a statement",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Add transaction",
+        "border": "rgb(94, 189, 195)",
+        "bg": "#5ebdc3",
+        "borderContrast": 1,
+        "fg": "rgb(6, 32, 31)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Whole of 2026JanuaryFebruaryMa",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "All categoriesUncategorised (1",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "All accounts / unknownCurrent ",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "All sources",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Choose a viewUncategorisedMini",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Save these filters",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Select filtered rows",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "view": "yearly",
+    "tokens": {
+      "bg": "#0b0b0c",
+      "surface": "#141415",
+      "surface-2": "#1b1b1d",
+      "surface-3": "#252528",
+      "ink": "#ececee",
+      "ink-2": "#b6b6bb",
+      "muted": "#8b8b91",
+      "line": "#29292c",
+      "line-2": "#3b3b40",
+      "accent": "#5ebdc3",
+      "accent-ink": "#06201f",
+      "accent-soft": "#1b2829",
+      "good": "#0ca30c",
+      "good-ink": "#52c552",
+      "bad": "#e66767",
+      "bad-ink": "#ff928d",
+      "warn": "#e2b53a",
+      "warn-ink": "#f0c45c",
+      "c-income": "#199e70",
+      "c-expenses": "#d95926",
+      "c-investments": "#3987e5",
+      "g-cash": "#8fa3ae",
+      "g-invest": "#3987e5",
+      "g-illiquid": "#e2b53a",
+      "g-pension": "#9478e6"
+    },
+    "textCount": 443,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "Every figure adds up the transactions behind it. Click a figure to see them.",
+        "tag": "P",
+        "cls": "ph-meta",
+        "fg": "#8b8b91",
+        "bg": "#0b0b0c",
+        "size": 13,
+        "ratio": 5.81,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "1",
+        "tag": "SPAN",
+        "cls": "badge",
+        "fg": "#f0c45c",
+        "bg": "#382d12",
+        "size": 11,
+        "ratio": 8.22,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Show 14 empty categories",
+        "tag": "BUTTON",
+        "cls": "linkish",
+        "fg": "#ececee",
+        "bg": "#141415",
+        "size": 13,
+        "ratio": 15.6,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Set up my tracker",
+        "tag": "BUTTON",
+        "cls": "btn primary sm",
+        "fg": "#06201f",
+        "bg": "#5ebdc3",
+        "size": 12,
+        "ratio": 7.73,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "Hide amounts",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "2026",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Take the tour",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Set up my tracker",
+        "border": "rgb(94, 189, 195)",
+        "bg": "#5ebdc3",
+        "borderContrast": 1,
+        "fg": "rgb(6, 32, 31)"
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "view": "settings",
+    "tokens": {
+      "bg": "#0b0b0c",
+      "surface": "#141415",
+      "surface-2": "#1b1b1d",
+      "surface-3": "#252528",
+      "ink": "#ececee",
+      "ink-2": "#b6b6bb",
+      "muted": "#8b8b91",
+      "line": "#29292c",
+      "line-2": "#3b3b40",
+      "accent": "#5ebdc3",
+      "accent-ink": "#06201f",
+      "accent-soft": "#1b2829",
+      "good": "#0ca30c",
+      "good-ink": "#52c552",
+      "bad": "#e66767",
+      "bad-ink": "#ff928d",
+      "warn": "#e2b53a",
+      "warn-ink": "#f0c45c",
+      "c-income": "#199e70",
+      "c-expenses": "#d95926",
+      "c-investments": "#3987e5",
+      "g-cash": "#8fa3ae",
+      "g-invest": "#3987e5",
+      "g-illiquid": "#e2b53a",
+      "g-pension": "#9478e6"
+    },
+    "textCount": 81,
+    "failures": [],
+    "pairs": [
+      {
+        "text": "Language, number format, start month, backups and the AI that reads statements.",
+        "tag": "P",
+        "cls": "ph-meta",
+        "fg": "#8b8b91",
+        "bg": "#0b0b0c",
+        "size": 13,
+        "ratio": 5.81,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "1",
+        "tag": "SPAN",
+        "cls": "badge",
+        "fg": "#f0c45c",
+        "bg": "#382d12",
+        "size": 11,
+        "ratio": 8.22,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "The i buttons next to titles and figures explain what they mean.",
+        "tag": "P",
+        "cls": "hint",
+        "fg": "#8b8b91",
+        "bg": "#141415",
+        "size": 13,
+        "ratio": 5.44,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      },
+      {
+        "text": "Set up my tracker",
+        "tag": "BUTTON",
+        "cls": "btn primary sm",
+        "fg": "#06201f",
+        "bg": "#5ebdc3",
+        "size": 12,
+        "ratio": 7.73,
+        "threshold": 4.5,
+        "disabled": false,
+        "gradient": false
+      }
+    ],
+    "controls": [
+      {
+        "text": "Hide amounts",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(236, 236, 238)",
+        "bg": "#1b2829",
+        "borderContrast": 12.88,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(236, 236, 238)",
+        "bg": "#141415",
+        "borderContrast": 15.6,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(182, 182, 187)",
+        "bg": "#1b2829",
+        "borderContrast": 7.52,
+        "fg": "rgb(182, 182, 187)"
+      },
+      {
+        "text": "",
+        "border": "rgb(182, 182, 187)",
+        "bg": "#141415",
+        "borderContrast": 9.12,
+        "fg": "rgb(182, 182, 187)"
+      },
+      {
+        "text": "Euro (€)Pound sterling (£)US d",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "What does this mean?",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(139, 139, 145)"
+      },
+      {
+        "text": "Set a start month",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(236, 236, 238)",
+        "bg": "#141415",
+        "borderContrast": 15.6,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(236, 236, 238)",
+        "bg": "#1b2829",
+        "borderContrast": 12.88,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "",
+        "border": "rgb(236, 236, 238)",
+        "bg": "#141415",
+        "borderContrast": 15.6,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Change where it’s saved…",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Restore a backup…",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Restore from Google Drive…",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Save a backup…",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Open another data file…",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      },
+      {
+        "text": "Start fresh…",
+        "border": "color(srgb 0.533137 0.30902 0.319804)",
+        "bg": "#141415",
+        "borderContrast": 2.88,
+        "fg": "rgb(255, 146, 141)"
+      },
+      {
+        "text": "Download everything as Excel",
+        "border": "rgb(59, 59, 64)",
+        "bg": "#141415",
+        "borderContrast": 1.65,
+        "fg": "rgb(236, 236, 238)"
+      }
+    ]
+  }
+]

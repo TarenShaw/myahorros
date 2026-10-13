@@ -1,0 +1,74 @@
+/* Regression proof for the 2026-10-13 transaction/import audit.
+   Serve root at localhost:8000; NODE_PATH=<Playwright modules> node tests/crew-audit-fixes.e2e.js */
+const {chromium}=require('playwright'), assert=require('assert'), path=require('path'),fs=require('fs');
+const XLSX=require('../vendor/xlsx.full.min.js');
+const OUT=path.join(__dirname,'../qa/crew-audit-2026-10-13/verification');fs.mkdirSync(OUT,{recursive:true});
+const START=process.env.START_URL||'http://localhost:8000/';
+const categories={income:[{name:'Salary'},{name:'Dividends'},{name:'Interest'}],expenses:[{name:'Groceries'},{name:'Utilities'},{name:'Restaurants'}],investments:[{name:'Funds'}]};
+const seed=()=>({app:'Yearly Budget Tracker',format:1,months:{},config:{categories,settings:{lang:'en',numFmt:'en',currency:'EUR',start:{y:2026,m:0},guide:{on:false,done:true}},networth:{accounts:[{id:'cashA',name:'Bank Alpha',group:'cash'},{id:'cashB',name:'Bank Beta',group:'cash'},{id:'fund',name:'Alpha Broker',group:'invest'},{id:'beta',name:'Beta Broker',group:'invest'}],snaps:{'2026-08':{cashA:1000,cashB:1000,fund:1000,beta:1000},'2026-09':{cashA:1000,cashB:1000,fund:1100,beta:1000}}}}});
+(async()=>{
+ const browser=await chromium.launch({channel:'msedge'});
+ const errors=[];
+ const boot=async(data=seed(),width=1280,lang='en')=>{
+  const ctx=await browser.newContext({viewport:{width,height:900},serviceWorkers:'block'}),p=await ctx.newPage();
+  await p.addInitScript(l=>{window.__ybtTest=true;localStorage.setItem('ybt.lang',l);},lang);
+  p.on('pageerror',e=>errors.push(String(e)));
+  await p.route('https://accounts.google.com/gsi/client',r=>r.fulfill({contentType:'text/javascript',body:'window.google={accounts:{oauth2:{}}};'}));
+  await p.goto(START); data.config.settings.lang=lang;
+  await p.evaluate(async d=>{localStorage.setItem('ybt.storage','browser');localStorage.setItem('ybt.picked','1');await window.__ybtWeb.idb.set('data',JSON.stringify(d));},data);
+  await p.reload();await p.waitForFunction(()=>window.__ybt?.S.gotMonths);await p.click('#tab-transactions');return p;
+ };
+ const openImport=async(p,text)=>{await p.click('#view [data-action=import]');await p.fill('#imp-text',text);await p.click('[data-action=imp-read]');await p.waitForSelector('#imp-r-0');};
+ const save=async p=>{await p.click('[data-action=imp-add]');if(await p.locator('[data-action=imp-add-confirm]').count())await p.click('[data-action=imp-add-confirm]');};
+ const all=p=>p.evaluate(()=>window.__ybt.allRows());
+ try{
+  const p=await boot();
+  const csv='Date,Amount,Description\n2026-09-09,-15,NETFLIX';
+  await openImport(p,csv);await p.selectOption('#imp-acct','cashA');await save(p);
+  await openImport(p,csv);await p.selectOption('#imp-acct','cashB');assert.equal(await p.isChecked('#imp-on-0'),true);await save(p);assert.equal((await all(p)).length,2);
+  await openImport(p,csv);await p.selectOption('#imp-acct','cashA');assert.equal(await p.isChecked('#imp-on-0'),false);await p.click('button[data-action=close]');await p.click('[data-action=imp-discard]');
+  await openImport(p,'Date,Amount,Description\n2026-09-01,2000,Salary\n2026-09-02,-500,APORTACION INDEXA\n2026-09-03,-100,Groceries\n2026-09-04,-50,Electricity');
+  assert.equal(await p.evaluate(()=>window.__ybt.S.modal.rows.filter(r=>r.on).length),4);
+  await p.fill('#imp-a-2','nonsense');await p.locator('#imp-a-2').press('Enter');await p.click('[data-action=imp-add]');assert.ok(await p.locator('#imp-a-2[aria-invalid=true]').count());assert.equal((await all(p)).length,2);
+  await p.click('[data-action=imp-review-mode][data-v=all]');await p.uncheck('#imp-on-2');await save(p);assert.equal((await all(p)).length,5);
+  const geometry=await p.locator('#view .notice svg').first().evaluate(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height}));assert.ok(geometry.width<=24&&geometry.height<=24);
+  await openImport(p,'Date,Amount,Description\n2026-09-05,-500,Transfer between accounts\n2026-09-05,500,Transfer between accounts');
+  assert.equal(await p.isChecked('#imp-on-0'),false);await p.fill('#imp-a-0','-600');await p.locator('#imp-a-0').press('Enter');assert.equal(await p.isChecked('#imp-on-0'),true);assert.equal(await p.evaluate(()=>window.__ybt.S.modal.checks.xfer),0);
+  await p.click('button[data-action=close]');await p.click('[data-action=imp-discard]');
+  await openImport(p,'Date,Description,Category,Cost,Currency,Ana,Ben\n2026-09-10,Dinner,Food,120,USD,-60,60');
+  assert.equal(await p.evaluate(()=>window.__ybt.S.modal.rows[0].fx),'USD');await p.click('[data-action=imp-add]');assert.ok(await p.locator('[data-action=imp-fx]').count());assert.equal((await all(p)).length,5);
+  await p.fill('#imp-a-0','-55');await p.locator('#imp-a-0').press('Enter');await p.check('[data-action=imp-fx]');await save(p);assert.equal((await all(p)).find(r=>r.concept==='Dinner').originalCurrency,'USD');
+  await openImport(p,'Date,Amount,Description\n09/01/2026,-10,US first\n09/02/2026,-20,US second');
+  await p.click('[data-action=imp-add]');assert.ok(await p.locator('[data-action=imp-date-order]').count());await p.selectOption('[data-action=imp-date-order]','mdy');assert.equal(await p.inputValue('#imp-date-0'),'2026-09-01');
+  await p.fill('#imp-date-1','2026-09-03');await p.locator('#imp-date-1').press('Enter');await save(p);assert.ok((await all(p)).some(r=>r.concept==='US second'&&r.date==='2026-09-03'));
+  await openImport(p,'Date,Amount,Description\n2026-09-11,-10,Bulk one\n2026-09-12,-20,Bulk two');
+  await p.fill('#imp-search','Bulk two');assert.equal(await p.locator('table.imp tbody tr').count(),1);await p.click('[data-action=imp-select-visible]');await p.selectOption('#imp-bulk-category','expenses|Restaurants');await p.click('[data-action=imp-bulk-apply]');
+  assert.deepEqual(await p.evaluate(()=>window.__ybt.S.modal.rows.map(r=>r.category)),['','Restaurants']);await p.click('[data-action=imp-bulk-exclude]');await p.click('[data-action=imp-excluded]');assert.equal(await p.locator('table.imp tbody tr').count(),1);await p.click('button[data-action=close]');await p.click('[data-action=imp-discard]');
+  await openImport(p,'Date,Amount,Description\n'+Array.from({length:205},(_,i)=>`2026-09-15,-${i+1},Large merchant ${i}`).join('\n'));await p.click('[data-action=imp-more]');await p.fill('#imp-a-204','invalid');await p.locator('#imp-a-204').press('Enter');await p.fill('#imp-search','Large merchant 1');await p.click('[data-action=imp-add]');assert.equal(await p.inputValue('#imp-a-204'),'invalid');assert.ok(await p.locator('#imp-a-204[aria-invalid=true]').count());await p.screenshot({path:path.join(OUT,'invalid-large-review.png')});await p.click('button[data-action=close]');await p.click('[data-action=imp-discard]');
+  await p.context().close();console.log('Import integrity, editable dates, foreign currency, bulk review and notice geometry passed');
+
+  for(const width of [1280,390])for(const lang of ['en','es']){
+   const data=seed();data.config.networth.snaps['2026-09']={cashA:1000,cashB:1000,fund:500,beta:1500};const q=await boot(data,width,lang);
+   await q.click('#view [data-action=add-tx]');await q.selectOption('#f-table','investments');await q.fill('#f-date','2026-09-15');await q.fill('#f-concept','Transfer from Alpha Broker to Beta Broker');await q.fill('#f-amount','500');await q.selectOption('#f-movement','transfer');await q.selectOption('#f-transferFrom','fund');await q.selectOption('#f-transferTo','beta');await q.locator('#tx-form button[type=submit]').click();
+   const transfer=await q.evaluate(()=>({G:[...window.__ybt.nwGains('2026-08','2026-09')],split:window.__ybt.nwSplit('2026-08','2026-09'),budget:window.__ybt.agg(2026).Y}));assert.deepEqual(transfer.G,[['fund',0],['beta',0]]);assert.equal(transfer.split.gains,0);assert.equal(transfer.split.left,0);assert.ok(transfer.split.ok);
+   await q.waitForFunction(()=>!window.YBT_BUSY());await q.reload();await q.waitForFunction(()=>window.__ybt?.S.gotMonths);assert.equal(await q.evaluate(()=>window.__ybt.allRows()[0].transferFrom),'fund');assert.equal(await q.evaluate(()=>window.__ybt.agg(2026).Y.inv),0);
+   await q.click('#tab-networth');await q.screenshot({path:path.join(OUT,`transfer-${lang}-${width}.png`)});
+   await q.context().close();
+  }
+  const d=seed();const r=await boot(d);await r.click('#view [data-action=add-tx]');await r.selectOption('#f-table','income');await r.fill('#f-date','2026-09-15');await r.fill('#f-concept','Alpha Broker dividend');await r.fill('#f-amount','100');await r.selectOption('#f-cat','Dividends');await r.selectOption('#f-investmentAccount','fund');await r.selectOption('#f-returnTreatment','retained');await r.locator('#tx-form button[type=submit]').click();
+  assert.equal(await r.evaluate(()=>window.__ybt.nwGains('2026-08','2026-09').get('fund')),100);assert.equal(await r.evaluate(()=>window.__ybt.nwSplit('2026-08','2026-09').left),0);assert.equal(await r.evaluate(()=>window.__ybt.agg(2026).Y.inc),0);await r.waitForFunction(()=>!window.YBT_BUSY());await r.reload();await r.waitForFunction(()=>window.__ybt?.S.gotMonths);assert.equal(await r.evaluate(()=>window.__ybt.allRows()[0].returnTreatment),'retained');await r.context().close();
+  const c=seed();c.config.networth.snaps={'2026-07':{fund:1000},'2026-09':{fund:1500}};c.config.networth.contributions={'2026-08':{fund:300}};c.months={'2026-09':{income:[],expenses:[],investments:[{id:'dep',date:'2026-09-15',amount:-200,concept:'Alpha Broker deposit',category:'Funds'}]}};const z=await boot(c);assert.equal(await z.evaluate(()=>window.__ybt.nwGains('2026-07','2026-09').get('fund')),0);await z.context().close();
+  console.log('Two-sided transfers EN/ES desktop/mobile, retained returns, mixed monthly contributions and persistence passed');
+  const imported=seed();imported.config.networth.snaps['2026-09']={cashA:1000,cashB:1000,fund:500,beta:1500};const v=await boot(imported);
+  await openImport(v,'Date,Amount,Description\n2026-09-15,-500,Internal broker transfer');await v.selectOption('#imp-t-0','investments');await v.click('#imp-r-0 details summary');await v.selectOption('#imp-movement-0','transfer');assert.equal(await v.locator('#imp-r-0 details').evaluate(el=>el.open),true);await v.selectOption('#imp-transferFrom-0','fund');await v.selectOption('#imp-transferTo-0','beta');await save(v);assert.equal(await v.evaluate(()=>window.__ybt.nwSplit('2026-08','2026-09').gains),0);await v.context().close();
+  const excel=await boot(), wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['Date','Amount','Description','Currency'],['2026-09-11',-10,'Excel shop','EUR'],['2026-09-12',10,'Excel refund','EUR'],['2026-09-13',-15,'USD fee','USD']]),'Bank transactions');
+  await excel.click('#view [data-action=import]');await excel.setInputFiles('#imp-file',{name:'synthetic.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:Buffer.from(XLSX.write(wb,{type:'array',bookType:'xlsx'}))});await excel.waitForSelector('#imp-r-2');assert.equal(await excel.evaluate(()=>window.__ybt.S.modal.rows[2].fx),'USD');await excel.uncheck('#imp-on-2');await excel.selectOption('#imp-t-1','expenses');await save(excel);assert.equal((await all(excel)).length,2);assert.deepEqual((await all(excel)).map(r=>r.amount).sort((a,b)=>a-b),[-10,10]);await excel.context().close();console.log('Imported transfer controls and actual XLSX currency/refund review passed');
+  const linkData=seed();linkData.config.networth.snaps['2026-09']={cashA:1000,cashB:1000,fund:500,beta:1500};linkData.months={'2026-09':{investments:[{id:'xfer',date:'2026-09-15',amount:-500,concept:'Transfer from Alpha Broker to Beta Broker',category:'Funds'}]}};const l=await boot(linkData);await l.click('#tab-networth');await l.click('button.nw-review');await l.selectOption('#nr-from-0','fund');await l.selectOption('#nr-0','beta');await l.click('[data-action=nw-review-link]');assert.equal(await l.evaluate(()=>window.__ybt.nwSplit('2026-08','2026-09').gains),0);assert.equal(await l.evaluate(()=>window.__ybt.nwSplit('2026-08','2026-09').left),0);await l.context().close();
+  const portable=seed();portable.months={'2026-09':{income:[{id:'ret',date:'2026-09-20',amount:100,concept:'Retained dividend',category:'Dividends',investmentAccount:'fund',returnTreatment:'retained',source:'broker.csv'}],investments:[{id:'move',date:'2026-09-15',amount:-500,concept:'Move investments',category:'Funds',transferFrom:'fund',transferTo:'beta'}]}};
+  const ex=await boot(portable);await ex.evaluate(()=>{window.__ybt.S.downloads={save:async({data})=>{window.__export=[...new Uint8Array(await data.arrayBuffer())];}};});await ex.click('#tab-settings');await ex.click('[data-action=export]');await ex.waitForFunction(()=>window.__export);const exported=Buffer.from(await ex.evaluate(()=>window.__export));await ex.context().close();
+  const back=await boot();await back.click('#view [data-action=import]');await back.setInputFiles('#imp-file',{name:'roundtrip.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:exported});await back.waitForSelector('#imp-r-1');await save(back);const restored=await all(back);assert.equal(restored.find(r=>r.concept==='Retained dividend').returnTreatment,'retained');assert.equal(restored.find(r=>r.concept==='Retained dividend').source,'broker.csv');assert.equal(restored.find(r=>r.concept==='Move investments').transferFrom,'fund');assert.equal(restored.find(r=>r.concept==='Move investments').transferTo,'beta');await back.context().close();console.log('Excel export/reimport preserves transfer and retained-return semantics');
+  const n=await boot();await n.click('#tab-networth');await n.click('[data-action=nw-import]');await n.setInputFiles('#nwimp-file',{name:'balances.csv',mimeType:'text/csv',buffer:Buffer.from('Month,Bank Alpha,Alpha Broker,Alpha Broker net contributions,New Pension\n2026-08,1000,1000,,0\n2026-09,1000,1250,200,500')});await n.waitForSelector('[data-action=nwimp-go]');
+  assert.equal(await n.evaluate(()=>window.__ybt.S.modal.data.cols.find(c=>/contributions/.test(c.name)).skip),true);await n.click('[data-action=nwimp-go]');assert.ok(await n.locator('#nwimp-new-confirm').count());await n.check('#nwimp-new-confirm');await n.click('[data-action=nwimp-go]');assert.equal(await n.evaluate(()=>window.__ybt.S.nw.accounts.some(a=>/net contributions/.test(a.name))),false);assert.equal(await n.evaluate(()=>Object.values(window.__ybt.S.nw.snaps['2026-09']).reduce((a,b)=>a+b,0)),4750);await n.context().close();
+  assert.deepEqual(errors,[]);console.log('Balance metadata guard and new-account confirmation passed; no page errors');
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

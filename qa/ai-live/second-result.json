@@ -1,0 +1,199 @@
+{
+  "checks": [
+    "API key session-only",
+    "Six rows; correct dates, salary, decimal, refund, interest; own transfer excluded; no save before review",
+    "Review save commits six rows",
+    "Six rows persist after reload"
+  ],
+  "statuses": [
+    {
+      "endpoint": "/v1/models",
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/messages",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "connection": "accepted",
+  "model": "claude-haiku-5-5",
+  "raw": {
+    "rows": [
+      [
+        "2026-09-01",
+        2500,
+        "QA SALARY ACME",
+        "income",
+        "Salary",
+        "synthetic-statement.txt",
+        "",
+        0
+      ],
+      [
+        "2026-09-02",
+        -800,
+        "QA RENT SEPTEMBER",
+        "expenses",
+        "Rent (fixed)",
+        "synthetic-statement.txt",
+        "",
+        0
+      ],
+      [
+        "2026-09-03",
+        -54.32,
+        "QA MERCADONA GROCERIES",
+        "expenses",
+        "Groceries (variable)",
+        "synthetic-statement.txt",
+        "",
+        0
+      ],
+      [
+        "2026-09-04",
+        -60,
+        "QA CLOTHES STORE",
+        "expenses",
+        "Clothes (variable)",
+        "synthetic-statement.txt",
+        "",
+        0
+      ],
+      [
+        "2026-09-05",
+        20,
+        "QA CLOTHES REFUND (refund of clothing purchase)",
+        "expenses",
+        "Clothes (variable)",
+        "synthetic-statement.txt",
+        "",
+        0
+      ],
+      [
+        "2026-09-30",
+        2.15,
+        "QA SAVINGS INTEREST",
+        "income",
+        "Interest",
+        "synthetic-statement.txt",
+        "",
+        0
+      ]
+    ],
+    "left_out": [
+      [
+        "2026-09-06",
+        -300,
+        "QA TRANSFER TO OWN SAVINGS (internal transfer; my own account)",
+        "synthetic-statement.txt",
+        "Transfer between my own accounts; the receiving savings account is not among the files, so this side is left out too."
+      ]
+    ],
+    "statements": [
+      {
+        "source": "synthetic-statement.txt",
+        "name": "QA Current Account",
+        "opening": 1000,
+        "closing": 2307.83
+      }
+    ],
+    "accounts": [
+      {
+        "name": "QA Current Account",
+        "group": "cash",
+        "match": null,
+        "balances": [
+          [
+            "2026-09",
+            2307.83
+          ]
+        ]
+      }
+    ],
+    "notes": "The savings account that received the 300.00 transfer is not in the files, so its balance is not tracked. The clothes refund is booked as a positive Clothes line, not as income."
+  },
+  "review": {
+    "type": "import",
+    "rows": [
+      {
+        "date": "2026-09-01",
+        "concept": "QA SALARY ACME",
+        "amount": 2500,
+        "table": "income",
+        "category": "Salary",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-02",
+        "concept": "QA RENT SEPTEMBER",
+        "amount": -800,
+        "table": "expenses",
+        "category": "Rent",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-03",
+        "concept": "QA MERCADONA GROCERIES",
+        "amount": -54.32,
+        "table": "expenses",
+        "category": "Groceries",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-04",
+        "concept": "QA CLOTHES STORE",
+        "amount": -60,
+        "table": "expenses",
+        "category": "Clothes",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-05",
+        "concept": "QA CLOTHES REFUND (refund of clothing purchase)",
+        "amount": 20,
+        "table": "expenses",
+        "category": "Clothes",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-30",
+        "concept": "QA SAVINGS INTEREST",
+        "amount": 2.15,
+        "table": "income",
+        "category": "Interest",
+        "on": true,
+        "aiQ": ""
+      }
+    ],
+    "ai": {
+      "out": [
+        {
+          "date": "2026-09-06",
+          "amount": -300,
+          "concept": "QA TRANSFER TO OWN SAVINGS (internal transfer; my own account)",
+          "src": "synthetic-statement.txt",
+          "why": "Transfer between my own accounts; the receiving savings account is not among the files, so this side is left out too."
+        }
+      ],
+      "checks": [
+        {
+          "name": "QA Current Account",
+          "move": 1307.83,
+          "found": 1307.83,
+          "ok": true
+        }
+      ],
+      "notes": "The savings account that received the 300.00 transfer is not in the files, so its balance is not tracked. The clothes refund is booked as a positive Clothes line, not as income.",
+      "n": 1
+    }
+  },
+  "passed": false,
+  "failure": "page.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#tab-transactions')\u001b[22m\n\u001b[2m    - locator resolved to <button role=\"tab\" class=\"tab\" data-action=\"tab\" aria-selected=\"true\" id=\"tab-transactions\" data-tab=\"transactions\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"m-body wz-body\">…</div> from <div class=\"on\" id=\"overlay\" aria-hidden=\"false\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div class=\"m-body wz-body\">…</div> from <div class=\"on\" id=\"overlay\" aria-hidden=\"false\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"scrim\" data-action=\"close\"></div> from <div class=\"on\" id=\"overlay\" aria-hidden=\"false\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  14 × retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"m-body wz-body\">…</div> from <div class=\"on\" id=\"overlay\" aria-hidden=\"false\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"m-body wz-body\">…</div> from <div class=\"on\" id=\"overlay\" aria-hidden=\"false\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"scrim\" data-action=\"close\"></div> from <div class=\"on\" id=\"overlay\" aria-hidden=\"false\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m       - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <div class=\"scrim\" data-action=\"close\"></div> from <div class=\"on\" id=\"overlay\" aria-hidden=\"false\">…</div> subtree intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n",
+  "screen": "INCOME · EXPENSES · INVESTMENTS\n\nMyAhorros\nOverview\nNet worth\nTransactions\nBy month\nSettings\nSaved\nHide amounts\nDownload backup\nTransactions\n\nEvery income, expense and investment row. Click a row to change it.\n\n‹\nYear\n2026\n›\nImport history\nFill in with AI\nAdd a statement\nAdd transaction\nSet up your tracker · step 1 of 5 · Where do you keep money?\nContinue\nIncome\n2\nExpenses\n4\nInvestments\n0\ni\nFilters\nSearch\nMonth\nWhole of 2026\nSeptember\nCategory\nAll categories\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\nFrom date\nTo date\nMinimum amount (absolute)\nMaximum amount (absolute)\nAccount\nAll accounts / unknown\nSource file\nAll sources\nsynthetic-statement.txt\nSaved views\nChoose a view\nUncategorised\nMinimum amount (absolute): 100,00\nSave these filters\n4 transactions \nCheck for mistakes with AI\nTotal −894,32 €\nSelect filtered rows\n0 selected\n\nClick a row to edit or delete it. You can also change a category straight from its list.\n\nDATE ↓\tDESCRIPTION\tCATEGORY\tAMOUNT\nSEPTEMBER 2026\t−894,32 €\n05/09/2026\tQA CLOTHES REFUND (refund of clothing purchase)\nsynthetic-statement.txt\n\t\nCategory\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\t+20,00 €\n04/09/2026\tQA CLOTHES STORE\nsynthetic-statement.txt\n\t\nCategory\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\t−60,00 €\n03/09/2026\tQA MERCADONA GROCERIES\nsynthetic-statement.txt\n\t\nCategory\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\t−54,32 €\n02/09/2026\tQA RENT SEPTEMBER\nsynthetic-statement.txt\n\t\nCategory\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\t−800,00 €\n\nSETUP · STEP 1 OF 5\n\nWhere do you keep money?\n1\nAccounts\n2\nStatements\n3\nBalances\n✓\nSalary\n5\nSummary\n\nAdd every account you have: current account, savings, investments, pension. Next, you bring in each one’s statement.\n\nStart with last month\nBring in my history\nStart from \n\nAmounts in\nEuro (€)\nPound sterling (£)\nUS dollar ($)\nCanadian dollar (CA$)\nAustralian dollar (A$)\nSwiss franc (CHF)\nMexican peso (MX$)\nSwedish krona (kr)\nPolish złoty (zł)\n\nAdd your accounts\nFinish later\nSkip this step\n© 2026 MyAhorros · Developed by Taren Shaw with Claude Opus 5.5 · Privacy"
+}

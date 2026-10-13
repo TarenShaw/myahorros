@@ -27,6 +27,7 @@ const text = t => ({ candidates: [{ content: { parts: [{ text: t }] } }] });
 const claudeText = t => [{ type: 'content_block_delta', delta: { type: 'text_delta', text: t } }];
 
 (async () => {
+  assert.deepStrictEqual(sample._parse('```json\n{"rows":[]}\n```'), {rows: []});
   /* 1. plain success */
   useCfg('gemini', 'gemini-test');
   fetch = async () => sse([text('{"rows":[]}')]);

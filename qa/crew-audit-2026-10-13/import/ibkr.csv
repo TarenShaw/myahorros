@@ -1,0 +1,8 @@
+Statement,Header,Field Name,Field Value
+Statement,Data,Title,Activity
+Deposits & Withdrawals,Header,Currency,Settle Date,Description,Amount
+Deposits & Withdrawals,Data,EUR,2026-09-02,Electronic Fund Transfer,500
+Dividends,Header,Currency,Date,Description,Amount
+Dividends,Data,EUR,2026-09-05,Global Fund Dividend,10
+Trades,Header,DataDiscriminator,Symbol
+Trades,Data,Order,ABC

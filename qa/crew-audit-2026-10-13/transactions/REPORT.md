@@ -1,0 +1,35 @@
+# Add transaction / review UI audit
+
+Audited 2026-10-13 against current working tree, using isolated headless Edge, browser storage, local server, synthetic data only. No application edits. Reproduce: set NODE_PATH to bundled Playwright modules and run `node qa/crew-audit-2026-10-13/transactions/audit.js`.
+
+## Reproduced defect
+
+- **P2: Uncategorised transaction warning becomes a giant icon that pushes the ledger off screen.** `index.html:5583` inserts `ICON.warn` directly into `.notice`; the SVG definition (`2832`) has no width/height and `.notice` (`354`) does not constrain it. Repro: add any uncategorised expense and open Transactions. At 1280x900, warning SVG measures **1169x1169px**, notice **1232.5px** high, and ends at y=1921; rows appear far below the first screen. Screenshot without overlay: `transactions-attention-desktop.png`; DOM dimensions: `results.json` / `attentionGeometry`. It also occupies a large block on mobile (`add-mobile.png` background). Constrain icon to 16-18px with `flex:none`, as existing Overview warnings already do.
+
+- **P2: Invalid edited import amount does not block import.** `index.html:6177` rejects invalid text only inside the editor, leaves the prior `r.amount`, and displays a temporary toast. `index.html:6990` and `6991` advance/add without checking any invalid editor. Repro: import `review.csv`; change row 1 amount from -32.45 to `nonsense`; press Enter (input gets invalid styling); click Add 5 rows; confirm refund sign review. Actual: merchant saves at **-32.45**, despite invalid text remaining in the reviewed field. Expected: block Add until the invalid field is corrected or explicitly reverted. Evidence: `invalid-review-amount.png`; `results.json` entries `invalidAmountResult` and `afterInvalidConfirmed` (same concept, -32.45). The screenshot captures the invalid field before Add. Prevent Add while included rows have invalid editor state; retain inline validation and focus the first bad input.
+
+## Highest value UI / functionality recommendations
+
+- **P2: Let manual transactions link to an account.** Add/Edit has no account picker (`index.html:5797-5815`). Imported rows can be linked to cash accounts (`5963`), but manual cash movements remain unknown. The net worth screen appropriately reports the mismatch, yet users cannot fix a manual row's account in its editor. Add optional account selection and show account/source in Edit. Existing imported account metadata survives editing correctly: our Bank row retained `account: bank` and `batch` after changing date and description (`results.json`, `taggedBefore` / `taggedAfter`; preservation code `2670-2682`).
+- **P2: Make date repair possible during review.** Review allows description, amount, type and category edits, but renders date as text (`5926`). A wrongly interpreted yet valid ambiguous date requires going back to input or importing and editing afterward. Add date editing, with unambiguous displayed format and a preview of day/month interpretation.
+- **P3: Give review search, sorting and bulk controls.** Current review has All rows / Needs attention and row checkboxes, but no merchant/date/amount search, column sorting, select-visible, bulk category or bulk type. All are especially useful for large uncategorised imports. Ordinary Transactions supports sorting and bulk categories; reuse those conventions.
+- **P3: Explain an empty Needs attention view.** On reimport of the same file all saved duplicates/transfers are excluded, so Needs attention shows zero rows without a row-level explanation. Add an empty state such as “All rows are excluded. Show All rows to compare duplicates.”
+- **P3: Improve mobile filters and toast placement.** Add form fits at 390px with no horizontal page overflow, but import completion toast overlaps the modal footer in the captured add-mobile screenshot. Transactions' expanded filter stack consumes most of the first screen. Collapse filters by default on mobile, retain active-filter count, and place toasts outside modal actions.
+- **P3: Simplify manual direction conventions.** Manual form correctly applies Spent/Refund, Income/Paid back and Invested/Withdrawn. Signed amount still overrides the direction choice; the subtitle instructs users to omit signs, but a concise final “Will save -€100 as Expenses” preview would reduce misunderstandings.
+
+## Exercised coverage / passing behavior
+
+- Manual income +1000, expense -100, refund +25, investment contribution -200 and withdrawal +20 saved with correct signs.
+- Zero amount rejected; missing date rejected. English and Spanish form copy checked. Personal category names remain unchanged on language switch, as expected.
+- File CSV and pasted CSV both read locally into editable review. Unknown descriptions produce attention rows. Equal +/-50 internal transfers were excluded; positive refund triggered sign confirmation.
+- Duplicate reimport excluded previously saved rows. Escape prompted discard confirmation; Keep checking returned to review; explicit discard closed it.
+- Account-tagged pasted import retained account/batch after date and description edit. Delete removed the row; Undo restored it.
+- Select filtered / bulk change category applied only Expenses rows. Amount sort returned -120, -100, -40, -32.45, -11, +18.99, +25.
+- Import history listed CSV and pasted batches with periods/counts. Opening `review.csv`'s Expenses batch filtered to precisely its four expense rows. Undo latest import removed the two Crewcoffee rows; history marked the batch undone and removed its active row link; reload confirmed both rows remained removed. Evidence: `import-history.png`; results entries `historyBeforeUndo`, `historyFilteredRows`, `historyAfterUndo`, `persistedLearnedRows`.
+- Review category learning worked: assigning first Crewcoffee row to Restaurants offered “Always put crewcoffee in Restaurants? Yes, and fill 1 more”; accepting filled both review rows. Both imported with Restaurants. Learned keyword survived reload, including after undoing that import, as expected for an explicitly accepted category rule. Evidence: `keywordOffer`, `learnedReviewCategories`, `keywordBefore`, `keywordAfterReload`.
+- Net worth snapshot total stayed €2300 and reported +€300 change; with -€200 contribution/+€20 withdrawal against broker +€200 balance change, broker net contributions were €180 and gains €20. Unmatched account difference displayed explicitly. Screenshot: networth-desktop.png.
+- Mobile 390x844 Add dialog fit within viewport; screenshot captured and inspected. No browser page errors recorded.
+
+## Scope limits
+
+This branch covered manual entry, local CSV/paste review, duplicates, transfer exclusion, refund confirmation, account tagging/edit/delete/undo, bulk category, sorting, history batch navigation/undo, and review keyword learning/reload persistence. Other crew branches cover XLSX, gains accounting and mocked AI downstream behavior. Live AI vendor reading and real PDF/image/OCR extraction are untested. Larger-file review pagination is not established by this branch. This audit does not establish exhaustive correctness of every import format.

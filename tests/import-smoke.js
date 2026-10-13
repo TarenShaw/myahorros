@@ -101,16 +101,19 @@ assert.strictEqual(parseAmount('1.234,5'), 1234.5);
 {
   const { markDups, shortDesc } = new Function(line('const r2=') + line('const fold=') + line('const loose=') + grab('markDups') + line('function shortDesc(') +
     'return {markDups,shortDesc};')();
-  const saved = [{ date: '2026-09-03', amount: -0.85, concept: 'VENDING ACME \\' }, { date: '2026-09-04', amount: -3, concept: 'BAR PEPE' }];
+  const saved = [{ date: '2026-09-03', amount: -0.85, concept: 'VENDING ACME \\', account:'main' }, { date: '2026-09-04', amount: -3, concept: 'BAR PEPE', account:'main' }];
   let rows = [{ date: '2026-09-03', amount: 0.85, concept: 'VENDING ACME' }, { date: '2026-09-03', amount: -0.85, concept: 'VENDING ACME' },
     { date: '2026-09-03', amount: -0.85, concept: 'VENDING ACME' }, { date: '2026-09-04', amount: -3, concept: 'CAFE' }];
-  markDups(rows, saved);
+  markDups(rows, saved,()=> 'main');
   assert.deepStrictEqual(rows.map(r => [r.dup, r.like]), [[false, null], [true, null], [false, null], [false, 'BAR PEPE']]);
   /* a refund is never matched to the charge it undoes, even with the same date and description */
-  markDups(rows = [{ date: '2026-09-03', amount: 0.85, concept: 'VENDING ACME \\' }], saved);
+  markDups(rows = [{ date: '2026-09-03', amount: 0.85, concept: 'VENDING ACME \\' }], saved,()=> 'main');
   assert.deepStrictEqual([rows[0].dup, rows[0].like], [false, null]);
   /* an edit is checked again: the amount changed back to the charge's makes it a duplicate */
-  rows[0].amount = -0.85; markDups(rows, saved); assert.strictEqual(rows[0].dup, true);
+  rows[0].amount = -0.85; markDups(rows, saved,()=> 'main'); assert.strictEqual(rows[0].dup, true);
+  markDups(rows,saved,()=> 'other');assert.equal(rows[0].dup,false);assert.equal(rows[0].like,null);
+  markDups(rows,saved);assert.equal(rows[0].dup,false);assert.equal(rows[0].like,'VENDING ACME \\');
+  markDups(rows,saved.map(r=>({...r,account:''})),()=> 'main');assert.equal(rows[0].dup,false);assert.ok(rows[0].like);
   /* notes: no stray backslash before the closing quote, long text cut with … */
   assert.strictEqual(shortDesc('VENDING ACME \\', 30), 'VENDING ACME');
   assert.strictEqual(shortDesc('PAGO / ', 30), 'PAGO');

@@ -1,0 +1,70 @@
+- generic [active]:
+  - dialog "MyAhorros" [ref=e1]:
+    - banner [ref=e2]:
+      - generic [ref=e3]: MyAhorros
+      - generic [ref=e4]:
+        - group "Language / Idioma" [ref=e5]:
+          - button "English" [ref=e6] [cursor=pointer]
+          - button "Español" [pressed] [ref=e7] [cursor=pointer]
+        - button "Ver una demo" [ref=e8] [cursor=pointer]
+        - button "Empezar" [ref=e9] [cursor=pointer]
+    - main [ref=e10]:
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - paragraph [ref=e14]: Gratis · Sin registro · Privado
+          - heading "Sabe a dónde va tu dinero y cuánto vales." [level=1] [ref=e15]
+          - paragraph [ref=e16]: Una forma gratuita y sencilla de seguir lo que ganas, gastas y tienes. Tus cifras se quedan en tu dispositivo o en tu propio Google Drive.
+          - generic [ref=e17]:
+            - button "Ver una demo" [ref=e18] [cursor=pointer]
+            - button "Empezar" [ref=e19] [cursor=pointer]
+          - paragraph [ref=e20]: Sin cuenta. Sin registro. Nada sale de tu dispositivo si tú no quieres.
+        - figure [ref=e21]:
+          - 'img "La página de Patrimonio con cifras de ejemplo: un total de 39.065 € y un gráfico de totales a fin de mes que crece cada mes, con los cuatro últimos meses del año en gris como previsión." [ref=e25]'
+        - list:
+          - listitem [ref=e26]: Tus datos se quedan en tu dispositivo
+          - listitem [ref=e31]: Importa desde Excel
+          - listitem [ref=e36]: Lee extractos con IA
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - heading "Todo en un mismo sitio" [level=2] [ref=e42]
+          - paragraph [ref=e43]: Pensado para quien solo quiere saber cómo va. Sin palabras de finanzas.
+          - generic [ref=e44]:
+            - article [ref=e45]:
+              - heading "Ingresos y gastos" [level=3] [ref=e49]
+              - paragraph [ref=e50]: Apunta lo que entra y lo que sale, a mano o con el archivo de tu banco. Lo ordena todo en categorías y pone cada mes al lado del anterior.
+            - article [ref=e51]:
+              - heading "Tu patrimonio mes a mes" [level=3] [ref=e57]
+              - paragraph [ref=e58]: Una vez al mes, escribe cuánto hay en cada cuenta. Un gráfico te enseña cómo crece tu total a lo largo del año.
+            - article [ref=e59]:
+              - heading "Inversiones" [level=3] [ref=e64]
+              - paragraph [ref=e65]: Ve cuánto has aportado y cuánto han ganado solos tus fondos, acciones o plan de pensiones.
+            - article [ref=e66]:
+              - heading "Mirada al futuro" [level=3] [ref=e71]
+              - paragraph [ref=e72]: Los meses en gris te enseñan dónde estarás seguramente en diciembre si sigues como este último año.
+        - generic [ref=e78]:
+          - heading "Tus datos son tuyos" [level=2] [ref=e79]
+          - paragraph [ref=e80]: No hay cuenta ni servidor con tus cifras. Guárdalas en una carpeta, en tu propio Google Drive o solo en este navegador, con copia diaria. Funciona sin conexión y se instala como una app.
+        - generic [ref=e81]:
+          - heading "Cómo funciona" [level=2] [ref=e82]
+          - list [ref=e83]:
+            - listitem [ref=e84]:
+              - generic [ref=e85]: Elige dónde vive
+              - generic [ref=e86]: Una carpeta, tu Google Drive o tu navegador. Puedes cambiarlo cuando quieras.
+            - listitem [ref=e87]:
+              - generic [ref=e88]: Añade lo que tienes
+              - generic [ref=e89]: Unas cuentas y lo que valían el mes pasado.
+            - listitem [ref=e90]:
+              - generic [ref=e91]: Añade tus movimientos
+              - generic [ref=e92]: A mano, pegando un extracto o con IA.
+        - generic [ref=e93]:
+          - heading "Cuando quieras" [level=2] [ref=e94]
+          - paragraph [ref=e95]: Haz el recorrido de dos minutos con datos de ejemplo, o configura tu propio control.
+          - generic [ref=e96]:
+            - button "Ver una demo" [ref=e97] [cursor=pointer]
+            - button "Empezar" [ref=e98] [cursor=pointer]
+    - contentinfo [ref=e99]:
+      - generic [ref=e100]: MyAhorros
+      - link "Privacidad" [ref=e101] [cursor=pointer]:
+        - /url: privacy.html
+      - generic [ref=e102]: © 2026
+  - status

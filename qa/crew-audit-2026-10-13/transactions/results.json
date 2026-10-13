@@ -1,0 +1,726 @@
+[
+  {
+    "manualRows": [
+      {
+        "id": "mscljq9whyc",
+        "date": "2026-09-15",
+        "amount": 1000,
+        "concept": "Salary audit",
+        "category": "",
+        "table": "income",
+        "mk": "2026-09",
+        "ord": 0
+      },
+      {
+        "id": "dt2wfgwqi3v",
+        "date": "2026-09-15",
+        "amount": -100,
+        "concept": "Groceries audit",
+        "category": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 1
+      },
+      {
+        "id": "570w535ni9z",
+        "date": "2026-09-15",
+        "amount": 25,
+        "concept": "Refund audit",
+        "category": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 2
+      },
+      {
+        "id": "3xnxowt2ige",
+        "date": "2026-09-15",
+        "amount": -200,
+        "concept": "Broker deposit audit",
+        "category": "",
+        "table": "investments",
+        "mk": "2026-09",
+        "ord": 3
+      },
+      {
+        "id": "843i5vtoinw",
+        "date": "2026-09-15",
+        "amount": 20,
+        "concept": "Broker withdrawal audit",
+        "category": "",
+        "table": "investments",
+        "mk": "2026-09",
+        "ord": 4
+      }
+    ]
+  },
+  {
+    "attentionGeometry": {
+      "svg": {
+        "x": 48,
+        "y": 700.484375,
+        "width": 1169,
+        "height": 1169,
+        "top": 700.484375,
+        "right": 1217,
+        "bottom": 1869.484375,
+        "left": 48
+      },
+      "notice": {
+        "x": 32,
+        "y": 688.484375,
+        "width": 1201,
+        "height": 1232.5,
+        "top": 688.484375,
+        "right": 1233,
+        "bottom": 1920.984375,
+        "left": 32
+      },
+      "attributes": "<svg viewBox=\"0 0 14 14\" aria-hidden=\"true\"><circle cx=\"7\" cy=\"7\" r=\"6.2\" fill=\"currentColor\" opacity=\".18\"></circle><path d=\"M7 3.6v4.1\" stroke=\"currentColor\" stroke-width=\"1.8\" s"
+    }
+  },
+  {
+    "zeroError": "Enter an amount other than 0."
+  },
+  {
+    "dateError": "Enter a date."
+  },
+  {
+    "reviewInitial": "Check the rows\n\n7 rows read from review.csv\n\nAccount\nNot one of my accounts (credit card, PayPal…)\nBank\nWhich account is this file from? Next time it’s recognised by itself.\n\n0 ready · 5 to review · 2 left out\n\nMatching totals check the amounts, not the categories. Check questions and possible duplicates before adding.\n\nNeeds attention\nAll rows\n\n2 rows look like a transfer between your own accounts (the same amount out and in, within 3 days), so they are unticked. Tick any you do want.\n\nEach row went to Income, Expenses or Investments by its sign and your keywords. Change the Type of any row that landed in the wrong place.\n\nTicked rows will be imported. Greyed rows won’t be; the reason is on the right.\n\nINCLUDE\n\tDATE\tDESCRIPTION\tAMOUNT\tTYPE\tCATEGORY\t\n\t16/09/2026\t\nDescription of row 1\n\t\nAmount of row 1\n\t\nType of row 1\nIncome\nExpenses\nInvestments\n\t\nCategory of row 1\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tNo keyword\n\t17/09/2026\t\nDescription of row 2\n\t\nAmount of row 2\n\t\nType of row 2\nIncome\nExpenses\nInvestments\n\t\nCategory of row 2\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tNo keyword\n\t18/09/2026\t\nDescription of row 3\n\t\nAmount of row 3\n\t\nType of row 3\nIncome\nExpenses\nInvestments\n\t\nCategory of row 3\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tLooks like money moved between your own accounts, which isn’t spending. Tick to import it anyway.\n\t18/09/2026\t\nDescription of row 4\n\t\nAmount of row 4\n\t\nType of row 4\nIncome\nExpenses\nInvestments\n\t\nCategory of row 4\nUncategorised\nSalary\nMeal vouchers\nDividends\nCompany benefits\nInterest\nRent received\nTax Return\nPension\nOther\n\tLooks like money moved between your own accounts, which isn’t spending. Tick to import it anyway.\n\t19/09/2026\t\nDescription of row 5\n\t\nAmount of row 5\n\t\nType of row 5\nIncome\nExpenses\nInvestments\n\t\nCategory of row 5\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tNo keyword\n\t20/09/2026\t\nDescription of row 6\n\t\nAmount of row 6\n\t\nType of row 6\nIncome\nExpenses\nInvestments\n\t\nCategory of row 6\nUncategorised\nSalary\nMeal vouchers\nDividends\nCompany benefits\nInterest\nRent received\nTax Return\nPension\nOther\n\tNo keyword\n\t21/09/2026\t\nDescription of row 7\n\t\nAmount of row 7\n\t\nType of row 7\nIncome\nExpenses\nInvestments\n\t\nCategory of row 7\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tNo keyword\nBack\n1 to Income · 4 to Expenses · 5 uncategorised\nAdd 5 rows",
+    "fields": [
+      {
+        "id": "imp-acct",
+        "type": "select-one",
+        "value": ""
+      },
+      {
+        "id": "imp-on-0",
+        "type": "checkbox",
+        "value": "on"
+      },
+      {
+        "id": "imp-d-0",
+        "type": "text",
+        "value": "Unrecognized merchant audit"
+      },
+      {
+        "id": "imp-a-0",
+        "type": "text",
+        "value": "−32,45 €"
+      },
+      {
+        "id": "imp-t-0",
+        "type": "select-one",
+        "value": "expenses"
+      },
+      {
+        "id": "imp-c-0",
+        "type": "select-one",
+        "value": ""
+      },
+      {
+        "id": "imp-on-1",
+        "type": "checkbox",
+        "value": "on"
+      },
+      {
+        "id": "imp-d-1",
+        "type": "text",
+        "value": "Refund audit import"
+      },
+      {
+        "id": "imp-a-1",
+        "type": "text",
+        "value": "18,99 €"
+      },
+      {
+        "id": "imp-t-1",
+        "type": "select-one",
+        "value": "expenses"
+      },
+      {
+        "id": "imp-c-1",
+        "type": "select-one",
+        "value": ""
+      },
+      {
+        "id": "imp-on-2",
+        "type": "checkbox",
+        "value": "on"
+      },
+      {
+        "id": "imp-d-2",
+        "type": "text",
+        "value": "Transfer between accounts"
+      },
+      {
+        "id": "imp-a-2",
+        "type": "text",
+        "value": "−50,00 €"
+      },
+      {
+        "id": "imp-t-2",
+        "type": "select-one",
+        "value": "expenses"
+      },
+      {
+        "id": "imp-c-2",
+        "type": "select-one",
+        "value": ""
+      },
+      {
+        "id": "imp-on-3",
+        "type": "checkbox",
+        "value": "on"
+      },
+      {
+        "id": "imp-d-3",
+        "type": "text",
+        "value": "Transfer between accounts"
+      },
+      {
+        "id": "imp-a-3",
+        "type": "text",
+        "value": "50,00 €"
+      },
+      {
+        "id": "imp-t-3",
+        "type": "select-one",
+        "value": "income"
+      },
+      {
+        "id": "imp-c-3",
+        "type": "select-one",
+        "value": ""
+      },
+      {
+        "id": "imp-on-4",
+        "type": "checkbox",
+        "value": "on"
+      },
+      {
+        "id": "imp-d-4",
+        "type": "text",
+        "value": "Audit laptop"
+      },
+      {
+        "id": "imp-a-4",
+        "type": "text",
+        "value": "−120,00 €"
+      },
+      {
+        "id": "imp-t-4",
+        "type": "select-one",
+        "value": "expenses"
+      },
+      {
+        "id": "imp-c-4",
+        "type": "select-one",
+        "value": ""
+      },
+      {
+        "id": "imp-on-5",
+        "type": "checkbox",
+        "value": "on"
+      },
+      {
+        "id": "imp-d-5",
+        "type": "text",
+        "value": "Salary audit import"
+      },
+      {
+        "id": "imp-a-5",
+        "type": "text",
+        "value": "900,00 €"
+      },
+      {
+        "id": "imp-t-5",
+        "type": "select-one",
+        "value": "income"
+      },
+      {
+        "id": "imp-c-5",
+        "type": "select-one",
+        "value": ""
+      },
+      {
+        "id": "imp-on-6",
+        "type": "checkbox",
+        "value": "on"
+      },
+      {
+        "id": "imp-d-6",
+        "type": "text",
+        "value": "Audit merchant"
+      },
+      {
+        "id": "imp-a-6",
+        "type": "text",
+        "value": "−40,00 €"
+      },
+      {
+        "id": "imp-t-6",
+        "type": "select-one",
+        "value": "expenses"
+      },
+      {
+        "id": "imp-c-6",
+        "type": "select-one",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "invalidAmountResult": [
+      {
+        "id": "mscljq9whyc",
+        "date": "2026-09-15",
+        "amount": 1000,
+        "concept": "Salary audit",
+        "category": "",
+        "table": "income",
+        "mk": "2026-09",
+        "ord": 0
+      },
+      {
+        "id": "dt2wfgwqi3v",
+        "date": "2026-09-15",
+        "amount": -100,
+        "concept": "Groceries audit",
+        "category": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 1
+      },
+      {
+        "id": "570w535ni9z",
+        "date": "2026-09-15",
+        "amount": 25,
+        "concept": "Refund audit",
+        "category": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 2
+      },
+      {
+        "id": "3xnxowt2ige",
+        "date": "2026-09-15",
+        "amount": -200,
+        "concept": "Broker deposit audit",
+        "category": "",
+        "table": "investments",
+        "mk": "2026-09",
+        "ord": 3
+      },
+      {
+        "id": "843i5vtoinw",
+        "date": "2026-09-15",
+        "amount": 20,
+        "concept": "Broker withdrawal audit",
+        "category": "",
+        "table": "investments",
+        "mk": "2026-09",
+        "ord": 4
+      }
+    ],
+    "reviewRemaining": 0,
+    "overlay": "Are you sure about these rows?\n\n1 row with an unusual sign\n\nThese amounts have the opposite sign to what their kind usually has. That can be right: a positive amount in Expenses is often a refund. If a row is in the wrong place, change its Type here. If the signs were flipped when you copied the rows, go back and fix them first.\n\nDATE\tDESCRIPTION\tAMOUNT\tTYPE\tWHY IT STANDS OUT\n17/09/2026\tRefund audit import\t18,99 €\t\nType of row 2\nIncome\nExpenses\nInvestments\n\tPositive in Expenses: right for a refund. If it’s income, like a salary, change it to Income.\nBack to the rows\nYes, add 5 rows"
+  },
+  {
+    "afterInvalidConfirmed": [
+      {
+        "id": "if84cgrmjqt",
+        "date": "2026-09-20",
+        "amount": 900,
+        "concept": "Salary audit import",
+        "category": "",
+        "batch": "ts7pc4d0jqs",
+        "source": "review.csv",
+        "account": "",
+        "table": "income",
+        "mk": "2026-09",
+        "ord": 0
+      },
+      {
+        "id": "mscljq9whyc",
+        "date": "2026-09-15",
+        "amount": 1000,
+        "concept": "Salary audit",
+        "category": "",
+        "table": "income",
+        "mk": "2026-09",
+        "ord": 1
+      },
+      {
+        "id": "54of7mxrjqt",
+        "date": "2026-09-21",
+        "amount": -40,
+        "concept": "Audit merchant",
+        "category": "",
+        "batch": "ts7pc4d0jqs",
+        "source": "review.csv",
+        "account": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 2
+      },
+      {
+        "id": "5t22qfudjqt",
+        "date": "2026-09-19",
+        "amount": -120,
+        "concept": "Audit laptop",
+        "category": "",
+        "batch": "ts7pc4d0jqs",
+        "source": "review.csv",
+        "account": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 3
+      },
+      {
+        "id": "eqvzdkvvjqt",
+        "date": "2026-09-17",
+        "amount": 18.99,
+        "concept": "Refund audit import",
+        "category": "",
+        "batch": "ts7pc4d0jqs",
+        "source": "review.csv",
+        "account": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 4
+      },
+      {
+        "id": "n1c80ngjjqs",
+        "date": "2026-09-16",
+        "amount": -32.45,
+        "concept": "Unrecognized merchant audit",
+        "category": "",
+        "batch": "ts7pc4d0jqs",
+        "source": "review.csv",
+        "account": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 5
+      },
+      {
+        "id": "dt2wfgwqi3v",
+        "date": "2026-09-15",
+        "amount": -100,
+        "concept": "Groceries audit",
+        "category": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 6
+      },
+      {
+        "id": "570w535ni9z",
+        "date": "2026-09-15",
+        "amount": 25,
+        "concept": "Refund audit",
+        "category": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 7
+      },
+      {
+        "id": "3xnxowt2ige",
+        "date": "2026-09-15",
+        "amount": -200,
+        "concept": "Broker deposit audit",
+        "category": "",
+        "table": "investments",
+        "mk": "2026-09",
+        "ord": 8
+      },
+      {
+        "id": "843i5vtoinw",
+        "date": "2026-09-15",
+        "amount": 20,
+        "concept": "Broker withdrawal audit",
+        "category": "",
+        "table": "investments",
+        "mk": "2026-09",
+        "ord": 9
+      }
+    ]
+  },
+  {
+    "networth": "Net worthi\n\nWhat everything you own is worth at the end of each month. Type the figures in once a month.\n\nMonth\nSeptember 2026\nAugust 2026\nFill in with AI\nImport from Excel\nEdit September 2026 figures\nSET UP YOUR TRACKER · STEP 2 OF 5\nBring in your statements\nContinue setup\n\nNET WORTH · END OF SEPTEMBER 2026i\n\n2.300 €\n\n2.300 € without retirement savings\n\nCash\n1.100 €\n48% · Available now\nInvestments\n1.200 €\n52% · Can be sold within days\nWhat changedi\nTotal change\n+300,00 €\nMarkets, interest and gains\n+20,00 €\nNot matched to an account\n−1.371,54 €\n\nSince the end of August 2026.\n\nYou saved\n+1.651,54 €\nMarkets, interest and gains\n+20,00 €\nNot matched to an account\n−1.371,54 €\n\nBar lengths show the size of each contribution; signs show increases or decreases.\n\nReview\nHow is this calculated?\nAccountsi\n\nValue at the end of the month, change since the month before, and share of the total.\n\nCheck accounts with AI\nEdit accounts\nACCOUNT\tVALUE\tCHANGE\tNET CONTRIBUTIONS\tGAINS\tSHARE\n Cash Available now\t1.100,00 €\t+100,00 €\t—\t—\t47,8%\nBank\t1.100,00 €\t+100,00 €\t—\t—\t47,8%\n Investments Can be sold within days\t1.200,00 €\t+200,00 €\t+180,00 €\t+20,00 €\t52,2%\nBroker\t1.200,00 €\t+200,00 €\t+180,00 €\t+20,00 €\t52,2%\nTotal, all accounts\t2.300,00 €\t+300,00 €\t+180,00 €\t+20,00 €\t100,0%\nHow is this calculated?\nMore analysis"
+  },
+  {
+    "duplicateReview": "Check the rows\n\n7 rows read from review.csv\n\nAccount\nNot one of my accounts (credit card, PayPal…)\nBank\nWhich account is this file from? Next time it’s recognised by itself.\n\n0 ready · 0 to review · 7 left out\n\nMatching totals check the amounts, not the categories. Check questions and possible duplicates before adding.\n\nNeeds attention\nAll rows\n\n2 rows look like a transfer between your own accounts (the same amount out and in, within 3 days), so they are unticked. Tick any you do want.\n\nEach row went to Income, Expenses or Investments by its sign and your keywords. Change the Type of any row that landed in the wrong place.\n\nTicked rows will be imported. Greyed rows won’t be; the reason is on the right.\n\nINCLUDE\n\tDATE\tDESCRIPTION\tAMOUNT\tTYPE\tCATEGORY\t\n\t16/09/2026\t\nDescription of row 1\n\t\nAmount of row 1\n\t\nType of row 1\nIncome\nExpenses\nInvestments\n\t\nCategory of row 1\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tAlready in your tracker. Tick to import it anyway.\n\t17/09/2026\t\nDescription of row 2\n\t\nAmount of row 2\n\t\nType of row 2\nIncome\nExpenses\nInvestments\n\t\nCategory of row 2\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tAlready in your tracker. Tick to import it anyway.\n\t18/09/2026\t\nDescription of row 3\n\t\nAmount of row 3\n\t\nType of row 3\nIncome\nExpenses\nInvestments\n\t\nCategory of row 3\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tLooks like money moved between your own accounts, which isn’t spending. Tick to import it anyway.\n\t18/09/2026\t\nDescription of row 4\n\t\nAmount of row 4\n\t\nType of row 4\nIncome\nExpenses\nInvestments\n\t\nCategory of row 4\nUncategorised\nSalary\nMeal vouchers\nDividends\nCompany benefits\nInterest\nRent received\nTax Return\nPension\nOther\n\tLooks like money moved between your own accounts, which isn’t spending. Tick to import it anyway.\n\t19/09/2026\t\nDescription of row 5\n\t\nAmount of row 5\n\t\nType of row 5\nIncome\nExpenses\nInvestments\n\t\nCategory of row 5\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tAlready in your tracker. Tick to import it anyway.\n\t20/09/2026\t\nDescription of row 6\n\t\nAmount of row 6\n\t\nType of row 6\nIncome\nExpenses\nInvestments\n\t\nCategory of row 6\nUncategorised\nSalary\nMeal vouchers\nDividends\nCompany benefits\nInterest\nRent received\nTax Return\nPension\nOther\n\tAlready in your tracker. Tick to import it anyway.\n\t21/09/2026\t\nDescription of row 7\n\t\nAmount of row 7\n\t\nType of row 7\nIncome\nExpenses\nInvestments\n\t\nCategory of row 7\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tAlready in your tracker. Tick to import it anyway.\nBack\nAdd 0 rows"
+  },
+  {
+    "discardConfirmation": "Discard these 7 rows?\nDiscard\nKeep checking"
+  },
+  {
+    "attentionRows": 0
+  },
+  {
+    "taggedBefore": {
+      "id": "6ok23qloko2",
+      "date": "2026-09-26",
+      "amount": -11,
+      "concept": "Metadata preservation audit",
+      "category": "",
+      "batch": "c264yklmko2",
+      "source": "",
+      "account": "bank",
+      "table": "expenses",
+      "mk": "2026-09",
+      "ord": 2
+    }
+  },
+  {
+    "taggedAfter": {
+      "id": "6ok23qloko2",
+      "date": "2026-09-27",
+      "amount": -11,
+      "concept": "Metadata moved date audit",
+      "category": "",
+      "account": "bank",
+      "batch": "c264yklmko2",
+      "table": "expenses",
+      "mk": "2026-09",
+      "ord": 2
+    }
+  },
+  {
+    "afterDelete": false
+  },
+  {
+    "afterUndoDelete": true
+  },
+  {
+    "bulkRows": [
+      {
+        "id": "if84cgrmjqt",
+        "date": "2026-09-20",
+        "amount": 900,
+        "concept": "Salary audit import",
+        "category": "",
+        "batch": "ts7pc4d0jqs",
+        "source": "review.csv",
+        "account": "",
+        "table": "income",
+        "mk": "2026-09",
+        "ord": 0
+      },
+      {
+        "id": "mscljq9whyc",
+        "date": "2026-09-15",
+        "amount": 1000,
+        "concept": "Salary audit",
+        "category": "",
+        "table": "income",
+        "mk": "2026-09",
+        "ord": 1
+      },
+      {
+        "id": "6ok23qloko2",
+        "date": "2026-09-27",
+        "amount": -11,
+        "concept": "Metadata moved date audit",
+        "category": "Other",
+        "account": "bank",
+        "batch": "c264yklmko2",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 2
+      },
+      {
+        "id": "54of7mxrjqt",
+        "date": "2026-09-21",
+        "amount": -40,
+        "concept": "Audit merchant",
+        "category": "Other",
+        "batch": "ts7pc4d0jqs",
+        "source": "review.csv",
+        "account": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 3
+      },
+      {
+        "id": "5t22qfudjqt",
+        "date": "2026-09-19",
+        "amount": -120,
+        "concept": "Audit laptop",
+        "category": "Other",
+        "batch": "ts7pc4d0jqs",
+        "source": "review.csv",
+        "account": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 4
+      },
+      {
+        "id": "eqvzdkvvjqt",
+        "date": "2026-09-17",
+        "amount": 18.99,
+        "concept": "Refund audit import",
+        "category": "Other",
+        "batch": "ts7pc4d0jqs",
+        "source": "review.csv",
+        "account": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 5
+      },
+      {
+        "id": "n1c80ngjjqs",
+        "date": "2026-09-16",
+        "amount": -32.45,
+        "concept": "Unrecognized merchant audit",
+        "category": "Other",
+        "batch": "ts7pc4d0jqs",
+        "source": "review.csv",
+        "account": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 6
+      },
+      {
+        "id": "dt2wfgwqi3v",
+        "date": "2026-09-15",
+        "amount": -100,
+        "concept": "Groceries audit",
+        "category": "Other",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 7
+      },
+      {
+        "id": "570w535ni9z",
+        "date": "2026-09-15",
+        "amount": 25,
+        "concept": "Refund audit",
+        "category": "Other",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 8
+      },
+      {
+        "id": "3xnxowt2ige",
+        "date": "2026-09-15",
+        "amount": -200,
+        "concept": "Broker deposit audit",
+        "category": "",
+        "table": "investments",
+        "mk": "2026-09",
+        "ord": 9
+      },
+      {
+        "id": "843i5vtoinw",
+        "date": "2026-09-15",
+        "amount": 20,
+        "concept": "Broker withdrawal audit",
+        "category": "",
+        "table": "investments",
+        "mk": "2026-09",
+        "ord": 10
+      }
+    ]
+  },
+  {
+    "sortedAmounts": [
+      "−120,00 €",
+      "−100,00 €",
+      "−40,00 €",
+      "−32,45 €",
+      "−11,00 €",
+      "+18,99 €",
+      "+25,00 €"
+    ]
+  },
+  {
+    "keywordOffer": "7 categories changed\nUndo\nAlways put “crewcoffee” in Restaurants?\nYes, and fill 1 more"
+  },
+  {
+    "keywordBefore": [
+      [
+        "crewcoffee",
+        "Restaurants"
+      ]
+    ],
+    "learnedReviewCategories": [
+      "Restaurants",
+      "Restaurants"
+    ]
+  },
+  {
+    "learnedRows": [
+      {
+        "id": "5renp6qbm08",
+        "date": "2026-09-29",
+        "amount": -8,
+        "concept": "Crewcoffee purchase two",
+        "category": "Restaurants",
+        "batch": "1qfs3hu1m08",
+        "source": "",
+        "account": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 2
+      },
+      {
+        "id": "xf3l6o91m08",
+        "date": "2026-09-28",
+        "amount": -7,
+        "concept": "Crewcoffee purchase one",
+        "category": "Restaurants",
+        "batch": "1qfs3hu1m08",
+        "source": "",
+        "account": "",
+        "table": "expenses",
+        "mk": "2026-09",
+        "ord": 3
+      }
+    ]
+  },
+  {
+    "historyBeforeUndo": "Import history\n\nFiles and statements added here. Older rows may not have source details.\n\nManually entered or older import2026-09-28 – 2026-09-29 · 2 rows imported\nExpenses · 2\nManually entered or older import2026-09-26 – 2026-09-26 · 1 row imported\nExpenses · 1\nreview.csv2026-09-16 – 2026-09-21 · 5 rows imported\nIncome · 1Expenses · 4\nClose"
+  },
+  {
+    "historyFilteredRows": [
+      "Audit laptopreview.csv",
+      "Audit merchantreview.csv",
+      "Unrecognized merchant auditreview.csv",
+      "Refund audit importreview.csv"
+    ]
+  },
+  {
+    "learnedRowsAfterUndo": []
+  },
+  {
+    "historyAfterUndo": "Import history\n\nFiles and statements added here. Older rows may not have source details.\n\nManually entered or older import2026-09-28 – 2026-09-29 · 2 rows imported · Undo\nManually entered or older import2026-09-26 – 2026-09-26 · 1 row imported\nExpenses · 1\nreview.csv2026-09-16 – 2026-09-21 · 5 rows imported\nIncome · 1Expenses · 4\nClose"
+  },
+  {
+    "keywordAfterReload": [
+      [
+        "crewcoffee",
+        "Restaurants"
+      ]
+    ],
+    "persistedLearnedRows": []
+  },
+  {
+    "mobileOverflow": {
+      "body": 375,
+      "width": 390,
+      "modal": {
+        "x": 12,
+        "y": 50.625,
+        "width": 351,
+        "height": 680,
+        "top": 50.625,
+        "right": 363,
+        "bottom": 730.625,
+        "left": 12
+      }
+    }
+  },
+  {
+    "spanishForm": "Añadir movimiento\n\nEscribe el importe sin signo y elige si el dinero salió o entró.\n\nTipo\nIngresos\nGastos\nInversiones\nFecha\nConcepto\nImporte (€)\nNo hace falta el signo menos.\nDinero\nGasto\nDevolución\nCategoría\nSin categoría\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\nNinguna palabra clave coincide con este concepto.\nCancelar\nAñadir movimiento"
+  }
+]

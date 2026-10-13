@@ -107,6 +107,10 @@ node tests/format-smoke.js
 
 The full list is in CLAUDE.md. On `localhost`, the page also prints a console warning for any month whose Net worth figures don't reconcile.
 
+Transaction/import audit regressions: `NODE_PATH=<Playwright modules> node tests/crew-audit-fixes.e2e.js` (Edge, local server). This covers account-aware duplicates, invalid reviewed amounts, Splitwise currency, date order and correction, bulk review, internal transfers, retained returns, monthly contribution precedence and balance-column guards.
+
+Transactions can optionally store `investmentAccount`, `transferFrom`, `transferTo` and `returnTreatment` alongside their existing source/account/batch metadata. Internal investment transfers use both accounts and do not count as new budget investments. A `returnTreatment` of `retained` records a return already included in the investment balance; it is excluded from cash income and payout additions. Older rows retain their description-based matching and paid-out-return behavior. Gains use reviewed contributions per month, with linked-transaction fallback for months without reviewed figures. Balance imports skip metadata columns by default and require confirmation before creating accounts. Foreign-currency rows require an explicitly confirmed amount in the tracker currency or exclusion.
+
 ## What's in the folder
 
 | File | What it is |

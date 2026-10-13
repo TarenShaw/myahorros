@@ -1,0 +1,493 @@
+{
+  "calc-yearly": {
+    "2025": {
+      "expected": {
+        "income": 19353.15,
+        "expenses": -9328.58,
+        "investments": -1800,
+        "savings": 10024.57
+      },
+      "shownTotals": [
+        "Total income = 19.353,15",
+        "Total expenses = −9.328,58",
+        "Total investments = 1.800,00",
+        "Total savings = 10.024,57"
+      ],
+      "mismatches": [
+        "investments 2025-04: shown 200,00 expected -200",
+        "investments 2025-05: shown 200,00 expected -200",
+        "investments 2025-06: shown 200,00 expected -200",
+        "investments 2025-07: shown 200,00 expected -200",
+        "investments 2025-08: shown 200,00 expected -200",
+        "investments 2025-09: shown 200,00 expected -200",
+        "investments 2025-10: shown 200,00 expected -200",
+        "investments 2025-11: shown 200,00 expected -200",
+        "investments 2025-12: shown 200,00 expected -200",
+        "investments total: shown 1.800,00 expected -1800"
+      ]
+    },
+    "2026": {
+      "expected": {
+        "income": 19353.15,
+        "expenses": -9445.08,
+        "investments": -1800,
+        "savings": 9908.07
+      },
+      "shownTotals": [
+        "Total income = 19.353,15",
+        "Total expenses = −9.445,08",
+        "Total investments = 1.800,00",
+        "Total savings = 9.908,07"
+      ],
+      "mismatches": [
+        "investments 2026-01: shown 200,00 expected -200",
+        "investments 2026-02: shown 200,00 expected -200",
+        "investments 2026-03: shown 200,00 expected -200",
+        "investments 2026-04: shown 200,00 expected -200",
+        "investments 2026-05: shown 200,00 expected -200",
+        "investments 2026-06: shown 200,00 expected -200",
+        "investments 2026-07: shown 200,00 expected -200",
+        "investments 2026-08: shown 200,00 expected -200",
+        "investments 2026-09: shown 200,00 expected -200",
+        "investments total: shown 1.800,00 expected -1800"
+      ]
+    }
+  },
+  "calc-overview": {
+    "2025": {
+      "eyebrow": "SAVED IN 2025 · APR–DECi",
+      "hero": "10.024,57 €",
+      "sub": "51,8% of income kept after expenses",
+      "tiles": [
+        "Income 19.353,15 € avg 2.150 € a month",
+        "Expenses 9.328,58 € 48,2% of income",
+        "Investments 1.800,00 € 9,3% of income",
+        "Not spent or invested i 8.224,57 € Income left after expenses and investments"
+      ],
+      "expectedSavings": 10024.57,
+      "expectedRatePct": 51.8,
+      "expectedLiquid": 8224.57,
+      "mismatches": []
+    },
+    "2026": {
+      "eyebrow": "SAVED IN 2026 · JAN–SEPi",
+      "hero": "9.908,07 €",
+      "sub": "51,2% of income kept after expenses",
+      "tiles": [
+        "Income 19.353,15 € avg 2.150 € a month",
+        "Expenses 9.445,08 € 48,8% of income",
+        "Investments 1.800,00 € 9,3% of income",
+        "Not spent or invested i 8.108,07 € Income left after expenses and investments"
+      ],
+      "expectedSavings": 9908.07,
+      "expectedRatePct": 51.2,
+      "expectedLiquid": 8108.07,
+      "mismatches": []
+    }
+  },
+  "parse-amount": {
+    "0": 0,
+    "999999999": 999999999,
+    "1000000000": null,
+    "12,50": 12.5,
+    "12.50": 12.5,
+    "1.234,56": 1234.56,
+    "1,234.56": 1234.56,
+    "1.234": 1234,
+    "1,234": 1234,
+    "12,500": 12500,
+    "0,125": 0.13,
+    "-5": -5,
+    "abc": null,
+    "12,5€": 12.5,
+    "€ 12,50": 12.5,
+    "  7,10  ": 7.1,
+    "1e5": null,
+    "😀": null,
+    "12,50,1": null,
+    "(25,00)": -25,
+    "25-": -25,
+    "1 234,56": 1234.56,
+    "١٢": null,
+    "0x10": null,
+    "+3": 3,
+    ".5": 0.5,
+    ",5": 0.5,
+    "3.": 3,
+    "Infinity": null
+  },
+  "rounding": {
+    "r2(1.005)": 1.01,
+    "r2(-1.005)": -1,
+    "r2(2.675)": 2.68,
+    "0.1+0.2 shown": "0,30 €"
+  },
+  "parse-date": {
+    "45000": "2023-03-15",
+    "2026-02-29": null,
+    "2028-02-29": "2028-02-29",
+    "29/02/2028": "2028-02-29",
+    "31/04/2026": null,
+    "01/02/2026": "2026-02-01",
+    "02/01/2026": "2026-01-02",
+    "13/01/2026": "2026-01-13",
+    "1/2/26": "2026-02-01",
+    "2026-12-31": "2026-12-31",
+    "31.12.2026": "2026-12-31",
+    "ayer": null,
+    "hoy": null,
+    "1899-12-31": null,
+    "2201-01-01": null
+  },
+  "add-inputs": [
+    {
+      "amountTyped": "12,50",
+      "saved": true,
+      "stored": {
+        "table": "expenses",
+        "amount": -12.5,
+        "date": "2026-09-20",
+        "concept": "QA amount 0",
+        "category": ""
+      },
+      "error": null,
+      "errorInView": null
+    },
+    {
+      "amountTyped": "12.50",
+      "saved": true,
+      "stored": {
+        "table": "expenses",
+        "amount": -12.5,
+        "date": "2026-09-20",
+        "concept": "QA amount 1",
+        "category": ""
+      },
+      "error": null,
+      "errorInView": null
+    },
+    {
+      "amountTyped": "1.234,56",
+      "saved": true,
+      "stored": {
+        "table": "expenses",
+        "amount": -1234.56,
+        "date": "2026-09-20",
+        "concept": "QA amount 2",
+        "category": ""
+      },
+      "error": null,
+      "errorInView": null
+    },
+    {
+      "amountTyped": "0",
+      "saved": false,
+      "stored": null,
+      "error": "Enter an amount other than 0.",
+      "errorInView": true
+    },
+    {
+      "amountTyped": "-5",
+      "saved": true,
+      "stored": {
+        "table": "expenses",
+        "amount": -5,
+        "date": "2026-09-20",
+        "concept": "QA amount 4",
+        "category": ""
+      },
+      "error": null,
+      "errorInView": null
+    },
+    {
+      "amountTyped": "abc",
+      "saved": false,
+      "stored": null,
+      "error": "Enter the amount as a number, for example 23,45.",
+      "errorInView": true
+    },
+    {
+      "amountTyped": "😀",
+      "saved": false,
+      "stored": null,
+      "error": "Enter the amount as a number, for example 23,45.",
+      "errorInView": true
+    },
+    {
+      "amountTyped": "  7,10  ",
+      "saved": true,
+      "stored": {
+        "table": "expenses",
+        "amount": -7.1,
+        "date": "2026-09-20",
+        "concept": "QA amount 7",
+        "category": ""
+      },
+      "error": null,
+      "errorInView": null
+    },
+    {
+      "amountTyped": "12,500",
+      "saved": true,
+      "stored": {
+        "table": "expenses",
+        "amount": -12.5,
+        "date": "2026-09-20",
+        "concept": "QA amount 8",
+        "category": ""
+      },
+      "error": null,
+      "errorInView": null
+    },
+    {
+      "amountTyped": "1000000000",
+      "saved": false,
+      "stored": null,
+      "error": "Enter the amount as a number, for example 23,45.",
+      "errorInView": true
+    },
+    {
+      "amountTyped": "5",
+      "saved": true,
+      "stored": {
+        "table": "expenses",
+        "amount": 5,
+        "date": "2026-09-20",
+        "concept": "Refund QA",
+        "category": ""
+      },
+      "error": null,
+      "errorInView": null
+    },
+    {
+      "amountTyped": "-100",
+      "saved": true,
+      "stored": {
+        "table": "income",
+        "amount": -100,
+        "date": "2026-09-20",
+        "concept": "QA income typed minus",
+        "category": ""
+      },
+      "error": null,
+      "errorInView": null
+    },
+    {
+      "amountTyped": "3",
+      "saved": true,
+      "stored": {
+        "table": "expenses",
+        "amount": -3,
+        "date": "2026-09-20",
+        "concept": "spaces around",
+        "category": ""
+      },
+      "error": null,
+      "errorInView": null
+    },
+    {
+      "amountTyped": "4",
+      "saved": true,
+      "stored": {
+        "table": "expenses",
+        "amount": -4,
+        "date": "2026-09-20",
+        "concept": "Ω emoji 😀 ñandú xxxxxxxxxxxxxxxxxxxxxxx…(497)",
+        "category": ""
+      },
+      "error": null,
+      "errorInView": null
+    },
+    {
+      "amountTyped": "6",
+      "saved": false,
+      "stored": null,
+      "error": "There’s no description. Press Add transaction again to save it anyway.",
+      "errorInView": true
+    },
+    {
+      "amountTyped": "1",
+      "saved": false,
+      "stored": null,
+      "error": "This date is in the future (29/02/2028). Press Add transaction again to keep it.",
+      "errorInView": true
+    },
+    {
+      "amountTyped": "1",
+      "saved": false,
+      "stored": null,
+      "error": "This date is in the future (31/12/2026). Press Add transaction again to keep it.",
+      "errorInView": true
+    },
+    {
+      "amountTyped": "1",
+      "saved": false,
+      "stored": null,
+      "error": "This date is a long time ago (01/01/1901). Press Add transaction again to keep it.",
+      "errorInView": true
+    }
+  ],
+  "date-display": [
+    "20/09/2026 QA amount 0 Category Uncategorised Rent Utilities Subscriptions Phone Insurance Education Transport Groceries Snacks Restaurants Alcohol + Bars Entertainment Clothes Non Essential Shopping Vacation + Hotel + Travel Health Legal Gifts Capital Gains Losses Taxes Cash Lottery Gym Other Maybe Rent? −12,50 €",
+    "20/09/2026 QA amount 1 Category Uncategorised Rent Utilities Subscriptions Phone Insurance Education Transport Groceries Snacks Restaurants Alcohol + Bars Entertainment Clothes Non Essential Shopping Vacation + Hotel + Travel Health Legal Gifts Capital Gains Losses Taxes Cash Lottery Gym Other Maybe Rent? −12,50 €",
+    "20/09/2026 QA amount 2 Category Uncategorised Rent Utilities Subscriptions Phone Insurance Education Transport Groceries Snacks Restaurants Alcohol + Bars Entertainment Clothes Non Essential Shopping Vacation + Hotel + Travel Health Legal Gifts Capital Gains Losses Taxes Cash Lottery Gym Other Maybe Rent? −1.234,56 €"
+  ],
+  "start-month-after-old-row": {
+    "start": {
+      "y": 2025,
+      "m": 3
+    },
+    "years": [
+      "2025",
+      "2026"
+    ]
+  },
+  "edit-delete-undo": {
+    "afterEdit": -99.99,
+    "toast": "Transaction deleted\nUndo",
+    "deleted": true,
+    "undoButton": true,
+    "restoredByUndo": true
+  },
+  "settings-persist": {
+    "num": "en",
+    "cur": "USD",
+    "born": "1985",
+    "salary": "30000",
+    "theme": "dark",
+    "themeRadio": "dark",
+    "settings": {
+      "lang": "en",
+      "numFmt": "en",
+      "currency": "USD",
+      "start": {
+        "y": 2025,
+        "m": 3
+      },
+      "birthYear": 1985,
+      "salary": 30000,
+      "theme": "dark",
+      "targets": {
+        "rentUtilities": 0.3,
+        "need": 0.5,
+        "want": 0.3,
+        "investments": 0.2
+      }
+    },
+    "heroAfter": "$10,024.57"
+  },
+  "language-switch": {
+    "toast": "Idioma cambiado a español",
+    "tabs": "Patrimonio Resumen Seguimiento anual Movimientos2 Categorías Ajustes"
+  },
+  "backup-roundtrip": {
+    "file": "MyAhorros backup 2026-10-11.json",
+    "bytes": 16564,
+    "emptyAfterFresh": 0,
+    "afterFresh": {
+      "panel": false,
+      "view": "WELCOME\n\nSet up your tracker\n\nPick a language and how you’d like to start.\n\nLanguage\nEnglish\nUse the tracker in English\n"
+    },
+    "restorePanel": null,
+    "identical": true,
+    "tabsBack": true
+  },
+  "export-xlsx": {
+    "file": "MyAhorros 2026-10-11.xlsx",
+    "sheets": [
+      "INCOME",
+      "EXPENSES",
+      "INVESTMENTS",
+      "YEARLY TRACKING 2026",
+      "YEARLY TRACKING 2025",
+      "CATEGORIES",
+      "NET WORTH",
+      "CAT_INCOME",
+      "CAT_EXPENSES",
+      "CAT_INVESTMENTS"
+    ],
+    "rowsPerSheet": {
+      "INCOME": 20,
+      "EXPENSES": 110,
+      "INVESTMENTS": 19,
+      "YEARLY TRACKING 2026": 51,
+      "YEARLY TRACKING 2025": 50,
+      "CATEGORIES": 39,
+      "NET WORTH": 19,
+      "CAT_INCOME": 1,
+      "CAT_EXPENSES": 1,
+      "CAT_INVESTMENTS": 1
+    },
+    "injectionCells": [
+      {
+        "sheet": "EXPENSES",
+        "cell": "C11",
+        "t": "s",
+        "v": "=HYPERLINK(\"http://example.com\",\"x\")",
+        "formula": null
+      },
+      {
+        "sheet": "EXPENSES",
+        "cell": "C12",
+        "t": "s",
+        "v": "+SUM(1,2)",
+        "formula": null
+      },
+      {
+        "sheet": "EXPENSES",
+        "cell": "C13",
+        "t": "s",
+        "v": "@cmd",
+        "formula": null
+      }
+    ]
+  },
+  "paste-import": {
+    "rows": [
+      "[x] | 03/02/2026 | MERCADONA VALENCIA | −45,30 € | Expenses | Uncategorised | No keyword",
+      "[x] | 04/02/2026 | NOMINA QA SL | 1.850,00 € | Income | Uncategorised | No keyword",
+      "[x] | 05/02/2026 | BIZUM DE ANA | 20,00 € | Income | Uncategorised | No keyword",
+      "[x] | 06/02/2026 | Compra 2 | −1.234,56 € | Expenses | Uncategorised | No keyword",
+      "[x] | 07/02/2026 | Línea con <b>html</b> | −2,00 € | Expenses | Uncategorised | No keyword Maybe Utilities?"
+    ],
+    "afterEscape": "Check the rows 5 rows read Each row went to Income, Expenses or Investments by its sign and your keywords. Change the Type of any row that landed in the wrong place. Ticked rows will be imported. Grey"
+  },
+  "navigation": {
+    "hashAfterTabs": "#categories",
+    "afterBack": {
+      "hash": "#yearly",
+      "tab": "tab-yearly",
+      "url": "http://localhost:8000/#yearly",
+      "landing": false,
+      "text": "INCOME · EXPENSES · INVESTMENTS MyAhorros ‹ Year 2025 2026 › Net worth Overview Yearly tracking Transactions15 Categorie"
+    },
+    "afterForward": {
+      "hash": "#categories",
+      "tab": "tab-categories"
+    },
+    "deepLinkTyped": {
+      "landing": true,
+      "tab": "tab-transactions"
+    },
+    "deepLinkAfterOpen": "tab-transactions",
+    "secondTabTookOver": true
+  },
+  "consoleErrors": [
+    "warning: The resource edge://downloads-hub/mai-message-bar.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/progress-bar.styles.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/button.styles.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/mai-menu-list.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/mai-menu-item.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/text.styles.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/text-input.styles.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/link.styles.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/mai-message-bar.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/progress-bar.styles.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/button.styles.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/mai-menu-list.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/mai-menu-item.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/text.styles.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/text-input.styles.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.",
+    "warning: The resource edge://downloads-hub/link.styles.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+  ]
+}

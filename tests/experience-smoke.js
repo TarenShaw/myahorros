@@ -37,8 +37,29 @@ assert.ok(!txMatches(row, { batch: 'batch2' }));
 assert.ok(txMatches(row, { min: 'invalid', max: '' }), 'an incomplete typed bound must not hide all rows');
 assert.ok(!txMatches({ date: row.date, amount: -30 }, { account: 'bank' }), 'legacy unlinked rows must not masquerade as a selected account');
 
+// The attention shortcut uses the category filter, including rows with stale categories.
+const txState={ui:{year:2026,tx:{table:'expenses',q:'',month:'all',cat:'all',sort:'date-desc'}}};
+const txRows=[
+  {...row,id:'ready',table:'expenses',category:'Groceries',concept:'Shop',ord:0},
+  {...row,id:'blank',table:'expenses',category:'',concept:'Shop',ord:1},
+  {...row,id:'stale',table:'expenses',category:'Removed category',concept:'Other',ord:2},
+  {...row,id:'income',table:'income',category:'',concept:'Shop',ord:3},
+  {...row,id:'old',date:'2025-09-10',table:'expenses',category:'',concept:'Shop',ord:4}
+];
+const txFiltered=new Function('S','allRows','isKnown','fold','fmtNum','txMatches',
+  'const UNCAT="Uncategorised";'+grab('txFiltered')+'return txFiltered;'
+)(txState,()=>txRows,(t,c)=>c==='Groceries',s=>String(s||'').toLowerCase(),String,txMatches);
+const attention={...txState.ui.tx,cat:'Uncategorised'};
+assert.deepStrictEqual(txFiltered(attention).map(r=>r.id),['blank','stale']);
+assert.strictEqual(txFiltered().length,3,'All rows restores classified rows');
+assert.strictEqual(txState.ui.tx.cat,'all','counting attention must not change the active filters');
+assert.deepStrictEqual(txFiltered({...attention,q:'shop',account:'bank'}).map(r=>r.id),['blank']);
+txRows[1].category='Groceries';
+assert.deepStrictEqual(txFiltered(attention).map(r=>r.id),['stale'],'accepting a category removes the row from attention');
+assert.strictEqual(txFiltered({...attention,source:'other.csv'}).length,0);
+
 // A clean row stays out of the attention list; every unresolved warning is surfaced.
-const ready = { category: 'Groceries', concept: 'Example shop' };
+const ready = { on: true, category: 'Groceries', concept: 'Example shop' };
 assert.strictEqual(impNeedsAttention(ready), false);
 for (const flag of ['dup', 'like', 'future', 'balOff', 'fx']) assert.ok(impNeedsAttention({ ...ready, [flag]: true }), flag);
 assert.ok(impNeedsAttention({ ...ready, odd: 0 }), 'zero is a valid discrepancy warning');
@@ -46,10 +67,14 @@ assert.ok(impNeedsAttention({ ...ready, aiQ: 'Shared expense?' }));
 assert.strictEqual(impNeedsAttention({ ...ready, aiQ: 'Shared expense?', aiA: 'Answered' }), false);
 assert.ok(impNeedsAttention({ ...ready, category: '' }));
 assert.ok(impNeedsAttention({ ...ready, concept: '  ---  ' }));
+for (const warning of [{ category: '' }, { dup: true }, { like: 'Saved row' }, { future: true }, { aiQ: 'Shared expense?' }, { odd: 0 }]) {
+  assert.ok(impNeedsAttention({ ...ready, ...warning }));
+  assert.strictEqual(impNeedsAttention({ ...ready, ...warning, on: false }), false, 'excluded rows belong to All rows');
+}
 console.log('experience smoke: filters and review passed');
 
 const {monthComparison,scenarioTotal,normRow}=new Function(
-  'const ymAdd=(k,n)=>{const d=new Date(Date.UTC(+k.slice(0,4),+k.slice(5,7)-1+n,1));return d.toISOString().slice(0,7)};const newId=()=>"new";'+line('const r2=')+line('const cents=')+line('const finAmt=')+grab('normRow')+grab('monthComparison')+grab('scenarioTotal')+'return {monthComparison,scenarioTotal,normRow};')();
+  'const ymAdd=(k,n)=>{const d=new Date(Date.UTC(+k.slice(0,4),+k.slice(5,7)-1+n,1));return d.toISOString().slice(0,7)};const newId=()=>"new";'+line('const r2=')+line('const cents=')+line('const finAmt=')+line('const isInternalTransfer=')+line('const isRetained=')+line('const isBudgetRow=')+grab('normRow')+grab('monthComparison')+grab('scenarioTotal')+'return {monthComparison,scenarioTotal,normRow};')();
 const history=[{date:'2026-08-01',table:'income',amount:100},{date:'2026-08-02',table:'expenses',amount:-20},{date:'2026-09-01',table:'income',amount:110.25},{date:'2026-09-02',table:'expenses',amount:-30.10},{date:'2026-09-03',table:'expenses',amount:5.05},{date:'2026-09-04',table:'investments',amount:-15}];
 const cmp=monthComparison(history,'2026-09','month');
 assert.deepStrictEqual(cmp.current,{income:110.25,expenses:25.05,investments:15,saved:85.2,n:4});

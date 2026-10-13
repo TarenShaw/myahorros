@@ -1,0 +1,12 @@
+SYNTHETIC BANK STATEMENT - QA ONLY
+Account: QA Current Account. Currency EUR. Period 01/09/2026 - 30/09/2026
+Opening balance: 1.000,00 EUR
+01/09/2026 QA SALARY ACME +2.500,00
+02/09/2026 QA RENT SEPTEMBER -800,00
+03/09/2026 QA MERCADONA GROCERIES -54,32
+04/09/2026 QA CLOTHES STORE -60,00
+05/09/2026 QA CLOTHES REFUND +20,00 (refund of clothing purchase)
+06/09/2026 QA TRANSFER TO OWN SAVINGS -300,00 (internal transfer; my own account)
+30/09/2026 QA SAVINGS INTEREST +2,15
+Closing balance: 2.307,83 EUR
+No other transactions. All names and figures are fictional.

@@ -1,0 +1,29 @@
+- generic [active] [ref=e204]:
+  - generic [ref=e205]:
+    - banner [ref=e206]:
+      - link "MyAhorros" [ref=e208] [cursor=pointer]:
+        - /url: ./
+    - generic [ref=e209]:
+      - tablist "Sections" [ref=e210]:
+        - tab "Overview" [ref=e211] [cursor=pointer]
+        - tab "Net worth" [selected] [ref=e215] [cursor=pointer]
+        - tab "Transactions" [ref=e748] [cursor=pointer]
+        - tab "By month" [ref=e227] [cursor=pointer]
+        - tab "Settings" [ref=e232] [cursor=pointer]
+      - generic [ref=e238]: Saved
+    - main [ref=e245]:
+      - generic [ref=e750]:
+        - heading [level=1] [ref=e751]:
+          - text: Net worth
+          - button "What does this mean?" [ref=e752]: i
+        - paragraph [ref=e753]: What everything you own is worth at the end of each month. Type the figures in once a month.
+      - generic [ref=e754]:
+        - generic [ref=e755]: Set up your tracker · step 1 of 5
+        - generic [ref=e756]: Where do you keep money?
+        - button "Continue setup" [ref=e757] [cursor=pointer]
+        - button "Hide the setup guide" [ref=e758] [cursor=pointer]
+  - status
+  - contentinfo [ref=e409]:
+    - text: © 2026 MyAhorros · Developed by Taren Shaw with Claude Opus 5.5 ·
+    - link "Privacy" [ref=e410] [cursor=pointer]:
+      - /url: privacy.html

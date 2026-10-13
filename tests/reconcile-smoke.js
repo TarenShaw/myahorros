@@ -6,7 +6,7 @@ const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const grab = name => { const a = html.indexOf('function ' + name + '('); assert.ok(a > -1, name + ' not found');
   const b = html.indexOf('\n}\n', a); return html.slice(a, b + 3); };
 const line = start => { const a = html.indexOf(start); assert.ok(a > -1, start + ' not found'); return html.slice(a, html.indexOf('\n', a) + 1); };
-const src = ['const r2=', 'const cents=', 'const fold=', 'const loose=', 'const nwBefore=', 'const nwWords=', 'const nwPensionish=', 'function ymAdd'].map(line).join('')
+const src = ['const r2=', 'const cents=', 'const fold=', 'const loose=', 'const nwBefore=', 'const nwWords=', 'const nwPensionish=', 'const isInternalTransfer=', 'const isRetained=', 'const isBudgetRow=', 'function ymAdd'].map(line).join('')
   + ['trackerSaved', 'nwSplit', 'nwReconcile', 'nwGains'].map(grab).join('');
 const make = new Function('N', 'months', 'RET', `const memo=(k,f)=>f(), nw=()=>N, nwHoles=()=>[], ymOf=(y,m)=>y+'-'+String(m+1).padStart(2,'0');
   let rows; const allRows=()=>rows||(rows=Object.keys(months).sort().flatMap(mk=>['income','expenses','investments'].flatMap(t=>(months[mk][t]||[]).map(r=>Object.assign({},r,{table:t,mk})))));
@@ -15,6 +15,31 @@ const make = new Function('N', 'months', 'RET', `const memo=(k,f)=>f(), nw=()=>N
   return {nwSplit,nwGains,nwReconcile};`);
 
 const RET = new Set(['income|Interest', 'income|Dividends']);
+// Reviewed statement contributions replace (rather than add to) bank-side transfer totals.
+{
+  const accounts=[{id:'cash',name:'Main Bank',group:'cash'},{id:'fund',name:'Broker',group:'invest'}];
+  const N={accounts,snaps:{'2026-08':{cash:1000,fund:1000},'2026-09':{cash:800,fund:1250}},contributions:{'2026-09':{fund:200}}};
+  const months={'2026-09':{income:[],expenses:[],investments:[{date:'2026-09-15',amount:-200,concept:'Broker deposit'}]}};
+  let f=make(N,months,RET), G=f.nwGains('2026-08','2026-09'), sp=f.nwSplit('2026-08','2026-09');
+  assert.strictEqual(G.get('fund'),50); assert.strictEqual(G.flows.get('fund'),200); assert.strictEqual(sp.left,0); assert.ok(sp.ok);
+  months['2026-09'].investments[0].concept='Unknown destination';
+  f=make(N,months,RET); sp=f.nwSplit('2026-08','2026-09');
+  assert.strictEqual(sp.gains,50); assert.strictEqual(sp.left,0); assert.strictEqual(sp.why.putRows.length,1); assert.ok(sp.ok);
+  // Missing bank transactions remain a cash discrepancy; a contribution never becomes market profit.
+  months['2026-09'].investments=[]; f=make(N,months,RET); sp=f.nwSplit('2026-08','2026-09');
+  assert.strictEqual(sp.gains,50); assert.strictEqual(sp.why.cash,-200); assert.strictEqual(sp.why.put,200); assert.ok(sp.ok);
+  // Withdrawal, fees/negative returns, and explicitly zero contributions.
+  N.snaps['2026-09']={cash:1200,fund:750}; N.contributions['2026-09'].fund=-200;
+  months['2026-09'].investments=[{date:'2026-09-15',amount:200,concept:'Broker withdrawal'}];
+  f=make(N,months,RET); assert.strictEqual(f.nwGains('2026-08','2026-09').get('fund'),-50); assert.ok(f.nwSplit('2026-08','2026-09').ok);
+  N.snaps['2026-09']={cash:1000,fund:1050}; N.contributions['2026-09'].fund=0; months['2026-09'].investments=[];
+  f=make(N,months,RET); assert.strictEqual(f.nwGains('2026-08','2026-09').get('fund'),50);
+  // Partial contribution coverage of a two-month comparison falls back to its linked rows.
+  N.snaps['2026-10']={cash:800,fund:1250}; months['2026-10']={investments:[{date:'2026-10-15',amount:-200,concept:'Broker deposit'}]};
+  f=make(N,months,RET); assert.strictEqual(f.nwGains('2026-08','2026-10').get('fund'),50); assert.ok(f.nwSplit('2026-08','2026-10').ok);
+  N.contributions['2026-10']={fund:200};
+  f=make(N,months,RET); assert.strictEqual(f.nwGains('2026-08','2026-10').get('fund'),50); assert.ok(f.nwSplit('2026-08','2026-10').ok);
+}
 /* one step, end of Aug → end of Sep. rows: [table, amount, description, category] */
 function run(accounts, s0, s1, rows) {
   const sep = { income: [], expenses: [], investments: [] };
@@ -138,4 +163,17 @@ const acc = (id, name, group, extra) => Object.assign({ id, name, group }, extra
   assert.strictEqual(f.nwReconcile({ change: 100, saved: 50, gains: 40, fresh: 0, left: 10, why: { cash: 10, ret: 0, put: 0 }, grp: { invest: { change: 500, gains: 40, flow: 400 } } }), false);
 }
 
+// Internal transfer, retained returns and month-by-month contribution precedence.
+{
+  const N={accounts:[acc('cash','Main Bank','cash'),acc('a','Alpha Broker','invest'),acc('b','Beta Broker','invest')],
+    snaps:{'2026-08':{cash:1000,a:1000,b:1000},'2026-09':{cash:1000,a:500,b:1500}}};
+  const months={'2026-09':{investments:[{date:'2026-09-15',amount:-500,concept:'Internal transfer',transferFrom:'a',transferTo:'b'}]}};
+  let f=make(N,months,RET), sp=f.nwSplit('2026-08','2026-09');
+  assert.deepStrictEqual([...f.nwGains('2026-08','2026-09').values()],[0,0]);assert.equal(sp.left,0);assert.ok(sp.ok);
+  N.snaps['2026-09']={cash:1000,a:1100,b:1000};months['2026-09']={income:[{date:'2026-09-15',amount:100,concept:'Alpha dividend',category:'Dividends',investmentAccount:'a',returnTreatment:'retained'}]};
+  f=make(N,months,RET);sp=f.nwSplit('2026-08','2026-09');assert.equal(sp.gains,100);assert.equal(sp.saved,0);assert.equal(sp.returns,0);assert.equal(sp.left,0);assert.ok(sp.ok);
+  N.snaps['2026-07']=N.snaps['2026-08'];delete N.snaps['2026-08'];N.snaps['2026-09']={cash:500,a:1500,b:1000};N.contributions={'2026-08':{a:300}};
+  months['2026-09']={investments:[{date:'2026-09-15',amount:-200,concept:'Deposit',investmentAccount:'a'}]};
+  f=make(N,months,RET);assert.equal(f.nwGains('2026-07','2026-09').get('a'),0);assert.ok(f.nwSplit('2026-07','2026-09').ok);
+}
 console.log('reconcile-smoke: all checks passed');

@@ -1,0 +1,101 @@
+{
+  "checks": [
+    "API key session-only"
+  ],
+  "statuses": [
+    {
+      "endpoint": "/v1/models",
+      "status": 200
+    },
+    {
+      "endpoint": "/v1/messages",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "connection": "accepted",
+  "model": "claude-haiku-5-5",
+  "review": {
+    "type": "import",
+    "rows": [
+      {
+        "date": "2026-09-01",
+        "concept": "QA SALARY ACME",
+        "amount": 2500,
+        "table": "income",
+        "category": "Salary",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-02",
+        "concept": "QA RENT SEPTEMBER",
+        "amount": -800,
+        "table": "expenses",
+        "category": "Rent",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-03",
+        "concept": "QA MERCADONA GROCERIES",
+        "amount": -54.32,
+        "table": "expenses",
+        "category": "Groceries",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-04",
+        "concept": "QA CLOTHES STORE",
+        "amount": -60,
+        "table": "expenses",
+        "category": "",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-05",
+        "concept": "QA CLOTHES REFUND",
+        "amount": 20,
+        "table": "income",
+        "category": "",
+        "on": true,
+        "aiQ": ""
+      },
+      {
+        "date": "2026-09-30",
+        "concept": "QA SAVINGS INTEREST",
+        "amount": 2.15,
+        "table": "income",
+        "category": "Interest",
+        "on": true,
+        "aiQ": ""
+      }
+    ],
+    "ai": {
+      "out": [
+        {
+          "date": "2026-09-06",
+          "amount": -300,
+          "concept": "QA TRANSFER TO OWN SAVINGS",
+          "src": "synthetic-statement.txt",
+          "why": "Transfer between my own accounts; the receiving savings account is not in the files"
+        }
+      ],
+      "checks": [
+        {
+          "name": "QA Current Account",
+          "move": 1307.83,
+          "found": -300,
+          "ok": false
+        }
+      ],
+      "notes": "The €300 transfer to savings is left out because it is between your own accounts; the savings account itself is not in the files. The €20 clothes refund is booked as a positive line in Clothes.",
+      "n": 1
+    }
+  },
+  "passed": false,
+  "failure": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'income'\n- 'expenses'\n",
+  "screen": "INCOME · EXPENSES · INVESTMENTS\n\nMyAhorros\nOverview\nNet worth\nTransactions\nBy month\nSettings\nSaved\nTransactions\n\nEvery income, expense and investment row. Click a row to change it.\n\nSet up your tracker · step 1 of 5 · Where do you keep money?\nContinue\nNothing recorded in the tracker yet\n\nAdd transactions one at a time, or paste rows from a bank statement. Categories fill in from your keyword list as they arrive.\n\nFill in with AI\nAdd a statement\nAdd transaction\n\nNew here? See how it works with example data: Take the tour\n\nCheck the rows\n\n6 rows read from 1 file, read by Claude\n\nSalary\nAccount\nNot one of my accounts (credit card, PayPal…)\nFrom date\nTo date\nThis statement covers the full period shown below\nRent (fixed)\nAccount\nNot one of my accounts (credit card, PayPal…)\nFrom date\nTo date\nThis statement covers the full period shown below\nGroceries (variable)\nAccount\nNot one of my accounts (credit card, PayPal…)\nFrom date\nTo date\nThis statement covers the full period shown below\nClothes (variable)\nAccount\nNot one of my accounts (credit card, PayPal…)\nFrom date\nTo date\nThis statement covers the full period shown below\nInterest\nAccount\nNot one of my accounts (credit card, PayPal…)\nFrom date\nTo date\nThis statement covers the full period shown below\n\n4 ready · 2 to review · 0 left out\n\nMatching totals check the amounts, not the categories. Check questions and possible duplicates before adding.\n\nNeeds attention\nAll rows\n\nQA Current Account: the statement’s balances move by 1.307,83 €, but the movements found add up to −300,00 €. Something may be missing or counted twice.\n\nClaude’s notes: The €300 transfer to savings is left out because it is between your own accounts; the savings account itself is not in the files. The €20 clothes refund is booked as a positive line in Clothes.\n\nLeft out on purpose (1)\n\nTicked rows will be imported. Greyed rows won’t be; the reason is on the right.\n\nINCLUDE\n\tDATE\tDESCRIPTION\tAMOUNT\tTYPE\tCATEGORY\t\n\t01/09/2026\t\nDescription of row 1\n\t\nAmount of row 1\n\t\nType of row 1\nIncome\nExpenses\nInvestments\n\t\nCategory of row 1\nUncategorised\nSalary\nMeal vouchers\nDividends\nCompany benefits\nInterest\nRent received\nTax Return\nPension\nOther\n\t\n\t02/09/2026\t\nDescription of row 2\n\t\nAmount of row 2\n\t\nType of row 2\nIncome\nExpenses\nInvestments\n\t\nCategory of row 2\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\t\n\t03/09/2026\t\nDescription of row 3\n\t\nAmount of row 3\n\t\nType of row 3\nIncome\nExpenses\nInvestments\n\t\nCategory of row 3\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\t\n\t04/09/2026\t\nDescription of row 4\n\t\nAmount of row 4\n\t\nType of row 4\nIncome\nExpenses\nInvestments\n\t\nCategory of row 4\nUncategorised\nRent\nUtilities\nSubscriptions\nPhone\nInsurance\nTransport\nGroceries\nRestaurants\nAlcohol + Bars\nEntertainment\nClothes\nNon Essential Shopping\nVacation + Hotel + Travel\nHealth\nGifts\nTaxes\nCash\nGym\nOther\n\tNo keyword\n\t05/09/2026\t\nDescription of row 5\n\t\nAmount of row 5\n\t\nType of row 5\nIncome\nExpenses\nInvestments\n\t\nCategory of row 5\nUncategorised\nSalary\nMeal vouchers\nDividends\nCompany benefits\nInterest\nRent received\nTax Return\nPension\nOther\n\tNo keyword\n\t30/09/2026\t\nDescription of row 6\n\t\nAmount of row 6\n\t\nType of row 6\nIncome\nExpenses\nInvestments\n\t\nCategory of row 6\nUncategorised\nSalary\nMeal vouchers\nDividends\nCompany benefits\nInterest\nRent received\nTax Return\nPension\nOther\n\t\nBack\n3 to Income · 3 to Expenses · 2 uncategorised\nAdd 6 rows\nClaude is ready to read your statements.\n© 2026 MyAhorros · Developed by Taren Shaw with Claude Opus 5.5 · Privacy"
+}

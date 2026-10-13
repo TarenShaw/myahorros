@@ -40,9 +40,9 @@ const TX={
     badKey:'That key wasn’t accepted. Check you copied all of it.', noKey:'Paste your API key first.', wrongKey:(n,h)=>`That doesn’t look like a ${n} key. It should start with ${h}`,
     netFail:'Couldn’t reach the service. Check your connection and try again.', noModels:'Your key works, but no suitable model was found for it.',
     saved:n=>`${n} is ready to read your statements.`, savedPaste:'Copy and paste is ready.',
-    pTitle:'Use your AI chat', stepCopy:'Copy request', stepChat:'Open AI chat', stepAnswer:'Paste answer', p1:'Copy the request. It includes the instructions and the data you selected.', copy:'Copy the request', copied:'Copied', copyFailed:'Copy didn’t work. Select the request below and copy it yourself.',
+    pTitle:'Use your AI chat', stepCopy:'Copy request', stepChat:'Open AI chat', stepAnswer:'Paste answer', p1:'Copy the request. It includes your instructions and selected data, and asks for the answer in one JSON code block.', copy:'Copy the request', copied:'Copied', copyFailed:'Copy didn’t work. Select the request below and copy it yourself.',
     p2:'Paste it into a new chat in ChatGPT, Claude or Gemini and send it.', p3:'When it has finished, copy its whole answer and paste it here:',
-    pPlaceholder:'Paste the AI’s answer here', read:'Create my review', pBad:'We couldn’t read that answer. Your pasted text is still here. Copy the repair request below into the same AI chat, then paste its new answer here.', repair:'Copy repair request', repairText:'Please redo your answer to my original request using exactly the requested JSON format. Return the complete answer, without commentary or missing sections. If it is too large, tell me so rather than cutting it off.',
+    pPlaceholder:'Paste the AI’s answer here', read:'Create my review', pBad:'We couldn’t read that answer. Your pasted text is still here. Copy the repair request below into the same AI chat, then paste its new answer here.', repair:'Copy repair request', repairText:'Please redo your answer to my original request using exactly the requested JSON format. Return the complete JSON object in one fenced code block labelled json, without commentary or missing sections. If it is too large, tell me so rather than cutting it off.',
     pSize:n=>`${n} characters. If the chat says it’s too long, send one month at a time.`, pTip:'Tip: use a new chat, so nothing from earlier conversations gets mixed in.',
     setTitleNone:'Set up AI…', setHelpNone:'Not set up yet. Use your own Claude, ChatGPT or Gemini key, or copy and paste into any AI chat.',
     setTitle:n=>'Change AI…', setHelp:(n,m)=>`Now using ${n}${m?' ('+m+')':''} with your own key.`, setHelpPaste:'Now using copy and paste: you paste the request into any AI chat and its answer back here.',
@@ -89,9 +89,9 @@ const TX={
     badKey:'Esa clave no se ha aceptado. Comprueba que la has copiado entera.', noKey:'Primero pega tu clave de API.', wrongKey:(n,h)=>`No parece una clave de ${n}. Debería empezar por ${h}`,
     netFail:'No se ha podido conectar con el servicio. Revisa la conexión y vuelve a intentarlo.', noModels:'Tu clave funciona, pero no se ha encontrado ningún modelo adecuado.',
     saved:n=>`${n} ya puede leer tus extractos.`, savedPaste:'Copiar y pegar está listo.',
-    pTitle:'Usar tu chat de IA', stepCopy:'Copiar petición', stepChat:'Abrir chat de IA', stepAnswer:'Pegar respuesta', p1:'Copia la petición. Lleva las instrucciones y los datos que has seleccionado.', copy:'Copiar la petición', copied:'Copiada', copyFailed:'No se ha podido copiar. Selecciona la petición de abajo y cópiala tú.',
+    pTitle:'Usar tu chat de IA', stepCopy:'Copiar petición', stepChat:'Abrir chat de IA', stepAnswer:'Pegar respuesta', p1:'Copia la petición. Incluye tus instrucciones y los datos seleccionados, y pide la respuesta en un único bloque de código JSON.', copy:'Copiar la petición', copied:'Copiada', copyFailed:'No se ha podido copiar. Selecciona la petición de abajo y cópiala tú.',
     p2:'Pégala en un chat nuevo de ChatGPT, Claude o Gemini y envíala.', p3:'Cuando termine, copia toda su respuesta y pégala aquí:',
-    pPlaceholder:'Pega aquí la respuesta de la IA', read:'Crear mi revisión', pBad:'No hemos podido leer esa respuesta. El texto que pegaste sigue aquí. Copia la petición de reparación de abajo en el mismo chat de IA y pega aquí su nueva respuesta.', repair:'Copiar petición de reparación', repairText:'Repite la respuesta a mi petición original usando exactamente el formato JSON solicitado. Devuelve la respuesta completa, sin comentarios ni secciones omitidas. Si es demasiado grande, dímelo en lugar de cortarla.',
+    pPlaceholder:'Pega aquí la respuesta de la IA', read:'Crear mi revisión', pBad:'No hemos podido leer esa respuesta. El texto que pegaste sigue aquí. Copia la petición de reparación de abajo en el mismo chat de IA y pega aquí su nueva respuesta.', repair:'Copiar petición de reparación', repairText:'Repite la respuesta a mi petición original usando exactamente el formato JSON solicitado. Devuelve el objeto JSON completo en un único bloque de código marcado como json, sin comentarios ni secciones omitidas. Si es demasiado grande, dímelo en lugar de cortarla.',
     pSize:n=>`${n} caracteres. Si el chat dice que es demasiado largo, envía un mes cada vez.`, pTip:'Consejo: usa un chat nuevo, para que no se mezcle nada de conversaciones anteriores.',
     setTitleNone:'Configurar la IA…', setHelpNone:'Aún sin configurar. Usa tu propia clave de Claude, ChatGPT o Gemini, o copia y pega en cualquier chat de IA.',
     setTitle:n=>'Cambiar la IA…', setHelp:(n,m)=>`Ahora con ${n}${m?' ('+m+')':''} y tu propia clave.`, setHelpPaste:'Ahora con copiar y pegar: pegas la petición en cualquier chat de IA y su respuesta aquí.',
@@ -338,6 +338,7 @@ function toast(s){ window.dispatchEvent(new CustomEvent('ybt-local-note',{detail
 
 /* copy and paste: shows the request, waits for the answer */
 function pasteRound(prompt,signal){
+  prompt='CHAT OUTPUT FORMAT\nPut the complete JSON object inside one fenced code block labelled json (```json). Do not write anything before or after the code block.\n\n'+prompt;
   return new Promise((resolve,reject)=>{
     if(signal&&signal.aborted){ reject({code:'cancelled'}); return; }
     const el=panel(`<h2 id="ap-title">${esc(t('pTitle'))}</h2>
