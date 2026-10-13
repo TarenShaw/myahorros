@@ -33,7 +33,9 @@ const data=lang=>({app:'Yearly Budget Tracker',format:1,months:{'2026-09':{
     assert.equal(await p.evaluate(()=>window.__ybt.nwGains('2026-08','2026-09').get('fund')),50);
     assert.equal(await p.evaluate(()=>window.__ybt.nwSplit('2026-08','2026-09').left),8.7);
     await p.click('[data-action=nw-review-step][data-i="1"]');
-    assert.match(await p.locator('.m-body').innerText(),lang==='en'?/not tied to a specific transaction/:/no corresponde a un movimiento concreto/);
+    assert.match(await p.locator('.nw-review-cash').innerText(),lang==='en'?/higher than your transactions predict/:/mayores de lo que indican tus movimientos/);
+    assert.deepEqual(await p.locator('.nw-review-cash dd').allTextContents(),['1,000.00 €','0.00 €','1,000.00 €','1,008.70 €','+8.70 €']);
+    assert.equal(await p.locator('.nw-review-cash .wz-list li').count(),1,'only the compared cash accounts appear here');
     assert.ok(await p.locator('#overlay .modal').evaluate(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth;}));
     assert.ok(await p.locator('.nw-review-body').evaluate(el=>el.scrollWidth<=el.clientWidth+1),'review contents fit the dialog');
     if(process.env.SHOTS)await p.locator('#overlay .modal').screenshot({path:process.env.SHOTS+`/review-${lang}-${width}.png`});
@@ -69,6 +71,26 @@ const data=lang=>({app:'Yearly Budget Tracker',format:1,months:{'2026-09':{
       assert.equal(await p.evaluate(()=>window.__ybt.S.nw.contributions['2026-09'].fund),200,'transaction import from Review continues to its pending balance review');
       await p.locator('#overlay button[data-action=close]').first().click();
     }
+    // A matched investment with a missing balance needs that balance, not another link.
+    const missing=data(lang);missing.config.networth.accounts[1].words='unknown platform transfer';delete missing.config.networth.snaps['2026-08'].fund;
+    await p.evaluate(d=>{const a=window.__ybt;a.loadDataset(d,false);a.S.ui.nw.month='2026-09';a.render();},missing);
+    await p.click('button.nw-review');
+    const item=p.locator('.nw-review-item');
+    assert.match(await item.innerText(),lang==='en'?/Already linked to Broker.*August 2026/:/Ya está vinculado a Broker.*agosto 2026/i);
+    assert.equal(await item.locator('[data-action=nw-review-balance]').count(),1,'only the missing month needs editing');
+    assert.equal(await item.locator('[data-action=nw-review-balance]').getAttribute('data-k'),'2026-08');
+    assert.equal(await p.locator('[data-action=nw-review-link]').isVisible(),false,'do not ask to link an already matched transaction');
+    if(process.env.SHOTS)await p.locator('#overlay .modal').screenshot({path:process.env.SHOTS+`/missing-balance-${lang}-${width}.png`,style:'#toast{visibility:hidden}'});
+    await p.click('[data-action=nw-review-balance]');await p.fill('#nwv-fund','1000');await p.click('#nw-snap-form button[type=submit]');
+    await p.waitForSelector('.nw-review-status');assert.equal(await p.locator('.nw-review-item').count(),0,'entering the balance resolves the matched row');
+    await p.locator('#overlay button[data-action=close]').first().click();
+    // With no transaction to link, open the useful view and preserve the sign.
+    await p.evaluate(()=>{const a=window.__ybt;a.S.nw.snaps['2026-09'].cash=991.3;a.S.ui.nw.month='2026-09';a.saveNw();a.render();});
+    await p.click('button.nw-review');
+    assert.equal(await p.locator('.seg [data-i="1"]').getAttribute('aria-pressed'),'true');
+    assert.match(await p.locator('.nw-review-cash').innerText(),lang==='en'?/lower than your transactions predict/:/menores de lo que indican tus movimientos/);
+    assert.deepEqual(await p.locator('.nw-review-cash dd').allTextContents(),['1,000.00 €','0.00 €','1,000.00 €','991.30 €','−8.70 €']);
+    assert.ok(await p.locator('.nw-review-body').evaluate(el=>el.scrollWidth<=el.clientWidth+1),'negative review fits the dialog');
     assert.ok(!(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)));
     assert.deepEqual(errors,[]);
     console.log(`${lang} ${width}px: yellow, link, reconcile, edit/return, balance-only AI import and contribution correction passed`);

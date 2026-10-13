@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-mnbmKAbj6GaF7UWEtdXMILTYWgR28b8/oPqFg1TkTok=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+sUGdVd+y4wZ1AoNnoGnCBI/VEy5f1iXszVuNupVAkw=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -876,6 +876,12 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 .nw-review-item{padding:var(--s16);border:1px solid var(--line);border-radius:var(--r-inner);margin:var(--s12) 0;overflow-wrap:anywhere}
 .nw-review-item select{width:100%;margin:var(--s8) 0}.nw-review-item .au-acts{flex-wrap:wrap}
 .nw-review-status{font-weight:600;color:var(--warn-ink)}
+.nw-review-summary{padding:var(--s16);border:1px solid var(--line);border-radius:var(--r-inner);background:var(--surface-2);margin-bottom:var(--s16)}
+.nw-review-summary .nw-review-status{font-size:var(--fs-section);margin:0 0 var(--s8)}
+.nw-review-summary>p{margin:0 0 var(--s8)}.nw-review-summary summary{cursor:pointer}
+.nw-review-math{margin:var(--s16) 0}.nw-review-math>div{display:flex;justify-content:space-between;gap:var(--s16);padding:var(--s8) 0}.nw-review-math dd{margin:0;white-space:nowrap;font-weight:600;font-variant-numeric:tabular-nums}.nw-review-math .total{border-top:1px solid var(--line);font-weight:600}
+.nw-review-item h4{margin:0 0 var(--s8)}.nw-review-item .nw-review-fix{margin-top:var(--s12)}
+.nw-review-item details{margin-top:var(--s16)}.nw-review-item summary{cursor:pointer;color:var(--muted)}
 .nw-review-body{min-width:0}.nw-review-body .seg button,.nw-review-body .btn,.nw-review-body~.m-foot .btn{white-space:normal;min-width:0}
 .nw-review-body .wz-list li{grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow-wrap:anywhere}
 .nw-review-body .wz-list li>span{text-align:right;font-size:var(--fs-meta)}
@@ -2061,7 +2067,7 @@ const STR={
   info_catSkip:['Rows whose description contains one of these words arrive unticked when you import: for example transfers between your own accounts, which are neither income nor spending.','Las filas cuya descripción contiene una de estas palabras llegan sin marcar al importar: por ejemplo, traspasos entre tus propias cuentas, que no son ni ingresos ni gastos.'],
   info_nwWhat:['Net worth is what everything you own is worth, minus what you owe. Once a month, type what each account is worth at the end of the month, or import several months from Excel, and the tracker shows how it grows and why.','El patrimonio neto es lo que vale todo lo que tienes, menos lo que debes. Una vez al mes, escribe lo que vale cada cuenta a final de mes, o importa varios meses desde Excel, y el control muestra cómo crece y por qué.'],
   info_nwGroups:['Accounts are grouped by how soon you could use the money: Cash now, Investments within days, Long-term on its own schedule (loans, property), Retirement when you retire. “Without retirement savings” is what you could reach before then.','Las cuentas se agrupan según lo pronto que podrías usar el dinero: Efectivo ya, Inversiones en días, A largo plazo según su propio calendario (préstamos, inmuebles) y Jubilación al jubilarte. «Sin el ahorro para la jubilación» es lo que podrías usar antes.'],
-  info_nwChange:['How your net worth moved since the previous month with figures. You saved: income minus expenses from your tracker. Markets, interest and gains: the Gains total of the Accounts table (price moves, interest, dividends). Moving money between your own accounts changes neither. Anything your transactions and account figures don’t explain is shown separately, Not matched to an account, so the lines always add up to the total.','Cómo ha cambiado tu patrimonio desde el mes anterior con cifras. Has ahorrado: ingresos menos gastos según tu control. Mercados, intereses y plusvalías: el total de Ganancias de la tabla Cuentas (cambios de precio, intereses, dividendos). Mover dinero entre tus propias cuentas no cambia ninguna de las dos. Lo que tus movimientos y las cifras de tus cuentas no explican se muestra por separado, Sin cuadrar con ninguna cuenta, así que las líneas siempre suman el total.'],
+  info_nwChange:['How your net worth moved since the previous month with figures. You saved: income minus expenses from your tracker. Markets, interest and gains: the Gains total of the Accounts table (price moves, interest, dividends). Moving money between your own accounts changes neither. Anything your transactions and account figures don’t explain is shown separately, Unexplained difference, so the lines always add up to the total.','Cómo ha cambiado tu patrimonio desde el mes anterior con cifras. Has ahorrado: ingresos menos gastos según tu control. Mercados, intereses y plusvalías: el total de Ganancias de la tabla Cuentas (cambios de precio, intereses, dividendos). Mover dinero entre tus propias cuentas no cambia ninguna de las dos. Lo que tus movimientos y las cifras de tus cuentas no explican se muestra por separado, Diferencia sin explicar, así que las líneas siempre suman el total.'],
   info_fhTitle:['Rules of thumb, not advice.','Reglas orientativas, no asesoramiento.'],
   info_fh_emerg:['Spendable cash divided by average monthly spending over recorded completed months in the last 12 months. A result of 2.9 months means your cash could cover about 2.9 months without income. The target is 6 months by default; below half the target is Low, below the target is Getting there, and reaching it is Healthy. Meal cards and money owed to you are excluded.', 'Efectivo disponible dividido entre el gasto medio mensual de los meses registrados y terminados de los últimos 12 meses. Un resultado de 2,9 meses significa que tu efectivo cubriría unos 2,9 meses sin ingresos. El objetivo predeterminado es de 6 meses: menos de la mitad es Bajo, menos del objetivo es En camino y alcanzarlo es Sano. Se excluyen las tarjetas de comida y el dinero que te deben.'],
   info_fh_fi:['Investments, illiquid assets and pensions divided by the target of 25 times average yearly spending. 9% means you have 9% of that target; 100% means you have reached it. The default target assumes withdrawing 4% a year. This is a rough estimate: returns vary, and some assets cannot be spent immediately.', 'Inversiones, activos ilíquidos y pensiones divididos entre el objetivo de 25 veces el gasto medio anual. Un 9% significa que tienes el 9% de ese objetivo; el 100% significa que lo has alcanzado. El objetivo predeterminado supone retirar un 4% al año. Es una estimación: la rentabilidad varía y algunos activos no están disponibles de inmediato.'],
@@ -2226,7 +2232,7 @@ const STR={
   nwDidntExist:['It didn’t exist before','No existía antes'],
   nwFromSaved:[(n,m)=>`${n} counts from ${m} on`,(n,m)=>`${n} cuenta a partir de ${m}`],
   nwFillExcel:['Fill them in from Excel','Rellenarlas desde Excel'],
-  nwBlindHint:[(n,m)=>`No figure for ${n} in ${m}. Money that moved into or out of ${n.includes(',')||n.includes(' and ')||n.includes(' y ')?'them':'it'} shows here under Not matched to an account.`,(n,m)=>`No hay cifra de ${n} en ${m}. El dinero que entró o salió de ahí aparece aquí en Sin cuadrar con ninguna cuenta.`],
+  nwBlindHint:[(n,m)=>`No figure for ${n} in ${m}. Money that moved into or out of ${n.includes(',')||n.includes(' and ')||n.includes(' y ')?'them':'it'} shows here under Unexplained difference.`,(n,m)=>`No hay cifra de ${n} en ${m}. El dinero que entró o salió de ahí aparece aquí en Diferencia sin explicar.`],
   nwClosedNote:[n=>`${pl(n,'account')} at 0 since an earlier month ${n===1?'is':'are'} hidden. ${n===1?'It comes':'They come'} back if you type a figure for ${n===1?'it':'them'}.`,n=>`${pl(n,'account')} a 0 desde un mes anterior ${n===1?'está oculta':'están ocultas'}. ${n===1?'Vuelve':'Vuelven'} si ${n===1?'le':'les'} pones una cifra.`],
   nwShowClosed:[n=>`Show accounts at 0 (${n})`,n=>`Mostrar cuentas a 0 (${n})`], nwHideClosed:['Hide accounts at 0','Ocultar cuentas a 0'],
   nwClosedSince:[m=>`At 0 since ${m}`,m=>`A 0 desde ${m}`],
@@ -2268,8 +2274,8 @@ const STR={
   nwTplDone:['Saved to your downloads. Fill it in, then upload it below.','Guardada en tus descargas. Rellénala y súbela aquí abajo.'],
   /* what changed: new accounts and money moved into them */
   nwNewAccRow:['New accounts','Cuentas nuevas'],
-  nwLeftRow:['Not matched to an account','Sin cuadrar con ninguna cuenta'], nwLeftRowSub:['Money your transactions and account figures don’t explain','Dinero que ni tus movimientos ni las cifras de tus cuentas explican'],
-  nwHealthOk:['Everything adds up','Todo cuadra'], nwHealthBad:[v=>`${v} to review`,v=>`${v} por revisar`], nwReview:['Review','Revisar'],
+  nwLeftRow:['Unexplained difference','Diferencia sin explicar'], nwLeftRowSub:['Money your transactions and account figures don’t explain','Dinero que ni tus movimientos ni las cifras de tus cuentas explican'],
+  nwHealthOk:['Everything adds up','Todo cuadra'], nwHealthBad:[v=>`${v} to review`,v=>`${v} por revisar`], nwReview:['Explain this difference','Entender esta diferencia'],
   nwLeftCash:['Cash accounts don’t match your transactions: one may be missing or in another month, a figure may be from another day, or money came from or went to an account you don’t track.','Las cuentas de efectivo no cuadran con tus movimientos: puede faltar uno o estar en otro mes, una cifra puede ser de otro día, o el dinero vino de o fue a una cuenta que no sigues.'],
   nwLeftRet:['Interest, dividends or gains that name no account with a figure this month:','Intereses, dividendos o plusvalías que no nombran ninguna cuenta con cifra este mes:'],
   nwLeftPut:['Money moved to or from investments that no account here shows (no account matched, the account has no figure this month, or it’s not tracked here):','Dinero movido a o desde inversiones que ninguna cuenta de aquí muestra (no encaja con ninguna cuenta, la cuenta no tiene cifra este mes o no se sigue aquí):'],
@@ -3951,7 +3957,7 @@ function viewNetworth(){
       const stat=(label,v,cls)=>`<div class="nw-change-stat ${cls}${v<-0.004?' down':''}"><span class="nw-stat-l">${esc(label)}</span><span class="nw-sval ${cls==='left'?'':v<-0.004?'down':'up'}">${signed(v)}</span></div>`;
       cLead=`<div class="nw-change-stats">${stat(L('nwTotalChange'),sp.change,'total')}${stat(L('nwMarket'),sp.gains,'market')}${hasLeft?stat(L('nwLeftRow'),sp.left,'left'):''}</div><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>`;
       cBody=`<div class="nw-bar" aria-hidden="true">${parts.filter(p=>Math.abs(p.v)>=0.005).map(p=>`<i class="${p.cls}${p.v<-0.004&&p.cls!=='left'?' neg':''}" style="flex:${Math.abs(p.v)}"></i>`).join('')}</div>
-        <div class="nw-mix-leg">${parts.map(p=>`<span title="${esc(p.sub)}"><i class="sw ${p.cls}${p.v<-0.004&&p.cls!=='left'?' neg':''}" aria-hidden="true"></i>${esc(p.label)} <b>${signed(p.v)}</b></span>`).join('')}${hasLeft?'':health}</div>${parts.some(p=>p.v<-0.004)?`<p class="hint">${esc(L('nwChangeSizes'))}</p>`:''}${review}
+        <div class="nw-mix-leg">${parts.map(p=>`<span title="${esc(p.sub)}"><i class="sw ${p.cls}${p.v<-0.004&&p.cls!=='left'?' neg':''}" aria-hidden="true"></i>${esc(p.label)} <b>${signed(p.v)}</b></span>`).join('')}${hasLeft?'':health}</div>${hasLeft?`<p class="hint">${esc(L(sp.left>0?'nwReviewMore':'nwReviewLess',fmtEUR(Math.abs(sp.left))))}</p>`:''}${parts.some(p=>p.v<-0.004)?`<p class="hint">${esc(L('nwChangeSizes'))}</p>`:''}${review}
         ${nwLateBox(nwLate(prev,k)||nwLate(k,ms[ms.indexOf(k)+1]))}${sp.blind.length&&Math.abs(sp.left)>=200?warnBox(L('nwBlindHint',listJoin(sp.blind),ymIn(k))):''}${sp.repay?warnBox(L('nwRepayHint',sp.repay)):''}`;
       cFt=how([ ...parts.map(p=>esc(p.label+': '+p.sub)),Math.abs(sp.returns)>0.004?esc(L('nwRetIncl',fmtEUR(sp.returns))):'',sp.moved>0.004?esc(L('nwMovedNote',fmtEUR(sp.moved,0))):''],retLink);
     }
@@ -4135,17 +4141,50 @@ function nwSuggest(groups,rest){
   return out;
 }
 Object.assign(STR,{
-  nwReviewTitle:['Review what changed','Revisar qué ha cambiado'],
-  nwReviewIntro:['Link the rows you recognise, then check the balances. The difference updates after each correction.','Vincula las filas que reconozcas y comprueba los saldos. La diferencia se actualiza tras cada corrección.'],
-  nwReviewSteps:[['1. Transactions','2. Balances and statements'],['1. Movimientos','2. Saldos y extractos']],
-  nwReviewRowHelp:['Choose the destination for an investment transfer, or the account that paid the return. This saves the full description as statement words for matching future rows.','Elige el destino de la transferencia de inversión o la cuenta que pagó el rendimiento. Se guarda la descripción completa como palabras del extracto para vincular futuras filas.'],
-  nwReviewMissing:['This row matches the account below, but its balance is missing for one of these month-ends.','Esta fila coincide con la cuenta indicada, pero falta su saldo para uno de estos fines de mes.'],
+  nwReviewTitle:['Why don’t these figures add up?','¿Por qué no cuadran estas cifras?'],
+  nwReviewIntro:['We compare the change in your balances with your savings and investment gains. Here is what is still unexplained.','Comparamos el cambio de tus saldos con tus ahorros y ganancias de inversión. Esto es lo que falta por explicar.'],
+  nwReviewSteps:[['Transactions to check','Balances and statements'],['Movimientos que comprobar','Saldos y extractos']],
+  nwReviewRowHelp:['Each item below needs an account or a balance. These transaction amounts can offset other differences; they do not have to equal the amount above.','Cada elemento necesita una cuenta o un saldo. Los importes pueden compensar otras diferencias; no tienen por qué sumar el importe de arriba.'],
+  nwReviewMissing:[(a,m)=>`Already linked to ${a}. Its month-end balance is missing for ${m}, so we cannot calculate its gain yet. Enter the balance from your statement.`,(a,m)=>`Ya está vinculado a ${a}. Falta su saldo al cierre de ${m}, por lo que aún no podemos calcular su ganancia. Introduce el saldo de tu extracto.`],
   nwReviewExternal:['This description is marked as an account you do not track here. Add that account or choose an existing one if that is incorrect.','Esta descripción está marcada como una cuenta que no sigues aquí. Añade la cuenta o elige una existente si no es correcto.'],
   nwReviewCash:['This cash difference is not tied to a specific transaction. Check both month-end balances, missing statements, dates, duplicates, and transfers to accounts you do not track.','Esta diferencia de efectivo no corresponde a un movimiento concreto. Comprueba ambos saldos de fin de mes, los extractos que faltan, las fechas, los duplicados y las transferencias a cuentas que no sigues.'],
   nwReviewCashTitle:['Cash balance difference','Diferencia de saldos de efectivo'],
   nwReviewFlow:['Statement contributions differ from the transfers linked in your tracker. Check the bank-side transfers and link them to the investment account.','Las aportaciones del extracto difieren de las transferencias vinculadas en tu control. Comprueba las transferencias del banco y vincúlalas a la cuenta de inversión.'],
   nwReviewNoRows:['No individual unmatched rows found. Continue to check balances and statement coverage.','No se han encontrado filas individuales sin vincular. Continúa para comprobar saldos y cobertura de los extractos.'],
   nwReviewBalanced:['The recorded figures now reconcile. This does not prove every transaction or category is correct.','Las cifras guardadas ahora cuadran. Esto no demuestra que todos los movimientos y categorías sean correctos.'],
+  nwReviewMore:[v=>`Your recorded net worth is ${v} higher than your savings and gains explain.`,v=>`Tu patrimonio registrado es ${v} mayor de lo que explican tus ahorros y ganancias.`],
+  nwReviewLess:[v=>`Your recorded net worth is ${v} lower than your savings and gains explain.`,v=>`Tu patrimonio registrado es ${v} menor de lo que explican tus ahorros y ganancias.`],
+  nwReviewMeaning:['This is a difference between records, not a fee or proof that money is missing. Check the items below against your statements.','Es una diferencia entre registros, no una comisión ni una prueba de que falte dinero. Contrasta los elementos de abajo con tus extractos.'],
+  nwReviewActual:['Change in recorded balances','Cambio en los saldos registrados'],
+  nwReviewExplained:['Explained by savings and gains','Explicado por ahorros y ganancias'],
+  nwReviewExplainedNew:['Explained by savings, gains and new accounts','Explicado por ahorros, ganancias y cuentas nuevas'],
+  nwReviewCauses:['Where does the difference come from?','¿De dónde sale la diferencia?'],
+  nwReviewInvestments:['Investment transfers and contributions','Transferencias y aportaciones a inversiones'],
+  nwReviewReturns:['Returns without a complete account record','Rendimientos sin datos completos de la cuenta'],
+  nwReviewMissingTitle:['Add a missing balance','Añade el saldo que falta'],
+  nwReviewAccountTitle:['Choose the account for this transaction','Elige la cuenta de este movimiento'],
+  nwReviewDestination:['Which investment account received or sent this money?','¿Qué cuenta de inversión recibió o envió este dinero?'],
+  nwReviewPayer:['Which account paid this return?','¿Qué cuenta pagó este rendimiento?'],
+  nwReviewAdvanced:['Change the account or edit the transaction','Cambiar la cuenta o editar el movimiento'],
+  nwReviewBetween:['Was this a transfer between two investment accounts?','¿Fue una transferencia entre dos cuentas de inversión?'],
+  nwReviewRemember:['Saving this choice also uses this description to match future transactions.','Al guardar, esta descripción también se usará para vincular futuros movimientos.'],
+  nwReviewSave:['Save account','Guardar cuenta'],
+  nwReviewMissingValue:['Missing balance','Falta el saldo'],
+  nwReviewCashMore:[v=>`Your cash balances are ${v} higher than your transactions predict.`,v=>`Tus saldos de efectivo son ${v} mayores de lo que indican tus movimientos.`],
+  nwReviewCashLess:[v=>`Your cash balances are ${v} lower than your transactions predict.`,v=>`Tus saldos de efectivo son ${v} menores de lo que indican tus movimientos.`],
+  nwReviewCashScope:['This compares the combined cash accounts listed below. It cannot identify a particular transaction or account as the cause.','Se compara el total de las cuentas de efectivo indicadas abajo. No se puede atribuir la causa a un movimiento o una cuenta concreta.'],
+  nwReviewCashStart:[m=>`Cash recorded at the end of ${m}`,m=>`Efectivo registrado al cierre de ${m}`],
+  nwReviewCashMovement:['Change expected from your transactions','Cambio previsto según tus movimientos'],
+  nwReviewCashExpected:[m=>`Expected cash at the end of ${m}`,m=>`Efectivo esperado al cierre de ${m}`],
+  nwReviewCashActual:[m=>`Cash you recorded for ${m}`,m=>`Efectivo que registraste en ${m}`],
+  nwReviewCashAccounts:['Cash accounts included in this comparison','Cuentas de efectivo incluidas en la comparación'],
+  nwReviewCashIncomplete:[n=>`Missing cash balances: ${n}. Fill these in first; the comparison is incomplete.`,n=>`Faltan saldos de efectivo: ${n}. Rellénalos primero; la comparación está incompleta.`],
+  nwReviewCheckBalances:['1. Check the balances you entered','1. Comprueba los saldos que introdujiste'],
+  nwReviewCheckBalancesHelp:['Compare each month-end balance with the closing balance on its statement. Correct it only if it differs from the statement.','Compara cada saldo de fin de mes con el saldo de cierre de su extracto. Corrígelo solo si no coincide con el extracto.'],
+  nwReviewCheckTransactions:['2. If the balances are right, check the transactions','2. Si los saldos son correctos, comprueba los movimientos'],
+  nwReviewCheckTransactionsHelp:['Check for missing transactions, duplicates, wrong amounts or dates. Include transfers into and out of investments. Don’t change a correct balance just to make this difference zero.','Busca movimientos que falten, duplicados, importes o fechas incorrectos. Incluye las transferencias a inversiones y desde ellas. No cambies un saldo correcto solo para dejar la diferencia a cero.'],
+  nwReviewAllBalances:['All account balances and other settings','Todos los saldos y otros ajustes'],
+  nwReviewCalculation:['See the net worth calculation','Ver el cálculo del patrimonio'],
   nwReviewChoose:['Choose an account first.','Elige primero una cuenta.'],
   nwReviewLinked:['Account matching updated.','Vinculación de cuentas actualizada.'],
   nwContributions:['Net contributions','Aportaciones netas'],
@@ -4163,28 +4202,49 @@ function modalNwReview(){
   const edit=k=>act('nw-review-balance',L('nwEdit',ymIn(k)),` data-k="${k}"`);
   const groups=new Map(); for(const r of rows){ const key=r.table+'|'+loose(r.concept); if(!groups.has(key)) groups.set(key,{r,rows:[]}); groups.get(key).rows.push(r); }
   m.groups=[...groups.values()];
-  const header=`${mHead(esc(L('nwReviewTitle')),esc(L('nwReviewIntro')))}<div class="m-body nw-review-body"><p class="nw-review-status" role="status">${esc(L('nwHealthBad',fmtEUR(Math.abs(sp.left))))} · ${esc(ymLabel(m.prev,true))} → ${esc(ymLabel(m.k,true))}</p>
-    <div class="seg" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:var(--s12) 0">${steps.map((s,i)=>`<button type="button" data-action="nw-review-step" data-i="${i}" aria-pressed="${(m.step||0)===i}">${esc(s)}</button>`).join('')}</div>`;
+  if(m.step==null) m.step=rows.length?0:1;
+  const hasLeft=Math.abs(sp.left)>=0.005, explained=r2(sp.saved+sp.gains+sp.fresh);
+  const mathRow=(label,value,total=false)=>`<div${total?' class="total"':''}><dt>${esc(label)}</dt><dd>${signed(value)}</dd></div>`;
+  const header=`${mHead(esc(L('nwReviewTitle')),esc(L('nwReviewIntro')))}<div class="m-body nw-review-body">
+    <section class="nw-review-summary"><p class="hint">${esc(ymLabel(m.prev,true))} → ${esc(ymLabel(m.k,true))}</p>
+      <p class="nw-review-status" role="status">${esc(hasLeft?L('nwHealthBad',fmtEUR(Math.abs(sp.left))):L('nwHealthOk'))}</p>
+      <p>${esc(hasLeft?L(sp.left>0?'nwReviewMore':'nwReviewLess',fmtEUR(Math.abs(sp.left))):L('nwReviewBalanced'))}</p>
+      <details><summary>${esc(L('nwReviewCalculation'))}</summary><dl class="nw-review-math">${mathRow(L('nwReviewActual'),sp.change)}${mathRow(L(Math.abs(sp.fresh)>=0.005?'nwReviewExplainedNew':'nwReviewExplained'),explained)}${mathRow(L('nwLeftRow'),sp.left,true)}</dl>
+      <p class="hint">${esc(L('nwSaved'))}: ${signed(sp.saved)} · ${esc(L('nwMarket'))}: ${signed(sp.gains)}${Math.abs(sp.fresh)>=0.005?` · ${esc(L('nwNewAccRow'))}: ${signed(sp.fresh)}`:''}</p>
+      ${hasLeft?`<p class="hint">${esc(L('nwReviewMeaning'))}</p>`:''}
+      <h4>${esc(L('nwReviewCauses'))}</h4><dl class="nw-review-math">${[['nwReviewCashTitle',sp.why.cash],['nwReviewInvestments',sp.why.put],['nwReviewReturns',sp.why.ret]].filter(([,v])=>Math.abs(v)>=0.005).map(([label,v])=>mathRow(L(label),v)).join('')}${mathRow(L('nwLeftRow'),sp.left,true)}</dl></details>
+    </section>
+    <div class="seg" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:var(--s12) 0">${steps.map((s,i)=>`<button type="button" data-action="nw-review-step" data-i="${i}" aria-pressed="${m.step===i}">${esc(s)}${i===0?` (${m.groups.length})`:''}</button>`).join('')}</div>`;
   let body='';
   if(!m.step){
-    body=`<p class="hint">${esc(L('nwReviewRowHelp'))}</p>`+m.groups.map((g,i)=>{
+    body=(rows.length?`<p class="hint">${esc(L('nwReviewRowHelp'))}</p>`:'')+m.groups.map((g,i)=>{
       const r=g.r, id=G.link.get(r), a=N.accounts.find(a=>a.id===id), eligible=N.accounts.filter(a=>r.table!=='investments'||a.group!=='cash');
+      const missing=a?[...(nwBefore(a,N.snaps[m.prev]||{},m.prev,m.k)==null?[m.prev]:[]),...(N.snaps[m.k]?.[a.id]==null?[m.k]:[])]:[];
       const external=String(N.untracked||'').split(',').map(loose).filter(Boolean).some(p=>(' '+loose(r.concept)+' ').includes(' '+p+' '));
-      return `<section class="nw-review-item"><h4>${esc(r.concept)}</h4><ul class="nw-rev-rows">${g.rows.map(r=>`<li><span>${esc(fmtDate(r.date))} · ${esc(r.category||TL(r.table))}</span><b>${signed(r.amount)}</b></li>`).join('')}</ul>
-        ${a?`<p class="hint">${esc(a.name)}: ${esc(L('nwReviewMissing'))}</p>`:external?`<p class="hint">${esc(L('nwReviewExternal'))}</p>`:''}
-        ${r.table==='investments'?nwTransferFrom('nr-from-'+i):''}<label for="nr-${i}">${esc(L('nwLinkPick',r.concept))}</label><select id="nr-${i}"${S.canWrite?'':' disabled'}><option value="">${esc(L('nwLinkNone'))}</option>${eligible.map(a=>`<option value="${esc(a.id)}"${a.id===id?' selected':''}>${esc(a.name)}</option>`).join('')}</select>
-        ${S.canWrite?`<div class="au-acts">${act('nw-review-link',L('nwLinkSave'),` data-i="${i}"`)}${act('nw-review-edit',L('editTx'),` data-mk="${r.mk}" data-t="${r.table}" data-id="${esc(r.id)}"`)}${a?edit(m.prev)+edit(m.k):''}</div>`:''}</section>`;
+      const picker=`<label for="nr-${i}">${esc(L(r.table==='investments'?'nwReviewDestination':'nwReviewPayer'))}</label><select id="nr-${i}"${S.canWrite?'':' disabled'}><option value="">${esc(L('nwLinkNone'))}</option>${eligible.map(a=>`<option value="${esc(a.id)}"${a.id===id?' selected':''}>${esc(a.name)}</option>`).join('')}</select>
+        ${r.table==='investments'?`<details><summary>${esc(L('nwReviewBetween'))}</summary>${nwTransferFrom('nr-from-'+i)}</details>`:''}
+        <p class="hint">${esc(L('nwReviewRemember'))}</p>${S.canWrite?`<div class="au-acts">${act('nw-review-link',L('nwReviewSave'),` data-i="${i}"`)}${act('nw-review-edit',L('editTx'),` data-mk="${r.mk}" data-t="${r.table}" data-id="${esc(r.id)}"`)}</div>`:''}`;
+      return `<section class="nw-review-item"><h4>${esc(L(a?'nwReviewMissingTitle':'nwReviewAccountTitle'))}</h4><b>${esc(r.concept)}</b><ul class="nw-rev-rows">${g.rows.map(r=>`<li><span>${esc(fmtDate(r.date))} · ${esc(r.category||TL(r.table))}</span><b>${signed(r.amount)}</b></li>`).join('')}</ul>
+        ${a?`<p>${esc(L('nwReviewMissing',a.name,listJoin(missing.map(k=>ymLabel(k,true)))))}</p>${S.canWrite?`<div class="au-acts nw-review-fix">${missing.map(edit).join('')}</div>`:''}<details><summary>${esc(L('nwReviewAdvanced'))}</summary>${picker}</details>`:`${external?`<p class="hint">${esc(L('nwReviewExternal'))}</p>`:''}${picker}`}</section>`;
     }).join('');
     if(!rows.length) body+=`<p>${esc(L('nwReviewNoRows'))}</p>`;
   } else {
-    body=`${Math.abs(sp.why.cash)>=0.005?`<div class="notice">${esc(L('nwReviewCashTitle'))} ${signed(sp.why.cash)}</div><p>${esc(L('nwReviewCash'))}</p>`:''}
+    const cashAccounts=N.accounts.filter(a=>a.group==='cash'&&N.snaps[m.k]?.[a.id]!=null&&nwBefore(a,N.snaps[m.prev]||{},m.prev,m.k)!=null);
+    const missingCash=N.accounts.filter(a=>a.group==='cash'&&!cashAccounts.includes(a));
+    const cashStart=r2(sum(cashAccounts.map(a=>nwBefore(a,N.snaps[m.prev]||{},m.prev,m.k)))), cashEnd=r2(sum(cashAccounts.map(a=>N.snaps[m.k][a.id]))), cashExpected=r2(cashEnd-sp.why.cash);
+    const balances=accounts=>`<ul class="wz-list">${accounts.map(a=>`<li><b>${esc(a.name)}</b><span>${esc(ymLabel(m.prev))}: ${nwBefore(a,N.snaps[m.prev]||{},m.prev,m.k)!=null?fmtEUR(nwBefore(a,N.snaps[m.prev]||{},m.prev,m.k)):esc(L('nwReviewMissingValue'))}<br>${esc(ymLabel(m.k))}: ${N.snaps[m.k]?.[a.id]!=null?fmtEUR(N.snaps[m.k][a.id]):esc(L('nwReviewMissingValue'))}</span></li>`).join('')}</ul>`;
+    const cashRow=(label,value,total=false)=>`<div${total?' class="total"':''}><dt>${esc(label)}</dt><dd>${fmtEUR(value)}</dd></div>`;
+    body=`${missingCash.length?`<p class="notice">${esc(L('nwReviewCashIncomplete',listJoin(missingCash.map(a=>a.name))))}</p>`:''}${cashAccounts.length&&Math.abs(sp.why.cash)>=0.005?`<section class="nw-review-cash"><h3>${esc(L('nwReviewCashTitle'))}</h3><p>${esc(L(sp.why.cash>0?'nwReviewCashMore':'nwReviewCashLess',fmtEUR(Math.abs(sp.why.cash))))}</p>
+      <dl class="nw-review-math">${cashRow(L('nwReviewCashStart',ymLabel(m.prev,true)),cashStart)}${mathRow(L('nwReviewCashMovement'),r2(cashExpected-cashStart))}${cashRow(L('nwReviewCashExpected',ymLabel(m.k,true)),cashExpected,true)}${cashRow(L('nwReviewCashActual',ymLabel(m.k,true)),cashEnd)}${mathRow(L('nwLeftRow'),sp.why.cash,true)}</dl>
+      <p class="hint">${esc(L('nwReviewCashScope'))}</p><details><summary>${esc(L('nwReviewCashAccounts'))}</summary>${balances(cashAccounts)}</details></section>`:''}
       ${Math.abs(G.flowDiff)>=0.005?`<p class="notice">${esc(L('nwReviewFlow'))} ${signed(G.flowDiff)}</p>`:''}
-      <ul class="wz-list">${N.accounts.map(a=>`<li><b>${esc(a.name)}</b><span>${esc(ymLabel(m.prev))}: ${N.snaps[m.prev]?.[a.id]!=null?fmtEUR(N.snaps[m.prev][a.id]):DASH}<br>${esc(ymLabel(m.k))}: ${N.snaps[m.k]?.[a.id]!=null?fmtEUR(N.snaps[m.k][a.id]):DASH}</span></li>`).join('')}</ul>
-      ${S.canWrite?`<div class="au-acts">${edit(m.prev)}${edit(m.k)}${act('nw-review-accounts',L('nwEditAccounts'))}${act('nw-review-returns',L('nwRetWhich'))}</div>`:''}
+      <section class="nw-review-item"><h4>${esc(L('nwReviewCheckBalances'))}</h4><p>${esc(L('nwReviewCheckBalancesHelp'))}</p>
+      ${S.canWrite?`<div class="au-acts">${edit(m.prev)}${edit(m.k)}</div>`:''}</section>
+      <section class="nw-review-item"><h4>${esc(L('nwReviewCheckTransactions'))}</h4><p>${esc(L('nwReviewCheckTransactionsHelp'))}</p>
       ${sp.missing.length?`<p class="warn-text">${esc(noTrackerText(sp.missing))}</p>`:''}${S.canWrite?coverageList(ymAdd(m.prev,1),m.k):''}
-      <div class="au-acts">${act('nw-review-transactions',L('inspectMonth'))}${S.canWrite?act('nw-review-import',L('addStatement')):''}</div>`;
+      <div class="au-acts">${act('nw-review-transactions',L('inspectMonth'))}${S.canWrite?act('nw-review-import',L('addStatement')):''}</div></section>
+      <details><summary>${esc(L('nwReviewAllBalances'))}</summary>${balances(N.accounts)}${S.canWrite?`<div class="au-acts">${act('nw-review-accounts',L('nwEditAccounts'))}${act('nw-review-returns',L('nwRetWhich'))}</div>`:''}</details>`;
   }
-  if(Math.abs(sp.left)<0.005) body+=`<p class="hint">${esc(L('nwReviewBalanced'))}</p>`;
   return header+body+`<p class="err" role="alert">${esc(m.msg||'')}</p></div><div class="m-foot"><button type="button" class="btn" data-action="close">${esc(L('close'))}</button><span class="r"><button type="button" class="btn primary" data-action="nw-review-step" data-i="${m.step?0:1}">${esc(steps[m.step?0:1])}</button></span></div>`;
 }
 function nwReviewChild(type,extra={}){
@@ -7266,7 +7326,7 @@ const ACTIONS={
   'local-x':el=>{ const fn=el.dataset.fn; if(S.local&&Array.isArray(S.local.actions)&&S.local.actions.includes(fn)) localAction(fn); },
   'backup':()=>downloadBackup(),
   'nw-snap':el=>{ if(S.canWrite) openModal({type:'nwsnap',k:el.dataset.k,wide:false}); },
-  'nw-review':el=>openModal({type:'nwreview',prev:el.dataset.prev,k:el.dataset.k,step:0,mid:true}),
+  'nw-review':el=>openModal({type:'nwreview',prev:el.dataset.prev,k:el.dataset.k,mid:true}),
   'nw-review-step':el=>{ S.modal.step=+el.dataset.i===1?1:0; S.modal.msg=''; renderModal(); },
   'nw-review-link':el=>{ const id=$('#nr-'+el.dataset.i)?.value; if(!nwReviewLink(+el.dataset.i,id)) S.modal.msg=L('nwReviewChoose'); else S.modal.msg=''; renderModal(); },
   'nw-review-balance':el=>{ if(S.canWrite) nwReviewChild('nwsnap',{k:el.dataset.k}); },
