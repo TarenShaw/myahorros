@@ -9,9 +9,9 @@
 <meta property="og:url" content="https://myahorros.app/">
 <meta property="og:image" content="https://myahorros.app/icons/icon-512.png">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#0d5c63">
+<meta name="theme-color" content="#2459E0">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-bhlY2grs15Wwa7XqeaDmUhf16Pcnho1Mu0TWXWk1Z/Q=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-B3BlZ8yXq7srUK+qk0s5HxgND76BRQRvsGj99CX30fM=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -23,80 +23,80 @@
 /* Layout: app shell. Sticky masthead with the year and four tabs over one working column (max 1240px).
    Overview reads summary → detail; the ledger views are full-width tables that scroll sideways inside their own frame. */
 :root{
-  --bg:#f1f4f2;
-  --surface:#fcfdfc;
-  --surface-2:#edf1ef;
-  --surface-3:#e2e8e5;
-  --ink:#13211f;
-  --ink-2:#44554f;
-  --muted:#5c6a65;
-  --line:#d8dfdc;
-  --line-2:#bcc8c3;--control-line:#7b8c84;
-  --accent:#0d5c63;
-  --accent-hover:#0a4a50;
+  --bg:#F3F6FC;
+  --surface:#FFFFFF;
+  --surface-2:#EAF0FA;
+  --surface-3:#D9E1EF;
+  --ink:#17243C;
+  --ink-2:#425570;
+  --muted:#586881;
+  --line:#D9E1EF;
+  --line-2:#B8C6DD;--control-line:#7D8DA6;
+  --accent:#2459E0;
+  --accent-hover:#1947BC;
   --accent-ink:#ffffff;
-  --accent-soft:#d9ebea;
-  --c-income:#087a56;
-  --c-expenses:#b94e25;
-  --c-investments:#2868c7;
-  --good:#087a56;
-  --good-ink:#076e4e;
-  --good-soft:#e1f2de;
-  --bad:#d03b3b;
-  --bad-ink:#a82727;
-  --bad-soft:#fbe5e3;
-  --warn-soft:#fbf0d2;
-  --warn-ink:#6e4b00;
+  --accent-soft:#EAF0FA;
+  --c-income:#087F6B;
+  --c-expenses:#B4233A;
+  --c-investments:#2459E0;
+  --good:#087F6B;
+  --good-ink:#087F6B;
+  --good-soft:#E2F6EE;
+  --bad:#B4233A;
+  --bad-ink:#B4233A;
+  --bad-soft:#FCE8ED;
+  --warn-soft:#FFF3D9;
+  --warn-ink:#8B5B00;
   --heat-lo:#ffcccc;
   --heat-mid:#fff2b3;
   --heat-hi:#daf2d0;
-  --shadow:0 1px 2px rgba(19,33,31,.06),0 12px 32px rgba(19,33,31,.12);
+  --shadow:0 2px 6px rgba(23,36,60,.04),0 10px 24px rgba(23,36,60,.08),inset 0 1px 0 rgba(255,255,255,.8);--page-glow:url("assets/northstar/background-light-glow.svg");
   --scrim:rgba(19,33,31,.38);
-  --f-display:"Bricolage Grotesque","Public Sans",system-ui,sans-serif;
-  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-display:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   /* design tokens: use these, never raw values. Spacing is a 4-pt scale; under 4 px only hairlines and optical nudges. */
   --s4:4px;--s8:8px;--s12:12px;--s16:16px;--s24:24px;--s32:32px;--s48:48px;
-  --r-card:12px;--r-inner:8px;--r-pill:999px;--r-mark:2px;
+  --r-card:18px;--r-inner:10px;--r-pill:999px;--r-mark:2px;
   /* type: page-title, section-title, kpi-hero, kpi, body, meta, eyebrow (+ lg and sm, never below 12 px except eyebrow) */
-  --fs-page:24px;--fs-section:18px;--fs-hero:48px;--fs-kpi:28px;--fs-lg:16px;--fs-body:14px;--fs-meta:13px;--fs-sm:12px;--fs-eyebrow:11px;
+  --fs-page:32px;--fs-section:18px;--fs-hero:48px;--fs-kpi:28px;--fs-lg:16px;--fs-body:14px;--fs-meta:13px;--fs-sm:12px;--fs-eyebrow:11px;
   --warn:#c99a06;--on-solid:#fff;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0b0b0c;--surface:#191d1e;--surface-2:#202729;--surface-3:#2a3133;
-    --ink:#ececee;--ink-2:#b6b6bb;--muted:#96969c;--line:#383f41;--line-2:#3b3b40;--control-line:#77777f;
-    --accent:#5ebdc3;--accent-hover:#82d1d5;--accent-ink:#06201f;--accent-soft:#1b2829;
-    --c-income:#199e70;--c-expenses:#d95926;--c-investments:#3987e5;
-    --good:#52cfa1;--good-ink:#52cfa1;--good-soft:#15301a;
-    --bad:#e66767;--bad-ink:#ff928d;--bad-soft:#3a1c1b;--warn-soft:#382d12;--warn-ink:#f0c45c;--warn:#e2b53a;
+    --bg:#0C1424;--surface:#131F34;--surface-2:#1C2B44;--surface-3:#2C3D58;
+    --ink:#F1F5FC;--ink-2:#C0CDE2;--muted:#A4B3CC;--line:#2C3D58;--line-2:#435675;--control-line:#7387A7;
+    --accent:#85A8FF;--accent-hover:#A6BFFF;--accent-ink:#10234C;--accent-soft:#1C2B44;
+    --c-income:#75DEBE;--c-expenses:#FF98A8;--c-investments:#85A8FF;
+    --good:#75DEBE;--good-ink:#75DEBE;--good-soft:#193E39;
+    --bad:#CB415B;--bad-ink:#FF98A8;--bad-soft:#442838;--warn-soft:#3C321E;--warn-ink:#F3CA77;--warn:#e2b53a;
     --heat-lo:#5e2b2b;--heat-mid:#54491d;--heat-hi:#21432a;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.45);--scrim:rgba(0,0,0,.55);
+    --shadow:0 2px 6px rgba(0,0,0,.16),0 10px 24px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.045);--page-glow:url("assets/northstar/background-dark-glow.svg");--scrim:rgba(0,0,0,.55);
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"],:root[data-ybt-theme="dark"]{
-  --bg:#0b0b0c;--surface:#191d1e;--surface-2:#202729;--surface-3:#2a3133;
-  --ink:#ececee;--ink-2:#b6b6bb;--muted:#96969c;--line:#383f41;--line-2:#3b3b40;--control-line:#77777f;
-  --accent:#5ebdc3;--accent-hover:#82d1d5;--accent-ink:#06201f;--accent-soft:#1b2829;
-  --c-income:#199e70;--c-expenses:#d95926;--c-investments:#3987e5;
-  --good:#52cfa1;--good-ink:#52cfa1;--good-soft:#15301a;
-  --bad:#e66767;--bad-ink:#ff928d;--bad-soft:#3a1c1b;--warn-soft:#382d12;--warn-ink:#f0c45c;--warn:#e2b53a;
+  --bg:#0C1424;--surface:#131F34;--surface-2:#1C2B44;--surface-3:#2C3D58;
+  --ink:#F1F5FC;--ink-2:#C0CDE2;--muted:#A4B3CC;--line:#2C3D58;--line-2:#435675;--control-line:#7387A7;
+  --accent:#85A8FF;--accent-hover:#A6BFFF;--accent-ink:#10234C;--accent-soft:#1C2B44;
+  --c-income:#75DEBE;--c-expenses:#FF98A8;--c-investments:#85A8FF;
+  --good:#75DEBE;--good-ink:#75DEBE;--good-soft:#193E39;
+  --bad:#CB415B;--bad-ink:#FF98A8;--bad-soft:#442838;--warn-soft:#3C321E;--warn-ink:#F3CA77;--warn:#e2b53a;
   --heat-lo:#5e2b2b;--heat-mid:#54491d;--heat-hi:#21432a;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.45);--scrim:rgba(0,0,0,.55);
+  --shadow:0 2px 6px rgba(0,0,0,.16),0 10px 24px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.045);--page-glow:url("assets/northstar/background-dark-glow.svg");--scrim:rgba(0,0,0,.55);
   color-scheme:dark;
 }
 
 /* Appearance setting: Light / Dark chosen in Settings beats the device setting (Automatic removes the attribute) */
 :root[data-ybt-theme="light"]{
-  --bg:#f1f4f2;--surface:#fcfdfc;--surface-2:#edf1ef;--surface-3:#e2e8e5;
-  --ink:#13211f;--ink-2:#44554f;--muted:#5c6a65;--line:#d8dfdc;--line-2:#bcc8c3;--control-line:#7b8c84;
-  --accent:#0d5c63;--accent-hover:#0a4a50;--accent-ink:#ffffff;--accent-soft:#d9ebea;
-  --c-income:#087a56;--c-expenses:#b94e25;--c-investments:#2868c7;
-  --good:#087a56;--good-ink:#076e4e;--good-soft:#e1f2de;
-  --bad:#d03b3b;--bad-ink:#a82727;--bad-soft:#fbe5e3;--warn-soft:#fbf0d2;--warn-ink:#6e4b00;--warn:#c99a06;
+  --bg:#F3F6FC;--surface:#FFFFFF;--surface-2:#EAF0FA;--surface-3:#D9E1EF;
+  --ink:#17243C;--ink-2:#425570;--muted:#586881;--line:#D9E1EF;--line-2:#B8C6DD;--control-line:#7D8DA6;
+  --accent:#2459E0;--accent-hover:#1947BC;--accent-ink:#ffffff;--accent-soft:#EAF0FA;
+  --c-income:#087F6B;--c-expenses:#B4233A;--c-investments:#2459E0;
+  --good:#087F6B;--good-ink:#087F6B;--good-soft:#E2F6EE;
+  --bad:#B4233A;--bad-ink:#B4233A;--bad-soft:#FCE8ED;--warn-soft:#FFF3D9;--warn-ink:#8B5B00;--warn:#c99a06;
   --heat-lo:#ffcccc;--heat-mid:#fff2b3;--heat-hi:#daf2d0;
-  --shadow:0 1px 2px rgba(19,33,31,.06),0 12px 32px rgba(19,33,31,.12);--scrim:rgba(19,33,31,.38);
+  --shadow:0 2px 6px rgba(23,36,60,.04),0 10px 24px rgba(23,36,60,.08),inset 0 1px 0 rgba(255,255,255,.8);--page-glow:url("assets/northstar/background-light-glow.svg");--scrim:rgba(19,33,31,.38);
   color-scheme:light;
 }
 
@@ -746,9 +746,9 @@ fieldset.plain legend{padding:0;margin-bottom:var(--s8)}
 .theme-sw::before,.theme-sw::after{content:"";position:absolute;left:8px;height:5px;border-radius:var(--r-mark)}
 .theme-sw::before{top:10px;width:46%}
 .theme-sw::after{top:22px;width:70%;box-shadow:0 10px 0 0 currentColor}
-.theme-sw.light{background:#f1f4f2;color:#d8dfdc}.theme-sw.light::before{background:#0d5c63}.theme-sw.light::after{background:#bcc8c3}
-.theme-sw.dark{background:#0b0b0c;color:#29292c}.theme-sw.dark::before{background:#5ebdc3}.theme-sw.dark::after{background:#3b3b40}
-.theme-sw.system{background:linear-gradient(115deg,#f1f4f2 50%,#0b0b0c 50%);color:transparent}.theme-sw.system::before{background:#0d5c63}.theme-sw.system::after{background:#8b8b91}
+.theme-sw.light{background:#F3F6FC;color:#D9E1EF}.theme-sw.light::before{background:#2459E0}.theme-sw.light::after{background:#B8C6DD}
+.theme-sw.dark{background:#0C1424;color:#2C3D58}.theme-sw.dark::before{background:#85A8FF}.theme-sw.dark::after{background:#435675}
+.theme-sw.system{background:linear-gradient(115deg,#F3F6FC 50%,#0C1424 50%);color:transparent}.theme-sw.system::before{background:#2459E0}.theme-sw.system::after{background:#7387A7}
 @media (max-width:520px){.radio-row.three{grid-template-columns:1fr;gap:var(--s8)}.radio-card.theme-card{flex-direction:row;align-items:center;gap:var(--s12)}.radio-card .theme-sw{width:64px;height:34px;flex:none}}
 
 /* toast */
@@ -1111,6 +1111,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 @media(max-width:600px){.app{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}.mast{grid-column:1;grid-row:1;min-width:0}.tabbar{grid-column:2;grid-row:1;border-bottom:0;justify-content:flex-end}.app>main,.app>footer{grid-column:1/-1}.tabbar-end{max-width:max(84px,calc(100vw - 160px));flex-wrap:wrap;justify-content:flex-end}.tabbar-end #btn-local-top{max-width:100%;white-space:normal;overflow-wrap:anywhere}.mast{padding-top:var(--s8);padding-bottom:var(--s8)}.mast .kicker{display:none}.mast .brand{font-size:24px}.page-head{margin-bottom:var(--s12)}.ph-meta{font-size:var(--fs-meta)}.ph-acts{gap:var(--s4)}.ph-acts:not(.show-all)>.btn:not(.primary):not([data-action=import]):not(.mobile-more){display:none}.ph-acts>.btn[data-action=import],.ph-acts>.btn.mobile-more,.ph-acts.show-all>.btn{display:inline-flex}.tx-filter-panel:not([open])+.tx-sum{margin-top:var(--s8)}.compare-grid{grid-template-columns:1fr}.filters input{max-width:100%}.ov-top{gap:var(--s12)}.more-analysis{gap:var(--s16)}}
 @media(max-width:320px){.app{grid-template-columns:minmax(0,1fr)}.tabbar{grid-column:1;grid-row:2}.tabbar-end{max-width:100%}}
 </style>
+<link rel="stylesheet" href="northstar.css">
 
 <script src="config.js"></script>
 <script src="js/web-shim.js"></script>
@@ -1126,11 +1127,11 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
   </header>
   <div class="tabbar">
     <nav class="tabs" role="tablist" aria-label="Sections">
-      <button class="tab" role="tab" data-action="tab" data-tab="overview" id="tab-overview"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16.5V10M10 16.5V4M16 16.5V8"/></svg><span class="tl">Overview</span></button>
-      <button class="tab" role="tab" data-action="tab" data-tab="networth" id="tab-networth"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3.5l7 3.4-7 3.4-7-3.4z"/><path d="M3 10.4l7 3.4 7-3.4"/><path d="M3 13.9l7 3.4 7-3.4"/></svg><span class="tl">Net worth</span></button>
-      <button class="tab" role="tab" data-action="tab" data-tab="transactions" id="tab-transactions"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 6h9M7.5 10h9M7.5 14h9"/><path d="M3.6 6h.01M3.6 10h.01M3.6 14h.01" stroke-width="2.6"/></svg><span class="tl">Transactions</span></button>
-      <button class="tab" role="tab" data-action="tab" data-tab="yearly" id="tab-yearly"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8.5h14M8 8.5V17M12.5 8.5V17"/></svg><span class="tl">Yearly<span class="tab-long"> tracking</span></span></button>
-      <button class="tab" role="tab" data-action="tab" data-tab="settings" id="tab-settings"><svg class="ti" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 6h7M14.5 6h2M3.5 14h2M9.5 14h7"/><circle cx="12.5" cy="6" r="2"/><circle cx="7.5" cy="14" r="2"/></svg><span class="tl">Settings</span></button>
+      <button class="tab" role="tab" data-action="tab" data-tab="overview" id="tab-overview"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span class="tl">Overview</span></button>
+      <button class="tab" role="tab" data-action="tab" data-tab="networth" id="tab-networth"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16M8 15l4-5 4 2 4-7"/></svg><span class="tl">Net worth</span></button>
+      <button class="tab" role="tab" data-action="tab" data-tab="transactions" id="tab-transactions"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 8V5l14-3v3M16 11h5v5h-5z"/></svg><span class="tl">Transactions</span></button>
+      <button class="tab" role="tab" data-action="tab" data-tab="yearly" id="tab-yearly"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 11h18"/></svg><span class="tl">Yearly<span class="tab-long"> tracking</span></span></button>
+      <button class="tab" role="tab" data-action="tab" data-tab="settings" id="tab-settings"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="16" cy="17" r="3"/></svg><span class="tl">Settings</span></button>
     </nav>
     <div class="tabbar-end">
       <span class="sync" id="sync" data-s="idle">Connecting</span>
@@ -1563,6 +1564,7 @@ const STR={
   pasteImport:['Add a statement','Añadir un extracto'], addTx:['Add transaction','Añadir movimiento'],
   importNewData:['Import new data','Importar nuevos datos'],
   importChoose:['What would you like to add?','¿Qué quieres añadir?'],
+  importEyebrow:['Keep your tracker up to date','Mantén tu control al día'],
   importTransactions:['Monthly transactions','Movimientos del mes'],
   importTransactionsHelp:['Add bank statements to track income, spending and investments.','Añade extractos bancarios para registrar ingresos, gastos e inversiones.'],
   importBalances:['Month-end account balances','Saldos de cuentas a final de mes'],
@@ -2779,6 +2781,9 @@ function applyTheme(){
   try{ localStorage.setItem('ybt.theme',v); }catch(_){}
 }
 applyTheme();
+const sidebarMedia=matchMedia('(min-width:1180px)');
+function orientTabs(){ $('.tabs').setAttribute('aria-orientation',sidebarMedia.matches?'vertical':'horizontal'); }
+orientTabs(); sidebarMedia.addEventListener('change',orientTabs);
 function setTheme(v){
   v=v==='light'||v==='dark'?v:'system';
   if(S.canWrite){ S.ui.themeLocal=null; setSettings({theme:v}); } else S.ui.themeLocal=v;
@@ -2873,15 +2878,15 @@ function viewEmpty(){
 
 /* ───────── icons ───────── */
 const ICON={
-  plus:'<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex:none"><path d="M10 4v12M4 10h12"/></svg>',
+  plus:'<svg width="16" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>',
   ai:'<svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" fill="currentColor" style="flex:none"><path d="M8 2.5l1.3 3.9a3 3 0 0 0 1.9 1.9L15 9.6l-3.8 1.3a3 3 0 0 0-1.9 1.9L8 16.7l-1.3-3.9a3 3 0 0 0-1.9-1.9L1 9.6l3.8-1.3a3 3 0 0 0 1.9-1.9z"/><path d="M15.5 1.5l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6z"/></svg>',
   eye:'<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 10S4.8 4.5 10 4.5 18.2 10 18.2 10 15.2 15.5 10 15.5 1.8 10 1.8 10z"/><circle cx="10" cy="10" r="2.6"/></svg>',
   eyeOff:'<svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.2 4.7A8.6 8.6 0 0 1 10 4.5c5.2 0 8.2 5.5 8.2 5.5a14 14 0 0 1-2.3 3M5.3 6.1A13.6 13.6 0 0 0 1.8 10s3 5.5 8.2 5.5a8 8 0 0 0 4.2-1.2"/><path d="M8.2 8.2a2.6 2.6 0 0 0 3.6 3.6"/><path d="M3 3l14 14"/></svg>',
   xl:'<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" style="flex:none"><rect x="2.2" y="2.2" width="11.6" height="11.6" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M2.2 6.4h11.6M6.6 6.4v7.4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>',
   flag:'<svg class="flag" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.2 1v10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M2.9 1.6h7.2L8.3 4.3l1.8 2.7H2.9z" fill="currentColor"/></svg>',
-  ok:'<svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6.2" fill="currentColor" opacity=".18"/><path d="M4.1 7.2l2 2 3.8-4.2" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  ok:'<svg width="14" height="14" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>',
   warn:'<svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6.2" fill="currentColor" opacity=".18"/><path d="M7 3.6v4.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="7" cy="10.1" r="1" fill="currentColor"/></svg>',
-  x:'<svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>'
+  x:'<svg width="14" height="14" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m6 6 12 12M6 18 18 6"/></svg>'
 };
 
 /* ───────── welcome (new tracker) ───────── */
@@ -5862,13 +5867,13 @@ document.addEventListener('keydown',e=>{
 function renderModal(keepId){
   const m=S.modal, o=$('#overlay'); if(!m){ closeModal(); return; }
   const inner=({edit:modalEdit,drill:modalDrill,importmenu:modalImportMenu,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwacc:modalNwAccounts,ai:modalAi,audit:modalAudit,nwgoal:modalNwGoal,nwret:modalNwReturns,nwlink:modalNwLink,nwreview:modalNwReview,nwimp:modalNwImport,bulkcat:modalBulkCategory,saveview:modalSaveView,imports:modalImportHistory,answers:modalAnswers})[m.type]();
-  o.innerHTML=`<div class="scrim" data-action="close"></div><div class="modal${m.wide?' wide':m.mid?' mid':''}" role="dialog" aria-modal="true" aria-labelledby="m-title">${inner}</div>`;
+  o.innerHTML=`<div class="scrim" data-action="close"></div><div class="modal${m.wide?' wide':m.mid?' mid':''}${m.type==='importmenu'?' import-menu':''}" role="dialog" aria-modal="true" aria-labelledby="m-title">${inner}</div>`;
   o.classList.add('on'); o.setAttribute('aria-hidden','false');
   if(m.type==='edit') txPreview();
   if(keepId){ const k=document.getElementById(keepId); if(k&&o.contains(k)){ k.focus({preventScroll:true}); return; } }
   const f=o.querySelector('[data-autofocus]')||o.querySelector('input,select,textarea,button:not([data-action=close])'); if(f) f.focus({preventScroll:!!keepId||keepId===null});
 }
-function mHead(title,sub){ return `<div class="m-head"><div><h3 id="m-title">${title}</h3>${sub?`<p>${sub}</p>`:''}</div><button class="icon-btn" data-action="close" aria-label="${esc(L('close'))}">${ICON.x}</button></div>`; }
+function mHead(title,sub,eyebrow){ return `<div class="m-head"><div>${eyebrow?`<p class="modal-eyebrow">${eyebrow}</p>`:''}<h3 id="m-title">${title}</h3>${sub?`<p>${sub}</p>`:''}</div><button class="icon-btn" data-action="close" aria-label="${esc(L('close'))}">${ICON.x}</button></div>`; }
 /* ───────── category guesses ─────────
    A small model learned from your own categorised transactions, one per table. Each description is cut into
    short letter sequences (2 to 5 letters inside each word, digits dropped), weighted by how rare they are
@@ -6048,10 +6053,10 @@ function modalDrill(){
 
 /* import */
 function modalImportMenu(){
-  return `${mHead(esc(L('importNewData')),esc(L('importChoose')))}<div class="m-body"><div class="ob-ways">
-    <button class="ob-way" type="button" data-action="guide-import">${ICON.xl}<b class="ob-way-t">${esc(L('importTransactions'))}</b><span class="ob-way-s">${esc(L('importTransactionsHelp'))}</span></button>
-    <button class="ob-way" type="button" data-action="import-balances">${ICON.plus}<b class="ob-way-t">${esc(L('importBalances'))}</b><span class="ob-way-s">${esc(L('importBalancesHelp'))}</span></button>
-  </div><div class="wz-acts" style="margin-top:var(--s12)"><button class="btn" type="button" data-action="guide-nwimport">${ICON.xl}${esc(L('importBalancesExcel'))}</button></div></div><div class="m-foot"><button class="btn" type="button" data-action="close">${esc(L('cancel'))}</button></div>`;
+  return `${mHead(esc(L('importNewData')),esc(L('importChoose')),esc(L('importEyebrow')))}<div class="m-body"><div class="ob-ways">
+    <button class="ob-way" type="button" data-action="guide-import"><span class="import-icon">${ICON.xl}</span><b class="ob-way-t">${esc(L('importTransactions'))}</b><span class="ob-way-s">${esc(L('importTransactionsHelp'))}</span><span class="import-chevron" aria-hidden="true">›</span></button>
+    <button class="ob-way" type="button" data-action="import-balances"><span class="import-icon">${ICON.plus}</span><b class="ob-way-t">${esc(L('importBalances'))}</b><span class="ob-way-s">${esc(L('importBalancesHelp'))}</span><span class="import-chevron" aria-hidden="true">›</span></button>
+  </div><button class="btn import-excel" type="button" data-action="guide-nwimport">${ICON.xl}<span>${esc(L('importBalancesExcel'))}</span><span class="import-arrow" aria-hidden="true">↗</span></button></div><div class="m-foot"><button class="btn" type="button" data-action="close">${esc(L('cancel'))}</button></div>`;
 }
 function skipList(){ const s=S.settings&&S.settings.skip; return Array.isArray(s)?s:DEFAULT_SKIP; }
 function skipMatch(concept){ const c=loose(concept); let best=null, bl=0; for(const w of skipList()){ const lw=loose(w); if(lw&&lw.length>bl&&hasKw(c,lw)){ best=w; bl=lw.length; } } return best; }
