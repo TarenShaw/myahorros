@@ -193,13 +193,60 @@ const SHOTS = process.env.SHOTS;
   await shot(p, 'wizard-summary');
   console.log('4d. statements, balances from the statement, salary, summary gaps');
 
-  /* 5. See a demo starts the tour */
-  p = await newPage();
-  await p.goto(START, { waitUntil: 'load' });
-  await p.waitForSelector('.web-landing [data-x=demo]');
-  await p.click('.web-landing .wl-hero [data-x=demo]');
-  await p.waitForSelector('#tour-card', { timeout: 10000 });
-  console.log('5. demo opens the tour');
+  /* 5. Every tutorial spotlight resolves, including folded analysis and the previous-year January demo. */
+  for (const [lang, width, date, scheme] of [['en', 1280, '2026-10-13', 'dark'], ['es', 1280, '2026-01-13', 'light'], ['en', 375, '2026-01-13', 'light'], ['es', 375, '2026-10-13', 'dark']]) {
+    p = await newPage();
+    await p.setViewportSize({ width, height: 860 });
+    await p.emulateMedia({ colorScheme: scheme });
+    await p.addInitScript(({ lang, date }) => {
+      window.__ybtTest = true;
+      localStorage.setItem('ybt.lang', lang);
+      const RealDate = Date, fixed = new RealDate(date + 'T12:00:00').getTime();
+      window.Date = class extends RealDate { constructor(...args) { super(...(args.length ? args : [fixed])); } static now() { return fixed; } };
+    }, { lang, date });
+    await p.goto(START, { waitUntil: 'load' });
+    const image = p.locator('.web-landing .wl-pages img');
+    await image.evaluate(img => img.decode());
+    assert.ok(await image.evaluate(img => img.naturalWidth > 0 && getComputedStyle(img).objectFit !== 'cover'), 'landing product image missing or cropped');
+    assert.strictEqual(await image.getAttribute('src'), `images/landing-networth-${scheme}${lang === 'es' ? '-es' : ''}.webp`);
+    assert.ok(await p.evaluate(() => document.querySelector('.web-landing').scrollWidth <= innerWidth), 'landing overflows horizontally');
+    await p.click('.web-landing .wl-hero [data-x=demo]');
+    await p.waitForSelector('#tour-card', { timeout: 10000 });
+    const steps = await p.evaluate(() => window.__ybt.TOUR_STEPS.map(s => s.k));
+    assert.ok(steps.includes('ovAnalysis') && steps.includes('nwAnalysis'), 'analysis steps missing');
+    for (let i = 0; i < steps.length; i++) {
+      await p.waitForFunction(i => {
+        const step = window.__ybt.TOUR_STEPS[i], card = document.querySelector('#tour-card');
+        if (!card || card.style.visibility === 'hidden') return false;
+        if (!step.el) return card.classList.contains('center');
+        const el = step.el(), spot = document.querySelector('#tour-spot');
+        return !!el && el.getClientRects().length > 0 && !spot.hidden && !card.classList.contains('center');
+      }, i).catch(async err => {
+        await shot(p, `tour-failed-${lang}-${width}-${steps[i]}`);
+        throw new Error(`${lang} ${width}px ${date} step ${steps[i]}: ${err.message}`);
+      });
+      const state = await p.evaluate(i => {
+        const step = window.__ybt.TOUR_STEPS[i], card = document.querySelector('#tour-card'), r = card.getBoundingClientRect();
+        return { key: step.k, tab: window.__ybt.S.ui.tab, title: document.querySelector('#tour-title').textContent,
+          text: document.querySelector('#tour-text').textContent, left: r.left, right: r.right, top: r.top, bottom: r.bottom };
+      }, i);
+      assert.ok(state.title && state.text && !state.text.includes('undefined'), 'missing translation for ' + state.key);
+      assert.ok(state.left >= 0 && state.right <= width && state.top >= 0 && state.bottom <= 860, 'tutorial card offscreen: ' + JSON.stringify(state));
+      if (i < steps.length - 1) {
+        const oldTitle = state.title;
+        await p.click('#tour-card [data-tour=next]');
+        await p.waitForFunction(title => document.querySelector('#tour-title').textContent !== title, oldTitle);
+      }
+    }
+    await shot(p, `tour-end-${lang}-${width}`);
+    await p.click('#tour-card [data-tour=end]');
+    await p.waitForSelector('button.web-way[data-m=browser]');
+    const saved = await p.evaluate(async () => JSON.parse(await window.__ybtWeb.idb.get('data') || '{}'));
+    assert.deepStrictEqual(saved.months || {}, {}, 'demo transactions were saved as real data');
+    assert.deepStrictEqual(saved.config?.networth?.accounts || [], [], 'demo accounts were saved as real data');
+    console.log(`5. ${lang}, ${width}px, ${date}: all ${steps.length} tutorial steps fit and highlight real targets`);
+    await p.context().close();
+  }
 
   /* 6. a small phone at 200% zoom (375x667 -> 187x333 CSS px): the where-to-save card fits, and the add dialog's
      sticky title and buttons leave its fields reachable */

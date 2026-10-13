@@ -155,4 +155,4 @@
 @media (prefers-reduced-motion:reduce){.wl-card,.wl-card:hover{transition:none;transform:none}}
 @media (max-width:960px){.wl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:720px){.wl-how ol{grid-template-columns:1fr}.wl-top .btn[data-x=demo]{display:none}.wl-view{border-radius:10px}.wl-safe{grid-template-columns:1fr}}
-@media (max-width:560px){.wl-grid{grid-template-columns:1fr}.wl-pages img{aspect-ratio:4/5;object-fit:cover;object-position:0 0}}
+@media (max-width:560px){.wl-grid{grid-template-columns:1fr}}
