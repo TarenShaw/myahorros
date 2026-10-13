@@ -49,7 +49,7 @@ const TX={
     connect:'Connect Google Drive', connecting:'Connecting…',
     driveFail:'Google Drive couldn’t be reached. Check your connection and try again.',
     driveDenied:'Google Drive access wasn’t given, so nothing was changed.',
-    barSignIn:'Google Drive needs you to sign in again. Your changes are kept on this device until then.',
+    barSignIn:'Reconnect Google Drive to sync. Your changes are kept on this device until then.',
     driveHave:'Already using it on another device? Choose this and your tracker opens from your Drive.',
     restoreT:'Restore from Google Drive…', restoreHelp:'Open your tracker or one of its daily backups from your Google Drive.',
     restoreTitle:'Restore from Google Drive', restoreSub:'Pick the version to open. What’s on screen now is kept as a backup first.',
@@ -61,7 +61,7 @@ const TX={
     barOffline:'You’re offline. Your changes are kept on this device and go to Google Drive when you’re back online.',
     barFolder:'The browser needs your permission again to save in your tracker folder. Your changes are kept until then.',
     barFolderFail:'Your tracker folder couldn’t be written to. Your changes are kept in this browser until it works again.',
-    reconnect:'Sign in again', allowShort:'Allow',
+    reconnect:'Reconnect', allowShort:'Allow',
     stDrive:t=>`Saved to Google Drive at ${t}.`, stDriveSaving:'Saving to Google Drive…', stDriveWait:'Changes waiting to go to Google Drive.', stDriveNever:'Not yet saved to Google Drive.',
     stFolder:t=>`Saved to the file at ${t}.`, stBrowser:'Saved in this browser.',
     conflictTitle:'Your tracker was changed somewhere else',
@@ -142,7 +142,7 @@ const TX={
     connect:'Conectar Google Drive', connecting:'Conectando…',
     driveFail:'No se ha podido conectar con Google Drive. Revisa la conexión y vuelve a intentarlo.',
     driveDenied:'No se ha dado acceso a Google Drive, así que no se ha cambiado nada.',
-    barSignIn:'Google Drive necesita que vuelvas a iniciar sesión. Hasta entonces, tus cambios se guardan en este dispositivo.',
+    barSignIn:'Vuelve a conectar Google Drive para sincronizar. Hasta entonces, tus cambios se guardan en este dispositivo.',
     driveHave:'¿Ya lo usas en otro dispositivo? Elige esta opción y tu control se abre desde tu Drive.',
     restoreT:'Restaurar desde Google Drive…', restoreHelp:'Abre tu control o una de sus copias diarias desde tu Google Drive.',
     restoreTitle:'Restaurar desde Google Drive', restoreSub:'Elige la versión que quieres abrir. Antes se guarda una copia de lo que hay ahora en pantalla.',
@@ -154,7 +154,7 @@ const TX={
     barOffline:'Estás sin conexión. Tus cambios se guardan en este dispositivo y pasan a Google Drive al volver a conectarte.',
     barFolder:'El navegador necesita tu permiso otra vez para guardar en la carpeta de tu control. Hasta entonces, tus cambios se conservan.',
     barFolderFail:'No se ha podido escribir en la carpeta de tu control. Tus cambios se guardan en este navegador hasta que vuelva a funcionar.',
-    reconnect:'Volver a iniciar sesión', allowShort:'Permitir',
+    reconnect:'Volver a conectar', allowShort:'Permitir',
     stDrive:t=>`Guardado en Google Drive a las ${t}.`, stDriveSaving:'Guardando en Google Drive…', stDriveWait:'Hay cambios pendientes de subir a Google Drive.', stDriveNever:'Todavía no se ha guardado en Google Drive.',
     stFolder:t=>`Guardado en el archivo a las ${t}.`, stBrowser:'Guardado en este navegador.',
     conflictTitle:'Tu control ha cambiado en otro sitio',
@@ -755,18 +755,6 @@ function driveSync(pull){
 }
 window.addEventListener('online',()=>{ if(mode==='drive'){ if(barKind==='offline') bar(null); driveSync(true); } if(mode==='folder') flushFolder(); });
 window.addEventListener('offline',()=>{ if(mode==='drive'){ drive.state='offline'; bar('offline'); } });
-/* Google only lets its pop-up open right after a click. So when the pass is gone or has under 10 minutes left, the
-   next click anywhere asks for a new one; for someone who already allowed MyAhorros the pop-up closes by itself and
-   the "sign in" strip never shows. Not on the strip's own button (it signs in itself); after a failure, wait 10 minutes. */
-let renewAt=0;
-document.addEventListener('pointerdown',e=>{
-  if(mode!=='drive'||navigator.onLine===false||!(window.google&&window.google.accounts&&window.google.accounts.oauth2)) return;
-  if(drive.token&&Date.now()<drive.exp-600000||Date.now()<renewAt) return;
-  if(e.target&&e.target.closest&&e.target.closest('#web-bar')) return;
-  if(!(JSON.parse(lsGet(DRIVE_KEY)||'{}')||{}).folderId) return;   /* never connected on this device: the strip asks */
-  renewAt=Date.now()+120000;
-  drive.signIn().then(()=>{ if(barKind==='signin'||barKind==='start') bar(null); return driveSync('note'); }).catch(()=>{ renewAt=Date.now()+600000; });
-},true);
 /* coming back to the tab: catch up with changes made on another device */
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible'&&mode==='drive'&&drive.valid()) driveSync('note'); });
 
@@ -1043,7 +1031,7 @@ async function startDrive(){
     setTimeout(()=>{ if(!store||mode!=='drive') return;
       if(navigator.onLine===false){ drive.state='offline'; bar('offline'); return; }
       if(drive.valid()){ driveSync('note').catch(()=>{}); return; }
-      drive.state='signin'; bar('start'); },0);
+      drive.state='signin'; bar('signin'); },0);
     return true;
   }
   /* a new device: connect before opening */

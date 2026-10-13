@@ -116,7 +116,7 @@ async function until(fn, ms, what) { const t = Date.now(); for (;;) { const v = 
   assert.ok(files.some(x => /changed elsewhere|before merging/.test(x.name)), 'no backup of the other version was kept');
   console.log('5. merged file has 2026-03, 2026-04 (mine) and 2026-07 (theirs); the other version was kept as a backup');
 
-  /* 6. the pass is kept: a reload doesn't ask to connect again; one about to run out is renewed by the next click */
+  /* 6. Google sign-in only opens on an explicit reconnect, never on an ordinary tap. */
   assert.strictEqual(JSON.parse(await page.evaluate(() => localStorage.getItem('ybt.drive'))).hint, 'someone@example.com', 'Google account not remembered');
   await page.reload({ waitUntil: 'load' });
   await sleep(2500);
@@ -126,9 +126,23 @@ async function until(fn, ms, what) { const t = Date.now(); for (;;) { const v = 
   await page.reload({ waitUntil: 'load' });
   await sleep(1500);
   await page.mouse.click(640, 20);
-  await until(() => page.evaluate(() => window.__tok === 1 && JSON.parse(localStorage.getItem('ybt.driveToken')).e > Date.now() + 50 * 60000), 5000, 'pass renewed on a click');
-  assert.strictEqual(await page.$('#web-bar'), null, 'a strip showed while renewing');
-  console.log('6. reload keeps the Drive pass; a pass about to run out is renewed by the next click, no strip');
+  await sleep(500);
+  assert.ok(!await page.evaluate(() => window.__tok), 'ordinary tap renewed a nearly expired pass');
+  await page.evaluate(() => { const x = JSON.parse(localStorage.getItem('ybt.driveToken')); x.e = Date.now() - 60000; localStorage.setItem('ybt.driveToken', JSON.stringify(x)); });
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForSelector('#web-bar button');
+  assert.ok((await page.textContent('#web-bar')).includes('Reconnect Google Drive to sync'), 'expired pass did not show the reconnect notice');
+  await page.mouse.click(640, 20);
+  await sleep(500);
+  assert.ok(!await page.evaluate(() => window.__tok), 'ordinary tap opened Google with an expired pass');
+  await page.evaluate(async m => { const db = await window.claude.use('db'); await db.doc('months/2026-08').set(m); }, month(80));
+  await until(() => page.evaluate(async () => { const c = await window.__ybtWeb.drive.cache(); return c.dirty && JSON.parse(c.text).months['2026-08']; }), 5000, 'offline edit saved locally');
+  assert.ok(!JSON.parse(trackerFile().content).months['2026-08'], 'edit synced before reconnect');
+  await page.click('#web-bar button');
+  await until(() => page.evaluate(() => window.__tok === 1 && JSON.parse(localStorage.getItem('ybt.driveToken')).e > Date.now() + 50 * 60000), 5000, 'explicit reconnect renewed the pass');
+  await until(() => JSON.parse(trackerFile().content).months['2026-08'], 10000, 'local edit synced after reconnect');
+  assert.strictEqual(await page.$('#web-bar'), null, 'reconnect notice remained after reconnect');
+  console.log('6. ordinary taps never open Google; explicit reconnect syncs locally saved edits');
   /* Drive status and reconnect notices must leave every phone tab unobstructed. */
   for (const width of [320, 390, 640]) {
     await page.setViewportSize({ width, height: 800 });
