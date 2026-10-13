@@ -129,6 +129,25 @@ async function until(fn, ms, what) { const t = Date.now(); for (;;) { const v = 
   await until(() => page.evaluate(() => window.__tok === 1 && JSON.parse(localStorage.getItem('ybt.driveToken')).e > Date.now() + 50 * 60000), 5000, 'pass renewed on a click');
   assert.strictEqual(await page.$('#web-bar'), null, 'a strip showed while renewing');
   console.log('6. reload keeps the Drive pass; a pass about to run out is renewed by the next click, no strip');
+  /* Drive status and reconnect notices must leave every phone tab unobstructed. */
+  for (const width of [320, 390, 640]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.waitForSelector('#web-sync');
+    assert.ok(await page.evaluate(() => document.querySelector('#web-sync').getBoundingClientRect().bottom < document.querySelector('.tabs').getBoundingClientRect().top), 'Drive status overlaps phone navigation at ' + width);
+    await page.context().setOffline(true);
+    await page.evaluate(() => window.__ybtWeb.sync());
+    await page.waitForSelector('#web-bar');
+    assert.ok(await page.evaluate(() => document.querySelector('#web-bar').getBoundingClientRect().bottom < document.querySelector('.tabs').getBoundingClientRect().top), 'Drive reconnect notice overlaps phone navigation at ' + width);
+    for (const tab of ['overview', 'networth', 'transactions', 'yearly', 'settings']) {
+      await page.click('#tab-' + tab);
+      assert.strictEqual(await page.getAttribute('#tab-' + tab, 'aria-selected'), 'true');
+    }
+    await page.context().setOffline(false);
+    await page.evaluate(() => window.__ybtWeb.sync());
+  }
+  await page.setViewportSize({ width: 1280, height: 900 });
+  assert.strictEqual(await page.$eval('#web-sync', el => getComputedStyle(el).bottom), '12px', 'desktop Drive status moved');
+  console.log('7. Drive notices clear phone navigation at 320/390/640px; all five tabs work; desktop unchanged');
   await browser.close();
   console.log('drive sync e2e: all passed');
 })().catch(e => { console.error(e); process.exit(1); });

@@ -66,6 +66,8 @@
 .web-sync.bad{color:var(--bad-ink,#a82727);border-color:var(--bad,#d03b3b)}
 .web-sync.busy{color:var(--muted,#5c6a65)}
 .web-sync[hidden]{display:none}
+/* Keep Drive status and reconnect notices above the phone's bottom navigation. */
+@media (max-width:640px){.web-sync,.web-bar{bottom:calc(74px + env(safe-area-inset-bottom,0px))}}
 @media print{.web-sync{display:none}}
 .ai-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:14px;align-items:start}
 .ai-col h3{margin:0 0 8px;font:600 13px/1.3 var(--f-body,system-ui,sans-serif);color:var(--ink-2,#44554f);display:flex;gap:8px;align-items:center}
@@ -108,6 +110,11 @@
 .wl-call{display:flex;align-items:center;gap:10px;padding:8px 12px 8px 8px;border-radius:12px;background:var(--surface,#fcfdfc);border:1px solid var(--line,#d8dfdc);font:600 14px/1.3 var(--f-body,system-ui,sans-serif)}
 .wl-call .wl-ico{flex:none;width:32px;height:32px;border-radius:9px}
 @media (max-width:767px){
+  .wl-top{padding:8px 16px;gap:4px}
+  .wl-top .wl-brand{font-size:16px}
+  .wl-top-r{width:100%;justify-content:space-between;gap:8px}
+  .wl-top .btn{padding-inline:10px;font-size:13px}
+  .wl-top .web-lang button{min-height:44px;padding:6px 8px;font-size:12px}
   .wl-hero{padding-top:24px;text-align:center}
   .wl-stage{grid-template-columns:minmax(0,1fr);gap:24px}
   .wl-hero h1{max-width:22ch;margin:0 auto 14px;font-size:clamp(2.2rem,6vw,3.2rem)}
