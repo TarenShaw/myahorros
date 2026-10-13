@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0d5c63">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-+sUGdVd+y4wZ1AoNnoGnCBI/VEy5f1iXszVuNupVAkw=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-bhlY2grs15Wwa7XqeaDmUhf16Pcnho1Mu0TWXWk1Z/Q=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -989,6 +989,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
 .nwt tr.grp .grp-sub::before{content:"· "}
 .nwt td.an{padding-left:var(--s32)}
 .nwt td.na{color:var(--muted)}
+.nwt td.nw-flow-missing{white-space:normal}
 .nwt .missing{color:var(--warn-ink);font-size:var(--fs-sm)}
 .chip-risk{display:inline-flex;align-items:center;font:600 var(--fs-eyebrow)/1 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;padding:3px var(--s8);border-radius:var(--r-inner);background:var(--bad-soft);color:var(--bad-ink);vertical-align:1px}
 .nw-form{display:grid;gap:var(--s8)}
@@ -1033,6 +1034,7 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
   .nwt td:nth-child(3){grid-column:2;grid-row:2;font-size:var(--fs-sm)}
   .nwt td:nth-child(3):empty,.nwt td:nth-child(4):empty,.nwt td.na{display:none}
   .nwt td:nth-child(4){grid-column:2;font-size:var(--fs-sm)}
+  .nwt td.nw-flow-missing{grid-column:1/-1}
   .nwt td:nth-child(n+3)[data-l]:not(:empty)::before{content:attr(data-l) " ";color:var(--muted)}
   .nwt td:nth-child(5){grid-column:1;grid-row:2;text-align:left;font-size:var(--fs-sm)}
   .nwt tr.grp{background:var(--surface-2)}
@@ -4099,6 +4101,19 @@ function nwGains(prev,k){
   }
   return out;
 }
+/* Derive cash movement from linked transactions; balance change minus interest would hide missing transactions. */
+function nwCashFlows(prev,k){
+  const N=nw(), cash=N.accounts.filter(a=>a.group==='cash'), ids=new Set(cash.map(a=>a.id)), allIds=new Set(N.accounts.map(a=>a.id)), flows=new Map(), unlinked=[];
+  if(!cash.length) return {flows,unlinked};
+  for(const r of allRows()){
+    const m=r.date.slice(0,7); if(m<=prev||m>k||!isBudgetRow(r)) continue;
+    if(!ids.has(r.account)){ if(!isReturn(r)&&(!r.account||!allIds.has(r.account))) unlinked.push(r); continue; }
+    if(!flows.has(r.account)) flows.set(r.account,0);
+    if(!isReturn(r)) flows.set(r.account,flows.get(r.account)+cents(r.amount));
+  }
+  for(const a of cash) if(!flows.has(a.id)&&statementCovered(a,ymAdd(prev,1),k)) flows.set(a.id,0);
+  return {flows:new Map([...flows].map(([id,v])=>[id,v/100])),unlinked};
+}
 /* unlinked Investments rows ({r,k}: row and the month whose gain it affects), one entry per description: the phrase
    saved as statement words is the description without the price after "@" or a trailing reference number, unless
    that no longer matches the row as whole words */
@@ -4188,6 +4203,12 @@ Object.assign(STR,{
   nwReviewChoose:['Choose an account first.','Elige primero una cuenta.'],
   nwReviewLinked:['Account matching updated.','Vinculación de cuentas actualizada.'],
   nwContributions:['Net contributions','Aportaciones netas'],
+  nwNetMoney:['Net money in/out','Entradas/salidas netas'],
+  nwCashFlowHelp:['Cash: recorded salary and other income, minus spending, plus refunds and transfers in or out. Interest and dividends stay under Gains. Amounts use transactions linked to each cash account; they may be incomplete if statements or transfers are missing.','Efectivo: nómina y otros ingresos registrados, menos gastos, más devoluciones y transferencias recibidas o enviadas. Los intereses y dividendos quedan en Ganancias. Los importes usan movimientos vinculados a cada cuenta de efectivo; pueden estar incompletos si faltan extractos o transferencias.'],
+  nwCashFlowUnknown:['No linked data','Sin datos vinculados'],
+  nwCashFlowUnlinked:[n=>`${n} transactions have no account link for this period. Cash amounts include linked transactions only. Open a transaction and set its Account / source to include it.`,n=>`${n} movimientos no tienen una cuenta vinculada en este periodo. Los importes de efectivo solo incluyen movimientos vinculados. Abre un movimiento y elige su Cuenta / origen para incluirlo.`],
+  nwCashFlowCheck:['Check account links','Comprobar vínculos de cuenta'],
+  nwAccountUnlinked:['No account link','Sin cuenta vinculada'],
   nwContributionHelp:['Deposits minus withdrawals. Each month uses reviewed statement contributions when available, otherwise linked Investments rows. Change is the full balance movement, including gains.','Ingresos de capital menos retiradas. Cada mes usa aportaciones revisadas del extracto cuando existen; en otro caso, filas de Inversiones vinculadas. Cambio es la variación completa del saldo, incluidas las ganancias.'],
   nwAiActivity:['Investment figures to save with these balances','Cifras de inversión que se guardarán con estos saldos'],
   nwAiUnknown:['Not shown — will use linked transactions','No consta — se usarán los movimientos vinculados'],
@@ -4290,19 +4311,27 @@ function accountsCard(k){
   const lC=` data-l="${esc(L('nwChangeCol'))}"`, lS=` data-l="${esc(L('nwShare'))}"`;   /* labels for the phone layout, where the header row is hidden */
   /* Change and Gains cells: signed, coloured by sign; a muted dash when there is no figure (once there is a month before to compare with) */
   const na=k&&prev?DASH:'', cell=(v,lab)=>`<td class="r ${v==null?'na':v<-0.004?'down':v>0.004?'up':''}"${lab}>${v==null?na:Math.abs(v)<0.005?DASH:signed(v)}</td>`;
-  const G=k&&prev?nwGains(prev,k):new Map(), gc=v=>cell(v,` data-l="${esc(L('nwGains'))}"`), dc=v=>cell(v,lC), fc=v=>cell(v,` data-l="${esc(L('nwContributions'))}"`);
+  const G=k&&prev?nwGains(prev,k):new Map(), cash=k&&prev?nwCashFlows(prev,k):{flows:new Map(),unlinked:[]}, flows=new Map([...(G.flows||[]),...cash.flows]);
+  const gc=v=>cell(v,` data-l="${esc(L('nwGains'))}"`), dc=v=>cell(v,lC);
+  const fc=(v,isCash=false)=>{
+    if(v==null&&isCash) return `<td class="r nw-flow-missing" data-l="${esc(L('nwNetMoney'))}"><span class="hint">${esc(L('nwCashFlowUnknown'))}</span></td>`;
+    if(v===0) return `<td class="r" data-l="${esc(L('nwNetMoney'))}">${fmtEUR(0)}</td>`;
+    return cell(v,` data-l="${esc(L('nwNetMoney'))}"`);
+  };
   const dOf=a=>{ const v=s[a.id], v0=s0?nwBefore(a,s0,prev,k):null; return v!=null&&v0!=null?r2(v-v0):null; };
   const rows=NW_GROUPS.map(g=>{ const accs=shown.filter(a=>a.group===g); if(!accs.length) return '';
-    const gg=accs.filter(a=>G.has(a.id)), gd=accs.map(dOf).filter(d=>d!=null);
-    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td>${dc(gd.length?sum(gd.map(cents))/100:null)}${fc(g!=='cash'&&gg.length?sum(gg.map(a=>cents(G.flows.get(a.id)||0)))/100:null)}${gc(gg.length?sum(gg.map(a=>cents(G.get(a.id))))/100:null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,1):''}</td></tr>`+
+    const gg=accs.filter(a=>G.has(a.id)), gf=accs.filter(a=>flows.has(a.id)), gd=accs.map(dOf).filter(d=>d!=null);
+    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td>${dc(gd.length?sum(gd.map(cents))/100:null)}${fc(gf.length?sum(gf.map(a=>cents(flows.get(a.id))))/100:null,g==='cash'&&!!prev)}${gc(gg.length?sum(gg.map(a=>cents(G.get(a.id))))/100:null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,1):''}</td></tr>`+
       accs.map(a=>{ const v=s[a.id], d=dOf(a);
         return `<tr><td class="an">${esc(a.name)}${a.risk?` <span class="chip-risk">${esc(L('nwRisk'))}</span>`:''}</td><td class="r">${v!=null?fmtEUR(v):`<span class="missing">${esc(L('nwNoFigure'))}</span>`}</td>
-          ${dc(d)}${fc(G.flows?.has(a.id)?G.flows.get(a.id):null)}${gc(G.has(a.id)?G.get(a.id):null)}<td class="r"${lS}>${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
+          ${dc(d)}${fc(flows.has(a.id)?flows.get(a.id):null,a.group==='cash'&&!!prev)}${gc(G.has(a.id)?G.get(a.id):null)}<td class="r"${lS}>${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
   const dT=k&&prev?r2(T.total-nwTotals(prev).total):null;
-  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?DASH:signed(dT)}</td>${fc(G.flows?.size?sum([...G.flows.values()].map(cents))/100:null)}${gc(G.size?sum([...G.values()].map(cents))/100:null)}<td class="r"${lS}>${T.total>0?fmtPct(1,1):''}</td></tr></tfoot>`:'';
+  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?DASH:signed(dT)}</td>${fc(flows.size?sum([...flows.values()].map(cents))/100:null)}${gc(G.size?sum([...G.values()].map(cents))/100:null)}<td class="r"${lS}>${T.total>0?fmtPct(1,1):''}</td></tr></tfoot>`:'';
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
       ${S.canWrite?`<div class="au-acts">${S.ai&&allRows().length&&nw().accounts.length?`<button type="button" class="linkish au-link" data-action="audit" data-f="nw" title="${esc(L('auTip_nw'))}">${ICON.ai}${esc(L('auBtn_nw'))}</button>`:''}<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button></div>`:''}</div>
-    <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwContributionHelp'))}">${esc(L('nwContributions'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
+    <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwCashFlowHelp')+' '+L('nwContributionHelp'))}">${esc(L('nwNetMoney'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
+    ${k&&prev&&shown.some(a=>a.group==='cash')?`<p class="hint">${esc(L('nwCashFlowHelp'))}</p>`:''}
+    ${cash.unlinked.length?`<p class="warn-text">${esc(L('nwCashFlowUnlinked',cash.unlinked.length))} <button type="button" class="btn sm" data-action="nw-cash-transactions" data-prev="${prev}" data-k="${k}">${esc(L('nwCashFlowCheck'))}</button></p>`:''}
     ${G.size&&G.unlinked.length?(()=>{ const u=G.unlinked, ds=nwUnlinked(u.map(r=>({r,k}))).map(g=>g.label);
       return `<p class="warn-text" style="margin-top:var(--s12)">${esc(L('nwUnlinked',u.length,fmtEUR(Math.abs(sum(u.map(r=>r.amount)))),listJoin(ds.slice(0,5).map(d=>`“${d}”`))+(ds.length>5?' …':'')))}${S.canWrite?` <button class="btn sm primary" type="button" data-action="nw-link">${esc(L('nwUnlinkedFix'))}</button>`:''}</p>`; })():''}
     ${k&&prev?`<details class="nw-foot nw-how"><summary>${esc(L('howCalc'))}</summary><p class="hint">${esc(L('nwContributionHelp'))}</p><p class="hint">${esc(L('nwGainsTip'))}</p></details>`:''}
@@ -5624,7 +5653,7 @@ function viewYearly(){
 function txSelection(){ const u=S.ui.tx; if(!(u.selection instanceof Set)) u.selection=new Set(); return u.selection; }
 const txKey=r=>JSON.stringify([r.mk,r.table,r.id]);
 function txMatches(r,u){
-  if(u.from&&r.date<u.from||u.to&&r.date>u.to||u.account&&r.account!==u.account||u.source&&r.source!==u.source||u.batch&&r.batch!==u.batch) return false;
+  if(u.from&&r.date<u.from||u.to&&r.date>u.to||u.account&&(u.account==='__unlinked__'?nw().accounts.some(a=>a.id===r.account):r.account!==u.account)||u.source&&r.source!==u.source||u.batch&&r.batch!==u.batch) return false;
   const min=u.min===''||u.min==null?null:parseAmount(String(u.min),wantNum()), max=u.max===''||u.max==null?null:parseAmount(String(u.max),wantNum());
   return !(min!=null&&Math.abs(r.amount)<min||max!=null&&Math.abs(r.amount)>max);
 }
@@ -5702,7 +5731,7 @@ function viewTransactions(){
       <label>${esc(L('month'))}<select id="tx-month"${u.allYears&&u.q.trim()?' disabled':''}><option value="all">${esc(L('wholeOf',y))}</option>${ms.map(m=>`<option value="${m}"${String(u.month)===String(m)?' selected':''}>${M()[m]}</option>`).join('')}</select></label>
       <label>${esc(L('category'))}<select id="tx-cat"><option value="all">${esc(L('allCategories'))}</option><option value="${UNCAT}"${u.cat===UNCAT?' selected':''}>${esc(L('uncat'))}${unInTable?' ('+unInTable+')':''}</option>${catNames(u.table).map(n=>`<option value="${esc(n)}"${n===u.cat?' selected':''}>${esc(n)}</option>`).join('')}</select></label>
       <label>${esc(L('fromDate'))}${dateInput(`id="tx-from"`,u.from)}</label><label>${esc(L('toDate'))}${dateInput(`id="tx-to"`,u.to)}</label><label>${esc(L('minAmount'))}<input id="tx-min" type="text" inputmode="decimal" value="${esc(u.min)}"></label><label>${esc(L('maxAmount'))}<input id="tx-max" type="text" inputmode="decimal" value="${esc(u.max)}"></label>
-      <label>${esc(L('accountFilter'))}<select id="tx-account"><option value="">${esc(L('anyAccount'))}</option>${nw().accounts.map(a=>`<option value="${esc(a.id)}"${u.account===a.id?' selected':''}>${esc(a.name)}</option>`).join('')}</select></label><label>${esc(L('source'))}<select id="tx-source"><option value="">${esc(L('anySource'))}</option>${[...new Set(allRows().map(r=>r.source).filter(Boolean))].map(f=>`<option${u.source===f?' selected':''}>${esc(f)}</option>`).join('')}</select></label>
+      <label>${esc(L('accountFilter'))}<select id="tx-account"><option value="">${esc(L('anyAccount'))}</option><option value="__unlinked__"${u.account==='__unlinked__'?' selected':''}>${esc(L('nwAccountUnlinked'))}</option>${nw().accounts.map(a=>`<option value="${esc(a.id)}"${u.account===a.id?' selected':''}>${esc(a.name)}</option>`).join('')}</select></label><label>${esc(L('source'))}<select id="tx-source"><option value="">${esc(L('anySource'))}</option>${[...new Set(allRows().map(r=>r.source).filter(Boolean))].map(f=>`<option${u.source===f?' selected':''}>${esc(f)}</option>`).join('')}</select></label>
       <label>${esc(L('savedViews'))}<select id="tx-saved-view"><option value="">${esc(L('defaultView'))}</option><option value="uncat">${esc(L('uncat'))}</option><option value="large">${esc(L('minAmount'))}: ${fmtNum(100)}</option>${savedTxViews().map(v=>`<option value="${esc(v.id)}">${esc(v.name)}</option>`).join('')}</select></label><div class="tx-filter-actions">${u.q.trim()?`<label class="check"><input type="checkbox" id="tx-ally"${u.allYears?' checked':''}>${esc(L('searchAllYears'))}</label>`:''}<button class="btn sm" data-action="tx-save-view">${esc(L('saveView'))}</button>${u.savedView?`<button class="btn sm" data-action="tx-delete-view">${esc(L('deleteView'))}</button>`:''}
       ${(u.q||u.month!=='all'||u.cat!=='all'||u.from||u.to||u.min||u.max||u.account||u.source||u.batch)?`<button class="btn ghost sm" data-action="tx-clear">${esc(L('clearFilters'))}</button>`:''}</div>
     </div>
@@ -7333,6 +7362,7 @@ const ACTIONS={
   'nw-review-accounts':()=>{ if(S.canWrite) nwReviewChild('nwacc',{mid:true}); },
   'nw-review-returns':()=>{ if(S.canWrite) nwReviewChild('nwret',{mid:true}); },
   'nw-review-edit':el=>{ if(!S.canWrite) return; S.nwReviewBack={...S.modal,groups:undefined}; ACTIONS['edit-tx'](el); },
+  'nw-cash-transactions':el=>{ const rows=nwCashFlows(el.dataset.prev,el.dataset.k).unlinked; Object.assign(S.ui.tx,{table:rows[0]?.table||'income',q:'',month:'all',cat:'all',allYears:true,from:ymAdd(el.dataset.prev,1)+'-01',to:ymdAdd(ymAdd(el.dataset.k,1)+'-01',-1),account:'__unlinked__',source:'',min:'',max:'',batch:'',savedView:'',limit:150}); setTab('transactions'); },
   'nw-review-transactions':()=>{ const m=S.modal; Object.assign(S.ui.tx,{table:'expenses',q:'',month:'all',cat:'all',allYears:true,from:ymAdd(m.prev,1)+'-01',to:ymdAdd(ymAdd(m.k,1)+'-01',-1),account:'',source:'',min:'',max:'',batch:'',savedView:'',limit:150}); S.nwReviewBack=null; closeModal(); setTab('transactions'); },
   'nw-review-import':()=>{ if(!S.canWrite) return; S.nwReviewBack={...S.modal,groups:undefined}; ACTIONS.import(); },
   'nw-del':()=>{ readNwSnap(); S.modal.confirmDel=true; renderModal(); },
@@ -7710,7 +7740,7 @@ function onHistory(){ const h=(location.hash||'').replace('#',''); if(!TABS.incl
   setTab(h,'pop'); }
 window.addEventListener('popstate',onHistory);
 window.addEventListener('hashchange',onHistory);
-if(window.__ybtTest) window.__ybt={coveragePeriods,guideState,monthComparison,scenarioTotal,txMatches,txKey,impNeedsAttention,statementCovered,bulkApply,kwHealth,fmtDate,parseUiDate,dateFormat,dateInput,templateDateBytes,parseAmount,parseDate,parseCSV,parseRows,findHeader,parseCells,guessTable,matchKeyword,allMatches,hasKw,fold,loose,agg,upsertTx,finishImport,splitLine,kwSuggestion,skipMatch,fmtNum,fmtEUR,CURRENCIES,foreignCode,isoOf,allRows,rowFromCols,readPasted,importChecks,detectDateOrder,monthlyCard,catNames,cats,kws,deleteTx,normCats,normKw,startOf,ymNow,aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,nwGains,aiApply,aiMerge,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
+if(window.__ybtTest) window.__ybt={coveragePeriods,guideState,monthComparison,scenarioTotal,nwCashFlows,txMatches,txKey,impNeedsAttention,statementCovered,bulkApply,kwHealth,fmtDate,parseUiDate,dateFormat,dateInput,templateDateBytes,parseAmount,parseDate,parseCSV,parseRows,findHeader,parseCells,guessTable,matchKeyword,allMatches,hasKw,fold,loose,agg,upsertTx,finishImport,splitLine,kwSuggestion,skipMatch,fmtNum,fmtEUR,CURRENCIES,foreignCode,isoOf,allRows,rowFromCols,readPasted,importChecks,detectDateOrder,monthlyCard,catNames,cats,kws,deleteTx,normCats,normKw,startOf,ymNow,aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,nwGains,aiApply,aiMerge,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
 boot();
 })();
 </script>

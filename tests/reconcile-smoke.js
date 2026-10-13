@@ -7,14 +7,46 @@ const grab = name => { const a = html.indexOf('function ' + name + '('); assert.
   const b = html.indexOf('\n}\n', a); return html.slice(a, b + 3); };
 const line = start => { const a = html.indexOf(start); assert.ok(a > -1, start + ' not found'); return html.slice(a, html.indexOf('\n', a) + 1); };
 const src = ['const r2=', 'const cents=', 'const fold=', 'const loose=', 'const nwBefore=', 'const nwWords=', 'const nwPensionish=', 'const isInternalTransfer=', 'const isRetained=', 'const isBudgetRow=', 'function ymAdd'].map(line).join('')
-  + ['trackerSaved', 'nwSplit', 'nwReconcile', 'nwGains'].map(grab).join('');
-const make = new Function('N', 'months', 'RET', `const memo=(k,f)=>f(), nw=()=>N, nwHoles=()=>[], ymOf=(y,m)=>y+'-'+String(m+1).padStart(2,'0');
+  + ['trackerSaved', 'nwSplit', 'nwReconcile', 'nwGains', 'nwCashFlows'].map(grab).join('');
+const make = new Function('N', 'months', 'RET', 'covered', `const memo=(k,f)=>f(), nw=()=>N, nwHoles=()=>[], statementCovered=a=>!!covered?.has(a.id), ymOf=(y,m)=>y+'-'+String(m+1).padStart(2,'0');
   let rows; const allRows=()=>rows||(rows=Object.keys(months).sort().flatMap(mk=>['income','expenses','investments'].flatMap(t=>(months[mk][t]||[]).map(r=>Object.assign({},r,{table:t,mk})))));
   const isReturn=r=>RET.has(r.table+'|'+r.category);
   ${src}
-  return {nwSplit,nwGains,nwReconcile};`);
+  return {nwSplit,nwGains,nwReconcile,nwCashFlows};`);
 
 const RET = new Set(['income|Interest', 'income|Dividends']);
+// Cash movement uses account-linked transactions, not the unexplained residual in the balance.
+{
+  const N={accounts:[{id:'bank',group:'cash'},{id:'side',group:'cash'},{id:'zero',group:'cash'},{id:'unknown',group:'cash'},{id:'fund',group:'invest'}],snaps:{}};
+  const months={
+    '2026-08':{income:[{date:'2026-08-31',amount:900,account:'bank'}]},
+    '2026-09':{
+      income:[{date:'2026-09-01',amount:2000,account:'bank'},
+        {date:'2026-09-02',amount:6.37,account:'bank',category:'Interest'},
+        {date:'2026-09-03',amount:40,account:'bank',category:'Dividends',investmentAccount:'fund'},
+        {date:'2026-09-04',amount:100,account:'bank',category:'Dividends',returnTreatment:'retained'},
+        {date:'2026-09-05',amount:50,account:'side'},
+        {date:'2026-09-06',amount:5,concept:'Unlinked salary'}],
+      expenses:[{date:'2026-09-10',amount:-1200,account:'bank'},
+        {date:'2026-09-11',amount:20,account:'bank'},
+        {date:'2026-09-12',amount:-10,account:'fund'},
+        {date:'2026-09-13',amount:-3,account:'deleted-account',concept:'Stale link'}],
+      investments:[{date:'2026-09-15',amount:-400,account:'bank',investmentAccount:'fund'},
+        {date:'2026-09-16',amount:100,account:'bank',investmentAccount:'fund'},
+        {date:'2026-09-17',amount:-90,account:'bank',transferFrom:'fund',transferTo:'other-fund'}]
+    },
+    '2026-10':{income:[{date:'2026-10-01',amount:200,account:'bank'}]}
+  };
+  const f=make(N,months,RET,new Set(['zero'])), cash=f.nwCashFlows('2026-08','2026-09');
+  assert.deepStrictEqual([...cash.flows],[['bank',520],['side',50],['zero',0]]);
+  assert.deepStrictEqual(cash.unlinked.map(r=>r.concept),['Unlinked salary','Stale link']);
+  assert.ok(!cash.flows.has('unknown'),'missing account activity must not become zero');
+  assert.strictEqual(f.nwCashFlows('2026-08','2026-10').flows.get('bank'),720,'all months in the comparison are included');
+  N.snaps={'2026-08':{bank:1000},'2026-09':{bank:99999}};
+  assert.strictEqual(f.nwCashFlows('2026-08','2026-09').flows.get('bank'),520,'editing a balance does not change recorded cash flow');
+  N.accounts=[];
+  assert.deepStrictEqual(f.nwCashFlows('2026-08','2026-09').unlinked,[],'no cash accounts means no cash-link warning');
+}
 // Reviewed statement contributions replace (rather than add to) bank-side transfer totals.
 {
   const accounts=[{id:'cash',name:'Main Bank',group:'cash'},{id:'fund',name:'Broker',group:'invest'}];

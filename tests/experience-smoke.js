@@ -17,7 +17,7 @@ const line = prefix => {
   return html.slice(a, html.indexOf('\n', a) + 1);
 };
 const { txMatches, impNeedsAttention } = new Function(
-  'const wantNum=()=>"en";' + line('const r2=') + line('const WORDCH=') +
+  'const wantNum=()=>"en", nw=()=>({accounts:[{id:"bank"}]});' + line('const r2=') + line('const WORDCH=') +
   grab('parseAmount') + grab('txMatches') + grab('impNeedsAttention') +
   'return {txMatches,impNeedsAttention};'
 )();
@@ -36,6 +36,9 @@ assert.ok(!txMatches(row, { source: 'other.csv' }));
 assert.ok(!txMatches(row, { batch: 'batch2' }));
 assert.ok(txMatches(row, { min: 'invalid', max: '' }), 'an incomplete typed bound must not hide all rows');
 assert.ok(!txMatches({ date: row.date, amount: -30 }, { account: 'bank' }), 'legacy unlinked rows must not masquerade as a selected account');
+assert.ok(txMatches({ date: row.date, amount: -30 }, { account: '__unlinked__' }), 'account review finds legacy rows');
+assert.ok(txMatches({ ...row, account: 'deleted' }, { account: '__unlinked__' }), 'account review finds stale account links');
+assert.ok(!txMatches(row, { account: '__unlinked__' }), 'account review excludes linked rows');
 
 // The attention shortcut uses the category filter, including rows with stale categories.
 const txState={ui:{year:2026,tx:{table:'expenses',q:'',month:'all',cat:'all',sort:'date-desc'}}};
