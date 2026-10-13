@@ -65,6 +65,7 @@ const file = (months, cfg) => JSON.stringify({ app: 'Yearly Budget Tracker', for
   const importDialog = async () => { await p.click('#tab-transactions'); await p.locator('[data-action="import"]').first().click(); await p.waitForSelector('#imp-file', { state: 'attached' }); };
   await importDialog();
   await p.setInputFiles('#imp-file', require('path').join(__dirname, 'fixtures', 'dimension.xlsx'));
+  await p.click('[data-action=imp-read]');
   await p.waitForSelector('#imp-r-0', { timeout: 10000 });
   assert.ok(/CAFE/.test(await p.inputValue('#imp-d-0')));
   await p.keyboard.press('Escape'); await p.locator('[data-action="imp-discard"]').click().catch(() => {});
@@ -72,6 +73,7 @@ const file = (months, cfg) => JSON.stringify({ app: 'Yearly Budget Tracker', for
   const lines = ['Fecha;Importe;Concepto', ...Array.from({ length: 450 }, (_, i) => `0${1 + i % 9}/03/2025;-${i + 1},00;Shop ${i}`)].join(String.fromCharCode(10));
   await importDialog();
   await p.setInputFiles('#imp-file', { name: 'long.csv', mimeType: 'text/csv', buffer: Buffer.from(lines) });
+  await p.click('[data-action=imp-read]');
   await p.waitForSelector('#imp-r-199');
   assert.ok(!(await p.$('#imp-r-200')), 'more than 200 rows drawn');
   await p.click('[data-action="imp-more"]'); await p.waitForSelector('#imp-r-399');

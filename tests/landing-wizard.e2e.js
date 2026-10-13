@@ -152,7 +152,9 @@ const SHOTS = process.env.SHOTS;
   assert.strictEqual((await p.$$('.wz-list [data-action="guide-import"][data-acc]')).length, 2, 'one Import per account');
   await p.click('.wz-list [data-action="guide-import"][data-acc]');
   await p.waitForSelector('#imp-text');
-  assert.ok(/Statement for: Current account/.test(await p.innerText('.modal')));
+  assert.ok(await p.locator('#imp-acct').isVisible(), 'wizard account choice appears before reading');
+  const wizardAccount = await p.inputValue('#imp-acct');
+  assert.strictEqual(await p.locator('#imp-acct option:checked').textContent(), 'Current account', 'wizard account is preselected');
   /* newest first, from 2 January of the wizard's year to today, with a running balance */
   const stmt = await p.evaluate(() => {
     const now = new Date(), y = now.getMonth() < 2 ? now.getFullYear() - 1 : now.getFullYear(), out = []; let bal = 1000;
@@ -164,6 +166,7 @@ const SHOTS = process.env.SHOTS;
   });
   await p.fill('#imp-text', stmt.text); await p.click('[data-action="imp-read"]');
   await p.waitForSelector('#imp-balfill');
+  assert.strictEqual(await p.inputValue('#imp-account-0'), wizardAccount, 'wizard rows inherit the account chosen before reading');
   assert.ok(await p.isChecked('#imp-balfill'), 'balance fill offered and ticked');
   await p.click('[data-action="imp-add"]');
   if (await p.$('[data-action="imp-add-confirm"]')) await p.click('[data-action="imp-add-confirm"]');

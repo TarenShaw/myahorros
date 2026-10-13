@@ -22,7 +22,7 @@ const ym = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
   await p.goto(START, { waitUntil: 'load' });
   await p.evaluate(async ({ ck, prev }) => { localStorage.setItem('ybt.storage', 'browser');
     await window.__ybtWeb.idb.set('data', JSON.stringify({ app: 'Yearly Budget Tracker', format: 1,
-      months: { [prev]: { income: [{ id: 's1', date: prev + '-27', concept: 'ACME PAYROLL', amount: 2000, category: 'Salary' }], expenses: [], investments: [] } },
+      months: { [prev]: { income: [{ id: 's1', date: prev + '-27', concept: 'ACME PAYROLL', amount: 2000, category: 'Salary', account: 'cur' }], expenses: [], investments: [] } },
       config: { settings: { lang: 'en', start: { y: +prev.slice(0, 4), m: +prev.slice(5, 7) - 1 }, guide: { on: false, done: true, stmts: { cur: { from: prev + '-01', to: prev + '-27', n: 1 } } },
           stmtFp: { cur: { h: 'date|description|amount|balance', n: 'bank_#', id: '' } }, lastCheckin: prev },
         networth: { accounts: [{ id: 'cur', name: 'Current account', group: 'cash' }, { id: 'sav', name: 'Savings account', group: 'cash' }, { id: 'fund', name: 'Index funds', group: 'invest' }],
@@ -41,7 +41,7 @@ const ym = (d, n) => { const x = new Date(d.getFullYear(), d.getMonth() + n, 1);
   await p.click('[data-action="ci-open"]');
   await p.waitForSelector('#ci-file', { state: 'attached' }); await shot('checkin-0');
   await p.setInputFiles('#ci-file', [{ name: 'bank_20261012.csv', mimeType: 'text/csv', buffer: Buffer.from(bank) }, { name: 'ahorro.csv', mimeType: 'text/csv', buffer: Buffer.from(sav) }]);
-  await p.waitForSelector('#imp-acct');
+  await p.waitForSelector('#imp-acct', { state: 'attached' });
   assert.strictEqual(await p.inputValue('#imp-acct'), 'cur', 'the known file goes to its account by itself');
   assert.ok(/file 1 of 2/.test(await p.innerText('.modal')));
   assert.ok(await p.isChecked('#imp-balfill'), 'its Balance column fills the month-end'); await shot('checkin-review');

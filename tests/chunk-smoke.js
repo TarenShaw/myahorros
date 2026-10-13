@@ -140,3 +140,20 @@ const paste=new Function('panel','t','esc','lang','copyText','parseAnswer','setT
   assert.deepStrictEqual(await result,{rows:[]});
   console.log('structured prompt and copied code block: all passed');
 })().catch(e=>{console.error(e);process.exitCode=1;});
+
+/* Each file has its own trusted account context; unassigned and stale selections stay unassigned. */
+{
+  const context = new Function('files', "const LANG='en', DEFAULT_CATS={}, S={cats:{}}, TKEYS=[], clone=x=>x, kws=()=>({}), startOf=()=>null, nw=()=>({accounts:[{id:'bank',name:'MyInvestor',group:'cash'},{id:'fund',name:'Indexa',group:'invest'}]});" + grab('aiContext') + "return aiContext('statement',files);");
+  const files=[{file:{name:'bank.csv'},acct:'bank'},{file:{name:'fund.csv'},acct:'fund'}];
+  const ctx=context(files);
+  assert.strictEqual(ctx.statement_accounts['bank.csv'].id,'bank');
+  assert.strictEqual(ctx.statement_accounts['fund.csv'].group,'invest');
+  assert.strictEqual(context([{file:{name:'none.csv'},acct:''}]).statement_accounts,undefined);
+  assert.strictEqual(context([{file:{name:'deleted.csv'},acct:'deleted'}]).statement_accounts,undefined);
+  const prompt=api.aiPrompt('statement','',[],ctx);
+  assert.ok(prompt.includes('statement source, not the destination of every transfer'));
+  assert.ok(prompt.includes('including every split part of it'));
+  assert.ok(prompt.includes('"bank.csv":{"id":"bank"'));
+  assert.ok(prompt.includes('"fund.csv":{"id":"fund"'));
+  console.log('AI per-file statement account context: all passed');
+}
