@@ -54,6 +54,14 @@ The repo is LF (`.gitattributes`). The CSP hash is computed on the LF text, whic
 
 Push to `main`; GitHub Pages publishes from the repo root. `README.md` documents Pages/domain/Google Cloud OAuth setup (parts 1-4).
 
+## Commit attribution
+
+For commits created by Codex, keep the user's configured Git author and append this trailer after a blank line in the commit message:
+
+```
+Co-authored-by: Codex <codex@openai.com>
+```
+
 ## Codebase navigation
 
 Before grepping or reading many files, query the knowledge graph in graphify-out/

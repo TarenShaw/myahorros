@@ -17,14 +17,48 @@ body{background-image:var(--page-glow);background-repeat:no-repeat;background-po
 .icon-btn{width:40px;height:40px}
 .date-control{grid-template-columns:minmax(0,1fr) 40px}
 .tabbar{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding-inline:var(--s12)}
-.tab{border-radius:var(--r-inner);color:var(--muted)}
+.tab{border-radius:var(--r-pill);color:var(--muted)}
 .tab:hover,.tab[aria-selected="true"]{background:var(--accent-soft);color:var(--accent)}
 .tab[aria-selected="true"]::after{display:none}
 .tab .ti{width:20px;height:20px}
-.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.seg button[aria-pressed="true"]{background:var(--control-selected);color:var(--control-selected-ink)}
 .chart .gl{stroke-dasharray:4 6}
 #view>.notice+.seg{margin-top:var(--s16)}
 :focus-visible{outline-width:3px;outline-offset:3px}
+
+/* B: soft, rounded controls; semantic warning and destructive styles stay in their own rules. */
+:root{--control-primary:var(--accent);--control-primary-hover:var(--accent-hover);--control-secondary:color-mix(in srgb,var(--accent) 6%,var(--surface-2));--control-selected:color-mix(in srgb,var(--accent) 28%,var(--surface-2));--control-selected-ink:var(--ink)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]):not([data-ybt-theme="light"]){--control-primary:#b0c5ff;--control-primary-hover:#c4d3ff}}
+:root[data-theme="dark"],:root[data-ybt-theme="dark"]{--control-primary:#b0c5ff;--control-primary-hover:#c4d3ff}
+.btn{border-radius:var(--r-pill);background:var(--control-secondary);border-color:transparent}
+.btn.primary{background:var(--control-primary);border-color:var(--control-primary)}
+.btn.primary:hover:not(:disabled){background:var(--control-primary-hover);border-color:var(--control-primary-hover)}
+.icon-btn,.linkish,.ind-target,.kchip,button.nw,.date-picker-wrap{border-radius:var(--r-pill)}
+input[type=text],input[type=search],input[type=date],input[type=number],input[type=email],input[type=password],select{border-radius:var(--r-pill);background:var(--surface-2)}
+textarea{border-radius:20px}
+input[type=checkbox],input[type=radio]{accent-color:var(--accent)}
+.ai-key input[type=password],.ai-key select{border-radius:var(--r-pill)}
+.seg{border:0;border-radius:var(--r-pill);padding:5px;gap:5px;background:color-mix(in srgb,var(--bg) 70%,var(--surface))}
+.seg button,.seg.dir span{border-radius:var(--r-pill)}
+.seg.dir{height:44px}
+.seg.dir input:checked+span{background:var(--control-selected);color:var(--control-selected-ink)}
+.radio-card,.web-way{border-radius:20px}
+.radio-card:has(input:checked){border-color:var(--good);background:var(--good-soft)}
+.cat-chip{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 35%,var(--line));color:var(--good-ink)}
+.switch .knob{width:38px;height:22px}
+.switch .knob::after{width:16px;height:16px;top:3px;left:3px}
+.switch[aria-checked="true"] .knob::after{transform:translateX(16px)}
+.web-lang{border-radius:var(--r-pill)}
+.web-lang button{border-radius:var(--r-pill)}
+.tx-filter-panel{border:1px solid var(--line);border-radius:22px;padding:var(--s16) var(--s24);margin-bottom:var(--s16);background:linear-gradient(115deg,var(--surface-2),var(--surface))}
+.tx-filter-panel>summary{margin-bottom:0}
+.tx-filter-panel>.filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s16);align-items:end;margin:var(--s16) 0 0;padding:0;border:0;border-radius:0;background:transparent}
+.tx-filter-panel .filters>label{display:grid;gap:var(--s8);min-width:0;font-size:var(--fs-sm);color:var(--ink-2)}
+.tx-filter-panel .filters>label>input,.tx-filter-panel .filters>label>select{width:100%}
+.tx-filter-panel .filters input[type=search]{width:100%}
+.tx-filter-panel .tx-filter-actions{grid-column:1/-1;display:flex;gap:var(--s8);flex-wrap:wrap;align-items:center}
+@media(max-width:980px){.tx-filter-panel>.filters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.tx-filter-panel{padding:var(--s16)}.tx-filter-panel>.filters{grid-template-columns:minmax(0,1fr)}.seg{border-radius:20px}}
 
 /* Import chooser: the selected minimal design, scoped to this dialog. */
 #overlay:has(>.import-menu)>.scrim{background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(6px)}
@@ -49,7 +83,7 @@ body{background-image:var(--page-glow);background-repeat:no-repeat;background-po
 .import-menu .import-excel>svg{color:var(--good-ink)}
 .import-menu .import-arrow{margin-left:auto;font-size:18px}
 .import-menu .m-foot{padding:var(--s16) var(--s32) var(--s24);background:var(--surface)}
-.import-menu .m-foot .btn{background:transparent}
+.import-menu .m-foot .btn{background:var(--control-secondary)}
 @media(max-width:640px){
   .import-menu .m-head{padding:var(--s24) var(--s16) var(--s12)}
   .import-menu .m-body{padding:var(--s16)}

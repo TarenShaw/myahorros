@@ -44,11 +44,24 @@ const START = process.env.START_URL || 'http://localhost:8000/';
           assert.ok(layout.content <= layout.page + 1, `${tab} overflows at ${width}: ${JSON.stringify(layout)}`);
           if (width >= 1180) assert.ok(layout.nav.right < layout.view.left, 'sidebar overlaps the content');
           if (tab === 'transactions') {
+            if (!await page.locator('.tx-filter-panel').evaluate(e => e.open)) await page.locator('.tx-filter-panel>summary').click();
+            const controlsFit = await page.locator('.tx-filter-panel').evaluate(e => e.scrollWidth <= e.clientWidth + 1);
+            assert.ok(controlsFit, 'expanded transaction filters overflow');
+            await page.fill('#tx-q', 'Groceries');
+            assert.strictEqual(await page.inputValue('#tx-q'), 'Groceries', 'search lost its value during render');
+            await page.selectOption('#tx-month', '0');
+            assert.strictEqual(await page.inputValue('#tx-month'), '0', 'month selector no longer works');
+            await page.click('[data-action="tx-clear"]');
             const gap = await page.evaluate(() => {
               const notice = document.querySelector('#view>.notice');
               return notice && notice.nextElementSibling.getBoundingClientRect().top - notice.getBoundingClientRect().bottom;
             });
             assert.ok(gap >= 16, 'transaction notice touches the review selector');
+            if (process.env.SHOTS && [1440, 390].includes(width)) {
+              await page.waitForSelector('#toast .toast', { state: 'hidden' });
+              await page.evaluate(() => window.scrollTo(0, 0));
+              await page.screenshot({ path: `${process.env.SHOTS}/controls-B-${theme}-${width}.png` });
+            }
           }
         }
         await page.click('#tab-overview');
@@ -104,6 +117,12 @@ const START = process.env.START_URL || 'http://localhost:8000/';
       assert.strictEqual(await page.locator('.import-menu').count(), 0, 'chooser styling leaked into another dialog');
       await page.keyboard.press('Escape');
     }
+    await page.click('#tab-transactions');
+    if (!await page.locator('.tx-filter-panel').evaluate(e => e.open)) await page.locator('.tx-filter-panel>summary').click();
+    assert.ok(await page.locator('.tx-filter-panel').evaluate(e => e.scrollWidth <= e.clientWidth + 1), 'Spanish filters overflow on a small phone');
+    await page.click('#tab-settings');
+    await page.click('.st-sub [data-tab="categories"]');
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1), 'Spanish category controls overflow');
     await page.click('#tab-settings');
     await page.check('#st-theme-system');
     for (const theme of ['light', 'dark']) {
