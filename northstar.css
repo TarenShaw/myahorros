@@ -33,6 +33,10 @@ body{background-image:var(--page-glow);background-repeat:no-repeat;background-po
 .btn{border-radius:var(--r-pill);background:var(--control-secondary);border-color:transparent}
 .btn.primary{background:var(--control-primary);border-color:var(--control-primary)}
 .btn.primary:hover:not(:disabled){background:var(--control-primary-hover);border-color:var(--control-primary-hover)}
+.btn.primary.overview-import{min-height:48px;gap:var(--s12);font-weight:700;background:linear-gradient(135deg,var(--control-primary),var(--accent));border-color:color-mix(in srgb,var(--control-primary) 80%,white);box-shadow:0 8px 24px -8px color-mix(in srgb,var(--accent) 55%,transparent),inset 0 1px 0 rgba(255,255,255,.25);transition:box-shadow .15s,transform .15s}
+.btn.overview-import svg{width:28px;height:28px;padding:6px;border-radius:50%;background:color-mix(in srgb,currentColor 12%,transparent)}
+.btn.primary.overview-import:hover:not(:disabled){background:linear-gradient(135deg,var(--control-primary-hover),var(--accent));box-shadow:0 10px 28px -8px color-mix(in srgb,var(--accent) 65%,transparent),inset 0 1px 0 rgba(255,255,255,.3);transform:translateY(-1px)}
+.btn.primary.overview-import:active:not(:disabled){transform:none}
 .icon-btn,.linkish,.ind-target,.kchip,button.nw,.date-picker-wrap{border-radius:var(--r-pill)}
 input[type=text],input[type=search],input[type=date],input[type=number],input[type=email],input[type=password],select{border-radius:var(--r-pill);background:var(--surface-2)}
 textarea{border-radius:20px}
@@ -122,4 +126,4 @@ input[type=checkbox],input[type=radio]{accent-color:var(--accent)}
   .tab{border-radius:0}
   .tabs .tab[aria-selected="true"]{background:var(--accent-soft)}
 }
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.btn.primary.overview-import{transition:none}}
