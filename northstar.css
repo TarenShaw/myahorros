@@ -11,9 +11,9 @@ body{background-image:var(--page-glow);background-repeat:no-repeat;background-po
 .tile+.tile{border-left:1px solid var(--line)}
 .tile:nth-child(n+3){border-top:1px solid var(--line)}
 .tile-val{margin-block:var(--s8);font-size:clamp(20px,1.7vw,28px);white-space:normal;overflow-wrap:anywhere}
-.btn:not(.sm),input[type=text],input[type=search],input[type=date],input[type=number],select{height:44px}
-.btn:not(.sm){padding-inline:var(--s16)}
-.btn.sm{min-height:32px}
+input[type=text],input[type=search],input[type=date],input[type=number],input[type=email],input[type=password],select{height:44px}
+.btn:not(.sm){height:auto;min-height:44px;padding:var(--s8) var(--s16)}
+.btn.sm{height:auto;min-height:32px;padding-block:var(--s4)}
 .icon-btn{width:40px;height:40px}
 .date-control{grid-template-columns:minmax(0,1fr) 40px}
 .tabbar{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);padding-inline:var(--s12)}
@@ -30,30 +30,39 @@ body{background-image:var(--page-glow);background-repeat:no-repeat;background-po
 :root{--control-primary:var(--accent);--control-primary-hover:var(--accent-hover);--control-secondary:color-mix(in srgb,var(--accent) 6%,var(--surface-2));--control-selected:color-mix(in srgb,var(--accent) 28%,var(--surface-2));--control-selected-ink:var(--ink)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]):not([data-ybt-theme="light"]){--control-primary:#b0c5ff;--control-primary-hover:#c4d3ff}}
 :root[data-theme="dark"],:root[data-ybt-theme="dark"]{--control-primary:#b0c5ff;--control-primary-hover:#c4d3ff}
-.btn{border-radius:var(--r-pill);background:var(--control-secondary);border-color:transparent}
+.btn{border-radius:var(--r-pill);background:var(--control-secondary);border-color:transparent;max-width:100%;white-space:normal}
 .btn.primary{background:var(--control-primary);border-color:var(--control-primary)}
 .btn.primary:hover:not(:disabled){background:var(--control-primary-hover);border-color:var(--control-primary-hover)}
 .btn.primary.overview-import{min-height:48px;gap:var(--s12);font-weight:700;background:linear-gradient(135deg,var(--control-primary),var(--accent));border-color:color-mix(in srgb,var(--control-primary) 80%,white);box-shadow:0 8px 24px -8px color-mix(in srgb,var(--accent) 55%,transparent),inset 0 1px 0 rgba(255,255,255,.25);transition:box-shadow .15s,transform .15s}
 .btn.overview-import svg{width:28px;height:28px;padding:6px;border-radius:50%;background:color-mix(in srgb,currentColor 12%,transparent)}
 .btn.primary.overview-import:hover:not(:disabled){background:linear-gradient(135deg,var(--control-primary-hover),var(--accent));box-shadow:0 10px 28px -8px color-mix(in srgb,var(--accent) 65%,transparent),inset 0 1px 0 rgba(255,255,255,.3);transform:translateY(-1px)}
 .btn.primary.overview-import:active:not(:disabled){transform:none}
-.icon-btn,.linkish,.ind-target,.kchip,button.nw,.date-picker-wrap{border-radius:var(--r-pill)}
+.icon-btn,.linkish,.ind-target,.lim-btn,.kchip,button.nw,.date-picker-wrap,.toast button,.wl-cta .btn,.wl-top .btn{border-radius:var(--r-pill)}
 input[type=text],input[type=search],input[type=date],input[type=number],input[type=email],input[type=password],select{border-radius:var(--r-pill);background:var(--surface-2)}
 textarea{border-radius:20px}
+/* Keep native dropdown behavior, with the same arrow on fields and compact category menus. */
+select:not([multiple]):not([size]),.tx td.k select,.kw-row select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+.tx td.k select,.kw-row select{padding-right:var(--s32)}
+.date-picker-wrap{background:var(--surface-2)}
 input[type=checkbox],input[type=radio]{accent-color:var(--accent)}
-.ai-key input[type=password],.ai-key select{border-radius:var(--r-pill)}
+input:disabled,select:disabled,textarea:disabled{opacity:.55;cursor:not-allowed}
+.ai-key input[type=password],.ai-key select{border-radius:var(--r-pill);background-color:var(--surface-2)}
 .seg{border:0;border-radius:var(--r-pill);padding:5px;gap:5px;background:color-mix(in srgb,var(--bg) 70%,var(--surface))}
 .seg button,.seg.dir span{border-radius:var(--r-pill)}
 .seg.dir{height:44px}
 .seg.dir input:checked+span{background:var(--control-selected);color:var(--control-selected-ink)}
 .radio-card,.web-way{border-radius:20px}
-.radio-card:has(input:checked){border-color:var(--good);background:var(--good-soft)}
+.radio-card:has(input:checked),.web-way.current{border-color:var(--accent);background:var(--control-selected);color:var(--control-selected-ink)}
+.radio-card:has(input:disabled){cursor:not-allowed}
+.btn[aria-pressed="true"]:not(.primary):not(.danger),.btn.ai-opt.on,.linkish[aria-pressed="true"]{background:var(--control-selected);color:var(--control-selected-ink);border-color:var(--accent)}
 .cat-chip{background:var(--good-soft);border-color:color-mix(in srgb,var(--good) 35%,var(--line));color:var(--good-ink)}
 .switch .knob{width:38px;height:22px}
 .switch .knob::after{width:16px;height:16px;top:3px;left:3px}
 .switch[aria-checked="true"] .knob::after{transform:translateX(16px)}
-.web-lang{border-radius:var(--r-pill)}
-.web-lang button{border-radius:var(--r-pill)}
+.web-lang{border:0;border-radius:var(--r-pill);padding:var(--s4);gap:var(--s4);overflow:visible;background:color-mix(in srgb,var(--bg) 70%,var(--surface))}
+.web-lang button{border-radius:var(--r-pill);min-height:32px}
+.web-lang button:hover{background:var(--surface-2)}
+.web-lang button[aria-pressed="true"]{background:var(--control-selected);color:var(--control-selected-ink)}
 .tx-filter-panel{border:1px solid var(--line);border-radius:22px;padding:var(--s16) var(--s24);margin-bottom:var(--s16);background:linear-gradient(115deg,var(--surface-2),var(--surface))}
 .tx-filter-panel>summary{margin-bottom:0}
 .tx-filter-panel>.filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s16);align-items:end;margin:var(--s16) 0 0;padding:0;border:0;border-radius:0;background:transparent}
@@ -126,4 +135,6 @@ input[type=checkbox],input[type=radio]{accent-color:var(--accent)}
   .tab{border-radius:0}
   .tabs .tab[aria-selected="true"]{background:var(--accent-soft)}
 }
+/* Compact desktop controls must retain the existing finger-sized targets on phones and touch screens. */
+@media(max-width:640px),(pointer:coarse){.btn.sm,.web-lang button{min-height:40px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.btn.primary.overview-import{transition:none}}
