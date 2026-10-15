@@ -36,6 +36,7 @@ const SHOTS = process.env.SHOTS;
   await p.waitForSelector('.wz-body', { timeout: 8000 });
   await shot(p, 'wizard-0');
   assert.ok(/one everyday account/i.test(await p.innerText('.wz-body')), 'quick setup starts with one everyday account');
+  await p.click('.wz-about summary');
   await p.fill('#wz-born', '1994'); await p.fill('#wz-salary', '62000');
   await p.click('.wz-body [data-action="about-set"]');
   await p.waitForFunction(() => document.querySelector('#wz-about-status').textContent.includes('saved'));
