@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#2459E0">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-4o6f5OqTnxI3ERCCW9thq9g+Sw1qFEakW2Bucy80nm8=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-oP+MWU/x596kc4ib0qqqeUsIfkco0uyLoqmk0Yohqjk=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1979,7 +1979,6 @@ const STR={
   wzValueOnly:['Only its value is needed: no statement. Money you send to it comes in with your bank’s statement.','Solo hace falta su valor: sin extracto. El dinero que le envías llega con el extracto de tu banco.'],
   wzNoAccs:['No accounts yet: add them first, then bring in each one’s statement here.','Aún no hay cuentas: añádelas primero y después trae aquí el extracto de cada una.'],
   wzStmtGot:[(a,b,n)=>`${a} – ${b} · ${n} ${n===1?'row':'rows'}`,(a,b,n)=>`${a} – ${b} · ${n} ${n===1?'movimiento':'movimientos'}`],
-  wzAi:['With AI','Con IA'],
   wzTxCover:[(n,t)=>`${n} of ${t} months have transactions`,(n,t)=>`${n} de ${t} meses tienen movimientos`], wzTxAll:['Every month has transactions','Todos los meses tienen movimientos'],
   wzHave:['done','hecho'], wzPart:['some accounts','algunas cuentas'], wzMissing:['missing','falta'],
   wz2Title:['What your accounts were worth','Lo que valían tus cuentas'],
@@ -2143,6 +2142,7 @@ const STR={
   fhLvl_good:['Healthy','Sano'], fhLvl_warn:['Getting there','En camino'], fhLvl_bad:['Low','Bajo'],
   aboutTitle:['About you','Sobre ti'], aboutSub:['Only used for “Net worth for your age” on Net worth. Saved in your tracker like the rest.','Solo se usa para «Patrimonio para tu edad» en Patrimonio. Se guarda en tu control como lo demás.'],
   birthYear:['Year of birth','Año de nacimiento'], grossSalary:['Gross yearly salary','Salario bruto anual'],
+  aboutOptionalTitle:['Personal details (optional)','Datos personales (opcional)'],
   aboutSet:['Set','Guardar'], aboutSaved:['Details saved in your tracker.','Datos guardados en tu control.'], aboutOptional:['Optional: set your birth year and gross annual salary for the age benchmark. You can change them in Settings.','Opcional: guarda tu año de nacimiento y salario bruto anual para la referencia por edad. Puedes cambiarlos en Ajustes.'],
   nwGoal:['Goal','Objetivo'],nwSetGoal:['Set a goal','Fijar un objetivo'], nwChangeGoal:['Change goal','Cambiar objetivo'],
   nwGoalNone:['A target amount and a date. The tracker works out how much a month that takes.','Un importe y una fecha. El control calcula cuánto hace falta al mes.'],
@@ -2772,6 +2772,13 @@ function applyLang(){
   $('#tab-settings .tl').textContent=L('tab_settings');
   $('#tab-networth .tl').textContent=L('tab_networth');
   $('#btn-backup').textContent=L('dlBackup');
+  const demoBar=$('#demo-bar');
+  if(demoBar){
+    demoBar.setAttribute('aria-label',L('tourBadge'));
+    demoBar.firstElementChild.textContent=L('demoBar');
+    demoBar.querySelector('[data-tour=again]').textContent=L('tourBtn');
+    demoBar.querySelector('[data-tour=end]').textContent=L('tourSetup');
+  }
 }
 
 /* ───────── appearance ───────── */
@@ -2855,7 +2862,7 @@ const setSub=()=>`<div class="st-sub"><div class="seg" role="group" aria-label="
 /* the one page header: title (+ info) and a one-line description on the left; the period control and the page's actions on the right */
 const PH={networth:['tab_networth','nwSub','nwWhat'],overview:['tab_overview','ovSub'],yearly:['pt_yearly','yHint','yTable'],transactions:['tab_transactions','txSub'],categories:['tab_categories','ctSub'],settings:['tab_settings','stSub']};
 function pageHead(t,period,actions){ const [tk,sk,ik]=PH[t];
-  return `<header class="page-head"><div><h1 class="page-title">${esc(L(tk))}${ik?info(ik):''}</h1><p class="ph-meta">${esc(L(sk))}</p></div>${period||actions?`<div class="ph-end">${period||''}${actions?`<div class="ph-acts${S.ui.pageActions&&S.ui.pageActions[t]?' show-all':''}" id="actions-${t}">${actions}<button class="btn sm mobile-more" data-action="page-actions" data-tab="${t}" aria-expanded="${!!(S.ui.pageActions&&S.ui.pageActions[t])}" aria-controls="actions-${t}">${esc(L(S.ui.pageActions&&S.ui.pageActions[t]?'fewerActions':'moreActions'))}</button></div>`:''}</div>`:''}</header>`; }
+  return `<header class="page-head"><div><h1 class="page-title">${esc(L(tk))}${ik?info(ik):''}</h1><p class="ph-meta">${esc(L(sk))}</p></div>${period||actions?`<div class="ph-end">${period?`<div class="ph-period">${period}</div>`:''}${actions?`<div class="ph-acts${S.ui.pageActions&&S.ui.pageActions[t]?' show-all':''}" id="actions-${t}">${actions}<button class="btn sm mobile-more" data-action="page-actions" data-tab="${t}" aria-expanded="${!!(S.ui.pageActions&&S.ui.pageActions[t])}" aria-controls="actions-${t}">${esc(L(S.ui.pageActions&&S.ui.pageActions[t]?'fewerActions':'moreActions'))}</button></div>`:''}</div>`:''}</header>`; }
 /* the year control, in the page header of the tabs that show one year */
 function yearStepper(){ const ys=yearList(), i=ys.indexOf(S.ui.year);
   return `<div class="yearbox"><button class="icon-btn" type="button" data-action="year-step" data-step="-1" id="year-prev" aria-label="${esc(L('prevYear'))}"${i<=0?' disabled':''}>‹</button><label class="sr" for="year-select">${esc(L('year'))}</label><select id="year-select">${ys.map(y=>`<option value="${y}"${y===S.ui.year?' selected':''}>${y}</option>`).join('')}</select><button class="icon-btn" type="button" data-action="year-step" data-step="1" id="year-next" aria-label="${esc(L('nextYear'))}"${i>=ys.length-1?' disabled':''}>›</button></div>`; }
@@ -2924,7 +2931,7 @@ function aboutFields(prefix,enabled){
   const so=S.settings||{}, cy=new Date().getFullYear(), disabled=enabled?'':' disabled';
   return `<div class="ctrls" style="align-items:flex-end"><div class="field"><label class="lab" for="${prefix}-born">${esc(L('birthYear'))}</label><input id="${prefix}-born" type="number" inputmode="numeric" min="1900" max="${cy}" step="1" value="${esc(String(so.birthYear||''))}"${disabled} style="max-width:140px"></div>
     <div class="field"><label class="lab" for="${prefix}-salary">${esc(L('grossSalary'))}</label><input id="${prefix}-salary" type="number" inputmode="decimal" min="0.01" max="999999999.99" step="any" value="${esc(String(so.salary||''))}"${disabled} style="max-width:180px"></div>
-    <button class="btn primary" type="button" data-action="about-set" data-prefix="${prefix}"${disabled}>${esc(L('aboutSet'))}</button></div><p class="hint" id="${prefix}-about-status" role="status"></p>`;
+    <button class="btn${prefix==='wz'?'':' primary'}" type="button" data-action="about-set" data-prefix="${prefix}"${disabled}>${esc(L('aboutSet'))}</button></div><p class="hint" id="${prefix}-about-status" role="status"></p>`;
 }
 function viewSettings(){
   const st=startOf(), cw=S.canWrite, cy=new Date().getFullYear();
@@ -2974,7 +2981,7 @@ function viewSettings(){
     ${themeCards(wantTheme(),false)}${cw?'':`<p class="hint" style="margin-top:var(--s12)">${esc(L('themeLocal'))}</p>`}</section>`;
   const aiX=S.ai&&typeof S.ai.extra==='function'?S.ai.extra(LANG)||[]:[];
   const aiCard=aiX.length?`<section class="card" id="ai-card"><div class="card-head"><div><h2>${esc(S.ai.title)}</h2><p class="sub">${esc(S.ai.sub)}</p></div></div>
-    <div class="set-acts">${cw&&allRows().length?`<div class="set-act"><button class="btn" type="button" data-action="audit" data-f="settings">${ICON.ai}${esc(L('auBtn_settings'))}</button><span class="hint">${esc(L('auHelp_settings'))}</span></div>`:''}<div class="set-act"><button class="btn" data-action="audit-answers">${esc(L('rememberAnswers'))}</button></div>${aiX.map(x=>`<div class="set-act"><button class="btn" type="button" data-action="ai-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button><span class="hint">${esc(x.help)}</span></div>`).join('')}</div></section>`:'';
+    <div class="set-acts">${cw&&allRows().length?`<div class="set-act"><button class="btn sm au-link" type="button" data-action="audit" data-f="settings">${ICON.ai}${esc(L('auBtn_settings'))}</button><span class="hint">${esc(L('auHelp_settings'))}</span></div>`:''}<div class="set-act"><button class="btn" data-action="audit-answers">${esc(L('rememberAnswers'))}</button></div>${aiX.map(x=>`<div class="set-act"><button class="btn" type="button" data-action="ai-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button><span class="hint">${esc(x.help)}</span></div>`).join('')}</div></section>`:'';
   const helpCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('helpTitle'))}</h2><p class="sub">${esc(L('helpSub'))}</p></div></div>
     <div class="ctrls"><button class="btn" type="button" data-action="tour">${esc(L('tourBtn'))}</button>${S.downloads||S.local?`<button class="btn" type="button" data-action="remind-ics">${esc(L('remindBtn'))}</button>`:''}${S.canWrite&&!guideState()&&(!nw().accounts.length||!nwMonths().length||!allRows().length)?`<button class="btn" type="button" data-action="guide-show">${esc(L('gShow'))}</button>`:''}</div><p class="hint" style="margin-top:var(--s12)">${esc(L('helpInfo'))}</p></section>`;
   return pageHead('settings')+`<div class="settings"><div class="stack">${langCard}${startCard}${aboutCard}${mlCard}</div><div class="stack">${themeCard}${dataCard}${aiCard}${helpCard}</div></div>`;
@@ -3772,12 +3779,13 @@ function modalWizard(){
   let body='';
   if(i===0){
     /* the currency was guessed from where the device is: shown here so a wrong guess is fixed before any figure is typed */
-    body=`<p class="hint">${esc(L('aboutOptional'))}</p>${aboutFields('wz',S.canWrite)}<p>${esc(L(S.settings.guide.quick?'quickAccounts':'wz0Text'))}</p>
-      <div class="seg"><button type="button" data-action="wz-scope" data-v="quick" aria-pressed="${!!S.settings.guide.quick}">${esc(L('quickStart'))}</button><button type="button" data-action="wz-scope" data-v="history" aria-pressed="${!S.settings.guide.quick}">${esc(L('historyStart'))}</button></div>
-      ${!S.settings.guide.quick?`<label>${esc(L('historyFrom'))} <input id="wz-from" type="month" value="${wzFrom()}" max="${ymNow()}"></label>`:''}
+    body=`<p>${esc(L(S.settings.guide.quick?'quickAccounts':'wz0Text'))}</p>
+      <div class="seg wz-scope" role="group" aria-label="${esc(L('setupScope'))}"><button type="button" data-action="wz-scope" data-v="quick" aria-pressed="${!!S.settings.guide.quick}">${esc(L('quickStart'))}</button><button type="button" data-action="wz-scope" data-v="history" aria-pressed="${!S.settings.guide.quick}">${esc(L('historyStart'))}</button></div>
+      ${!S.settings.guide.quick?`<label class="field">${esc(L('historyFrom'))}<input id="wz-from" type="month" value="${wzFrom()}" max="${ymNow()}"></label>`:''}
       <p class="wz-cur"><label for="wz-cur">${esc(L('wzCurrency'))}</label> <select id="wz-cur">${Object.entries(CURRENCIES).map(([c,x])=>`<option value="${c}"${c===CUR?' selected':''}>${esc(x.n)}</option>`).join('')}</select></p>
       ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>`<li>${accName(a)}<span class="wz-st">${esc(L('g_'+a.group))}</span></li>`).join('')}</ul>`:''}
-      <div class="wz-acts">${act('guide-acc',esc(L(nAcc?'nwEditAccounts':'nwAddAccounts')),'',nAcc?'':'primary')}</div>`;
+      <div class="wz-acts">${act('guide-acc',esc(L(nAcc?'nwEditAccounts':'nwAddAccounts')),'',nAcc?'':'primary')}</div>
+      <details class="wz-about"><summary>${esc(L('aboutOptionalTitle'))}</summary><div><p class="hint">${esc(L('aboutOptional'))}</p>${aboutFields('wz',S.canWrite)}</div></details>`;
   } else if(i===1){
     const stat=a=>{ const s=st[a.id]; if(s&&s.noActivity) return `<span class="wz-st ok">${esc(L('noActivity'))}</span>`; return s?`<span class="wz-st ok">${esc(L('wzStmtGot',fmtDate(s.from||s.coverFrom),fmtDate(s.to||s.coverTo),s.n||0))}</span>`:`<span class="wz-st">${esc(L('wzStmtNone'))}</span>`; };
     /* statements only from Cash accounts: an investment or pension account's buys, sells and fees happen inside it; what went in is the
@@ -3785,13 +3793,13 @@ function modalWizard(){
     const next=txOk?null:N.accounts.find(a=>a.group==='cash'&&!st[a.id]);
     body=`<p>${esc(L('historyFrom'))}: ${esc(ymLabel(C.from,true))}. ${esc(L('importFileHelp'))}</p>
       ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>a.group==='cash'?`<li>${accName(a)}${stat(a)}${act('guide-import',esc(L('addStatement')),` data-acc="${a.id}" aria-label="${esc(L('wzImport')+': '+a.name)}"`,a===next?'primary sm':'sm')}</li>`:`<li>${accName(a)}<span class="wz-st">${esc(L('wzValueOnly'))}</span></li>`).join('')}</ul>`:`<p class="hint">${esc(L('wzNoAccs'))}</p><div class="wz-acts">${act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`}
-      ${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('wzAi')))}</div>`:''}
+      ${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('aiBtn')))}</div>`:''}
       ${coverageList(C.from,ymAdd(C.now,-1))}`;
   } else if(i===2){
     const k=C.balMiss[0]||C.bal[C.bal.length-1];
     body=`<p>${esc(S.settings.guide.quick?L('quickBalances'):L('wz2Text',ymIn(C.bal[0])))}</p>
       ${nAcc?wzStrip(C.bal,C.balAt,C.now,C.balMiss.length?L('wzBalCover',C.bal.length-C.balMiss.length,C.bal.length):L('wzBalAll')):''}
-      <div class="wz-acts">${nAcc?act('guide-val',esc(L(N.snaps[k]?'nwEdit':'nwEnter',ymIn(k))),` data-k="${k}"`,balOk?'':'primary')+act('guide-nwimport',ICON.xl+esc(L('nwImport')))+(S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):''):act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`;
+      <div class="wz-acts">${nAcc?(S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):'')+act('guide-nwimport',ICON.xl+esc(L('nwImport')))+act('guide-val',esc(L(N.snaps[k]?'nwEdit':'nwEnter',ymIn(k))),` data-k="${k}"`,balOk?'':'primary'):act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`;
   } else if(i===3){
     const cands=sal||!salCat?[]:salaryCands(rows);
     body=`<p>${esc(L('incomeOptional'))}</p>
@@ -3812,8 +3820,8 @@ function modalWizard(){
   /* one way forward: "Next" once the step is done, "Skip this step" while it isn't */
   const fwd=!last&&i===1&&S.settings.guide.quick&&nTx>0?act('wz-next',esc(L('optionalBalances')),'','ghost')+act('guide-finish',esc(L('seeSummary')),'','primary'):last?act('guide-finish',esc(L('wzFinish')),'','primary'):done[i]?act('wz-next',esc(L('wzNext')),'','primary'):act('wz-next',esc(L('wzSkip')),'','ghost');
   return `<div class="m-head"><div><p class="eyebrow">${esc(L('wzEyebrow',i+1,WZ_STEPS))}</p><h3 id="m-title">${esc(L(last&&w.gaps?'wz4TitleGaps':'wz'+i+'Title'))}</h3></div><button class="icon-btn" data-action="wz-later" aria-label="${esc(L('wzLater'))}" title="${esc(L('wzLater'))}">${ICON.x}</button></div>
-  <div class="m-body wz-body"><ol class="wz-dots">${dots}</ol>${body}</div>
-  <div class="m-foot"><span>${i>0?act('wz-back',esc(L('wzBack'))):act('wz-later',esc(L('wzLater')),'','ghost')}</span><span class="r">${fwd}</span></div>`;
+  <div class="m-body wz-body wz-setup"><div class="wz-progress"><ol class="wz-dots">${dots}</ol><p class="wz-current-step" aria-hidden="true">${esc(names[i])}</p></div>${body}</div>
+  <div class="m-foot wz-footer"><span>${i>0?act('wz-back',esc(L('wzBack'))):act('wz-later',esc(L('wzLater')),'','ghost')}</span><span class="r">${fwd}</span></div>`;
 }
 /* ───────── monthly check-in ─────────
    Once a month, for the month that just ended: drop every bank statement at once (each goes to its account by the file's
@@ -3847,7 +3855,7 @@ function modalCheckin(){
     body=`<p>${esc(L('ci0Text'))}</p>
       <div class="drop" id="ci-drop"><span>${esc(L('ciDrop'))}</span><label class="btn sm primary" for="ci-file">${esc(L('ciChoose'))}</label><input type="file" id="ci-file" accept=".xlsx,.xlsm,.xls,.csv,.txt" multiple class="sr"></div>
       ${cash.length?`<ul class="wz-list">${cash.map(a=>`<li>${accName(a)}<span class="wz-st${covered(a)?' ok':''}">${esc(st[a.id]&&st[a.id].noActivity?L('noActivity'):st[a.id]?L('ciUpTo',fmtDate(st[a.id].to||st[a.id].coverTo)):L('wzStmtNone'))}</span></li>`).join('')}</ul>`:''}
-      ${coverageList(k,k)}${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('wzAi')))}</div>`:''}`;
+      ${coverageList(k,k)}${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('aiBtn')))}</div>`:''}`;
   } else if(i===1){
     const s=N.snaps[k]||{}, cl=nwState(k).closed, miss=N.accounts.filter(a=>s[a.id]==null&&!cl.has(a.id));
     body=`<p>${esc(miss.length?L('ci1Text',ymIn(k)):L('ciAllBal',ymIn(k)))}</p>
@@ -4335,7 +4343,7 @@ function accountsCard(k){
   const dT=k&&prev?r2(T.total-nwTotals(prev).total):null;
   const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?DASH:signed(dT)}</td>${fc(flows.size?sum([...flows.values()].map(cents))/100:null)}${gc(G.size?sum([...G.values()].map(cents))/100:null)}<td class="r"${lS}>${T.total>0?fmtPct(1,1):''}</td></tr></tfoot>`:'';
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
-      ${S.canWrite?`<div class="au-acts">${S.ai&&allRows().length&&nw().accounts.length?`<button type="button" class="linkish au-link" data-action="audit" data-f="nw" title="${esc(L('auTip_nw'))}">${ICON.ai}${esc(L('auBtn_nw'))}</button>`:''}<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button></div>`:''}</div>
+      ${S.canWrite?`<div class="au-acts">${S.ai&&allRows().length&&nw().accounts.length?`<button type="button" class="btn sm au-link" data-action="audit" data-f="nw" title="${esc(L('auTip_nw'))}">${ICON.ai}${esc(L('auBtn_nw'))}</button>`:''}<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button></div>`:''}</div>
     <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwCashFlowHelp')+' '+L('nwContributionHelp'))}">${esc(L('nwNetMoney'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
     ${k&&prev&&shown.some(a=>a.group==='cash')?`<p class="hint">${esc(L('nwCashFlowHelp'))}</p>`:''}
     ${cash.unlinked.length?`<p class="warn-text">${esc(L('nwCashFlowUnlinked',cash.unlinked.length))} <button type="button" class="btn sm" data-action="nw-cash-transactions" data-prev="${prev}" data-k="${k}">${esc(L('nwCashFlowCheck'))}</button></p>`:''}
@@ -5731,7 +5739,7 @@ function viewTransactions(){
         ${S.ai?`<button class="btn" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}
         <button class="btn" data-action="import">${esc(L('pasteImport'))}</button>
         <button class="btn primary" data-action="add-tx">${esc(L('addTx'))}</button>`:'')+`<div class="toolbar">
-      <div class="left"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(t=>`<button data-action="tx-table" data-t="${t}" aria-pressed="${u.table===t}"><i class="sw ${t}"></i>${esc(TL(t))}<span class="ct">${fmtCount(counts[t])}</span></button>`).join('')}</div>${info('txKinds')}</div>
+      <div class="left tx-types"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(t=>`<button data-action="tx-table" data-t="${t}" aria-pressed="${u.table===t}"><span class="tx-type-label"><i class="sw ${t}"></i>${esc(TL(t))}</span><span class="ct">${fmtCount(counts[t])}</span></button>`).join('')}</div>${info('txKinds')}</div>
     </div>
     <details class="tx-filter-panel"${(u.filtersOpen==null?matchMedia('(min-width:601px)').matches:u.filtersOpen)?' open':''}><summary>${esc(L('filters'))}${filterCount?' · '+esc(L('activeFilters',filterCount)):''}</summary><div class="filters">
       <label>${esc(L('search'))}<input type="search" id="tx-q" placeholder="${esc(L('searchPh'))}" value="${esc(u.q)}" autocomplete="off"></label>
@@ -5745,7 +5753,7 @@ function viewTransactions(){
     </details>
     ${attentionCount?`<div class="notice">${ICON.warn}<span>${esc(L('txAttentionNotice',attentionCount))}</span><button type="button" class="linkish" data-action="tx-review-mode" data-v="attention">${esc(L('needsAttention'))}</button></div>`:''}
     <div class="seg" role="group" aria-label="${esc(L('needsAttention'))}" style="display:grid;margin-bottom:var(--s12)"><button type="button" data-action="tx-review-mode" data-v="attention" aria-pressed="${u.cat===UNCAT}">${esc(L('needsAttention'))} · ${fmtCount(attentionCount)}</button><button type="button" data-action="tx-review-mode" data-v="all" aria-pressed="${u.cat==='all'}">${esc(L('allRowsReview'))}</button></div>
-    <div class="tx-sum"><span>${esc(pl(rows.length,'transaction'))}${rows.length>shown.length?esc(L('showingFirst',fmtCount(shown.length))):''}${S.canWrite&&S.ai&&allRows().length?` <button type="button" class="linkish au-link" data-action="audit" data-f="tx" title="${esc(L('auLinkTip'))}">${ICON.ai}${esc(L('auBtn'))}</button>`:''}</span><span>${esc(L('total'))} <b>${fmtEUR(total)}</b></span></div>
+    <div class="tx-sum"><span>${esc(pl(rows.length,'transaction'))}${rows.length>shown.length?esc(L('showingFirst',fmtCount(shown.length))):''}${S.canWrite&&S.ai&&allRows().length?` <button type="button" class="btn sm au-link" data-action="audit" data-f="tx" title="${esc(L('auLinkTip'))}">${ICON.ai}${esc(L('auBtn'))}</button>`:''}</span><span>${esc(L('total'))} <b>${fmtEUR(total)}</b></span></div>
     ${S.canWrite&&rows.length?`<div class="bulk-tools"><button class="btn sm" data-action="tx-select-filtered">${esc(L('selectFiltered'))}</button><span>${esc(L('selectedCount',txSelection().size))}</span>${txSelection().size?`<button class="btn sm" data-action="tx-bulk">${esc(L('bulkCategory'))}</button><button class="btn sm" data-action="tx-clear-selection">${esc(L('clearSelection'))}</button>`:''}</div><p class="hint" style="margin:0 0 var(--s8)">${esc(L('txRowHint'))}</p>`:''}
     <div class="frame" style="overflow:visible"><table class="tx">
       <thead><tr><th style="width:110px">${sortBtn('date',L('date'))}</th><th>${esc(L('concept'))}</th><th style="width:240px">${esc(L('category'))}</th><th class="r" style="width:140px">${sortBtn('amount',L('amount'))}</th></tr></thead>
@@ -5788,7 +5796,7 @@ function viewCategories(){
     <div class="stack">
     <section class="card">
       <div class="card-head"><div><h2>${esc(L('catsOf',TL(t)))}${info('catList')}</h2><p class="sub">${esc(L('catsSub'))}${t==='expenses'?esc(L('catsSubNW')):''}</p></div>
-        ${S.canWrite?`<button class="btn sm" type="button" data-action="add-cat">${esc(L('addCategory'))}</button>`:''}</div>
+        ${S.canWrite?`<button class="btn" type="button" data-action="add-cat">${esc(L('addCategory'))}</button>`:''}</div>
       <div><label class="sr" for="cat-q">${esc(L('filterCats'))}</label><input type="search" id="cat-q" placeholder="${esc(L('filterCats')+(t==='expenses'?L('filterCatsNW'):''))}" value="${esc(c.cq||'')}" style="width:100%" autocomplete="off"></div>
       <ul class="cat-list" style="margin-top:var(--s8)">${items||`<li><span class="hint">${esc(L('noCatsMatch'))}</span></li>`}</ul>
     </section>

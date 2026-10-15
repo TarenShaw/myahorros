@@ -283,7 +283,7 @@ function setup(){
         <div id="ai-effortbox" hidden><label for="ai-effort">${esc(t('effort'))}</label><select id="ai-effort">${(((M().providers||{}).anthropic||{}).efforts||[]).map(e=>`<option value="${e}"${e===effortOf(c.provider==='anthropic'?c.effort:'')?' selected':''}>${esc(t('eff_'+e))}</option>`).join('')}</select><p class="web-hint">${esc(t('effortHelp'))}</p></div>
         <div id="ai-reco" class="ai-reco" hidden></div></details>
       </div>
-      <div class="web-acts"><button type="button" class="btn primary" data-x="go"></button><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`);
+      <div class="web-acts ai-footer"><button type="button" class="btn" data-x="cancel">${esc(t('cancel'))}</button><button type="button" class="btn primary" data-x="go"></button></div>`);
     const $=s=>el.querySelector(s), keyIn=$('#ai-key');
     if(c.key&&c.provider===sel) keyIn.value=c.key;
     const show=()=>{
@@ -350,7 +350,7 @@ function pasteRound(prompt,signal){
         <li><b>${esc(t('stepAnswer'))}</b><p><label for="ai-answer">${esc(t('p3'))}</label></p><textarea id="ai-answer" rows="7" placeholder="${esc(t('pPlaceholder'))}"></textarea></li>
       </ol>
       <div id="ai-repairbox" hidden><textarea id="ai-repair" readonly rows="3" aria-label="${esc(t('repair'))}">${esc(t('repairText'))}</textarea><button type="button" class="btn" data-x="repair">${esc(t('repair'))}</button></div>
-      <div class="web-acts"><button type="button" class="btn primary" data-x="read">${esc(t('read'))}</button><button type="button" class="btn ghost" data-x="cancel">${esc(t('cancel'))}</button></div>`);
+      <div class="web-acts ai-footer"><button type="button" class="btn" data-x="cancel">${esc(t('cancel'))}</button><button type="button" class="btn primary" data-x="read">${esc(t('read'))}</button></div>`);
     el.querySelector('.ai-req').value=prompt;
     const fin=(fn,v)=>{ if(signal) signal.removeEventListener('abort',onAbort); el.close(); fn(v); };
     const onAbort=()=>{ if(el.isConnected) fin(reject,{code:'cancelled'}); };
