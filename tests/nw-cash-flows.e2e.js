@@ -11,7 +11,7 @@ const data=lang=>({app:'Yearly Budget Tracker',format:1,months:{'2026-09':{
   investments:[{id:'deposit',date:'2026-09-15',amount:-400,concept:'Broker deposit',category:'Funds',account:'bank',investmentAccount:'fund'}]
 }},config:{categories:{income:[{name:'Salary'},{name:'Interest'}],expenses:[{name:'Rent'}],investments:[{name:'Funds'}]},
   settings:{lang,numFmt:'en',currency:'EUR',start:{y:2026,m:8},guide:{on:false,done:true,stmts:{quiet:{periods:[['2026-09-01','2026-09-30']]}}}},
-  networth:{accounts:[{id:'bank',name:'Main Bank',group:'cash'},{id:'side',name:'Side Bank',group:'cash'},
+  networth:{contributions:{'2026-09':{fund:400}},accounts:[{id:'bank',name:'Main Bank',group:'cash'},{id:'side',name:'Side Bank',group:'cash'},
     {id:'quiet',name:'Confirmed no activity',group:'cash'},{id:'unknown',name:'No linked statement',group:'cash'},
     {id:'fund',name:'Broker',group:'invest'}],
     snaps:{'2026-08':{bank:6628.24,side:200,quiet:10,unknown:40,fund:1000},'2026-09':{bank:6269.46,side:250,quiet:10,unknown:40,fund:1410}}}}});
@@ -26,7 +26,7 @@ const data=lang=>({app:'Yearly Budget Tracker',format:1,months:{'2026-09':{
     await p.evaluate(async d=>{localStorage.setItem('ybt.storage','browser');localStorage.setItem('ybt.picked','1');await window.__ybtWeb.idb.set('data',JSON.stringify(d));},data(lang));
     await p.reload();await p.waitForFunction(()=>window.__ybt?.S.gotMonths);await p.click('#tab-networth');
     const table=p.locator('.nwt'), row=name=>table.locator('tbody tr').filter({has:p.locator('td.an',{hasText:name})});
-    assert.equal((await table.locator('thead th').nth(3).textContent()).trim(),lang==='en'?'Net money in/out':'Entradas/salidas netas');
+    assert.equal((await table.locator('thead th').nth(3).textContent()).trim(),lang==='en'?'Money in − money out':'Entradas − salidas');
     assert.equal(await row('Main Bank').locator('td').nth(3).innerText(),'−365.15 €');
     assert.equal(await row('Main Bank').locator('td').nth(4).innerText(),'+6.37 €');
     assert.equal(await row('Side Bank').locator('td').nth(3).innerText(),'+50.00 €');
@@ -45,13 +45,13 @@ const data=lang=>({app:'Yearly Budget Tracker',format:1,months:{'2026-09':{
     assert.equal(await p.evaluate(()=>window.__ybt.nwSplit('2026-08','2026-09').left),8.7);
     // An older unlinked salary can be found and linked through the existing editor.
     await p.evaluate(()=>{const a=window.__ybt;a.upsertTx(null,{table:'income',date:'2026-09-20',amount:100,concept:'Legacy unlinked salary',category:'Salary'});a.render();});
-    await p.click('[data-action=nw-cash-transactions]');
-    assert.equal(await p.inputValue('#tx-account'),'__unlinked__');
-    assert.equal(await p.locator('[data-action=edit-tx]').count(),1,'review filters out already-linked rows');
-    await p.click('[data-action=edit-tx]');await p.selectOption('#f-account','bank');await p.locator('#tx-form button[type=submit]').click();
-    await p.click('#tab-networth');
+    await p.locator('.page-head [data-action=nw-update]').first().click();
+    await p.locator('.nwu-groups summary').first().click();
+    const group=p.locator('.nwu-group').filter({has:p.locator('b',{hasText:'Legacy unlinked salary'})});
+    await group.locator('select').selectOption('bank');await group.locator('[data-action=nwu-link]').click();
+    await p.keyboard.press('Escape');
     assert.equal(await row('Main Bank').locator('td').nth(3).innerText(),'−265.15 €');
-    assert.equal(await p.locator('[data-action=nw-cash-transactions]').count(),0,'warning disappears after linking');
+    assert.equal(await p.evaluate(()=>window.__ybt.nwCashFlows('2026-08','2026-09').unlinked.length),0,'warning disappears after linking');
     assert.ok(!(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)),'cash table does not overflow the page');
     assert.deepEqual(errors,[]);await context.close();console.log(`${lang} ${width}px: cash flows, gains, unknown activity and account correction passed`);
   }}finally{await browser.close();}

@@ -27,10 +27,10 @@ const short = series(M(2026, 0), [{ cash: 1000 }, { cash: 1200 }, { cash: 1400 }
 assert.strictEqual(nwForecast(short, [M(2026, 11)])[0].g.cash, 1400 + 200 * 9);
 
 /* a missing month counts per month: Jan 1000, Mar 1400 is +200 a month, not +400 */
-assert.strictEqual(nwForecast([{ i: M(2026, 0), g: { cash: 1000 } }, { i: M(2026, 2), g: { cash: 1400 } }], [M(2026, 3)])[0].g.cash, 1600);
+assert.strictEqual(nwForecast([{ i: M(2025, 10), g: { cash: 600 } }, { i: M(2026, 0), g: { cash: 1000 } }, { i: M(2026, 2), g: { cash: 1400 } }], [M(2026, 3)])[0].g.cash, 1600);
 
-/* 3. one month: flat; no months: nothing made up */
-assert.deepStrictEqual(nwForecast([{ i: M(2026, 0), g: { cash: 900, invest: 100 } }], [M(2026, 5)])[0], { g: { cash: 900, invest: 100 }, total: 1000 });
+/* 3. no forecast until there are at least three recent distinct months */
+assert.deepStrictEqual(nwForecast([{ i: M(2026, 0), g: { cash: 900, invest: 100 } }], [M(2026, 5)])[0], null);
 assert.deepStrictEqual(nwForecast([], [M(2026, 0), M(2026, 1)]), [null, null]);
 assert.deepStrictEqual(nwForecast(full, []), []);
 
@@ -47,7 +47,7 @@ assert.deepStrictEqual(far[0].g, { cash: 0, illiquid: 0 });
 assert.deepStrictEqual(far[1].g, { cash: 0, illiquid: 0 });
 assert.strictEqual(far[1].total, 0);
 /* a group that's gone from the last month projects from 0, not from its old figure */
-assert.strictEqual(nwForecast(series(M(2026, 0), [{ cash: 100, pension: 500 }, { cash: 200 }]), [M(2026, 2)])[0].g.pension, 0);
+assert.strictEqual(nwForecast(series(M(2026, 0), [{ cash: 100, pension: 500 }, { cash: 200, pension: 500 }, { cash: 300 }]), [M(2026, 3)])[0].g.pension, 0);
 
 /* ── Month by month (flows) ── */
 const hist = (from, vals) => vals.map((v, j) => ({ i: from + j, v }));
@@ -66,7 +66,7 @@ assert.ok(dec2 <= 1250 + 50 * 0.7 / 0.3 + 0.01, 'never more than 2.3 slopes past
 
 /* 7. fewer than 12 months, and 1 month: the median of what there is, flat */
 assert.deepStrictEqual(flowForecast(hist(M(2026, 6), [800, 900, 850]), [M(2026, 9)]), [850]);
-assert.deepStrictEqual(flowForecast(hist(M(2026, 8), [640]), [M(2026, 9), M(2026, 11)]), [640, 640]);
+assert.deepStrictEqual(flowForecast(hist(M(2026, 8), [640]), [M(2026, 9), M(2026, 11)]), [null, null]);
 assert.deepStrictEqual(flowForecast([], [M(2026, 9)]), [null]);
 
 /* 8. an outlier month (a 1.400 € laptop on top of 1.200) doesn't move the projection */
@@ -132,4 +132,7 @@ assert.strictEqual(big.total, 850); assert.ok(big.days.every(x => x.v >= 0));
 /* last day of the month: nothing left to project */
 assert.deepStrictEqual(monthDays(900, 2026, 9, 32, 700, [], prof), { total: 700, days: [] });
 
+assert.deepStrictEqual(flowForecast(hist(M(2026, 7), [640, 650]), [M(2026, 9)]), [null]);
+assert.deepStrictEqual(nwForecast(series(M(2026, 7), [{cash:100}, {cash:200}]), [M(2026, 9)]), [null]);
+assert.deepStrictEqual(nwForecast([{i:M(2024,0),g:{cash:1}}, {i:M(2026,1),g:{cash:2}}, {i:M(2026,2),g:{cash:3}}], [M(2026,3)]), [null], 'old history does not fill the recent minimum');
 console.log('forecast smoke: all passed');

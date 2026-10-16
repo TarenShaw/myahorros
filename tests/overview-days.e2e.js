@@ -24,7 +24,7 @@ const data = JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, c
 
 (async () => {
   const browser = await chromium.launch({ channel: 'msedge' });
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'en-GB' });
   await ctx.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
   const p = await ctx.newPage(), errs = [];
   p.on('pageerror', e => errs.push(String(e).slice(0, 200)));
