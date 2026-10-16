@@ -21,13 +21,8 @@ const START = process.env.START_URL || 'http://localhost:8000/';
       assert.ok(await page.locator('.welcome .ob-way').evaluateAll(es => es.every(e => e.querySelector('span').getBoundingClientRect().top >= e.querySelector('b').getBoundingClientRect().bottom)), 'welcome descriptions must sit below titles');
       await page.click('[data-action=ob-start]');
       await page.waitForSelector('.wz-setup');
-      assert.ok(!await page.locator('#wz-born').isVisible(), 'personal details should start collapsed');
-      assert.strictEqual(await page.locator('.wz-setup .btn.primary:visible').count(), 1, 'optional save competes with account setup');
-      await page.locator('.wz-about summary').focus();
-      await page.keyboard.press('Enter');
-      assert.ok(await page.locator('#wz-born').isVisible(), 'optional details do not open by keyboard');
-      assert.ok(!await page.locator('[data-prefix=wz]').evaluate(e => e.classList.contains('primary')));
-      await page.locator('.wz-about summary').click();
+      assert.strictEqual(await page.locator('#wz-born, #wz-salary').count(), 0, 'personal details are not repeated in setup');
+      assert.strictEqual(await page.locator('.wz-setup .btn.primary:visible').count(), 1, 'one primary account action');
       await page.click('[data-action=wz-scope][data-v=history]');
       assert.strictEqual(await page.locator('#wz-from').evaluate(e => e.getBoundingClientRect().height), 44);
       const scope = await page.locator('.wz-scope button').evaluateAll(es => es.map(e => e.getBoundingClientRect().width));
@@ -40,6 +35,8 @@ const START = process.env.START_URL || 'http://localhost:8000/';
       await page.locator('#nw-acc-form [data-action=na-add][data-g=invest]').first().click();
       await page.click('#nw-acc-form button[type=submit]');
       await page.waitForSelector('.wz-setup');
+      assert.match(await page.locator('.wz-current-step').innerText(), /Statements|Extractos/, 'saving accounts advances');
+      await page.click('[data-action=wz-back]');
       for (let step = 0; step < 5; step++) {
         const label = `${lang}/${theme}/${width}/step ${step + 1}`;
         assert.ok(await page.locator('#overlay .modal').evaluate(e => e.scrollWidth <= e.clientWidth), `modal overflow: ${label}`);
@@ -61,7 +58,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
           }), `footer columns do not fit: ${label}`);
         }
         if (step === 1) assert.strictEqual(await page.locator('.wz-setup [data-action=ai-tx]').innerText(), lang === 'en' ? 'Fill in with AI' : 'Rellenar con IA');
-        if (step === 2) assert.deepStrictEqual(await page.locator('.wz-setup .wz-acts button').evaluateAll(es => es.map(e => e.dataset.action)), ['ai-nw', 'guide-nwimport', 'guide-val']);
+        if (step === 2) assert.deepStrictEqual(await page.locator('.wz-setup .wz-acts button').evaluateAll(es => es.map(e => e.dataset.action)), ['guide-val', 'guide-nwimport', 'ai-nw']);
         if (process.env.SHOTS && width !== 320) await page.screenshot({ path: `${process.env.SHOTS}/${lang}-${theme}-${width}-step-${step + 1}.png` });
         if (step < 4) await page.click('[data-action=wz-next]');
       }

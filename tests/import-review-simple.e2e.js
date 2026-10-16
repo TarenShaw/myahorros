@@ -95,23 +95,19 @@ const TRACKER = { app: 'Yearly Budget Tracker', format: 1, months: { '2026-09': 
     await wp.click('[data-m=browser]');
     await wp.click('[data-action=ob-start]');
     await wp.click('[data-action=guide-acc]');
-    for (const name of ['Current account', 'Savings account']) await wp.getByRole('button', { name, exact: true }).click();
+    for (const name of ['Cash account', 'Savings account']) await wp.getByRole('button', { name, exact: true }).click();
     await wp.locator('#nw-acc-form button[type=submit]').click();
-    await wp.click('[data-action=wz-next]');
     const wizardAccount = await wp.locator('.wz-list [data-action=guide-import][data-acc]').first().getAttribute('data-acc');
     await wp.locator('.wz-list [data-action=guide-import][data-acc]').first().click();
-    assert.ok(await wp.locator('#imp-acct').isVisible(), 'wizard uses shared account picker before upload');
-    assert.strictEqual(await wp.inputValue('#imp-acct'), wizardAccount, 'wizard preselects chosen account');
-    const otherAccount = await wp.locator('#imp-acct option').evaluateAll(os => os.find(o => o.textContent === 'Savings account').value);
-    await wp.selectOption('#imp-acct', otherAccount);
+    assert.strictEqual(await wp.locator('#imp-acct').count(), 0, 'wizard retains its chosen account');
     await wp.setInputFiles('#imp-file', { name: 'wizard-savings.csv', mimeType: 'text/csv', buffer: Buffer.from(`Date,Amount,Description
 2026-09-30,5,Interest`) });
     await wp.setInputFiles('#imp-file', { name: 'wizard-bank.csv', mimeType: 'text/csv', buffer: Buffer.from(`Date,Amount,Description
 2026-09-29,7,Interest`) });
-    await wp.selectOption('#imp-acct-1', wizardAccount);
+    assert.strictEqual(await wp.locator('[data-action=imp-file-account]').count(), 0, 'both files inherit the wizard account');
     await wp.click('[data-action=imp-read]');
     await wp.waitForSelector('table.imp');
-    assert.strictEqual(await wp.inputValue('#imp-account-0'), otherAccount, 'wizard upload inherits corrected account');
+    assert.strictEqual(await wp.inputValue('#imp-account-0'), wizardAccount, 'wizard upload inherits its account');
     assert.strictEqual(await wp.locator('table.imp td.on input').count(), 1, 'wizard review has one checkbox');
     await wp.click('[data-action=imp-add]');
     if (await wp.locator('[data-action=imp-add-confirm]').count()) await wp.click('[data-action=imp-add-confirm]');
@@ -120,7 +116,7 @@ const TRACKER = { app: 'Yearly Budget Tracker', format: 1, months: { '2026-09': 
     await wp.click('[data-action=imp-add]');
     if (await wp.locator('[data-action=imp-add-confirm]').count()) await wp.click('[data-action=imp-add-confirm]');
     await wp.waitForSelector('.wz-body');
-    assert.strictEqual(await wp.evaluate(() => window.__ybt.allRows().find(r => r.source === 'wizard-savings.csv').account), otherAccount, 'wizard saves account and returns to setup');
+    assert.strictEqual(await wp.evaluate(() => window.__ybt.allRows().find(r => r.source === 'wizard-savings.csv').account), wizardAccount, 'wizard saves account and returns to setup');
     await wizardContext.close();
     assert.deepStrictEqual(errors, []);
     console.log('Import review: single checkbox, inherited accounts, overrides, filtered bulk edits, exclusions, persistence, Spanish/mobile, setup wizard upload passed');

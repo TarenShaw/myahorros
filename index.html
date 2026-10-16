@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#2459E0">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-oP+MWU/x596kc4ib0qqqeUsIfkco0uyLoqmk0Yohqjk=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-I+rPmLSoc78Na3CVz98uNPWwnWEwX1cYfkZR5rOPvsw=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -2192,10 +2192,10 @@ const STR={
   nwAccErr:['Give every account a name, each one different.','Pon nombre a todas las cuentas, cada una distinto.'],
   nwAccDropWarn:[n=>`Removing ${n===1?'this account':'these accounts'} also removes ${n===1?'its':'their'} figures.`,n=>`Al quitar ${n===1?'esta cuenta':'estas cuentas'} también se quitan sus cifras.`],
   nwSaveAccounts:['Save accounts','Guardar cuentas'], nwAccSaved:['Accounts saved','Cuentas guardadas'], nwAccNone:['Add at least one account first: tap one of the suggestions or use “Add another account”.','Añade primero al menos una cuenta: toca una de las sugerencias o usa «Añadir otra cuenta».'],
-  nwSug_cash:[['Current account','Savings account'],['Cuenta corriente','Cuenta de ahorro']],
-  nwSug_invest:[['Index funds','Investment account','Crypto'],['Fondos indexados','Cuenta de inversión','Cripto']],
-  nwSug_illiquid:[['Crowdlending','Property','Fixed-term deposit'],['Crowdlending','Inmueble','Depósito a plazo']],
-  nwSug_pension:[['Pension plan'],['Plan de pensiones']],
+  nwSug_cash:[['Cash account','Savings account','Remunerated account'],['Cuenta de efectivo','Cuenta de ahorro','Cuenta remunerada']],
+  nwSug_invest:[['Index funds','Brokerage account','Robo-advisor','Investment funds','Crypto'],['Fondos indexados','Cuenta de bróker','Robo-advisor','Fondos de inversión','Cripto']],
+  nwSug_illiquid:[['Fixed-term deposit','Treasury bills / bonds','Crowdlending','Property'],['Depósito a plazo','Letras / bonos del Tesoro','Crowdlending','Inmueble']],
+  nwSug_pension:[['Pension plan','Employer pension plan'],['Plan de pensiones','Plan de pensiones de empleo']],
   nwGoalTitle:['Net worth goal','Objetivo de patrimonio'], nwGoalAmount:[()=>`Amount (${cs()})`,()=>`Importe (${cs()})`], nwGoalBy:['By the end of','A final de'],
   nwRemoveGoal:['Remove goal','Quitar objetivo'], nwSaveGoal:['Save goal','Guardar objetivo'], nwGoalErr:['Enter an amount above zero.','Introduce un importe mayor que cero.'],
   nwGoalSaved:['Goal saved','Objetivo guardado'], nwGoalRemoved:['Goal removed','Objetivo quitado'],
@@ -2424,7 +2424,47 @@ Object.assign(STR,{
   impAccountUnknown:['An account in this file does not match your accounts. Check the account details.','Una cuenta del archivo no coincide con tus cuentas. Revisa los detalles de cuenta.'],
   flowMixed:['Each month uses reviewed statement contributions when available, otherwise linked transactions.','Cada mes usa aportaciones revisadas del extracto cuando existen; en otro caso, movimientos vinculados.']
 });
+STR.ovSub=['Income, spending and savings for the period you choose.','Ingresos, gastos y ahorro del periodo que elijas.'];
 STR.nwGainsTip=['Gains = balance change − net contributions + returns paid outside the investment. Each month uses reviewed statement contributions when available, otherwise linked transactions. Select the investment account on a transaction to link it explicitly; older rows still use statement words and account names. For transfers between investments, choose both source and destination. Mark reinvested dividends as “Stayed in the investment”: they are already included in balance growth and are excluded from cash income. Cash accounts show only the returns they paid. Check unlinked transactions before relying on gains. The Gains total matches Markets, interest and gains in What changed.','Ganancias = cambio de saldo − aportaciones netas + rendimientos pagados fuera de la inversión. Cada mes usa aportaciones revisadas del extracto cuando existen; en otro caso, movimientos vinculados. Selecciona la cuenta de inversión en el movimiento para vincularlo; los movimientos antiguos siguen usando palabras del extracto y nombres de cuenta. En traspasos entre inversiones, elige origen y destino. Marca los dividendos reinvertidos como «Reinvertido en la inversión»: ya están incluidos en el crecimiento del saldo y se excluyen de ingresos en efectivo. Las cuentas de efectivo muestran solo los rendimientos que pagaron. Revisa movimientos sin vincular antes de confiar en las ganancias. El total de Ganancias coincide con Mercados, intereses y plusvalías en Qué ha cambiado.'];
+
+Object.assign(STR,{
+  nwAccStartQ:['Tap a type to add an account. Tap again for another, then rename each one after your bank or app.','Toca un tipo para añadir una cuenta. Tócalo otra vez para añadir otra y pon a cada una el nombre de tu banco o aplicación.'],
+  nwAccountCount:[n=>`${n} accounts added. Their names can be edited above.`,n=>`${n} cuentas añadidas. Puedes editar sus nombres arriba.`],
+  nwAccMore:['Automatic transaction matching','Vinculación automática de movimientos'],
+  nwAccMoreHint:['Optional: link imported movements to accounts after you have added statements.','Opcional: vincula movimientos a cuentas después de añadir extractos.'],
+  nwAccWords:['Text that identifies this account','Texto que identifica esta cuenta'],
+  nwCashMatchPh:['e.g. interest from BBVA, interest from Trade Republic','p. ej. intereses BBVA, intereses Trade Republic'],
+  nwInvestMatchPh:['e.g. Indexa Capital, MyInvestor, Vanguard','p. ej. Indexa Capital, MyInvestor, Vanguard'],
+  nwAccWordsHelp:['Optional matching rules for older transactions. Use the bank, broker or fund name, separated by commas. For cash accounts, these rules identify interest, not salary. For investments, they link contributions and returns. You can instead choose the account directly when reviewing a transaction.','Reglas opcionales para movimientos antiguos. Usa nombres del banco, bróker o fondo, separados por comas. En efectivo identifican intereses, no la nómina. En inversiones vinculan aportaciones y rendimientos. También puedes elegir la cuenta directamente al revisar un movimiento.'],
+  nwAccUntracked:['Names of investments you do not track here (optional)','Nombres de inversiones que no sigues aquí (opcional)'],
+  wzPersonalLater:['Your salary is reviewed after importing statements. Optional personal details are available in Settings.','La nómina se revisa después de importar los extractos. Los datos personales opcionales están en Ajustes.'],
+  txAccount:['Account on this statement','Cuenta de este extracto'],
+  txMovement:['What happened to this money?','¿Qué pasó con este dinero?'],
+  txDeposit:['Money added to an investment','Dinero aportado a una inversión'],
+  txWithdrawal:['Money withdrawn from an investment','Dinero retirado de una inversión'],
+  txInvestmentTo:['Which investment received it?','¿Qué inversión lo recibió?'],
+  txInvestmentFrom:['Which investment did it come from?','¿De qué inversión salió?'],
+  txDepositHelp:['Choose the investment that received this money. It is a contribution, not spending or investment growth.','Elige la inversión que recibió el dinero. Es una aportación, no un gasto ni una ganancia.'],
+  txWithdrawalHelp:['Choose the investment this money came from. It reduces your contributions; it is not salary or new income.','Elige la inversión de la que salió el dinero. Reduce tus aportaciones; no es una nómina ni un ingreso nuevo.'],
+  txTransferHelp:['Use this only when moving money directly between two investments you track. Select both accounts; the move does not change total income or spending.','Úsalo solo para mover dinero directamente entre dos inversiones que sigues aquí. Elige ambas cuentas; el traspaso no cambia los ingresos ni los gastos totales.'],
+  impInvestmentDetails:['Link this investment transfer','Vincular este movimiento de inversión'],
+  impRowDetails:['Change the account for this row','Cambiar la cuenta de este movimiento'],
+  impEditable:['Edit the date, description, amount or category directly in the boxes below.','Edita la fecha, el concepto, el importe o la categoría directamente en las casillas.'],
+  impRefund:['Refund / reimbursement: reduces spending','Devolución / reembolso: reduce el gasto'],
+  impRefundHelp:['A positive expense is money returned to you: it reduces spending in its category. Money you earn belongs in Income.','Un gasto positivo es dinero que te devuelven: reduce el gasto de su categoría. El dinero que ganas va en Ingresos.'],
+  sureText:['These amounts run in the opposite direction to usual. A positive expense can be a refund or shared-cost reimbursement. Edit any mistake here; otherwise keep it as shown.','Estos importes van en sentido contrario al habitual. Un gasto positivo puede ser una devolución o un reembolso de gastos compartidos. Corrige aquí cualquier error; si está bien, déjalo como aparece.'],
+  impActualDates:[(a,b)=>`Transaction dates in this file: ${a} – ${b}.`,(a,b)=>`Fechas de los movimientos del archivo: ${a} – ${b}.`],
+  impCoverageOptional:['Complete statement dates (optional)','Fechas del extracto completo (opcional)'],
+  impCoverageHelp:['Only for missing-statement reminders: if your bank export includes every movement between two dates, enter those dates here. They can include days with no activity. This does not change transaction dates or amounts. Leave this closed if you are unsure.','Solo para los recordatorios de extractos pendientes: si la exportación incluye todos los movimientos entre dos fechas, indícalas aquí. Pueden incluir días sin actividad. Esto no cambia las fechas ni los importes de los movimientos. Si no lo sabes, déjalo cerrado.'],
+  impCoverageSave:['Confirm these statement dates','Confirmar estas fechas del extracto'],
+  impCoverageConfirmed:['Statement dates confirmed','Fechas del extracto confirmadas'],
+  allTypes:['All types','Todos los tipos'],
+  forecastWait:['Forecasts appear after 3 completed months of data. Until then, only recorded amounts are shown.','Las previsiones aparecerán tras 3 meses completos de datos. Hasta entonces solo se muestran los importes registrados.'],
+  forecastNwWait:['Forecasts appear after 3 completed months with balances for every account.','Las previsiones aparecerán tras 3 meses completos con saldos de todas las cuentas.'],
+  selectedMonth:['Selected month','Mes seleccionado'],
+  periodNoBalances:['No balances recorded for this month. Enter the month-end figures to see your net worth.','No hay saldos registrados para este mes. Introduce las cifras a fin de mes para ver tu patrimonio.']
+});
+
 function L(k,...a){ const e=STR[k]; if(!e) return k; const v=e[LANG==='es'?1:0]; const out=typeof v==='function'?v(...a):v; return aiWord(k,out); }
 /* web version: the AI screens name the AI the visitor picked */
 const AI_KEYS=/^(ai|obWayAiSub|obAiHelp)/;
@@ -2490,9 +2530,9 @@ function limitFor(name){ const v=Number(limitsOf()[name]); return v>0&&isKnown('
 function setLimit(name,v){ const l=Object.assign({},limitsOf()); if(v>0) l[name]=r2(v); else delete l[name]; setSettings({limits:l}); }
 function moveLimit(from,to){ const l=limitsOf(); if(!(from in l)) return; const n=Object.assign({},l); if(to) n[to]=n[from]; delete n[from]; setSettings({limits:n}); }
 
-function agg(year,fromStart){
+function agg(year,fromStart,month){
   const from=fromStart?ovFirst(year):0;
-  return memo('agg'+year+(from?'s'+from:''),()=>{
+  return memo('agg'+year+(from?'s'+from:'')+(Number.isInteger(month)?'m'+month:''),()=>{
     const R={};
     for(const t of TKEYS){
       const rows=new Map(), counts=new Map();
@@ -2504,7 +2544,7 @@ function agg(year,fromStart){
       if(!isBudgetRow(r)) continue;
       const y=+r.date.slice(0,4), m=+r.date.slice(5,7)-1;
       if(year!=='all' && y!==year) continue;
-      if(m<from) continue;
+      if(m<from||Number.isInteger(month)&&m!==month) continue;
       const A=R[r.table]; const v=r.table==='investments'?-r.amount:r.amount;
       const key=(r.category && r.category!==UNCAT && A.rows.has(r.category))?r.category:UNCAT;
       if(key===UNCAT) A.uncatCount++;
@@ -2864,6 +2904,12 @@ const PH={networth:['tab_networth','nwSub','nwWhat'],overview:['tab_overview','o
 function pageHead(t,period,actions){ const [tk,sk,ik]=PH[t];
   return `<header class="page-head"><div><h1 class="page-title">${esc(L(tk))}${ik?info(ik):''}</h1><p class="ph-meta">${esc(L(sk))}</p></div>${period||actions?`<div class="ph-end">${period?`<div class="ph-period">${period}</div>`:''}${actions?`<div class="ph-acts${S.ui.pageActions&&S.ui.pageActions[t]?' show-all':''}" id="actions-${t}">${actions}<button class="btn sm mobile-more" data-action="page-actions" data-tab="${t}" aria-expanded="${!!(S.ui.pageActions&&S.ui.pageActions[t])}" aria-controls="actions-${t}">${esc(L(S.ui.pageActions&&S.ui.pageActions[t]?'fewerActions':'moreActions'))}</button></div>`:''}</div>`:''}</header>`; }
 /* the year control, in the page header of the tabs that show one year */
+/* The same month/year controls on Overview and Net worth. Missing balances stay missing. */
+function summaryPeriod(tab,y,m,years){
+  const months=tab==='overview'?[['all',L('wholeYear')],...M().map((n,i)=>[String(i),n])]:M().map((n,i)=>[String(i),n]);
+  return `<div class="summary-period"><label>${esc(L('month'))}<select id="summary-month" data-tab="${tab}">${months.map(([v,n])=>`<option value="${v}"${String(m)===v?' selected':''}>${esc(n)}</option>`).join('')}</select></label><label>${esc(L('year'))}<select id="summary-year" data-tab="${tab}">${[...new Set([...years,+y])].sort((a,b)=>a-b).map(v=>`<option value="${v}"${+y===v?' selected':''}>${v}</option>`).join('')}</select></label></div>`;
+}
+
 function yearStepper(){ const ys=yearList(), i=ys.indexOf(S.ui.year);
   return `<div class="yearbox"><button class="icon-btn" type="button" data-action="year-step" data-step="-1" id="year-prev" aria-label="${esc(L('prevYear'))}"${i<=0?' disabled':''}>‹</button><label class="sr" for="year-select">${esc(L('year'))}</label><select id="year-select">${ys.map(y=>`<option value="${y}"${y===S.ui.year?' selected':''}>${y}</option>`).join('')}</select><button class="icon-btn" type="button" data-action="year-step" data-step="1" id="year-next" aria-label="${esc(L('nextYear'))}"${i>=ys.length-1?' disabled':''}>›</button></div>`; }
 /* a guide card or bar goes under the page header, not above it */
@@ -3121,8 +3167,8 @@ function yearMonthCard(y,A){
   return `<section class="card year-month-card"><label>${esc(L('month'))}<select id="year-month-pick">${ms.map(i=>`<option value="${i}"${i===m?' selected':''}>${esc(M()[i])}</option>`).join('')}</select></label>${TKEYS.map(t=>`<h2>${esc(TL(t))} · ${fmtEUR(t==='income'?A[t].total[m]:-A[t].total[m])}</h2><ul class="month-list">${catRowsFor(A,t).map(c=>({c,v:(A[t].rows.get(c)||[])[m]||0})).filter(x=>Math.abs(x.v)>=.005).map(x=>`<li><button class="linkish" data-action="drill" data-t="${t}" data-c="${esc(x.c)}" data-m="${m}">${esc(dispCat(x.c))}</button><b>${fmtEUR(x.v)}</b></li>`).join('')}</ul>`).join('')}</section>`;
 }
 function viewOverview(){
-  const y=S.ui.year, A=agg(y,true), Y=A.Y, ms=ovMonths(y), idx=chartIdx(y), T=targets(), AF=agg(y);
-  const ai=avgIdx(y), incAvg=ai.length?sum(ai.map(i=>A.income.total[i]))/ai.length:0;
+  const y=S.ui.year, month=S.ui.overviewMonth??'all', selected=month!=='all', A=agg(y,true), Y=agg(y,true,selected?+month:undefined).Y, ms=selected?[+month]:ovMonths(y), idx=selected?[+month]:chartIdx(y), T=targets(), AF=agg(y);
+  const ai=selected?[+month]:avgIdx(y), incAvg=ai.length?sum(ai.map(i=>A.income.total[i]))/ai.length:0;
   const nm=nowYM(), partialOut=y===nm.y&&idx.includes(nm.m)&&ai.length<idx.length;
   const rn=rentName(), un=roleName('expenses','utilities');
   const nUn=TKEYS.reduce((a,t)=>a+AF[t].uncatCount,0);
@@ -3149,7 +3195,7 @@ function viewOverview(){
   const oc=S.ui.oc, am=ms;
   const multi=yearsWithData().length>1;
   const mmT=S.ui.mm.table, mmD=!!S.ui.mm.days&&mmT!=='all', mc=mmCat(A);
-  return pageHead('overview',yearStepper(),S.canWrite?`<button class="btn primary overview-import" type="button" data-action="import-menu">${ICON.plus}${esc(L('importNewData'))}</button>`:'')+`<div class="stack">
+  return pageHead('overview',summaryPeriod('overview',y,month,yearList()),S.canWrite?`<button class="btn primary overview-import" type="button" data-action="import-menu">${ICON.plus}${esc(L('importNewData'))}</button>`:'')+`<div class="stack">
     ${notice||backupNudge()}${monthlyCard()}
     <section class="ov-top" aria-label="${esc(L('yearSummary'))}">
       <div class="hero">
@@ -3159,13 +3205,13 @@ function viewOverview(){
         <p class="hint" style="margin:var(--s8) 0 0">${esc(L('savedDef'))}</p>
       </div>
       <div class="tiles">
-        <div class="tile"><span class="tile-label"><i class="sw income"></i>${esc(TL('income'))}</span><span class="tile-val">${fmtEUR(Y.inc)}</span><span class="tile-sub">${ms.length?esc(L('avgMonth',fmtEUR(incAvg,0))):'—'}</span></div>
+        <div class="tile"><span class="tile-label"><i class="sw income"></i>${esc(TL('income'))}</span><span class="tile-val">${fmtEUR(Y.inc)}</span><span class="tile-sub">${selected?esc(L('selectedMonth')):ms.length?esc(L('avgMonth',fmtEUR(incAvg,0))):'—'}</span></div>
         <div class="tile"><span class="tile-label"><i class="sw expenses"></i>${esc(TL('expenses'))}</span><span class="tile-val">${fmtEUR(-Y.exp)}</span><span class="tile-sub">${esc(L('ofIncome',fmtPct(Y.expRate)))}</span></div>
         <div class="tile"><span class="tile-label"><i class="sw investments"></i>${esc(TL('investments'))}</span><span class="tile-val">${fmtEUR(Y.inv)}</span><span class="tile-sub">${esc(L('ofIncome',fmtPct(Y.invRate)))}</span></div>
         <div class="tile"><span class="tile-label">${esc(L('liquid'))}${info('ovLeft')}</span><span class="tile-val">${fmtEUR(Y.liquid)}</span><span class="tile-sub">${esc(L('liquidSub'))}</span></div>
       </div>
     </section>
-    ${latestMonthCard()}${comparisonCard()}${thisMonthCard()}
+    ${selected?'':latestMonthCard()}${comparisonCard()}${!selected||+month===nm.m?thisMonthCard():''}
     ${analysisToggle('overview')}<div class="more-analysis" id="analysis-overview"${analysisOpen('overview')?'':' hidden'}>
     ${Y.inc>0?'':`<section class="card ov-first"><h2>${esc(L('ovFirstTitle'))}</h2><p class="sub">${esc(L('ovFirstText'))}</p>${S.canWrite?`<button class="btn primary" type="button" data-action="guide-income">${esc(L('ovAddIncome'))}</button>`:''}</section>`}
     <section class="card">
@@ -3174,6 +3220,7 @@ function viewOverview(){
           <div class="seg" role="group" aria-label="${esc(L('mmView'))}"><button data-action="mm-days" data-v="0" aria-pressed="${!mmD}">${esc(L('mmMonths'))}</button><button data-action="mm-days" data-v="1" aria-pressed="${mmD}"${mmT==='all'?` aria-disabled="true" title="${esc(L('mmDaysOff'))}"`:''}>${esc(L('mmDays'))}</button></div></div></div></div>
       ${mmT!=='all'&&mc?`<div class="legend" style="margin-bottom:var(--s8)"><button type="button" class="cat-chip" data-action="mm-clear-cat">${esc(L('onlyCat',dispCat(mc)))}<span aria-hidden="true">${ICON.x}</span><span class="sr">${esc(L('backToAll',mmT))}</span></button></div>`:''}
       <div class="chart" id="ch-monthly"></div>
+      ${y===nm.y&&!mmForecast('income',null)?`<p class="foot-note forecast-wait">${esc(L('forecastWait'))}</p>`:''}
       ${partialOut&&!mmD?`<p class="foot-note">${esc(L('partialNote',M()[nm.m]))}</p>`:''}
       ${(F=>F?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L(mmD?'mmFcDays':'fcNote',F.n))}</p>`:'')(y===nm.y?(mmT==='all'?TKEYS.map(t=>mmForecast(t,null)).find(Boolean):mmForecast(mmT,mc)):null)}
     </section>
@@ -3195,7 +3242,7 @@ function viewOverview(){
       <p class="foot-note">${esc(L('shareFoot'))}</p>
     </section>`:''}
     ${Y.inc>0?`<section class="card">
-      <div class="card-head"><div><h2>${esc(L('indicators'))}${info('ovInd')}</h2><p class="sub">${esc(L('indicatorsSub',y))}${AF.expenses.uncatCount?' '+esc(L('indUncat',AF.expenses.uncatCount)):''}</p></div></div>
+      <div class="card-head"><div><h2>${esc(L('indicators'))}${info('ovInd')}</h2><p class="sub">${esc(selected?ymLabel(ymOf(y,+month),true):L('indicatorsSub',y))}${AF.expenses.uncatCount?' '+esc(L('indUncat',AF.expenses.uncatCount)):''}</p></div></div>
       <div class="inds">${inds}</div>
     </section>`:''}
     ${multi?`<section class="card"><div class="card-head"><div><h2>${esc(L('yearByYear'))}${info('ovYears')}</h2><p class="sub">${esc(L('eurosYear'))}</p></div>${chartLegend(TKEYS.map(t=>[t,TL(t)]))}</div><div class="chart" id="ch-years" style="height:260px"></div></section>`:''}
@@ -3239,6 +3286,7 @@ function thisMonthCard(){
   return `<section class="card tm" aria-labelledby="tm-title">
     <div class="card-head"><div><h2 id="tm-title">${esc(L('thisMonth'))} · ${esc(M()[m])}${info('ovThisMonth')}</h2><p class="sub">${esc(L('dayOf',n.day,n.days))}</p></div>
       ${S.canWrite?`<div class="ctrls">${S.ai?`<button class="btn sm" type="button" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn sm" type="button" data-action="import">${esc(L('pasteImport'))}</button><button class="btn sm" type="button" data-action="add-tx">${esc(L('addTx'))}</button></div>`:''}</div>
+    ${!mmForecast('income',null)?`<p class="hint forecast-wait">${esc(L('forecastWait'))}</p>`:''}
     ${cnt?`<div class="tm-stats">${kpi('expenses','spentSoFar')}${kpi('income','inSoFar')}${kpi('investments','invSoFar')}</div>`:`<p class="hint">${esc(L('nothingThisMonth',M()[m]))}</p>`}
     ${lims.length?`<h3 class="tm-h">${esc(L('monthlyLimits'))}</h3><div class="lims">${limRows}</div>`:''}
     ${cnt&&(top.length||!lims.length)?`<h3 class="tm-h">${esc(lims.length?L('otherSpending'):L('topThisMonth'))}</h3>${top.length?`<div class="hbars${top.length>3?' cols':''}"${top.length>3?` style="grid-template-rows:repeat(${Math.ceil(top.length/2)},auto)"`:''}>${top.map(d=>`<div class="hb" data-action="drill" data-t="expenses" data-c="${esc(d.n)}" data-m="${m}" role="button" tabindex="0">
@@ -3432,7 +3480,7 @@ function drawOverviewCharts(){
      (mmForecast) for this month's rest and the months after it */
   const M12=[...Array(12).keys()], nn=nowYM(), FC=t=>y===nn.y?mmForecast(t,t===S.ui.mm.table?mmCat(A):null):null;
   const fcOf=t=>{ const F=FC(t); return F?M12.map(m=>F.months.has(m)?F.months.get(m).fc:0):null; };
-  const later=m=>y===nn.y&&m>nn.m, cur12=y===nn.y?nn.m:-1, ttl=m=>M()[m]+' '+y+(m===cur12?' · '+L('soFar'):later(m)?' · '+L('projTag'):'');
+  const later=m=>y===nn.y&&m>nn.m, projected=m=>later(m)&&!!FC(S.ui.mm.table==='all'?'expenses':S.ui.mm.table), cur12=y===nn.y?nn.m:-1, ttl=m=>M()[m]+' '+y+(m===cur12?' · '+L('soFar'):projected(m)?' · '+L('projTag'):'');
   const fv=(v,f)=>!f?fmtEUR(v):Math.abs(v)>=0.005?fmtEUR(v)+' + ≈ '+fmtEUR(f):'≈ '+fmtEUR(f);
   const fcHow=t=>{ const F=FC(t); return F?`<div class="hint" style="margin-top:var(--s8);max-width:32ch">${esc(L('mmFcHow',F.n,F.season))}</div>`:''; };
   if(el&&S.ui.mm.days&&S.ui.mm.table!=='all'){
@@ -3506,6 +3554,22 @@ function normNw(d){
       if(Object.keys(s).length) contributions[k]=s; }
     if(Object.keys(contributions).length) o.contributions=contributions;
   }
+  for(const field of ['payouts','flowReviews','flowDetails']){
+    const months={};
+    for(const [k,values] of Object.entries(d[field]||{})){
+      if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(k)||!values||typeof values!=='object') continue;
+      const entries={};
+      for(const [id,v] of Object.entries(values)){
+        if(!ids.has(id)||o.accounts.find(a=>a.id===id).group==='cash') continue;
+        if(field==='payouts'&&typeof v==='number'&&Number.isFinite(v)&&v>=0) entries[id]=r2(v);
+        if(field==='flowReviews'&&typeof v==='string'&&v.length<=1000000) entries[id]=v;
+        if(field==='flowDetails'&&v&&typeof v.added==='number'&&typeof v.withdrawn==='number'&&Number.isFinite(v.added)&&Number.isFinite(v.withdrawn)&&v.added>=0&&v.withdrawn>=0) entries[id]={added:r2(v.added),withdrawn:r2(v.withdrawn)};
+      }
+      if(Object.keys(entries).length) months[k]=entries;
+    }
+    if(Object.keys(months).length) o[field]=months;
+  }
+  if(Array.isArray(d.matchRules)) o.matchRules=d.matchRules.filter(x=>x&&ids.has(x.source)&&o.accounts.some(a=>a.id===x.target&&a.group!=='cash')&&typeof x.description==='string'&&x.description.length>0&&[-1,1].includes(x.direction)).map(x=>({source:x.source,target:x.target,description:x.description.slice(0,1000),direction:x.direction}));
   return o;
 }
 const nw=()=>S.nw||{accounts:[],snaps:{},goal:null};
@@ -3616,14 +3680,14 @@ function nwSplit(prev,k){
     const v=C(r.amount); if(inv) I+=v; else R+=v;
     if(G.has(G.link.get(r))) continue;   /* it reached an account with a Gains figure */
     if(inv){ putOff+=v; putRows.push(r); } else { ret+=v; retRows.push(r); } }
-  const why={cash:cashD-saved-R-I,ret,put:moved+putOff+C(G.flowDiff)};
+  const why={cash:cashD-saved-R-I,ret:ret-C(G.payoutDiff||0),put:moved+putOff+C(G.flowDiff)};
   const ok=nwReconcile({change,saved,gains,fresh,left,why,grp},prev,k), E=v=>v/100;
   /* a repayment entered as income: an invested account fell, about that much landed in cash,
      an income row of about that size is in the tracker, and the Gains total shows a big fall */
   const repay=drop&&gains<-0.5*drop.d&&cashD>=0.8*drop.d&&tr.income.some(v=>C(v)>=0.9*drop.d&&C(v)<=1.3*drop.d)?drop.name:null;
   const blind=nwHoles(k).map(id=>(N.accounts.find(a=>a.id===id)||{}).name).filter(Boolean);
   return {change:E(change),lfl:E(both),added:E(added),moved:E(moved),fresh:E(fresh),saved:E(saved),gains:E(gains),left:E(left),
-    why:{cash:E(why.cash),ret:E(why.ret),put:E(why.put),retRows,putRows},returns:E(R-ret),missing:tr.missing,repay,blind,ok};
+    pending:nwPending(G,prev,k),why:{cash:E(why.cash),ret:E(why.ret),put:E(why.put),retRows,putRows},returns:E(R-ret),missing:tr.missing,repay,blind,ok};
 }
 /* The check behind "Everything adds up", in cents: the card's lines make the change, the leftover equals its causes,
    and each non-Cash group's change is its gains plus the money put in (rows linked to its accounts) plus new accounts.
@@ -3644,13 +3708,13 @@ function nwLate(prev,k){
   return memo('late|'+prev+'|'+k,()=>{
     const N=nw(), ms=nwMonths(), i=ms.indexOf(prev), pp=i>0?ms[i-1]:null, ok=N.lateOk||{};
     const s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, sP=pp?N.snaps[pp]||{}:null;
-    const a1=nwSplit(prev,k); if(a1.missing.length) return null;
+    const a1=nwSplit(prev,k); if(a1.pending.size||a1.missing.length) return null;
     const a0=pp&&ymAdd(pp,1)===prev?nwSplit(pp,prev):null;
     let best=null;
     for(const r of allRows()){ if(!isBudgetRow(r)||r.table!=='investments'||r.amount>-300||r.date.slice(0,7)!==prev) continue;
       const amt=-r.amount;
       if(a1.gains<0.6*amt) continue;
-      if(a0&&!a0.missing.length&&a0.gains>-0.6*amt) continue;
+      if(a0&&!a0.missing.length&&!a0.pending.size&&a0.gains>-0.6*amt) continue;
       for(const a of N.accounts){ if(a.group==='cash'||ok[prev+'|'+a.id]) continue;
         const v1=s1[a.id], v0=s0[a.id]; if(v1==null||v0==null) continue;
         const up=v1-v0; if(up<0.85*amt||up>1.15*amt+0.03*Math.abs(v0)) continue;
@@ -3785,7 +3849,7 @@ function modalWizard(){
       <p class="wz-cur"><label for="wz-cur">${esc(L('wzCurrency'))}</label> <select id="wz-cur">${Object.entries(CURRENCIES).map(([c,x])=>`<option value="${c}"${c===CUR?' selected':''}>${esc(x.n)}</option>`).join('')}</select></p>
       ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>`<li>${accName(a)}<span class="wz-st">${esc(L('g_'+a.group))}</span></li>`).join('')}</ul>`:''}
       <div class="wz-acts">${act('guide-acc',esc(L(nAcc?'nwEditAccounts':'nwAddAccounts')),'',nAcc?'':'primary')}</div>
-      <details class="wz-about"><summary>${esc(L('aboutOptionalTitle'))}</summary><div><p class="hint">${esc(L('aboutOptional'))}</p>${aboutFields('wz',S.canWrite)}</div></details>`;
+      <p class="hint">${esc(L('wzPersonalLater'))}</p>`;
   } else if(i===1){
     const stat=a=>{ const s=st[a.id]; if(s&&s.noActivity) return `<span class="wz-st ok">${esc(L('noActivity'))}</span>`; return s?`<span class="wz-st ok">${esc(L('wzStmtGot',fmtDate(s.from||s.coverFrom),fmtDate(s.to||s.coverTo),s.n||0))}</span>`:`<span class="wz-st">${esc(L('wzStmtNone'))}</span>`; };
     /* statements only from Cash accounts: an investment or pension account's buys, sells and fees happen inside it; what went in is the
@@ -3799,7 +3863,7 @@ function modalWizard(){
     const k=C.balMiss[0]||C.bal[C.bal.length-1];
     body=`<p>${esc(S.settings.guide.quick?L('quickBalances'):L('wz2Text',ymIn(C.bal[0])))}</p>
       ${nAcc?wzStrip(C.bal,C.balAt,C.now,C.balMiss.length?L('wzBalCover',C.bal.length-C.balMiss.length,C.bal.length):L('wzBalAll')):''}
-      <div class="wz-acts">${nAcc?(S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):'')+act('guide-nwimport',ICON.xl+esc(L('nwImport')))+act('guide-val',esc(L(N.snaps[k]?'nwEdit':'nwEnter',ymIn(k))),` data-k="${k}"`,balOk?'':'primary'):act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`;
+      <div class="wz-acts">${nAcc?act('guide-val',esc(L(N.snaps[k]?'nwEdit':'nwEnter',ymIn(k))),` data-k="${k}"`,balOk?'':'primary')+act('guide-nwimport',ICON.xl+esc(L('nwImport')))+(S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):''):act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`;
   } else if(i===3){
     const cands=sal||!salCat?[]:salaryCands(rows);
     body=`<p>${esc(L('incomeOptional'))}</p>
@@ -3926,16 +3990,16 @@ function viewNetworth(){
   if(!N.accounts.length) return head()+(G?guideCard(G):`<section class="card nw-empty"><h2>${esc(L('nwEmptyTitle'))}</h2><p class="sub" style="max-width:68ch">${esc(L('nwEmptyText'))}</p>
     <div class="nw-groups-help">${NW_GROUPS.map(g=>`<div>${gSw(g)}<b>${esc(L('g_'+g))}</b><span class="hint">${esc(L('gs_'+g))}</span></div>`).join('')}</div>
     ${cw?`<div class="ctrls" style="margin-top:var(--s16)">${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button><button class="btn primary" type="button" data-action="nw-accounts">${esc(L('nwAddAccounts'))}</button></div>`:''}</section>`);
-  let k=S.ui.nw.month; if(!k||!ms.includes(k)) k=ms[ms.length-1]||null;
+  let k=S.ui.nw.month; if(!k) k=ms[ms.length-1]||ymAdd(ymNow(),-1);
   /* the month in progress can be entered from the 25th; earlier, only finished months are offered */
   const newK=due||(nowYM().day>=25&&!ms.includes(ymNow())?ymNow():null);
-  const per=ms.length>1?`<label class="sr" for="nw-month">${esc(L('nwMonthPick'))}</label><select id="nw-month">${ms.slice().reverse().map(x=>`<option value="${x}"${x===k?' selected':''}>${esc(ymLabel(x,true))}</option>`).join('')}</select>`:'';
+  const per=summaryPeriod('networth',+k.slice(0,4),+k.slice(5,7)-1,[...nwYearsAll(),nowYM().y]);
   const enter=cw&&newK&&!(G&&G.cur==='val');
-  const ctrls=`${cw?`${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button>`:''}
-    ${cw&&k?`<button class="btn${enter?'':' primary'}" type="button" data-action="nw-snap" data-k="${k}">${esc(L('nwEdit',ymIn(k)))}</button>`:''}
-    ${enter?`<button class="btn primary" type="button" data-action="nw-snap" data-k="${newK}">${esc(L('nwEnter',ymIn(newK)))}</button>`:''}`;
-  const dueBar=due&&cw&&!ciDue()?`<div class="notice">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(L('nwDue',ymIn(due)))}</span><button class="linkish" type="button" data-action="nw-snap" data-k="${due}">${esc(L('nwEnter',ymIn(due)))}</button></div>`:'';
-  if(!k) return head(per,ctrls)+`<div class="stack">${G?guideCard(G):`${dueBar}<section class="card"><p class="hint">${esc(L('nwNoPrev'))}</p></section>`}${accountsCard(null)}</div>`;
+  const ctrls=`${cw?`<button class="btn primary" type="button" data-action="nw-update" data-k="${k}">${esc(L('nwuUpdate'))}</button>`:''}${cw?`${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button>`:''}
+    ${cw&&k?`<button class="btn" type="button" data-action="nw-snap" data-k="${k}">${esc(L('nwEdit',ymIn(k)))}</button>`:''}
+    ${enter?`<button class="btn" type="button" data-action="nw-update" data-k="${newK}">${esc(L('nwEnter',ymIn(newK)))}</button>`:''}`;
+  const dueBar=due&&cw&&!ciDue()?`<div class="notice">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(L('nwDue',ymIn(due)))}</span><button class="linkish" type="button" data-action="nw-update" data-k="${due}">${esc(L('nwEnter',ymIn(due)))}</button></div>`:'';
+  if(!N.snaps[k]) return head(per,ctrls)+`<div class="stack">${G?guideCard(G):''}<section class="card"><p class="hint">${esc(L('periodNoBalances'))}</p></section>${accountsCard(null)}</div>`;
   const T=nwTotals(k), prev=ms[ms.indexOf(k)-1]||null, mk=+k.slice(5,7)-1, yk=k.slice(0,4);
   const share=v=>T.total>0?v/T.total:0;
   const shownG=NW_GROUPS.filter(g=>nwState(k).shown.some(a=>a.group===g)), posSum=Math.max(1e-9,sum(NW_GROUPS.map(g=>Math.max(0,T.g[g]))));
@@ -3966,8 +4030,9 @@ function viewNetworth(){
     const sp=nwSplit(prev,k), hasLeft=Math.abs(sp.left)>=0.005, w=sp.why;
     const review=hasLeft||w.retRows.length||w.putRows.length?`<button type="button" class="btn nw-review" data-action="nw-review" data-prev="${prev}" data-k="${k}">${esc(L('nwReview'))}</button>`:'';
     const health=`<p class="nw-health ${hasLeft?'bad':'ok'}">${(hasLeft?ICON.warn:ICON.ok).replace('<svg','<svg width="14" height="14"')}<span>${esc(hasLeft?L('nwHealthBad',fmtEUR(Math.abs(sp.left))):L('nwHealthOk'))}</span></p>`;
-    cLead=`<p class="nw-delta ${sp.change<-0.004?'down':'up'}">${signed(sp.change)}</p><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>${sp.missing.length?'':health}`;
-    if(sp.missing.length) cBody=foot([esc(noTrackerText(sp.missing)),sp.added>0.004?esc(L('nwNewAccIncl',fmtEUR(sp.added,0))):'']);
+    cLead=`<p class="nw-delta ${sp.change<-0.004?'down':'up'}">${signed(sp.change)}</p><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>${sp.missing.length||sp.pending.size?'':health}`;
+    if(sp.pending.size) cBody=`<p>${esc(L('nwuPending'))}</p>${cw?`<button class="btn" data-action="nw-update" data-k="${k}">${esc(L('nwuConfirmMoney'))}</button>`:''}`;
+    else if(sp.missing.length) cBody=foot([esc(noTrackerText(sp.missing)),sp.added>0.004?esc(L('nwNewAccIncl',fmtEUR(sp.added,0))):'']);
     else {
       const parts=[{cls:'saved',label:L('nwSaved'),sub:L('nwSavedSub'),v:sp.saved},{cls:'market',label:L('nwMarket'),sub:L('nwMarketSub'),v:sp.gains},
         ...(Math.abs(sp.fresh)>0.004?[{cls:'fresh',label:L('nwNewAccRow'),sub:L('nwNewAccRowSub'),v:sp.fresh}]:[]),...(hasLeft?[{cls:'left',label:L('nwLeftRow'),sub:L('nwLeftRowSub'),v:sp.left}]:[])];
@@ -4012,7 +4077,7 @@ function viewNetworth(){
   const ally=nwYearsAll(), sely=nwYearsSel();
   const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
       <div class="ch-end">${chartLegend(NW_GROUPS.filter(g=>N.accounts.some(a=>a.group===g)).map(g=>[g,L('g_'+g)]),ms.length>1)}${ally.length<2?'':`<div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div>`}</div></div>
-      <div class="chart" id="ch-nw" style="height:260px"></div>${(n=>n?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L('fcNote',n))}</p>`:'')(nwChartForecast(nwChartMonths()).n)}${nwChartNote()}</section>`:'';
+      <div class="chart" id="ch-nw" style="height:260px"></div>${(n=>n?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L('fcNote',n))}</p>`:`<p class="foot-note forecast-wait">${esc(L('forecastNwWait'))}</p>`)(nwChartForecast(nwChartMonths()).n)}${nwChartNote()}</section>`:'';
   return head(per,ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${changeCard}${accountsCard(k)}${analysisToggle('networth')}<div class="more-analysis" id="analysis-networth"${analysisOpen('networth')?'':' hidden'}>${chart}${healthCard(k,T)}${goalCard}${scenarioCard()}</div></div>`;
 }
 /* Financial health: savings rate shares Overview yearly totals. Spending averages use the income and expenses behind "You saved"
@@ -4089,7 +4154,7 @@ function goalGrowthCalc(T,rest,left,pace){
 const nwWords=s=>fold(s).split(/[^a-z0-9]+/).filter(x=>x.length>=3);
 const nwPensionish=s=>/pensi|jubil|retir/.test(fold(s));
 function nwGains(prev,k){
-  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map(), put=new Map(), ret=new Map(); out.unlinked=[]; out.link=new Map(); out.flows=new Map(); out.payouts=ret; out.flowDiff=0;   /* row → account id */
+  const N=nw(), s1=N.snaps[k]||{}, s0=N.snaps[prev]||{}, out=new Map(), put=new Map(), ret=new Map(); out.unlinked=[]; out.link=new Map(); out.flows=new Map(); out.payouts=ret; out.flowDiff=0; out.payoutDiff=0;   /* row → account id */
   const words=nwWords, skip=String(N.untracked||'').split(',').map(loose).filter(Boolean);
   const all=N.accounts.map(a=>({id:a.id,cash:a.group==='cash',pen:a.group==='pension',w:new Set(words(a.name)),p:String(a.words||'').split(',').map(loose).filter(Boolean)})), nonCash=all.filter(a=>!a.cash);
   /* the one account with the best score; a tie goes to neither */
@@ -4105,6 +4170,11 @@ function nwGains(prev,k){
     const explicit=r.investmentAccount||(N.accounts.some(a=>a.id===r.account&&a.group!=='cash')?r.account:null);
     const best=(accs.some(a=>a.id===explicit)?explicit:null)||byPhrase||(accs.some(a=>a.p.some(p=>c.includes(' '+p+' ')))?null:pick(accs,a=>side&&a.pen!==pen?0:sc(a)));
     if(best){ const target=r.table==='investments'?put:ret; const key=r.table==='investments'?m+'|'+best:best; target.set(key,(target.get(key)||0)+(r.table==='investments'?-r.amount:r.amount)); out.link.set(r,best); } else if(r.table==='investments'&&!skip.some(p=>c.includes(' '+p+' '))) out.unlinked.push(r); }
+  // An entered monthly payout replaces the linked payout, never adds it a second time.
+  for(let m=ymAdd(prev,1);m<=k;m=ymAdd(m,1)) for(const [id,v] of Object.entries(N.payouts?.[m]||{})){
+    const recorded=sum(allRows().filter(r=>r.date.slice(0,7)===m&&r.table!=='investments'&&!isRetained(r)&&out.link.get(r)===id).map(r=>r.amount));
+    ret.set(id,r2((ret.get(id)||0)-recorded+v)); out.payoutDiff=r2(out.payoutDiff+v-recorded);
+  }
   for(const a of N.accounts){
     if(a.group==='cash'){ if(ret.has(a.id)) out.set(a.id,r2(ret.get(a.id))); continue; }   /* only the interest it paid */
     const v1=s1[a.id], v0=nwBefore(a,s0,prev,k); if(v1==null||v0==null) continue;
@@ -4232,8 +4302,60 @@ Object.assign(STR,{
   nwFlowBlank:['Leave blank to use linked transactions; 0 means no net contributions.','Deja vacío para usar los movimientos vinculados; 0 significa que no hubo aportaciones netas.'],
   nwAiGainsHelp:['Gains are calculated from the previous balance and net contributions, plus returns paid out. Unknown contributions are not assumed to be zero. Review these figures against the original statement.','Las ganancias se calculan con el saldo anterior y las aportaciones netas, más los rendimientos pagados fuera. Las aportaciones desconocidas no se suponen cero. Contrasta estas cifras con el extracto original.']
 });
+Object.assign(STR,{
+  nwCashFlowUnlinked:[n=>`${n} transactions need a cash account. Assign a statement’s transactions together in Update your accounts.`,n=>`${n} movimientos necesitan una cuenta de efectivo. Asigna juntos los movimientos de un extracto en Actualiza tus cuentas.`],
+  nwuTitle:['Update your accounts','Actualiza tus cuentas'],
+  nwuIntro:['Update your balances first. Confirm money added or withdrawn when you’re ready to calculate gains.','Actualiza primero los saldos. Confirma el dinero aportado o retirado cuando quieras calcular las ganancias.'],
+  nwuUpdate:['Update this month','Actualizar este mes'],
+  nwuProgress:[(n,t)=>`${n} of ${t} account balances updated`,(n,t)=>`${n} de ${t} saldos actualizados`],
+  nwuClosing:[m=>`Balance / total account value at the end of ${m}`,m=>`Saldo / valor total de la cuenta al cierre de ${m}`],
+  nwuBalanceSaved:['Balance saved','Saldo guardado'],
+  nwuCashHelp:['Upload this account’s statement or enter the closing balance shown by your bank.','Sube el extracto de esta cuenta o introduce el saldo de cierre que indica tu banco.'],
+  nwuCashRows:['See this account’s transactions','Ver los movimientos de esta cuenta'],
+  nwuMovementQuestion:['How would you like to tell us about money added or withdrawn?','¿Cómo quieres indicar el dinero aportado o retirado?'],
+  nwuMode_later:['Save the balance; review movements later','Guardar el saldo; revisar movimientos más tarde'],
+  nwuMode_summary:['Enter monthly amounts','Introducir importes mensuales'],
+  nwuMode_transactions:['Review amounts from transactions','Revisar importes de los movimientos'],
+  nwuAdded:['Money added','Dinero aportado'],
+  nwuWithdrawn:['Money withdrawn','Dinero retirado'],
+  nwuSummaryHelp:['Enter both amounts for this whole month, using 0 if none. Include transfers to or from other investments, but not buys and sells inside this account. These totals replace linked transfers; they are never added twice.','Introduce ambos importes del mes completo, con 0 si no hubo. Incluye traspasos a otras inversiones o desde ellas, pero no compras y ventas dentro de esta cuenta. Estos totales sustituyen los movimientos vinculados; nunca se suman dos veces.'],
+  nwuSavedTotal:[v=>`Saved monthly net amount: ${v}. Leave both boxes empty to keep it, or enter both to replace it.`,v=>`Importe neto mensual guardado: ${v}. Deja ambas casillas vacías para conservarlo o rellena ambas para sustituirlo.`],
+  nwuFound:[(n,a,w)=>`${n} movements · ${a} added · ${w} withdrawn`,(n,a,w)=>`${n} movimientos · ${a} aportados · ${w} retirados`],
+  nwuNoTransfers:['No movements found for this account in this month.','No se han encontrado movimientos de esta cuenta en este mes.'],
+  nwuConfirmHelp:['Saving confirms these are all the money added and withdrawn this month. If something is missing, use the grouped account choices below or enter monthly amounts instead. New or changed transactions will need another confirmation.','Al guardar confirmas que estos son todos los importes aportados y retirados del mes. Si falta algo, usa la vinculación por grupos de abajo o introduce los importes mensuales. Los movimientos nuevos o modificados necesitarán otra confirmación.'],
+  nwuPayoutQuestion:['Interest or dividends paid into another account?','¿Intereses o dividendos pagados en otra cuenta?'],
+  nwuPayoutHelp:[v=>`Recorded payouts: ${v}. Leave blank to use them, or enter the full monthly payout to replace them. Do not include reinvested returns or capital withdrawals.`,v=>`Rendimientos cobrados registrados: ${v}. Deja vacío para usarlos o introduce el total mensual para sustituirlos. No incluyas rendimientos reinvertidos ni retiradas de capital.`],
+  nwuPayout:['Total returns paid out this month','Total de rendimientos cobrados fuera este mes'],
+  nwuLaterHelp:['Your balance still counts towards net worth. Gain / loss will wait until the money added and withdrawn is confirmed.','Tu saldo sigue contando en el patrimonio. La ganancia o pérdida esperará hasta que confirmes el dinero aportado y retirado.'],
+  nwuMovementsSaved:['Monthly movements confirmed','Movimientos mensuales confirmados'],
+  nwuNeedsMovements:['Balance and movements can be completed separately.','Puedes completar el saldo y los movimientos por separado.'],
+  nwuSaveAccount:['Save this account','Guardar esta cuenta'],
+  nwuSaved:[a=>`${a} saved. You can continue with another account or close this window.`,a=>`${a} guardada. Puedes seguir con otra cuenta o cerrar esta ventana.`],
+  nwuBadNumber:['Enter a valid balance. For monthly amounts, enter both money added and withdrawn, using 0 if none. Movement and payout amounts must not be negative.','Introduce un saldo válido. En los importes mensuales, rellena aportaciones y retiradas, con 0 si no hubo. Los importes de movimientos y rendimientos cobrados no pueden ser negativos.'],
+  nwuGroupTitle:['Assign transactions in groups','Asignar movimientos por grupos'],
+  nwuGroupHelp:['Choose an account once for each group. Review the dates and amounts if unsure. Confirm each account’s monthly amounts above when the links are complete.','Elige una cuenta una vez por grupo. Si tienes dudas, revisa las fechas e importes. Confirma los importes mensuales de cada cuenta arriba cuando termines de vincularlos.'],
+  nwuSourceGroup:[n=>`${n} transactions need the account they came from.`,n=>`${n} movimientos necesitan la cuenta de la que proceden.`],
+  nwuTransferGroup:[(n,v)=>`${n} investment transfers · ${v} in total`,(n,v)=>`${n} transferencias de inversión · ${v} en total`],
+  nwuSeeRows:['See dates and amounts','Ver fechas e importes'],
+  nwuRemember:[a=>`Remember this description and direction from ${a} for future transfers`,a=>`Recordar esta descripción y sentido desde ${a} para futuras transferencias`],
+  nwuApplyGroup:[n=>`Apply to ${n} transactions`,n=>`Aplicar a ${n} movimientos`],
+  nwuGroupSaved:['Account choices saved. Review the monthly amounts above.','Cuentas guardadas. Revisa los importes mensuales de arriba.'],
+  nwuConfirmMoney:['Confirm money added / withdrawn','Confirmar aportaciones / retiradas'],
+  nwuPending:['Balances are available. Confirm monthly movements to show gains; unknown amounts are not treated as zero.','Los saldos están disponibles. Confirma los movimientos mensuales para mostrar ganancias; los importes desconocidos no se consideran cero.'],
+  nwuPendingTotal:['Awaiting account updates','Pendiente de actualizar cuentas'],
+  nwuEarlierBalance:['Add an earlier balance','Añadir un saldo anterior'],
+  nwuComparison:[(a,b)=>`Change: ${a} → ${b}. Select a balance or movement amount to update it.`,(a,b)=>`Cambio: ${a} → ${b}. Selecciona un saldo o un importe de movimientos para actualizarlo.`],
+  nwValue:['Balance / value','Saldo / valor'],
+  nwChangeCol:['Change since last update','Cambio desde la última actualización'],
+  nwNetMoney:['Money in − money out','Entradas − salidas'],
+  nwGains:['Gain / loss','Ganancia / pérdida'],
+  nwShare:['% of total','% del total'],
+  nwReviewFlow:['Monthly totals differ from linked transfers. The confirmed totals are used for investment gains; check missing cash transactions only if you want to reconcile all balances.','Los totales mensuales difieren de los movimientos vinculados. Las ganancias usan los totales confirmados; comprueba los movimientos de efectivo que falten solo si quieres conciliar todos los saldos.']
+});
+
 function modalNwReview(){
   const m=S.modal, N=nw(), sp=nwSplit(m.prev,m.k), G=nwGains(m.prev,m.k), steps=L('nwReviewSteps');
+  if(sp.pending.size) return `${mHead(esc(L('nwuTitle')))}<div class="m-body"><p>${esc(L('nwuPending'))}</p>${S.canWrite?`<button class="btn primary" data-action="nw-update" data-k="${m.k}">${esc(L('nwuConfirmMoney'))}</button>`:''}</div>`;
   const rows=[...sp.why.putRows,...sp.why.retRows], act=(a,t,extra='')=>`<button type="button" class="btn sm" data-action="${a}"${extra}>${esc(t)}</button>`;
   const edit=k=>act('nw-review-balance',L('nwEdit',ymIn(k)),` data-k="${k}"`);
   const groups=new Map(); for(const r of rows){ const key=r.table+'|'+loose(r.concept); if(!groups.has(key)) groups.set(key,{r,rows:[]}); groups.get(key).rows.push(r); }
@@ -4327,6 +4449,10 @@ function accountsCard(k){
   /* Change and Gains cells: signed, coloured by sign; a muted dash when there is no figure (once there is a month before to compare with) */
   const na=k&&prev?DASH:'', cell=(v,lab)=>`<td class="r ${v==null?'na':v<-0.004?'down':v>0.004?'up':''}"${lab}>${v==null?na:Math.abs(v)<0.005?DASH:signed(v)}</td>`;
   const G=k&&prev?nwGains(prev,k):new Map(), cash=k&&prev?nwCashFlows(prev,k):{flows:new Map(),unlinked:[]}, flows=new Map([...(G.flows||[]),...cash.flows]);
+  const pending=k&&prev?nwPending(G,prev,k):new Map();
+  const update=(text,month=k,account='')=>S.canWrite?`<button class="nw-edit-value" type="button" data-action="nw-update" data-id="${esc(account)}" data-k="${month||ymAdd(ymNow(),-1)}">${text}</button>`:text;
+  const pendingCell=(label,month=k,account='')=>`<td class="r nw-pending" data-l="${esc(L('nwGains'))}">${update(esc(L(label)),month,account)}</td>`;
+  const aggregateMissing=accs=>accs.some(a=>a.group!=='cash'&&(pending.has(a.id)||!G.has(a.id)));
   const gc=v=>cell(v,` data-l="${esc(L('nwGains'))}"`), dc=v=>cell(v,lC);
   const fc=(v,isCash=false)=>{
     if(v==null&&isCash) return `<td class="r nw-flow-missing" data-l="${esc(L('nwNetMoney'))}"><span class="hint">${esc(L('nwCashFlowUnknown'))}</span></td>`;
@@ -4336,19 +4462,20 @@ function accountsCard(k){
   const dOf=a=>{ const v=s[a.id], v0=s0?nwBefore(a,s0,prev,k):null; return v!=null&&v0!=null?r2(v-v0):null; };
   const rows=NW_GROUPS.map(g=>{ const accs=shown.filter(a=>a.group===g); if(!accs.length) return '';
     const gg=accs.filter(a=>G.has(a.id)), gf=accs.filter(a=>flows.has(a.id)), gd=accs.map(dOf).filter(d=>d!=null);
-    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td>${dc(gd.length?sum(gd.map(cents))/100:null)}${fc(gf.length?sum(gf.map(a=>cents(flows.get(a.id))))/100:null,g==='cash'&&!!prev)}${gc(gg.length?sum(gg.map(a=>cents(G.get(a.id))))/100:null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,1):''}</td></tr>`+
+    return `<tr class="grp"><td>${gSw(g)} ${esc(L('g_'+g))} <span class="hint grp-sub">${esc(L('gs_'+g))}</span></td><td class="r">${k?fmtEUR(T.g[g]):''}</td>${dc(gd.length?sum(gd.map(cents))/100:null)}${accs.some(a=>pending.has(a.id))?`<td class="r" data-l="${esc(L('nwNetMoney'))}">${esc(L('nwuPendingTotal'))}</td>`:fc(gf.length?sum(gf.map(a=>cents(flows.get(a.id))))/100:null,g==='cash'&&!!prev)}${k&&aggregateMissing(accs)?pendingCell('nwuPendingTotal'):gc(gg.length?sum(gg.map(a=>cents(G.get(a.id))))/100:null)}<td class="r"${lS}>${k&&T.total>0?fmtPct(T.g[g]/T.total,1):''}</td></tr>`+
       accs.map(a=>{ const v=s[a.id], d=dOf(a);
-        return `<tr><td class="an">${esc(a.name)}${a.risk?` <span class="chip-risk">${esc(L('nwRisk'))}</span>`:''}</td><td class="r">${v!=null?fmtEUR(v):`<span class="missing">${esc(L('nwNoFigure'))}</span>`}</td>
-          ${dc(d)}${fc(flows.has(a.id)?flows.get(a.id):null,a.group==='cash'&&!!prev)}${gc(G.has(a.id)?G.get(a.id):null)}<td class="r"${lS}>${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
+        return `<tr><td class="an">${esc(a.name)}${a.risk?` <span class="chip-risk">${esc(L('nwRisk'))}</span>`:''}</td><td class="r">${update(v!=null?fmtEUR(v):esc(L('nwNoFigure')),k,a.id)}</td>
+          ${dc(d)}${pending.has(a.id)?`<td class="r" data-l="${esc(L('nwNetMoney'))}">${update(esc(L('nwuConfirmMoney')),pending.get(a.id)[0],a.id)}</td>`:fc(flows.has(a.id)?flows.get(a.id):null,a.group==='cash'&&!!prev).replace(/>([^<>]+)<\/td>$/,(_,text)=>'>'+update(text,k,a.id)+'</td>')}${pending.has(a.id)?pendingCell('nwuConfirmMoney',pending.get(a.id)[0],a.id):a.group!=='cash'&&!G.has(a.id)&&k?pendingCell(v==null?'nwReviewMissingValue':'nwuEarlierBalance',v==null?k:ymAdd(k,-1),a.id):gc(G.has(a.id)?G.get(a.id):null)}<td class="r"${lS}>${v!=null&&T.total>0?fmtPct(v/T.total,1):''}</td></tr>`; }).join(''); }).join('');
   const dT=k&&prev?r2(T.total-nwTotals(prev).total):null;
-  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?DASH:signed(dT)}</td>${fc(flows.size?sum([...flows.values()].map(cents))/100:null)}${gc(G.size?sum([...G.values()].map(cents))/100:null)}<td class="r"${lS}>${T.total>0?fmtPct(1,1):''}</td></tr></tfoot>`:'';
+  const foot=k?`<tfoot><tr class="tot"><td>${esc(L('nwTotalRow'))}</td><td class="r">${fmtEUR(T.total)}</td><td class="r ${dT==null?'':dT<-0.004?'down':dT>0.004?'up':''}"${lC}>${dT==null?'':Math.abs(dT)<0.005?DASH:signed(dT)}</td>${pending.size?`<td class="r" data-l="${esc(L('nwNetMoney'))}">${esc(L('nwuPendingTotal'))}</td>`:fc(flows.size?sum([...flows.values()].map(cents))/100:null)}${aggregateMissing(shown)?pendingCell('nwuPendingTotal'):gc(G.size?sum([...G.values()].map(cents))/100:null)}<td class="r"${lS}>${T.total>0?fmtPct(1,1):''}</td></tr></tfoot>`:'';
   return `<section class="card"><div class="card-head"><div><h2>${esc(L('nwAccounts'))}${info('nwAccounts')}</h2><p class="sub">${esc(L('nwAccountsSub'))}</p></div>
       ${S.canWrite?`<div class="au-acts">${S.ai&&allRows().length&&nw().accounts.length?`<button type="button" class="btn sm au-link" data-action="audit" data-f="nw" title="${esc(L('auTip_nw'))}">${ICON.ai}${esc(L('auBtn_nw'))}</button>`:''}<button class="btn sm" type="button" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button></div>`:''}</div>
+    ${k?`<p class="hint nwu-progress">${esc(nwUpdateProgress(k))}</p>`:''}${k&&prev?`<p class="hint">${esc(L('nwuComparison',ymLabel(prev,true),ymLabel(k,true)))}</p>`:''}
     <div class="frame" style="overflow-x:auto"><table class="nwt"><thead><tr><th>${esc(L('nwAccount'))}</th><th class="r">${esc(L('nwValue'))}</th><th class="r">${esc(L('nwChangeCol'))}</th><th class="r" title="${esc(L('nwCashFlowHelp')+' '+L('nwContributionHelp'))}">${esc(L('nwNetMoney'))}</th><th class="r" title="${esc(L('nwGainsTip'))}">${esc(L('nwGains'))}</th><th class="r">${esc(L('nwShare'))}</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>
     ${k&&prev&&shown.some(a=>a.group==='cash')?`<p class="hint">${esc(L('nwCashFlowHelp'))}</p>`:''}
-    ${cash.unlinked.length?`<p class="warn-text">${esc(L('nwCashFlowUnlinked',cash.unlinked.length))} <button type="button" class="btn sm" data-action="nw-cash-transactions" data-prev="${prev}" data-k="${k}">${esc(L('nwCashFlowCheck'))}</button></p>`:''}
-    ${G.size&&G.unlinked.length?(()=>{ const u=G.unlinked, ds=nwUnlinked(u.map(r=>({r,k}))).map(g=>g.label);
-      return `<p class="warn-text" style="margin-top:var(--s12)">${esc(L('nwUnlinked',u.length,fmtEUR(Math.abs(sum(u.map(r=>r.amount)))),listJoin(ds.slice(0,5).map(d=>`“${d}”`))+(ds.length>5?' …':'')))}${S.canWrite?` <button class="btn sm primary" type="button" data-action="nw-link">${esc(L('nwUnlinkedFix'))}</button>`:''}</p>`; })():''}
+    ${cash.unlinked.length?`<p class="warn-text">${esc(L('nwCashFlowUnlinked',cash.unlinked.length))} <button type="button" class="btn sm" data-action="nw-update" data-k="${k}">${esc(L('nwCashFlowCheck'))}</button></p>`:''}
+    ${pending.size&&G.unlinked?.length?(()=>{ const u=G.unlinked, ds=nwUnlinked(u.map(r=>({r,k}))).map(g=>g.label);
+      return `<p class="warn-text" style="margin-top:var(--s12)">${esc(L('nwUnlinked',u.length,fmtEUR(Math.abs(sum(u.map(r=>r.amount)))),listJoin(ds.slice(0,5).map(d=>`“${d}”`))+(ds.length>5?' …':'')))}${S.canWrite?` <button class="btn sm primary" type="button" data-action="nw-update" data-k="${k}">${esc(L('nwuConfirmMoney'))}</button>`:''}</p>`; })():''}
     ${k&&prev?`<details class="nw-foot nw-how"><summary>${esc(L('howCalc'))}</summary><p class="hint">${esc(L('nwContributionHelp'))}</p><p class="hint">${esc(L('nwGainsTip'))}</p></details>`:''}
     ${st&&st.closed.size?`<p class="hint" style="margin-top:var(--s12)">${esc(L('nwClosedNote',st.closed.size))}</p>`:''}</section>`;
 }
@@ -4364,10 +4491,12 @@ function nwChartMonths(){ const ys=nwYearsSel(); if(!ys.length) return [];
    Why the median: with a handful of months, a least-squares line or the average change lets one big deposit or market drop
    set the slope of the whole projection; the median ignores it. No damping on top: a steady saver's months look alike, and
    damping would bend their line down for no reason. A group never crosses 0 (savings don't go below nothing, a debt paid
-   off doesn't turn into money). No figures: nothing to project (null). One figure: flat. */
+   off doesn't turn into money). Fewer than three recent figures: nothing to project (null). */
 function nwForecast(pts,at){
-  if(!pts.length) return at.map(()=>null);
-  const last=pts[pts.length-1], use=pts.filter(p=>p.i>last.i-12), groups=[...new Set(use.flatMap(p=>Object.keys(p.g)))], step={};
+  if(pts.length<3) return at.map(()=>null);
+  const last=pts[pts.length-1], use=pts.filter(p=>p.i>last.i-12);
+  if(new Set(use.map(p=>p.i)).size<3) return at.map(()=>null);
+  const groups=[...new Set(use.flatMap(p=>Object.keys(p.g)))], step={};
   for(const g of groups){ const d=[]; for(let j=1;j<use.length;j++) d.push(((use[j].g[g]||0)-(use[j-1].g[g]||0))/(use[j].i-use[j-1].i));
     step[g]=d.length?median(d):0; }
   return at.map(i=>{ const g={}; let total=0;
@@ -4379,8 +4508,9 @@ function nwForecast(pts,at){
 function nwChartForecast(ms){
   const all=nwMonths(), last=all[all.length-1], F=ms.map(()=>null), fut=ms.map((k,i)=>({k,i})).filter(x=>x.k>last);
   if(!fut.length) return {F,n:0};
-  const full=all.filter(k=>!nwIncomplete(k)), ix=k=>+k.slice(0,4)*12+ +k.slice(5,7)-1;
-  const pts=(full.length?full:all).map(k=>({i:ix(k),g:nwTotals(k).g})), li=pts[pts.length-1].i;
+  const full=all.filter(k=>k<ymNow()&&!nwIncomplete(k)), ix=k=>+k.slice(0,4)*12+ +k.slice(5,7)-1;
+  const pts=full.map(k=>({i:ix(k),g:nwTotals(k).g})); if(pts.length<3) return {F,n:0};
+  const li=pts[pts.length-1].i; if(pts.filter(p=>p.i>li-12).length<3||ix(ymNow())-li>3) return {F,n:0};
   nwForecast(pts,fut.map(x=>ix(x.k))).forEach((p,j)=>{ F[fut[j].i]=p; });
   return {F,n:pts.filter(p=>p.i>li-12).length};
 }
@@ -4401,9 +4531,10 @@ function median(a){
      (December gifts, a yearly bill). Capped at twice the level: with one year of history a one-off can't be told
      from a season, so a single big month lifts that month next year by a quarter of a normal month at most. */
 function flowForecast(hist,at){
-  if(!hist.length) return at.map(()=>null);
+  if(hist.length<3) return at.map(()=>null);
   const last=hist[hist.length-1].i, use=hist.filter(p=>p.i>last-12), sl=[], byI=new Map(hist.map(p=>[p.i,p.v])), PHI=0.7;
   for(let a=0;a<use.length;a++) for(let b=a+1;b<use.length;b++) sl.push((use[b].v-use[a].v)/(use[b].i-use[a].i));
+  if(new Set(use.map(p=>p.i)).size<3) return at.map(()=>null);
   const slope=use.length>=4?median(sl):0, level=median(use.map(p=>p.v-slope*(p.i-last)));
   return at.map(i=>{ const h=Math.max(0,i-last); let v=level+slope*PHI*(1-Math.pow(PHI,h))/(1-PHI);
     if(byI.has(i-12)) v=0.75*v+0.25*Math.min(byI.get(i-12),2*Math.max(0,level));
@@ -4463,7 +4594,7 @@ function mmForecast(t,cat){
     for(const r of allRows()){ const i=ix(r.date); if(i<from||i>cur) continue; tracked.add(i);
       if(r.table!==t||(cat&&((r.category&&r.category!==UNCAT&&known.has(r.category))?r.category:UNCAT)!==cat)) continue; mine.push(r); }
     const past=[...tracked].filter(i=>i<cur).sort((a,b)=>a-b);
-    if(!past.length||![...tracked].some(i=>i>=N.y*12)) return null;
+    if(past.length<3||past.filter(i=>i>=cur-12).length<3||cur-past[past.length-1]>3||![...tracked].some(i=>i>=N.y*12)) return null;
     const last=past[past.length-1], win=new Set(past.filter(i=>i>last-12)), mv=new Map(past.map(i=>[i,0])), dv=new Map(), key=r=>r.concept||r.category;
     for(const r of mine){ const i=ix(r.date); if(mv.has(i)) mv.set(i,mv.get(i)+sign*r.amount); }
     const rec=findRecurring(mine.filter(r=>win.has(ix(r.date))).map(r=>({k:key(r),i:ix(r.date),d:+r.date.slice(8,10),v:sign*r.amount})),last,win.size), isRec=new Set(rec.map(r=>r.k));
@@ -4495,7 +4626,7 @@ function nwTrend(ms){
   const full=have.filter(x=>!nwIncomplete(x.k)), use=full.length>=2?full:have;
   return use.length>=2?linFitXY(use.map(x=>({x:x.i,v:nwTotals(x.k).total}))):null;
 }
-function nwSelMonth(){ const ms=nwMonths(); let k=S.ui.nw.month; if(!k||!ms.includes(k)) k=ms[ms.length-1]||null; return k; }
+function nwSelMonth(){ const ms=nwMonths(); let k=S.ui.nw.month; if(!k) k=ms[ms.length-1]||ymAdd(ymNow(),-1); return k; }
 function drawNwChart(){
   const el=$('#ch-nw'); if(!el) return;
   const ms=nwChartMonths(); if(!ms.length) return;
@@ -4557,6 +4688,140 @@ function drawNwChart(){
   svg.addEventListener('pointerleave',e=>{ if(e.pointerType==='touch') return; hl.style.opacity='0'; hideTip(); });
 }
 /* modals */
+/* Monthly account updates. Balances stand alone; contribution confirmation is separate.
+   Signatures invalidate transaction confirmations after an import, edit, deletion or relink. */
+function nwRemembered(r){
+  if(!r.account||r.table!=='investments'||isInternalTransfer(r)) return null;
+  const matches=(nw().matchRules||[]).filter(x=>x.source===r.account&&x.description===loose(r.concept)&&x.direction===Math.sign(r.amount)&&nw().accounts.some(a=>a.id===x.target&&a.group!=='cash'));
+  const ids=[...new Set(matches.map(x=>x.target))]; return ids.length===1?ids[0]:null;
+}
+function applyRememberedInvestment(r,account){
+  if(r.rememberedInvestment&&r.investmentAccount===r.rememberedInvestment&&r.rememberedSource!==account) r.investmentAccount='';
+  if(r.rememberedInvestment&&r.investmentAccount!==r.rememberedInvestment){delete r.rememberedInvestment;delete r.rememberedSource;}
+  if(!r.investmentManual&&!r.investmentAccount&&!r.investmentName&&r.movement!=='transfer'){
+    const id=nwRemembered({...r,account});if(id){r.investmentAccount=id;r.rememberedInvestment=id;r.rememberedSource=account;}
+  }
+}
+function nwMonthActivity(id,k,G){
+  G=G||nwGains(ymAdd(k,-1),k);
+  const rows=allRows().filter(r=>r.date.slice(0,7)===k&&!isRetained(r)&&(G.link.get(r)===id||isInternalTransfer(r)&&(r.transferFrom===id||r.transferTo===id)));
+  let added=0,withdrawn=0,payout=0;
+  for(const r of rows){ if(isInternalTransfer(r)){ if(r.transferTo===id) added+=r.amount<0?-r.amount:r.amount; else withdrawn+=Math.abs(r.amount); }
+    else if(r.table==='investments'){ if(r.amount<0) added-=r.amount; else withdrawn+=r.amount; } else payout+=r.amount; }
+  // Unmatched investment/return rows are part of the evidence: a new unknown deposit needs another review.
+  const evidence=allRows().filter(r=>r.date.slice(0,7)===k&&!isRetained(r)&&(rows.includes(r)||(r.table==='investments'||isReturn(r))&&!G.link.has(r)));
+  const signature=JSON.stringify(evidence.map(r=>[r.id,r.table,r.date,r.amount,r.concept,r.category,r.account||'',r.investmentAccount||'',r.transferFrom||'',r.transferTo||'',r.returnTreatment||'',G.link.get(r)||'']).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b))));
+  return {rows,added:r2(added),withdrawn:r2(withdrawn),payout:r2(payout),signature};
+}
+function nwPending(G,prev,k){
+  const N=nw(), pending=new Map();
+  for(const a of N.accounts){ if(a.group==='cash'||!G.has(a.id)) continue;
+    const missing=[];
+    for(let m=ymAdd(prev,1);m<=k;m=ymAdd(m,1)){
+      if(typeof N.contributions?.[m]?.[a.id]==='number') continue;
+      if(N.flowReviews?.[m]?.[a.id]!==nwMonthActivity(a.id,m,G).signature) missing.push(m);
+    }
+    if(missing.length) pending.set(a.id,missing);
+  }
+  return pending;
+}
+function nwUpdateProgress(k){
+  const N=nw(), accounts=N.accounts.filter(a=>!nwState(k).closed.has(a.id)&&(!a.from||a.from<=k));
+  return L('nwuProgress',accounts.filter(a=>N.snaps[k]?.[a.id]!=null).length,accounts.length);
+}
+function nwUpdateGroups(k){
+  const G=nwGains(ymAdd(k,-1),k), groups=new Map(), N=nw();
+  for(const r of allRows().filter(r=>r.date.slice(0,7)===k&&isBudgetRow(r))){
+    if(!N.accounts.some(a=>a.id===r.account)){
+      const key=r.source?'source|'+r.source:JSON.stringify(['source',r.table,loose(r.concept),Math.sign(r.amount)]); if(!groups.has(key)) groups.set(key,{kind:'source',label:r.source||r.concept,rows:[],source:'',target:''}); groups.get(key).rows.push(r);
+    }
+    if(r.table!=='investments'||isInternalTransfer(r)) continue;
+    const key=JSON.stringify(['investment',r.account||'',loose(r.concept),Math.sign(r.amount)]);
+    if(!groups.has(key)) groups.set(key,{kind:'investment',label:r.concept,rows:[],source:r.account||'',target:G.link.get(r)||''});
+    const g=groups.get(key); g.rows.push(r); if(g.target!==(G.link.get(r)||'')) g.target='';
+  }
+  return [...groups.values()];
+}
+function readNwUpdate(){
+  const m=S.modal; if(m?.type!=='nwupdate') return;
+  m.drafts=m.drafts||{};
+  document.querySelectorAll('.nwu-account-form').forEach(f=>{ const d={...(m.drafts[f.dataset.id]||m.renderedDrafts?.[f.dataset.id]||{})}; f.querySelectorAll('[data-field]').forEach(el=>{d[el.dataset.field]=el.value;}); if(m.drafts[f.dataset.id]||JSON.stringify(d)!==JSON.stringify(m.renderedDrafts?.[f.dataset.id])) m.drafts[f.dataset.id]=d; });
+}
+function modalNwUpdate(){
+  const m=S.modal,N=nw(),k=m.k,prev=nwMonths().filter(x=>x<k).pop(), G=nwGains(ymAdd(k,-1),k);
+  const closed=nwState(k).closed, accounts=N.accounts.filter(a=>!closed.has(a.id)&&(!a.from||a.from<=k));
+  const options=[...new Set([k,...nwMonths(),...Array.from({length:36},(_,i)=>ymAdd(ymNow(),-i))])].sort().reverse();
+  const input=(a,f,label,value,extra='')=>`<label for="nwu-${f}-${esc(a.id)}">${esc(label)}<input id="nwu-${f}-${esc(a.id)}" data-field="${f}" type="text" inputmode="decimal" autocomplete="off" value="${esc(value??'')}" ${extra}></label>`;
+  const edit=r=>`<button class="linkish" type="button" data-action="nwu-edit" data-mk="${r.mk}" data-t="${r.table}" data-id="${esc(r.id)}" aria-label="${esc(L('editTx')+': '+r.concept)}">${esc(L('editTx'))}</button>`;
+  m.renderedDrafts={};
+  const cards=accounts.map(a=>{
+    const activity=nwMonthActivity(a.id,k,G), total=N.contributions?.[k]?.[a.id], detail=N.flowDetails?.[k]?.[a.id];
+    const savedDetail=detail&&r2(detail.added-detail.withdrawn)===total?detail:null;
+    const mode=typeof total==='number'?'summary':N.flowReviews?.[k]?.[a.id]===activity.signature?'transactions':'later';
+    const d=m.drafts?.[a.id]||{balance:N.snaps[k]?.[a.id]!=null?fmtNum(N.snaps[k][a.id]):'',mode,added:savedDetail?fmtNum(savedDetail.added):'',withdrawn:savedDetail?fmtNum(savedDetail.withdrawn):'',payout:N.payouts?.[k]?.[a.id]!=null?fmtNum(N.payouts[k][a.id]):''};
+    m.renderedDrafts[a.id]={...d};
+    const summary=d.mode==='summary', confirmed=mode!=='later';
+    const transactions=`<details class="nwu-transactions"><summary>${esc(L('nwuFound',activity.rows.length,fmtEUR(activity.added),fmtEUR(activity.withdrawn)))}</summary><ul>${activity.rows.map(r=>`<li><span>${esc(fmtDate(r.date))} · ${esc(r.concept)}</span><b>${signed(r.amount)}</b>${edit(r)}</li>`).join('')||`<li>${esc(L('nwuNoTransfers'))}</li>`}</ul></details>`;
+    return `<form class="nwu-account-form" data-id="${esc(a.id)}" id="nwu-form-${esc(a.id)}"><div class="card-head"><h4>${gSw(a.group)} ${esc(a.name)}</h4><span class="hint">${esc(N.snaps[k]?.[a.id]!=null?L('nwuBalanceSaved'):L('nwReviewMissingValue'))}</span></div>
+      ${input(a,'balance',L('nwuClosing',ymLabel(k,true)),d.balance)}${prev&&N.snaps[prev]?.[a.id]!=null?`<p class="hint">${esc(ymLabel(prev,true))}: ${fmtEUR(N.snaps[prev][a.id])}</p>`:''}
+      ${a.group==='cash'?`<p class="hint">${esc(L('nwuCashHelp'))}</p><details><summary>${esc(L('nwuCashRows'))}</summary><ul class="nwu-cash-rows">${allRows().filter(r=>r.date.slice(0,7)===k&&r.account===a.id&&isBudgetRow(r)).map(r=>`<li><span>${esc(fmtDate(r.date))} · ${esc(r.concept)}</span><b>${signed(r.amount)}</b>${edit(r)}</li>`).join('')||`<li>${esc(L('nwuNoTransfers'))}</li>`}</ul></details>`:`
+      <label for="nwu-mode-${esc(a.id)}">${esc(L('nwuMovementQuestion'))}<select id="nwu-mode-${esc(a.id)}" data-field="mode" data-action="nwu-mode">${['later','summary','transactions'].map(v=>`<option value="${v}"${d.mode===v?' selected':''}>${esc(L('nwuMode_'+v))}</option>`).join('')}</select></label>
+      ${summary?`<p class="hint">${esc(L('nwuSummaryHelp'))}</p>${typeof total==='number'?`<p class="hint">${esc(L('nwuSavedTotal',fmtEUR(total)))}</p>`:''}<div class="nwu-amounts">${input(a,'added',L('nwuAdded'),d.added)}${input(a,'withdrawn',L('nwuWithdrawn'),d.withdrawn)}</div>`:''}
+      ${d.mode==='transactions'?transactions+`<p class="hint">${esc(L('nwuConfirmHelp'))}</p>`:''}
+      ${d.mode!=='later'?`<details class="nwu-payout"${d.payout!==''?' open':''}><summary>${esc(L('nwuPayoutQuestion'))}</summary><p class="hint">${esc(L('nwuPayoutHelp',fmtEUR(activity.payout)))}</p>${input(a,'payout',L('nwuPayout'),d.payout)}</details>`:`<p class="hint">${esc(L('nwuLaterHelp'))}</p>`}
+      <p class="hint">${esc(confirmed?L('nwuMovementsSaved'):L('nwuNeedsMovements'))}</p>`}
+      <p class="err" role="alert">${m.errorId===a.id?esc(m.msg||''):''}</p><div class="nwu-actions"><button type="submit" class="btn primary">${esc(L('nwuSaveAccount'))}</button><button type="button" class="btn" data-action="nwu-upload" data-id="${esc(a.id)}">${esc(L('addStatement'))}</button></div>
+    </form>`;
+  }).join('');
+  m.groups=nwUpdateGroups(k);
+  const groups=m.groups.map((g,i)=>{const cash=g.kind==='source', eligible=N.accounts.filter(a=>cash||a.group!=='cash'), source=N.accounts.find(a=>a.id===g.source);
+    return `<div class="nwu-group"><b>${esc(g.label)}</b><p class="hint">${esc(L(cash?'nwuSourceGroup':'nwuTransferGroup',g.rows.length,fmtEUR(sum(g.rows.map(r=>Math.abs(r.amount))))))}${source?` · ${esc(source.name)}`:''}</p><details><summary>${esc(L('nwuSeeRows'))}</summary><ul>${g.rows.map(r=>`<li>${esc(fmtDate(r.date))} · ${esc(r.concept)} · ${signed(r.amount)} ${edit(r)}</li>`).join('')}</ul></details>
+      <label for="nwu-target-${i}">${esc(L(cash?'txAccount':'nwReviewDestination'))}<select id="nwu-target-${i}"><option value="">${esc(L('nwLinkNone'))}</option>${eligible.map(a=>`<option value="${esc(a.id)}"${g.target===a.id?' selected':''}>${esc(a.name)}</option>`).join('')}</select></label>
+      ${!cash&&source?`<label class="check"><input type="checkbox" id="nwu-remember-${i}" checked>${esc(L('nwuRemember',source.name))}</label>`:''}<button type="button" class="btn sm" data-action="nwu-link" data-i="${i}">${esc(L('nwuApplyGroup',g.rows.length))}</button></div>`;}).join('');
+  return `${mHead(esc(L('nwuTitle')),esc(L('nwuIntro')))}<div class="m-body nwu-body"><label for="nwu-month">${esc(L('month'))}<select id="nwu-month">${options.map(x=>`<option value="${x}"${x===k?' selected':''}>${esc(ymLabel(x,true))}</option>`).join('')}</select></label><p class="nwu-progress" role="status">${esc(nwUpdateProgress(k))}</p>
+    ${m.message?`<p class="hint" role="status">${esc(m.message)} ${m.undo?`<button class="linkish" type="button" data-action="nwu-undo">${esc(L('undo'))}</button>`:''}</p>`:''}${cards}
+    ${groups?`<details class="nwu-groups"${m.groupsOpen?' open':''}><summary>${esc(L('nwuGroupTitle'))}</summary><p class="hint">${esc(L('nwuGroupHelp'))}</p>${groups}</details>`:''}
+    ${m.groupError?`<p class="err" role="alert">${esc(m.groupError)}</p>`:''}</div><div class="m-foot"><button class="btn" type="button" data-action="close">${esc(L('close'))}</button></div>`;
+}
+function saveNwUpdate(form){
+  if(!S.canWrite) return; readNwUpdate();
+  const m=S.modal,N=ensureNw(),id=form.dataset.id,a=N.accounts.find(a=>a.id===id),d=m.drafts[id]||m.renderedDrafts[id],k=m.k;
+  const parse=v=>String(v??'').trim()===''?null:parseAmount(v,wantNum()), balance=parse(d.balance);
+  const error=()=>{m.errorId=id;m.msg=L('nwuBadNumber');renderModalKeepScroll();};
+  if(!a||balance==null) return error();
+  let total,detail,payout;
+  if(a.group!=='cash'){
+    if(d.mode==='summary'){
+      if(String(d.added||'').trim()===''&&String(d.withdrawn||'').trim()===''&&typeof N.contributions?.[k]?.[id]==='number') total=N.contributions[k][id];
+      else {const added=parse(d.added),withdrawn=parse(d.withdrawn);if(added==null||withdrawn==null||added<0||withdrawn<0) return error(); total=r2(added-withdrawn);detail={added,withdrawn};}
+    }
+    if(String(d.payout||'').trim()!==''){payout=parse(d.payout);if(payout==null||payout<0)return error();}
+  }
+  (N.snaps[k]=N.snaps[k]||{})[id]=balance;
+  if(a.group!=='cash'){
+    if(d.mode==='summary'){
+      ((N.contributions=N.contributions||{})[k]=N.contributions[k]||{})[id]=total;
+      if(detail) ((N.flowDetails=N.flowDetails||{})[k]=N.flowDetails[k]||{})[id]=detail;
+      if(N.flowReviews?.[k]) delete N.flowReviews[k][id];
+    } else {
+      if(N.contributions?.[k]) delete N.contributions[k][id]; if(N.flowDetails?.[k]) delete N.flowDetails[k][id];
+      if(d.mode==='transactions') ((N.flowReviews=N.flowReviews||{})[k]=N.flowReviews[k]||{})[id]=nwMonthActivity(id,k).signature;
+      else if(N.flowReviews?.[k]) delete N.flowReviews[k][id];
+    }
+    if(d.mode!=='later'){if(payout!=null) ((N.payouts=N.payouts||{})[k]=N.payouts[k]||{})[id]=payout;else if(N.payouts?.[k]) delete N.payouts[k][id];}
+  }
+  delete m.drafts[id];m.errorId=null;m.msg='';m.message=L('nwuSaved',a.name);S.ui.nw.month=k;saveNw();render();renderModalKeepScroll();
+}
+function nwUpdateLink(i){
+  if(!S.canWrite) return;readNwUpdate();const m=S.modal,g=m.groups[i],id=$('#nwu-target-'+i)?.value,N=ensureNw(),a=N.accounts.find(a=>a.id===id),cash=g?.kind==='source';
+  if(!g||!a||!cash&&a.group==='cash'){m.groupError=L('nwReviewChoose');renderModalKeepScroll();return;}
+  const previous=g.rows.map(r=>({mk:r.mk,table:r.table,id:r.id,value:findRow(r.mk,r.table,r.id).row?.[cash?'account':'investmentAccount']})),oldRules=clone(N.matchRules||[]),key=cash?'account':'investmentAccount';
+  for(const r of g.rows){const f=findRow(r.mk,r.table,r.id);if(f.row){f.row[key]=id;markDirty('months/'+r.mk);}}
+  if(!cash&&g.source&&$('#nwu-remember-'+i)?.checked){const description=loose(g.rows[0].concept),direction=Math.sign(g.rows[0].amount);N.matchRules=(N.matchRules||[]).filter(x=>!(x.source===g.source&&x.description===description&&x.direction===direction));N.matchRules.push({source:g.source,description,direction,target:id});}
+  m.groupsOpen=true;m.groupError='';m.message=L('nwuGroupSaved');saveNw();render();renderModalKeepScroll();
+  m.undo=()=>{for(const r of previous){const f=findRow(r.mk,r.table,r.id);if(f.row){if(r.value)f.row[key]=r.value;else delete f.row[key];markDirty('months/'+r.mk);}}ensureNw().matchRules=oldRules;m.undo=null;m.message='';saveNw();render();if(S.modal?.type==='nwupdate')renderModalKeepScroll();};renderModalKeepScroll();
+}
+
 function modalNwSnap(){
   const m=S.modal, N=nw(), k=m.k, ms=nwMonths(), has=!!N.snaps[k], prev=ms.filter(x=>x<k).pop()||null, own=N.snaps[k]||{}, ps=prev?N.snaps[prev]:{};
   /* accounts that were already at 0 before this month aren't carried over and sit behind a toggle */
@@ -4592,8 +4857,8 @@ function modalNwAccounts(){
   const m=S.modal; if(!m.list) m.list=clone(nw().accounts);
   const L2=m.list, used=new Set(Object.values(nw().snaps).flatMap(s=>Object.keys(s)));
   /* statement words and "at risk" are for people who already know they need them: shown at once when one is set, else behind More options */
-  if(m.adv==null) m.adv=L2.some(a=>a.risk||String(a.words||'').trim())||!!String(nw().untracked||'').trim();
-  const adv=m.adv;
+  if(m.adv==null) m.adv=false;
+  const setup=!!(S.wizard&&S.wizard.on&&S.wizard.mode!=='ci'), adv=!setup&&m.adv;
   const dropped=nw().accounts.filter(a=>used.has(a.id)&&!L2.some(b=>b.id===a.id)).length;
   /* descriptions from Investments rows and interest/dividend income not yet in any account's statement words; for each
      account those sharing a word with its name first. A Cash account only gets interest ones (see nwGains) */
@@ -4607,19 +4872,19 @@ function modalNwAccounts(){
       <label class="sr" for="na-g-${i}">${esc(L('nwAccGroup'))}</label><select id="na-g-${i}" data-i="${i}" data-f="group">${NW_GROUPS.map(g=>`<option value="${g}"${a.group===g?' selected':''}>${esc(L('g_'+g))}</option>`).join('')}</select>
       ${adv?`<label class="check" title="${esc(L('nwRiskHelp'))}"><input type="checkbox" id="na-r-${i}" data-i="${i}" data-f="risk"${a.risk?' checked':''}>${esc(L('nwRisk'))}</label>`:'<span class="check" aria-hidden="true"></span>'}
       <span class="acts"><button type="button" class="icon-btn" data-action="na-up" data-i="${i}" aria-label="${esc(L('nwMoveUp',a.name||''))}"${i?'':' disabled'}>↑</button><button type="button" class="icon-btn" data-action="na-down" data-i="${i}" aria-label="${esc(L('nwMoveDown',a.name||''))}"${i<L2.length-1?'':' disabled'}>↓</button><button type="button" class="icon-btn" data-action="na-del" data-i="${i}" aria-label="${esc(L('nwRemoveAcc',a.name||''))}">${ICON.x}</button></span>
-      ${adv?`<label class="acc-words" for="na-w-${i}"><span>${esc(L('nwAccWords'))}</span><input type="text" id="na-w-${i}" data-i="${i}" data-f="words" value="${esc(a.words||'')}" placeholder="${esc(L('nwAccWordsPh'))}" autocomplete="off"></label>${pick(a,i)}`:''}</div>`).join('');
-  const sug=NW_GROUPS.flatMap(g=>STR['nwSug_'+g][LANG==='es'?1:0].map(n=>[g,n])).filter(([,n])=>!L2.some(a=>a.name.toLowerCase()===n.toLowerCase()));
+      ${adv?`<label class="acc-words" for="na-w-${i}"><span>${esc(L('nwAccWords'))}</span><input type="text" id="na-w-${i}" data-i="${i}" data-f="words" value="${esc(a.words||'')}" placeholder="${esc(L(a.group==='cash'?'nwCashMatchPh':'nwInvestMatchPh'))}" autocomplete="off"></label>${pick(a,i)}`:''}</div>`).join('');
+  const sug=NW_GROUPS.flatMap(g=>STR['nwSug_'+g][LANG==='es'?1:0].map(n=>[g,n]));
   const chip=([g,n])=>`<button type="button" class="kchip nw-sug" data-action="na-add" data-g="${g}" data-n="${esc(n)}">${gSw(g)} ${esc(n)}</button>`;
   /* a new list (or the setup guide): the ideas by group, with what each group means */
-  const start=!L2.length||!!guideState();
-  const startBox=start?`<div class="acc-start"><p class="acc-start-q">${esc(L('nwAccStartQ'))}</p><div class="acc-start-grid">${NW_GROUPS.map(g=>{ const c=sug.filter(x=>x[0]===g);
+  const start=true;
+  const startBox=start?`<div class="acc-start"><p class="acc-start-q">${esc(L('nwAccStartQ'))}</p>${L2.length?`<p class="hint" role="status">${esc(L('nwAccountCount',L2.length))}</p>`:''}<div class="acc-start-grid">${NW_GROUPS.map(g=>{ const c=sug.filter(x=>x[0]===g);
       return `<div class="acc-start-g"><div class="acc-start-h">${gSw(g)}<b>${esc(L('g_'+g))}</b><span class="hint">${esc(L('gs_'+g))}</span></div><div class="acc-start-chips">${c.map(chip).join('')||`<span class="hint">${esc(L('nwSugAllAdded'))}</span>`}</div></div>`; }).join('')}</div>
     <div class="ctrls" style="margin-top:var(--s12)"><button type="button" class="btn sm" data-action="na-add">${esc(L('nwAddOther'))}</button></div></div>`:'';
   return `${mHead(esc(L('nwAccTitle')),esc(L('nwAccSub')))}
   <form id="nw-acc-form" novalidate><div class="m-body">
     ${L2.length?`<div class="acc-list">${rows}</div>${adv?`<p class="hint" style="margin-top:var(--s12)">${esc(L('nwAccWordsHelp'))}</p>
     <label class="acc-words" for="na-untracked" style="margin-top:var(--s12)"><span>${esc(L('nwAccUntracked'))}</span><input type="text" id="na-untracked" value="${esc(m.untracked!=null?m.untracked:nw().untracked||'')}" autocomplete="off"></label>`
-      :`<p style="margin-top:var(--s12)"><button type="button" class="linkish" data-action="na-adv" aria-expanded="false">${esc(L('nwAccMore'))}</button> <span class="hint">${esc(L('nwAccMoreHint'))}</span></p>`}`:''}
+      :setup?'':`<p style="margin-top:var(--s12)"><button type="button" class="linkish" data-action="na-adv" aria-expanded="false">${esc(L('nwAccMore'))}</button> <span class="hint">${esc(L('nwAccMoreHint'))}</span></p>`}`:''}
     ${start?startBox:`<div class="ctrls"><button type="button" class="btn sm" data-action="na-add">${esc(L('nwAddAccount'))}</button>${sug.length?`<span class="hint">${esc(L('nwSuggest'))}</span>${sug.map(chip).join('')}`:''}</div>`}
     ${dropped?`<p class="warn-text">${esc(L('nwAccDropWarn',dropped))}</p>`:''}
     <p class="err" id="na-err" aria-live="polite"></p>
@@ -5296,10 +5561,11 @@ function aiApply(m,res,nFiles){
     const first=tx.rows.map(r=>r.date).sort()[0], y=+first.slice(0,4), mo=+first.slice(5,7)-1;
     obApply(m.lang==='es'?'es':'en',y,mo); S.ui.tab='transactions'; try{ history.replaceState(null,'','#transactions'); }catch(_){} render();
   }
-  S.modal={type:'import',step:'input',table:'auto',text:'',rows:[],bad:[],msg:'',acct:m.files.length===1?m.files[0].acct||'':'',sourceAccounts:Object.fromEntries(m.files.map(f=>[f.file.name,f.acct||''])),pick:true,ai:{out:tx.out,checks:tx.checks,notes:tx.notes,n:nFiles},aiBack:m.mode==='start'?null:back,pendingNw:nwd&&nwd.cols.length?nwd:null};
+  S.modal={type:'import',step:'input',table:'auto',text:'',rows:[],bad:[],msg:'',acct:m.files.length===1?m.files[0].acct||'':'',sourceAccounts:Object.fromEntries(m.files.map(f=>[f.file.name,f.acct||''])),fixedAccount:m.fixedAccount,pick:true,ai:{out:tx.out,checks:tx.checks,notes:tx.notes,n:nFiles},aiBack:m.mode==='start'?null:back,pendingNw:nwd&&nwd.cols.length?nwd:null};
   finishImport(tx.rows,[],label);
 }
 function statementFileList(m,prefix,accountPick=true){
+  accountPick=accountPick&&!m.fixedAccount;
   const busy=!!m.busy;
   return m.files.length?`<ul class="ai-files">${m.files.map((f,i)=>`<li><span class="ai-fn">${esc(f.file.name)}</span><span class="hint">${fmtCount(Math.max(1,Math.round(f.file.size/1024)))} KB</span>${accountPick?`<div class="ai-file-account"><label class="sr" for="${prefix}-acct-${i}">${esc(L('aiFileAccount'))}: ${esc(f.file.name)}</label><select id="${prefix}-acct-${i}" data-action="${prefix}-file-account" data-i="${i}"${busy?' disabled':''}><option value="">${esc(L('impAcctNone'))}</option>${nw().accounts.map(a=>`<option value="${esc(a.id)}"${a.id===f.acct?' selected':''}>${esc(a.name)}</option>`).join('')}</select></div>`:''}${busy?'':`<button type="button" class="icon-btn" data-action="${prefix==='ai'?'ai-del':'imp-file-del'}" data-i="${i}" aria-label="${esc(L('aiRemove',f.file.name))}">${ICON.x}</button>`}</li>`).join('')}</ul>`:'';
 }
@@ -5697,9 +5963,9 @@ function modalImportHistory(){
 function modalAnswers(){ return `${mHead(esc(L('rememberAnswers')))}<div class="m-body">${auAnswers().map((x,i)=>`<div class="card"><p>${esc(x.q)}</p><label class="sr" for="answer-${i}">${esc(L('editAnswer'))}</label><input type="text" id="answer-${i}" value="${esc(x.a)}"><button class="btn sm" data-action="answer-save" data-i="${i}">${esc(L('saveAnswer'))}</button><button class="btn sm" data-action="answer-forget" data-i="${i}">${esc(L('forgetAnswer'))}</button></div>`).join('')||`<p>${esc(L('rememberedNone'))}</p>`}</div><div class="m-foot"><button class="btn" data-action="close">${esc(L('close'))}</button></div>`; }
 function txFiltered(u=S.ui.tx){
   const y=S.ui.year, q=u.q.trim().toLowerCase(), every=!!(u.allYears||u.from||u.to||u.batch);
-  let rows=allRows().filter(r=>r.table===u.table && (every||+r.date.slice(0,4)===y));
+  let rows=allRows().filter(r=>(u.cat===UNCAT&&u.attentionAll||r.table===u.table) && (every||+r.date.slice(0,4)===y));
   if(u.month!=='all'&&!every) rows=rows.filter(r=>+r.date.slice(5,7)-1===+u.month);
-  if(u.cat===UNCAT) rows=rows.filter(r=>!isKnown(u.table,r.category));
+  if(u.cat===UNCAT) rows=rows.filter(r=>isBudgetRow(r)&&!isKnown(r.table,r.category));
   else if(u.cat!=='all') rows=rows.filter(r=>r.category===u.cat);
   if(q){ const fq=fold(q); rows=rows.filter(r=>fold(r.concept).includes(fq)||fold(r.category).includes(fq)||fmtNum(r.amount).includes(q)||String(r.amount).includes(q)); }
   rows=rows.filter(r=>txMatches(r,u));
@@ -5719,7 +5985,7 @@ function viewTransactions(){
   const rows=txFiltered(); const shown=rows.slice(0,u.limit);
   const total=r2(sum(rows.map(r=>r.amount)));
   const unInTable=A[u.table].uncatCount;
-  const attentionCount=txFiltered({...u,cat:UNCAT}).length;
+  const attentionCount=txFiltered({...u,cat:UNCAT,attentionAll:true}).length;
   const sortBtn=(k,label)=>{ const [sk,sd]=u.sort.split('-'); const on=sk===k; return `<button data-action="tx-sort" data-k="${k}" aria-label="${esc(L('sortBy',label))}">${esc(label)}${on?(sd==='asc'?' ↑':' ↓'):''}</button>`; };
   /* sorted by date over several months: a heading with the month's total before each month's rows */
   const byMonth=u.sort.startsWith('date')&&u.month==='all', mTot=new Map(); if(byMonth) for(const r of rows){ const k=r.date.slice(0,7); mTot.set(k,(mTot.get(k)||0)+r.amount); }
@@ -5731,7 +5997,7 @@ function viewTransactions(){
     const mg=S.canWrite&&!known?mlGuess(r.table,r.concept):null;
     const cat=S.canWrite?`<label class="sr" for="cs-${esc(r.id)}">${esc(L('category'))}</label><select id="cs-${esc(r.id)}" class="${known?'':'missing'}" data-action="set-cat" ${ref}>${catOptions(r.table,r.category,false)}</select>${mlLevel(mg)?`<button type="button" class="linkish ml-maybe" data-action="use-ml-row" ${ref} data-c="${esc(mg.cat)}" title="${esc(mg.like?L('mlLike',mg.like):'')}">${esc(L('mlMaybe',mg.cat))}</button>`:''}`
       :`<span class="cat-text ${known?'':'missing'}">${known?esc(r.category):esc(L('uncat'))}</span>`;
-    return head+`<tr id="txr-${esc(r.id)}" data-action="edit-tx" ${ref} tabindex="0"><td class="d">${fmtDate(r.date)}</td><td class="c">${S.canWrite?`<input type="checkbox" data-action="tx-pick" ${ref} ${txSelection().has(txKey(r))?'checked':''} aria-label="${esc(L('includeRow',r.ord+1))}">`:''}${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}${r.source?`<small class="hint tx-source">${esc(r.source)}</small>`:''}${txAccountingHint(r)}</td><td class="k">${cat}</td><td class="amt r">${r.amount>0&&u.table!=='income'?'+':''}${fmtEUR(r.amount)}</td></tr>`;
+    return head+`<tr id="txr-${esc(r.id)}" data-action="edit-tx" ${ref} tabindex="0"><td class="d">${fmtDate(r.date)}</td><td class="c">${S.canWrite?`<input type="checkbox" data-action="tx-pick" ${ref} ${txSelection().has(txKey(r))?'checked':''} aria-label="${esc(L('includeRow',r.ord+1))}">`:''}${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}${u.attentionAll&&u.cat===UNCAT?`<small class="hint tx-source">${esc(TL(r.table))}</small>`:''}${r.source?`<small class="hint tx-source">${esc(r.source)}</small>`:''}${txAccountingHint(r)}</td><td class="k">${cat}</td><td class="amt r">${r.amount>0&&r.table!=='income'?'+':''}${fmtEUR(r.amount)}</td></tr>`;
   }).join('');
   return pageHead('transactions',yearStepper(),S.canWrite?`
         ${unInTable?`<button class="btn" data-action="categorise" title="${esc(L('categoriseTitle'))}">${esc(L('categoriseBlanks'))}</button>`:''}
@@ -5739,7 +6005,7 @@ function viewTransactions(){
         ${S.ai?`<button class="btn" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}
         <button class="btn" data-action="import">${esc(L('pasteImport'))}</button>
         <button class="btn primary" data-action="add-tx">${esc(L('addTx'))}</button>`:'')+`<div class="toolbar">
-      <div class="left tx-types"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(t=>`<button data-action="tx-table" data-t="${t}" aria-pressed="${u.table===t}"><span class="tx-type-label"><i class="sw ${t}"></i>${esc(TL(t))}</span><span class="ct">${fmtCount(counts[t])}</span></button>`).join('')}</div>${info('txKinds')}</div>
+      <div class="left tx-types"><div class="seg" role="group" aria-label="${esc(L('table'))}">${u.cat===UNCAT?`<button data-action="tx-attention-all" aria-pressed="${!!u.attentionAll}">${esc(L('allTypes'))}</button>`:''}${TKEYS.map(t=>`<button data-action="tx-table" data-t="${t}" aria-pressed="${u.table===t&&!(u.cat===UNCAT&&u.attentionAll)}"><span class="tx-type-label"><i class="sw ${t}"></i>${esc(TL(t))}</span><span class="ct">${fmtCount(counts[t])}</span></button>`).join('')}</div>${info('txKinds')}</div>
     </div>
     <details class="tx-filter-panel"${(u.filtersOpen==null?matchMedia('(min-width:601px)').matches:u.filtersOpen)?' open':''}><summary>${esc(L('filters'))}${filterCount?' · '+esc(L('activeFilters',filterCount)):''}</summary><div class="filters">
       <label>${esc(L('search'))}<input type="search" id="tx-q" placeholder="${esc(L('searchPh'))}" value="${esc(u.q)}" autocomplete="off"></label>
@@ -5859,6 +6125,8 @@ function openModal(m){ const a=document.activeElement; if(!S.modal) opener=a&&a!
 function closeModal(){ const prev=S.modal&&S.modal.type; if(S.modal&&S.modal.ctl) S.modal.ctl.abort(); const was=!!S.modal; S.modal=null; const o=$('#overlay'); o.classList.remove('on'); o.innerHTML=''; o.setAttribute('aria-hidden','true');
   if(was&&opener&&opener.isConnected) opener.focus({preventScroll:true}); opener=null;
   if(prev==='nwreview') S.nwReviewBack=null;
+  if(prev==='nwupdate') S.nwUpdateBack=null;
+  if(was&&S.nwUpdateBack){const back=S.nwUpdateBack;setTimeout(()=>{if(!S.modal&&S.nwUpdateBack===back){S.nwUpdateBack=null;openModal(back);}},0);return;}
   if(was&&S.nwReviewBack){ const back=S.nwReviewBack; S.nwReviewBack=null; setTimeout(()=>{ if(!S.modal) openModal(back); },0); return; }
   /* the wizard itself closed (Esc, outside click, ×): same as "Finish later", so it doesn't come back after the next dialog */
   if(prev==='wizard'&&S.wizard) S.wizard.on=false;
@@ -5876,10 +6144,11 @@ document.addEventListener('keydown',e=>{
 });
 function renderModal(keepId){
   const m=S.modal, o=$('#overlay'); if(!m){ closeModal(); return; }
-  const inner=({edit:modalEdit,drill:modalDrill,importmenu:modalImportMenu,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwacc:modalNwAccounts,ai:modalAi,audit:modalAudit,nwgoal:modalNwGoal,nwret:modalNwReturns,nwlink:modalNwLink,nwreview:modalNwReview,nwimp:modalNwImport,bulkcat:modalBulkCategory,saveview:modalSaveView,imports:modalImportHistory,answers:modalAnswers})[m.type]();
+  const inner=({edit:modalEdit,drill:modalDrill,importmenu:modalImportMenu,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwupdate:modalNwUpdate,nwacc:modalNwAccounts,ai:modalAi,audit:modalAudit,nwgoal:modalNwGoal,nwret:modalNwReturns,nwlink:modalNwLink,nwreview:modalNwReview,nwimp:modalNwImport,bulkcat:modalBulkCategory,saveview:modalSaveView,imports:modalImportHistory,answers:modalAnswers})[m.type]();
   o.innerHTML=`<div class="scrim" data-action="close"></div><div class="modal${m.wide?' wide':m.mid?' mid':''}${m.type==='importmenu'?' import-menu':''}" role="dialog" aria-modal="true" aria-labelledby="m-title">${inner}</div>`;
   o.classList.add('on'); o.setAttribute('aria-hidden','false');
   if(m.type==='edit') txPreview();
+  if(m.type==='nwupdate'&&m.focusId){const form=document.getElementById('nwu-form-'+m.focusId);m.focusId=null;if(form){form.scrollIntoView({block:'start'});form.querySelector('input')?.focus({preventScroll:true});return;}}
   if(keepId){ const k=document.getElementById(keepId); if(k&&o.contains(k)){ k.focus({preventScroll:true}); return; } }
   const f=o.querySelector('[data-autofocus]')||o.querySelector('input,select,textarea,button:not([data-action=close])'); if(f) f.focus({preventScroll:!!keepId||keepId===null});
 }
@@ -5968,8 +6237,9 @@ function txAccountingFields(r,prefix,i){
   let html=(r.accountUnknown?`<p class="warn-text">${esc(L('impAccountUnknown'))}</p>`:'')+field('account',L('txAccount'),opts(accs,r.account));
   if(r.table==='investments'){
     const internal=r.movement==='transfer'||isInternalTransfer(r);
-    html+=field('movement',L('txMovement'),`<option value="contribution"${internal?'':' selected'}>${esc(L('txContribution'))}</option><option value="transfer"${internal?' selected':''}>${esc(L('txTransfer'))}</option>`);
-    html+=internal?field('transferFrom',L('txFrom'),opts(investments,r.transferFrom))+field('transferTo',L('txTo'),opts(investments,r.transferTo)):field('investmentAccount',L('txInvestment'),opts(investments,r.investmentAccount));
+    html+=field('movement',L('txMovement'),`<option value="contribution"${internal?'':' selected'}>${esc(L(r.amount>0?'txWithdrawal':'txDeposit'))}</option><option value="transfer"${internal?' selected':''}>${esc(L('txTransfer'))}</option>`);
+    html+=internal?field('transferFrom',L('txFrom'),opts(investments,r.transferFrom))+field('transferTo',L('txTo'),opts(investments,r.transferTo)):field('investmentAccount',L(r.amount>0?'txInvestmentFrom':'txInvestmentTo'),opts(investments,r.investmentAccount));
+    html+=`<p class="hint">${esc(L(internal?'txTransferHelp':r.amount>0?'txWithdrawalHelp':'txDepositHelp'))}</p>`;
   }else if(isReturn(r)||r.returnTreatment||r.table==='income'&&RET_INC.test(fold((r.category||'')+' '+r.concept))){
     html+=field('investmentAccount',L('txInvestment'),opts(accs,r.investmentAccount));
     html+=field('returnTreatment',L('txReturn'),`<option value="paid"${isRetained(r)?'':' selected'}>${esc(L('txPaid'))}</option><option value="retained"${isRetained(r)?' selected':''}>${esc(L('txRetained'))}</option>`)+`<p class="hint">${esc(L('txReturnHelp'))}</p>`;
@@ -6098,7 +6368,7 @@ function modalImport(){
     ${m.pick&&!m.files?.length?impAcctPick(m):''}
     <div class="drop" id="imp-drop"><span>${esc(L('importFileHelp'))}</span>
       <label class="btn sm" for="imp-file">${esc(L('aiChoose'))}</label><input type="file" id="imp-file" multiple accept=".xlsx,.xlsm,.xls,.csv,.txt,.tsv,.ods,.pdf,.png,.jpg,.jpeg,.webp,.gif" class="sr"></div>
-    ${m.files?.length?`<p class="hint">${esc(L('impFilesHelp'))}</p>${statementFileList(m,'imp')}`:''}
+    ${m.files?.length?`<p class="hint">${esc(L('impFilesHelp'))}</p>${statementFileList(m,'imp',!m.fixedAccount)}`:''}
     <div class="field"><label for="imp-text">${esc(L('impOrPaste'))}</label>
       <textarea id="imp-text" rows="4" placeholder="${fmtDate('2026-08-31')}&#9;-60,00&#9;Amazon.es&#10;${fmtDate('2026-08-30')}&#9;-39,90&#9;RENFE VIRTUAL INTERNET">${esc(m.text)}</textarea>
       <span class="help">${esc(L('impPasteShort'))}</span></div>
@@ -6115,8 +6385,8 @@ function modalImport(){
     return `${mHead(esc(L('sureTitle')),esc(odd.length?L('unusualSign',odd.length):L('noUnusual')))}
     <div class="m-body">
       <p>${esc(L('sureText'))}</p>
-      ${odd.length?`<div class="imp-table-wrap"><table class="imp sc"><thead><tr><th>${esc(L('date'))}</th><th>${esc(L('concept'))}</th><th class="r">${esc(L('amount'))}</th><th>${esc(L('table'))}</th><th>${esc(L('whyStands'))}</th></tr></thead><tbody>
-        ${odd.map(({r,i})=>`<tr><td class="d">${fmtDate(r.date)}</td><td class="c">${esc(r.concept)}</td><td class="a r num">${fmtEUR(r.amount)}</td><td class="tb">${impTableSel(r,i)}</td><td class="n hint">${esc(signReason(r))}</td></tr>`).join('')}
+      ${odd.length?`<div class="imp-table-wrap"><table class="imp sc"><thead><tr><th>${esc(L('date'))}</th><th>${esc(L('concept'))}</th><th class="r">${esc(L('amount'))}</th><th>${esc(L('table'))}</th><th>${esc(L('category'))}</th><th>${esc(L('whyStands'))}</th></tr></thead><tbody>
+        ${odd.map(({r,i})=>`<tr><td class="d"><input class="ed" id="imp-date-${i}" data-action="imp-date" data-i="${i}" value="${esc(r.dateDraft??r.date)}" aria-label="${esc(L('date'))}"></td><td class="c"><input class="ed" id="imp-d-${i}" data-action="imp-desc" data-i="${i}" value="${esc(r.concept)}" aria-label="${esc(L('concept'))}"></td><td class="a r num"><input class="ed" id="imp-a-${i}" data-action="imp-amt" data-i="${i}" inputmode="decimal" value="${esc(r.amountDraft??fmtEUR(r.amount,2,true))}" aria-label="${esc(L('amount'))}"></td><td class="tb">${impTableSel(r,i)}</td><td class="k"><select data-action="imp-cat" data-i="${i}" aria-label="${esc(L('category'))}">${catOptions(r.table,r.category,true)}</select></td><td class="n hint">${esc(signReason(r))}</td></tr>`).join('')}
       </tbody></table></div>`:''}
     </div>
     <div class="m-foot">${m.confirmClose?impConfirmBar(m):`<button class="btn" data-action="imp-signback">${esc(L('backToRows'))}</button><span class="r"><button class="btn primary" data-action="imp-add-confirm">${esc(L('yesAdd',m.rows.filter(r=>r.on).length))}</button></span>`}</div>`;
@@ -6134,17 +6404,17 @@ function modalImport(){
     <td class="a r num"><label class="sr" for="imp-a-${i}">${esc(L('amtForRow',i+1))}</label><input type="text" class="ed${r.invalidAmount?' bad':''}" id="imp-a-${i}" data-action="imp-amt" data-i="${i}" inputmode="decimal" value="${esc(r.amountDraft??fmtEUR(r.amount,2,true))}"${r.invalidAmount?' aria-invalid="true"':''}></td>
     <td class="tb">${impTableSel(r,i)}</td>
     <td class="k"><label class="sr" for="imp-c-${i}">${esc(L('catForRow',i+1))}</label><select id="imp-c-${i}" data-action="imp-cat" data-i="${i}" class="${r.category?(r.ml?'guess':''):'missing'}"${r.ml?` title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}"`:''}>${catOptions(r.table,r.category,true)}</select></td>
-    <td class="n">${r.aiQ?(()=>{ const ao=aiRowOptions(r); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" aria-pressed="${r.aiA===o.text}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${greyed(r)?`<span class="note why">${esc(whyText(r))}</span> `:''}${r.like&&!r.dup&&!greyed(r)?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span><label class="check"><input type="checkbox" data-action="imp-fx" data-i="${i}"${r.fxConfirmed?' checked':''}>${esc(L('impFxConfirm',CUR))}</label> `:''}${r.table==='expenses'&&isBizum(r)?`<span class="note">${esc(L('noteBizum'))}</span> `:''}${greyed(r)?'':r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
+    <td class="n">${r.aiQ?(()=>{ const ao=aiRowOptions(r); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" aria-pressed="${r.aiA===o.text}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${greyed(r)?`<span class="note why">${esc(whyText(r))}</span> `:''}${r.like&&!r.dup&&!greyed(r)?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span><label class="check"><input type="checkbox" data-action="imp-fx" data-i="${i}"${r.fxConfirmed?' checked':''}>${esc(L('impFxConfirm',CUR))}</label> `:''}${r.table==='expenses'&&r.amount>0?`<span class="note refund">${esc(L('impRefund'))}</span>`:''}${r.table==='expenses'&&isBizum(r)?`<span class="note">${esc(L('noteBizum'))}</span> `:''}${greyed(r)?'':r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
-    ${m.pick?impAcctPick(m):''}${importCoverage(m)}${impDateControls(m)}
+    ${m.pick?impAcctPick(m):''}${impDateControls(m)}${importCoverage(m)}
     ${m.msg?`<p class="err" role="alert">${esc(m.msg)}</p>`:''}
-    <p class="notice">${esc(L('reviewSummary',rows.filter(r=>r.on&&!impNeedsAttention(r)).length,rows.filter(impNeedsAttention).length,rows.filter(r=>!r.on).length))}</p><p class="hint">${esc(L('reviewSafety'))}</p>
+    <p class="${rows.some(impNeedsAttention)?'notice':'review-ready'}" role="status">${esc(L('reviewSummary',rows.filter(r=>r.on&&!impNeedsAttention(r)).length,rows.filter(impNeedsAttention).length,rows.filter(r=>!r.on).length))}</p><p class="hint">${esc(L('reviewSafety'))}</p>
     <div class="seg"><button type="button" data-action="imp-review-mode" data-v="attention" aria-pressed="${!!m.attention}">${esc(L('needsAttention'))}</button><button type="button" data-action="imp-review-mode" data-v="all" aria-pressed="${!m.attention}">${esc(L('allRowsReview'))}</button></div>${aiReviewNote(m)}${impChecksNote(m)}${(o=>o?`<label class="check"><input type="checkbox" id="imp-balfill"${m.balFill!==false?' checked':''}> ${esc(L('impBalFill',o.a.name,o.ks.length))}</label>`:'')(impBalOffer(m))}
     ${m.sw&&m.sw.people.length>1?`<div class="field"><label class="lab" for="imp-sw-who">${esc(L('swWho'))}</label><select id="imp-sw-who" style="max-width:320px">${m.sw.people.map((p,i)=>`<option value="${i}"${i===m.sw.who?' selected':''}>${esc(p)}</option>`).join('')}</select><span class="help">${esc(L('swHelp'))}</span></div>`:''}
     ${guessed?`<p class="hint">${esc(L('sortedNote'))}</p>`:''}
     ${nMl?`<p class="hint ml-note">${esc(L('mlImpNote',nMl))}</p>`:''}
-    <p class="hint imp-key">${esc(L('impKey'))}</p>
+    <p class="hint imp-key">${esc(L('impKey'))} ${esc(L('impEditable'))} ${esc(L('impRefundHelp'))}</p>
     <div class="imp-controls"><label for="imp-search">${esc(L('search'))}</label><input id="imp-search" value="${esc(m.search||'')}" type="search"><label for="imp-sort">${esc(L('date'))} / ${esc(L('amount'))}</label><select id="imp-sort">${[['','—'],['date-asc',L('date')+' ↑'],['date-desc',L('date')+' ↓'],['amount-asc',L('amount')+' ↑'],['amount-desc',L('amount')+' ↓'],['concept-asc',L('concept')+' ↑']].map(([v,t])=>`<option value="${v}"${m.sort===v?' selected':''}>${esc(t)}</option>`).join('')}</select><button class="btn sm" data-action="imp-excluded" aria-pressed="${!!m.excluded}">${esc(L('impExcluded'))}</button></div>
     <details><summary>${esc(L('impBulkEdit'))}</summary><p class="hint">${esc(L('impBulkHelp'))}</p><div class="imp-controls"><button class="btn sm" data-action="imp-bulk-include">${esc(L('impInclude'))}</button><button class="btn sm" data-action="imp-bulk-exclude">${esc(L('impExclude'))}</button><select id="imp-bulk-type" aria-label="${esc(L('table'))}"><option value="">${esc(L('table'))}</option>${TKEYS.map(t=>`<option value="${t}">${esc(TL(t))}</option>`).join('')}</select><select id="imp-bulk-category" aria-label="${esc(L('category'))}"><option value="">${esc(L('category'))}</option>${TKEYS.map(t=>`<optgroup label="${esc(TL(t))}">${catNames(t).map(c=>`<option value="${esc(t+'|'+c)}">${esc(c)}</option>`).join('')}</optgroup>`).join('')}</select><button class="btn sm" data-action="imp-bulk-apply">${esc(L('impBulk'))}</button></div></details>
     ${reviewRows.length?'':`<p class="notice">${esc(L('impEmpty'))}<button class="btn sm" data-action="imp-review-mode" data-v="all">${esc(L('allRowsReview'))}</button></p>`}
@@ -6160,7 +6430,7 @@ function importSources(m){ return [...new Set(m.rows.map(r=>r.aiSrc||m.fileName|
 function sourceAccount(m,r,multi){ if(r.account) return r.account; const src=r.aiSrc||m.fileName||''; return (multi==null?importSources(m).length>1:multi)?m.sourceAccounts&&Object.prototype.hasOwnProperty.call(m.sourceAccounts,src)?m.sourceAccounts[src]:'':m.acct||''; }
 function refreshImportChecks(m){
   markDups(m.rows,allRows(),r=>sourceAccount(m,r));
-  for(const r of m.rows){ r.same=false; r.future=r.date>todayIso(); r.skip=skipMatch(r.concept); setWhy(r); }
+  for(const r of m.rows){ applyRememberedInvestment(r,sourceAccount(m,r)); r.same=false; r.future=r.date>todayIso(); r.skip=skipMatch(r.concept); r.accountUnknown=[['accountName','account'],['investmentName','investmentAccount'],['transferFromName','transferFrom'],['transferToName','transferTo']].some(([name,key])=>r[name]&&!nw().accounts.some(a=>a.id===(key==='account'?sourceAccount(m,r):r[key]))); setWhy(r); }
   m.checks=importChecks(m.rows); m.checks.invest=m.rows.some(r=>r.inv); m.checks.future=m.rows.filter(r=>r.future).length;
 }
 function validateImport(m){
@@ -6185,7 +6455,7 @@ function setImportDateOrder(m,src,order){
   if(!['dmy','mdy'].includes(order)){ for(const r of m.rows) if((r.aiSrc||m.fileName||'')===src&&!r.dateEdited) r.dateConfirmed=false; return; }
   const old=DATE_ORDER; DATE_ORDER=order;
   try{ for(const r of m.rows){ if((r.aiSrc||m.fileName||'')!==src||!r.rawDate||r.dateEdited) continue; const d=parseDate(r.rawDate); if(d){ r.date=d; r.dateConfirmed=true; r.invalidDate=false; r.dateDraft=null; } } } finally{ DATE_ORDER=old; }
-  m.coverConfirmed=false;
+  m.coverConfirmed=false; m.coverFrom=null; m.coverTo=null; if(m.sourceCoverage) delete m.sourceCoverage[src];
 }
 function impReviewRows(m){
   const q=fold(m.search||''); let rs=m.rows.map((r,i)=>({r,i})).filter(x=>(!m.attention||impNeedsAttention(x.r))&&(!m.excluded||!x.r.on)&&(!q||fold(x.r.concept+' '+x.r.date+' '+x.r.amount+' '+x.r.category).includes(q)));
@@ -6198,17 +6468,22 @@ function impDateControls(m){
     return `<div class="field"><label for="imp-order-${i}">${esc(L('impDateOrder'))} · ${esc(src)} · ${esc(r.rawDate)}</label><select id="imp-order-${i}" data-action="imp-date-order" data-source="${esc(src)}"><option value="">${esc(L('impDateChoose'))}</option>${['dmy','mdy'].map(v=>`<option value="${v}"${selected===v?' selected':''}>${esc(L(v==='dmy'?'impDmy':'impMdy'))}</option>`).join('')}</select><p class="hint">${esc(L('impDateHelp'))}</p></div>`;
   }).join('');
 }
-function importCoverage(m){
-  if(!m.acct||!m.rows.length||importSources(m).length>1) return '';
-  const ds=m.rows.map(r=>r.date).sort(), f=m.coverFrom||ds[0], t=m.coverTo||ds[ds.length-1];
-  return `<fieldset class="field"><legend>${esc(L('period'))}</legend><label>${esc(L('fromDate'))}${dateInput(`id="imp-period-from"`,f)}</label><label>${esc(L('toDate'))}${dateInput(`id="imp-period-to"`,t)}</label><label class="check"><input type="checkbox" id="imp-period-confirm"${m.coverConfirmed?' checked':''}>${esc(L('periodConfirm'))}</label></fieldset>`;
+function importDateLabel(d){ return parseDate(d)===d?`${+d.slice(8,10)} ${(LANG==='es'?M()[+d.slice(5,7)-1].toLowerCase():M()[+d.slice(5,7)-1])} ${d.slice(0,4)}`:d; }
+function importCoverage(m,source){
+  const multi=source!=null;
+  if(!m.rows.length||!multi&&importSources(m).length>1) return '';
+  const rs=multi?m.rows.filter(r=>(r.aiSrc||m.fileName||'')===source):m.rows;
+  const ds=rs.filter(r=>!r.invalidDate&&parseDate(r.date)===r.date).map(r=>r.date).sort(); if(!ds.length) return '';
+  const c=multi?m.sourceCoverage?.[source]||{}:{from:m.coverFrom,to:m.coverTo,confirmed:m.coverConfirmed}, account=multi?sourceAccount(m,rs[0],true):m.acct;
+  const input=key=>multi?`data-action="imp-source-period" data-field="${key}" data-source="${esc(source)}"`:`id="imp-period-${key}"`;
+  return `<p class="hint imp-date-range">${esc(L('impActualDates',importDateLabel(ds[0]),importDateLabel(ds[ds.length-1])))}</p>${!account?'':`<details class="imp-coverage"><summary>${esc(L('impCoverageOptional'))}</summary><p class="hint">${esc(L('impCoverageHelp'))}</p><div class="coverage-dates"><label>${esc(L('fromDate'))}${dateInput(input('from'),c.from||ds[0])}</label><label>${esc(L('toDate'))}${dateInput(input('to'),c.to||ds[ds.length-1])}</label></div><button type="button" class="btn sm" data-action="imp-confirm-coverage"${multi?` data-source="${esc(source)}"`:''}>${esc(L(c.confirmed?'impCoverageConfirmed':'impCoverageSave'))}</button></details>`}`;
 }
+
 function impAcctPick(m){
   const accs=nw().accounts, sources=m.step==='input'?[]:importSources(m);
   const opts=id=>`<option value="">${esc(L('impAcctNone'))}</option>${accs.map(a=>`<option value="${esc(a.id)}"${a.id===id?' selected':''}>${esc(a.name)}</option>`).join('')}`;
-  if(sources.length>1) return sources.map((src,i)=>{ const ds=m.rows.filter(r=>(r.aiSrc||m.fileName||'')===src).map(r=>r.date).sort(), c=m.sourceCoverage&&m.sourceCoverage[src]||{};
-    return `<fieldset class="field"><legend>${esc(src||L('unknownSource'))}</legend><label for="imp-source-${i}">${esc(L('impAcct'))}</label><select id="imp-source-${i}" data-action="imp-source-account" data-source="${esc(src)}">${opts(m.sourceAccounts&&m.sourceAccounts[src])}</select><label>${esc(L('fromDate'))}${dateInput(`data-action="imp-source-period" data-field="from" data-source="${esc(src)}"`,c.from||ds[0])}</label><label>${esc(L('toDate'))}${dateInput(`data-action="imp-source-period" data-field="to" data-source="${esc(src)}"`,c.to||ds[ds.length-1])}</label><label class="check"><input type="checkbox" data-action="imp-source-period" data-field="confirmed" data-source="${esc(src)}"${c.confirmed?' checked':''}>${esc(L('periodConfirm'))}</label></fieldset>`;
-  }).join('');
+  if(m.fixedAccount&&accs.some(a=>a.id===m.fixedAccount)) return `<p class="imp-account-label">${esc(L('impForAcc',accs.find(a=>a.id===m.fixedAccount).name))}</p>${sources.length>1?sources.map(src=>`<p>${esc(src)}</p>${importCoverage(m,src)}`).join(''):''}`;
+  if(sources.length>1) return sources.map((src,i)=>`<fieldset class="field plain"><legend>${esc(src||L('unknownSource'))}</legend><label for="imp-source-${i}">${esc(L('impAcct'))}</label><select id="imp-source-${i}" data-action="imp-source-account" data-source="${esc(src)}">${opts(m.sourceAccounts&&m.sourceAccounts[src])}</select>${importCoverage(m,src)}</fieldset>`).join('');
   const picker=`<div class="field"><label class="lab" for="imp-acct">${esc(L('impAcct'))}${m.qpos?` <span class="hint">· ${esc(L('ciFileN',m.qpos[0],m.qpos[1]))}</span>`:''}</label><select id="imp-acct" style="max-width:360px">${opts(m.acct)}</select><span class="help">${esc(L(m.auto&&m.acct?'impAcctAuto':'impAcctHelp'))}</span></div>`;
   const account=accs.find(a=>a.id===m.acct);
   return m.step==='input'||!account?picker:`<details class="imp-account-change"><summary>${esc(L('impForAcc',account.name))}${m.qpos?` · ${esc(L('ciFileN',m.qpos[0],m.qpos[1]))}`:''} · ${esc(L('impChangeAccount'))}</summary>${picker}</details>`;
@@ -6441,7 +6716,7 @@ function impEdit(el,focusId){
     r.invalidAmount=v==null||Math.abs(v)<0.005; r.amountDraft=r.invalidAmount?el.value:null;
     if(r.invalidAmount){ bad(true); toast(L('impBadAmt')); return; }
     bad(false); if(v===r.amount) return;
-    r.amount=v; if(r.guessed){ const t=guessTable(r); if(t!==r.table){ setImpTable(r,t); r.guessed=true; } }
+    r.amount=v;
   } else if(el.dataset.action==='imp-date'){
     if(el.value===r.date&&!r.invalidDate) return;
     const v=/^\d{4}-\d{2}-\d{2}$/.test(el.value)?parseDate(el.value):null;
@@ -6549,6 +6824,7 @@ function finishImport(parsed,bad,fileName,opt){
   for(const r of rows){
     for(const [name,key] of [['accountName','account'],['investmentName','investmentAccount'],['transferFromName','transferFrom'],['transferToName','transferTo']]) if(r[name]){ const a=nw().accounts.find(a=>a.id===r[name]||nkey(a.name)===nkey(r[name])); if(a) r[key]=a.id; else r.accountUnknown=true; }
     if(r.transferFromName||r.transferToName) r.movement='transfer';
+    applyRememberedInvestment(r,sourceAccount({...S.modal,rows,fileName},r));
     if(r.returnTreatment) r.returnTreatment=/^(retained|reinvertido en la inversion|stayed in the investment)$/i.test(fold(r.returnTreatment))?'retained':'paid';
   }
   markDups(rows,allRows(),r=>sourceAccount(Object.assign({},S.modal,{rows,fileName}),r));
@@ -6592,7 +6868,7 @@ function impReadFiles(){
 }
 function impNextFile(queue){
   const f=queue.files[queue.index++]; if(!f) return;
-  openModal({type:'import',step:'input',table:queue.table,text:'',rows:[],bad:[],msg:'',pick:true,acct:f.acct,files:[f],queue,qpos:[queue.index,queue.files.length]});
+  openModal({type:'import',step:'input',table:queue.table,text:'',rows:[],bad:[],msg:'',pick:true,acct:f.acct,fixedAccount:queue.back?.fixedAccount,files:[f],queue,qpos:[queue.index,queue.files.length]});
   readFile(f.file);
 }
 async function readFile(file){
@@ -6638,6 +6914,7 @@ function fpMatch(fp,all,accs){ let best=null,bs=0,tie=false;
 }
 /* a file read for the check-in: its fingerprint, and its account when one matches */
 function impFp(m,name,rows){ const h=findHeader(rows); m.fp=fileFp(name,rows,h?h.row:null);
+  if(m.acct) m.dateOrder=S.settings.stmtFp?.[m.acct]?.dateOrder||'';
   if(m.pick&&!m.acct){ const a=fpMatch(m.fp,S.settings&&S.settings.stmtFp,nw().accounts.filter(x=>x.group==='cash')); if(a){ m.acct=a.id; m.auto=true; m.dateOrder=S.settings.stmtFp?.[a.id]?.dateOrder||''; } } }
 /* a statement imported for one account (from the wizard) whose Balance column adds up: its month-ends, for that account's figures not typed yet */
 function impBalOffer(m){ const c=m.checks, a=m.acct&&nw().accounts.find(x=>x.id===m.acct);
@@ -6661,7 +6938,7 @@ function addImported(){
   const coverageDates=m.rows.map(r=>r.date).sort(), cf=m.coverFrom||coverageDates[0], ct=m.coverTo||coverageDates[coverageDates.length-1];
   if(m.coverConfirmed&&(parseDate(cf)!==cf||parseDate(ct)!==ct||cf>ct)){ toast(L('coverageDateError')); return; }
   for(const src of sources) if(sources.length>1){ const cv=m.sourceCoverage&&m.sourceCoverage[src]; if(!cv||!cv.confirmed) continue; const ds=m.rows.filter(r=>(r.aiSrc||m.fileName||'')===src).map(r=>r.date).sort(), f=cv.from||ds[0], t=cv.to||ds[ds.length-1]; if(parseDate(f)!==f||parseDate(t)!==t||f>t){ toast(L('coverageDateError')); return; } if(!nw().accounts.some(a=>a.id===sourceAccount(m,m.rows.find(r=>(r.aiSrc||m.fileName||'')===src),true))){ toast(L('coverageAccountError')); return; } }
-  for(const r of rows){ const mk=r.date.slice(0,7), id=newId(); insertSorted(ensureMonth(mk)[r.table],normRow({id,date:r.date,amount:r2(r.amount),concept:r.concept,category:r.category||'',batch,source:r.source||r.aiSrc||m.fileName||'',...txAccountingValues(r),account:sourceAccount(m,r,sources.length>1),originalCurrency:r.fx||''})); markDirty('months/'+mk); added.push({mk,table:r.table,id}); by[r.table]=(by[r.table]||0)+1; }
+  for(const r of rows){ const mk=r.date.slice(0,7), id=newId(); insertSorted(ensureMonth(mk)[r.table],normRow({id,date:r.date,amount:r2(r.amount),concept:r.concept,category:r.category||'',batch,source:r.source||r.aiSrc||m.fileName||'',...txAccountingValues(r),investmentAccount:r.movement==='transfer'?'':r.investmentAccount||(!r.investmentManual&&nwRemembered({...r,account:sourceAccount(m,r,sources.length>1)}))||'',account:sourceAccount(m,r,sources.length>1),originalCurrency:r.fx||''})); markDirty('months/'+mk); added.push({mk,table:r.table,id}); by[r.table]=(by[r.table]||0)+1; }
   if(S.settings&&S.settings.startAuto&&rows.length){ const first=rows.map(r=>r.date).sort()[0], st=startOf(), fk={y:+first.slice(0,4),m:+first.slice(5,7)-1};
     const nx=Object.assign({},S.settings); delete nx.startAuto; if(!st||fk.y*12+fk.m<st.y*12+st.m) nx.start=fk; S.settings=nx; markDirty('config/settings'); }
   const g=Object.assign({},S.settings.guide), sts=Object.assign({},g.stmts);
@@ -6680,7 +6957,7 @@ function addImported(){
   const yrs=[...new Set(rows.map(r=>+r.date.slice(0,4)))]; if(yrs.length===1) S.ui.year=yrs[0];
   render(); toast(L('addedParts',Object.entries(by).map(([t,n])=>L('nToT',fmtCount(n),TL(t))).concat(bo?[L('balFilled',bo.ks.length)]:[]).join(', ')),added.length?{label:L('undo'),fn:undoImport}:null,15000);
   if(m.queue&&m.queue.index<m.queue.files.length) impNextFile(m.queue);
-  if(pendNw) setTimeout(()=>{ const next={data:pendNw,fileName:L('aiNwFrom'),wide:true}; if(S.modal?.type==='nwreview') nwReviewChild('nwimp',next); else if(!S.modal||S.modal.type==='wizard'){ setTab('networth'); openModal({type:'nwimp',...next}); } },400);
+  if(pendNw) setTimeout(()=>{ const next={data:pendNw,fileName:L('aiNwFrom'),wide:true}; if(S.modal?.type==='nwreview') nwReviewChild('nwimp',next); else if(!S.modal||S.modal.type==='wizard'||S.modal.type==='nwupdate'){ if(S.modal?.type==='nwupdate') S.nwUpdateBack=S.modal;setTab('networth'); openModal({type:'nwimp',...next}); } },400);
 }
 function undoImport(){
   const li=S.lastImport; if(!li) return; let n=0;
@@ -7228,7 +7505,7 @@ const ACTIONS={
   },
   'year-step':el=>{ const ys=yearList(); const i=ys.indexOf(S.ui.year)+(+el.dataset.step); if(i>=0&&i<ys.length){ S.ui.year=ys[i]; S.ui.tx.month='all'; S.ui.oc.month='all'; render(); } },
   'export':()=>exportXlsx(),
-  'goto-uncat':()=>{ const A=agg(S.ui.year); const t=TKEYS.find(k=>A[k].uncatCount)||'expenses'; Object.assign(S.ui.tx,{table:t,cat:UNCAT,month:'all',q:'',limit:150}); setTab('transactions'); },
+  'goto-uncat':()=>{ const A=agg(S.ui.year); const t=TKEYS.find(k=>A[k].uncatCount)||'expenses'; Object.assign(S.ui.tx,{table:t,cat:UNCAT,attentionAll:true,month:'all',q:'',limit:150,from:'',to:'',min:'',max:'',account:'',source:'',batch:'',allYears:false,savedView:''}); txSelection().clear(); setTab('transactions'); },
   'edit-target':el=>{ if(!S.canWrite) return; S.ui.editTarget=el.dataset.key; render(); const i=$('#target-input'); if(i){ i.focus(); i.select(); } },
   'oc-table':el=>{ S.ui.oc.table=el.dataset.t; render(); },
   'oc-top':el=>{ S.ui.oc.top=el.dataset.v==='top'; try{ localStorage.setItem('ybt.top',S.ui.oc.top?'top':'all'); }catch(_){} render(); },
@@ -7242,7 +7519,7 @@ const ACTIONS={
     const c=$('#ch-monthly'); if(c){ const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches; c.closest('.card').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}); } },
   'drill':el=>openModal({type:'drill',t:el.dataset.t,c:el.dataset.c,m:el.dataset.m}),
   'drill-open':()=>{ const m=S.modal; Object.assign(S.ui.tx,{table:m.t,cat:m.c==='*'?'all':m.c,month:m.m==='year'?'all':m.m,q:'',limit:150}); closeModal(); setTab('transactions'); },
-  'tx-table':el=>{ Object.assign(S.ui.tx,{table:el.dataset.t,cat:'all',limit:150}); render(); },
+  'tx-table':el=>{ Object.assign(S.ui.tx,{table:el.dataset.t,attentionAll:false,cat:S.ui.tx.cat===UNCAT?UNCAT:'all',limit:150}); render(); },
   'tx-sort':el=>{ const [k,d]=S.ui.tx.sort.split('-'); const nk=el.dataset.k; S.ui.tx.sort=nk+'-'+(k===nk?(d==='asc'?'desc':'asc'):(nk==='amount'?'asc':'desc')); render(); },
   'page-actions':el=>{ const t=el.dataset.tab; S.ui.pageActions=Object.assign({},S.ui.pageActions,{[t]:!(S.ui.pageActions&&S.ui.pageActions[t])}); render(); },
   'analysis-toggle':el=>{ const t=el.dataset.tab; if(!['overview','networth'].includes(t)) return; S.ui.analysis=Object.assign({},S.ui.analysis,{[t]:!analysisOpen(t)}); try{ localStorage.setItem('ybt.analysis.'+t,S.ui.analysis[t]?'1':'0'); }catch(_){} render(); },
@@ -7261,7 +7538,8 @@ const ACTIONS={
   'answer-forget':el=>{ const a=auAnswers().slice(); a.splice(+el.dataset.i,1); setSettings({auditAnswers:a}); renderModalKeepScroll(); },
   'answer-save':el=>{ const a=clone(auAnswers()), i=+el.dataset.i, v=$('#answer-'+i).value.trim(); if(a[i]&&v){ a[i].a=v.slice(0,1000); setSettings({auditAnswers:a}); toast(L('savedToast')); } },
   'tx-more':()=>{ S.ui.tx.limit+=150; render(); },
-  'tx-review-mode':el=>{ S.ui.tx.cat=el.dataset.v==='attention'?UNCAT:'all'; S.ui.tx.limit=150; S.ui.tx.savedView=''; txSelection().clear(); render(); },
+  'tx-attention-all':()=>{ S.ui.tx.attentionAll=true; S.ui.tx.cat=UNCAT; S.ui.tx.limit=150; render(); },
+  'tx-review-mode':el=>{ S.ui.tx.attentionAll=el.dataset.v==='attention'; S.ui.tx.cat=el.dataset.v==='attention'?UNCAT:'all'; S.ui.tx.limit=150; S.ui.tx.savedView=''; txSelection().clear(); render(); },
   'imp-review-mode':el=>{ S.modal.attention=el.dataset.v==='attention'; S.modal.excluded=false; S.modal.search=''; renderModalKeepScroll(); },
   'imp-excluded':()=>{ S.modal.excluded=!S.modal.excluded; S.modal.attention=false; renderModalKeepScroll(); },
   'imp-bulk-include':()=>impBulk('include'), 'imp-bulk-exclude':()=>impBulk('exclude'), 'imp-bulk-apply':()=>impBulk('apply'),
@@ -7285,7 +7563,7 @@ const ACTIONS={
   'import':()=>{ let t='auto'; try{ const v=localStorage.getItem('ybt.impTable'); if(v==='auto'||TKEYS.includes(v)) t=v; }catch(_){} openModal({type:'import',step:'input',table:t,text:'',rows:[],bad:[],msg:'',pick:true,files:[]}); },
   'import-menu':()=>{ if(S.canWrite) openModal({type:'importmenu'}); },
   'import-balances':()=>{ if(!S.canWrite) return; if(nw().accounts.length) ACTIONS['guide-val']({dataset:{k:ciMonth()}}); else ACTIONS['guide-acc'](); },
-  'imp-ai':()=>{ const m=S.modal; if(!S.ai||!m) return; const files=m.queue?m.queue.files.slice(m.queue.index-1):m.files?.length?m.files:m.originalFile?[{file:m.originalFile,acct:m.acct||''}]:[]; for(const f of files) if(tooBig(m,f.file)) return; aiOpen({type:'ai',mode:'statement',files,acct:m.acct,pick:true,mid:true}); },
+  'imp-ai':()=>{ const m=S.modal; if(!S.ai||!m) return; const files=m.queue?m.queue.files.slice(m.queue.index-1):m.files?.length?m.files:m.originalFile?[{file:m.originalFile,acct:m.acct||''}]:[]; for(const f of files) if(tooBig(m,f.file)) return; aiOpen({type:'ai',mode:'statement',files,acct:m.acct,fixedAccount:m.fixedAccount,pick:true,mid:true}); },
   'undo-import':()=>undoImport(),
   'imp-discard':()=>closeModal(),
   'imp-keep':()=>{ S.modal.confirmClose=false; renderModalKeepScroll(); },
@@ -7294,6 +7572,7 @@ const ACTIONS={
   'import-template':()=>downloadTemplate(),
   'imp-back':()=>{ if(S.modal.aiBack){ openModal(S.modal.aiBack); return; } if(S.modal.queue){ const q=S.modal.queue; openModal({...q.back,files:q.files.slice(q.index-1)}); return; } Object.assign(S.modal,{step:'input',wide:false,confirmClose:false}); renderModal(); },
   'imp-add':()=>{ const m=S.modal; if(!validateImport(m)) return; if(m.rows.some(r=>r.on&&oddSign(r))){ m.step='signcheck'; renderModal(); return; } addImported(); },
+  'imp-confirm-coverage':el=>{ const m=S.modal, src=el.dataset.source, multi=src!=null, ds=m.rows.filter(r=>!multi||(r.aiSrc||m.fileName||'')===src).map(r=>r.date).sort(), c=multi?m.sourceCoverage?.[src]||{}:{from:m.coverFrom,to:m.coverTo}, f=c.from||ds[0], t=c.to||ds[ds.length-1]; if(parseDate(f)!==f||parseDate(t)!==t||f>t){ toast(L('coverageDateError')); return; } if(multi) m.sourceCoverage={...m.sourceCoverage,[src]:{...c,from:f,to:t,confirmed:true}}; else m.coverConfirmed=true; renderModalKeepScroll(); },
   'imp-add-confirm':()=>addImported(),
   'imp-signback':()=>{ S.modal.step='preview'; renderModal(); },
   'goto-skip':()=>{ closeModal(); setTab('categories'); const s=document.getElementById('skip-card'); if(s){ s.scrollIntoView({block:'start'}); const i=$('#new-skip'); if(i) i.focus({preventScroll:true}); } },
@@ -7371,6 +7650,11 @@ const ACTIONS={
     let r=null; try{ r=await S.ai[fn](); }catch(_){} render(); if(r&&r.message) toast(r.message); },
   'local-x':el=>{ const fn=el.dataset.fn; if(S.local&&Array.isArray(S.local.actions)&&S.local.actions.includes(fn)) localAction(fn); },
   'backup':()=>downloadBackup(),
+  'nw-update':el=>{if(S.canWrite)openModal({type:'nwupdate',k:el.dataset.k||ymAdd(ymNow(),-1),focusId:el.dataset.id,mid:true});},
+  'nwu-link':el=>nwUpdateLink(+el.dataset.i),
+  'nwu-undo':()=>{if(S.canWrite&&S.modal?.undo){readNwUpdate();S.modal.undo();}},
+  'nwu-edit':el=>{if(!S.canWrite)return;readNwUpdate();S.nwUpdateBack=S.modal;ACTIONS['edit-tx'](el);},
+  'nwu-upload':el=>{readNwUpdate();const m=S.modal,a=nw().accounts.find(a=>a.id===el.dataset.id);if(!a||!S.canWrite)return;S.nwUpdateBack=m;if(a.group!=='cash'&&S.ai)aiOpen({type:'ai',mode:'nw',files:[],acct:a.id,mid:true});else {ACTIONS.import();Object.assign(S.modal,{acct:a.id,fixedAccount:a.id});renderModal();}},
   'nw-snap':el=>{ if(S.canWrite) openModal({type:'nwsnap',k:el.dataset.k,wide:false}); },
   'nw-review':el=>openModal({type:'nwreview',prev:el.dataset.prev,k:el.dataset.k,mid:true}),
   'nw-review-step':el=>{ S.modal.step=+el.dataset.i===1?1:0; S.modal.msg=''; renderModal(); },
@@ -7387,7 +7671,7 @@ const ACTIONS={
   'nw-del-yes':()=>{ const k=S.modal.k, N=ensureNw(), old=N.snaps[k], flow=N.contributions?.[k]; delete N.snaps[k]; if(N.contributions) delete N.contributions[k]; saveNw(); closeModal(); render();
     toast(L('nwDeletedToast',ymM(k),k.slice(0,4)),{label:L('undo'),fn:()=>{ const N=ensureNw(); N.snaps[k]=old; if(flow){ N.contributions=N.contributions||{}; N.contributions[k]=flow; } saveNw(); render(); }}); },
   'nw-accounts':()=>{ if(S.canWrite) openModal({type:'nwacc',mid:true}); },
-  'na-add':el=>{ readNwAccounts(); const m=S.modal; m.list.push({id:newId(),name:el.dataset.n||'',group:el.dataset.g||'invest'}); renderModalKeepScroll(); const i=document.getElementById('na-n-'+(m.list.length-1)); if(i&&!el.dataset.n) i.focus(); },
+  'na-add':el=>{ readNwAccounts(); const m=S.modal; const base=el.dataset.n||''; let n=1; while(m.list.some(a=>a.name.toLowerCase()===(base+' '+n).toLowerCase())) n++; m.list.push({id:newId(),name:base?base+' '+n:'',group:el.dataset.g||'cash'}); renderModalKeepScroll(); const i=document.getElementById('na-n-'+(m.list.length-1)); if(i&&!el.dataset.n) i.focus(); },
   'na-del':el=>{ readNwAccounts(); S.modal.list.splice(+el.dataset.i,1); renderModalKeepScroll(); },
   'na-up':el=>{ readNwAccounts(); const l=S.modal.list, i=+el.dataset.i; if(i>0){ [l[i-1],l[i]]=[l[i],l[i-1]]; } renderModalKeepScroll('na-n-'+(i-1)); },
   'na-down':el=>{ readNwAccounts(); const l=S.modal.list, i=+el.dataset.i; if(i<l.length-1){ [l[i+1],l[i]]=[l[i],l[i+1]]; } renderModalKeepScroll('na-n-'+(i+1)); },
@@ -7397,7 +7681,7 @@ const ACTIONS={
   'guide-nwimport':()=>{ if(S.ui.tab!=='networth') setTab('networth'); ACTIONS['nw-import'](); },
   'guide-val':el=>{ if(!S.canWrite) return; if(S.ui.tab!=='networth') setTab('networth'); openModal({type:'nwsnap',k:el.dataset.k,wide:false}); },
   /* from the wizard's statement list: the import knows which account the file is from (its dates are remembered, its Balance column can fill that account's month-ends) */
-  'guide-import':el=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS.import(); const id=el&&el.dataset.acc; if(id&&S.modal&&S.modal.type==='import'){ S.modal.acct=id; renderModal(); } },
+  'guide-import':el=>{ if(S.ui.tab!=='transactions') setTab('transactions'); ACTIONS.import(); const id=el&&el.dataset.acc; if(id&&S.modal&&S.modal.type==='import'){ S.modal.acct=id; S.modal.fixedAccount=id; renderModal(); } },
   'wz-go':el=>{ if(!S.wizard) return; S.wizard.step=+el.dataset.s||0; renderModalKeepScroll(); },
   'wz-salary':el=>{ const f=findRow(el.dataset.mk,'income',el.dataset.id), cat=catNames('income').find(n=>SALARY_RE.test(n)); if(!f.row||!cat) return;
     /* every uncategorised income row with the same description is the same salary in other months */
@@ -7511,25 +7795,25 @@ document.addEventListener('change',e=>{
   if(id==='ob-month'){ S.ui.obM=+el.value; return; }
   if(id==='ob-year'){ S.ui.obY=+el.value; return; }
   if(id==='st-month'||id==='st-year'){ setStart({y:+$('#st-year').value,m:+$('#st-month').value}); return; }
-  if((id==='imp-period-from'||id==='imp-period-to')&&S.modal){ S.modal[id==='imp-period-from'?'coverFrom':'coverTo']=dateValue(el); return; }
-  if(id==='imp-period-confirm'&&S.modal){ S.modal.coverConfirmed=el.checked; return; }
+  if((id==='imp-period-from'||id==='imp-period-to')&&S.modal){ S.modal[id==='imp-period-from'?'coverFrom':'coverTo']=dateValue(el); S.modal.coverConfirmed=false; el.closest('.imp-coverage').querySelector('[data-action=imp-confirm-coverage]').textContent=L('impCoverageSave'); return; }
   if(a==='imp-date-order'&&S.modal){ setImportDateOrder(S.modal,el.dataset.source,el.value); refreshImportChecks(S.modal); renderModalKeepScroll(); return; }
   if(id==='imp-sort'&&S.modal){ S.modal.sort=el.value; renderModalKeepScroll(); return; }
   if(a==='imp-fx'){ S.modal.rows[+el.dataset.i].fxConfirmed=el.checked; S.modal.msg=''; renderModalKeepScroll(); return; }
-  if(a==='imp-accounting'){ const r=S.modal.rows[+el.dataset.i]; r[el.dataset.field]=el.value;
+  if(a==='imp-accounting'){ const r=S.modal.rows[+el.dataset.i]; r[el.dataset.field]=el.value; if(el.dataset.field==='investmentAccount'){r.investmentManual=true;delete r.rememberedInvestment;delete r.rememberedSource;}
     if(el.dataset.field==='movement'&&el.value!=='transfer'){ r.transferFrom=''; r.transferTo=''; }
     refreshImportChecks(S.modal); renderModalKeepScroll(); return; }
   if(id==='f-movement'){ readEditForm(); if(S.modal.draft.movement!=='transfer'){ S.modal.draft.transferFrom=''; S.modal.draft.transferTo=''; } renderModal(); txPreview(); return; }
   if(el.name==='f-dir'){ readEditForm(); txPreview(); return; }
   if(id==='imp-balfill'&&S.modal){ S.modal.balFill=el.checked; return; }
   if(a==='imp-source-account'&&S.modal){ S.modal.sourceAccounts=Object.assign({},S.modal.sourceAccounts,{[el.dataset.source]:el.value}); S.modal.sourceCoverage=Object.assign({},S.modal.sourceCoverage,{[el.dataset.source]:Object.assign({},S.modal.sourceCoverage&&S.modal.sourceCoverage[el.dataset.source],{confirmed:false})}); refreshImportChecks(S.modal); renderModalKeepScroll(); return; }
-  if(a==='imp-source-period'&&S.modal){ const src=el.dataset.source, c=Object.assign({},S.modal.sourceCoverage&&S.modal.sourceCoverage[src],{[el.dataset.field]:el.type==='checkbox'?el.checked:dateValue(el)}); S.modal.sourceCoverage=Object.assign({},S.modal.sourceCoverage,{[src]:c}); return; }
+  if(a==='imp-source-period'&&S.modal){ const src=el.dataset.source, c=Object.assign({},S.modal.sourceCoverage&&S.modal.sourceCoverage[src],{[el.dataset.field]:dateValue(el),confirmed:false}); S.modal.sourceCoverage=Object.assign({},S.modal.sourceCoverage,{[src]:c}); el.closest('.imp-coverage').querySelector('[data-action=imp-confirm-coverage]').textContent=L('impCoverageSave'); return; }
   if(a==='imp-file-account'&&S.modal&&S.modal.type==='import'){ const m=S.modal; m.text=$('#imp-text').value; m.table=$('#imp-table').value; m.files[+el.dataset.i].acct=el.value; renderModalKeepScroll(); return; }
   if(a==='ai-file-account'&&S.modal&&S.modal.type==='ai'&&!S.modal.busy){ const m=S.modal, ta=$('#ai-rules'); if(ta) m.rules=ta.value; m.files[+el.dataset.i].acct=el.value; renderModalKeepScroll(); return; }
   if(id==='imp-acct'&&S.modal&&S.modal.type==='import'){ const m=S.modal; if(m.step==='input'){ m.text=$('#imp-text').value; m.table=$('#imp-table').value; } m.acct=el.value||null; if(m.queue) m.files[0].acct=m.acct||''; m.auto=false; m.coverConfirmed=false; if(m.step!=='input') refreshImportChecks(m); renderModalKeepScroll(); return; }
   if(id==='ci-file'&&el.files&&el.files.length){ ciFiles([...el.files]); return; }
   if(a==='ci-cat'&&el.value){ const ref=refOf(el), f=findRow(ref.mk,ref.table,ref.id); setTxCategory(ref,el.value); render(); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); if(f.row) offerKeyword(ref.table,f.row.concept,el.value); return; }
   if(id==='imp-sw-who'&&S.modal&&S.modal.sw){ S.modal.sw.who=+el.value; readSplitwise(); return; }
+  if(id==='summary-month'||id==='summary-year'){ const tab=el.dataset.tab, y=+$('#summary-year').value, m=$('#summary-month').value; if(tab==='overview'){ S.ui.year=y; S.ui.overviewMonth=m; S.ui.oc.month=m; if(m!=='all') S.ui.compareMonth=ymOf(y,+m); } else { S.ui.nw.month=ymOf(y,+m); S.ui.nw.years=[y]; } render(); return; }
   if(id==='year-select'){ S.ui.year=+el.value; S.ui.tx.month='all'; S.ui.oc.month='all'; render(); return; }
   if(id==='oc-month'){ S.ui.oc.month=el.value; render(); return; }
   if(id==='oc-exrent'){ S.ui.oc.exRent=el.checked; render(); return; }
@@ -7565,6 +7849,8 @@ document.addEventListener('change',e=>{
     if(c){ S.modal.newConfirmed=false; c.skip=!v; c.guessed=false; if(v.startsWith('a:')){ c.as=v.slice(2); } else if(v.startsWith('g:')){ c.as=null; c.group=v.slice(2); } } renderModalKeepScroll(); return; }
   if(el.dataset&&el.dataset.retc&&S.modal&&S.modal.type==='nwret'){ const t=el.dataset.retc, n=catNames(t)[+el.dataset.i]; if(n!=null){ if(el.checked) S.modal.sel[t].add(n); else S.modal.sel[t].delete(n); } return; }
   if(id==='nw-month'){ S.ui.nw.month=el.value; render(); return; }
+  if(id==='nwu-month'&&S.modal?.type==='nwupdate'){readNwUpdate();S.modal.draftsByMonth=S.modal.draftsByMonth||{};S.modal.draftsByMonth[S.modal.k]=S.modal.drafts;S.modal.k=el.value;S.modal.drafts=S.modal.draftsByMonth[el.value]||{};S.modal.message='';renderModal();return;}
+  if(a==='nwu-mode'&&S.modal?.type==='nwupdate'){readNwUpdate();renderModalKeepScroll(id);return;}
   if(id==='nw-k'&&S.modal&&S.modal.type==='nwsnap'){ S.modal.k=el.value; S.modal.vals=null; S.modal.flows=null; S.modal.touched=null; S.modal.confirmDel=false; renderModal(); return; }
   if(S.modal&&S.modal.type==='edit'&&(id==='f-table'||id==='f-cat')){
     readEditForm();
@@ -7589,6 +7875,7 @@ document.addEventListener('submit',e=>{
     renameCatCore(m.t,m.name,nn);
     markDirty('config/categories'); markDirty('config/keywords'); bump(); closeModal(); render(); toast(L('renamedTo',nn));
   }
+  else if(f.classList.contains('nwu-account-form')) saveNwUpdate(f);
   else if(f.id==='nw-snap-form'){
     readNwSnap(); const m=S.modal, N=ensureNw(), out={}; let bad=null;
     for(const a of N.accounts){ const raw=String(m.vals[a.id]||'').trim(); if(!raw) continue; const v=parseAmount(raw,wantNum()); if(v===null){ bad=a; break; } out[a.id]=v; }
@@ -7609,7 +7896,9 @@ document.addEventListener('submit',e=>{
     const un=String(m.untracked!=null?m.untracked:N.untracked||'').replace(/\s+/g,' ').trim(); if(un) N.untracked=un; else delete N.untracked;
     for(const k of Object.keys(N.snaps)){ for(const id of Object.keys(N.snaps[k])) if(!keep.has(id)) delete N.snaps[k][id]; if(!Object.keys(N.snaps[k]).length) delete N.snaps[k]; }
     for(const k of Object.keys(N.contributions||{})){ for(const id of Object.keys(N.contributions[k])) if(!keep.has(id)||N.accounts.find(a=>a.id===id)?.group==='cash') delete N.contributions[k][id]; if(!Object.keys(N.contributions[k]).length) delete N.contributions[k]; }
-    saveNw(); closeModal(); render(); toast(L('nwAccSaved'));
+    for(const field of ['flowReviews','flowDetails','payouts']) for(const k of Object.keys(N[field]||{})) for(const id of Object.keys(N[field][k])) if(!keep.has(id)||N.accounts.find(a=>a.id===id)?.group==='cash') delete N[field][k][id];
+    if(N.matchRules) N.matchRules=N.matchRules.filter(r=>keep.has(r.source)&&keep.has(r.target)&&N.accounts.find(a=>a.id===r.target)?.group!=='cash');
+    saveNw(); if(S.wizard?.on&&S.wizard.mode!=='ci'&&S.wizard.step===0) S.wizard.step=1; closeModal(); render(); toast(L('nwAccSaved'));
   }
   else if(f.id==='nw-link-form'){
     const m=S.modal, N=ensureNw(); let n=0;
@@ -7757,7 +8046,7 @@ function onHistory(){ const h=(location.hash||'').replace('#',''); if(!TABS.incl
   setTab(h,'pop'); }
 window.addEventListener('popstate',onHistory);
 window.addEventListener('hashchange',onHistory);
-if(window.__ybtTest) window.__ybt={coveragePeriods,guideState,monthComparison,scenarioTotal,nwCashFlows,txMatches,txKey,impNeedsAttention,statementCovered,bulkApply,kwHealth,fmtDate,parseUiDate,dateFormat,dateInput,templateDateBytes,parseAmount,parseDate,parseCSV,parseRows,findHeader,parseCells,guessTable,matchKeyword,allMatches,hasKw,fold,loose,agg,upsertTx,finishImport,splitLine,kwSuggestion,skipMatch,fmtNum,fmtEUR,CURRENCIES,foreignCode,isoOf,allRows,rowFromCols,readPasted,importChecks,detectDateOrder,monthlyCard,catNames,cats,kws,deleteTx,normCats,normKw,startOf,ymNow,aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,nwGains,aiApply,aiMerge,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
+if(window.__ybtTest) window.__ybt={applyRememberedInvestment,nwRemembered,nwMonthActivity,nwPending,normNw,nwChartForecast,mmForecast,txFiltered,coveragePeriods,guideState,monthComparison,scenarioTotal,nwCashFlows,txMatches,txKey,impNeedsAttention,statementCovered,bulkApply,kwHealth,fmtDate,parseUiDate,dateFormat,dateInput,templateDateBytes,parseAmount,parseDate,parseCSV,parseRows,findHeader,parseCells,guessTable,matchKeyword,allMatches,hasKw,fold,loose,agg,upsertTx,finishImport,splitLine,kwSuggestion,skipMatch,fmtNum,fmtEUR,CURRENCIES,foreignCode,isoOf,allRows,rowFromCols,readPasted,importChecks,detectDateOrder,monthlyCard,catNames,cats,kws,deleteTx,normCats,normKw,startOf,ymNow,aiTxResult,aiNwData,aiPrompt,aiContext,aiDefault,sampleDataset,TOUR_STEPS,tourActive:()=>!!TOUR,S,loadDataset,render,mlGuess,mlModel,mlTrain,mlLevel,nwSplit,nwGains,aiApply,aiMerge,trackerSaved,savingPace,autoReturnCats,nwChartMonths,nwState,ensureNw,saveNw};
 boot();
 })();
 </script>

@@ -7,12 +7,12 @@ const grab = name => { const a = html.indexOf('function ' + name + '('); assert.
   const b = html.indexOf('\n}\n', a); return html.slice(a, b + 3); };
 const line = start => { const a = html.indexOf(start); assert.ok(a > -1, start + ' not found'); return html.slice(a, html.indexOf('\n', a) + 1); };
 const src = ['const r2=', 'const cents=', 'const fold=', 'const loose=', 'const nwBefore=', 'const nwWords=', 'const nwPensionish=', 'const isInternalTransfer=', 'const isRetained=', 'const isBudgetRow=', 'function ymAdd'].map(line).join('')
-  + ['trackerSaved', 'nwSplit', 'nwReconcile', 'nwGains', 'nwCashFlows'].map(grab).join('');
+  + ['trackerSaved', 'nwSplit', 'nwReconcile', 'nwGains', 'nwCashFlows', 'nwRemembered', 'nwMonthActivity', 'nwPending'].map(grab).join('');
 const make = new Function('N', 'months', 'RET', 'covered', `const memo=(k,f)=>f(), nw=()=>N, nwHoles=()=>[], statementCovered=a=>!!covered?.has(a.id), ymOf=(y,m)=>y+'-'+String(m+1).padStart(2,'0');
   let rows; const allRows=()=>rows||(rows=Object.keys(months).sort().flatMap(mk=>['income','expenses','investments'].flatMap(t=>(months[mk][t]||[]).map(r=>Object.assign({},r,{table:t,mk})))));
-  const isReturn=r=>RET.has(r.table+'|'+r.category);
+  const sum=a=>a.reduce((s,v)=>s+v,0), isReturn=r=>RET.has(r.table+'|'+r.category);
   ${src}
-  return {nwSplit,nwGains,nwReconcile,nwCashFlows};`);
+  return {nwSplit,nwGains,nwReconcile,nwCashFlows,nwPending,nwMonthActivity};`);
 
 const RET = new Set(['income|Interest', 'income|Dividends']);
 // Cash movement uses account-linked transactions, not the unexplained residual in the balance.
@@ -209,3 +209,27 @@ const acc = (id, name, group, extra) => Object.assign({ id, name, group }, extra
   f=make(N,months,RET);assert.equal(f.nwGains('2026-07','2026-09').get('a'),0);assert.ok(f.nwSplit('2026-07','2026-09').ok);
 }
 console.log('reconcile-smoke: all checks passed');
+
+// Monthly review distinguishes unknown from explicit zero and expires when its evidence changes.
+{
+ const N={accounts:[{id:'bank',name:'Bank',group:'cash'},{id:'fund',name:'Fund',group:'invest'}],snaps:{'2026-08':{fund:10000},'2026-10':{fund:10800}}};
+ const months={'2026-09':{investments:[{id:'one',date:'2026-09-05',amount:-500,concept:'Fund',account:'bank'}]},'2026-10':{investments:[]}};
+ let f=make(N,months,RET),G=f.nwGains('2026-08','2026-10');
+ assert.deepStrictEqual(f.nwPending(G,'2026-08','2026-10').get('fund'),['2026-09','2026-10']);
+ N.flowReviews={'2026-09':{fund:f.nwMonthActivity('fund','2026-09').signature}};
+ N.contributions={'2026-10':{fund:0}};
+ f=make(N,months,RET);G=f.nwGains('2026-08','2026-10');
+ assert.strictEqual(f.nwPending(G,'2026-08','2026-10').size,0);
+ assert.strictEqual(G.get('fund'),300);
+ months['2026-09'].investments[0].amount=-600;
+ f=make(N,months,RET);assert.deepStrictEqual(f.nwPending(f.nwGains('2026-08','2026-10'),'2026-08','2026-10').get('fund'),['2026-09']);
+ N.contributions['2026-09']={fund:500};
+ f=make(N,months,RET);assert.strictEqual(f.nwPending(f.nwGains('2026-08','2026-10'),'2026-08','2026-10').size,0);
+ assert.strictEqual(f.nwGains('2026-08','2026-10').get('fund'),300,'summary replaces transfers');
+ months['2026-10'].income=[{id:'div',date:'2026-10-03',amount:20,concept:'Fund dividend',category:'Dividends',investmentAccount:'fund'}];
+ N.payouts={'2026-10':{fund:25}};f=make(N,months,RET);
+ assert.strictEqual(f.nwGains('2026-08','2026-10').get('fund'),325,'manual payout replaces recorded payout');
+ assert.ok(f.nwSplit('2026-08','2026-10').ok,'manual payout still reconciles');
+ assert.strictEqual(f.nwMonthActivity('fund','2026-10').payout,20,'recorded payout remains separately inspectable');
+}
+console.log('monthly account review: incomplete periods, expired confirmations, zero contributions and payout overrides passed');

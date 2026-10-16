@@ -49,9 +49,9 @@ const txRows=[
   {...row,id:'income',table:'income',category:'',concept:'Shop',ord:3},
   {...row,id:'old',date:'2025-09-10',table:'expenses',category:'',concept:'Shop',ord:4}
 ];
-const txFiltered=new Function('S','allRows','isKnown','fold','fmtNum','txMatches',
+const txFiltered=new Function('S','allRows','isKnown','fold','fmtNum','txMatches','isBudgetRow',
   'const UNCAT="Uncategorised";'+grab('txFiltered')+'return txFiltered;'
-)(txState,()=>txRows,(t,c)=>c==='Groceries',s=>String(s||'').toLowerCase(),String,txMatches);
+)(txState,()=>txRows,(t,c)=>c==='Groceries',s=>String(s||'').toLowerCase(),String,txMatches,()=>true);
 const attention={...txState.ui.tx,cat:'Uncategorised'};
 assert.deepStrictEqual(txFiltered(attention).map(r=>r.id),['blank','stale']);
 assert.strictEqual(txFiltered().length,3,'All rows restores classified rows');

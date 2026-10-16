@@ -172,3 +172,47 @@ input:disabled,select:disabled,textarea:disabled{opacity:.55;cursor:not-allowed}
 /* Compact desktop controls must retain the existing finger-sized targets on phones and touch screens. */
 @media(max-width:640px),(pointer:coarse){.btn.sm,.web-lang button{min-height:40px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.btn.primary.overview-import{transition:none}}
+
+/* Editable review fields and consistent month/year controls. */
+.imp input.ed{border:1px solid var(--control-line);border-radius:12px;background:var(--surface-2);padding:8px 10px;min-height:40px}
+.imp input.ed:hover{border-color:var(--muted)}
+.imp input.ed:focus{border-color:var(--accent);outline:2px solid var(--accent-soft)}
+.imp input.ed.bad{border-color:var(--bad-ink)}
+.imp .refund{display:block;color:var(--ink-2);margin-top:var(--s8)}
+.imp-coverage{margin:var(--s12) 0 var(--s16)}
+.coverage-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s12);margin:var(--s12) 0}
+.summary-period{display:flex;gap:var(--s12);flex-wrap:wrap;max-width:100%}
+.summary-period label{display:grid;gap:var(--s4);font-size:var(--fs-sm);color:var(--ink-2);min-width:0}
+.summary-period select{max-width:100%}
+.acc-start .nw-sug{border:1px solid var(--control-line);background:var(--control-secondary);min-height:40px;padding:var(--s8) var(--s12)}
+.tx-types .seg:has([data-action=tx-attention-all]){flex-wrap:wrap}
+@media(max-width:600px){.coverage-dates{grid-template-columns:1fr}.tx-types .seg:has([data-action=tx-attention-all]){display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.tx-types [data-action=tx-attention-all]{grid-column:1/-1}.summary-period{gap:var(--s8)}}
+
+.review-ready{padding:var(--s12) var(--s16);border:1px solid var(--line);border-radius:var(--r-inner);color:var(--ink-2);background:var(--surface-2)}
+
+/* A monthly account check-in keeps edits beside their results. */
+.nwu-body{display:grid;gap:var(--s16)}
+.nwu-account-form,.nwu-group{padding:var(--s24);border:1px solid var(--line);border-radius:var(--r-inner);background:var(--surface-2);display:grid;gap:var(--s12);min-width:0}
+.nwu-account-form h4{margin:0;overflow-wrap:anywhere}
+.nwu-account-form label,.nwu-group label{display:grid;gap:var(--s8);min-width:0}
+.nwu-account-form input,.nwu-account-form select,.nwu-group select{width:100%;min-width:0}
+.nwu-account-form .card-head{margin:0;align-items:start}
+.nwu-amounts{display:grid;grid-template-columns:1fr 1fr;gap:var(--s12)}
+.nwu-actions{display:flex;gap:var(--s8);flex-wrap:wrap}
+.nwu-account-form p{margin:0}
+.nwu-account-form details>p,.nwu-account-form details>label{margin-top:var(--s12)}
+.nwu-account-form ul,.nwu-groups ul{padding:0;list-style:none;max-height:240px;overflow:auto}
+.nwu-account-form li{display:flex;justify-content:space-between;gap:var(--s12);padding:var(--s8) 0;border-bottom:1px solid var(--line)}
+.nwu-account-form li span{overflow-wrap:anywhere;min-width:0}
+.nwu-account-form li b{white-space:nowrap}
+.nwu-group{margin-top:var(--s12)}
+.nwu-group label.check{display:flex;align-items:center}
+.nwu-group label.check input{flex:0 0 auto}
+.nw-edit-value{font:inherit;color:inherit;background:var(--surface-2);border:1px solid var(--control-line);border-radius:10px;padding:6px 10px;cursor:pointer;text-align:inherit;max-width:100%;white-space:normal}
+.nw-edit-value:hover,.nw-edit-value:focus-visible{border-color:var(--accent)}
+.nw-pending{font-size:var(--fs-sm);color:var(--ink-2);white-space:normal;min-width:130px}
+.nwt th{white-space:normal}
+@media(max-width:600px){.nwu-amounts{grid-template-columns:1fr}.nwu-account-form,.nwu-group{padding:var(--s12)}.nwu-account-form .card-head{display:grid;gap:var(--s8)}.nwu-account-form select{white-space:normal}.nwu-actions .btn{width:100%}}
+
+.nwu-body>label{display:grid;gap:var(--s8);justify-items:start}
+.nwu-account-form li .linkish{flex:0 0 auto}
