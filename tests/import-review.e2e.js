@@ -12,14 +12,15 @@ for (let i = 0; i < 40; i++) lines.push(`${String(1 + (i % 28)).padStart(2, '0')
 (async () => {
   const browser = await chromium.launch({ channel: 'msedge' });
   const open = async (w, h) => {
-    const ctx = await browser.newContext({ viewport: { width: w, height: h } });
+    const ctx = await browser.newContext({ viewport: { width: w, height: h }, serviceWorkers: 'block' });
+    await ctx.route('https://accounts.google.com/gsi/client',r=>r.fulfill({contentType:'text/javascript',body:'window.google={accounts:{oauth2:{}}};'}));
     await ctx.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
     const p = await ctx.newPage(), errs = []; p.on('pageerror', e => errs.push(String(e).slice(0, 200)));
     await p.goto(START); await p.evaluate(async t => { localStorage.setItem('ybt.storage', 'browser'); await window.__ybtWeb.idb.set('data', t); }, file);
     await p.goto(START); await p.click('.web-landing .wl-hero [data-x=open]');
     await p.waitForFunction(() => window.__ybtWeb.store && window.__ybtWeb.store.months['2026-09']);
     await p.evaluate(() => document.querySelector('[data-action=import]').click());
-    await p.fill('#imp-text', lines.join('\n')); await p.click('[data-action=imp-read]'); await p.waitForSelector('table.imp');await p.selectOption('#imp-acct','main');
+    await p.click('.imp-paste > summary'); await p.fill('#imp-text', lines.join('\n')); await p.click('[data-action=imp-read]'); await p.waitForSelector('table.imp');
     return { p, errs };
   };
   /* title and buttons are never squeezed by a long table, nor does the table scroll sideways */
@@ -60,11 +61,12 @@ for (let i = 0; i < 40; i++) lines.push(`${String(1 + (i % 28)).padStart(2, '0')
 
   const { p, errs } = await open(1280, 720);
   const row = i => p.evaluate(i => { const tr = document.getElementById('imp-r-' + i);
-    return { on: tr.querySelector('[data-action=imp-on]').checked, desc: tr.querySelector('[data-action=imp-desc]').value, amt: tr.querySelector('[data-action=imp-amt]').value, note: tr.querySelector('td.n').innerText }; }, i);
+    return { on: tr.querySelector('[data-action=imp-on]').checked, desc: tr.querySelector('[data-action=imp-desc]')?.value||tr.querySelector('td.c').textContent, amt: tr.querySelector('[data-action=imp-amt]')?.value||tr.querySelector('td.a').textContent, note: tr.querySelector('td.n').innerText }; }, i);
   /* the refund is not taken for the charge; the empty description is pointed out */
   assert.ok(!/Already in your tracker|Same date/.test((await row(0)).note), 'refund matched: ' + (await row(0)).note);
   assert.ok(/No description/.test((await row(2)).note));
   /* Esc puts the text back and leaves the review open */
+  await p.click('[data-action=imp-edit][data-i="2"]');
   await p.fill('#imp-d-2', 'typo'); await p.press('#imp-d-2', 'Escape');
   assert.strictEqual(await p.inputValue('#imp-d-2'), '.'); assert.ok(await p.isVisible('table.imp'));
   assert.ok(!(await p.isVisible('.confirm-inline')), 'Esc in a box asked to discard');
@@ -81,6 +83,7 @@ for (let i = 0; i < 40; i++) lines.push(`${String(1 + (i % 28)).padStart(2, '0')
   await p.press('#imp-a-2', 'Escape'); assert.strictEqual((await row(2)).amt, '−14,90 €');
   /* changing −0,90 to −0,85 makes it the saved charge: checked again, unticked as a duplicate */
   assert.strictEqual((await row(1)).on, true);
+  await p.click('[data-action=imp-edit][data-i="1"]');
   await p.fill('#imp-a-1', '-0,85'); await p.click('table.imp thead');   /* leaving the box saves too */
   await p.waitForFunction(() => /Already in your tracker/.test(document.querySelector('#imp-r-1 td.n').innerText));
   assert.strictEqual((await row(1)).on, false);
@@ -118,12 +121,13 @@ for (let i = 0; i < 40; i++) lines.push(`${String(1 + (i % 28)).padStart(2, '0')
     await p.goto(START); await p.evaluate(async t => { localStorage.setItem('ybt.storage', 'browser'); await window.__ybtWeb.idb.set('data', t); }, file);
     await p.goto(START); await p.click('.web-landing .wl-hero [data-x=open]');
     await p.waitForFunction(() => window.__ybtWeb.store && window.__ybtWeb.store.months['2026-09']);
-    await p.click('#tab-transactions'); await p.click('[data-action=ai-tx]');
+    await p.click('#tab-transactions'); await p.click('#view [data-action=import]');
+    await p.click('[data-action=imp-read]'); await p.click('[data-action=imp-ai]');
     await p.setInputFiles('#ai-file', [{ name: bank, mimeType: 'text/csv', buffer: Buffer.from('date;amount;concept\n05/09/2026;-30;HOME FIBRE\n') },
       { name: fund, mimeType: 'text/csv', buffer: Buffer.from('fecha;importe;concepto\n10/09/2026;-300;SUSCRIPCION FONDO INDEXADO\n') }]);
     await p.click('[data-action=ai-send]'); await p.waitForSelector('table.imp');await p.selectOption('#imp-source-0','main');
     const rows = () => p.evaluate(() => [...document.querySelectorAll('table.imp tbody tr')].map(tr => ({
-      desc: tr.querySelector('[data-action=imp-desc]').value, on: tr.querySelector('[data-action=imp-on]').checked,
+      desc: tr.querySelector('[data-action=imp-desc]')?.value||tr.querySelector('td.c').textContent, on: tr.querySelector('[data-action=imp-on]').checked,
       grey: tr.classList.contains('off'), why: (tr.querySelector('.note.why') || {}).innerText || '' })));
     const by = async () => Object.fromEntries((await rows()).map(r => [r.desc, r]));
     let r = await by();
@@ -139,6 +143,7 @@ for (let i = 0; i < 40; i++) lines.push(`${String(1 + (i % 28)).padStart(2, '0')
 
     for (const d of ['SUSCRIPCION FONDO INDEXADO', 'APORTACION PLAN PENSIONES', 'SUSCRIPCION FONDO GLOBAL'])
       assert.ok(r[d].on && !r[d].grey, 'investment wording alone must not exclude a source: ' + d);
+    await p.click('.import-help > summary');
     assert.ok(/Greyed rows won’t be/.test(await p.innerText('.imp-key')));
     /* never greyed without a reason, never unticked by the app without one */
     const noReason = rs => rs.filter(x => (x.grey && !x.why) || (!x.on && !x.grey && x.why));
