@@ -1,0 +1,4 @@
+import smoke: all passed
+time-zone region: all passed
+statement month-end balances: all passed
+statement fingerprints: all passed

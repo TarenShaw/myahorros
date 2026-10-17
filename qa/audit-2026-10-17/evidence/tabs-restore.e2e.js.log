@@ -1,0 +1,5 @@
+1. second tab takes over, first one stops
+2. start fresh: Cancel focused, Escape cancels
+3. start fresh, then restore from this browser
+4. an edit made just before another tab takes over is saved
+tabs-restore: all passed

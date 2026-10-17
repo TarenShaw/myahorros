@@ -1,4 +1,4 @@
-/* Makes the landing page's product shot: the Net worth page filled with made-up data (never real figures).
+/* Makes the landing page's product shot: the app filled with made-up data (never real figures).
      python -m http.server 8000   (repo root)     NODE_PATH=<playwright folder> node tools/landing-shot.js
    Writes images/landing-{networth,overview,yearly}-{dark,light}.webp (English) and the same with -es (Spanish).
    Run it again after a UI change, and now and then so the months shown stay recent: the data is seeded, and its
@@ -9,7 +9,7 @@ const START = process.env.START_URL || 'http://localhost:8000/';
 const OUT = path.join(__dirname, '..', 'images');
 
 /* someone saving steadily for the 18 months up to last month: pay in, rent and life out, 300 € to savings and
-   250 € to an index fund a month, a small pension plan; funds move with a made-up market. The rest of the year shows as forecast.
+   250 € to an index fund a month, a small pension plan; funds move with a made-up market. Only recorded balances are shown.
    In the page's language: Spanish category and account names, and each language's own number format. */
 const ES = { Salary: 'Nómina', Rent: 'Alquiler', Utilities: 'Suministros', Phone: 'Teléfono', 'Funds/ETFs': 'Fondos/ETFs', Groceries: 'Supermercado', Restaurants: 'Restaurantes', 'Vacation + Hotel + Travel': 'Vacaciones y viajes', Gifts: 'Regalos',
   SALARY: 'NOMINA', RENT: 'ALQUILER', ELECTRICITY: 'LUZ', PHONE: 'TELEFONO', 'INDEX FUND': 'FONDO INDEXADO', SUPERMARKET: 'SUPERMERCADO', RESTAURANT: 'RESTAURANTE', 'SUMMER BONUS': 'PAGA EXTRA', 'HOLIDAY FLIGHTS AND HOTEL': 'VUELOS Y HOTEL VACACIONES', GIFTS: 'REGALOS',
@@ -38,7 +38,7 @@ function demo(lang) {
   const categories = { income: [tr('Salary')], investments: [tr('Funds/ETFs')],
     expenses: [fx('Rent', 'Need'), fx('Utilities', 'Need'), fx('Phone', 'Need'), fx('Groceries', 'Want'), fx('Restaurants', 'Want'), fx('Vacation + Hotel + Travel', 'Want'), fx('Gifts', 'Want')] };
   return JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months, config: { categories,
-    settings: { lang, start: { y: Math.floor(first / 12), m: first % 12 }, fixedVar: 1, numFmt: lang === 'es' ? 'eu' : 'en', currency: 'EUR', birthYear: 1994,
+    settings: { lang, start: { y: Math.floor(first / 12), m: first % 12 }, fixedVar: 1, numFmt: lang === 'es' ? 'eu' : 'en', currency: 'EUR',
       lastCheckin: '9999-12' },   /* no check-in strip in the shots */
     networth: { accounts: [{ id: 'c', name: tr('Current account'), group: 'cash' }, { id: 's', name: tr('Savings account'), group: 'cash' },
       { id: 'f', name: tr('Index fund'), group: 'invest' }, { id: 'p', name: tr('Pension plan'), group: 'pension' }], snaps, goal: { amount: 30000, month: (Math.floor(end / 12) + 1) + '-12' } } } });
@@ -58,6 +58,7 @@ const HIDE = { en: ['Monthly check', 'This month'], es: ['Revisión del mes', 'E
   for (const lang of ['en', 'es']) for (const scheme of ['dark', 'light']) {
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2, colorScheme: scheme });
     await ctx.addInitScript(l => { try { localStorage.setItem('ybt.lang', l); } catch (_) {} }, lang);
+    await ctx.route('https://accounts.google.com/gsi/client', r => r.fulfill({ contentType: 'text/javascript', body: 'window.google={accounts:{oauth2:{}}};' }));
     const p = await ctx.newPage();
     await p.goto(START, { waitUntil: 'load' });
     await p.evaluate(async t => { localStorage.setItem('ybt.storage', 'browser'); await window.__ybtWeb.idb.set('data', t); }, demo(lang));
@@ -66,12 +67,8 @@ const HIDE = { en: ['Monthly check', 'This month'], es: ['Revisión del mes', 'E
     await p.waitForFunction(() => window.__ybtWeb.store && Object.keys(window.__ybtWeb.store.months).length);
     await p.addStyleTag({ content: '#view .notice,.toast,.guide,.guide-bar,.web-bar,.web-foot{display:none!important}' });
     for (const s of SHOTS) {
-      await p.click('#tab-' + s.tab);
-      /* the year buttons: show the latest year only (its figures, then the forecast), not "All years" */
-      const yb = () => p.$$('[data-action=nw-year][data-y]:not([data-y=all])');
-      let ys = await yb(); const yl = ys[ys.length - 1];
-      if (yl && (await yl.getAttribute('aria-pressed')) !== 'true') await yl.click();
-      for (let hit = true; hit;) { hit = false; for (const b of (await yb()).slice(0, -1)) if ((await b.getAttribute('aria-pressed')) === 'true') { await b.click(); hit = true; break; } }
+      if (s.tab === 'yearly') { await p.click('#tab-overview'); await p.click('#view [data-tab=yearly]'); }
+      else await p.click('#tab-' + s.tab);
       await p.mouse.move(0, 0); await p.waitForTimeout(600);
       const clip = await p.evaluate(([s, lang, hide]) => {
         /* the demo stops in August, so the reminders about this month only add noise */

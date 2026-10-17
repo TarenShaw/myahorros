@@ -1,0 +1,45 @@
+[
+  {
+    "name": "duplicates-scoped-to-account",
+    "pass": true
+  },
+  {
+    "name": "foreign-currency-confirmation",
+    "pass": true
+  },
+  {
+    "name": "ambiguous-dates",
+    "pass": true
+  },
+  {
+    "name": "invalid-row-beyond-first-200",
+    "pass": true
+  },
+  {
+    "name": "xlsx-refund-signs",
+    "pass": true
+  },
+  {
+    "name": "320px-transactions-overflow",
+    "viewport": 320,
+    "client": 320,
+    "scroll": 351,
+    "offscreen": [
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "class": "",
+        "text": "Todos los movimientos",
+        "rect": {
+          "left": 179.265625,
+          "right": 350.921875,
+          "width": 171.65625
+        }
+      }
+    ]
+  },
+  {
+    "name": "internal-transfer-accounting",
+    "pass": true
+  }
+]
