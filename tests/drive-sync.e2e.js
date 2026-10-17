@@ -152,7 +152,7 @@ async function until(fn, ms, what) { const t = Date.now(); for (;;) { const v = 
     await page.evaluate(() => window.__ybtWeb.sync());
     await page.waitForSelector('#web-bar');
     assert.ok(await page.evaluate(() => document.querySelector('#web-bar').getBoundingClientRect().bottom < document.querySelector('.tabs').getBoundingClientRect().top), 'Drive reconnect notice overlaps phone navigation at ' + width);
-    for (const tab of ['overview', 'transactions', 'networth', 'settings']) {
+    for (const tab of ['overview', 'networth', 'transactions', 'yearly', 'settings']) {
       await page.click('#tab-' + tab);
       assert.strictEqual(await page.getAttribute('#tab-' + tab, 'aria-selected'), 'true');
     }
@@ -161,7 +161,7 @@ async function until(fn, ms, what) { const t = Date.now(); for (;;) { const v = 
   }
   await page.setViewportSize({ width: 1280, height: 900 });
   assert.strictEqual(await page.$eval('#web-sync', el => getComputedStyle(el).bottom), '12px', 'desktop Drive status moved');
-  console.log('7. Drive notices clear phone navigation at 320/390/640px; all four navigation buttons work; desktop unchanged');
+  console.log('7. Drive notices clear phone navigation at 320/390/640px; all five tabs work; desktop unchanged');
   await browser.close();
   console.log('drive sync e2e: all passed');
 })().catch(e => { console.error(e); process.exit(1); });

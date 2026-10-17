@@ -24,7 +24,7 @@ node tests/import-smoke.js      # import: amounts, keyword matching, IBKR sectio
 node tools/update-csp-hash.js   # after ANY edit to index.html's inline <script>
 ```
 
-Browser tests need Playwright (Edge channel) and the server above. Set `START_URL` to override the default localhost:8000 address: `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` (fake Drive: deferral, conflict, merge) and `tests/landing-wizard.e2e.js` (landing, simple account setup, optional tips and demo isolation) and `tests/simplification.e2e.js` (import review, balances, goals and backup compatibility) and `tests/tabs-restore.e2e.js` (one tab at a time, browser backup restore, Start fresh). Also run `tests/import-review.e2e.js` (editable review, duplicates and AI fallback), `tests/nw-monthly-update.e2e.js` (optional performance, account import return and saved movements), and `tests/transactions-attention.e2e.js` (categorisation on desktop and phone).
+Browser tests need Playwright (Edge channel) and the server above: `NODE_PATH=<dir with playwright> node tests/drive-sync.e2e.js` (fake Drive: deferral, conflict, merge) and `tests/landing-wizard.e2e.js` (landing, wizard, tour hand-off) and `tests/tabs-restore.e2e.js` (one tab at a time, browser backup restore, Start fresh).
 
 ## Line endings
 
@@ -37,7 +37,7 @@ The repo is LF (`.gitattributes`). The CSP hash is computed on the LF text, whic
 - `js/web-ai.js` provides `sample.json(prompt, opts)` for statement reading: direct browser-to-vendor calls with the visitor's own Anthropic/OpenAI/Gemini key, or a copy-paste flow. Keys live only in localStorage/sessionStorage. It retries 429/5xx/network with backoff, stops a silent stream, reports truncation, and `explain(err)` gives the plain-language reason plus copyable details (keys are scrubbed).
 - `js/models.js` is the one place for model names, defaults, per-model guidance and request limits (chunk size, max output).
 - The page splits big statement text into several requests (`aiJobs`/`aiMerge`/`aiRunJob` in `index.html`), reuses finished requests on retry and re-splits a request whose answer was cut off.
-- First visit: `landing()` in `web-shim.js` (See a demo / Get started) then the where-to-save choice; a new tracker names one account and picks currency, then imports a statement or enters a transaction. The demo opens immediately with optional short tips. Summary, Transactions and Accounts are the primary destinations; history is under Summary and Settings is secondary. Background syncs wait while a dialog is open or edits are in flight (`window.YBT_BUSY`) and arrive through the soft `ybt-sync-data` event, never `ybt-replace-data` (that one closes dialogs and resets filters).
+- First visit: `landing()` in `web-shim.js` (See a demo / Get started) then the where-to-save choice; a new tracker gets the tour, then the setup wizard (`modalWizard`, `maybeWizard`). Background syncs wait while a dialog is open or edits are in flight (`window.YBT_BUSY`) and arrive through the soft `ybt-sync-data` event, never `ybt-replace-data` (that one closes dialogs and resets filters).
 - `js/web-boot.js` registers `sw.js` and sets the footer year. `config.js` sets `window.YBT_CONFIG` (Google OAuth client ID, version).
 - `vendor/` holds pdf.js and SheetJS, self-hosted to satisfy the CSP. Do not edit.
 

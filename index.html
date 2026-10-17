@@ -11,7 +11,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#2459E0">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-WwPd+YMa8VOb/BK92ElCjurC+FsZAaL3YU6W01lJDis=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-I+rPmLSoc78Na3CVz98uNPWwnWEwX1cYfkZR5rOPvsw=' https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: blob: https://myahorrosapp.goatcounter.com; connect-src 'self' https://www.googleapis.com https://accounts.google.com/gsi/ https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com; frame-src https://accounts.google.com/gsi/; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -1128,8 +1128,9 @@ table.nwt{width:100%;border-collapse:collapse;font-size:var(--fs-body);font-vari
   <div class="tabbar">
     <nav class="tabs" role="tablist" aria-label="Sections">
       <button class="tab" role="tab" data-action="tab" data-tab="overview" id="tab-overview"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span class="tl">Overview</span></button>
-      <button class="tab" role="tab" data-action="tab" data-tab="transactions" id="tab-transactions"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 8V5l14-3v3M16 11h5v5h-5z"/></svg><span class="tl">Transactions</span></button>
       <button class="tab" role="tab" data-action="tab" data-tab="networth" id="tab-networth"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16h16M8 15l4-5 4 2 4-7"/></svg><span class="tl">Net worth</span></button>
+      <button class="tab" role="tab" data-action="tab" data-tab="transactions" id="tab-transactions"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 8V5l14-3v3M16 11h5v5h-5z"/></svg><span class="tl">Transactions</span></button>
+      <button class="tab" role="tab" data-action="tab" data-tab="yearly" id="tab-yearly"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 11h18"/></svg><span class="tl">Yearly<span class="tab-long"> tracking</span></span></button>
       <button class="tab" role="tab" data-action="tab" data-tab="settings" id="tab-settings"><svg class="ti" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="16" cy="17" r="3"/></svg><span class="tl">Settings</span></button>
     </nav>
     <div class="tabbar-end">
@@ -2464,40 +2465,6 @@ Object.assign(STR,{
   periodNoBalances:['No balances recorded for this month. Enter the month-end figures to see your net worth.','No hay saldos registrados para este mes. Introduce las cifras a fin de mes para ver tu patrimonio.']
 });
 
-
-Object.assign(STR,{
- tab_overview:['Summary','Resumen'], tab_networth:['Accounts','Cuentas'], kicker:['Your money, clearly','Tu dinero, claro'],
- ovSub:['Income, spending and what is left.','Ingresos, gastos y lo que queda.'], nwSub:['Your balances and how they change.','Tus saldos y cómo cambian.'], stSub:['Preferences, storage and backups.','Preferencias, almacenamiento y copias.'],
- simpleStart:['Start with one statement','Empieza con un extracto'], simpleStartHelp:['Name your bank account, then add a statement. Review the transactions and see your month.','Pon nombre a tu cuenta bancaria y añade un extracto. Revisa los movimientos y consulta tu mes.'],
- accountName:['Account name','Nombre de la cuenta'], mainAccount:['My bank account','Mi cuenta bancaria'], enterManually:['Enter transactions by hand','Añadir movimientos a mano'], simpleEmpty:['See your first month','Consulta tu primer mes'],
- spending:['Spending','Gastos'], leftAfterSpending:['Left after spending','Lo que queda tras gastar'], leftHelp:['Income minus spending. This includes money you put into savings or investments.','Ingresos menos gastos. Incluye el dinero destinado al ahorro o a inversiones.'],
- spendingByCategory:['Where your money went','En qué has gastado'], noSpending:['No spending recorded in this period.','No hay gastos registrados en este periodo.'],
- more:['more','más'], less:['less','menos'], spendingCompared:[(v,d,m)=>`${v} ${d} spent than in ${m}.`,(v,d,m)=>`${v} ${d} de gasto que en ${m}.`],
- investedSeparately:[v=>`${v} moved into investments. This is included in the amount left after spending.`,v=>`${v} destinados a inversiones. Están incluidos en lo que queda tras gastar.`],
- inspectMonth:['View transactions','Ver movimientos'], historyReports:['History and reports','Historial e informes'], backToSummary:['Back to Summary','Volver al resumen'],
- updateBalances:['Update balances','Actualizar saldos'], accountsOptional:['Follow your savings over time','Sigue tus ahorros a lo largo del tiempo'], accountsHelp:['Add an account and record its balance whenever you want. This is optional for tracking your spending.','Añade una cuenta y registra su saldo cuando quieras. Es opcional para llevar el control de gastos.'],
- accountTotal:['Recorded account balances','Saldos registrados'], balanceAsOf:[m=>`Last recorded: ${m}`,m=>`Último registro: ${m}`], sinceMonth:[m=>`since ${m}`,m=>`desde ${m}`], noBalanceYet:['No balance recorded yet','Aún no hay un saldo registrado'], addBalance:['Add balance','Añadir saldo'],
- balancesRecorded:[(n,t)=>`${n} of ${t} accounts have a balance for this month. Missing balances are not counted as zero.`,(n,t)=>`${n} de ${t} cuentas tienen saldo este mes. Los saldos que faltan no se cuentan como cero.`],
- balanceHistory:['Balance history','Historial de saldos'], recordedOnly:['Recorded balances only. No forecasts.','Solo saldos registrados, sin previsiones.'], partialBalances:['Some balances are missing','Faltan algunos saldos'],
- investmentDetails:['Investment performance (optional)','Rendimiento de inversiones (opcional)'], performanceHelp:['A change in balance can include deposits and withdrawals. Confirm those movements to calculate a gain or loss.','El cambio de saldo puede incluir aportaciones y retiradas. Confirma esos movimientos para calcular las ganancias o pérdidas.'], reviewPerformance:['Review this account’s performance','Revisar el rendimiento de esta cuenta'], performanceGain:['Recorded gain / loss','Ganancia / pérdida registrada'],
- moreAccountOptions:['More account options','Más opciones de cuentas'], balanceEntryHelp:['Enter the balance shown by your bank or statement.','Introduce el saldo que muestra tu banco o extracto.'], otherAccountTypes:['Other account types','Otros tipos de cuenta'],
- nwuTitle:['Update balances','Actualizar saldos'], nwuIntro:['Enter the month-end balance for each account you want to update.','Introduce el saldo de fin de mes de las cuentas que quieras actualizar.'], nwAccSub:['Name your accounts so you can recognise them.','Pon nombre a tus cuentas para reconocerlas.'],
- goalRemaining:[v=>`${v} left to reach your goal.`,v=>`Faltan ${v} para alcanzar tu objetivo.`], goalMonthly:[v=>`${v} to save each month until the target date.`,v=>`${v} de ahorro mensual hasta la fecha del objetivo.`], goalIncomplete:['Add the missing balances to see your full progress.','Añade los saldos que faltan para ver tu progreso completo.'],
- backupRestore:['Backups and export','Copias y exportación'], restoreSourceHelp:['Choose where to restore from. You will review the backup before replacing your data.','Elige desde dónde restaurar. Revisarás la copia antes de sustituir tus datos.'], restoreFile:['Choose a backup file','Elegir un archivo de copia'],
- trackingAutomatic:['All recorded history is included unless you choose a start month.','Se incluye todo el historial registrado salvo que elijas un mes inicial.'],
- usedCategories:['Show used categories','Mostrar categorías usadas'], matchingRules:['Automatic category rules (advanced)','Reglas automáticas de categorías (avanzado)'], backToCategories:['Back to categories','Volver a las categorías'], moreTransactionTools:['More transaction tools','Más herramientas de movimientos'],
- tourBtn:['Quick tips','Consejos rápidos'], helpSub:['A few tips using example data. Your figures stay unchanged.','Algunos consejos con datos de ejemplo. Tus cifras no cambian.'],
- tour_simpleSummary:[['Your month','Start with income, spending and the amount left. Choose another month or open History for older figures.'],['Tu mes','Empieza por los ingresos, gastos y lo que queda. Elige otro mes o abre el historial para ver cifras anteriores.']],
- tour_simpleTransactions:[['Your transactions','Add a statement, review anything uncertain, or enter a transaction by hand.'],['Tus movimientos','Añade un extracto, revisa las dudas o introduce un movimiento a mano.']],
- tour_simpleAccounts:[['Your accounts','Record balances when you want to follow your savings. Investment performance is optional.'],['Tus cuentas','Registra saldos cuando quieras seguir tus ahorros. El rendimiento de inversiones es opcional.']],
- readRows:['Review transactions','Revisar movimientos'], checkRows:['Review transactions','Revisar movimientos'], rowsRead:[(n,f)=>`${n} transactions${f?' · '+f:''}`,(n,f)=>`${n} movimientos${f?' · '+f:''}`],
- addRows:[n=>`Add ${n} transactions`,n=>`Añadir ${n} movimientos`], allRowsReview:['All transactions','Todos los movimientos'], impEditable:['Select Edit to change a transaction.','Pulsa Editar para cambiar un movimiento.'], noKeyword:['Choose a category','Elige una categoría'],
- editTransaction:['Edit','Editar'], finishEditing:['Done','Listo'], reviewHelp:['Review help','Ayuda para revisar'], reviewTools:['Filter and edit several transactions','Filtrar y editar varios movimientos'],
- issueCategory:['Choose a category','Elegir categoría'], issueDuplicate:['Possible duplicates','Posibles duplicados'], issueTransfer:['Transfers and exclusions','Transferencias y exclusiones'], issueOther:['Other checks','Otras comprobaciones'],
- importFileHelp:['Choose a bank CSV, Excel, PDF or picture.','Elige un CSV, Excel, PDF o imagen de tu banco.'], localReadHelp:['CSV and Excel stay on this device. For a PDF or picture, you can choose an AI reader.','Los CSV y Excel se leen en este dispositivo. Para un PDF o imagen puedes elegir un lector con IA.'],
- importNewData:['Add a statement','Añadir un extracto'], pasteImport:['Add a statement','Añadir un extracto'], reminderSimple:['Add your next bank statement and review your month. Account balances are optional.','Añade tu próximo extracto bancario y revisa el mes. Los saldos son opcionales.']
-});
-
 function L(k,...a){ const e=STR[k]; if(!e) return k; const v=e[LANG==='es'?1:0]; const out=typeof v==='function'?v(...a):v; return aiWord(k,out); }
 /* web version: the AI screens name the AI the visitor picked */
 const AI_KEYS=/^(ai|obWayAiSub|obAiHelp)/;
@@ -2841,6 +2808,7 @@ function applyLang(){
   $('.kicker').textContent=L('kicker'); $('.mast .brand').textContent=L('appTitle');
   $('.tabs').setAttribute('aria-label',L('sections'));
   $('#tab-overview .tl').textContent=L('tab_overview');
+  $('#tab-yearly .tl').textContent=L('tab_yearly');
   $('#tab-settings .tl').textContent=L('tab_settings');
   $('#tab-networth .tl').textContent=L('tab_networth');
   $('#btn-backup').textContent=L('dlBackup');
@@ -2899,23 +2867,29 @@ function render(){
   if(S.mode==='nodb') html=viewNoDb();
   else if(!S.gotMonths||!S.gotConfig||S.tourPending) html=loadingHtml();   /* not the empty tracker the tour is about to fill */
   else if(ob) html=viewWelcome();
-  else if(!allRows().length && !['categories','settings','networth'].includes(S.ui.tab)) html=pageHead(S.ui.tab)+viewEmpty();
-  else html=({overview:viewOverview,yearly:viewYearly,transactions:viewTransactions,categories:viewCategories,networth:viewNetworth,settings:viewSettings})[S.ui.tab]();
+  else if(!allRows().length && S.ui.tab!=='categories' && S.ui.tab!=='settings' && S.ui.tab!=='networth'){ const G=guideState();
+    /* Overview, and Transactions at its step, show the guide itself; elsewhere a reminder above the usual empty page */
+    html=pageHead(S.ui.tab)+(!G?viewEmpty():S.ui.tab==='overview'||(S.ui.tab==='transactions'&&G.cur==='tx')?`<div class="guide-wrap">${guideCard(G)}</div>`+viewEmpty():guideBar(G)+viewEmpty()); }
+  else { html=({overview:viewOverview,yearly:viewYearly,transactions:viewTransactions,categories:viewCategories,networth:viewNetworth,settings:viewSettings})[S.ui.tab]();
+    const G=S.ui.tab!=='networth'&&S.ui.tab!=='settings'?guideState():null;
+    if(G){ const full=S.ui.tab==='overview'; html=afterHead(html,full?`<div class="guide-wrap">${guideCard(G)}</div>`:guideBar(G)); }
+    else if((S.ui.tab==='overview'||S.ui.tab==='networth')&&ciDue()) html=afterHead(html,`<div class="guide-wrap">${ciStrip()}</div>`); }
   if(!ob&&(S.ui.tab==='settings'||S.ui.tab==='categories')) html=afterHead(html,setSub());
   v.innerHTML=html;
   restoreFocus(st);
   afterRender();
   syncStatus();
+  maybeWizard();
 }
 function renderHeader(){
   const ys=yearList();
-  for(const t of TABS){ const b=$('#tab-'+t); if(b) b.setAttribute('aria-selected',String(S.ui.tab===t||(t==='settings'&&S.ui.tab==='categories')||(t==='overview'&&S.ui.tab==='yearly'))); }
+  for(const t of TABS){ const b=$('#tab-'+t); if(b) b.setAttribute('aria-selected',String(S.ui.tab===t||(t==='settings'&&S.ui.tab==='categories'))); }
   if(!S.gotMonths){ setTxTab(0); return; }
   if(S.ui.year==null||!ys.includes(S.ui.year)){ const wd=yearsWithData(), st=startOf(), cy=new Date().getFullYear(); S.ui.year=wd.length?wd[wd.length-1]:(st?Math.max(cy,st.y):cy); }
   const un=agg(S.ui.year);
   const nUn=TKEYS.reduce((a,t)=>a+un[t].uncatCount,0);
   setTxTab(nUn);
-  $('#tab-networth').classList.remove('due');
+  $('#tab-networth').classList.toggle('due',!!(S.canWrite&&S.gotConfig&&nwDue()));
   $('#btn-backup').hidden=!(S.downloads && allRows().length && !isOnboarding() && !S.demo);
   { const tb=$('#btn-local-top'); let tp=null; try{ tp=S.local&&typeof S.local.top==='function'?S.local.top(LANG):null; }catch(_){}
     if(tb){ tb.hidden=!tp||S.demo; if(tp&&tb.dataset.key!==tp.fn+'|'+tp.label){ tb.dataset.fn=tp.fn; tb.innerHTML=(tp.icon||'')+'<span>'+esc(tp.label)+'</span>'; tb.title=tp.help||''; tb.dataset.key=tp.fn+'|'+tp.label; } } }
@@ -2926,7 +2900,7 @@ function renderHeader(){
 /* Settings holds Categories too: General | Categories under the page title */
 const setSub=()=>`<div class="st-sub"><div class="seg" role="group" aria-label="${esc(L('tab_settings'))}">${[['settings','stGeneral'],['categories','tab_categories']].map(([t,k])=>`<button type="button" data-action="tab" data-tab="${t}" aria-pressed="${S.ui.tab===t}">${esc(L(k))}</button>`).join('')}</div></div>`;
 /* the one page header: title (+ info) and a one-line description on the left; the period control and the page's actions on the right */
-const PH={networth:['tab_networth','nwSub'],overview:['tab_overview','ovSub'],yearly:['pt_yearly','yHint','yTable'],transactions:['tab_transactions','txSub'],categories:['tab_categories','ctSub'],settings:['tab_settings','stSub']};
+const PH={networth:['tab_networth','nwSub','nwWhat'],overview:['tab_overview','ovSub'],yearly:['pt_yearly','yHint','yTable'],transactions:['tab_transactions','txSub'],categories:['tab_categories','ctSub'],settings:['tab_settings','stSub']};
 function pageHead(t,period,actions){ const [tk,sk,ik]=PH[t];
   return `<header class="page-head"><div><h1 class="page-title">${esc(L(tk))}${ik?info(ik):''}</h1><p class="ph-meta">${esc(L(sk))}</p></div>${period||actions?`<div class="ph-end">${period?`<div class="ph-period">${period}</div>`:''}${actions?`<div class="ph-acts${S.ui.pageActions&&S.ui.pageActions[t]?' show-all':''}" id="actions-${t}">${actions}<button class="btn sm mobile-more" data-action="page-actions" data-tab="${t}" aria-expanded="${!!(S.ui.pageActions&&S.ui.pageActions[t])}" aria-controls="actions-${t}">${esc(L(S.ui.pageActions&&S.ui.pageActions[t]?'fewerActions':'moreActions'))}</button></div>`:''}</div>`:''}</header>`; }
 /* the year control, in the page header of the tabs that show one year */
@@ -2951,9 +2925,11 @@ function viewNoDb(){
   return `<div class="state"><h2>${esc(L('nodbTitle'))}</h2><p>${esc(L('nodbText'))}</p></div>`;
 }
 function viewEmpty(){
-  return `<section class="card simple-empty"><h2>${esc(L('simpleEmpty'))}</h2><p>${esc(L('simpleStartHelp'))}</p>${S.canWrite?`<div class="ctrls"><button class="btn primary" data-action="import">${esc(L('addStatement'))}</button><button class="btn" data-action="add-tx">${esc(L('addTx'))}</button></div>`:''}</section>`;
+  return `<div class="state"><h2>${esc(L('emptyTitle'))}</h2>
+    <p>${esc(L('emptyText'))}</p>
+    ${S.canWrite?`<div class="row">${S.ai?`<button class="btn" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn" data-action="import">${esc(L('pasteImport'))}</button><button class="btn primary" data-action="add-tx">${esc(L('addTx'))}</button></div>`:''}
+    <p class="hint" style="margin-top:var(--s16)">${esc(L('emptyTour'))} <button type="button" class="linkish" data-action="tour">${esc(L('tourBtn'))}</button></p></div>`;
 }
-
 
 /* ───────── icons ───────── */
 const ICON={
@@ -2983,40 +2959,18 @@ function obStartPick(){ const box=$('#ob-month-box'), now=new Date();
   /* opening "start from an earlier month?" without changing it keeps the automatic start (the first month you import) */
   if(box&&box.open){ const y=+$('#ob-year').value, m=+$('#ob-month').value; if(y!==now.getFullYear()||m!==now.getMonth()) return {y,m,auto:false}; }
   return {y:now.getFullYear(),m:now.getMonth(),auto:true}; }
-function simpleStarter(lang){
-  const stock=clone(lang==='es'?DEFAULT_CATS_ES:DEFAULT_CATS), mapping=new Map(), kept=[0,1,2,5,6,7,11,12,13,18];
-  stock.expenses=stock.expenses.filter((c,i)=>kept.includes(i));
-  const source=(lang==='es'?DEFAULT_CATS_ES:DEFAULT_CATS).expenses;
-  const merge={3:1,4:18,8:7,9:18,10:11,14:18,15:18,16:18,17:13};
-  for(const [from,to] of Object.entries(merge)) mapping.set(source[from].name,source[to].name);
-  return {stock,mapping};
-}
 function obApply(lang,y,m,auto){
   setSettings(Object.assign({lang,start:{y,m},guide:{on:true},startAuto:!!auto,fixedVar:1},S.settings&&S.settings.numFmt?{}:{numFmt:regionNum()},S.settings&&S.settings.currency?{}:{currency:regionCurrency()}));
-  const starter=simpleStarter(lang), fresh=!allRows().length&&(!S.cats||(isStockCats(S.cats)&&!TKEYS.some(t=>(kws()[t]||[]).length)));
-  if(fresh){S.cats=starter.stock;markDirty('config/categories');}
-  if(!S.kw||!TKEYS.some(t=>(S.kw[t]||[]).length)){ const st=STARTER_KW[lang], keep=kwRegionKeep(); S.kw={}; for(const t of TKEYS) S.kw[t]=st[t].concat(t==='expenses'&&st.extra?st.extra:[]).map(q=>[q[0],fresh&&t==='expenses'?(starter.mapping.get(q[1])||q[1]):q[1]]).filter(q=>isKnown(t,q[1])&&keep(q[0])); markDirty('config/keywords'); }
+  if(!S.cats||(isStockCats(S.cats)&&!TKEYS.some(t=>(kws()[t]||[]).length))){ S.cats=clone(lang==='es'?DEFAULT_CATS_ES:DEFAULT_CATS); markDirty('config/categories'); }
+  if(!S.kw||!TKEYS.some(t=>(S.kw[t]||[]).length)){ const st=STARTER_KW[lang], keep=kwRegionKeep(); S.kw={}; for(const t of TKEYS) S.kw[t]=st[t].concat(t==='expenses'&&st.extra?st.extra:[]).filter(q=>isKnown(t,q[1])&&keep(q[0])).map(q=>q.slice()); markDirty('config/keywords'); }
   S.ui.year=y; bump();
 }
 function viewWelcome(){
-  return `<section class="card welcome simple-welcome" aria-labelledby="ob-title"><p class="eyebrow">${esc(L('welcome'))}</p><h2 id="ob-title">${esc(L('simpleStart'))}</h2><p>${esc(L('simpleStartHelp'))}</p>
-    <form id="simple-start-form"><div class="field"><label for="ob-account">${esc(L('accountName'))}</label><input id="ob-account" maxlength="80" value="${esc(L('mainAccount'))}" required autocomplete="off"></div>
-    <div class="field"><label for="ob-currency">${esc(L('currency'))}</label><select id="ob-currency">${Object.entries(CURRENCIES).map(([k,c])=>`<option value="${k}"${k===CUR?' selected':''}>${esc(c.n)}</option>`).join('')}</select></div>
-    <div class="ctrls"><button class="btn primary" type="submit" id="ob-start">${esc(L('addStatement'))}</button><button class="btn ghost" type="button" data-action="simple-manual">${esc(L('enterManually'))}</button></div></form>
-    <p class="hint">${esc(L('webHaveBackup'))} <button class="linkish" data-action="restore">${esc(L('restoreIt'))}</button></p></section>`;
+  const u=S.ui;
+  return `<section class="card welcome" aria-labelledby="ob-title"><p class="eyebrow">${esc(L('welcome'))}</p><h2 id="ob-title">${esc(L('setupScope'))}</h2><p>${esc(L('quickHelp'))}</p>
+  <div class="ob-ways"><button class="ob-way" id="ob-start" data-action="ob-start"><b>${esc(L('quickStart'))}</b><span>${esc(L('quickHelp'))}</span></button><button class="ob-way" id="ob-history" data-action="ob-history"><b>${esc(L('historyStart'))}</b><span>${esc(L('historyHelp'))}</span></button></div>
+  <p class="hint">${esc(L('webHaveBackup'))} <button class="linkish" data-action="restore">${esc(L('restoreIt'))}</button></p></section>`;
 }
-function simpleStart(manual=false){
-  if(!S.canWrite) return;
-  const name=$('#ob-account')?.value.trim(), currency=$('#ob-currency')?.value;
-  if(!name){ $('#ob-account')?.reportValidity(); return; }
-  const lang=S.ui.obLang==='es'?'es':'en', n=nowYM();
-  obApply(lang,n.y,n.m,true);
-  setSettings({currency:CURRENCIES[currency]?currency:CUR,guide:Object.assign({},S.settings.guide,{on:false,done:true})});
-  const N=ensureNw(), a={id:newId(),name,group:'cash',words:'',risk:false}; N.accounts.push(a); saveNw();
-  S.wizard=null; S.wizardShown=true; S.ui.tab='overview'; bump(); render();
-  if(manual) ACTIONS['add-tx'](); else openModal({type:'import',step:'input',table:'auto',text:'',acct:a.id,fixedAccount:true,pick:true,wide:true});
-}
-
 
 /* ───────── settings ───────── */
 function aboutFields(prefix,enabled){
@@ -3025,19 +2979,59 @@ function aboutFields(prefix,enabled){
     <div class="field"><label class="lab" for="${prefix}-salary">${esc(L('grossSalary'))}</label><input id="${prefix}-salary" type="number" inputmode="decimal" min="0.01" max="999999999.99" step="any" value="${esc(String(so.salary||''))}"${disabled} style="max-width:180px"></div>
     <button class="btn${prefix==='wz'?'':' primary'}" type="button" data-action="about-set" data-prefix="${prefix}"${disabled}>${esc(L('aboutSet'))}</button></div><p class="hint" id="${prefix}-about-status" role="status"></p>`;
 }
-function modalRestoreChoices(){
-  const extra=S.local&&typeof S.local.extra==='function'?S.local.extra(LANG):[];
-  return `${mHead(esc(L('restoreBtn')),esc(L('restoreSourceHelp')))}<div class="m-body stack"><button class="btn" data-action="restore-file">${esc(L('restoreFile'))}</button>${extra.filter(x=>/restore/i.test(x.fn)).map(x=>`<button class="btn" data-action="restore-local" data-fn="${esc(x.fn)}">${esc(x.label)}</button>`).join('')}</div><div class="m-foot"><button class="btn" data-action="close">${esc(L('cancel'))}</button></div>`;
-}
 function viewSettings(){
-  const cw=S.canWrite, extra=S.local&&typeof S.local.extra==='function'?S.local.extra(LANG):[];
-  const action=x=>`<button class="btn" data-action="local-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button>`;
-  return pageHead('settings')+`<div class="settings"><div class="stack"><section class="card"><h2>${esc(L('language'))}</h2>${langCards('st',LANG,false)}<div class="field"><label for="st-cur">${esc(L('currency'))}</label><select id="st-cur"${cw?'':' disabled'}>${Object.entries(CURRENCIES).map(([k,c])=>`<option value="${k}"${k===CUR?' selected':''}>${esc(c.n)}</option>`).join('')}</select><p class="hint">${esc(L('currencyHelp'))}</p></div><details><summary>${esc(L('numFmt'))}</summary><div class="radio-row">${[['eu','1.234,56'],['en','1,234.56']].map(([v,label])=>`<label><input type="radio" name="st-num" id="st-num-${v}" value="${v}"${wantNum()===v?' checked':''}>${label}</label>`).join('')}</div></details></section><section class="card"><h2>${esc(L('appearance'))}</h2>${themeCards(wantTheme(),false)}</section></div>
-  <div class="stack"><section class="card"><h2>${esc(L('dataFileTitle'))}</h2><p>${esc(S.local?LT('dataFileSub'):L('dataWeb'))}</p>${S.local?`<p class="hint">${esc(S.local.file)}</p>`:''}<div class="ctrls">${extra.filter(x=>!/restore/i.test(x.fn)).map(action).join('')}</div><h3>${esc(L('backupRestore'))}</h3><div class="ctrls"><button class="btn" data-action="${S.local?'local-save':'backup'}">${esc(L('dlBackup'))}</button><button class="btn" data-action="restore-choices">${esc(L('restoreBtn'))}</button>${S.downloads&&allRows().length?`<button class="btn" data-action="export">${esc(L('dlAll'))}</button>`:''}</div>${S.local?`<details class="danger-zone"><summary>${esc(L('startFresh'))}</summary><p>${esc(L('startFreshHelp'))}</p><button class="btn danger" data-action="local-fresh">${esc(L('startFresh'))}</button></details>`:''}</section>
-  <section class="card"><h2>${esc(L('helpTitle'))}</h2><div class="ctrls"><button class="btn" data-action="tour">${esc(L('tourBtn'))}</button><button class="btn" data-action="remind-ics">${esc(L('remindBtn'))}</button></div></section>
-  <details class="card"><summary>${esc(L('advanced'))}</summary><label class="check"><input type="checkbox" id="st-ml"${mlOn()?' checked':''}${cw?'':' disabled'}>${esc(L('mlToggle'))}</label><p class="hint">${esc(L('mlSub'))}</p><h3>${esc(L('startTitle'))}</h3><p>${esc(L('trackingAutomatic'))}</p><label>${esc(L('startTitle'))}<input type="month" id="st-period" value="${startOf()?ymOf(startOf().y,startOf().m):''}"></label>${startOf()?`<button class="btn" data-action="st-clear">${esc(L('clearStart'))}</button>`:''}</details></div></div>`;
+  const st=startOf(), cw=S.canWrite, cy=new Date().getFullYear();
+  const act=(a,label,help,cls)=>`<div class="set-act"><button class="btn${cls?' '+cls:''}" type="button" data-action="${a}">${esc(label)}</button><span class="hint">${esc(help)}</span></div>`;
+  const nf=wantNum();
+  const langCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('language'))}</h2><p class="sub">${esc(L('langSub'))}</p></div></div>
+    ${langCards('st',LANG,false)}
+    <p class="hint" style="margin-top:var(--s12)">${esc(cw?L('langCatNote'):L('langLocal'))}</p>
+    <fieldset class="field plain" style="margin-top:var(--s16)"><legend class="lab">${esc(L('numFmt'))}</legend><div class="radio-row">${[['eu','1.234,56','numEu'],['en','1,234.56','numEn']].map(([v,s,k])=>`<label class="radio-card"><input type="radio" name="st-num" id="st-num-${v}" value="${v}"${nf===v?' checked':''}><span><b class="num">${s}</b><small>${esc(L(k))}</small></span></label>`).join('')}</div></fieldset>
+    <div class="field" style="margin-top:var(--s16)"><label class="lab" for="st-cur">${esc(L('currency'))}</label><select id="st-cur"${cw?'':' disabled'} style="max-width:320px">${Object.entries(CURRENCIES).map(([k,c])=>`<option value="${k}"${k===CUR?' selected':''}>${esc(c.n)}</option>`).join('')}</select><span class="help">${esc(L('currencyHelp'))}</span></div></section>`;
+  let startBody;
+  if(!st){
+    startBody=`<p class="hint">${esc(L('notSetHint'))}</p>${cw?`<div style="margin-top:var(--s12)"><button class="btn" type="button" data-action="st-set">${esc(L('setStart'))}</button></div>`:''}`;
+  } else {
+    const wd=yearsWithData();
+    const ys=yearRange(Math.min(cy-5,st.y,...(wd.length?[wd[0]]:[])),Math.max(cy+1,st.y));
+    const iso=st.y+'-'+String(st.m+1).padStart(2,'0');
+    const pre=allRows().filter(r=>r.date.slice(0,7)<iso).length;
+    startBody=`<div class="start-row"><label class="sr" for="st-month">${esc(L('month'))}</label><select id="st-month"${cw?'':' disabled'}>${M().map((n,i)=>`<option value="${i}"${i===st.m?' selected':''}>${n}</option>`).join('')}</select>
+      <label class="sr" for="st-year">${esc(L('year'))}</label><select id="st-year"${cw?'':' disabled'}>${ys.map(y=>`<option${y===st.y?' selected':''}>${y}</option>`).join('')}</select>
+      ${cw&&allRows().length?`<button class="btn ghost sm" type="button" data-action="st-clear">${esc(L('clearStart'))}</button>`:''}</div>
+      ${pre?`<p class="warn-text" style="margin-top:var(--s12)">${esc(L('preData',pre))}${cw?` <button class="btn sm" type="button" data-action="st-set">${esc(L('preDataBtn'))}</button>`:''}</p>`:''}`;
+  }
+  const startCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('startTitle'))}${info('setStart')}</h2><p class="sub">${esc(L('startSub'))}</p></div></div>${startBody}</section>`;
+  const canDl=S.downloads&&allRows().length;
+  const dataCard=S.local
+    ? `<section class="card"><div class="card-head"><div><h2>${esc(LT('dataFileTitle'))}</h2><p class="sub">${esc(LT('dataFileSub'))}</p></div></div>
+        <code class="path" id="data-path">${esc(S.local.file)}</code>
+        <p class="hint" id="local-status" role="status"${S.local.status?'':' hidden'} style="margin-top:var(--s8)">${esc(S.local.status||'')}</p>
+        ${S.local.version?`<p class="hint" id="app-version" style="margin-top:var(--s8)">${esc(L('appVersion',S.local.version))}</p>`:''}
+        ${S.local.backups?`<p class="hint" style="margin:var(--s12) 0 var(--s8)">${esc(LT('backupsNote'))}</p><code class="path" id="backup-path">${esc(S.local.backups)}</code>`:''}
+        <div class="set-acts">
+          ${(typeof S.local.extra==='function'?S.local.extra(LANG)||[]:[]).map(x=>`<div class="set-act"><button class="btn" type="button" data-action="local-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button><span class="hint">${esc(x.help)}</span></div>`).join('')}
+          ${act('local-save',LT('saveCopy'),LT('saveCopyHelp'))}
+          ${act('local-open',L('openOther'),L('openOtherHelp'))}
+          ${act('local-fresh',L('startFresh'),L('startFreshHelp'),'danger')}
+          ${canDl?act('export',L('dlAll'),L('dlAllHelp')):''}
+        </div></section>`
+    : `<section class="card"><div class="card-head"><div><h2>${esc(L('dataTitle'))}</h2><p class="sub">${esc(L('dataWeb'))}</p></div></div>
+        <div class="set-acts">${canDl?act('backup',L('dlBackupLong'),L('dlBackupHelp')):''}${cw?act('restore',L('restoreBtn'),L('restoreHelp')):''}${canDl?act('export',L('dlAll'),L('dlAllHelp')):''}</div></section>`;
+  const aboutCard=`<section class="card" id="about-card"><div class="card-head"><div><h2>${esc(L('aboutTitle'))}</h2><p class="sub">${esc(L('aboutSub'))}</p></div></div>${aboutFields('st',cw)}</section>`;
+  const mlN=mlOn()?mlLearnedCount():0;
+  const mlCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('mlTitle'))}</h2><p class="sub">${esc(L('mlSub'))}</p></div></div>
+    <label class="check"><input type="checkbox" id="st-ml"${mlOn()?' checked':''}${cw?'':' disabled'}>${esc(L('mlToggle'))}</label>
+    ${mlOn()?`<p class="hint" style="margin-top:var(--s12)">${esc(mlN?L('mlLearned',mlN):L('mlTooFew',ML_MIN_ROWS))}</p>`:''}</section>`;
+  const themeCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('appearance'))}</h2><p class="sub">${esc(L('appearanceSub'))}</p></div></div>
+    ${themeCards(wantTheme(),false)}${cw?'':`<p class="hint" style="margin-top:var(--s12)">${esc(L('themeLocal'))}</p>`}</section>`;
+  const aiX=S.ai&&typeof S.ai.extra==='function'?S.ai.extra(LANG)||[]:[];
+  const aiCard=aiX.length?`<section class="card" id="ai-card"><div class="card-head"><div><h2>${esc(S.ai.title)}</h2><p class="sub">${esc(S.ai.sub)}</p></div></div>
+    <div class="set-acts">${cw&&allRows().length?`<div class="set-act"><button class="btn sm au-link" type="button" data-action="audit" data-f="settings">${ICON.ai}${esc(L('auBtn_settings'))}</button><span class="hint">${esc(L('auHelp_settings'))}</span></div>`:''}<div class="set-act"><button class="btn" data-action="audit-answers">${esc(L('rememberAnswers'))}</button></div>${aiX.map(x=>`<div class="set-act"><button class="btn" type="button" data-action="ai-x" data-fn="${esc(x.fn)}">${esc(x.label)}</button><span class="hint">${esc(x.help)}</span></div>`).join('')}</div></section>`:'';
+  const helpCard=`<section class="card"><div class="card-head"><div><h2>${esc(L('helpTitle'))}</h2><p class="sub">${esc(L('helpSub'))}</p></div></div>
+    <div class="ctrls"><button class="btn" type="button" data-action="tour">${esc(L('tourBtn'))}</button>${S.downloads||S.local?`<button class="btn" type="button" data-action="remind-ics">${esc(L('remindBtn'))}</button>`:''}${S.canWrite&&!guideState()&&(!nw().accounts.length||!nwMonths().length||!allRows().length)?`<button class="btn" type="button" data-action="guide-show">${esc(L('gShow'))}</button>`:''}</div><p class="hint" style="margin-top:var(--s12)">${esc(L('helpInfo'))}</p></section>`;
+  return pageHead('settings')+`<div class="settings"><div class="stack">${langCard}${startCard}${aboutCard}${mlCard}</div><div class="stack">${themeCard}${dataCard}${aiCard}${helpCard}</div></div>`;
 }
-
 /* renames one category everywhere it's used (the caller saves and redraws) */
 function renameCatCore(t,from,nn){
   const roles=Object.keys(ROLE_NAMES).map(r=>[r,roleCat(t,r)]);
@@ -3085,7 +3079,7 @@ function setLang(v){
   else toast(L('langSaved'));
 }
 function setStart(st){
-  const s=Object.assign({},S.settings||{}); delete s.startAuto; if(st) s.start=st; else delete s.start;
+  const s=Object.assign({},S.settings||{}); if(st) s.start=st; else delete s.start;
   S.settings=s; markDirty('config/settings'); bump(); render();
   toast(st?L('startSaved',M()[st.m],st.y):L('startCleared'));
 }
@@ -3101,8 +3095,7 @@ function coverStart(date){
 function LT(k){ const f=S.local&&S.local.text; let v=null; try{ v=typeof f==='function'?f.call(S.local,k,LANG):null; }catch(_){} return v||L(k); }
 async function localAction(fn){
   if(!S.local||typeof S.local[fn]!=='function') return;
-  /* A backup includes edits still waiting for the debounced storage write. */
-  let r=null; try{ r=await S.local[fn](fn==='saveCopy'?currentDataset():undefined); }catch(_){ r=null; }
+  let r=null; try{ r=await S.local[fn](); }catch(_){ r=null; }
   if(fn==='saveCopy'&&r&&r.message&&!r.bad&&S.canWrite&&S.local.nudge){ setSettings({lastBackup:todayYmd()}); render(); }
   if(r&&r.message) toast(r.message,null,9000);
 }
@@ -3129,7 +3122,40 @@ function scenarioTotal(current,monthly,extra,n){
   if(![current,monthly,extra,n].every(Number.isFinite)||extra<0||extra>=1e9||!Number.isInteger(n)||n<1||n>600) return null;
   return (cents(current)+(cents(monthly)+cents(extra))*n)/100;
 }
-
+function scenarioState(){
+  const ms=nwMonths(); if(!ms.length) return null;
+  const k=ms[ms.length-1], current=nwTotals(k).total, pace=savingPace(), monthly=pace?pace.avg:0;
+  const extra=S.ui.scenarioExtra===undefined?100:S.ui.scenarioExtra, n=S.ui.scenarioMonths===undefined?12:S.ui.scenarioMonths;
+  const total=scenarioTotal(current,monthly,extra,n), base=scenarioTotal(current,monthly,0,n);
+  return {k,current,pace,monthly,extra,n,total,base,added:total==null?null:(cents(total)-cents(base))/100,end:Number.isInteger(n)&&n>=1&&n<=600?ymAdd(k,n):null};
+}
+function scenarioOutput(){
+  const x=scenarioState(); if(!x) return '';
+  const amountOk=Number.isFinite(x.extra)&&x.extra>=0&&x.extra<1e9, monthsOk=Number.isInteger(x.n)&&x.n>=1&&x.n<=600, goal=nw().goal;
+  const error=!amountOk?L('scenarioAmountError',fmtEUR(999999999.99,2,true)):!monthsOk?L('scenarioMonthError'):'';
+  const gap=x.total==null||!goal?null:(cents(goal.amount)-cents(x.total))/100;
+  return `<div class="scenario-total"><span class="nw-stat-l">${esc(L('scenarioResult'))}</span><strong id="scenario-result">${x.total==null?DASH:fmtEUR(x.total)}</strong><span class="hint">${x.end?esc(L('scenarioEnd',ymIn(x.end))):''}</span></div>
+    <div class="scenario-comparison"><div><span>${esc(L('scenarioBaseline'))}</span><b id="scenario-baseline">${x.total==null?DASH:fmtEUR(x.base)}</b></div><div><span>${esc(L('scenarioImpact'))}</span><b id="scenario-impact">${x.added==null?DASH:signed(x.added)}</b></div></div>
+    ${gap==null?'':`<p class="scenario-goal">${esc(gap>0?L('scenarioGoalGap',fmtEUR(gap)):L('scenarioGoalAbove',fmtEUR(-gap)))}</p>`}
+    <p id="scenario-error" class="scenario-error"${error?'':' hidden'}>${esc(error)}</p>`;
+}
+function scenarioInput(el){
+  if(el.id==='scenario-extra'){ S.ui.scenarioRaw=el.value; S.ui.scenarioExtra=parseAmount(el.value,wantNum()); }
+  else S.ui.scenarioMonths=el.value===''?0:Number(el.value);
+  const out=$('#scenario-output'); if(!out) return; out.innerHTML=scenarioOutput();
+  const x=scenarioState(); $('#scenario-extra').setAttribute('aria-invalid',String(!Number.isFinite(x.extra)||x.extra<0||x.extra>=1e9));
+  $('#scenario-months').setAttribute('aria-invalid',String(!Number.isInteger(x.n)||x.n<1||x.n>600));
+  document.querySelectorAll('#savings-scenario [aria-pressed]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.n===x.n)));
+}
+function scenarioCard(){
+  const x=scenarioState(); if(!x) return ''; const goal=nw().goal, goalMonths=goal?ymDiff(x.k,goal.month):0;
+  return `<section class="card" id="savings-scenario"><div class="card-head"><div><h2>${esc(L('scenario'))}</h2><p class="sub">${esc(L('scenarioIntro'))}</p></div></div>
+    <div class="scenario-layout"><div class="scenario-controls"><dl class="scenario-meta"><div><dt>${esc(L('scenarioStart'))}</dt><dd>${fmtEUR(x.current)}</dd><dd class="hint">${esc(ymIn(x.k))}</dd></div><div><dt>${esc(L('nwStSave'))}</dt><dd>${fmtEUR(x.monthly)}</dd><dd class="hint">${esc(x.pace?L('nwStSaveSub',x.pace.n):L('scenarioNoAverage'))}</dd></div></dl>
+      <div class="scenario-fields"><label>${esc(L('scenarioExtra'))} (${esc(withCur('').trim())})<input id="scenario-extra" type="text" inputmode="decimal" value="${esc(S.ui.scenarioRaw==null?fmtNum(x.extra):S.ui.scenarioRaw)}" aria-invalid="${!Number.isFinite(x.extra)||x.extra<0||x.extra>=1e9}" aria-describedby="scenario-error"></label><label>${esc(L('scenarioMonths'))}<input id="scenario-months" type="number" min="1" max="600" step="1" value="${x.n}" aria-invalid="${!Number.isInteger(x.n)||x.n<1||x.n>600}" aria-describedby="scenario-error"></label></div>
+      <div class="scenario-presets">${[6,12,24].map(n=>`<button class="btn sm" type="button" data-action="scenario-period" data-n="${n}" aria-pressed="${x.n===n}">${esc(L('scenarioDuration',n))}</button>`).join('')}${goalMonths>=1&&goalMonths<=600?`<button class="btn sm" type="button" data-action="scenario-period" data-n="${goalMonths}">${esc(L('scenarioUseGoal'))}</button>`:''}</div></div>
+      <div id="scenario-output" aria-live="polite" aria-atomic="true">${scenarioOutput()}</div></div>
+    <details class="nw-foot nw-how"><summary>${esc(L('howCalc'))}</summary><p>${esc(L('scenarioHelp'))}</p></details></section>`;
+}
 function latestMonthCard(){
   if(allRows().some(r=>r.date.slice(0,7)===ymNow())) return '';
   const ms=[...new Set(allRows().map(r=>r.date.slice(0,7)))].filter(k=>k<ymNow()&&+k.slice(0,4)===S.ui.year).sort(), k=ms[ms.length-1]; if(!k) return '';
@@ -3140,31 +3166,89 @@ function yearMonthCard(y,A){
   const ms=activeMonths(y), m=ms.includes(S.ui.yearMonth)?S.ui.yearMonth:ms[ms.length-1]||0;
   return `<section class="card year-month-card"><label>${esc(L('month'))}<select id="year-month-pick">${ms.map(i=>`<option value="${i}"${i===m?' selected':''}>${esc(M()[i])}</option>`).join('')}</select></label>${TKEYS.map(t=>`<h2>${esc(TL(t))} · ${fmtEUR(t==='income'?A[t].total[m]:-A[t].total[m])}</h2><ul class="month-list">${catRowsFor(A,t).map(c=>({c,v:(A[t].rows.get(c)||[])[m]||0})).filter(x=>Math.abs(x.v)>=.005).map(x=>`<li><button class="linkish" data-action="drill" data-t="${t}" data-c="${esc(x.c)}" data-m="${m}">${esc(dispCat(x.c))}</button><b>${fmtEUR(x.v)}</b></li>`).join('')}</ul>`).join('')}</section>`;
 }
-function summarySelection(){
-  const keys=[...new Set(allRows().filter(isBudgetRow).map(r=>r.date.slice(0,7)))].sort();
-  if(S.ui.overviewMonth==null){ const k=keys[keys.length-1]||ymNow(); S.ui.year=+k.slice(0,4); S.ui.overviewMonth=String(+k.slice(5,7)-1); }
-  const y=S.ui.year, month=S.ui.overviewMonth, k=month==='all'?null:ymOf(y,+month);
-  return {keys,y,month,k,rows:allRows().filter(r=>isBudgetRow(r)&&+r.date.slice(5,7)-1>=ovFirst(y)&&(k?r.date.slice(0,7)===k:+r.date.slice(0,4)===y))};
-}
 function viewOverview(){
-  const {keys,y,month,k,rows}=summarySelection(), totals=agg(y,true,month==='all'?undefined:+month).Y;
-  const years=[...new Set(keys.map(x=>x.slice(0,4)))], value=k||'year:'+y;
-  const choices=[...new Set([...keys,...(k?[k]:[])])].sort().reverse();
-  const period=`<label class="simple-period">${esc(L('period'))}<select id="summary-period">${choices.map(m=>`<option value="${m}"${value===m?' selected':''}>${esc(ymLabel(m,true))}</option>`).join('')}${years.map(yr=>`<option value="year:${yr}"${value==='year:'+yr?' selected':''}>${esc(L('wholeOf',yr))}</option>`).join('')}</select></label>`;
-  const un=rows.filter(r=>!isKnown(r.table,r.category)).length;
-  const expense=new Map(); for(const r of rows) if(r.table==='expenses') expense.set(r.category||UNCAT,(expense.get(r.category||UNCAT)||0)-cents(r.amount));
-  const cats=[...expense].sort((a,b)=>b[1]-a[1]), biggest=Math.max(1,...cats.map(x=>Math.abs(x[1])));
-  const c=k?monthComparison(allRows(),k,'month'):null;
-  const compare=c?.complete&&Math.abs(c.change.expenses)>.004?`<p class="summary-comparison">${esc(L('spendingCompared',fmtEUR(Math.abs(c.change.expenses)),L(c.change.expenses>0?'more':'less'),ymLabel(c.previousMonth,true)))}</p>`:'';
-  const categoryList=cats.map(([cat,v])=>`<li><button type="button" class="linkish" data-action="drill" data-t="expenses" data-c="${esc(cat)}" data-m="${k?+month:'year'}">${esc(dispCat(cat))}</button><span class="simple-bar" aria-hidden="true"><i style="width:${Math.abs(v)/biggest*100}%"></i></span><b>${fmtEUR(v/100)}${k&&limitFor(cat)?`<small class="category-limit">${esc(L('perMonthShort',fmtEUR(limitFor(cat))))}</small>`:''}</b></li>`).join('');
-  return pageHead('overview',period,S.canWrite?`<button class="btn primary" data-action="import">${ICON.plus}${esc(L('addStatement'))}</button>`:'')+`<div class="stack">
-    ${backupNudge()}${un?`<div class="notice"><span>${esc(L('txAttentionNotice',un))}</span><button class="linkish" data-action="summary-review">${esc(L('needsAttention'))}</button></div>`:''}
-    <section class="summary-totals" aria-label="${esc(L('tab_overview'))}"><div class="tile"><span class="tile-label">${esc(TL('income'))}</span><strong class="tile-val">${fmtEUR(totals.inc)}</strong></div><div class="tile"><span class="tile-label">${esc(L('spending'))}</span><strong class="tile-val">${fmtEUR(-totals.exp)}</strong></div><div class="tile summary-left"><span class="tile-label">${esc(L('leftAfterSpending'))}</span><strong class="tile-val">${fmtEUR(totals.sav)}</strong><span class="hint">${esc(L('leftHelp'))}</span></div></section>
-    ${rows.length?`<section class="card"><div class="card-head"><h2>${esc(L('spendingByCategory'))}</h2></div>${compare}${cats.length?`<ul class="simple-categories">${categoryList}</ul>`:`<p>${esc(L('noSpending'))}</p>`}${Math.abs(totals.inv)>.004?`<p class="hint">${esc(L('investedSeparately',fmtEUR(totals.inv)))}</p>`:''}</section>`:`<p class="notice">${esc(L('noActivity'))}</p>`}
-    <div class="ctrls"><button class="btn" data-action="summary-transactions">${esc(L('inspectMonth'))}</button><button class="btn ghost" data-action="tab" data-tab="yearly">${esc(L('historyReports'))}</button></div>
+  const y=S.ui.year, month=S.ui.overviewMonth??'all', selected=month!=='all', A=agg(y,true), Y=agg(y,true,selected?+month:undefined).Y, ms=selected?[+month]:ovMonths(y), idx=selected?[+month]:chartIdx(y), T=targets(), AF=agg(y);
+  const ai=selected?[+month]:avgIdx(y), incAvg=ai.length?sum(ai.map(i=>A.income.total[i]))/ai.length:0;
+  const nm=nowYM(), partialOut=y===nm.y&&idx.includes(nm.m)&&ai.length<idx.length;
+  const rn=rentName(), un=roleName('expenses','utilities');
+  const nUn=TKEYS.reduce((a,t)=>a+AF[t].uncatCount,0);
+  const notice=nUn&&!S.demo?`<div class="notice">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(L('uncatNotice',nUn,y))}</span><button class="linkish" data-action="goto-uncat">${esc(L('reviewThem',nUn))}</button></div>`:'';
+  const inds=[
+    {k:'rentUtilities',label:L('ind_rentUtil'),sub:L('ind_rentUtilSub',rn||ROLE_NAMES.rent[LANG==='es'?1:0],un||ROLE_NAMES.utilities[LANG==='es'?1:0]),amt:Y.rentUtil,dir:'max'},
+    {k:'need',label:L('ind_need'),sub:L('ind_needSub'),amt:Y.need,dir:'max'},
+    {k:'want',label:L('ind_want'),sub:L('ind_wantSub'),amt:Y.want,dir:'max'},
+    {k:'investments',label:L('ind_inv'),sub:L('ind_invSub'),amt:Y.inv,dir:'min'}
+  ].map(d=>{
+    const v=Y.ind[d.k], tg=T[d.k], ok=d.dir==='max'? v<=tg+1e-9 : v>=tg-1e-9;
+    const status=d.dir==='max'? L(ok?'st_on':'st_over') : L(ok?'st_on':'st_under');
+    const tgt= S.ui.editTarget===d.k
+      ? `<span class="ind-target-wrap">${esc(L('targetPct'))}<label class="sr" for="target-input">${esc(L('targetFor',d.label))}</label><input id="target-input" type="number" min="0" max="100" step="1" value="${Math.round(tg*1000)/10}" data-key="${d.k}"></span>`
+      : `<span class="ind-target-wrap">${esc(L('target'))}<button class="ind-target" data-action="edit-target" data-key="${d.k}" ${S.canWrite?'':'disabled'} title="${S.canWrite?esc(L('changeTarget')):''}">${d.dir==='max'?'≤':'≥'} ${fmtPct(tg,0)}</button></span>`;
+    return `<div class="ind">
+      <div class="ind-label">${esc(d.label)}<small>${esc(d.sub)}</small></div>
+      <div class="meter" role="img" aria-label="${esc(L('meterAria',d.label,fmtPct(v),fmtPct(tg,0)))}"><div class="fill ${ok?'good':'bad'}" style="width:${Math.max(0,Math.min(1,v))*100}%"></div><div class="tick" style="left:${Math.min(1,tg)*100}%"></div></div>
+      <div class="ind-val">${fmtPct(v)}<small>${fmtEUR(d.amt,0)}</small></div>
+      ${tgt}
+      <span class="pill ${ok?'good':'bad'}">${ok?ICON.ok:ICON.warn}${esc(status)}</span>
+    </div>`;
+  }).join('');
+  const oc=S.ui.oc, am=ms;
+  const multi=yearsWithData().length>1;
+  const mmT=S.ui.mm.table, mmD=!!S.ui.mm.days&&mmT!=='all', mc=mmCat(A);
+  return pageHead('overview',summaryPeriod('overview',y,month,yearList()),S.canWrite?`<button class="btn primary overview-import" type="button" data-action="import-menu">${ICON.plus}${esc(L('importNewData'))}</button>`:'')+`<div class="stack">
+    ${notice||backupNudge()}${monthlyCard()}
+    <section class="ov-top" aria-label="${esc(L('yearSummary'))}">
+      <div class="hero">
+        <p class="eyebrow">${esc(L('savedIn',y,ms.length?monthRange([idx[0],idx[idx.length-1]].filter((v,i,a)=>a.indexOf(v)===i)):L('noMonths'),ms.length&&ymOf(y,idx[idx.length-1])===ymNow()))}${info('ovSaved')}</p>
+        <p class="hero-num">${fmtEUR(Y.sav)}</p>
+        <p class="hero-sub">${Y.inc>0?L('keptAfter',fmtPct(Y.savRate)):esc(L('noIncomeYet'))}</p>
+        <p class="hint" style="margin:var(--s8) 0 0">${esc(L('savedDef'))}</p>
+      </div>
+      <div class="tiles">
+        <div class="tile"><span class="tile-label"><i class="sw income"></i>${esc(TL('income'))}</span><span class="tile-val">${fmtEUR(Y.inc)}</span><span class="tile-sub">${selected?esc(L('selectedMonth')):ms.length?esc(L('avgMonth',fmtEUR(incAvg,0))):'—'}</span></div>
+        <div class="tile"><span class="tile-label"><i class="sw expenses"></i>${esc(TL('expenses'))}</span><span class="tile-val">${fmtEUR(-Y.exp)}</span><span class="tile-sub">${esc(L('ofIncome',fmtPct(Y.expRate)))}</span></div>
+        <div class="tile"><span class="tile-label"><i class="sw investments"></i>${esc(TL('investments'))}</span><span class="tile-val">${fmtEUR(Y.inv)}</span><span class="tile-sub">${esc(L('ofIncome',fmtPct(Y.invRate)))}</span></div>
+        <div class="tile"><span class="tile-label">${esc(L('liquid'))}${info('ovLeft')}</span><span class="tile-val">${fmtEUR(Y.liquid)}</span><span class="tile-sub">${esc(L('liquidSub'))}</span></div>
+      </div>
+    </section>
+    ${selected?'':latestMonthCard()}${comparisonCard()}${!selected||+month===nm.m?thisMonthCard():''}
+    ${analysisToggle('overview')}<div class="more-analysis" id="analysis-overview"${analysisOpen('overview')?'':' hidden'}>
+    ${Y.inc>0?'':`<section class="card ov-first"><h2>${esc(L('ovFirstTitle'))}</h2><p class="sub">${esc(L('ovFirstText'))}</p>${S.canWrite?`<button class="btn primary" type="button" data-action="guide-income">${esc(L('ovAddIncome'))}</button>`:''}</section>`}
+    <section class="card">
+      <div class="card-head"><div><h2>${esc(L('monthByMonth'))}${info('ovMonthly')}</h2><p class="sub">${esc(mmSummary(A))} ${esc(L('clickBar'))}</p></div>
+        <div class="ch-end">${chartLegend(mmT==='all'?TKEYS.map(t=>[t,TL(t)]):[[mmT,mc?dispCat(mc):TL(mmT)]],mmT!=='all'&&!mmD)}<div class="ctrls"><div class="seg" role="group" aria-label="${esc(L('show'))}"><button data-action="mm-table" data-t="all" aria-pressed="${mmT==='all'}">${esc(L('all'))}</button>${TKEYS.map(t=>`<button data-action="mm-table" data-t="${t}" aria-pressed="${mmT===t}"><i class="sw ${t}"></i>${esc(TL(t))}</button>`).join('')}</div>
+          <div class="seg" role="group" aria-label="${esc(L('mmView'))}"><button data-action="mm-days" data-v="0" aria-pressed="${!mmD}">${esc(L('mmMonths'))}</button><button data-action="mm-days" data-v="1" aria-pressed="${mmD}"${mmT==='all'?` aria-disabled="true" title="${esc(L('mmDaysOff'))}"`:''}>${esc(L('mmDays'))}</button></div></div></div></div>
+      ${mmT!=='all'&&mc?`<div class="legend" style="margin-bottom:var(--s8)"><button type="button" class="cat-chip" data-action="mm-clear-cat">${esc(L('onlyCat',dispCat(mc)))}<span aria-hidden="true">${ICON.x}</span><span class="sr">${esc(L('backToAll',mmT))}</span></button></div>`:''}
+      <div class="chart" id="ch-monthly"></div>
+      ${y===nm.y&&!mmForecast('income',null)?`<p class="foot-note forecast-wait">${esc(L('forecastWait'))}</p>`:''}
+      ${partialOut&&!mmD?`<p class="foot-note">${esc(L('partialNote',M()[nm.m]))}</p>`:''}
+      ${(F=>F?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L(mmD?'mmFcDays':'fcNote',F.n))}</p>`:'')(y===nm.y?(mmT==='all'?TKEYS.map(t=>mmForecast(t,null)).find(Boolean):mmForecast(mmT,mc)):null)}
+    </section>
+    <section class="card">
+      <div class="card-head"><div><h2>${esc(L('byCategory'))}${info('ovCats')}</h2><p class="sub">${esc(oc.table==='expenses'&&oc.exRent&&rn?L('rentLeftOut',rn):L('totalsPeriod'))}${esc(L('clickCat'))}</p></div>
+        <div class="ctrls">
+          <div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(t=>`<button data-action="oc-table" data-t="${t}" aria-pressed="${oc.table===t}">${esc(TL(t))}</button>`).join('')}</div>
+          <div class="seg" role="group" aria-label="${esc(L('howMany'))}"><button data-action="oc-top" data-v="top" aria-pressed="${!!oc.top}">${esc(L('top10'))}</button><button data-action="oc-top" data-v="all" aria-pressed="${!oc.top}">${esc(L('allCats'))}</button></div>
+          <label class="sr" for="oc-month">${esc(L('period'))}</label>
+          <select id="oc-month">${['all',...new Set([...am,...(oc.month!=='all'?[+oc.month]:[])])].sort((a,b)=>a==='all'?-1:b==='all'?1:a-b).map(m=>`<option value="${m}"${String(oc.month)===String(m)?' selected':''}>${m==='all'?esc(L('wholeYear')):M()[m]}</option>`).join('')}</select>
+          ${oc.table==='expenses'&&rn?`<label class="check"><input type="checkbox" id="oc-exrent" ${oc.exRent?'checked':''}>${esc(L('leaveOut',rn))}</label>`:''}
+        </div></div>
+      <div id="ch-cats">${catBars(A)}</div>
+    </section>
+    ${Y.inc>0?`    <section class="card">
+      <div class="card-head"><div><h2>${esc(L('shareIncome'))}${info('ovShare')}</h2><p class="sub">${esc(L('shareIncomeSub'))}</p></div>
+        <div class="legend"><span><i class="lkey" style="background:var(--c-expenses)"></i>${esc(TL('expenses'))}</span><span><i class="lkey" style="background:var(--c-investments)"></i>${esc(TL('investments'))}</span></div></div>
+      <div class="chart" id="ch-prop"></div>
+      <p class="foot-note">${esc(L('shareFoot'))}</p>
+    </section>`:''}
+    ${Y.inc>0?`<section class="card">
+      <div class="card-head"><div><h2>${esc(L('indicators'))}${info('ovInd')}</h2><p class="sub">${esc(selected?ymLabel(ymOf(y,+month),true):L('indicatorsSub',y))}${AF.expenses.uncatCount?' '+esc(L('indUncat',AF.expenses.uncatCount)):''}</p></div></div>
+      <div class="inds">${inds}</div>
+    </section>`:''}
+    ${multi?`<section class="card"><div class="card-head"><div><h2>${esc(L('yearByYear'))}${info('ovYears')}</h2><p class="sub">${esc(L('eurosYear'))}</p></div>${chartLegend(TKEYS.map(t=>[t,TL(t)]))}</div><div class="chart" id="ch-years" style="height:260px"></div></section>`:''}
+    </div>
   </div>`;
 }
-
 /* Monthly check: months with no transactions since the first one, and net worth figures not yet typed in */
 function monthlyCard(){
   if(S.demo||!S.canWrite||!allRows().length) return '';
@@ -3674,7 +3758,7 @@ function remindIcsText(){
   const d=new Date(), nx=new Date(d.getFullYear(),d.getMonth()+1,1), ymd=x=>x.getFullYear()+String(x.getMonth()+1).padStart(2,'0')+String(x.getDate()).padStart(2,'0');
   const stamp=d.toISOString().replace(/[-:]/g,'').replace(/\.\d+/,''), e=s=>String(s).replace(/[\\,;]/g,m=>'\\'+m);
   return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//MyAhorros//EN','CALSCALE:GREGORIAN','BEGIN:VEVENT',`UID:ybt-monthly-${stamp}@yearly-budget-tracker`,`DTSTAMP:${stamp}`,
-    `DTSTART;VALUE=DATE:${ymd(nx)}`,'RRULE:FREQ=MONTHLY;BYMONTHDAY=1',`SUMMARY:${e(L('remindTitle'))}`,`DESCRIPTION:${e(L('reminderSimple'))}`,
+    `DTSTART;VALUE=DATE:${ymd(nx)}`,'RRULE:FREQ=MONTHLY;BYMONTHDAY=1',`SUMMARY:${e(L('remindTitle'))}`,`DESCRIPTION:${e(L('remindDesc'))}`,
     'BEGIN:VALARM','TRIGGER:PT9H','ACTION:DISPLAY',`DESCRIPTION:${e(L('remindTitle'))}`,'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n')+'\r\n';
 }
 async function remindIcs(){
@@ -3747,9 +3831,62 @@ function salaryCands(rows){ const seen=new Set(), out=[];
   for(const r of rows.filter(r=>r.table==='income'&&r.amount>0&&!r.category).sort((a,b)=>b.amount-a.amount)){ const d=loose(r.concept); if(seen.has(d)) continue; seen.add(d); out.push(r); if(out.length>=4) break; }
   return out; }
 function modalWizard(){
-  return `${mHead(esc(L('simpleStart')),esc(L('simpleStartHelp')))}<div class="m-body"><button class="btn primary" data-action="import">${esc(L('addStatement'))}</button><button class="btn" data-action="add-tx">${esc(L('enterManually'))}</button></div><div class="m-foot"><button class="btn" data-action="close">${esc(L('close'))}</button></div>`;
+  if(S.wizard.mode==='ci') return modalCheckin();
+  const w=S.wizard, i=w.step, N=nw(), C=wzCover(), st=(S.settings&&S.settings.guide&&S.settings.guide.stmts)||{};
+  const nAcc=N.accounts.length, nMon=nwMonths().length, rows=allRows(), nTx=rows.length, nInc=rows.filter(r=>r.table==='income').length, sal=salaryRow(rows);
+  const salCat=catNames('income').find(n=>SALARY_RE.test(n));
+  const fin=C.tx.filter(k=>k<C.now).length, txOk=!C.txMiss.length&&(nTx>0||N.accounts.some(a=>a.group==='cash'&&statementCovered(a,C.from,ymAdd(C.now,-1)))), balOk=nAcc>0&&!C.balMiss.length;
+  const done=[nAcc>0,txOk,balOk,!!sal];   /* from the data: a step skipped without doing it gets no tick */
+  const act=(a,label,extra,cls)=>`<button type="button" class="btn ${cls||''}" data-action="${a}"${extra||''}>${label}</button>`;
+  const ok=(on,text)=>on?`<p class="wz-ok">${ICON.ok}<span>${esc(text)}</span></p>`:'';
+  const accName=a=>`<span class="wz-n">${gSw(a.group)}<b>${esc(a.name)}</b></span>`;
+  let body='';
+  if(i===0){
+    /* the currency was guessed from where the device is: shown here so a wrong guess is fixed before any figure is typed */
+    body=`<p>${esc(L(S.settings.guide.quick?'quickAccounts':'wz0Text'))}</p>
+      <div class="seg wz-scope" role="group" aria-label="${esc(L('setupScope'))}"><button type="button" data-action="wz-scope" data-v="quick" aria-pressed="${!!S.settings.guide.quick}">${esc(L('quickStart'))}</button><button type="button" data-action="wz-scope" data-v="history" aria-pressed="${!S.settings.guide.quick}">${esc(L('historyStart'))}</button></div>
+      ${!S.settings.guide.quick?`<label class="field">${esc(L('historyFrom'))}<input id="wz-from" type="month" value="${wzFrom()}" max="${ymNow()}"></label>`:''}
+      <p class="wz-cur"><label for="wz-cur">${esc(L('wzCurrency'))}</label> <select id="wz-cur">${Object.entries(CURRENCIES).map(([c,x])=>`<option value="${c}"${c===CUR?' selected':''}>${esc(x.n)}</option>`).join('')}</select></p>
+      ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>`<li>${accName(a)}<span class="wz-st">${esc(L('g_'+a.group))}</span></li>`).join('')}</ul>`:''}
+      <div class="wz-acts">${act('guide-acc',esc(L(nAcc?'nwEditAccounts':'nwAddAccounts')),'',nAcc?'':'primary')}</div>
+      <p class="hint">${esc(L('wzPersonalLater'))}</p>`;
+  } else if(i===1){
+    const stat=a=>{ const s=st[a.id]; if(s&&s.noActivity) return `<span class="wz-st ok">${esc(L('noActivity'))}</span>`; return s?`<span class="wz-st ok">${esc(L('wzStmtGot',fmtDate(s.from||s.coverFrom),fmtDate(s.to||s.coverTo),s.n||0))}</span>`:`<span class="wz-st">${esc(L('wzStmtNone'))}</span>`; };
+    /* statements only from Cash accounts: an investment or pension account's buys, sells and fees happen inside it; what went in is the
+       Investments row on the bank side, and the rest is its value on the next step */
+    const next=txOk?null:N.accounts.find(a=>a.group==='cash'&&!st[a.id]);
+    body=`<p>${esc(L('historyFrom'))}: ${esc(ymLabel(C.from,true))}. ${esc(L('importFileHelp'))}</p>
+      ${nAcc?`<ul class="wz-list">${N.accounts.map(a=>a.group==='cash'?`<li>${accName(a)}${stat(a)}${act('guide-import',esc(L('addStatement')),` data-acc="${a.id}" aria-label="${esc(L('wzImport')+': '+a.name)}"`,a===next?'primary sm':'sm')}</li>`:`<li>${accName(a)}<span class="wz-st">${esc(L('wzValueOnly'))}</span></li>`).join('')}</ul>`:`<p class="hint">${esc(L('wzNoAccs'))}</p><div class="wz-acts">${act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`}
+      ${S.ai?`<div class="wz-acts">${act('ai-tx',ICON.ai+esc(L('aiBtn')))}</div>`:''}
+      ${coverageList(C.from,ymAdd(C.now,-1))}`;
+  } else if(i===2){
+    const k=C.balMiss[0]||C.bal[C.bal.length-1];
+    body=`<p>${esc(S.settings.guide.quick?L('quickBalances'):L('wz2Text',ymIn(C.bal[0])))}</p>
+      ${nAcc?wzStrip(C.bal,C.balAt,C.now,C.balMiss.length?L('wzBalCover',C.bal.length-C.balMiss.length,C.bal.length):L('wzBalAll')):''}
+      <div class="wz-acts">${nAcc?act('guide-val',esc(L(N.snaps[k]?'nwEdit':'nwEnter',ymIn(k))),` data-k="${k}"`,balOk?'':'primary')+act('guide-nwimport',ICON.xl+esc(L('nwImport')))+(S.ai?act('ai-nw',ICON.ai+esc(L('aiBtn'))):''):act('wz-go',esc(L('wzAccFirst')),' data-s="0"','primary')}</div>`;
+  } else if(i===3){
+    const cands=sal||!salCat?[]:salaryCands(rows);
+    body=`<p>${esc(L('incomeOptional'))}</p>
+      ${cands.length?`<p>${esc(L('wzSalaryQ'))}</p><ul class="wz-list">${cands.map(r=>`<li><span class="wz-n">${esc(shortDesc(r.concept,48))}</span><span class="wz-st">${fmtEUR(r.amount)} · ${esc(fmtDate(r.date))}</span>${act('wz-salary',esc(L('wzSalaryIs')),` data-mk="${r.mk}" data-id="${r.id}" aria-label="${esc(L('wzSalaryIsFor',shortDesc(r.concept,48)))}"`,'sm')}</li>`).join('')}</ul>`:''}
+      ${sal?ok(true,L('wzSalaryFound',fmtEUR(sal.amount),fmtDate(sal.date))):`<div class="wz-acts">${act('guide-income',esc(L('wzAddSalary')),'',cands.length?'':'primary')}</div>`}`;
+  } else {
+    const place=S.local&&Array.isArray(S.local.actions)&&S.local.actions.includes('changeStorage');
+    const noStmt=nTx?N.accounts.filter(a=>a.group==='cash'&&!st[a.id]).map(a=>a.name):[];
+    const gap=(t,s)=>`<li>${esc(t)} <button type="button" class="linkish" data-action="wz-go" data-s="${s}">${esc(L(s===1?'wzImport':'wzGoFix'))}</button></li>`;
+    const gaps=[C.txMiss.length?gap(L('wzGapTx',wzMonths(C.txMiss)),1):'',noStmt.length?gap(L('wzGapStmt',listJoin(noStmt)),1):'',nAcc&&C.balMiss.length?gap(L('wzGapBal',wzMonths(C.balMiss)),2):''].join('');
+    body=`<p>${esc(L('wz4Text'))}</p><p class="wz-sum">${esc(L('wzCounts',nAcc,nMon,nTx,nInc))}</p>${gaps?`<ul class="wz-gaps">${gaps}</ul>`:''}<p class="hint">${esc(S.local?LT('gSafeApp'):L('gSafeWeb'))}</p>
+      <div class="wz-acts">${place?act('wz-place',esc(L('wzPlace'))):''}${S.downloads||S.local?act('remind-ics',esc(L('remindBtn'))):''}</div>`;
+    w.gaps=!!gaps;
+  }
+  const names=L('wzNames');
+  const dots=names.map((n,j)=>{ const tick=j<WZ_STEPS-1&&done[j], skipped=j<i&&!tick; return `<li class="${j===i?'cur':tick?'done':skipped?'skipped':''}"${j===i?' aria-current="step"':''}><span>${tick?'✓':skipped?'–':j+1}</span><small>${esc(n)}</small>${skipped?`<i class="sr"> (${esc(L('wzSkipped'))})</i>`:''}</li>`; }).join('');
+  const last=i===WZ_STEPS-1;
+  /* one way forward: "Next" once the step is done, "Skip this step" while it isn't */
+  const fwd=!last&&i===1&&S.settings.guide.quick&&nTx>0?act('wz-next',esc(L('optionalBalances')),'','ghost')+act('guide-finish',esc(L('seeSummary')),'','primary'):last?act('guide-finish',esc(L('wzFinish')),'','primary'):done[i]?act('wz-next',esc(L('wzNext')),'','primary'):act('wz-next',esc(L('wzSkip')),'','ghost');
+  return `<div class="m-head"><div><p class="eyebrow">${esc(L('wzEyebrow',i+1,WZ_STEPS))}</p><h3 id="m-title">${esc(L(last&&w.gaps?'wz4TitleGaps':'wz'+i+'Title'))}</h3></div><button class="icon-btn" data-action="wz-later" aria-label="${esc(L('wzLater'))}" title="${esc(L('wzLater'))}">${ICON.x}</button></div>
+  <div class="m-body wz-body wz-setup"><div class="wz-progress"><ol class="wz-dots">${dots}</ol><p class="wz-current-step" aria-hidden="true">${esc(names[i])}</p></div>${body}</div>
+  <div class="m-foot wz-footer"><span>${i>0?act('wz-back',esc(L('wzBack'))):act('wz-later',esc(L('wzLater')),'','ghost')}</span><span class="r">${fwd}</span></div>`;
 }
-
 /* ───────── monthly check-in ─────────
    Once a month, for the month that just ended: drop every bank statement at once (each goes to its account by the file's
    fingerprint, overlap is skipped as duplicates), the balances still missing, the rows with no category, then what the month
@@ -3847,28 +3984,102 @@ function guideBar(G){
   const w=wzStep(G);
   return `<div class="guide-bar"><span><b>${esc(L('gEyebrow',w+1))}</b> · ${esc(L('wz'+w+'Title'))}</span><button class="linkish" type="button" data-action="guide-continue">${esc(L('gContinue'))}</button></div>`;
 }
-function simpleGoalCard(){
-  const N=nw(), ms=nwMonths(), k=ms[ms.length-1], g=N.goal;
-  if(!g) return S.canWrite?`<button class="btn ghost" data-action="nw-goal">${esc(L('nwSetGoal'))}</button>`:'';
-  const total=k?nwTotals(k).total:0, rest=Math.max(0,g.amount-total), months=ymDiff(ymNow(),g.month), progress=Math.max(0,Math.min(1,total/g.amount));
-  return `<section class="card nw-goal"><div class="card-head"><h2>${esc(L('nwGoal'))}</h2>${S.canWrite?`<button class="btn sm" data-action="nw-goal">${esc(L('nwChangeGoal'))}</button>`:''}</div><p>${esc(L('nwGoalLine',fmtEUR(g.amount),ymM(g.month),g.month.slice(0,4)))}</p><progress max="1" value="${progress}" aria-label="${esc(L('nwGoal'))}"></progress><p>${esc(L('nwProgress',fmtPct(progress,0),fmtEUR(total),fmtEUR(g.amount)))}</p>${rest?`<p>${esc(L('goalRemaining',fmtEUR(rest)))}${months>0?' '+esc(L('goalMonthly',fmtEUR(rest/months))):' '+esc(L('nwGoalPast'))}</p>`:`<p>${esc(L('nwReached'))}</p>`}${!k||N.accounts.some(a=>(!a.from||a.from<=k)&&N.snaps[k]?.[a.id]==null&&!nwState(k).closed.has(a.id))?`<p class="hint">${esc(L('goalIncomplete'))}</p>`:''}</section>`;
-}
 function viewNetworth(){
-  const N=nw(),ms=nwMonths(),k=S.ui.nw.month||ms[ms.length-1]||ymAdd(ymNow(),-1),cw=S.canWrite;
+  const N=nw(), ms=nwMonths(), cw=S.canWrite, due=nwDue(), G0=guideState(), G=G0&&G0.cur!=='done'?G0:null;   /* the "you're set up" card lives on Overview only */
+  const head=(per,acts)=>pageHead('networth',per,acts);
+  if(!N.accounts.length) return head()+(G?guideCard(G):`<section class="card nw-empty"><h2>${esc(L('nwEmptyTitle'))}</h2><p class="sub" style="max-width:68ch">${esc(L('nwEmptyText'))}</p>
+    <div class="nw-groups-help">${NW_GROUPS.map(g=>`<div>${gSw(g)}<b>${esc(L('g_'+g))}</b><span class="hint">${esc(L('gs_'+g))}</span></div>`).join('')}</div>
+    ${cw?`<div class="ctrls" style="margin-top:var(--s16)">${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button><button class="btn primary" type="button" data-action="nw-accounts">${esc(L('nwAddAccounts'))}</button></div>`:''}</section>`);
+  let k=S.ui.nw.month; if(!k) k=ms[ms.length-1]||ymAdd(ymNow(),-1);
+  /* the month in progress can be entered from the 25th; earlier, only finished months are offered */
+  const newK=due||(nowYM().day>=25&&!ms.includes(ymNow())?ymNow():null);
   const per=summaryPeriod('networth',+k.slice(0,4),+k.slice(5,7)-1,[...nwYearsAll(),nowYM().y]);
-  const actions=cw?`<button class="btn primary" data-action="nw-update" data-k="${k}">${esc(L('updateBalances'))}</button><button class="btn" data-action="nw-accounts">${esc(L('nwEditAccounts'))}</button>`:'';
-  if(!N.accounts.length) return pageHead('networth')+`<section class="card"><h2>${esc(L('accountsOptional'))}</h2><p>${esc(L('accountsHelp'))}</p>${cw?`<button class="btn primary" data-action="nw-accounts">${esc(L('nwAddAccounts'))}</button>`:''}</section>`;
-  const snap=N.snaps[k]||{},present=N.accounts.filter(a=>snap[a.id]!=null),total=nwTotals(k).total;
-  const accountRows=N.accounts.map(a=>{
-    const prior=ms.filter(x=>x<k&&N.snaps[x][a.id]!=null).pop(),previous=prior?N.snaps[prior][a.id]:null,has=snap[a.id]!=null;
-    const last=ms.filter(x=>x<=k&&N.snaps[x][a.id]!=null).pop();
-    return `<li class="simple-account"><div><h3>${esc(a.name)}</h3><p class="hint">${last?esc(L('balanceAsOf',ymLabel(last,true))):esc(L('noBalanceYet'))}</p></div><div class="account-amount">${cw?`<button class="linkish" data-action="nw-update" data-id="${esc(a.id)}" data-k="${k}">${has?fmtEUR(snap[a.id]):esc(L('addBalance'))}</button>`:has?fmtEUR(snap[a.id]):DASH}${has&&previous!=null?`<small>${signed(r2(snap[a.id]-previous))} · ${esc(L('sinceMonth',ymLabel(prior,true)))}</small>`:''}</div>${a.group!=='cash'?`<details class="account-performance"><summary>${esc(L('investmentDetails'))}</summary><p class="hint">${esc(L('performanceHelp'))}</p><button class="btn sm" data-action="nw-performance" data-id="${esc(a.id)}" data-k="${k}">${esc(L('reviewPerformance'))}</button></details>`:''}</li>`;
-  }).join('');
-  return pageHead('networth',per,actions)+`<div class="stack"><section class="hero"><p class="eyebrow">${esc(L('accountTotal'))} · ${esc(ymLabel(k,true))}</p><p class="hero-num">${present.length?fmtEUR(total):DASH}</p>${present.length<N.accounts.length?`<p class="hint">${esc(L('balancesRecorded',present.length,N.accounts.length))}</p>`:''}</section><section class="card"><ul class="simple-accounts">${accountRows}</ul></section>
-    ${ms.length?`<section class="card"><h2>${esc(L('balanceHistory'))}</h2><p class="hint">${esc(L('recordedOnly'))}</p><div id="simple-balance-chart" class="simple-history">${ms.slice(-24).map(m=>{const t=nwTotals(m);return `<button class="history-month" data-action="account-month" data-k="${m}"><span>${esc(ymLabel(m,true))}</span><strong>${fmtEUR(t.total)}</strong><span class="balance-bar" aria-hidden="true"><i style="height:${Math.max(1,Math.abs(t.total)/Math.max(1,...ms.map(x=>Math.abs(nwTotals(x).total)))*100)}%"></i></span>${N.accounts.some(a=>(!a.from||a.from<=m)&&N.snaps[m]?.[a.id]==null&&!nwState(m).closed.has(a.id))?`<small>${esc(L('partialBalances'))}</small>`:''}</button>`;}).join('')}</div></section>`:''}
-    ${simpleGoalCard()}${cw?`<details class="card"><summary>${esc(L('moreAccountOptions'))}</summary><div class="ctrls"><button class="btn" data-action="nw-import">${esc(L('nwImport'))}</button><button class="btn" data-action="import">${esc(L('addStatement'))}</button></div></details>`:''}</div>`;
+  const enter=cw&&newK&&!(G&&G.cur==='val');
+  const ctrls=`${cw?`<button class="btn primary" type="button" data-action="nw-update" data-k="${k}">${esc(L('nwuUpdate'))}</button>`:''}${cw?`${S.ai?`<button class="btn" type="button" data-action="ai-nw">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}<button class="btn" type="button" data-action="nw-import">${ICON.xl}${esc(L('nwImport'))}</button>`:''}
+    ${cw&&k?`<button class="btn" type="button" data-action="nw-snap" data-k="${k}">${esc(L('nwEdit',ymIn(k)))}</button>`:''}
+    ${enter?`<button class="btn" type="button" data-action="nw-update" data-k="${newK}">${esc(L('nwEnter',ymIn(newK)))}</button>`:''}`;
+  const dueBar=due&&cw&&!ciDue()?`<div class="notice">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(L('nwDue',ymIn(due)))}</span><button class="linkish" type="button" data-action="nw-update" data-k="${due}">${esc(L('nwEnter',ymIn(due)))}</button></div>`:'';
+  if(!N.snaps[k]) return head(per,ctrls)+`<div class="stack">${G?guideCard(G):''}<section class="card"><p class="hint">${esc(L('periodNoBalances'))}</p></section>${accountsCard(null)}</div>`;
+  const T=nwTotals(k), prev=ms[ms.indexOf(k)-1]||null, mk=+k.slice(5,7)-1, yk=k.slice(0,4);
+  const share=v=>T.total>0?v/T.total:0;
+  const shownG=NW_GROUPS.filter(g=>nwState(k).shown.some(a=>a.group===g)), posSum=Math.max(1e-9,sum(NW_GROUPS.map(g=>Math.max(0,T.g[g]))));
+  const hero=`<section class="ov-top" aria-label="${esc(L('nwTitle'))}">
+    <div class="hero">
+      <p class="eyebrow">${esc(L('nwEyebrow',ymM(k),yk))}${info('nwGroups')}</p>
+      <p class="hero-num">${fmtEUR(T.total,0)}</p>
+      <p class="hero-sub">${esc(L('nwWithoutPension',fmtEUR(T.total-T.g.pension,0)))}${T.risk>0.004?` · <span class="warn-text" style="font-size:inherit">${esc(L('nwAtRisk',fmtEUR(T.risk,0)))}</span>`:''}</p>
+      <div class="nw-alloc" role="img" aria-label="${esc(NW_GROUPS.map(g=>L('g_'+g)+' '+fmtPct(share(T.g[g]),0)).join(', '))}">${NW_GROUPS.map(g=>T.g[g]>0?`<i class="${g}" data-nwg="${g}" data-v="${T.g[g]}" data-p="${share(T.g[g])}" style="width:${(T.g[g]/posSum*100).toFixed(2)}%"></i>`:'').join('')}</div>
+      ${T.missing?`<p class="warn-text">${esc(L('nwMissing',T.missing))}</p>`:''}
+      ${(()=>{ const h=new Set(nwHoles(k)), l=nwLater(k).filter(x=>h.has(x.a.id)); return l.length?`<p class="warn-text">${esc(L('nwLaterHero',listJoin(l.map(x=>x.a.name))))}</p>`:''; })()}
+    </div>
+    <div class="tiles" style="--n:${Math.max(1,shownG.length)}">${shownG.map(g=>`<div class="tile"><span class="tile-label">${gSw(g)}${esc(L('g_'+g))}</span><span class="tile-val">${fmtEUR(T.g[g],0)}</span><span class="tile-sub">${fmtPct(share(T.g[g]),0)} · ${esc(L('gs_'+g))}</span></div>`).join('')}</div>
+  </section>`;
+  /* what changed since the month before: own saving vs everything else */
+  let cLead='', cBody='', cFt='';
+  const foot=items=>{ const x=items.filter(Boolean); return x.length?`<ul class="nw-foot">${x.map(t=>`<li>${t}</li>`).join('')}</ul>`:''; };
+  /* explanations fold away under "How is this calculated?"; foot() stays for what the reader must see */
+  const how=(items,extra)=>{ const x=items.filter(Boolean); return x.length||extra?`<details class="nw-foot nw-how"><summary>${esc(L('howCalc'))}</summary>${x.length?`<ul>${x.map(t=>`<li>${t}</li>`).join('')}</ul>`:''}${extra||''}</details>`:''; };
+  /* Keep the heading, summary, body and explanations in the same order for both cards. */
+  const nwCard=(t,btn,lead,body,ft)=>`<section class="card nw-card${t==='nwChange'?' nw-change':' nw-goal'}"><div class="card-head"><div style="display:flex;align-items:center;gap:var(--s12);flex-wrap:wrap"><h2>${esc(L(t))}${info(t)}</h2>${t==='nwGoal'?btn:''}</div>${t==='nwGoal'?'':btn}</div><div class="nw-lead">${lead}</div><div class="nw-body">${body}</div><div class="nw-ft">${ft}</div></section>`;
+  const warnBox=t=>`<p class="notice nw-repay">${ICON.warn.replace('<svg','<svg width="16" height="16"')}<span>${esc(t)}</span></p>`;
+  const retLink=cw?`<button class="linkish nw-retlink" type="button" data-action="nw-ret">${esc(L('nwRetWhich'))}</button>`:'';
+  if(!prev){ const tr=trackerSaved(ymAdd(k,-1),k);
+    if(!tr.missing.length){ cLead=`<p class="nw-delta ${tr.saved<-0.004?'down':'up'}">${signed(tr.saved)}</p><p class="hint nw-since">${esc(L('nwSavedIn',ymIn(k)))}</p>`; cFt=how([],retLink); }
+    cBody=foot([esc(L('nwNoPrev'))]); }
+  else {
+    const sp=nwSplit(prev,k), hasLeft=Math.abs(sp.left)>=0.005, w=sp.why;
+    const review=hasLeft||w.retRows.length||w.putRows.length?`<button type="button" class="btn nw-review" data-action="nw-review" data-prev="${prev}" data-k="${k}">${esc(L('nwReview'))}</button>`:'';
+    const health=`<p class="nw-health ${hasLeft?'bad':'ok'}">${(hasLeft?ICON.warn:ICON.ok).replace('<svg','<svg width="14" height="14"')}<span>${esc(hasLeft?L('nwHealthBad',fmtEUR(Math.abs(sp.left))):L('nwHealthOk'))}</span></p>`;
+    cLead=`<p class="nw-delta ${sp.change<-0.004?'down':'up'}">${signed(sp.change)}</p><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>${sp.missing.length||sp.pending.size?'':health}`;
+    if(sp.pending.size) cBody=`<p>${esc(L('nwuPending'))}</p>${cw?`<button class="btn" data-action="nw-update" data-k="${k}">${esc(L('nwuConfirmMoney'))}</button>`:''}`;
+    else if(sp.missing.length) cBody=foot([esc(noTrackerText(sp.missing)),sp.added>0.004?esc(L('nwNewAccIncl',fmtEUR(sp.added,0))):'']);
+    else {
+      const parts=[{cls:'saved',label:L('nwSaved'),sub:L('nwSavedSub'),v:sp.saved},{cls:'market',label:L('nwMarket'),sub:L('nwMarketSub'),v:sp.gains},
+        ...(Math.abs(sp.fresh)>0.004?[{cls:'fresh',label:L('nwNewAccRow'),sub:L('nwNewAccRowSub'),v:sp.fresh}]:[]),...(hasLeft?[{cls:'left',label:L('nwLeftRow'),sub:L('nwLeftRowSub'),v:sp.left}]:[])];
+      const stat=(label,v,cls)=>`<div class="nw-change-stat ${cls}${v<-0.004?' down':''}"><span class="nw-stat-l">${esc(label)}</span><span class="nw-sval ${cls==='left'?'':v<-0.004?'down':'up'}">${signed(v)}</span></div>`;
+      cLead=`<div class="nw-change-stats">${stat(L('nwTotalChange'),sp.change,'total')}${stat(L('nwMarket'),sp.gains,'market')}${hasLeft?stat(L('nwLeftRow'),sp.left,'left'):''}</div><p class="hint nw-since">${esc(L('nwSinceEnd',ymM(prev),prev.slice(0,4)))}</p>`;
+      cBody=`<div class="nw-bar" aria-hidden="true">${parts.filter(p=>Math.abs(p.v)>=0.005).map(p=>`<i class="${p.cls}${p.v<-0.004&&p.cls!=='left'?' neg':''}" style="flex:${Math.abs(p.v)}"></i>`).join('')}</div>
+        <div class="nw-mix-leg">${parts.map(p=>`<span title="${esc(p.sub)}"><i class="sw ${p.cls}${p.v<-0.004&&p.cls!=='left'?' neg':''}" aria-hidden="true"></i>${esc(p.label)} <b>${signed(p.v)}</b></span>`).join('')}${hasLeft?'':health}</div>${hasLeft?`<p class="hint">${esc(L(sp.left>0?'nwReviewMore':'nwReviewLess',fmtEUR(Math.abs(sp.left))))}</p>`:''}${parts.some(p=>p.v<-0.004)?`<p class="hint">${esc(L('nwChangeSizes'))}</p>`:''}${review}
+        ${nwLateBox(nwLate(prev,k)||nwLate(k,ms[ms.indexOf(k)+1]))}${sp.blind.length&&Math.abs(sp.left)>=200?warnBox(L('nwBlindHint',listJoin(sp.blind),ymIn(k))):''}${sp.repay?warnBox(L('nwRepayHint',sp.repay)):''}`;
+      cFt=how([ ...parts.map(p=>esc(p.label+': '+p.sub)),Math.abs(sp.returns)>0.004?esc(L('nwRetIncl',fmtEUR(sp.returns))):'',sp.moved>0.004?esc(L('nwMovedNote',fmtEUR(sp.moved,0))):''],retLink);
+    }
+  }
+  const changeCard=nwCard('nwChange','',cLead,cBody,cFt);
+  /* goal: progress, three key figures, where the rest has to come from */
+  let goal, goalBtn='', body='', gFt='';
+  if(!N.goal) goal=`<p class="hint">${esc(L('nwGoalNone'))}</p>${cw?`<div style="margin-top:var(--s12)"><button class="btn" type="button" data-action="nw-goal">${esc(L('nwSetGoal'))}</button></div>`:''}`;
+  else {
+    /* the goal always works from the latest figures, whichever month is on screen */
+    const kG=ms[ms.length-1], TG=kG===k?T:nwTotals(kG);
+    const G=N.goal, gy=G.month.slice(0,4), left=ymDiff(kG,G.month), rest=r2(G.amount-TG.total), pr=Math.max(0,Math.min(1,TG.total/G.amount));
+    const pace=savingPace();
+    goalBtn=cw?`<button class="btn sm" type="button" data-action="nw-goal">${esc(L('nwChangeGoal'))}</button>`:'';
+    let status='';
+    if(rest<=0) status=`<span class="pill good">${ICON.ok}${esc(L('nwReached'))}</span>`;
+    else if(left<=0) body=foot([esc(L('nwGoalPast'))]);
+    else {
+      const need=rest/left, ok=pace&&pace.avg>=need;
+      status=`<span class="pill ${ok?'good':'bad'}">${ok?ICON.ok:ICON.warn}${esc(L(ok?'nwOnTrack':'nwBehind'))}</span>`;
+      const c=goalGrowthCalc(TG,rest,left,pace), sv=Math.max(0,Math.min(rest,c.fromSaving)), gp=Math.max(0,c.gap);
+      const stat=(lab,val,sub)=>`<div class="nw-stat"><span class="nw-stat-l">${esc(lab)}</span><span class="nw-stat-v">${val}</span><span class="nw-stat-s">${esc(sub)}</span></div>`;
+      const txt=pace&&c.gap<=0?L('nwGoalSavingEnough'):c.tot!=null?L(!pace?'nwGrowNoPace':pace.avg<0?'nwGrowNeg':'nwGrow',fmtEUR(c.inv,0),fmtPct(c.tot,1),left>=12?fmtPct(c.yr,1):null):L('nwGoalNoInvest',fmtEUR(c.gap,0));
+      body=`<div class="nw-stats">${stat(L('nwStToGo'),fmtEUR(rest,0),L('nwStToGoSub',left))}${stat(L('nwStNeed'),fmtEUR(need,0),L('nwStNeedSub',M3()[+G.month.slice(5,7)-1],gy))}${stat(L('nwStSave'),pace?fmtEUR(pace.avg,0):DASH,pace?L('nwStSaveSub',pace.n):L('nwStSaveNone'))}</div>
+        <div class="nw-mix" aria-hidden="true">${sv>0?`<i class="saved" style="flex:${sv}"></i>`:''}${gp>0?`<i class="growth" style="flex:${gp}"></i>`:''}</div>
+        <div class="nw-mix-leg"><span><i class="sw saved" aria-hidden="true"></i>${esc(L('nwFromSavingRow'))} <b>${fmtEUR(sv,0)}</b></span><span><i class="sw growth" aria-hidden="true"></i>${esc(L('nwFromGrowthRow'))} <b>${fmtEUR(gp,0)}</b></span></div>
+        <p class="nw-growth-txt">${esc(txt)}</p>`;
+      gFt=how([pace?esc(L('nwGoalFootProj',fmtEUR(TG.total+pace.avg*left,0),ymM(G.month),gy)):'',c.tot!=null&&c.gap>0?esc(L('nwGoalGrowthNote')):'',kG!==k?esc(L('nwGoalAsOf',ymIn(kG))):'']);
+    }
+    goal=`<p class="nw-goal-line">${esc(L('nwGoalLine',fmtEUR(G.amount,0),ymM(G.month),gy))}</p>
+      <span class="nw-bar" role="img" aria-label="${esc(fmtPct(pr,0))}"><i class="saved" style="width:${(pr*100).toFixed(1)}%"></i></span>
+      <div class="nw-goal-cap"><span class="hint">${esc(L('nwProgress',fmtPct(pr,0),fmtEUR(TG.total),fmtEUR(G.amount,0)))}</span>${status}</div>`;
+  }
+  const goalCard=nwCard('nwGoal',goalBtn,goal,body,gFt);
+  const ally=nwYearsAll(), sely=nwYearsSel();
+  const chart=ms.length?`<section class="card"><div class="card-head"><div><h2>${esc(L('nwOverTime'))}${info('nwOverTime')}</h2><p class="sub">${esc(L('nwOverTimeSub'))}</p></div>
+      <div class="ch-end">${chartLegend(NW_GROUPS.filter(g=>N.accounts.some(a=>a.group===g)).map(g=>[g,L('g_'+g)]),ms.length>1)}${ally.length<2?'':`<div class="seg nw-years" role="group" aria-label="${esc(L('nwYears'))}">${ally.map(y=>`<button type="button" data-action="nw-year" data-y="${y}" aria-pressed="${sely.includes(y)}">${y}</button>`).join('')}${ally.length>1?`<button type="button" data-action="nw-year" data-y="all" aria-pressed="${sely.length===ally.length}">${esc(L('nwAllYears'))}</button>`:''}</div>`}</div></div>
+      <div class="chart" id="ch-nw" style="height:260px"></div>${(n=>n?`<p class="foot-note"><i class="lkey fc" aria-hidden="true"></i> ${esc(L('fcNote',n))}</p>`:`<p class="foot-note forecast-wait">${esc(L('forecastNwWait'))}</p>`)(nwChartForecast(nwChartMonths()).n)}${nwChartNote()}</section>`:'';
+  return head(per,ctrls)+`<div class="stack">${G?guideCard(G):''}${dueBar}${hero}${changeCard}${accountsCard(k)}${analysisToggle('networth')}<div class="more-analysis" id="analysis-networth"${analysisOpen('networth')?'':' hidden'}>${chart}${healthCard(k,T)}${goalCard}${scenarioCard()}</div></div>`;
 }
-
 /* Financial health: savings rate shares Overview yearly totals. Spending averages use the income and expenses behind "You saved"
    (trackerSaved: from your pay, without returns or Investments rows), averaged over the finished months with
    transactions among the 12 up to k. Assumptions in HEALTH; settings.health overrides any of them.
@@ -4538,7 +4749,7 @@ function readNwUpdate(){
 }
 function modalNwUpdate(){
   const m=S.modal,N=nw(),k=m.k,prev=nwMonths().filter(x=>x<k).pop(), G=nwGains(ymAdd(k,-1),k);
-  const closed=nwState(k).closed, accounts=N.accounts.filter(a=>(!m.onlyId||a.id===m.onlyId)&&(!closed.has(a.id)||a.id===m.onlyId)&&(!a.from||a.from<=k));
+  const closed=nwState(k).closed, accounts=N.accounts.filter(a=>!closed.has(a.id)&&(!a.from||a.from<=k));
   const options=[...new Set([k,...nwMonths(),...Array.from({length:36},(_,i)=>ymAdd(ymNow(),-i))])].sort().reverse();
   const input=(a,f,label,value,extra='')=>`<label for="nwu-${f}-${esc(a.id)}">${esc(label)}<input id="nwu-${f}-${esc(a.id)}" data-field="${f}" type="text" inputmode="decimal" autocomplete="off" value="${esc(value??'')}" ${extra}></label>`;
   const edit=r=>`<button class="linkish" type="button" data-action="nwu-edit" data-mk="${r.mk}" data-t="${r.table}" data-id="${esc(r.id)}" aria-label="${esc(L('editTx')+': '+r.concept)}">${esc(L('editTx'))}</button>`;
@@ -4553,7 +4764,7 @@ function modalNwUpdate(){
     const transactions=`<details class="nwu-transactions"><summary>${esc(L('nwuFound',activity.rows.length,fmtEUR(activity.added),fmtEUR(activity.withdrawn)))}</summary><ul>${activity.rows.map(r=>`<li><span>${esc(fmtDate(r.date))} · ${esc(r.concept)}</span><b>${signed(r.amount)}</b>${edit(r)}</li>`).join('')||`<li>${esc(L('nwuNoTransfers'))}</li>`}</ul></details>`;
     return `<form class="nwu-account-form" data-id="${esc(a.id)}" id="nwu-form-${esc(a.id)}"><div class="card-head"><h4>${gSw(a.group)} ${esc(a.name)}</h4><span class="hint">${esc(N.snaps[k]?.[a.id]!=null?L('nwuBalanceSaved'):L('nwReviewMissingValue'))}</span></div>
       ${input(a,'balance',L('nwuClosing',ymLabel(k,true)),d.balance)}${prev&&N.snaps[prev]?.[a.id]!=null?`<p class="hint">${esc(ymLabel(prev,true))}: ${fmtEUR(N.snaps[prev][a.id])}</p>`:''}
-      ${a.group==='cash'||!m.performance?`<p class="hint">${esc(L('balanceEntryHelp'))}</p><details><summary>${esc(L('nwuCashRows'))}</summary><ul class="nwu-cash-rows">${allRows().filter(r=>r.date.slice(0,7)===k&&r.account===a.id&&isBudgetRow(r)).map(r=>`<li><span>${esc(fmtDate(r.date))} · ${esc(r.concept)}</span><b>${signed(r.amount)}</b>${edit(r)}</li>`).join('')||`<li>${esc(L('nwuNoTransfers'))}</li>`}</ul></details>`:`
+      ${a.group==='cash'?`<p class="hint">${esc(L('nwuCashHelp'))}</p><details><summary>${esc(L('nwuCashRows'))}</summary><ul class="nwu-cash-rows">${allRows().filter(r=>r.date.slice(0,7)===k&&r.account===a.id&&isBudgetRow(r)).map(r=>`<li><span>${esc(fmtDate(r.date))} · ${esc(r.concept)}</span><b>${signed(r.amount)}</b>${edit(r)}</li>`).join('')||`<li>${esc(L('nwuNoTransfers'))}</li>`}</ul></details>`:`
       <label for="nwu-mode-${esc(a.id)}">${esc(L('nwuMovementQuestion'))}<select id="nwu-mode-${esc(a.id)}" data-field="mode" data-action="nwu-mode">${['later','summary','transactions'].map(v=>`<option value="${v}"${d.mode===v?' selected':''}>${esc(L('nwuMode_'+v))}</option>`).join('')}</select></label>
       ${summary?`<p class="hint">${esc(L('nwuSummaryHelp'))}</p>${typeof total==='number'?`<p class="hint">${esc(L('nwuSavedTotal',fmtEUR(total)))}</p>`:''}<div class="nwu-amounts">${input(a,'added',L('nwuAdded'),d.added)}${input(a,'withdrawn',L('nwuWithdrawn'),d.withdrawn)}</div>`:''}
       ${d.mode==='transactions'?transactions+`<p class="hint">${esc(L('nwuConfirmHelp'))}</p>`:''}
@@ -4567,9 +4778,9 @@ function modalNwUpdate(){
     return `<div class="nwu-group"><b>${esc(g.label)}</b><p class="hint">${esc(L(cash?'nwuSourceGroup':'nwuTransferGroup',g.rows.length,fmtEUR(sum(g.rows.map(r=>Math.abs(r.amount))))))}${source?` · ${esc(source.name)}`:''}</p><details><summary>${esc(L('nwuSeeRows'))}</summary><ul>${g.rows.map(r=>`<li>${esc(fmtDate(r.date))} · ${esc(r.concept)} · ${signed(r.amount)} ${edit(r)}</li>`).join('')}</ul></details>
       <label for="nwu-target-${i}">${esc(L(cash?'txAccount':'nwReviewDestination'))}<select id="nwu-target-${i}"><option value="">${esc(L('nwLinkNone'))}</option>${eligible.map(a=>`<option value="${esc(a.id)}"${g.target===a.id?' selected':''}>${esc(a.name)}</option>`).join('')}</select></label>
       ${!cash&&source?`<label class="check"><input type="checkbox" id="nwu-remember-${i}" checked>${esc(L('nwuRemember',source.name))}</label>`:''}<button type="button" class="btn sm" data-action="nwu-link" data-i="${i}">${esc(L('nwuApplyGroup',g.rows.length))}</button></div>`;}).join('');
-  return `${mHead(esc(L(m.performance?'investmentDetails':'updateBalances')),esc(L(m.performance?'performanceHelp':'balanceEntryHelp')))}<div class="m-body nwu-body"><label for="nwu-month">${esc(L('month'))}<select id="nwu-month">${options.map(x=>`<option value="${x}"${x===k?' selected':''}>${esc(ymLabel(x,true))}</option>`).join('')}</select></label><p class="nwu-progress" role="status">${esc(nwUpdateProgress(k))}</p>
-    ${m.performance?`<p class="hint">${esc(L('performanceHelp'))}</p>${m.onlyId?`<p class="performance-result">${esc(L('performanceGain'))}: <strong>${G.has(m.onlyId)&&!nwPending(G,ymAdd(k,-1),k).has(m.onlyId)?signed(G.get(m.onlyId)):DASH}</strong></p>`:''}`:''}${m.message?`<p class="hint" role="status">${esc(m.message)} ${m.undo?`<button class="linkish" type="button" data-action="nwu-undo">${esc(L('undo'))}</button>`:''}</p>`:''}${cards}
-    ${m.performance&&groups?`<details class="nwu-groups"${m.groupsOpen?' open':''}><summary>${esc(L('nwuGroupTitle'))}</summary><p class="hint">${esc(L('nwuGroupHelp'))}</p>${groups}</details>`:''}
+  return `${mHead(esc(L('nwuTitle')),esc(L('nwuIntro')))}<div class="m-body nwu-body"><label for="nwu-month">${esc(L('month'))}<select id="nwu-month">${options.map(x=>`<option value="${x}"${x===k?' selected':''}>${esc(ymLabel(x,true))}</option>`).join('')}</select></label><p class="nwu-progress" role="status">${esc(nwUpdateProgress(k))}</p>
+    ${m.message?`<p class="hint" role="status">${esc(m.message)} ${m.undo?`<button class="linkish" type="button" data-action="nwu-undo">${esc(L('undo'))}</button>`:''}</p>`:''}${cards}
+    ${groups?`<details class="nwu-groups"${m.groupsOpen?' open':''}><summary>${esc(L('nwuGroupTitle'))}</summary><p class="hint">${esc(L('nwuGroupHelp'))}</p>${groups}</details>`:''}
     ${m.groupError?`<p class="err" role="alert">${esc(m.groupError)}</p>`:''}</div><div class="m-foot"><button class="btn" type="button" data-action="close">${esc(L('close'))}</button></div>`;
 }
 function saveNwUpdate(form){
@@ -4579,7 +4790,7 @@ function saveNwUpdate(form){
   const error=()=>{m.errorId=id;m.msg=L('nwuBadNumber');renderModalKeepScroll();};
   if(!a||balance==null) return error();
   let total,detail,payout;
-  if(a.group!=='cash'&&m.performance){
+  if(a.group!=='cash'){
     if(d.mode==='summary'){
       if(String(d.added||'').trim()===''&&String(d.withdrawn||'').trim()===''&&typeof N.contributions?.[k]?.[id]==='number') total=N.contributions[k][id];
       else {const added=parse(d.added),withdrawn=parse(d.withdrawn);if(added==null||withdrawn==null||added<0||withdrawn<0) return error(); total=r2(added-withdrawn);detail={added,withdrawn};}
@@ -4587,7 +4798,7 @@ function saveNwUpdate(form){
     if(String(d.payout||'').trim()!==''){payout=parse(d.payout);if(payout==null||payout<0)return error();}
   }
   (N.snaps[k]=N.snaps[k]||{})[id]=balance;
-  if(a.group!=='cash'&&m.performance){
+  if(a.group!=='cash'){
     if(d.mode==='summary'){
       ((N.contributions=N.contributions||{})[k]=N.contributions[k]||{})[id]=total;
       if(detail) ((N.flowDetails=N.flowDetails||{})[k]=N.flowDetails[k]||{})[id]=detail;
@@ -4666,7 +4877,9 @@ function modalNwAccounts(){
   const chip=([g,n])=>`<button type="button" class="kchip nw-sug" data-action="na-add" data-g="${g}" data-n="${esc(n)}">${gSw(g)} ${esc(n)}</button>`;
   /* a new list (or the setup guide): the ideas by group, with what each group means */
   const start=true;
-  const startBox=`<div class="acc-start"><div class="ctrls">${chip(['cash',L('mainAccount')])}<button type="button" class="btn sm" data-action="na-add">${esc(L('nwAddOther'))}</button></div><details><summary>${esc(L('otherAccountTypes'))}</summary><div class="acc-start-grid">${NW_GROUPS.map(g=>`<div><h4>${esc(L('g_'+g))}</h4><div class="ctrls">${sug.filter(x=>x[0]===g).map(chip).join('')}</div></div>`).join('')}</div></details></div>`;
+  const startBox=start?`<div class="acc-start"><p class="acc-start-q">${esc(L('nwAccStartQ'))}</p>${L2.length?`<p class="hint" role="status">${esc(L('nwAccountCount',L2.length))}</p>`:''}<div class="acc-start-grid">${NW_GROUPS.map(g=>{ const c=sug.filter(x=>x[0]===g);
+      return `<div class="acc-start-g"><div class="acc-start-h">${gSw(g)}<b>${esc(L('g_'+g))}</b><span class="hint">${esc(L('gs_'+g))}</span></div><div class="acc-start-chips">${c.map(chip).join('')||`<span class="hint">${esc(L('nwSugAllAdded'))}</span>`}</div></div>`; }).join('')}</div>
+    <div class="ctrls" style="margin-top:var(--s12)"><button type="button" class="btn sm" data-action="na-add">${esc(L('nwAddOther'))}</button></div></div>`:'';
   return `${mHead(esc(L('nwAccTitle')),esc(L('nwAccSub')))}
   <form id="nw-acc-form" novalidate><div class="m-body">
     ${L2.length?`<div class="acc-list">${rows}</div>${adv?`<p class="hint" style="margin-top:var(--s12)">${esc(L('nwAccWordsHelp'))}</p>
@@ -5707,8 +5920,8 @@ function viewYearly(){
   body+=`<tr class="prop"><th class="rh" scope="row">${esc(L('pctIncome'))}</th>${sv.map((v,i)=>`<td class="${pc(i).trim()}">${inc[i]?fmtPct(v/inc[i]):DASH}</td>`).join('')}<td class="tot">${sum(inc)?fmtPct(sum(sv)/sum(inc)):DASH}</td>${multi?`<td class="tot">${sum(ALL.income.total)?fmtPct(sum(ALL.savings)/sum(ALL.income.total)):DASH}</td>`:''}</tr>`;
   const single=S.ui.yearSingle==null?matchMedia('(max-width:600px)').matches:S.ui.yearSingle;
   const choice=`<div class="seg year-view"><button data-action="year-view" data-v="month" aria-pressed="${single}">${esc(L('monthView'))}</button><button data-action="year-view" data-v="grid" aria-pressed="${!single}">${esc(L('gridView'))}</button></div>`;
-  if(single) return `<button class="btn ghost" data-action="tab" data-tab="overview">${esc(L('backToSummary'))}</button>`+pageHead('yearly',yearStepper())+choice+yearMonthCard(y,A);
-  return `<button class="btn ghost" data-action="tab" data-tab="overview">${esc(L('backToSummary'))}</button>`+pageHead('yearly',yearStepper())+choice+`<div class="grid-head">
+  if(single) return pageHead('yearly',yearStepper())+choice+yearMonthCard(y,A);
+  return pageHead('yearly',yearStepper())+choice+`<div class="grid-head">
       <div class="heat-legend">
         <button type="button" class="switch" role="switch" aria-checked="${S.ui.heat}" data-action="toggle-heat" id="heat-switch"><span class="knob" aria-hidden="true"></span>${esc(L('heatMap'))}</button>
         <span class="cell-flag">${ICON.flag}${esc(L('bigMonthCat'))}</span>
@@ -5730,7 +5943,7 @@ function savedTxViews(){ return Array.isArray(S.settings&&S.settings.txViews)?S.
 function applyTxView(v){
   const f=v.filters||{}, u=S.ui.tx; Object.assign(u,{q:'',month:'all',cat:'all',from:'',to:'',min:'',max:'',account:'',source:'',batch:'',allYears:false});
   for(const k of ['q','month','cat','sort','from','to','min','max','account','source','batch']) if(typeof f[k]==='string') u[k]=f[k].slice(0,500);
-  u.monthDefaulted=true; if(TKEYS.includes(f.table)) u.table=f.table; u.allYears=f.allYears===true; if(Number.isInteger(f.year)&&f.year>=1900&&f.year<=2100) S.ui.year=f.year;
+  if(TKEYS.includes(f.table)) u.table=f.table; u.allYears=f.allYears===true; if(Number.isInteger(f.year)&&f.year>=1900&&f.year<=2100) S.ui.year=f.year;
   txSelection().clear(); u.limit=150; render();
 }
 function modalBulkCategory(){
@@ -5767,7 +5980,6 @@ function catOptions(t,selected,withBlank){
   return o;
 }
 function viewTransactions(){
-  if(!S.ui.tx.monthDefaulted){const k=[...new Set(allRows().map(r=>r.date.slice(0,7)))].sort().pop();if(k){S.ui.year=+k.slice(0,4);S.ui.tx.month=String(+k.slice(5,7)-1);}S.ui.tx.monthDefaulted=true;}
   const u=S.ui.tx, y=S.ui.year, A=agg(y), ms=activeMonths(y), filterCount=['q','from','to','min','max','account','source','batch'].filter(k=>!!u[k]).length+(u.month!=='all'?1:0)+(u.cat!=='all'?1:0);
   const counts=Object.fromEntries(TKEYS.map(t=>[t,allRows().filter(r=>r.table===t&&+r.date.slice(0,4)===y).length]));
   const rows=txFiltered(); const shown=rows.slice(0,u.limit);
@@ -5785,14 +5997,18 @@ function viewTransactions(){
     const mg=S.canWrite&&!known?mlGuess(r.table,r.concept):null;
     const cat=S.canWrite?`<label class="sr" for="cs-${esc(r.id)}">${esc(L('category'))}</label><select id="cs-${esc(r.id)}" class="${known?'':'missing'}" data-action="set-cat" ${ref}>${catOptions(r.table,r.category,false)}</select>${mlLevel(mg)?`<button type="button" class="linkish ml-maybe" data-action="use-ml-row" ${ref} data-c="${esc(mg.cat)}" title="${esc(mg.like?L('mlLike',mg.like):'')}">${esc(L('mlMaybe',mg.cat))}</button>`:''}`
       :`<span class="cat-text ${known?'':'missing'}">${known?esc(r.category):esc(L('uncat'))}</span>`;
-    return head+`<tr id="txr-${esc(r.id)}" data-action="edit-tx" ${ref} tabindex="0"><td class="d">${fmtDate(r.date)}</td><td class="c">${S.canWrite&&u.bulkOpen?`<input type="checkbox" data-action="tx-pick" ${ref} ${txSelection().has(txKey(r))?'checked':''} aria-label="${esc(L('includeRow',r.ord+1))}">`:''}${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}${u.attentionAll&&u.cat===UNCAT?`<small class="hint tx-source">${esc(TL(r.table))}</small>`:''}${r.source?`<small class="hint tx-source">${esc(r.source)}</small>`:''}${txAccountingHint(r)}</td><td class="k">${cat}</td><td class="amt r">${r.amount>0&&r.table!=='income'?'+':''}${fmtEUR(r.amount)}</td></tr>`;
+    return head+`<tr id="txr-${esc(r.id)}" data-action="edit-tx" ${ref} tabindex="0"><td class="d">${fmtDate(r.date)}</td><td class="c">${S.canWrite?`<input type="checkbox" data-action="tx-pick" ${ref} ${txSelection().has(txKey(r))?'checked':''} aria-label="${esc(L('includeRow',r.ord+1))}">`:''}${esc(r.concept)||`<span class="hint">${esc(L('noConcept'))}</span>`}${u.attentionAll&&u.cat===UNCAT?`<small class="hint tx-source">${esc(TL(r.table))}</small>`:''}${r.source?`<small class="hint tx-source">${esc(r.source)}</small>`:''}${txAccountingHint(r)}</td><td class="k">${cat}</td><td class="amt r">${r.amount>0&&r.table!=='income'?'+':''}${fmtEUR(r.amount)}</td></tr>`;
   }).join('');
-  return pageHead('transactions',yearStepper(),S.canWrite?`<button class="btn primary" data-action="import">${esc(L('addStatement'))}</button><button class="btn" data-action="add-tx">${esc(L('addTx'))}</button>`:'')+`<div class="toolbar">
+  return pageHead('transactions',yearStepper(),S.canWrite?`
+        ${unInTable?`<button class="btn" data-action="categorise" title="${esc(L('categoriseTitle'))}">${esc(L('categoriseBlanks'))}</button>`:''}
+        <button class="btn ghost" data-action="import-history">${esc(L('importHistory'))}</button>${S.lastImport?`<button class="btn ghost" data-action="undo-import">${esc(L('undoImport',S.lastImport.n))}</button>`:''}
+        ${S.ai?`<button class="btn" data-action="ai-tx">${ICON.ai}${esc(L('aiBtn'))}</button>`:''}
+        <button class="btn" data-action="import">${esc(L('pasteImport'))}</button>
+        <button class="btn primary" data-action="add-tx">${esc(L('addTx'))}</button>`:'')+`<div class="toolbar">
       <div class="left tx-types"><div class="seg" role="group" aria-label="${esc(L('table'))}">${u.cat===UNCAT?`<button data-action="tx-attention-all" aria-pressed="${!!u.attentionAll}">${esc(L('allTypes'))}</button>`:''}${TKEYS.map(t=>`<button data-action="tx-table" data-t="${t}" aria-pressed="${u.table===t&&!(u.cat===UNCAT&&u.attentionAll)}"><span class="tx-type-label"><i class="sw ${t}"></i>${esc(TL(t))}</span><span class="ct">${fmtCount(counts[t])}</span></button>`).join('')}</div>${info('txKinds')}</div>
     </div>
+    <details class="tx-filter-panel"${(u.filtersOpen==null?matchMedia('(min-width:601px)').matches:u.filtersOpen)?' open':''}><summary>${esc(L('filters'))}${filterCount?' · '+esc(L('activeFilters',filterCount)):''}</summary><div class="filters">
       <label>${esc(L('search'))}<input type="search" id="tx-q" placeholder="${esc(L('searchPh'))}" value="${esc(u.q)}" autocomplete="off"></label>
-    <details class="tx-filter-panel"${u.filtersOpen?' open':''}><summary>${esc(L('filters'))}${filterCount?' · '+esc(L('activeFilters',filterCount)):''}</summary><div class="filters">
-
       <label>${esc(L('month'))}<select id="tx-month"${u.allYears&&u.q.trim()?' disabled':''}><option value="all">${esc(L('wholeOf',y))}</option>${ms.map(m=>`<option value="${m}"${String(u.month)===String(m)?' selected':''}>${M()[m]}</option>`).join('')}</select></label>
       <label>${esc(L('category'))}<select id="tx-cat"><option value="all">${esc(L('allCategories'))}</option><option value="${UNCAT}"${u.cat===UNCAT?' selected':''}>${esc(L('uncat'))}${unInTable?' ('+unInTable+')':''}</option>${catNames(u.table).map(n=>`<option value="${esc(n)}"${n===u.cat?' selected':''}>${esc(n)}</option>`).join('')}</select></label>
       <label>${esc(L('fromDate'))}${dateInput(`id="tx-from"`,u.from)}</label><label>${esc(L('toDate'))}${dateInput(`id="tx-to"`,u.to)}</label><label>${esc(L('minAmount'))}<input id="tx-min" type="text" inputmode="decimal" value="${esc(u.min)}"></label><label>${esc(L('maxAmount'))}<input id="tx-max" type="text" inputmode="decimal" value="${esc(u.max)}"></label>
@@ -5803,8 +6019,8 @@ function viewTransactions(){
     </details>
     ${attentionCount?`<div class="notice">${ICON.warn}<span>${esc(L('txAttentionNotice',attentionCount))}</span><button type="button" class="linkish" data-action="tx-review-mode" data-v="attention">${esc(L('needsAttention'))}</button></div>`:''}
     <div class="seg" role="group" aria-label="${esc(L('needsAttention'))}" style="display:grid;margin-bottom:var(--s12)"><button type="button" data-action="tx-review-mode" data-v="attention" aria-pressed="${u.cat===UNCAT}">${esc(L('needsAttention'))} · ${fmtCount(attentionCount)}</button><button type="button" data-action="tx-review-mode" data-v="all" aria-pressed="${u.cat==='all'}">${esc(L('allRowsReview'))}</button></div>
-    <div class="tx-sum"><span>${esc(pl(rows.length,'transaction'))}${rows.length>shown.length?esc(L('showingFirst',fmtCount(shown.length))):''}</span><span>${esc(L('total'))} <b>${fmtEUR(total)}</b></span></div>
-    ${S.canWrite&&allRows().length?`<details class="bulk-tools"${u.bulkOpen?' open':''}><summary>${esc(L('moreTransactionTools'))}</summary><div class="ctrls"><button class="btn sm" data-action="import-history">${esc(L('importHistory'))}</button>${S.lastImport?`<button class="btn sm" data-action="undo-import">${esc(L('undoImport',S.lastImport.n))}</button>`:''}<button class="btn sm" data-action="tx-select-filtered">${esc(L('selectFiltered'))}</button><span>${esc(L('selectedCount',txSelection().size))}</span>${txSelection().size?`<button class="btn sm" data-action="tx-bulk">${esc(L('bulkCategory'))}</button><button class="btn sm" data-action="tx-clear-selection">${esc(L('clearSelection'))}</button>`:''}</div></details><p class="hint" style="margin:0 0 var(--s8)">${esc(L('txRowHint'))}</p>`:''}
+    <div class="tx-sum"><span>${esc(pl(rows.length,'transaction'))}${rows.length>shown.length?esc(L('showingFirst',fmtCount(shown.length))):''}${S.canWrite&&S.ai&&allRows().length?` <button type="button" class="btn sm au-link" data-action="audit" data-f="tx" title="${esc(L('auLinkTip'))}">${ICON.ai}${esc(L('auBtn'))}</button>`:''}</span><span>${esc(L('total'))} <b>${fmtEUR(total)}</b></span></div>
+    ${S.canWrite&&rows.length?`<div class="bulk-tools"><button class="btn sm" data-action="tx-select-filtered">${esc(L('selectFiltered'))}</button><span>${esc(L('selectedCount',txSelection().size))}</span>${txSelection().size?`<button class="btn sm" data-action="tx-bulk">${esc(L('bulkCategory'))}</button><button class="btn sm" data-action="tx-clear-selection">${esc(L('clearSelection'))}</button>`:''}</div><p class="hint" style="margin:0 0 var(--s8)">${esc(L('txRowHint'))}</p>`:''}
     <div class="frame" style="overflow:visible"><table class="tx">
       <thead><tr><th style="width:110px">${sortBtn('date',L('date'))}</th><th>${esc(L('concept'))}</th><th style="width:240px">${esc(L('category'))}</th><th class="r" style="width:140px">${sortBtn('amount',L('amount'))}</th></tr></thead>
       <tbody>${tr||`<tr class="empty-row"><td colspan="4">${esc(L('noMatchFilters',tl(u.table)))}</td></tr>`}</tbody>
@@ -5819,13 +6035,21 @@ function rulePreview(){
   return esc(L('affectedRows',rows.length))+(rows.length?' · '+rows.slice(0,3).map(r=>esc(r.concept)).join(' · '):'');
 }
 function viewCategories(){
-  if(S.ui.ct.rules) return viewCategoryRules();
-  const c=S.ui.ct,t=c.table,counts=new Map(); for(const r of allRows())if(r.table===t)counts.set(r.category,(counts.get(r.category)||0)+1);
-  const q=(c.cq||'').toLowerCase(),used=counts.size>0, list=cats()[t].filter(x=>(c.showUnused||!used||counts.has(x.name)||limitFor(x.name))&&(!q||x.name.toLowerCase().includes(q)));
-  return pageHead('categories')+`<div class="toolbar"><div class="seg">${TKEYS.map(k=>`<button data-action="ct-table" data-t="${k}" aria-pressed="${t===k}">${esc(TL(k))}</button>`).join('')}</div></div><section class="card"><div class="card-head"><h2>${esc(L('catsOf',TL(t)))}</h2>${S.canWrite?`<button class="btn" data-action="add-cat">${esc(L('addCategory'))}</button>`:''}</div><label for="cat-q">${esc(L('filterCats'))}</label><input type="search" id="cat-q" value="${esc(c.cq||'')}"><ul class="cat-list simple-cat-list">${list.map(x=>`<li><span class="cat-name">${esc(x.name)}</span><span class="hint">${counts.get(x.name)||0}</span>${S.canWrite?`<span class="acts">${t==='expenses'?`<button class="btn ghost sm" data-action="limit" data-name="${esc(x.name)}">${esc(limitFor(x.name)?L('perMonthShort',fmtEUR(limitFor(x.name),0)):L('addLimit'))}</button>`:''}<button class="btn ghost sm" data-action="rename-cat" data-name="${esc(x.name)}">${esc(L('rename'))}</button><button class="btn ghost sm" data-action="delete-cat" data-name="${esc(x.name)}">${esc(L('del'))}</button></span>`:''}</li>`).join('')}</ul>${used?`<button class="linkish" data-action="show-unused-categories">${esc(L(c.showUnused?'usedCategories':'allCategories'))}</button>`:''}</section><button class="btn ghost" data-action="category-rules">${esc(L('matchingRules'))}</button>`;
-}
-function viewCategoryRules(){
-  const c=S.ui.ct,t=c.table,kwl=kws()[t]||[];
+  const c=S.ui.ct, t=c.table, list=cats()[t], kwl=kws()[t]||[];
+  const useCount=new Map(); for(const r of allRows()) if(r.table===t) useCount.set(r.category,(useCount.get(r.category)||0)+1);
+  const kwCount=new Map(); for(const [,cat] of kwl) kwCount.set(cat,(kwCount.get(cat)||0)+1);
+  const cq=(c.cq||'').trim().toLowerCase();
+  const nwMatch=cg=>{ const ty=cg.type||'Want'; return ty.toLowerCase()===cq||L(ty==='Need'?'need':'want').toLowerCase()===cq||STR[ty==='Need'?'need':'want'].some(x=>x.toLowerCase()===cq); };
+  const items=list.filter(cg=>!cq||cg.name.toLowerCase().includes(cq)||(t==='expenses'&&nwMatch(cg))).map(cg=>{
+    const ty=cg.type||'Want', other=ty==='Need'?'Want':'Need';
+    const lim=t==='expenses'?limitFor(cg.name):null;
+    const limBtn=t!=='expenses'?'':S.canWrite?`<button type="button" class="lim-btn${lim?' on':''}" data-action="limit" data-name="${esc(cg.name)}" aria-label="${esc(L('limitFor',cg.name))}">${esc(lim?L('perMonthShort',fmtEUR(lim,0)):L('addLimit'))}</button>`:(lim?`<span class="lim-btn on">${esc(L('perMonthShort',fmtEUR(lim,0)))}</span>`:'');
+    return `<li class="${t==='expenses'?'has-lim':''}">
+      <span class="cat-name"><span>${esc(cg.name)}</span>${t==='expenses'?(S.canWrite?`<button class="nw ${ty==='Need'?'need':''}" data-action="toggle-nw" data-name="${esc(cg.name)}" title="${esc(L('switchTo',nwLabel(other)))}">${esc(nwLabel(ty))}</button>`:`<span class="nw ${ty==='Need'?'need':''}">${esc(nwLabel(ty))}</span>`):''}</span>
+      <span class="uses">${esc([useCount.get(cg.name)?pl(useCount.get(cg.name),'txn'):'',kwCount.get(cg.name)?pl(kwCount.get(cg.name),'keyword'):''].filter(Boolean).join(' · '))}</span>
+      ${limBtn}
+      ${S.canWrite?`<span class="acts"><button class="btn ghost sm" data-action="rename-cat" data-name="${esc(cg.name)}">${esc(L('rename'))}</button><button class="btn ghost sm del" data-action="delete-cat" data-name="${esc(cg.name)}">${esc(L('del'))}</button></span>`:''}
+    </li>`; }).join('');
   const q=c.q.trim().toLowerCase();
   const fq=fold(q);
   const filtered=kwl.map((p,i)=>({k:p[0],cat:p[1],i})).filter(d=>!q||fold(d.k).includes(fq)||fold(d.cat).includes(fq));
@@ -5833,7 +6057,18 @@ function viewCategoryRules(){
   const kwRows=shown.map(d=>`<div class="kw-row"><span class="kw" title="${esc(d.k)}">${esc(L('ruleWhen'))} ${esc(L(/^".*"$/.test(d.k)?'wholeWord':'contains'))}: <b>${esc(d.k.replace(/^"|"$/g,''))}</b><small>${esc(L('ruleUse'))}: ${esc(d.cat)}</small></span>
       ${S.canWrite?`<label class="sr" for="kc-${d.i}">${esc(L('catFor',d.k))}</label><select id="kc-${d.i}" data-action="kw-cat" data-i="${d.i}" class="${isKnown(t,d.cat)?'':'missing'}">${catOptions(t,d.cat,false)}</select>
       <button class="icon-btn" data-action="kw-del" data-i="${d.i}" aria-label="${esc(L('delKw',d.k))}">${ICON.x}</button>`:`<span>${esc(d.cat)}</span>`}</div>`).join('');
-  return pageHead('categories')+`<button class="btn" data-action="category-rules">${esc(L('backToCategories'))}</button><div class="stack">    <section class="card">
+  return pageHead('categories')+`<div class="toolbar"><div class="left"><div class="seg" role="group" aria-label="${esc(L('table'))}">${TKEYS.map(k=>`<button data-action="ct-table" data-t="${k}" aria-pressed="${t===k}"><i class="sw ${k}"></i>${esc(TL(k))}</button>`).join('')}</div></div></div>
+  <div class="cat-layout">
+    <div class="stack">
+    <section class="card">
+      <div class="card-head"><div><h2>${esc(L('catsOf',TL(t)))}${info('catList')}</h2><p class="sub">${esc(L('catsSub'))}${t==='expenses'?esc(L('catsSubNW')):''}</p></div>
+        ${S.canWrite?`<button class="btn" type="button" data-action="add-cat">${esc(L('addCategory'))}</button>`:''}</div>
+      <div><label class="sr" for="cat-q">${esc(L('filterCats'))}</label><input type="search" id="cat-q" placeholder="${esc(L('filterCats')+(t==='expenses'?L('filterCatsNW'):''))}" value="${esc(c.cq||'')}" style="width:100%" autocomplete="off"></div>
+      <ul class="cat-list" style="margin-top:var(--s8)">${items||`<li><span class="hint">${esc(L('noCatsMatch'))}</span></li>`}</ul>
+    </section>
+    ${skipCard()}
+    </div>
+    <section class="card">
       <div class="card-head"><div><h2>${esc(L('keywords'))}${info('catKw')}</h2><p class="sub">${esc(L('kwSub',kwl.length,tl(t)))}</p></div>
         <div class="ctrls">${S.downloads?`<button class="btn sm" type="button" data-action="kw-download">${esc(L('downloadList'))}</button>`:''}${S.canWrite?`<button class="btn sm" type="button" data-action="kw-import">${esc(L('importList'))}</button>`:''}</div></div>
       <div class="kw-test">
@@ -5851,7 +6086,11 @@ function viewCategoryRules(){
       <div class="kw-list">${kwRows||`<p class="hint" style="padding:var(--s12) 0">${esc(L('noKwMatch'))}</p>`}</div>
       ${filtered.length>shown.length?`<div class="more"><button class="btn" data-action="kw-more">${esc(L('showAllKw',fmtCount(filtered.length)))}</button></div>`:''}
       ${kwHealthCard(t)}
-    </section>${skipCard()}</div>`;
+    </section>
+  </div>
+  <details class="howto card"><summary>${esc(L('howTitle'))}</summary>
+    <ul>${['how1','how2','how3','how4','how5'].map(k=>`<li>${esc(L(k))}</li>`).join('')}</ul>
+  </details>`;
 }
 function skipCard(){
   const list=skipList();
@@ -5905,7 +6144,7 @@ document.addEventListener('keydown',e=>{
 });
 function renderModal(keepId){
   const m=S.modal, o=$('#overlay'); if(!m){ closeModal(); return; }
-  const inner=({edit:modalEdit,drill:modalDrill,importmenu:modalImportMenu,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwupdate:modalNwUpdate,nwacc:modalNwAccounts,ai:modalAi,audit:modalAudit,nwgoal:modalNwGoal,nwret:modalNwReturns,nwlink:modalNwLink,nwreview:modalNwReview,nwimp:modalNwImport,bulkcat:modalBulkCategory,saveview:modalSaveView,imports:modalImportHistory,answers:modalAnswers,restorechoices:modalRestoreChoices})[m.type]();
+  const inner=({edit:modalEdit,drill:modalDrill,importmenu:modalImportMenu,import:modalImport,rename:modalRename,delcat:modalDelCat,addcat:modalAddCat,kwimport:modalKwImport,limit:modalLimit,restore:modalRestore,wizard:modalWizard,nwsnap:modalNwSnap,nwupdate:modalNwUpdate,nwacc:modalNwAccounts,ai:modalAi,audit:modalAudit,nwgoal:modalNwGoal,nwret:modalNwReturns,nwlink:modalNwLink,nwreview:modalNwReview,nwimp:modalNwImport,bulkcat:modalBulkCategory,saveview:modalSaveView,imports:modalImportHistory,answers:modalAnswers})[m.type]();
   o.innerHTML=`<div class="scrim" data-action="close"></div><div class="modal${m.wide?' wide':m.mid?' mid':''}${m.type==='importmenu'?' import-menu':''}" role="dialog" aria-modal="true" aria-labelledby="m-title">${inner}</div>`;
   o.classList.add('on'); o.setAttribute('aria-hidden','false');
   if(m.type==='edit') txPreview();
@@ -6033,7 +6272,7 @@ function modalEdit(){
     </div>
     <div class="field"><label for="f-cat">${esc(L('category'))}</label><select id="f-cat">${catOptions(d.table,d.category,true)}</select>
       <span class="suggest" id="f-sug">${sugHtml(d)}</span></div>
-    <details><summary>${esc(L('impRowDetails'))}</summary>${txAccountingFields(d,'f')}</details>
+    ${txAccountingFields(d,'f')}
     ${m.ref?`<p class="hint">${esc(findRow(m.ref.mk,m.ref.table,m.ref.id).row?.source||'')}</p>`:''}
     <p class="hint" id="f-preview" aria-live="polite"></p>
     <div class="field" id="f-err" hidden><span class="err"></span></div>
@@ -6070,9 +6309,7 @@ function submitEdit(){
   const amount=parsed>0&&d.dir==='out'&&!/^\+/.test(raw)?-parsed:parsed;
   let category=d.category;
   if(!category && !m.ref){ const sug=matchKeyword(d.table,d.concept); if(sug&&isKnown(d.table,sug.cat)) category=sug.cat; }
-  const first=!allRows().length;
   upsertTx(m.ref,{table:d.table,date,amount,concept:d.concept.trim(),category,...txAccountingValues(d)});
-  if(first){S.ui.year=+date.slice(0,4);S.ui.overviewMonth=String(+date.slice(5,7)-1);S.ui.tx.month=S.ui.overviewMonth;S.ui.tx.monthDefaulted=true;}
   closeModal(); render();
   toast(m.ref?L('savedToast'):(category?L('addedAs',TL(d.table),category,fmtEUR(amount)):L('addedUncat',TL(d.table),fmtEUR(amount))));
   coverStart(date);
@@ -6132,13 +6369,13 @@ function modalImport(){
     <div class="drop" id="imp-drop"><span>${esc(L('importFileHelp'))}</span>
       <label class="btn sm" for="imp-file">${esc(L('aiChoose'))}</label><input type="file" id="imp-file" multiple accept=".xlsx,.xlsm,.xls,.csv,.txt,.tsv,.ods,.pdf,.png,.jpg,.jpeg,.webp,.gif" class="sr"></div>
     ${m.files?.length?`<p class="hint">${esc(L('impFilesHelp'))}</p>${statementFileList(m,'imp',!m.fixedAccount)}`:''}
-    <details class="imp-paste"><summary>${esc(L('impOrPaste'))}</summary><div class="field"><label for="imp-text">${esc(L('impOrPaste'))}</label>
+    <div class="field"><label for="imp-text">${esc(L('impOrPaste'))}</label>
       <textarea id="imp-text" rows="4" placeholder="${fmtDate('2026-08-31')}&#9;-60,00&#9;Amazon.es&#10;${fmtDate('2026-08-30')}&#9;-39,90&#9;RENFE VIRTUAL INTERNET">${esc(m.text)}</textarea>
-      <span class="help">${esc(L('impPasteShort'))}</span></div></details>
+      <span class="help">${esc(L('impPasteShort'))}</span></div>
     <details><summary>${esc(L('advanced'))}</summary><div class="field"><label for="imp-table">${esc(L('putRowsIn'))}</label><select id="imp-table" style="max-width:360px"><option value="auto"${m.table==='auto'?' selected':''}>${esc(L('sortAuto'))}</option>${TKEYS.map(t=>`<option value="${t}"${t===m.table?' selected':''}>${esc(L('allInto',TL(t)))}</option>`).join('')}</select>
       <span class="help">${esc(L('sortAutoHelp'))}</span></div></details>
-    <details><summary>${esc(L('reviewHelp'))}</summary><p class="template-note">${esc(L('skipNote',sk.length?sk.slice(0,4).map(quote).join(', ')+(sk.length>4?', …':''):L('emptyForNow')))} <button type="button" class="linkish" data-action="goto-skip">${esc(L('editSkip'))}</button></p></details>
-    ${S.ai&&m.msg?`<button class="btn" type="button" data-action="imp-ai">${ICON.ai}${esc(L('useAiFallback'))}</button>`:''}
+    <p class="template-note">${esc(L('skipNote',sk.length?sk.slice(0,4).map(quote).join(', ')+(sk.length>4?', …':''):L('emptyForNow')))} <button type="button" class="linkish" data-action="goto-skip">${esc(L('editSkip'))}</button></p>
+    ${S.ai?`<button class="btn" type="button" data-action="imp-ai">${ICON.ai}${esc(L('useAiFallback'))}</button>`:''}
     ${m.msg?`<p class="field"><span class="err">${esc(m.msg)}</span></p>`:''}
   </div>
   <div class="m-foot"><span class="r"><button class="btn" data-action="close">${esc(L('cancel'))}</button><button class="btn primary" data-action="imp-read">${esc(L('readRows'))}</button></span></div>`;
@@ -6160,32 +6397,29 @@ function modalImport(){
   /* every change redraws the review, so a long file shows 200 rows at a time; the rest are still added */
   const shown=m.shown||200;
   const reviewRows=impReviewRows(m);
-  const body=reviewRows.slice(0,shown).map(({r,i})=>{ const editing=m.editing?.includes(i)||r.invalidAmount||r.invalidDate;
-    return `<tr class="${greyed(r)?'off':''}${r.aiQ&&!r.aiA?' ai-ask':''}" id="imp-r-${i}">
+  const body=reviewRows.slice(0,shown).map(({r,i})=>`<tr class="${greyed(r)?'off':''}${r.aiQ&&!r.aiA?' ai-ask':''}" id="imp-r-${i}">
     <td class="on"><input type="checkbox" id="imp-on-${i}" data-action="imp-on" data-i="${i}" ${r.on?'checked':''} aria-label="${esc(L('includeRow',i+1))}"></td>
-    <td class="d">${editing?`<input aria-label="${esc(L('date'))}" class="ed${r.invalidDate?' bad':''}" id="imp-date-${i}" data-action="imp-date" data-i="${i}" value="${esc(r.dateDraft??r.date)}"${r.invalidDate?' aria-invalid="true"':''}>`:esc(fmtDate(r.date))}</td>
-    <td class="c">${editing?`<input aria-label="${esc(L('concept'))}" class="ed" id="imp-d-${i}" data-action="imp-desc" data-i="${i}" value="${esc(r.concept)}" maxlength="140"><details><summary>${esc(L('impRowDetails'))}</summary>${txAccountingFields(Object.assign({},r,{account:sourceAccount(m,r)}),'imp',i)}</details>`:esc(r.concept)}</td>
-    <td class="a r num">${editing?`<input aria-label="${esc(L('amount'))}" class="ed${r.invalidAmount?' bad':''}" id="imp-a-${i}" data-action="imp-amt" data-i="${i}" inputmode="decimal" value="${esc(r.amountDraft??fmtEUR(r.amount,2,true))}"${r.invalidAmount?' aria-invalid="true"':''}>`:fmtEUR(r.amount)}</td>
-    <td class="tb">${editing?impTableSel(r,i):esc(TL(r.table))}</td>
-    <td class="k">${editing||!r.category||r.ml?`<select aria-label="${esc(L('category'))}" id="imp-c-${i}" data-action="imp-cat" data-i="${i}" class="${r.category?'':'missing'}">${catOptions(r.table,r.category,true)}</select>`:esc(r.category)}</td>
-    <td class="n"><button class="linkish" type="button" data-action="imp-edit" data-i="${i}" aria-label="${esc(L(editing?'finishEditing':'editTransaction')+': '+r.concept)}">${esc(L(editing?'finishEditing':'editTransaction'))}</button>${r.aiQ?(()=>{ const ao=aiRowOptions(r); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" aria-pressed="${r.aiA===o.text}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${greyed(r)?`<span class="note why">${esc(whyText(r))}</span> `:''}${r.like&&!r.dup&&!greyed(r)?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span><label class="check"><input type="checkbox" data-action="imp-fx" data-i="${i}"${r.fxConfirmed?' checked':''}>${esc(L('impFxConfirm',CUR))}</label> `:''}${r.table==='expenses'&&r.amount>0?`<span class="note refund">${esc(L('impRefund'))}</span>`:''}${r.table==='expenses'&&isBizum(r)?`<span class="note">${esc(L('noteBizum'))}</span> `:''}${greyed(r)?'':r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`; }).join('');
+    <td class="d"><label class="sr" for="imp-date-${i}">${esc(L('date'))} ${i+1}</label><input type="text" class="ed${r.invalidDate?' bad':''}" id="imp-date-${i}" data-action="imp-date" data-i="${i}" value="${esc(r.dateDraft??r.date)}" placeholder="YYYY-MM-DD"${r.invalidDate?' aria-invalid="true"':''}></td>
+    <td class="c"><label class="sr" for="imp-d-${i}">${esc(L('descForRow',i+1))}</label><input type="text" class="ed" id="imp-d-${i}" data-action="imp-desc" data-i="${i}" maxlength="140" value="${esc(r.concept)}" placeholder="${esc(L('noConcept'))}" title="${esc(r.concept)}"><details><summary>${esc(L(r.table==='investments'?'impInvestmentDetails':'impRowDetails'))}</summary>${txAccountingFields(Object.assign({},r,{account:sourceAccount(m,r)}),'imp',i)}</details></td>
+    <td class="a r num"><label class="sr" for="imp-a-${i}">${esc(L('amtForRow',i+1))}</label><input type="text" class="ed${r.invalidAmount?' bad':''}" id="imp-a-${i}" data-action="imp-amt" data-i="${i}" inputmode="decimal" value="${esc(r.amountDraft??fmtEUR(r.amount,2,true))}"${r.invalidAmount?' aria-invalid="true"':''}></td>
+    <td class="tb">${impTableSel(r,i)}</td>
+    <td class="k"><label class="sr" for="imp-c-${i}">${esc(L('catForRow',i+1))}</label><select id="imp-c-${i}" data-action="imp-cat" data-i="${i}" class="${r.category?(r.ml?'guess':''):'missing'}"${r.ml?` title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}"`:''}>${catOptions(r.table,r.category,true)}</select></td>
+    <td class="n">${r.aiQ?(()=>{ const ao=aiRowOptions(r); return `<div class="ai-qbox"><span class="note ai-q"><b>${esc(L('aiAsks'))}:</b> ${esc(ao.opts.length?ao.stem:r.aiQ)}</span>${ao.opts.length?`<span class="ai-opts">${ao.opts.map((o,j)=>`<button type="button" class="btn sm ai-opt${r.aiA===o.text?' on':''}" aria-pressed="${r.aiA===o.text}" data-action="ai-opt" data-i="${i}" data-j="${j}">${esc(o.k)}) ${esc(o.text)}</button>`).join('')}</span>`:''}${r.aiA?`<span class="hint">${esc(L('aiYourAnswer',r.aiA))}</span>`:''}</div>`; })():''}${greyed(r)?`<span class="note why">${esc(whyText(r))}</span> `:''}${r.like&&!r.dup&&!greyed(r)?`<span class="note">${esc(L('noteLike',shortDesc(r.like,30)))}</span> `:''}${WORDCH.test(r.concept)?'':`<span class="note">${esc(L('noteNoDesc'))}</span> `}${r.balOff?`<span class="note">${esc(L('noteBal'))}</span> `:''}${r.odd!=null&&!r.xfer?`<span class="note">${esc(L('noteOdd',fmtEUR(r.odd,0)))}</span> `:''}${r.fx?`<span class="note">${esc(L('noteFx',r.fx))}</span><label class="check"><input type="checkbox" data-action="imp-fx" data-i="${i}"${r.fxConfirmed?' checked':''}>${esc(L('impFxConfirm',CUR))}</label> `:''}${r.table==='expenses'&&r.amount>0?`<span class="note refund">${esc(L('impRefund'))}</span>`:''}${r.table==='expenses'&&isBizum(r)?`<span class="note">${esc(L('noteBizum'))}</span> `:''}${greyed(r)?'':r.ml&&r.category===r.ml.cat?`<span class="note ml" title="${esc(L('mlGuessTitle',fmtPct(r.ml.p,0)))}">${esc(L('mlGuess'))}${r.ml.like?` · ${esc(L('mlLike',shortDesc(r.ml.like,24)))}`:''}</span>`:(!r.category?`<span class="note">${esc(L('noKeyword'))}</span>${r.maybe?` <button type="button" class="linkish ml-maybe" data-action="imp-maybe" data-i="${i}">${esc(L('mlMaybe',r.maybe.cat))}</button>`:''}`:'')}</td></tr>`).join('');
   return `${mHead(esc(L('checkRows')),esc(L('rowsRead',rows.length,m.fileName||'')))}
   <div class="m-body">
-    ${m.pick?impAcctPick(m):''}${impDateControls(m)}
+    ${m.pick?impAcctPick(m):''}${impDateControls(m)}${importCoverage(m)}
     ${m.msg?`<p class="err" role="alert">${esc(m.msg)}</p>`:''}
-    <p class="${rows.some(impNeedsAttention)?'notice':'review-ready'}" role="status">${esc(L('reviewSummary',rows.filter(r=>r.on&&!impNeedsAttention(r)).length,rows.filter(impNeedsAttention).length,rows.filter(r=>!r.on).length))}</p>
-    <div class="seg"><button type="button" data-action="imp-review-mode" data-v="attention" aria-pressed="${!!m.attention}">${esc(L('needsAttention'))}</button><button type="button" data-action="imp-review-mode" data-v="all" aria-pressed="${!m.attention}">${esc(L('allRowsReview'))}</button></div><div class="review-issues">${['category','duplicate','transfer','other'].map(issue=>{const n=rows.filter(r=>impIssue(r,issue)).length;return n?`<button class="btn sm" data-action="imp-issue" data-v="${issue}" aria-pressed="${m.issue===issue}">${esc(L('issue'+issue[0].toUpperCase()+issue.slice(1)))} · ${n}</button>`:'';}).join('')}</div>${aiReviewNote(m)}${impChecksNote(m)}${(o=>o?`<label class="check"><input type="checkbox" id="imp-balfill"${m.balFill!==false?' checked':''}> ${esc(L('impBalFill',o.a.name,o.ks.length))}</label>`:'')(impBalOffer(m))}
+    <p class="${rows.some(impNeedsAttention)?'notice':'review-ready'}" role="status">${esc(L('reviewSummary',rows.filter(r=>r.on&&!impNeedsAttention(r)).length,rows.filter(impNeedsAttention).length,rows.filter(r=>!r.on).length))}</p><p class="hint">${esc(L('reviewSafety'))}</p>
+    <div class="seg"><button type="button" data-action="imp-review-mode" data-v="attention" aria-pressed="${!!m.attention}">${esc(L('needsAttention'))}</button><button type="button" data-action="imp-review-mode" data-v="all" aria-pressed="${!m.attention}">${esc(L('allRowsReview'))}</button></div>${aiReviewNote(m)}${impChecksNote(m)}${(o=>o?`<label class="check"><input type="checkbox" id="imp-balfill"${m.balFill!==false?' checked':''}> ${esc(L('impBalFill',o.a.name,o.ks.length))}</label>`:'')(impBalOffer(m))}
     ${m.sw&&m.sw.people.length>1?`<div class="field"><label class="lab" for="imp-sw-who">${esc(L('swWho'))}</label><select id="imp-sw-who" style="max-width:320px">${m.sw.people.map((p,i)=>`<option value="${i}"${i===m.sw.who?' selected':''}>${esc(p)}</option>`).join('')}</select><span class="help">${esc(L('swHelp'))}</span></div>`:''}
+    ${guessed?`<p class="hint">${esc(L('sortedNote'))}</p>`:''}
+    ${nMl?`<p class="hint ml-note">${esc(L('mlImpNote',nMl))}</p>`:''}
+    <p class="hint imp-key">${esc(L('impKey'))} ${esc(L('impEditable'))} ${esc(L('impRefundHelp'))}</p>
+    <div class="imp-controls"><label for="imp-search">${esc(L('search'))}</label><input id="imp-search" value="${esc(m.search||'')}" type="search"><label for="imp-sort">${esc(L('date'))} / ${esc(L('amount'))}</label><select id="imp-sort">${[['','—'],['date-asc',L('date')+' ↑'],['date-desc',L('date')+' ↓'],['amount-asc',L('amount')+' ↑'],['amount-desc',L('amount')+' ↓'],['concept-asc',L('concept')+' ↑']].map(([v,t])=>`<option value="${v}"${m.sort===v?' selected':''}>${esc(t)}</option>`).join('')}</select><button class="btn sm" data-action="imp-excluded" aria-pressed="${!!m.excluded}">${esc(L('impExcluded'))}</button></div>
+    <details><summary>${esc(L('impBulkEdit'))}</summary><p class="hint">${esc(L('impBulkHelp'))}</p><div class="imp-controls"><button class="btn sm" data-action="imp-bulk-include">${esc(L('impInclude'))}</button><button class="btn sm" data-action="imp-bulk-exclude">${esc(L('impExclude'))}</button><select id="imp-bulk-type" aria-label="${esc(L('table'))}"><option value="">${esc(L('table'))}</option>${TKEYS.map(t=>`<option value="${t}">${esc(TL(t))}</option>`).join('')}</select><select id="imp-bulk-category" aria-label="${esc(L('category'))}"><option value="">${esc(L('category'))}</option>${TKEYS.map(t=>`<optgroup label="${esc(TL(t))}">${catNames(t).map(c=>`<option value="${esc(t+'|'+c)}">${esc(c)}</option>`).join('')}</optgroup>`).join('')}</select><button class="btn sm" data-action="imp-bulk-apply">${esc(L('impBulk'))}</button></div></details>
     ${reviewRows.length?'':`<p class="notice">${esc(L('impEmpty'))}<button class="btn sm" data-action="imp-review-mode" data-v="all">${esc(L('allRowsReview'))}</button></p>`}
     <div class="imp-table-wrap"><table class="imp"><thead><tr><th>${esc(L('impImport'))}</th><th>${esc(L('date'))}</th><th>${esc(L('concept'))}</th><th class="r">${esc(L('amount'))}</th><th>${esc(L('table'))}</th><th>${esc(L('category'))}</th><th></th></tr></thead><tbody>${body}</tbody></table></div>
     ${reviewRows.length>shown?`<div class="more"><button class="btn" data-action="imp-more">${esc(L('showMore',fmtCount(Math.min(200,reviewRows.length-shown))))}</button></div>`:''}
-${importCoverage(m)}
-    <details class="import-help"><summary>${esc(L('reviewHelp'))}</summary><p class="hint">${esc(L('reviewSafety'))}</p>${guessed?`<p class="hint">${esc(L('sortedNote'))}</p>`:''}
-    ${nMl?`<p class="hint ml-note">${esc(L('mlImpNote',nMl))}</p>`:''}
-    <p class="hint imp-key">${esc(L('impKey'))} ${esc(L('impEditable'))} ${esc(L('impRefundHelp'))}</p></details>
-    <details class="import-tools"><summary>${esc(L('reviewTools'))}</summary><div class="imp-controls"><label for="imp-search">${esc(L('search'))}</label><input id="imp-search" value="${esc(m.search||'')}" type="search"><label for="imp-sort">${esc(L('date'))} / ${esc(L('amount'))}</label><select id="imp-sort">${[['','—'],['date-asc',L('date')+' ↑'],['date-desc',L('date')+' ↓'],['amount-asc',L('amount')+' ↑'],['amount-desc',L('amount')+' ↓'],['concept-asc',L('concept')+' ↑']].map(([v,t])=>`<option value="${v}"${m.sort===v?' selected':''}>${esc(t)}</option>`).join('')}</select><button class="btn sm" data-action="imp-excluded" aria-pressed="${!!m.excluded}">${esc(L('impExcluded'))}</button></div>
-    <details><summary>${esc(L('impBulkEdit'))}</summary><p class="hint">${esc(L('impBulkHelp'))}</p><div class="imp-controls"><button class="btn sm" data-action="imp-bulk-include">${esc(L('impInclude'))}</button><button class="btn sm" data-action="imp-bulk-exclude">${esc(L('impExclude'))}</button><select id="imp-bulk-type" aria-label="${esc(L('table'))}"><option value="">${esc(L('table'))}</option>${TKEYS.map(t=>`<option value="${t}">${esc(TL(t))}</option>`).join('')}</select><select id="imp-bulk-category" aria-label="${esc(L('category'))}"><option value="">${esc(L('category'))}</option>${TKEYS.map(t=>`<optgroup label="${esc(TL(t))}">${catNames(t).map(c=>`<option value="${esc(t+'|'+c)}">${esc(c)}</option>`).join('')}</optgroup>`).join('')}</select><button class="btn sm" data-action="imp-bulk-apply">${esc(L('impBulk'))}</button></div></details>
-    </details>
     ${m.bad.length?`<div class="field"><span class="lab">${esc(L('badLines',m.bad.length))}</span><div class="bad-lines">${esc(m.bad.slice(0,30).join('\n'))}${m.bad.length>30?'\n…':''}</div></div>`:''}
   </div>
   <div class="m-foot">${m.confirmClose?impConfirmBar(m):`<button class="btn" data-action="imp-back">${esc(L('back'))}</button><span class="r"><span class="hint" id="imp-summary" style="align-self:center">${esc(byT.map(([t,n])=>L('nToT',fmtCount(n),TL(t))).join(' · ')+(nMl?L('nGuessed',nMl):'')+(noCat?L('nUncat',noCat):''))}</span><button class="btn primary" data-action="imp-add" ${on.length?'':'disabled'}>${esc(L('addRows',on.length))}</button></span>`}</div>`;
@@ -6223,14 +6457,8 @@ function setImportDateOrder(m,src,order){
   try{ for(const r of m.rows){ if((r.aiSrc||m.fileName||'')!==src||!r.rawDate||r.dateEdited) continue; const d=parseDate(r.rawDate); if(d){ r.date=d; r.dateConfirmed=true; r.invalidDate=false; r.dateDraft=null; } } } finally{ DATE_ORDER=old; }
   m.coverConfirmed=false; m.coverFrom=null; m.coverTo=null; if(m.sourceCoverage) delete m.sourceCoverage[src];
 }
-function impIssue(r,issue){
-  if(issue==='category') return r.on&&!r.category;
-  if(issue==='duplicate') return !!(r.dup||r.like||r.same);
-  if(issue==='transfer') return !!(r.xfer||r.skip||!r.on);
-  return impNeedsAttention(r)&&!!r.category&&!r.dup&&!r.like;
-}
 function impReviewRows(m){
-  const q=fold(m.search||''); let rs=m.rows.map((r,i)=>({r,i})).filter(({r})=>!m.issue||impIssue(r,m.issue)).filter(x=>(!m.attention||impNeedsAttention(x.r))&&(!m.excluded||!x.r.on)&&(!q||fold(x.r.concept+' '+x.r.date+' '+x.r.amount+' '+x.r.category).includes(q)));
+  const q=fold(m.search||''); let rs=m.rows.map((r,i)=>({r,i})).filter(x=>(!m.attention||impNeedsAttention(x.r))&&(!m.excluded||!x.r.on)&&(!q||fold(x.r.concept+' '+x.r.date+' '+x.r.amount+' '+x.r.category).includes(q)));
   if(m.sort){ const [key,dir]=m.sort.split('-'), d=dir==='desc'?-1:1; rs.sort((a,b)=>d*(key==='amount'?a.r.amount-b.r.amount:String(a.r[key]).localeCompare(String(b.r[key])))||a.i-b.i); }
   return rs;
 }
@@ -6712,7 +6940,7 @@ function addImported(){
   for(const src of sources) if(sources.length>1){ const cv=m.sourceCoverage&&m.sourceCoverage[src]; if(!cv||!cv.confirmed) continue; const ds=m.rows.filter(r=>(r.aiSrc||m.fileName||'')===src).map(r=>r.date).sort(), f=cv.from||ds[0], t=cv.to||ds[ds.length-1]; if(parseDate(f)!==f||parseDate(t)!==t||f>t){ toast(L('coverageDateError')); return; } if(!nw().accounts.some(a=>a.id===sourceAccount(m,m.rows.find(r=>(r.aiSrc||m.fileName||'')===src),true))){ toast(L('coverageAccountError')); return; } }
   for(const r of rows){ const mk=r.date.slice(0,7), id=newId(); insertSorted(ensureMonth(mk)[r.table],normRow({id,date:r.date,amount:r2(r.amount),concept:r.concept,category:r.category||'',batch,source:r.source||r.aiSrc||m.fileName||'',...txAccountingValues(r),investmentAccount:r.movement==='transfer'?'':r.investmentAccount||(!r.investmentManual&&nwRemembered({...r,account:sourceAccount(m,r,sources.length>1)}))||'',account:sourceAccount(m,r,sources.length>1),originalCurrency:r.fx||''})); markDirty('months/'+mk); added.push({mk,table:r.table,id}); by[r.table]=(by[r.table]||0)+1; }
   if(S.settings&&S.settings.startAuto&&rows.length){ const first=rows.map(r=>r.date).sort()[0], st=startOf(), fk={y:+first.slice(0,4),m:+first.slice(5,7)-1};
-    const nx=Object.assign({},S.settings); if(!st||fk.y*12+fk.m<st.y*12+st.m) nx.start=fk; S.settings=nx; markDirty('config/settings'); }
+    const nx=Object.assign({},S.settings); delete nx.startAuto; if(!st||fk.y*12+fk.m<st.y*12+st.m) nx.start=fk; S.settings=nx; markDirty('config/settings'); }
   const g=Object.assign({},S.settings.guide), sts=Object.assign({},g.stmts);
   for(const src of sources){
     const rs=m.rows.filter(r=>(r.aiSrc||m.fileName||'')===src), id=sourceAccount(m,rs[0],sources.length>1); if(!id||!nw().accounts.some(a=>a.id===id&&a.group==='cash')) continue;
@@ -6726,10 +6954,7 @@ function addImported(){
   bump(); closeModal();
   if(added.length){ const dates=rows.map(r=>r.date).sort(); setSettings({imports:(Array.isArray(S.settings.imports)?S.settings.imports:[]).concat([{id:batch,date:todayYmd(),source:m.fileName||'',account:m.acct||'',from:dates[0],to:dates[dates.length-1],n:added.length}])}); }
   S.lastImport=added.length?{added,n:added.length,batch,oldGuide,oldFp,bal:bo?{id:bo.a.id,ks:bo.ks}:null}:null;
-  if(rows.length){ const latest=rows.map(r=>r.date.slice(0,7)).sort().pop(); S.ui.year=+latest.slice(0,4); S.ui.overviewMonth=String(+latest.slice(5,7)-1); S.ui.tx.month=S.ui.overviewMonth; S.ui.tx.monthDefaulted=true;
-    setSettings({guide:Object.assign({},S.settings.guide,{on:false,done:true})}); if(S.wizard) S.wizard.on=false;
-    if(!S.nwUpdateBack&&(!m.queue||m.queue.index>=m.queue.files.length)){ S.ui.tab='overview'; try{history.replaceState(null,'','#overview');}catch(_){} }
-  }
+  const yrs=[...new Set(rows.map(r=>+r.date.slice(0,4)))]; if(yrs.length===1) S.ui.year=yrs[0];
   render(); toast(L('addedParts',Object.entries(by).map(([t,n])=>L('nToT',fmtCount(n),TL(t))).concat(bo?[L('balFilled',bo.ks.length)]:[]).join(', ')),added.length?{label:L('undo'),fn:undoImport}:null,15000);
   if(m.queue&&m.queue.index<m.queue.files.length) impNextFile(m.queue);
   if(pendNw) setTimeout(()=>{ const next={data:pendNw,fileName:L('aiNwFrom'),wide:true}; if(S.modal?.type==='nwreview') nwReviewChild('nwimp',next); else if(!S.modal||S.modal.type==='wizard'||S.modal.type==='nwupdate'){ if(S.modal?.type==='nwupdate') S.nwUpdateBack=S.modal;setTab('networth'); openModal({type:'nwimp',...next}); } },400);
@@ -6788,7 +7013,11 @@ function modalAddCat(){
   return `${mHead(esc(L('addCategory')),esc(L('addCatSub',TL(t),roleName(t,'other'))))}
   <form id="addcat-form" novalidate><div class="m-body">
     <div class="field"><label for="ac-name">${esc(L('name'))}</label><input type="text" id="ac-name" placeholder="${esc(L('ph_'+t))}" autocomplete="off" data-autofocus><span class="err" id="ac-err" aria-live="polite"></span></div>
-
+    ${t==='expenses'?`<fieldset class="field plain"><legend class="lab" style="margin-bottom:var(--s8)">${esc(L('type'))}</legend>
+      <div class="radio-row">
+        <label class="radio-card"><input type="radio" name="ac-type" value="Need"><span><b>${esc(L('need'))}</b><small>${esc(L('needDesc'))}</small></span></label>
+        <label class="radio-card"><input type="radio" name="ac-type" value="Want" checked><span><b>${esc(L('want'))}</b><small>${esc(L('wantDesc'))}</small></span></label>
+      </div><span class="help">${esc(L('nwHelp'))}</span></fieldset>`:''}
   </div>
   <div class="m-foot"><span class="r"><button type="button" class="btn" data-action="close">${esc(L('cancel'))}</button><button type="submit" class="btn primary">${esc(L('addCategory'))}</button></span></div></form>`;
 }
@@ -7078,12 +7307,20 @@ let TOUR=null;
 const tourSec=sel=>()=>{ const e=$(sel); return e?e.closest('section')||e:null; };
 const TOUR_STEPS=[
   {k:'intro'},
-  {k:'simpleSummary',tab:'overview',el:()=>$('#view .summary-totals')},
-  {k:'simpleTransactions',tab:'transactions',el:()=>$('#view .page-head')},
-  {k:'simpleAccounts',tab:'networth',el:()=>$('#view .page-head')},
+  {k:'tabs',tab:'overview',el:()=>$('.tabs'),pos:'right'},   /* right: the card would otherwise cover the saved figure under the tabs */
+  {k:'ovTop',tab:'overview',el:()=>$('#view .ov-top')},
+  {k:'ovMonth',tab:'overview',el:tourSec('#month-comparison')},
+  {k:'ovAnalysis',tab:'overview',el:()=>$('#view [data-action=analysis-toggle][data-tab=overview]')},
+  {k:'ovMonthly',tab:'overview',el:tourSec('#ch-monthly')},
+  {k:'nwTop',tab:'networth',el:()=>$('#view .ov-top')},
+  {k:'nwCards',tab:'networth',el:()=>$('#view .nw-change')},
+  {k:'nwAccounts',tab:'networth',el:()=>$('#view table.nwt')},
+  {k:'nwAnalysis',tab:'networth',el:()=>$('#view .nw-goal')},
+  {k:'txImport',tab:'transactions',el:()=>$('#view .page-head [data-action=import]')},
+  {k:'yearly',tab:'yearly',el:()=>$('#view .yframe, #view .year-month-card')},
+  {k:'catList',tab:'categories',el:tourSec('.cat-list')},
   {k:'end'}
 ];
-
 /* the example: this year so far (last year if it's only just begun), in the tracker's language */
 function sampleDataset(){
   const es=LANG==='es', C=clone(es?DEFAULT_CATS_ES:DEFAULT_CATS), n=nowYM();
@@ -7150,10 +7387,9 @@ async function startTour(opts){
   Object.assign(S.ui,{year:D.year,editTarget:null,tx:Object.assign(S.ui.tx,{table:'expenses',q:'',month:'all',cat:'all',limit:150,sort:'date-desc',allYears:false,from:'',to:'',min:'',max:'',account:'',source:'',batch:'',savedView:'',selection:new Set()}),
     ct:Object.assign(S.ui.ct,{table:'expenses',q:'',cq:'',test:''}),mm:{table:'expenses',cat:null},oc:Object.assign(S.ui.oc,{table:'expenses',month:'all'}),nw:{month:null}});
   bump();
-  S.ui.overviewMonth=null; S.ui.tx.monthDefaulted=false;
-  setTab('overview','replace');
-  if(TOUR.demo){tourFree();return;}
-  tourMount(); tourGo(0);
+  tourMount();
+  setTab('networth','replace');
+  tourGo(0);
 }
 function tourMount(){
   const layer=document.createElement('div'); layer.id='tour-layer'; layer.className='tour-layer';
@@ -7256,7 +7492,7 @@ window.addEventListener('ybt-prefs',()=>{
 /* how: 'replace' (the tour: no history entry per step), 'pop' (Back/Forward already moved); otherwise a new entry, so the phone's Back returns to the previous tab */
 function setTab(t,how){ if(!TABS.includes(t)) return; S.ui.tab=t; S.ui.editTarget=null;
   try{ if(how==='replace') history.replaceState(null,'','#'+t); else if(how!=='pop'&&location.hash!=='#'+t) history.pushState(null,'','#'+t); }catch(_){} render(); window.scrollTo({top:0}); }
-const DEMO_OFF=new Set(['local-save','restore-choices','restore-local','restore-file','local-x','local-open','local-fresh','backup','restore','restore-yes','remind-ics']);
+const DEMO_OFF=new Set(['local-x','local-open','local-fresh','backup','restore','restore-yes','remind-ics']);
 const ACTIONS={
   'tab':el=>setTab(el.dataset.tab),
   'goto-about':()=>{ setTab('settings'); const card=$('#about-card'); if(card) card.scrollIntoView({block:'center'}); const input=$('#st-born'); if(input) input.focus({preventScroll:true}); },
@@ -7269,7 +7505,7 @@ const ACTIONS={
   },
   'year-step':el=>{ const ys=yearList(); const i=ys.indexOf(S.ui.year)+(+el.dataset.step); if(i>=0&&i<ys.length){ S.ui.year=ys[i]; S.ui.tx.month='all'; S.ui.oc.month='all'; render(); } },
   'export':()=>exportXlsx(),
-  'goto-uncat':()=>{ const A=agg(S.ui.year); const t=TKEYS.find(k=>A[k].uncatCount)||'expenses'; Object.assign(S.ui.tx,{table:t,cat:UNCAT,attentionAll:true,month:'all',monthDefaulted:true,q:'',limit:150,from:'',to:'',min:'',max:'',account:'',source:'',batch:'',allYears:false,savedView:''}); txSelection().clear(); setTab('transactions'); },
+  'goto-uncat':()=>{ const A=agg(S.ui.year); const t=TKEYS.find(k=>A[k].uncatCount)||'expenses'; Object.assign(S.ui.tx,{table:t,cat:UNCAT,attentionAll:true,month:'all',q:'',limit:150,from:'',to:'',min:'',max:'',account:'',source:'',batch:'',allYears:false,savedView:''}); txSelection().clear(); setTab('transactions'); },
   'edit-target':el=>{ if(!S.canWrite) return; S.ui.editTarget=el.dataset.key; render(); const i=$('#target-input'); if(i){ i.focus(); i.select(); } },
   'oc-table':el=>{ S.ui.oc.table=el.dataset.t; render(); },
   'oc-top':el=>{ S.ui.oc.top=el.dataset.v==='top'; try{ localStorage.setItem('ybt.top',S.ui.oc.top?'top':'all'); }catch(_){} render(); },
@@ -7288,6 +7524,7 @@ const ACTIONS={
   'page-actions':el=>{ const t=el.dataset.tab; S.ui.pageActions=Object.assign({},S.ui.pageActions,{[t]:!(S.ui.pageActions&&S.ui.pageActions[t])}); render(); },
   'analysis-toggle':el=>{ const t=el.dataset.tab; if(!['overview','networth'].includes(t)) return; S.ui.analysis=Object.assign({},S.ui.analysis,{[t]:!analysisOpen(t)}); try{ localStorage.setItem('ybt.analysis.'+t,S.ui.analysis[t]?'1':'0'); }catch(_){} render(); },
   'year-view':el=>{ S.ui.yearSingle=el.dataset.v==='month'; render(); },
+  'scenario-period':el=>{ const input=$('#scenario-months'); if(input){ input.value=el.dataset.n; scenarioInput(input); } },
   'compare-rows':el=>{ const k=el.dataset.k; Object.assign(S.ui.tx,{table:el.dataset.t,from:k+'-01',to:ymdAdd(ymAdd(k,1)+'-01',-1),month:'all',cat:'all',q:'',min:'',max:'',source:'',account:'',batch:'',allYears:true}); setTab('transactions'); },
   'import-history':()=>openModal({type:'imports',mid:true}),
   'import-view':el=>{ closeModal(); const u=S.ui.tx; Object.assign(u,{table:TKEYS.includes(el.dataset.t)?el.dataset.t:u.table,batch:el.dataset.id,from:'',to:'',q:'',month:'all',cat:'all',source:'',account:'',min:'',max:'',allYears:true}); txSelection().clear(); setTab('transactions'); },
@@ -7303,7 +7540,7 @@ const ACTIONS={
   'tx-more':()=>{ S.ui.tx.limit+=150; render(); },
   'tx-attention-all':()=>{ S.ui.tx.attentionAll=true; S.ui.tx.cat=UNCAT; S.ui.tx.limit=150; render(); },
   'tx-review-mode':el=>{ S.ui.tx.attentionAll=el.dataset.v==='attention'; S.ui.tx.cat=el.dataset.v==='attention'?UNCAT:'all'; S.ui.tx.limit=150; S.ui.tx.savedView=''; txSelection().clear(); render(); },
-  'imp-review-mode':el=>{ S.modal.issue=''; S.modal.attention=el.dataset.v==='attention'; S.modal.excluded=false; S.modal.search=''; renderModalKeepScroll(); },
+  'imp-review-mode':el=>{ S.modal.attention=el.dataset.v==='attention'; S.modal.excluded=false; S.modal.search=''; renderModalKeepScroll(); },
   'imp-excluded':()=>{ S.modal.excluded=!S.modal.excluded; S.modal.attention=false; renderModalKeepScroll(); },
   'imp-bulk-include':()=>impBulk('include'), 'imp-bulk-exclude':()=>impBulk('exclude'), 'imp-bulk-apply':()=>impBulk('apply'),
   'imp-more':()=>{ S.modal.shown=(S.modal.shown||200)+200; renderModalKeepScroll(); },
@@ -7323,7 +7560,7 @@ const ACTIONS={
   'tx-del-yes':()=>{ const ref=S.modal.ref; const del=deleteTx(ref); closeModal(); render(); if(del) toast(L('txDeleted'),{label:L('undo'),fn:()=>{ restoreTx(ref,del); render(); }}); },
   'categorise':()=>{ const t=S.ui.tx.table; const r=categoriseBlanks(t); render();
     toast(r.filled?L('filled',r.filled,r.left):L('noKwMatchesUncat',fmtCount(r.left),tl(t))); },
-  'import':()=>{ let t='auto'; try{ const v=localStorage.getItem('ybt.impTable'); if(v==='auto'||TKEYS.includes(v)) t=v; }catch(_){} const cash=nw().accounts.filter(a=>a.group==='cash');openModal({type:'import',step:'input',table:t,text:'',rows:[],bad:[],msg:'',pick:true,files:[],acct:cash.length===1?cash[0].id:''}); },
+  'import':()=>{ let t='auto'; try{ const v=localStorage.getItem('ybt.impTable'); if(v==='auto'||TKEYS.includes(v)) t=v; }catch(_){} openModal({type:'import',step:'input',table:t,text:'',rows:[],bad:[],msg:'',pick:true,files:[]}); },
   'import-menu':()=>{ if(S.canWrite) openModal({type:'importmenu'}); },
   'import-balances':()=>{ if(!S.canWrite) return; if(nw().accounts.length) ACTIONS['guide-val']({dataset:{k:ciMonth()}}); else ACTIONS['guide-acc'](); },
   'imp-ai':()=>{ const m=S.modal; if(!S.ai||!m) return; const files=m.queue?m.queue.files.slice(m.queue.index-1):m.files?.length?m.files:m.originalFile?[{file:m.originalFile,acct:m.acct||''}]:[]; for(const f of files) if(tooBig(m,f.file)) return; aiOpen({type:'ai',mode:'statement',files,acct:m.acct,fixedAccount:m.fixedAccount,pick:true,mid:true}); },
@@ -7370,24 +7607,18 @@ const ACTIONS={
     toast(L('khPruned',gone.length),{label:L('undo'),fn:()=>{ const K2=ensureKw(); const have=new Set(K2[t].map(q=>q[0].toLowerCase())); for(const p of gone) if(!have.has(p[0].toLowerCase())) K2[t].push(p); markDirty('config/keywords'); bump(); render(); }},12000); },
   'kw-del':el=>{ const t=S.ui.ct.table, i=+el.dataset.i, K=ensureKw(); const [p]=K[t].splice(i,1); markDirty('config/keywords'); bump(); render();
     toast(L('kwRemoved',p[0]),{label:L('undo'),fn:()=>{ const K2=ensureKw(); if(!K2[t].some(q=>q[0].toLowerCase()===p[0].toLowerCase())) K2[t].splice(Math.min(i,K2[t].length),0,p); markDirty('config/keywords'); bump(); render(); }}); },
-  'imp-edit':el=>{const m=S.modal,i=+el.dataset.i;m.editing=m.editing||[];m.editing=m.editing.includes(i)?m.editing.filter(x=>x!==i):m.editing.concat(i);renderModalKeepScroll();},
-  'imp-issue':el=>{const m=S.modal;m.issue=m.issue===el.dataset.v?'':el.dataset.v;m.attention=false;m.excluded=false;m.shown=200;renderModalKeepScroll();},
-  'simple-manual':()=>simpleStart(true),
-  'summary-review':()=>{ const {k}=summarySelection(); S.ui.tx.month=k?String(+k.slice(5,7)-1):'all'; S.ui.tx.monthDefaulted=true; Object.assign(S.ui.tx,{cat:UNCAT,attentionAll:true,q:'',from:'',to:'',min:'',max:'',account:'',source:'',batch:'',allYears:false,savedView:'',limit:150});txSelection().clear();setTab('transactions'); },
-  'summary-transactions':()=>{ const {k}=summarySelection(); S.ui.tx.month=k?String(+k.slice(5,7)-1):'all'; S.ui.tx.monthDefaulted=true; Object.assign(S.ui.tx,{cat:'all',attentionAll:false,q:'',from:'',to:'',min:'',max:'',account:'',source:'',batch:'',allYears:false,savedView:'',limit:150});txSelection().clear();setTab('transactions'); },
-  'account-month':el=>{S.ui.nw.month=el.dataset.k;render();},
-  'nw-performance':el=>{if(S.canWrite)openModal({type:'nwupdate',k:el.dataset.k,focusId:el.dataset.id,onlyId:el.dataset.id,performance:true,mid:true});},
-  'restore-choices':()=>openModal({type:'restorechoices'}),
-  'restore-file':()=>{closeModal();ACTIONS.restore();},
-  'restore-local':el=>{closeModal();localAction(el.dataset.fn);},
-  'show-unused-categories':()=>{S.ui.ct.showUnused=!S.ui.ct.showUnused;render();},
-  'category-rules':()=>{S.ui.ct.rules=!S.ui.ct.rules;render();window.scrollTo({top:0});},
   /* welcome */
   'ob-start':el=>{
     if(!S.canWrite) return;
-    if(!el?.demo){simpleStart();return;}
-    S.wizardShown=true; S.tourPending=true;
-    bump(); render(); setTimeout(()=>startTour({fresh:true,demo:true}),350);
+    const demo=!!(el&&el.demo);   /* "See a demo" on the landing page: the visitor came for the example */
+    const lang=S.ui.obLang==='es'?'es':'en', {y,m,auto}=obStartPick();
+    obApply(lang,y,m,auto);
+    S.ui.tab='networth'; try{ history.replaceState(null,'','#networth'); }catch(_){}
+    const k=ymAdd(ymNow(),-1); setSettings({start:{y:+k.slice(0,4),m:+k.slice(5,7)-1},startAuto:true,guide:{on:true,quick:true}});
+    if(!demo){ S.wizardShown=true; bump(); render(); wizardOpen(0); return; }
+    S.tourPending=true;
+    bump(); render(); window.scrollTo({top:0});
+    setTimeout(()=>startTour({fresh:true,demo}),350);
   },
   'ob-history':()=>{ if(!S.canWrite) return; const y=nowYM().y; obApply(S.ui.obLang==='es'?'es':'en',y,0,false); S.wizardShown=true; render(); wizardOpen(0); },
   'ob-ai':()=>{ if(!S.canWrite||!S.ai) return; const lang=S.ui.obLang==='es'?'es':'en'; aiOpen({type:'ai',mode:'start',files:[],lang,mid:true}); },
@@ -7419,7 +7650,7 @@ const ACTIONS={
     let r=null; try{ r=await S.ai[fn](); }catch(_){} render(); if(r&&r.message) toast(r.message); },
   'local-x':el=>{ const fn=el.dataset.fn; if(S.local&&Array.isArray(S.local.actions)&&S.local.actions.includes(fn)) localAction(fn); },
   'backup':()=>downloadBackup(),
-  'nw-update':el=>{if(S.canWrite)openModal({type:'nwupdate',k:el.dataset.k||ymAdd(ymNow(),-1),focusId:el.dataset.id,onlyId:el.dataset.id,mid:true});},
+  'nw-update':el=>{if(S.canWrite)openModal({type:'nwupdate',k:el.dataset.k||ymAdd(ymNow(),-1),focusId:el.dataset.id,mid:true});},
   'nwu-link':el=>nwUpdateLink(+el.dataset.i),
   'nwu-undo':()=>{if(S.canWrite&&S.modal?.undo){readNwUpdate();S.modal.undo();}},
   'nwu-edit':el=>{if(!S.canWrite)return;readNwUpdate();S.nwUpdateBack=S.modal;ACTIONS['edit-tx'](el);},
@@ -7534,6 +7765,7 @@ document.addEventListener('input',e=>{
   const id=e.target.id;
   if(e.target.matches('[data-date-input]')) validateDateInput(e.target);
   if(id&&AMT_FIELD.test(id)) amtRead(e.target);
+  if(id==='scenario-extra'||id==='scenario-months'){ scenarioInput(e.target); return; }
   if(id==='tx-q'){ S.ui.tx.q=e.target.value; S.ui.tx.limit=150; clearTimeout(qTimer); qTimer=setTimeout(render,140); }
   else if(id==='kw-q'){ S.ui.ct.q=e.target.value; S.ui.ct.kwLimit=25; clearTimeout(qTimer); qTimer=setTimeout(render,140); }
   else if(id==='cat-q'){ S.ui.ct.cq=e.target.value; clearTimeout(qTimer); qTimer=setTimeout(render,140); }
@@ -7581,8 +7813,6 @@ document.addEventListener('change',e=>{
   if(id==='ci-file'&&el.files&&el.files.length){ ciFiles([...el.files]); return; }
   if(a==='ci-cat'&&el.value){ const ref=refOf(el), f=findRow(ref.mk,ref.table,ref.id); setTxCategory(ref,el.value); render(); if(S.modal&&S.modal.type==='wizard') renderModalKeepScroll(); if(f.row) offerKeyword(ref.table,f.row.concept,el.value); return; }
   if(id==='imp-sw-who'&&S.modal&&S.modal.sw){ S.modal.sw.who=+el.value; readSplitwise(); return; }
-  if(id==='st-period'){const v=el.value;if(/^\d{4}-(0[1-9]|1[0-2])$/.test(v))setStart({y:+v.slice(0,4),m:+v.slice(5,7)-1});else if(!v)setStart(null);return;}
-  if(id==='summary-period'){const v=el.value;if(v.startsWith('year:')){S.ui.year=+v.slice(5);S.ui.overviewMonth='all';}else{S.ui.year=+v.slice(0,4);S.ui.overviewMonth=String(+v.slice(5,7)-1);}render();return;}
   if(id==='summary-month'||id==='summary-year'){ const tab=el.dataset.tab, y=+$('#summary-year').value, m=$('#summary-month').value; if(tab==='overview'){ S.ui.year=y; S.ui.overviewMonth=m; S.ui.oc.month=m; if(m!=='all') S.ui.compareMonth=ymOf(y,+m); } else { S.ui.nw.month=ymOf(y,+m); S.ui.nw.years=[y]; } render(); return; }
   if(id==='year-select'){ S.ui.year=+el.value; S.ui.tx.month='all'; S.ui.oc.month='all'; render(); return; }
   if(id==='oc-month'){ S.ui.oc.month=el.value; render(); return; }
@@ -7594,6 +7824,7 @@ document.addEventListener('change',e=>{
   if(id==='compare-month'){ S.ui.compareMonth=el.value; render(); return; }
   if(id==='compare-base'){ S.ui.compareBase=el.value; render(); return; }
   if(id==='year-month-pick'){ S.ui.yearMonth=+el.value; render(); return; }
+  if(id==='scenario-extra'||id==='scenario-months'){ scenarioInput(el); return; }
   if(id==='tx-month'){ S.ui.tx.month=el.value; S.ui.tx.limit=150; render(); return; }
   if(id==='tx-cat'){ S.ui.tx.cat=el.value; S.ui.tx.limit=150; render(); return; }
   if(id==='tx-ally'){ S.ui.tx.allYears=el.checked; S.ui.tx.limit=150; render(); return; }
@@ -7684,7 +7915,6 @@ document.addEventListener('submit',e=>{
     if(same('income')&&same('expenses')) delete N.returnCats; else N.returnCats=R;
     saveNw(); closeModal(); render(); toast(L('nwRetSaved'));
   }
-  else if(f.id==='simple-start-form'){ simpleStart(); }
   else if(f.id==='nw-goal-form'){
     const v=parseAmount($('#ng-amt').value,wantNum());
     if(v===null||v<=0){ $('#ng-err').textContent=L('nwGoalErr'); $('#ng-amt').focus(); return; }
@@ -7706,7 +7936,7 @@ document.addEventListener('submit',e=>{
     const oi=other?C[t].findIndex(c=>c.name===other):-1; if(oi>-1) C[t].splice(oi,0,item); else C[t].push(item);
     S.ui.ct.cq='';
     const back=S.modal.back;
-    markDirty('config/categories'); bump(); closeModal(); render(); toast(L('addedCat',name));
+    markDirty('config/categories'); bump(); closeModal(); render(); toast(L('addedCat',name)+(t==='expenses'?' ('+nwLabel(item.type)+')':''));
     if(back==='nwret'){ const R=returnCatsList(); openModal({type:'nwret',mid:true,sel:{income:new Set([...R.income,name]),expenses:new Set(R.expenses)}}); }
   }
   else if(f.id==='add-skip-form'){
@@ -7759,7 +7989,7 @@ function placeYearly(){
 document.addEventListener('scroll',e=>{ const t=e.target; if(t&&t.classList&&t.classList.contains('yframe')) S.ui.yScroll={y:S.ui.year,l:t.scrollLeft,t:t.scrollTop}; },true);
 if(window.ResizeObserver){ let rt=null; new ResizeObserver(()=>{ clearTimeout(rt); rt=setTimeout(()=>{ const w=$('#view').clientWidth; if(w!==lastW&&S.ui.tab==='overview'&&S.gotMonths&&!isOnboarding()){ lastW=w; hideTip(); drawOverviewCharts(); } else if(w!==lastW&&S.ui.tab==='networth'){ lastW=w; hideTip(); drawNwChart(); } },120); }).observe($('#view')); }
 
-document.addEventListener('toggle',e=>{ const d=e.target; if(d?.isConnected&&d.classList?.contains('bulk-tools')){if(!!S.ui.tx.bulkOpen!==d.open){S.ui.tx.bulkOpen=d.open;render();}return;} if(d&&d.id==='ob-month-box'){ S.ui.obMonthOpen=d.open; return; } if(d&&d.id==='kw-health'){ S.ui.ct.khOpen=d.open; return; } if(d&&d.classList&&d.classList.contains('ai-rules')&&S.modal&&S.modal.type==='ai') S.modal.openRules=d.open; },true);
+document.addEventListener('toggle',e=>{ const d=e.target; if(d&&d.id==='ob-month-box'){ S.ui.obMonthOpen=d.open; return; } if(d&&d.id==='kw-health'){ S.ui.ct.khOpen=d.open; return; } if(d&&d.classList&&d.classList.contains('ai-rules')&&S.modal&&S.modal.type==='ai') S.modal.openRules=d.open; },true);
 /* ───────── boot ───────── */
 async function boot(){
   const h=(location.hash||'').replace('#',''); if(TABS.includes(h)) S.ui.tab=h;
@@ -7793,7 +8023,7 @@ function loadDataset(d,persist,soft){
     markDirty('config/categories'); markDirty('config/keywords'); markDirty('config/settings'); markDirty('config/networth');
   }
   /* soft: data that arrived from another device or file: the screen, filters and any open dialog stay as they are */
-  if(!soft){ S.ui.overviewMonth=null; S.ui.tx.monthDefaulted=false; Object.assign(S.ui.tx,{from:'',to:'',min:'',max:'',source:'',account:'',batch:'',savedView:'',allYears:false}); txSelection().clear(); S.ui.year=null; S.ui.mm={table:S.ui.mm.table,cat:null,days:S.ui.mm.days}; S.ui.oc.month='all'; S.ui.tx.cat='all'; S.ui.tx.month='all'; S.ui.editTarget=null; S.ui.obY=null; S.ui.yScroll=null; S.lastImport=null; closeModal(); }
+  if(!soft){ Object.assign(S.ui.tx,{from:'',to:'',min:'',max:'',source:'',account:'',batch:'',savedView:'',allYears:false}); txSelection().clear(); S.ui.year=null; S.ui.mm={table:S.ui.mm.table,cat:null,days:S.ui.mm.days}; S.ui.oc.month='all'; S.ui.tx.cat='all'; S.ui.tx.month='all'; S.ui.editTarget=null; S.ui.obY=null; S.ui.yScroll=null; S.lastImport=null; closeModal(); }
   fixedVarOnce();
   bump(); render();
 }

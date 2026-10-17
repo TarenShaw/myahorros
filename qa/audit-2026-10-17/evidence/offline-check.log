@@ -1,1 +1,0 @@
-PASS: service worker installs, caches assets and reopens saved summary without network.

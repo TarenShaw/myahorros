@@ -1,1 +1,0 @@
-{"browser": {"browserName": "chromium", "launchOptions": {"executablePath": "/workspace/.myahorros-tools/edge/opt/microsoft/msedge/msedge", "headless": true, "chromiumSandbox": false}, "contextOptions": {"viewport": {"width": 1280, "height": 900}, "serviceWorkers": "block"}}, "outputDir": "/tmp/myahorros-audit-2026-10-17/cli"}

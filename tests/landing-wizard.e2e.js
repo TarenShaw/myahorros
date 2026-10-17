@@ -1,67 +1,266 @@
-/* First visit, optional tips, demo isolation and returning visitors.
-   Serve the repo on :8000, then run with Playwright's Edge channel. */
+/* Browser check of the first-visit path: landing page -> where to save -> setup wizard.
+     python -m http.server 8000   (repo root)     NODE_PATH=<playwright folder> node tests/landing-wizard.e2e.js
+   Set SHOTS=<folder> to also save screenshots there. */
 const { chromium } = require('playwright');
-const assert = require('node:assert/strict');
+const assert = require('assert');
 const START = process.env.START_URL || 'http://localhost:8000/';
+const SHOTS = process.env.SHOTS;
 (async () => {
   const browser = await chromium.launch({ channel: 'msedge' });
-  const errors = [];
-  try {
-    for (const [lang, width, scheme] of [['en',1280,'dark'],['es',390,'light']]) {
-      const ctx = await browser.newContext({viewport:{width,height:860},colorScheme:scheme,serviceWorkers:'block'});
-      await ctx.addInitScript(lang => { window.__ybtTest=true; localStorage.setItem('ybt.lang',lang); },lang);
-      await ctx.route('https://accounts.google.com/gsi/client',r=>r.fulfill({contentType:'text/javascript',body:'window.google={accounts:{oauth2:{}}};'}));
-      const p=await ctx.newPage(); p.on('pageerror',e=>errors.push(e.message));
-      await p.goto(START);
-      const img=p.locator('.wl-pages img'); await img.evaluate(i=>i.decode());
-      assert.equal(await img.getAttribute('src'),`images/landing-overview-${scheme}${lang==='es'?'-es':''}.webp`);
-      await p.click('.wl-hero [data-x=demo]'); await p.waitForSelector('#demo-bar');
-      assert.equal(await p.locator('#tour-card').count(),0,'demo opens without a mandatory tour');
-      assert.equal(await p.locator('.summary-totals .tile').count(),3);
-      assert.equal(await p.locator('#tab-yearly').count(),0);
-      assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'demo horizontal overflow');
-      await p.click('#tab-settings');
-      await p.evaluate(()=>{window.__ybt.S.local.saveCopy=()=>{window.__demoSaved=true;};});
-      await p.click('[data-action=local-save]');
-      assert.equal(await p.evaluate(()=>!!window.__demoSaved),false,'demo cannot download a real tracker backup');
-      await p.click('#demo-bar [data-tour=again]');
-      const steps=await p.evaluate(()=>window.__ybt.TOUR_STEPS.map(s=>s.k));
-      assert.equal(steps.length,5,'three tips plus introduction and end');
-      for(let i=1;i<steps.length;i++) {
-        await p.waitForFunction(i=>{
-          const s=window.__ybt.TOUR_STEPS[i],c=document.querySelector('#tour-card');
-          return c&&c.style.visibility!=='hidden'&&(!s.el||s.el()?.getClientRects().length);
-        },i);
-        const rect=await p.locator('#tour-card').boundingBox();
-        assert.ok(rect.x>=0&&rect.x+rect.width<=width+1&&rect.y>=0&&rect.y+rect.height<=861,`tip ${steps[i]} fits ${width}px`);
-        assert.ok(!/undefined/.test(await p.locator('#tour-card').innerText()));
-        if(i<steps.length-1){const title=await p.locator('#tour-title').innerText();await p.click('#tour-card [data-tour=next]');await p.waitForFunction(t=>document.querySelector('#tour-title').textContent!==t,title);}
+  const shot = async (page, n) => { if (SHOTS) await page.screenshot({ path: `${SHOTS}/${n}.png`, fullPage: false }); };
+  const newPage = async () => { const p = await (await browser.newContext({ viewport: { width: 1280, height: 860 } })).newPage();
+    p.on('pageerror', e => console.log('pageerror:', String(e).slice(0, 200)));
+    await p.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'en'); } catch (_) {} });
+    await p.route('https://accounts.google.com/gsi/client', r => r.fulfill({ contentType: 'text/javascript', body: 'window.google={accounts:{oauth2:{}}};' }));
+    return p; };
+
+  /* 1. landing, then Get started -> the where-to-save choice */
+  let p = await newPage();
+  await p.goto(START, { waitUntil: 'load' });
+  await p.waitForSelector('.web-landing h1');
+  assert.ok((await p.innerText('.web-landing h1')).length > 10);
+  await shot(p, 'landing');
+  assert.ok(await p.$('.web-landing [data-x=demo]') && await p.$('.web-landing [data-x=start]'));
+  await p.click('.web-landing .wl-hero [data-x=start]');
+  await p.waitForSelector('button.web-way[data-m=browser]');
+  for (let i = 0; i < 12; i++) await p.keyboard.press('Tab');
+  assert.ok(await p.evaluate(() => document.querySelector('.web-panel').contains(document.activeElement)), 'Tab left the where-to-save panel');
+  console.log('1. landing -> where to save (Tab stays inside)');
+
+  /* 2. pick the browser, set up from scratch -> the wizard opens by itself */
+  await p.click('button.web-way[data-m=browser]');
+  await p.waitForSelector('[data-action="ob-start"]');
+  await shot(p, 'welcome');
+  await p.click('[data-action="ob-start"]');
+  /* History setup starts directly; the demo still offers its tour. */
+  await p.waitForSelector('.wz-body', { timeout: 8000 });
+  await shot(p, 'wizard-0');
+  assert.ok(/one everyday account/i.test(await p.innerText('.wz-body')), 'quick setup starts with one everyday account');
+  assert.strictEqual(await p.locator('#wz-born, #wz-salary').count(), 0, 'personal details belong in Settings, not account setup');
+  /* one way forward: "Skip this step" while a step isn't done, "Next" once it is */
+  assert.strictEqual((await p.innerText('.m-foot [data-action="wz-next"]')).trim(), 'Skip this step');
+  await p.click('[data-action="wz-next"]');
+  assert.ok(/Add a statement|CSV|bank/i.test(await p.innerText('.wz-body')), 'statements step explains file import');
+  await p.click('[data-action="wz-next"]');
+  await p.click('[data-action="wz-next"]');
+  assert.ok(/salary/i.test(await p.innerText('.wz-body')));
+  await p.click('[data-action="wz-next"]');
+  await p.waitForSelector('[data-action="guide-finish"]');
+  await shot(p, 'wizard-4');
+  console.log('2. wizard steps work');
+
+
+  /* 3. a dialog the wizard opens brings the wizard back when it closes */
+  await p.click('[data-action="wz-back"]'); await p.click('[data-action="wz-back"]'); await p.click('[data-action="wz-back"]'); await p.click('[data-action="wz-back"]');
+  await p.click('[data-action="guide-acc"]');
+  await p.waitForSelector('#overlay .modal:not(:has(.wz-body))');
+  await p.keyboard.press('Escape');
+  await p.waitForSelector('.wz-body', { timeout: 5000 });
+  console.log('3. wizard returns after a dialog closes');
+
+  /* 3b. Esc on the wizard itself counts as "Finish later": the next dialog doesn't bring it back */
+  await p.keyboard.press('Escape');
+  await p.waitForSelector('#overlay.on', { state: 'detached' }).catch(() => {});
+  await p.click('#tab-transactions'); await p.click('#view [data-action="add-tx"]');
+  await p.waitForSelector('#overlay .modal'); await p.keyboard.press('Escape'); await p.waitForTimeout(300);
+  assert.ok(!(await p.$('.wz-body')), 'wizard came back after Esc');
+  await p.click('#tab-settings');
+  await p.fill('#st-born', '1994'); await p.fill('#st-salary', '62000');
+  await p.click('[data-action=about-set]');
+  await p.waitForFunction(() => document.querySelector('#st-about-status').textContent.includes('saved'));
+  await p.fill('#st-born', '2027'); await p.click('[data-action="about-set"]');
+  assert.strictEqual(await p.evaluate(() => window.__ybtWeb.store.config.settings.birthYear), 1994, 'invalid birth year saved');
+  await p.fill('#st-born', '1993'); await p.fill('#st-salary', '65000');
+  assert.ok(await p.evaluate(()=>window.YBT_BUSY()), 'background sync must wait while details are being edited');
+  await p.click('[data-action="about-set"]');
+  await p.waitForFunction(() => document.querySelector('#st-about-status').textContent.includes('saved'));
+  assert.ok(!await p.evaluate(()=>window.YBT_BUSY()), 'Set must release the sync deferral');
+  await p.reload({ waitUntil: 'load' });
+  await p.waitForTimeout(800); if(await p.$('.wz-body')) await p.keyboard.press('Escape');
+  await p.click('#tab-settings');
+  assert.strictEqual(await p.inputValue('#st-born'), '1993', 'birth year lost on reload');
+  assert.strictEqual(await p.inputValue('#st-salary'), '65000', 'salary lost on reload');
+  await p.click('#tab-transactions');
+  console.log('3b. Esc closes the wizard for good');
+
+  /* 3c. a row typed by hand for a month before the new tracker's automatic start moves the start back,
+     so the Overview shows it instead of "no income yet" */
+  await p.click('#view [data-action="add-tx"]'); await p.waitForSelector('#tx-form');
+  await p.selectOption('#f-table', 'income'); await p.fill('#f-date', '2025-01-28');
+  await p.fill('#f-concept', 'Salary'); await p.fill('#f-amount', '2100');
+  assert.strictEqual(await p.inputValue('#f-cat'), 'Salary', 'keyword category not shown while typing');
+  await p.$eval('#tx-form', f => f.requestSubmit());
+  await p.waitForFunction(() => { const s = window.__ybtWeb.store.config.settings; return s && s.start && s.start.y === 2025 && s.start.m === 0; }, null, { timeout: 5000 });
+  console.log('3c. hand-typed earlier row moves an automatic start back');
+
+  /* Missing age details jump to the exact Settings card and focus its first field. */
+  await p.evaluate(async()=>{ const db=await window.claude.use('db');
+    await db.doc('config/networth').set({accounts:[{id:'bank',name:'Bank',group:'cash'}],snaps:{'2026-09':{bank:1000}}});
+    window.dispatchEvent(new CustomEvent('ybt-sync-data',{detail:JSON.parse(JSON.stringify(window.__ybtWeb.store))}));
+  });
+  await p.click('#tab-settings'); await p.fill('#st-born',''); await p.fill('#st-salary','');
+  await p.click('[data-action="about-set"]'); await p.waitForFunction(()=>document.querySelector('#st-about-status').textContent.includes('saved'));
+  await p.click('#tab-networth');
+  if(!await p.locator('[data-action="goto-about"]').isVisible()) await p.click('[data-action="analysis-toggle"][data-tab="networth"]');
+  await p.click('[data-action="goto-about"]');
+  assert.strictEqual(await p.evaluate(()=>document.activeElement.id),'st-born', 'Add details did not focus About you');
+  assert.ok(await p.locator('#about-card').isVisible());
+  await p.fill('#st-born','1993'); await p.fill('#st-salary','65000'); await p.click('[data-action="about-set"]');
+  await p.waitForFunction(()=>document.querySelector('#st-about-status').textContent.includes('saved'));
+  console.log('3d. Add details opens and focuses About you');
+
+  /* 4. returning visitors don't see the landing again */
+  await p.reload({ waitUntil: 'load' });
+  await p.waitForTimeout(1500);
+  assert.ok(!(await p.$('.web-landing')), 'landing shown again to a returning visitor');
+  console.log('4. returning visit goes straight to the app');
+
+  /* 4b. typing the address again shows the landing; with a tracker saved here it offers only "Open my tracker".
+     The tracker predates Fixed/Variable: Gym still has its old default mark (moves to Fixed), Groceries was
+     changed by the user (kept) */
+  await p.evaluate(async () => { localStorage.setItem('ybt.storage', 'browser');
+    await window.__ybtWeb.idb.set('data', JSON.stringify({ app: 'Yearly Budget Tracker', format: 1, months: { '2026-09': { income: [{ id: 'a1', date: '2026-09-01', desc: 'Salary', amount: 2000, cat: 'Salary' }], expenses: [], investments: [] } },
+      config: { categories: { expenses: [{ name: 'Groceries', type: 'Want' }, { name: 'Gym', type: 'Want' }] }, settings: { lang: 'en' } } })); });
+  await p.goto(START, { waitUntil: 'load' });
+  await p.waitForSelector('.web-landing [data-x=open]');
+  assert.ok(!(await p.$('.web-landing [data-x=demo]')) && !(await p.$('.web-landing [data-x=start]')), 'returning visitor offered demo/start');
+  await p.click('.web-landing .wl-hero [data-x=open]');
+  await p.waitForFunction(() => window.__ybtWeb.store && window.__ybtWeb.store.months['2026-09']);
+  assert.ok(!(await p.$('.web-panel')), 'where-to-save asked again');
+  console.log('4b. typed visit: landing, then Open my tracker');
+  await p.waitForFunction(() => { const s = window.__ybtWeb.store.config.settings; return s && s.fixedVar; }, null, { timeout: 5000 });
+  const marks = await p.evaluate(() => Object.fromEntries(window.__ybtWeb.store.config.categories.expenses.map(c => [c.name, c.type])));
+  assert.deepStrictEqual(marks, { Groceries: 'Want', Gym: 'Need' }, 'Fixed/Variable migration: ' + JSON.stringify(marks));
+  assert.strictEqual(await p.getAttribute('#tab-overview', 'aria-selected'), 'true', 'a tracker with rows and no accounts should open on the Overview');
+  console.log('4c. Fixed/Variable migration keeps marks the user changed');
+
+  /* 4d. the year from every account: accounts, a statement for one of them (its Balance column fills the month-ends),
+     the month-ends still missing one by one, the salary picked from the imported income */
+  p = await newPage();
+  await p.goto(START, { waitUntil: 'load' });
+  await p.click('.web-landing .wl-hero [data-x=start]');
+  await p.click('button.web-way[data-m=browser]'); await p.click('[data-action="ob-history"]');
+  await p.waitForSelector('.wz-body', { timeout: 8000 });
+  await p.click('[data-action="guide-acc"]'); await p.waitForSelector('#nw-acc-form');
+  for (const n of ['Cash account', 'Savings account']) await p.click(`#nw-acc-form [data-action="na-add"][data-n="${n}"]`);
+  await p.click('#nw-acc-form button[type=submit]'); await p.waitForSelector('.wz-body');
+  assert.match(await p.innerText('.wz-current-step'), /Statements/, 'saving accounts advances to statements');
+  assert.strictEqual((await p.$$('.wz-list [data-action="guide-import"][data-acc]')).length, 2, 'one Import per account');
+  await p.click('.wz-list [data-action="guide-import"][data-acc]');
+  await p.waitForSelector('#imp-text');
+  assert.strictEqual(await p.locator('#imp-acct').count(), 0, 'wizard keeps the selected account without asking again');
+  assert.match(await p.innerText('.imp-account-label'), /Cash account 1/);
+  await p.waitForFunction(() => window.__ybtWeb.store.config.networth?.accounts.length);
+  const wizardAccount = await p.evaluate(() => window.__ybtWeb.store.config.networth.accounts[0].id);
+  /* newest first, from 2 January of the wizard's year to today, with a running balance */
+  const stmt = await p.evaluate(() => {
+    const now = new Date(), y = now.getMonth() < 2 ? now.getFullYear() - 1 : now.getFullYear(), out = []; let bal = 1000;
+    const add = (d, a, c) => { bal = Math.round((bal + a) * 100) / 100; out.push([d, c, a, bal]); };
+    for (let d = new Date(y, 0, 2); d <= now; d.setDate(d.getDate() + 1)) {
+      const iso = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      if (d.getDate() === 2) add(iso, -40, 'MERCADONA'); if (d.getDate() === 27) add(iso, 2100, 'TRANSFERENCIA ACME SL'); }
+    return { text: 'Date\tDescription\tAmount\tBalance\n' + out.reverse().map(r => r.join('\t')).join('\n'), y };
+  });
+  await p.fill('#imp-text', stmt.text); await p.click('[data-action="imp-read"]');
+  await p.waitForSelector('#imp-balfill');
+  assert.strictEqual(await p.inputValue('#imp-account-0'), wizardAccount, 'wizard rows inherit the account chosen before reading');
+  assert.ok(await p.isChecked('#imp-balfill'), 'balance fill offered and ticked');
+  await p.click('[data-action="imp-add"]');
+  if (await p.$('[data-action="imp-add-confirm"]')) await p.click('[data-action="imp-add-confirm"]');
+  await p.waitForSelector('.wz-body');
+  assert.ok(/rows/.test(await p.innerText('.wz-list li')), 'the account shows its imported dates');
+  assert.ok(/Coverage not confirmed/.test(await p.innerText('.wz-body')), 'coverage must be confirmed separately for every account');
+  /* December closes on the balance before the first row */
+  await p.waitForFunction(k => { const n = window.__ybtWeb.store.config.networth; return n && n.snaps && n.snaps[k] && Object.values(n.snaps[k])[0] === 1000; }, (stmt.y - 1) + '-12', { timeout: 5000 });
+  await p.click('[data-action="wz-next"]');
+  assert.ok((await p.$$('.wz-year li.part')).length > 0, 'month-ends without the savings account are partial');
+  assert.ok(/December/.test(await p.innerText('.wz-acts [data-action="guide-val"]')));
+  await p.click('[data-action="guide-val"]'); await p.waitForSelector('#nw-snap-form');
+  const ins = await p.$$('#nw-snap-form input[data-acc]'); await ins[1].fill('4000');
+  await p.click('#nw-snap-form button[type=submit]'); await p.waitForSelector('.wz-body');
+  assert.ok(/January/.test(await p.innerText('.wz-acts [data-action="guide-val"]')), 'the next missing month-end comes next');
+  await p.click('[data-action="guide-val"]'); await p.waitForSelector('#nw-snap-form');
+  assert.ok(await p.$('#nw-snap-form input.carried'), 'the savings figure is carried from December');
+  await p.keyboard.press('Escape'); await p.waitForSelector('.wz-body');
+  await p.click('[data-action="wz-next"]');
+  await p.click('[data-action="wz-salary"]');
+  await p.waitForFunction(() => /Salary found/.test(document.querySelector('.wz-body').innerText));
+  await p.click('[data-action="wz-next"]');
+  assert.ok(/Almost there/.test(await p.innerText('#m-title')) && /Balances not complete/.test(await p.innerText('.wz-body')), 'summary lists what is missing');
+  await shot(p, 'wizard-summary');
+  console.log('4d. statements, balances from the statement, salary, summary gaps');
+
+  /* 5. Every tutorial spotlight resolves, including folded analysis and the previous-year January demo. */
+  for (const [lang, width, date, scheme] of [['en', 1280, '2026-10-13', 'dark'], ['es', 1280, '2026-01-13', 'light'], ['en', 375, '2026-01-13', 'light'], ['es', 375, '2026-10-13', 'dark']]) {
+    p = await newPage();
+    await p.setViewportSize({ width, height: 860 });
+    await p.emulateMedia({ colorScheme: scheme });
+    await p.addInitScript(({ lang, date }) => {
+      window.__ybtTest = true;
+      localStorage.setItem('ybt.lang', lang);
+      const RealDate = Date, fixed = new RealDate(date + 'T12:00:00').getTime();
+      window.Date = class extends RealDate { constructor(...args) { super(...(args.length ? args : [fixed])); } static now() { return fixed; } };
+    }, { lang, date });
+    await p.goto(START, { waitUntil: 'load' });
+    const image = p.locator('.web-landing .wl-pages img');
+    await image.evaluate(img => img.decode());
+    assert.ok(await image.evaluate(img => img.naturalWidth > 0 && getComputedStyle(img).objectFit !== 'cover'), 'landing product image missing or cropped');
+    assert.strictEqual(await image.getAttribute('src'), `images/landing-networth-${scheme}${lang === 'es' ? '-es' : ''}.webp`);
+    assert.ok(await p.evaluate(() => document.querySelector('.web-landing').scrollWidth <= innerWidth), 'landing overflows horizontally');
+    await p.click('.web-landing .wl-hero [data-x=demo]');
+    await p.waitForSelector('#tour-card', { timeout: 10000 });
+    const steps = await p.evaluate(() => window.__ybt.TOUR_STEPS.map(s => s.k));
+    assert.ok(steps.includes('ovAnalysis') && steps.includes('nwAnalysis'), 'analysis steps missing');
+    for (let i = 0; i < steps.length; i++) {
+      await p.waitForFunction(i => {
+        const step = window.__ybt.TOUR_STEPS[i], card = document.querySelector('#tour-card');
+        if (!card || card.style.visibility === 'hidden') return false;
+        if (!step.el) return card.classList.contains('center');
+        const el = step.el(), spot = document.querySelector('#tour-spot');
+        return !!el && el.getClientRects().length > 0 && !spot.hidden && !card.classList.contains('center');
+      }, i).catch(async err => {
+        await shot(p, `tour-failed-${lang}-${width}-${steps[i]}`);
+        throw new Error(`${lang} ${width}px ${date} step ${steps[i]}: ${err.message}`);
+      });
+      const state = await p.evaluate(i => {
+        const step = window.__ybt.TOUR_STEPS[i], card = document.querySelector('#tour-card'), r = card.getBoundingClientRect();
+        return { key: step.k, tab: window.__ybt.S.ui.tab, title: document.querySelector('#tour-title').textContent,
+          text: document.querySelector('#tour-text').textContent, left: r.left, right: r.right, top: r.top, bottom: r.bottom };
+      }, i);
+      assert.ok(state.title && state.text && !state.text.includes('undefined'), 'missing translation for ' + state.key);
+      assert.ok(state.left >= 0 && state.right <= width && state.top >= 0 && state.bottom <= 860, 'tutorial card offscreen: ' + JSON.stringify(state));
+      if (i < steps.length - 1) {
+        const oldTitle = state.title;
+        await p.click('#tour-card [data-tour=next]');
+        await p.waitForFunction(title => document.querySelector('#tour-title').textContent !== title, oldTitle);
       }
-      await p.click('#tour-card [data-tour=end]'); await p.waitForSelector('[data-m=browser]');
-      assert.equal(await p.locator('[data-m=folder]').isVisible(),false,'folder storage is optional');
-      for(let i=0;i<12;i++)await p.keyboard.press('Tab');
-      assert.ok(await p.evaluate(()=>document.querySelector('.web-panel').contains(document.activeElement)),'storage focus stays inside');
-      const saved=await p.evaluate(async()=>JSON.parse(await window.__ybtWeb.idb.get('data')||'{}'));
-      assert.deepEqual(saved.months||{},{}); assert.deepEqual(saved.config?.networth?.accounts||[],[]);
-      await p.click('[data-m=browser]'); await p.waitForSelector('#simple-start-form');
-      await p.fill('#ob-account',lang==='es'?'Mi banco':'Everyday'); await p.selectOption('#ob-currency','EUR');
-      await p.click('[data-action=simple-manual]'); await p.waitForSelector('#tx-form');
-      assert.equal(await p.locator('.wz-body,#st-born,#st-salary').count(),0);
-      await p.selectOption('#f-table','income'); await p.fill('#f-date','2025-01-28');
-      await p.fill('#f-concept','Salary'); await p.fill('#f-amount','2100');
-      await p.locator('#tx-form').evaluate(f=>f.requestSubmit());
-      await p.waitForFunction(()=>window.__ybt.S.settings.start.y===2025);
-      await p.click('#tab-overview');
-      // A hand-entered historical transaction must be visible without a period correction.
-      assert.equal(await p.inputValue('#summary-period'),'2025-01');
-      await p.waitForFunction(()=>!window.YBT_BUSY());
-      await p.reload(); await p.waitForSelector('#summary-period');
-      assert.equal(await p.locator('.web-landing,.wz-body').count(),0);
-      assert.equal(await p.evaluate(()=>window.__ybt.allRows().length),1);
-      if(process.env.SHOTS)await p.screenshot({path:`${process.env.SHOTS}/onboarding-${lang}-${width}.png`,fullPage:true});
-      console.log(`${lang}, ${width}px: demo, tips, storage, manual setup and reload passed`);
-      await ctx.close();
     }
-    assert.deepEqual(errors,[]); console.log('landing-onboarding: all passed');
-  } finally { await browser.close(); }
-})().catch(e=>{console.error(e);process.exit(1);});
+    await shot(p, `tour-end-${lang}-${width}`);
+    await p.click('#tour-card [data-tour=end]');
+    await p.waitForSelector('button.web-way[data-m=browser]');
+    const saved = await p.evaluate(async () => JSON.parse(await window.__ybtWeb.idb.get('data') || '{}'));
+    assert.deepStrictEqual(saved.months || {}, {}, 'demo transactions were saved as real data');
+    assert.deepStrictEqual(saved.config?.networth?.accounts || [], [], 'demo accounts were saved as real data');
+    console.log(`5. ${lang}, ${width}px, ${date}: all ${steps.length} tutorial steps fit and highlight real targets`);
+    await p.context().close();
+  }
+
+  /* 6. a small phone at 200% zoom (375x667 -> 187x333 CSS px): the where-to-save card fits, and the add dialog's
+     sticky title and buttons leave its fields reachable */
+  p = await (await browser.newContext({ viewport: { width: 187, height: 333 }, hasTouch: true })).newPage();
+  await p.addInitScript(() => { try { localStorage.setItem('ybt.lang', 'es'); } catch (_) {} });
+  await p.goto(START, { waitUntil: 'load' });
+  await p.click('.web-landing .wl-hero [data-x=start]');
+  await p.waitForSelector('button.web-way[data-m=browser]');
+  assert.ok(await p.evaluate(() => document.querySelector('.web-panel-card').getBoundingClientRect().right <= innerWidth), 'where-to-save card wider than the screen');
+  await p.click('button.web-way[data-m=browser]'); await p.click('[data-action="ob-history"]');
+  await p.waitForSelector('.wz-body', { timeout: 8000 }); await p.keyboard.press('Escape');
+  await p.waitForSelector('#overlay.on', { state: 'detached' }).catch(() => {});
+  await p.click('#tab-transactions'); await p.click('#view [data-action="add-tx"]'); await p.waitForSelector('#f-amount');
+  const reach = await p.evaluate(() => { const f = document.getElementById('f-amount'); f.scrollIntoView({ block: 'center' });
+    const r = f.getBoundingClientRect(), hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return hit === f || f.contains(hit); });
+  assert.ok(reach, 'amount field hidden under the dialog title or buttons');
+  console.log('6. small phone at 200% zoom: card fits, add dialog fields reachable');
+  await browser.close();
+  console.log('landing + wizard e2e: all passed');
+})().catch(e => { console.error(e); process.exit(1); });

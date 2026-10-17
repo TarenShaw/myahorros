@@ -1,4 +1,0 @@
-1. title, buttons and table fit at 1280, 1024 and 390 px
-2. attention excludes ready and left-out rows; All rows restores them without changing selections
-2. descriptions and amounts edit inline, are checked again and are saved
-3. multi-file review preserves investment wording without blanket exclusions; greyed rows have reasons

@@ -1,6 +1,0 @@
-const fs=require('node:fs'),{spawn}=require('node:child_process');
-const root='/workspace/myahorros',out='/tmp/myahorros-audit-2026-10-17';
-const suites=fs.readdirSync(root+'/tests').filter(x=>x.endsWith('smoke.js')).map(x=>'tests/'+x).concat(['landing-wizard','simplification','import-review','nw-monthly-update','transactions-attention','drive-sync','tabs-restore','crew-audit-fixes'].map(x=>'tests/'+x+'.e2e.js'));
-const results=[];let i=0;
-async function worker(){while(i<suites.length){const file=suites[i++],start=Date.now();await new Promise(resolve=>{const log=fs.createWriteStream(out+'/'+file.split('/').pop()+'.log');const p=spawn('node',['-r','/workspace/.myahorros-tools/edge-launch.cjs',file],{cwd:root,env:{...process.env,START_URL:'http://localhost:8002/'},detached:true});p.stdout.pipe(log);p.stderr.pipe(log);const timeout=setTimeout(()=>{try{process.kill(-p.pid,'SIGTERM')}catch{}},120000);p.on('close',(code,signal)=>{clearTimeout(timeout);const result={file,code,signal,seconds:Math.round((Date.now()-start)/100)/10};results.push(result);fs.writeFileSync(out+'/suite-results.json',JSON.stringify(results,null,2));console.log(JSON.stringify(result));resolve();});});}}
-Promise.all([worker(),worker()]);
