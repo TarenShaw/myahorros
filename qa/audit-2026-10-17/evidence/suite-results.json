@@ -1,0 +1,116 @@
+[
+  {
+    "file": "tests/audit-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 0.5
+  },
+  {
+    "file": "tests/chunk-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 0.5
+  },
+  {
+    "file": "tests/date-template-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 0.9
+  },
+  {
+    "file": "tests/experience-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 0.5
+  },
+  {
+    "file": "tests/forecast-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 0.4
+  },
+  {
+    "file": "tests/format-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 0.4
+  },
+  {
+    "file": "tests/ai-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 3.7
+  },
+  {
+    "file": "tests/health-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 0.5
+  },
+  {
+    "file": "tests/merge-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 0.4
+  },
+  {
+    "file": "tests/import-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 0.5
+  },
+  {
+    "file": "tests/reconcile-smoke.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 0.4
+  },
+  {
+    "file": "tests/landing-wizard.e2e.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 9.4
+  },
+  {
+    "file": "tests/simplification.e2e.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 10.6
+  },
+  {
+    "file": "tests/nw-monthly-update.e2e.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 9.1
+  },
+  {
+    "file": "tests/import-review.e2e.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 11.4
+  },
+  {
+    "file": "tests/transactions-attention.e2e.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 3.7
+  },
+  {
+    "file": "tests/tabs-restore.e2e.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 3.4
+  },
+  {
+    "file": "tests/drive-sync.e2e.js",
+    "code": 0,
+    "signal": null,
+    "seconds": 26
+  },
+  {
+    "file": "tests/crew-audit-fixes.e2e.js",
+    "code": 1,
+    "signal": null,
+    "seconds": 32
+  }
+]

@@ -1,0 +1,42 @@
+page.fill: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('#imp-text')[22m
+[2m    - locator resolved to <textarea rows="4" id="imp-text" placeholder="08/31/2026⇆-60,00⇆Amazon.es↵08/30/2026⇆-39,90⇆RENFE VIRTUAL INTERNET"></textarea>[22m
+[2m    - fill("Date,Amount,Description[22m
+[2m2026-09-09,-15,NETFLIX")[22m
+[2m  - attempting fill action[22m
+[2m    2 × waiting for element to be visible, enabled and editable[22m
+[2m      - element is not visible[22m
+[2m    - retrying fill action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible, enabled and editable[22m
+[2m      - element is not visible[22m
+[2m    - retrying fill action[22m
+[2m      - waiting 100ms[22m
+[2m    59 × waiting for element to be visible, enabled and editable[22m
+[2m       - element is not visible[22m
+[2m     - retrying fill action[22m
+[2m       - waiting 500ms[22m
+
+    at openImport (/workspace/myahorros/tests/crew-audit-fixes.e2e.js:21:87)
+    at async /workspace/myahorros/tests/crew-audit-fixes.e2e.js:27:3 {
+  log: [
+    "  - waiting for locator('#imp-text')",
+    '    - locator resolved to <textarea rows="4" id="imp-text" placeholder="08/31/2026⇆-60,00⇆Amazon.es↵08/30/2026⇆-39,90⇆RENFE VIRTUAL INTERNET"></textarea>',
+    '    - fill("Date,Amount,Description\n2026-09-09,-15,NETFLIX")',
+    '  - attempting fill action',
+    '    2 × waiting for element to be visible, enabled and editable',
+    '      - element is not visible',
+    '    - retrying fill action',
+    '    - waiting 20ms',
+    '    2 × waiting for element to be visible, enabled and editable',
+    '      - element is not visible',
+    '    - retrying fill action',
+    '      - waiting 100ms',
+    '    59 × waiting for element to be visible, enabled and editable',
+    '       - element is not visible',
+    '     - retrying fill action',
+    '       - waiting 500ms'
+  ],
+  name: 'TimeoutError'
+}
