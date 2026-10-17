@@ -33,12 +33,12 @@ const lsSet=(k,v)=>{ try{ if(v==null) localStorage.removeItem(k); else localStor
 const TX={
   en:{
     chooseTitle:'Where would you like to use your tracker?',
-    chooseSub:'You can change this later in Settings.', moreStorage:'More storage options',
+    chooseSub:'Choose what suits you. Your figures stay in the place you choose, and you can change it later in Settings.',
     folderT:'A folder I manage', folderS:'Saved as a file on this computer, with daily backups in the same folder. Works offline. Keep a separate copy if you want protection from losing this computer.',
     folderNo:'Needs Chrome or Edge on a computer.',
-    driveT:'Across my devices', driveS:'Use your Google Drive to share your tracker across phone and computer, with daily backups. Only this app’s files are accessed.',
+    driveT:'Across my devices', driveS:'Connect your Google Drive to use the same tracker on your phone and computer, with daily backups in Drive. Works offline and syncs when you reconnect. The site only sees files it creates.',
     driveNo:'Not available on this site yet.', driveOffline:'Needs an internet connection to set up.',
-    browserT:'This device', browserS:'Saved in this browser. Clearing browser data deletes it, including local backups. Download a separate backup from Settings.',
+    browserT:'This device', browserS:'Start straight away in this browser. Clearing browser data also deletes its backups. Download a backup from Settings to keep a separate copy.',
     cancel:'Cancel', keepBrowser:'Keep it in this browser',
     pickHint:'Pick a folder such as Documents. A “Yearly Budget Tracker” folder is made inside it, unless you pick one that already has your tracker.',
     pickedNotAllowed:'The browser didn’t allow saving in that folder. Pick another one, such as Documents.',
@@ -77,15 +77,15 @@ const TX={
     landNoSignup:'No sign-up. You add statements; banks are not connected automatically. AI is optional; automatic AI connections are billed separately.',
     landChip:'Free · No sign-up · Private',
     landCalls:['Save on your device or your Drive','Import CSV, Excel or PDF statements','Use AI if you want to'],
-    landShotAlt:'The monthly Summary with fictional income, spending and savings, and a spending breakdown.',
+    landShotAlt:'The current Net worth page with fictional figures: total savings, cash, investments and retirement balances, plus a breakdown of savings and market gains since the previous month.',
     landFeatT:'Everything in one place', landFeatSub:'Made for people who just want to know how they’re doing. No finance words needed.',
-    landF:[['Your month at a glance','See what came in, what you spent and what is left, grouped into simple categories.'],
-           ['Your savings over time','Add account balances whenever you want to see how your savings change.'],
-           ['A goal of your own','Choose a savings target and see your progress.'],
-           ['Easy to keep','Add your next statement, review anything uncertain and download a backup.']],
+    landF:[['Income and expenses','Add what comes in and what goes out, by hand or with your bank’s file. It sorts everything into categories and puts each month side by side.'],
+           ['Net worth over time','Once a month, type what each account holds. One chart shows your total growing through the year.'],
+           ['Investments','See how much you put in, and how much your funds, shares or pension gained on their own.'],
+           ['A look ahead','Open More analysis for forecasts, a savings goal and a scenario showing what extra monthly savings could add.']],
     landSafeT:'Your data stays yours', landSafe:'There is no account and no server holding your figures. Keep them in a folder, in your own Google Drive or only in this browser, with a daily backup. It works offline and installs like an app.',
-    landHow:'How it works', landHowSteps:[['Choose where it lives','This device, your Google Drive or a folder you manage. You can change it any time.'],['Add a statement','Name one account and add a bank statement. Review the transactions before saving.'],['See your money clearly','See a monthly spending summary, then add account balances to follow your savings.']],
-    landEnd:'Ready when you are', landEndSub:'Explore the example tracker, or start with your own statement.',
+    landHow:'How it works', landHowSteps:[['Choose where it lives','This device, your Google Drive or a folder you manage. You can change it any time.'],['Add a statement','Start with one account and one month, or bring in your history. Review the rows before saving.'],['See your money clearly','See a monthly spending summary, then add account balances to follow your savings.']],
+    landEnd:'Ready when you are', landEndSub:'Take the two-minute tour with example data, or set up your own tracker.',
     landPrivacy:'Privacy',
     stDriveError:t=>`Couldn’t sync with Google Drive. Trying again at ${t}.`, stDrivePaused:'Sync is waiting until you finish what you’re doing.',
     keptTheirs:'Opened the newer version. The one on this screen was kept as a backup.', keptMine:'Kept the version on this screen. The other one was kept as a backup.',
@@ -126,12 +126,12 @@ const TX={
   },
   es:{
     chooseTitle:'¿Dónde quieres usar tu control?',
-    chooseSub:'Puedes cambiarlo después en Ajustes.', moreStorage:'Más opciones de almacenamiento',
+    chooseSub:'Elige lo que te resulte más cómodo. Tus cifras se guardan donde tú decidas; puedes cambiarlo luego en Ajustes.',
     folderT:'Una carpeta que yo gestiono', folderS:'Un archivo en este ordenador, con copias diarias en la misma carpeta. Funciona sin conexión. Guarda otra copia fuera del ordenador para protegerte si lo pierdes.',
     folderNo:'Necesita Chrome o Edge en un ordenador.',
-    driveT:'En mis dispositivos', driveS:'Usa tu Google Drive para acceder desde el móvil y el ordenador, con copias diarias. Solo se accede a los archivos de esta app.',
+    driveT:'En mis dispositivos', driveS:'Conecta tu Google Drive para usar el mismo control en el móvil y el ordenador, con copias diarias en Drive. Funciona sin conexión y sincroniza al volver a conectarte. La web solo ve los archivos que crea.',
     driveNo:'Todavía no está disponible en esta web.', driveOffline:'Necesita conexión a internet para configurarlo.',
-    browserT:'Este dispositivo', browserS:'Guardado en este navegador. Borrar sus datos elimina el control y las copias locales. Descarga una copia aparte desde Ajustes.',
+    browserT:'Este dispositivo', browserS:'Empieza directamente en este navegador. Si borras sus datos, también se borran las copias. Descarga una copia desde Ajustes para guardarla aparte.',
     cancel:'Cancelar', keepBrowser:'Dejarlo en este navegador',
     pickHint:'Elige una carpeta como Documentos. Dentro se crea una carpeta «Yearly Budget Tracker», salvo que elijas una que ya tenga tu control.',
     pickedNotAllowed:'El navegador no permite guardar en esa carpeta. Elige otra, como Documentos.',
@@ -170,15 +170,15 @@ const TX={
     landNoSignup:'Sin registro. Tú añades los extractos; no hay conexión automática con tu banco. La IA es opcional; las conexiones automáticas de IA se pagan aparte.',
     landChip:'Gratis · Sin registro · Privado',
     landCalls:['Guarda en tu dispositivo o tu Drive','Importa extractos CSV, Excel o PDF','Usa IA si quieres'],
-    landShotAlt:'El resumen mensual con ingresos, gastos y ahorro ficticios, y un desglose de gastos.',
+    landShotAlt:'La página actual de Patrimonio con cifras ficticias: ahorro total, saldos de efectivo, inversiones y jubilación, y un desglose del ahorro y las ganancias de mercado desde el mes anterior.',
     landFeatT:'Todo en un mismo sitio', landFeatSub:'Pensado para quien solo quiere saber cómo va. Sin palabras de finanzas.',
-    landF:[['Tu mes de un vistazo','Consulta lo que has ingresado, gastado y lo que queda, con categorías sencillas.'],
-           ['Tus ahorros en el tiempo','Añade saldos cuando quieras para ver cómo cambian tus ahorros.'],
-           ['Tu propio objetivo','Elige una meta de ahorro y consulta tu progreso.'],
-           ['Fácil de mantener','Añade el siguiente extracto, revisa las dudas y descarga una copia de seguridad.']],
+    landF:[['Ingresos y gastos','Apunta lo que entra y lo que sale, a mano o con el archivo de tu banco. Lo ordena todo en categorías y pone cada mes al lado del anterior.'],
+           ['Tu patrimonio mes a mes','Una vez al mes, escribe cuánto hay en cada cuenta. Un gráfico te enseña cómo crece tu total a lo largo del año.'],
+           ['Inversiones','Ve cuánto has aportado y cuánto han ganado solos tus fondos, acciones o plan de pensiones.'],
+           ['Mirada al futuro','Abre Más análisis para ver previsiones, un objetivo de ahorro y cuánto podría aportar ahorrar más cada mes.']],
     landSafeT:'Tus datos son tuyos', landSafe:'No hay cuenta ni servidor con tus cifras. Guárdalas en una carpeta, en tu propio Google Drive o solo en este navegador, con copia diaria. Funciona sin conexión y se instala como una app.',
-    landHow:'Cómo funciona', landHowSteps:[['Elige dónde vive','Este dispositivo, tu Google Drive o una carpeta que gestionas. Puedes cambiarlo cuando quieras.'],['Añade un extracto','Pon nombre a una cuenta y añade un extracto. Revisa los movimientos antes de guardar.'],['Ve tu dinero con claridad','Consulta el resumen de gastos del mes y añade saldos para seguir tus ahorros.']],
-    landEnd:'Cuando quieras', landEndSub:'Explora el control de ejemplo o empieza con tu propio extracto.',
+    landHow:'Cómo funciona', landHowSteps:[['Elige dónde vive','Este dispositivo, tu Google Drive o una carpeta que gestionas. Puedes cambiarlo cuando quieras.'],['Añade un extracto','Empieza con una cuenta y un mes, o trae tu historial. Revisa las filas antes de guardar.'],['Ve tu dinero con claridad','Consulta el resumen de gastos del mes y añade saldos para seguir tus ahorros.']],
+    landEnd:'Cuando quieras', landEndSub:'Haz el recorrido de dos minutos con datos de ejemplo, o configura tu propio control.',
     landPrivacy:'Privacidad',
     stDriveError:t=>`No se ha podido sincronizar con Google Drive. Se reintentará a las ${t}.`, stDrivePaused:'La sincronización espera a que termines lo que estás haciendo.',
     keptTheirs:'Abierta la versión más nueva. La de esta pantalla se ha guardado como copia.', keptMine:'Te has quedado con la versión de esta pantalla. La otra se ha guardado como copia.',
@@ -506,7 +506,7 @@ function landing(known){
             <div class="wl-cta">${cta}</div>
             <p class="wl-fine">${esc(t('landNoSignup'))}</p></div>
             <figure class="wl-frame"><div class="wl-glow" aria-hidden="true"></div><div class="wl-view"><div class="wl-pages">
-              <img src="${shot('overview')}" alt="${esc(t('landShotAlt'))}" width="1280" height="900" fetchpriority="high" decoding="async">
+              <img src="${shot('networth')}" alt="${esc(t('landShotAlt'))}" width="1280" height="900" fetchpriority="high" decoding="async">
 </div></div></figure>
             <ul class="wl-calls">${t('landCalls').map((c,i)=>`<li class="wl-call c${i+1}"><span class="wl-ico">${svg(callIco[i],20)}</span>${esc(c)}</li>`).join('')}</ul></div></section>
           <div class="wl-body">
@@ -540,8 +540,10 @@ function chooseMode(fromSettings,opts){   /* opts.keep: label for the button tha
     const el=panel(`<div class="web-top"><p class="web-eyebrow">MyAhorros</p>${langSw}</div><h2 id="wp-title">${esc(t('chooseTitle'))}</h2><p class="web-sub">${esc(t('chooseSub'))}</p>
       <div class="web-ways">
         ${card('browser',t('browserT'),t('browserS')+(itp()?' '+t('itpWarn'):''),true,'')}
-        ${card('drive',t('driveT'),t('driveS'),dOk,canDrive()?t('driveOffline'):t('driveNo'))}
-      </div><details class="web-storage-more"><summary>${esc(t('moreStorage'))}</summary>${card('folder',t('folderT'),t('folderS'),fOk,t('folderNo'))}${fOk?`<p class="web-hint">${esc(t('pickHint'))}</p>`:''}</details>
+        ${card('drive',t('driveT'),t('driveS')+(fromSettings?'':' '+t('driveHave')),dOk,canDrive()?t('driveOffline'):t('driveNo'))}
+        ${card('folder',t('folderT'),t('folderS'),fOk,t('folderNo'))}
+      </div>
+      ${fOk?`<p class="web-hint">${esc(t('pickHint'))}</p>`:''}
       ${fromSettings?`<div class="web-acts"><button type="button" class="btn ghost" data-x="cancel">${esc(opts&&opts.keep||t('cancel'))}</button></div>`:''}`,{overlay:fromSettings});
     el.addEventListener('click',async e=>{
       const b=e.target.closest('button'); if(!b||b.disabled) return;
@@ -953,10 +955,10 @@ const local={
     await driveSync('note');
     return drive.state==='idle'?{message:t('synced')}:null;
   },
-  async saveCopy(snapshot){
+  async saveCopy(){
     await queue;
     const name=t('copyName',today());
-    try{ const r=await saveFile(name,new Blob([serialise(snapshot)],{type:'application/json'}),[{description:t('jsonFilter'),accept:{'application/json':['.json']}}]);
+    try{ const r=await saveFile(name,new Blob([serialise()],{type:'application/json'}),[{description:t('jsonFilter'),accept:{'application/json':['.json']}}]);
       if(r.declined) return null; return {message:r.picked?t('copySaved',r.name):t('copyDownloaded',r.name)}; }
     catch(_){ return {message:t('copyFailed'),bad:true}; }
   },

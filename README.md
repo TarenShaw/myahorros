@@ -74,13 +74,9 @@ You'll create a "sign-in client" that lets your site ask Google for access to a 
 - **Saving:** changes are saved on the device immediately and go to Drive a couple of seconds later.
 - **Changes on two devices:** if the Drive file was changed on another device after this one last synced, the tracker asks which version to keep. It keeps the other one as a backup in Drive's `Backups` folder, so nothing is lost.
 
-## Everyday use
-
-Start with an account name and currency, then add a statement or enter a transaction. The Summary opens on the imported month with income, spending, money left and categories. History is available from Summary. Transactions has search plus optional filters and bulk tools. Accounts keeps balances and history, with investment performance available per account and one optional savings goal. Settings holds preferences, storage, backup and a single Restore entry point. Existing data, account movements and custom categories remain compatible.
-
 ## AI for reading statements (nothing to set up on your side)
 
-**Add a statement** reads CSV and Excel locally. PDFs and pictures open the optional AI reader; files the local reader cannot understand offer **Read this file with AI**. The first time someone uses AI, the tracker asks which service to use:
+The **Fill in with AI** buttons work on the website too. The first time someone uses them, the tracker asks which AI to use:
 
 | Option | What they need | Cost |
 |---|---|---|
@@ -90,9 +86,9 @@ Start with an account name and currency, then add a statement or enter a transac
 | **Copy and paste** | Nothing | Free. The tracker shows the request, they paste it into ChatGPT (a Plus account works), Claude or Gemini, then paste the answer back. Scanned pages and photos can't go this way. |
 
 How it works:
-- **Checking the key:** the tracker checks the key and asks the service which models it offers. It picks a sensible default (Claude: Haiku 5.5 at high effort, set in `js/models.js`), which can be changed in **Change AI** in the statement reader; Claude's effort can be changed there too.
+- **Checking the key:** the tracker checks the key and asks the service which models it offers. It picks a sensible default (Claude: Haiku 5.5 at high effort, set in `js/models.js`), which can be changed in **Settings › Reading statements with AI**; Claude's effort can be changed there too.
 - **Where things go:** the key is kept only in that browser (or only until the tab closes, if they untick "Remember"). Statements go straight from the browser to the service they chose, never through your site.
-- **Checking the answer:** every answer goes through the same checks and review screen as on the Claude website before anything is saved. Everyday summaries and account balances do not require AI.
+- **Checking the answer:** every answer goes through the same checks and review screen as on the Claude website before anything is saved.
 
 About "Sign in with ChatGPT": OpenAI announced it at DevDay (29 September 2026) for 16 approved partner apps only. Your site can't use it yet. If OpenAI opens it to all developers, it could be added as another option.
 
@@ -102,16 +98,16 @@ Build a new version and upload the changed files to the repository the same way,
 
 Data files keep the same format as the Windows app, and new versions can always read older files.
 
-Before uploading, run the checks (Node.js, no install needed). These include financial calculation compatibility and date/amount formatting:
+Before uploading, run the checks (Node.js, no install needed), for example the Net worth reconciliation check, which proves that "What changed" adds up to the cent and that "Markets, interest and gains" equals the Gains total of the Accounts table:
 
 ```
 node tests/reconcile-smoke.js
 node tests/format-smoke.js
 ```
 
-Browser checks for the simplified app are `tests/landing-wizard.e2e.js` (first visit, demo, English/Spanish and phones), `tests/simplification.e2e.js` (imports, saved investment details, goals, backup and restore), `tests/drive-sync.e2e.js`, and `tests/tabs-restore.e2e.js`. Run them with Playwright’s Edge channel against the local server. The full list of calculation checks is in CLAUDE.md. On `localhost`, the page also prints a console warning for any month whose Net worth figures don't reconcile.
+The full list is in CLAUDE.md. On `localhost`, the page also prints a console warning for any month whose Net worth figures don't reconcile.
 
-Import checks keep account-aware duplicates, amount/date validation, currency confirmation, transfer handling and Undo. Review rows are read-only until Edit is selected; optional source, coverage and bulk controls are disclosed when needed.
+Transaction/import audit regressions: `NODE_PATH=<Playwright modules> node tests/crew-audit-fixes.e2e.js` (Edge, local server). This covers account-aware duplicates, invalid reviewed amounts, Splitwise currency, date order and correction, bulk review, internal transfers, retained returns, monthly contribution precedence and balance-column guards.
 
 Transactions can optionally store `investmentAccount`, `transferFrom`, `transferTo` and `returnTreatment` alongside their existing source/account/batch metadata. Internal investment transfers use both accounts and do not count as new budget investments. A `returnTreatment` of `retained` records a return already included in the investment balance; it is excluded from cash income and payout additions. Older rows retain their description-based matching and paid-out-return behavior. Gains use reviewed contributions per month, with linked-transaction fallback for months without reviewed figures. Balance imports skip metadata columns by default and require confirmation before creating accounts. Foreign-currency rows require an explicitly confirmed amount in the tracker currency or exclusion.
 
